@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Especificação — Simulador web de cargas e vetores</title>
+  <style>
+    :root{color-scheme:light dark;--bg:#f4f7f8;--panel:#fff;--ink:#142a3b;--muted:#607181;--line:#d9e1e7;--accent:#246bce;--note:#fff4d8;--code:#edf2f5}
+    @media(prefers-color-scheme:dark){:root{--bg:#10171d;--panel:#17222b;--ink:#e8f0f5;--muted:#a8bac7;--line:#31434f;--accent:#7eb3ff;--note:#3a2d12;--code:#0d1419}}
+    *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.65 system-ui,-apple-system,"Segoe UI",sans-serif}a{color:var(--accent)}
+    .layout{display:grid;grid-template-columns:17rem minmax(0,56rem);gap:3rem;max-width:78rem;margin:auto;padding:2rem}
+    nav{position:sticky;top:1.5rem;align-self:start;max-height:calc(100vh - 3rem);overflow:auto;border-right:1px solid var(--line);padding-right:1.4rem}
+    nav strong{display:block;margin-bottom:.8rem}nav a{display:block;padding:.32rem .55rem;border-radius:.35rem;color:var(--muted);text-decoration:none}nav a:hover,nav a.active{background:var(--code);color:var(--ink)}
+    article{min-width:0;background:var(--panel);border:1px solid var(--line);border-radius:1rem;padding:clamp(1.5rem,4vw,3.5rem);box-shadow:0 1rem 3rem rgba(20,42,59,.08)}
+    header{border-bottom:1px solid var(--line);margin-bottom:2.5rem;padding-bottom:1.5rem}h1{font-size:clamp(2rem,4vw,3.3rem);line-height:1.08;letter-spacing:-.04em;margin:.4rem 0 1rem}h2{margin-top:3rem;font-size:1.65rem;scroll-margin-top:2rem}h3{margin-top:2rem;scroll-margin-top:2rem}
+    .meta{color:var(--muted);font-size:.9rem;overflow-wrap:anywhere}code{background:var(--code);padding:.12rem .35rem;border-radius:.25rem}pre{background:var(--code);border:1px solid var(--line);border-radius:.65rem;padding:1rem;overflow:auto}pre code{padding:0}aside{margin:1.5rem 0;border-left:.3rem solid #e3a018;background:var(--note);padding:1rem 1.2rem}li+li{margin-top:.3rem}
+    @media(max-width:850px){.layout{display:block;padding:.75rem}nav{position:static;border:0;border-bottom:1px solid var(--line);padding:1rem 0;margin-bottom:1rem;max-height:none;columns:2}nav strong{column-span:all}article{border-radius:.65rem;padding:1.25rem}}
+  </style>
+</head>
+<body>
+<div class="layout">
+  <nav aria-label="Seções da especificação">
+    <strong>Conteúdo</strong>
+    <a href="#objetivo">1. Objetivo</a><a href="#decisoes">2. Decisões</a>
+    <a href="#escopo">3. Escopo</a><a href="#modelo">4. Modelo científico</a>
+    <a href="#arquitetura">5. Arquitetura</a><a href="#fluxo">6. Fluxo</a>
+    <a href="#controles">7. Controles</a><a href="#visual">8. Direção visual</a>
+    <a href="#erros">9. Erros</a><a href="#testes">10. Testes</a>
+    <a href="#publicacao">11. Publicação</a>
+  </nav>
+  <article>
+    <header>
+      <div class="meta">Fonte: docs/superpowers/specs/2026-08-04-simulador-web-cargas-vetores-design.md · Gerado em 4 de agosto de 2026</div>
+      <h1>Simulador web de cargas e vetores</h1>
+      <p><strong>Status:</strong> aprovado para implementação<br><strong>Repositório:</strong> Atzingen/Eletromagnetismo-aulas</p>
+    </header>
+
+    <section id="objetivo"><h2>1. Objetivo</h2>
+      <p>Criar um site estático, publicável no GitHub Pages, para organizar materiais de eletromagnetismo e oferecer duas experiências com o mesmo núcleo matemático:</p>
+      <ol><li>simulador genérico de forças elétricas com até seis cargas-fonte e uma carga de prova;</li><li>versão web do exercício 13 do capítulo 21 do Halliday, com os dados do enunciado.</li></ol>
+      <p>O público principal são estudantes do IFSP. A tarefa central é tornar visível que a força resultante é uma soma vetorial e relacionar sua intensidade ao produto escalar.</p>
+    </section>
+
+    <section id="decisoes"><h2>2. Decisões aprovadas</h2>
+      <ul><li>HTML5, CSS e JavaScript em módulos ES, com SVG.</li><li>Sem framework, empacotador ou compilação; publicação estática no GitHub Pages.</li><li>O py5/Processing será preservado.</li><li>Halliday será um preset do motor genérico.</li><li>Páginas separadas no catálogo e abas apenas dentro de cada material.</li><li><code>site/simuladores.json</code> será o registro central.</li><li>Núcleo criado com testes prévios e validação em navegador real.</li></ul>
+    </section>
+
+    <section id="escopo"><h2>3. Escopo funcional</h2>
+      <h3>3.1 Página inicial e catálogo</h3>
+      <p>“Laboratório de Eletromagnetismo” terá explicação curta, busca por título, tema, livro, capítulo ou palavra-chave e filtros para todos, simuladores ou resoluções. O JSON inicial terá “Cargas e vetores” e “Halliday — capítulo 21 — exercício 13”. Uma aula futura exigirá somente nova pasta e registro.</p>
+      <h3>3.2 Simulador genérico</h3>
+      <p>A aba <strong>Experimento</strong> terá plano em centímetros e painel. Começará com duas fontes e uma carga de prova. Permitirá adicionar até seis fontes, selecionar/remover fontes, alternar sinal, ajustar de 0,1 µC a 10,0 µC em passos de 0,1 µC, arrastar, mover pelo teclado e restaurar. A carga de prova será única, ajustável e não removível.</p>
+      <p>Cada fonte terá sua seta de força; a resultante será mais espessa. Todas usarão escala comum no quadro. Uma tabela exibirá componentes, módulos e unidades.</p>
+      <h3>3.3 Soma de vetores</h3>
+      <p>A e B terão extremidades arrastáveis. Serão mostrados ponta-com-cauda, paralelogramo, diagonal R = A + B, componentes, módulos e ângulo.</p>
+      <h3>3.4 Produto escalar</h3>
+      <p>A experiência mostrará θ, projeção, <code>A · B = AₓBₓ + AᵧBᵧ</code>, <code>A · B = |A||B| cos θ</code>, sinal do resultado e <code>|A + B|² = |A|² + |B|² + 2A · B</code>. A dedução começa em <code>|A| = √(Aₓ² + Aᵧ²)</code>.</p>
+      <aside><strong>Distinção científica:</strong> a área é <code>|det(A,B)| = |A||B||sen θ|</code>. Ela não é o produto escalar e não determina diretamente o módulo da soma. O produto escalar usa cosseno e aparece no termo cruzado.</aside>
+      <h3>3.5 Teoria guiada</h3>
+      <ol><li>componentes;</li><li>módulo por Pitágoras;</li><li>soma por componentes;</li><li>produto escalar por componentes e projeção;</li><li>módulo da soma;</li><li>produto escalar versus área.</li></ol>
+      <p>Os exemplos acompanharão os vetores posicionados pelo aluno.</p>
+      <h3>3.6 Exercício Halliday</h3>
+      <p>Abas <strong>Enunciado</strong>, <strong>Resolução</strong> e <strong>Simulação</strong>. A resolução existente será preservada. O preset usará q₁ = +1,0 µC em (0,0), q₂ = −3,0 µC em (10,0) e q₃ = +1,0 µC em x = −10/(√3−1) cm, y = 0. Um botão restaurará o equilíbrio.</p>
+    </section>
+
+    <section id="modelo"><h2>4. Modelo científico e unidades</h2>
+      <p>O núcleo converterá centímetros em metros, microcoulombs em coulombs, retornará newtons e usará <code>k = 8,9875517923 × 10⁹ N·m²/C²</code>.</p>
+      <p><strong>Fᵢ = k qᵢ qₜ (rₜ − rᵢ) / |rₜ − rᵢ|³</strong></p>
+      <p>A resultante será a soma. O sinal de qᵢqₜ produzirá atração ou repulsão. Coincidência exata será singularidade: as setas serão ocultadas e a interface pedirá separação, sem limite artificial.</p>
+    </section>
+
+    <section id="arquitetura"><h2>5. Arquitetura</h2>
+<pre><code>site/
+├── .nojekyll, index.html, simuladores.json
+├── assets/
+│   ├── base.css
+│   └── simulador.css
+├── componentes/
+│   ├── abas.js
+│   ├── catalogo.js
+│   ├── simulador-cargas.js
+│   └── simulador-vetores.js
+├── nucleo/
+│   ├── eletrostatica.js
+│   ├── formato.js
+│   └── vetores.js
+├── simuladores/cargas-e-vetores/
+├── exercicios/halliday-21-13/
+└── testes/</code></pre>
+      <p><code>vetores.js</code> e <code>eletrostatica.js</code> serão puros e sem DOM. <code>simulador-cargas.js</code> receberá elemento e configuração; as duas páginas passarão presets. <code>simulador-vetores.js</code> cuidará das experiências, <code>abas.js</code> da navegação e <code>catalogo.js</code> dos filtros.</p>
+    </section>
+
+    <section id="fluxo"><h2>6. Fluxo de dados</h2>
+      <ol><li>A página carrega o preset.</li><li>O componente cria estado local.</li><li>Uma interação altera o estado.</li><li>Funções puras recalculam.</li><li>SVG e tabela atualizam.</li><li>A escala comum usa o maior módulo.</li></ol>
+      <p>Não haverá servidor, banco, conta ou persistência.</p>
+    </section>
+
+    <section id="controles"><h2>7. Controles e acessibilidade</h2>
+      <ul><li>Clique/toque seleciona; arrastar posiciona.</li><li>Setas movem 0,5 cm; Shift + seta, 2 cm.</li><li><kbd>+</kbd>/<kbd>−</kbd> ajustam; <kbd>S</kbd> troca sinal; <kbd>A</kbd> adiciona; <kbd>Delete</kbd> remove fonte; <kbd>R</kbd> restaura.</li><li>Atalhos só atuam com o plano focado.</li><li>Rótulos visíveis, foco perceptível e abas ARIA.</li><li>Cor acompanhada de sinais, rótulos e padrões.</li><li>Respeito a movimento reduzido.</li></ul>
+      <p>No desktop, plano e painel lado a lado; no celular, plano primeiro e alvos de pelo menos 44 px.</p>
+    </section>
+
+    <section id="visual"><h2>8. Direção visual</h2>
+      <p>Conceito: <strong>mesa de laboratório vetorial</strong>. Grade como papel milimetrado e leituras como instrumentos.</p>
+      <p><strong>Paleta:</strong> papel frio #F4F7F8; tinta #142A3B; positivo #D94841; negativo #246BCE; resultante #7A3CE7; medição #E3A018. Seis cores ligarão cada fonte à sua força, com anel numerado.</p>
+      <p><strong>Tipo:</strong> Trebuchet MS nos títulos, Segoe UI no texto e Consolas nos dados. A assinatura será a construção do paralelogramo como desenho feito com régua; o restante será contido e funcional.</p>
+    </section>
+
+    <section id="erros"><h2>9. Tratamento de erros</h2>
+      <ul><li>Entrada inválida preserva o último valor e instrui.</li><li>Valores fora da faixa são limitados e informados.</li><li>Com seis fontes, adicionar é desabilitado.</li><li>A carga de prova não pode ser removida.</li><li>Singularidade gera mensagem específica.</li><li>Falha do JSON orienta recarregar.</li></ul>
+    </section>
+
+    <section id="testes"><h2>10. Testes e critérios de aceitação</h2>
+      <p>Node.js cobrirá operações vetoriais, projeção, ângulo, vetor nulo, formas do produto escalar, identidade da soma, Coulomb, atração, repulsão, seis fontes, singularidade, equilíbrio Halliday e catálogo.</p>
+      <p>No navegador: catálogo, filtros, navegação, cargas, mouse, teclado, setas, leituras, abas, foco, preset, restauração, desktop, celular e console sem erros.</p>
+      <p>A conclusão exige testes aprovados, páginas funcionais, GitHub Pages publicado e URL respondendo.</p>
+    </section>
+
+    <section id="publicacao"><h2>11. Publicação</h2>
+      <p><code>site/</code> será publicado por GitHub Actions em <a href="https://atzingen.github.io/Eletromagnetismo-aulas/">https://atzingen.github.io/Eletromagnetismo-aulas/</a>. O README apontará para o site e o py5. A publicação será verificada por HTTP e navegador.</p>
+    </section>
+  </article>
+</div>
+<script>
+  const links=[...document.querySelectorAll('nav a')];
+  const sections=links.map(link=>document.querySelector(link.hash)).filter(Boolean);
+  const observer=new IntersectionObserver(entries=>{
+    const visible=entries.filter(entry=>entry.isIntersecting).sort((a,b)=>b.intersectionRatio-a.intersectionRatio)[0];
+    if(!visible)return;
+    links.forEach(link=>link.classList.toggle('active',link.hash==='#'+visible.target.id));
+  },{rootMargin:'-15% 0px -70%',threshold:[0,.25,.6]});
+  sections.forEach(section=>observer.observe(section));
+</script>
+</body>
+</html>
