@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Simulador de forças entre cargas, soma vetorial e produto escalar.">
+  <title>Cargas e vetores · Laboratório de Eletromagnetismo</title>
+  <link rel="stylesheet" href="../../assets/base.css">
+  <link rel="stylesheet" href="../../assets/simulador.css">
+</head>
+<body class="lesson-page">
+  <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+
+  <header class="lesson-header">
+    <nav class="breadcrumb" aria-label="Navegação estrutural">
+      <a href="../../">Laboratório</a>
+      <span aria-hidden="true">/</span>
+      <span>Simuladores</span>
+      <span aria-hidden="true">/</span>
+      <strong>Cargas e vetores</strong>
+    </nav>
+    <div class="lesson-title-row">
+      <div>
+        <p class="eyebrow">Experimento interativo</p>
+        <h1>Cargas e vetores</h1>
+      </div>
+      <p class="lesson-intro">
+        Construa um sistema elétrico, depois isole a geometria da soma e do
+        produto escalar. O desenho e a conta respondem juntos.
+      </p>
+    </div>
+  </header>
+
+  <main class="lesson-main" id="conteudo">
+    <div data-tabs>
+      <div class="tab-list" role="tablist" aria-label="Modos do laboratório">
+        <button
+          class="tab-button"
+          id="tab-experimento"
+          type="button"
+          role="tab"
+          aria-selected="true"
+          aria-controls="painel-experimento"
+        >Experimento</button>
+        <button
+          class="tab-button"
+          id="tab-soma"
+          type="button"
+          role="tab"
+          aria-selected="false"
+          aria-controls="painel-soma"
+          tabindex="-1"
+        >Soma de vetores</button>
+        <button
+          class="tab-button"
+          id="tab-produto"
+          type="button"
+          role="tab"
+          aria-selected="false"
+          aria-controls="painel-produto"
+          tabindex="-1"
+        >Produto escalar</button>
+        <button
+          class="tab-button"
+          id="tab-teoria"
+          type="button"
+          role="tab"
+          aria-selected="false"
+          aria-controls="painel-teoria"
+          tabindex="-1"
+        >Teoria guiada</button>
+      </div>
+
+      <section
+        class="tab-panel"
+        id="painel-experimento"
+        role="tabpanel"
+        aria-labelledby="tab-experimento"
+      >
+        <div data-charge-simulator></div>
+      </section>
+
+      <section
+        class="tab-panel"
+        id="painel-soma"
+        role="tabpanel"
+        aria-labelledby="tab-soma"
+        hidden
+      >
+        <div data-vector-sum></div>
+      </section>
+
+      <section
+        class="tab-panel"
+        id="painel-produto"
+        role="tabpanel"
+        aria-labelledby="tab-produto"
+        hidden
+      >
+        <div data-vector-dot></div>
+      </section>
+
+      <section
+        class="tab-panel"
+        id="painel-teoria"
+        role="tabpanel"
+        aria-labelledby="tab-teoria"
+        hidden
+      >
+        <div data-vector-theory></div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="lesson-footer site-footer">
+    <p>Laboratório de Eletromagnetismo · IFSP</p>
+    <a href="../../">Voltar ao catálogo</a>
+  </footer>
+
+  <script type="module" src="./app.js"></script>
+</body>
+</html>
