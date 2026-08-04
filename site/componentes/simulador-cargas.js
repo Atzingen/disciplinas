@@ -70,6 +70,12 @@ export function addSource(state) {
 
   const number = state.nextSourceNumber;
   const angle = ((number - 1) * 2 * Math.PI) / state.maxSources;
+  const usedColors = new Set(
+    state.sources.map((existingSource) => existingSource.vectorColor),
+  );
+  const vectorColor =
+    FORCE_COLORS.find((color) => !usedColors.has(color)) ??
+    FORCE_COLORS[(number - 1) % FORCE_COLORS.length];
   const source = {
     id: "q" + String(number),
     label: "q" + subscript(number),
@@ -77,7 +83,7 @@ export function addSource(state) {
     yCm: Number((7 * Math.sin(angle)).toFixed(1)),
     magnitudeMicroC: 1,
     sign: 1,
-    vectorColor: FORCE_COLORS[(number - 1) % FORCE_COLORS.length],
+    vectorColor,
   };
 
   state.sources.push(source);
@@ -131,7 +137,11 @@ export function moveSelected(state, dxCm, dyCm) {
 
 export function setSelectedMagnitude(state, magnitudeMicroC) {
   const charge = selectedCharge(state);
-  if (charge === null || !Number.isFinite(magnitudeMicroC)) {
+  if (
+    charge === null ||
+    !Number.isFinite(magnitudeMicroC) ||
+    (state.lockSources && selectedSource(state))
+  ) {
     return charge?.magnitudeMicroC ?? null;
   }
 
@@ -144,6 +154,9 @@ export function flipSelectedSign(state) {
   const charge = selectedCharge(state);
   if (charge === null) {
     return null;
+  }
+  if (state.lockSources && selectedSource(state)) {
+    return charge.sign;
   }
   charge.sign *= -1;
   return charge.sign;
@@ -519,6 +532,7 @@ export function mountChargeSimulator(root, preset) {
   const selectedLabel = root.querySelector("[data-selected-label]");
   const selectedPosition = root.querySelector("[data-selected-position]");
   const magnitudeInput = root.querySelector("[data-magnitude]");
+  const flipSignButton = root.querySelector('[data-action="flip-sign"]');
   const signValue = root.querySelector("[data-sign-value]");
   const sourceCount = root.querySelector("[data-source-count]");
   const sourceList = root.querySelector("[data-source-list]");
@@ -545,6 +559,7 @@ export function mountChargeSimulator(root, preset) {
     svg.innerHTML = svgMarkup(state, forceSystem);
     const selected = selectedCharge(state);
     const selectedIsSource = Boolean(selectedSource(state));
+    const selectedIsLockedSource = state.lockSources && selectedIsSource;
     selectionReadout.textContent =
       selected.label +
       " em (" +
@@ -560,6 +575,12 @@ export function mountChargeSimulator(root, preset) {
       selected.yCm.toFixed(1).replace(".", ",") +
       " cm";
     magnitudeInput.value = selected.magnitudeMicroC.toFixed(1);
+    magnitudeInput.disabled = selectedIsLockedSource;
+    magnitudeInput.title = selectedIsLockedSource
+      ? "A carga desta fonte é fixa neste exercício."
+      : "";
+    flipSignButton.disabled = selectedIsLockedSource;
+    flipSignButton.title = magnitudeInput.title;
     signValue.textContent = selected.sign > 0 ? "(agora positiva)" : "(agora negativa)";
     sourceCount.textContent =
       String(state.sources.length) + " / " + String(state.maxSources);

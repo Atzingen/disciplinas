@@ -63,6 +63,19 @@ test("adicionar cria fontes numeradas e respeita o limite seis", { skip: !apiAva
   assert.equal(state.sources.length, 6);
 });
 
+test("seis fontes ativas mantêm cores vetoriais distintas após substituição", { skip: !apiAvailable }, () => {
+  const state = genericState();
+  while (state.sources.length < 6) {
+    simulator.addSource(state);
+  }
+  state.selectedId = "q2";
+  simulator.removeSelectedSource(state);
+  simulator.addSource(state);
+
+  const colors = state.sources.map((source) => source.vectorColor);
+  assert.equal(new Set(colors).size, colors.length);
+});
+
 test("remoção atua somente em fonte selecionada e protege a carga de prova", { skip: !apiAvailable }, () => {
   const state = genericState();
   state.selectedId = "q1";
@@ -73,14 +86,18 @@ test("remoção atua somente em fonte selecionada e protege a carga de prova", {
   assert.equal(simulator.removeSelectedSource(state), false);
 });
 
-test("preset bloqueado não adiciona, remove ou move suas fontes", { skip: !apiAvailable }, () => {
+test("preset bloqueado preserva posição, módulo e sinal de suas fontes", { skip: !apiAvailable }, () => {
   const state = simulator.createSimulatorState(HALLIDAY_PRESET);
   state.selectedId = "q1";
 
   assert.equal(simulator.addSource(state), false);
   assert.equal(simulator.removeSelectedSource(state), false);
   assert.equal(simulator.moveSelected(state, 2, 0), false);
+  assert.equal(simulator.setSelectedMagnitude(state, 4), 1);
+  assert.equal(simulator.flipSelectedSign(state), 1);
   assert.equal(state.sources[0].xCm, 0);
+  assert.equal(state.sources[0].magnitudeMicroC, 1);
+  assert.equal(state.sources[0].sign, 1);
 });
 
 test("movimento desloca e limita a carga selecionada ao plano", { skip: !apiAvailable }, () => {
