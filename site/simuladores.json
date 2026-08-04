@@ -1,0 +1,32 @@
+[
+  {
+    "id": "cargas-e-vetores",
+    "title": "Cargas e vetores",
+    "kind": "simulador",
+    "theme": "Força elétrica e soma vetorial",
+    "description": "Adicione cargas positivas e negativas, mova a carga de prova e acompanhe cada força e a resultante.",
+    "path": "simuladores/cargas-e-vetores/",
+    "tags": [
+      "força",
+      "Coulomb",
+      "vetores",
+      "produto escalar",
+      "simulação"
+    ]
+  },
+  {
+    "id": "halliday-21-13",
+    "title": "Halliday — capítulo 21 — exercício 13",
+    "kind": "resolucao",
+    "theme": "Equilíbrio eletrostático",
+    "description": "Resolução passo a passo e simulação do ponto onde duas forças elétricas se anulam.",
+    "path": "exercicios/halliday-21-13/",
+    "tags": [
+      "Halliday",
+      "capítulo 21",
+      "exercício 13",
+      "equilíbrio",
+      "resolução"
+    ]
+  }
+]

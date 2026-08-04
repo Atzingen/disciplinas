@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Simulações e resoluções interativas para as aulas de eletromagnetismo.">
+  <title>Laboratório de Eletromagnetismo</title>
+  <link rel="stylesheet" href="./assets/base.css">
+</head>
+<body class="home-page">
+  <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+
+  <header class="site-header">
+    <a class="brand" href="./" aria-label="Laboratório de Eletromagnetismo — início">
+      <span class="brand__mark" aria-hidden="true">Σ</span>
+      <span>
+        <strong>Laboratório de Eletromagnetismo</strong>
+        <small>IFSP · materiais de aula</small>
+      </span>
+    </a>
+    <span class="site-header__note">Física em movimento</span>
+  </header>
+
+  <main id="conteudo">
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero__copy">
+        <p class="eyebrow">Forças · campos · vetores</p>
+        <h1 id="hero-title">Veja a soma acontecer.</h1>
+        <p class="hero__lead">
+          Mova cargas, decomponha vetores e confronte o desenho com a conta.
+          Cada material une explicação, experimento e resultado numérico.
+        </p>
+        <a class="text-link" href="#catalogo">
+          Explorar materiais <span aria-hidden="true">↓</span>
+        </a>
+      </div>
+
+      <div class="hero__instrument" aria-label="Diagrama de dois vetores e sua resultante">
+        <div class="instrument__readout">
+          <span>SOMA VETORIAL</span>
+          <strong>R⃗ = A⃗ + B⃗</strong>
+        </div>
+        <svg viewBox="0 0 520 330" role="img" aria-labelledby="hero-vector-title hero-vector-desc">
+          <title id="hero-vector-title">Construção do paralelogramo</title>
+          <desc id="hero-vector-desc">Vetores A e B partem da mesma origem e formam a resultante R.</desc>
+          <defs>
+            <pattern id="hero-grid" width="26" height="26" patternUnits="userSpaceOnUse">
+              <path d="M 26 0 L 0 0 0 26" class="hero-grid-line"></path>
+            </pattern>
+            <marker id="hero-arrow-a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+              <path d="M 0 0 L 10 5 L 0 10 z" class="hero-arrow-a-head"></path>
+            </marker>
+            <marker id="hero-arrow-b" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+              <path d="M 0 0 L 10 5 L 0 10 z" class="hero-arrow-b-head"></path>
+            </marker>
+            <marker id="hero-arrow-r" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+              <path d="M 0 0 L 10 5 L 0 10 z" class="hero-arrow-r-head"></path>
+            </marker>
+          </defs>
+          <rect width="520" height="330" fill="url(#hero-grid)"></rect>
+          <polygon points="86,258 326,210 414,82 174,130" class="hero-parallelogram"></polygon>
+          <line x1="86" y1="258" x2="326" y2="210" class="hero-vector hero-vector--a" marker-end="url(#hero-arrow-a)"></line>
+          <line x1="86" y1="258" x2="174" y2="130" class="hero-vector hero-vector--b" marker-end="url(#hero-arrow-b)"></line>
+          <line x1="326" y1="210" x2="414" y2="82" class="hero-helper"></line>
+          <line x1="174" y1="130" x2="414" y2="82" class="hero-helper"></line>
+          <line x1="86" y1="258" x2="414" y2="82" class="hero-vector hero-vector--r" marker-end="url(#hero-arrow-r)"></line>
+          <circle cx="86" cy="258" r="6" class="hero-origin"></circle>
+          <text x="252" y="254" class="hero-label hero-label--a">A⃗</text>
+          <text x="104" y="174" class="hero-label hero-label--b">B⃗</text>
+          <text x="272" y="140" class="hero-label hero-label--r">R⃗</text>
+        </svg>
+        <p class="instrument__caption">
+          A diagonal não é um atalho gráfico: ela é a soma das componentes.
+        </p>
+      </div>
+    </section>
+
+    <section class="catalog-section" id="catalogo" aria-labelledby="catalog-title" data-catalog-root>
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">Acervo inicial</p>
+          <h2 id="catalog-title">Escolha um experimento</h2>
+        </div>
+        <p class="catalog-count" data-catalog-count aria-live="polite">Carregando materiais…</p>
+      </div>
+
+      <div class="catalog-controls" data-catalog-controls aria-busy="true">
+        <label class="search-field">
+          <span>Buscar no acervo</span>
+          <input
+            type="search"
+            placeholder="Ex.: Halliday, vetores, capítulo 21"
+            autocomplete="off"
+            data-catalog-search
+          >
+        </label>
+        <div class="filter-group" aria-label="Filtrar tipo de material">
+          <button type="button" data-catalog-filter="todos" aria-pressed="true">Todos</button>
+          <button type="button" data-catalog-filter="simulador" aria-pressed="false">Simuladores</button>
+          <button type="button" data-catalog-filter="resolucao" aria-pressed="false">Resoluções</button>
+        </div>
+      </div>
+
+      <div class="catalog-grid" data-catalog-results aria-live="polite"></div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>Material didático aberto · Gustavo von Atzingen · IFSP</p>
+    <a href="https://github.com/Atzingen/Eletromagnetismo-aulas">Código-fonte no GitHub</a>
+  </footer>
+
+  <script type="module">
+    import { mountCatalog } from "./componentes/catalogo.js";
+
+    mountCatalog(document.querySelector("[data-catalog-root]"));
+  </script>
+</body>
+</html>
