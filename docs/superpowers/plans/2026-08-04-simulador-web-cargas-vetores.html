@@ -1,0 +1,530 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Plano de implementação — Simulador web de cargas e vetores</title>
+<style>
+:root{color-scheme:light dark;--bg:#f4f7f8;--panel:#fff;--ink:#142a3b;--muted:#607181;--line:#d9e1e7;--accent:#246bce;--code:#edf2f5;--task:#f8fafb}
+@media(prefers-color-scheme:dark){:root{--bg:#10171d;--panel:#17222b;--ink:#e8f0f5;--muted:#a8bac7;--line:#31434f;--accent:#7eb3ff;--code:#0d1419;--task:#121c23}}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--ink);font:15.5px/1.65 system-ui,-apple-system,"Segoe UI",sans-serif}.layout{display:grid;grid-template-columns:18rem minmax(0,62rem);gap:2.5rem;max-width:86rem;margin:auto;padding:2rem}nav{position:sticky;top:1.25rem;align-self:start;max-height:calc(100vh - 2.5rem);overflow:auto;border-right:1px solid var(--line);padding-right:1rem}nav strong{display:block;margin-bottom:.7rem}nav a{display:block;color:var(--muted);text-decoration:none;padding:.28rem .45rem;border-radius:.3rem}nav a.sub{padding-left:1.2rem;font-size:.88rem}nav a.active,nav a:hover{color:var(--ink);background:var(--code)}article{min-width:0;background:var(--panel);border:1px solid var(--line);border-radius:1rem;padding:clamp(1.4rem,4vw,3.5rem);box-shadow:0 1rem 3rem rgba(20,42,59,.08)}.meta{color:var(--muted);border-bottom:1px solid var(--line);padding-bottom:1rem;margin-bottom:1.5rem;overflow-wrap:anywhere}h1{font-size:clamp(2rem,4vw,3.15rem);line-height:1.08;letter-spacing:-.04em}h2{margin-top:3rem;border-top:1px solid var(--line);padding-top:2rem;scroll-margin-top:2rem}h3{margin-top:2.7rem;background:var(--task);border-left:.3rem solid var(--accent);padding:.8rem 1rem;scroll-margin-top:2rem}h4{margin-top:2rem}a{color:var(--accent)}code{background:var(--code);border-radius:.25rem;padding:.12rem .35rem}pre{background:var(--code);border:1px solid var(--line);border-radius:.6rem;padding:1rem;overflow:auto}pre code{padding:0}blockquote{margin:1.2rem 0;border-left:.3rem solid #e3a018;padding:.7rem 1rem;background:var(--task)}li+li{margin-top:.3rem}input[type=checkbox]{width:1.05rem;height:1.05rem;vertical-align:-.15rem;margin-right:.4rem}
+@media(max-width:900px){.layout{display:block;padding:.75rem}nav{position:static;max-height:18rem;border:0;border-bottom:1px solid var(--line);padding:1rem 0;margin-bottom:1rem;columns:2}nav strong{column-span:all}article{padding:1.2rem;border-radius:.65rem}}
+</style>
+</head>
+<body>
+<div class="layout">
+<nav aria-label="Tarefas do plano"><strong>Plano de execução</strong><div id="toc"></div></nav>
+<article>
+<div class="meta">Fonte: docs/superpowers/plans/2026-08-04-simulador-web-cargas-vetores.md · Gerado em 04/08/2026 10:13</div>
+<h1 id="simulador-web-de-cargas-e-vetores-implementation-plan">Simulador Web de Cargas e Vetores Implementation Plan</h1>
+<blockquote>
+<p><strong>For agentic workers:</strong> REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (- [ ]) syntax for tracking.</p>
+</blockquote>
+<p><strong>Goal:</strong> Publicar um catálogo didático com simulador genérico de forças elétricas, laboratórios de soma e produto escalar e uma página web do exercício Halliday 21.13.</p>
+<p><strong>Architecture:</strong> Um núcleo JavaScript puro calcula vetores e eletrostática, enquanto componentes SVG cuidam apenas do estado de interação e da apresentação. O simulador genérico e o exercício Halliday injetam presets diferentes no mesmo componente; o catálogo é alimentado por um registro JSON.</p>
+<p><strong>Tech Stack:</strong> HTML5, CSS responsivo, JavaScript ES modules, SVG, Node.js 22 test runner, Python HTTP server para validação local e GitHub Pages.</p>
+<h2 id="global-constraints">Global Constraints</h2>
+<ul>
+<li>HTML5, CSS e JavaScript em módulos ES, com desenho em SVG.</li>
+<li>Sem framework, empacotador ou etapa de compilação.</li>
+<li>Site estático no GitHub Pages.</li>
+<li>O código py5/Processing existente será preservado.</li>
+<li>O exercício Halliday será um preset do mesmo motor do simulador genérico.</li>
+<li>Até seis cargas-fonte e exatamente uma carga de prova.</li>
+<li>Valores ajustáveis de 0,1 µC a 10,0 µC em passos de 0,1 µC.</li>
+<li>Unidades SI no núcleo; interface em centímetros, microcoulombs e newtons.</li>
+<li>Não limitar artificialmente a força em uma singularidade.</li>
+<li>Todo comportamento calculável novo começa por teste falhando.</li>
+</ul>
+<hr />
+<h2 id="mapa-de-arquivos">Mapa de arquivos</h2>
+<ul>
+<li><strong>package.json:</strong> comandos de teste e servidor local, sem dependências.</li>
+<li><strong>site/simuladores.json:</strong> registro único do catálogo.</li>
+<li><strong>site/index.html:</strong> entrada do catálogo.</li>
+<li><strong>site/assets/base.css:</strong> identidade visual, tipografia, catálogo e elementos comuns.</li>
+<li><strong>site/assets/simulador.css:</strong> plano, painéis, cargas, vetores e responsividade.</li>
+<li><strong>site/nucleo/vetores.js:</strong> operações vetoriais puras.</li>
+<li><strong>site/nucleo/eletrostatica.js:</strong> lei de Coulomb e superposição.</li>
+<li><strong>site/nucleo/formato.js:</strong> formatação numérica e unidades.</li>
+<li><strong>site/componentes/catalogo.js:</strong> busca, filtro e cartões.</li>
+<li><strong>site/componentes/abas.js:</strong> tabs com teclado e ARIA.</li>
+<li><strong>site/componentes/simulador-cargas.js:</strong> estado, controles e SVG eletrostático.</li>
+<li><strong>site/componentes/simulador-vetores.js:</strong> soma, paralelogramo, projeção e teoria.</li>
+<li><strong>site/simuladores/cargas-e-vetores/preset.js:</strong> configuração genérica.</li>
+<li><strong>site/simuladores/cargas-e-vetores/index.html:</strong> página das quatro abas.</li>
+<li><strong>site/simuladores/cargas-e-vetores/app.js:</strong> montagem da página genérica.</li>
+<li><strong>site/exercicios/halliday-21-13/preset.js:</strong> configuração analítica do exercício.</li>
+<li><strong>site/exercicios/halliday-21-13/index.html:</strong> enunciado, resolução e simulação.</li>
+<li><strong>site/exercicios/halliday-21-13/app.js:</strong> montagem do preset Halliday.</li>
+<li><strong>site/testes/*.test.js:</strong> testes do núcleo, presets, catálogo e estado.</li>
+<li><strong>.github/workflows/pages.yml:</strong> publicação de site/ no GitHub Pages.</li>
+<li><strong>README.md:</strong> acesso ao site e manutenção do catálogo.</li>
+</ul>
+<hr />
+<h3 id="task-1-nucleo-vetorial">Task 1: Núcleo vetorial</h3>
+<p><strong>Files:</strong></p>
+<ul>
+<li>Create: package.json</li>
+<li>Create: site/testes/vetores.test.js</li>
+<li>Create: site/nucleo/vetores.js</li>
+</ul>
+<p><strong>Interfaces:</strong></p>
+<ul class="contains-task-list">
+<li><p>Produces: add(a, b), subtract(a, b), scale(vector, factor), magnitudeSquared(vector), magnitude(vector), dot(a, b), determinant(a, b), angleBetween(a, b), project(vector, onto), resultantMagnitude(a, b).</p>
+</li>
+<li><p>Vector shape: object with finite numeric properties x and y.</p>
+</li>
+<li><p>angleBetween returns radians or null when one vector is null.</p>
+</li>
+<li><p>project returns null when the target direction is null.</p>
+</li>
+<li class="task-list-item"><p><input disabled="disabled" type="checkbox" /> <strong>Step 1: Add the dependency-free Node test command</strong></p>
+</li>
+</ul>
+<p>Create package.json with:</p>
+<pre><code class="language-json">{
+  &quot;name&quot;: &quot;eletromagnetismo-aulas&quot;,
+  &quot;private&quot;: true,
+  &quot;type&quot;: &quot;module&quot;,
+  &quot;scripts&quot;: {
+    &quot;test&quot;: &quot;node --test site/testes/*.test.js&quot;,
+    &quot;serve&quot;: &quot;python -m http.server 8000 --directory site&quot;
+  }
+}
+</code></pre>
+<ul class="contains-task-list">
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> <strong>Step 2: Write failing vector tests</strong></li>
+</ul>
+<p>Cover exact component sums, magnitude of (3,4), dot product, determinant area,
+angles 0°, 90° and 180°, projection, null-vector behavior and:</p>
+<pre><code class="language-js">assert.ok(
+  nearlyEqual(
+    resultantMagnitude(a, b) ** 2,
+    magnitude(a) ** 2 + magnitude(b) ** 2 + 2 * dot(a, b)
+  )
+);
+</code></pre>
+<p>Use a guarded dynamic import so the first run fails with an assertion that the
+expected exports are absent, rather than aborting on a missing module.</p>
+<ul class="contains-task-list">
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> <strong>Step 3: Run the tests and observe the expected failure</strong></li>
+</ul>
+<p>Run: node --test --test-name-pattern=&quot;vetor&quot; site/testes/*.test.js</p>
+<p>Expected: FAIL because site/nucleo/vetores.js does not yet provide the API.</p>
+<ul class="contains-task-list">
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> <strong>Step 4: Implement the minimal pure functions</strong></li>
+</ul>
+<p>Use Math.hypot for the module, clamp the cosine to [-1, 1] before Math.acos and
+return null for operations whose denominator has magnitude squared at most
+Number.EPSILON.</p>
+<ul class="contains-task-list">
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> <strong>Step 5: Run all vector tests</strong></li>
+</ul>
+<p>Run: npm test</p>
+<p>Expected: all vector tests PASS and output contains no warning or error.</p>
+<ul class="contains-task-list">
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> <strong>Step 6: Commit</strong></li>
+</ul>
+<pre><code class="language-powershell">git add package.json site/nucleo/vetores.js site/testes/vetores.test.js
+git commit -m &quot;feat: add tested vector math core&quot;
+</code></pre>
+<hr />
+<h3 id="task-2-nucleo-eletrostatico-e-presets">Task 2: Núcleo eletrostático e presets</h3>
+<p><strong>Files:</strong></p>
+<ul>
+<li>Create: site/testes/eletrostatica.test.js</li>
+<li>Create: site/testes/presets.test.js</li>
+<li>Create: site/nucleo/eletrostatica.js</li>
+<li>Create: site/simuladores/cargas-e-vetores/preset.js</li>
+<li>Create: site/exercicios/halliday-21-13/preset.js</li>
+</ul>
+<p><strong>Interfaces:</strong></p>
+<ul class="contains-task-list">
+<li><p>Consumes: add, magnitude and scale from site/nucleo/vetores.js.</p>
+</li>
+<li><p>Produces: COULOMB_CONSTANT, ElectrostaticSingularityError, forceFromSource(source, testCharge), calculateForceSystem(sources, testCharge).</p>
+</li>
+<li><p>Charge shape: id, label, xCm, yCm, magnitudeMicroC, sign and optional vectorColor.</p>
+</li>
+<li><p>calculateForceSystem returns individual entries with source and force plus resultant.</p>
+</li>
+<li><p>Produces: GENERIC_PRESET, HALLIDAY_PRESET and HALLIDAY_EQUILIBRIUM_X_CM.</p>
+</li>
+<li class="task-list-item"><p><input disabled="disabled" type="checkbox" /> <strong>Step 1: Write failing Coulomb tests</strong></p>
+</li>
+</ul>
+<p>Test a known 1 µC by 1 µC pair separated by 1 m, attraction and repulsion,
+vertical direction, vector sum of multiple sources, six sources and exact
+coincidence throwing ElectrostaticSingularityError with the source id.</p>
+<ul class="contains-task-list">
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> <strong>Step 2: Verify the Coulomb tests fail for the missing API</strong></li>
+</ul>
+<p>Run: node --test --test-name-pattern=&quot;Coulomb|atração|repulsão|singularidade&quot; site/testes/*.test.js</p>
+<p>Expected: FAIL because the electrostatic API is absent.</p>
+<ul class="contains-task-list">
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> <strong>Step 3: Implement SI conversion and Coulomb vector</strong></li>
+</ul>
+<p>Convert cm to m and µC to C. For delta = test position − source position, use:</p>
+<pre><code class="language-js">const coefficient =
+  COULOMB_CONSTANT * sourceChargeC * testChargeC / (distanceM ** 3);
+return scale(deltaM, coefficient);
+</code></pre>
+<p>Throw only when distanceM is zero. Sum every returned force with add.</p>
+<ul class="contains-task-list">
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> <strong>Step 4: Verify electrostatic tests pass</strong></li>
+</ul>
+<p>Run: npm test</p>
+<p>Expected: vector and electrostatic suites PASS.</p>
+<ul class="contains-task-list">
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> <strong>Step 5: Write failing preset tests</strong></li>
+</ul>
+<p>Assert the generic preset has two sources and one test charge. Assert
+HALLIDAY_EQUILIBRIUM_X_CM equals -10 / (sqrt(3) - 1), that q1 and q2 are 10 cm
+apart, and that calculateForceSystem produces resultant magnitude below 1e-10 N
+at the equilibrium point.</p>
+<ul class="contains-task-list">
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> <strong>Step 6: Verify preset tests fail</strong></li>
+</ul>
+<p>Run: node --test --test-name-pattern=&quot;preset|Halliday&quot; site/testes/*.test.js</p>
+<p>Expected: FAIL because the preset modules are absent.</p>
+<ul class="contains-task-list">
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> <strong>Step 7: Add both immutable preset objects</strong></li>
+</ul>
+<p>Use Object.freeze at the top level and clone nested values inside the simulator
+before interaction. Include viewport {-20, 20, -12, 12} in the generic preset
+and {-20, 15, -10, 10} in the Halliday preset.</p>
+<ul class="contains-task-list">
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> <strong>Step 8: Run all tests and commit</strong></li>
+</ul>
+<p>Run: npm test</p>
+<p>Expected: all suites PASS.</p>
+<pre><code class="language-powershell">git add site/nucleo/eletrostatica.js site/simuladores/cargas-e-vetores/preset.js site/exercicios/halliday-21-13/preset.js site/testes/eletrostatica.test.js site/testes/presets.test.js
+git commit -m &quot;feat: add electrostatic core and lesson presets&quot;
+</code></pre>
+<hr />
+<h3 id="task-3-registro-e-catalogo">Task 3: Registro e catálogo</h3>
+<p><strong>Files:</strong></p>
+<ul>
+<li>Create: site/simuladores.json</li>
+<li>Create: site/testes/catalogo.test.js</li>
+<li>Create: site/componentes/catalogo.js</li>
+<li>Create: site/index.html</li>
+<li>Create: site/assets/base.css</li>
+<li>Create: site/.nojekyll</li>
+</ul>
+<p><strong>Interfaces:</strong></p>
+<ul class="contains-task-list">
+<li><p>Produces: normalizeSearchText(text), filterCatalog(items, query, type), loadCatalog(url), mountCatalog(root, options).</p>
+</li>
+<li><p>Registry fields: id, title, kind, theme, description, path and tags.</p>
+</li>
+<li><p>kind is simulador or resolucao.</p>
+</li>
+<li class="task-list-item"><p><input disabled="disabled" type="checkbox" /> <strong>Step 1: Write failing catalog tests</strong></p>
+</li>
+</ul>
+<p>Test accent-insensitive search for “forca”, search by “Halliday” and “21”,
+kind filtering, empty query, unique ids, valid kinds and that every registered
+path resolves to a planned HTML destination.</p>
+<ul class="contains-task-list">
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> <strong>Step 2: Verify failure</strong></li>
+</ul>
+<p>Run: node --test --test-name-pattern=&quot;catálogo|busca|filtro&quot; site/testes/*.test.js</p>
+<p>Expected: FAIL because the registry and filtering API are absent.</p>
+<ul class="contains-task-list">
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> <strong>Step 3: Implement registry and pure filtering</strong></li>
+</ul>
+<p>Normalize with String.normalize(&quot;NFD&quot;), strip combining marks and lowercase.
+Search a joined representation of title, theme, description and tags. Apply
+kind after text filtering.</p>
+<ul class="contains-task-list">
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> <strong>Step 4: Verify catalog tests pass</strong></li>
+</ul>
+<p>Run: npm test</p>
+<p>Expected: all suites PASS.</p>
+<ul class="contains-task-list">
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> <strong>Step 5: Build the catalog page</strong></li>
+</ul>
+<p>Add semantic header, search input, three filter buttons, result count, card
+grid and a useful load-error state. Cards must be real links and retain the
+kind, theme and tags visible to students.</p>
+<ul class="contains-task-list">
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> <strong>Step 6: Apply the approved visual system</strong></li>
+</ul>
+<p>Define CSS custom properties for the six approved colors, local typography,
+visible focus, paper-grid motif, responsive catalog and reduced motion.</p>
+<ul class="contains-task-list">
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> <strong>Step 7: Serve and smoke-check the catalog</strong></li>
+</ul>
+<p>Run: npm run serve</p>
+<p>Open: <a href="http://127.0.0.1:8000/">http://127.0.0.1:8000/</a></p>
+<p>Expected: two catalog cards, working search/filter and no console error.</p>
+<ul class="contains-task-list">
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> <strong>Step 8: Commit</strong></li>
+</ul>
+<pre><code class="language-powershell">git add site/.nojekyll site/index.html site/simuladores.json site/assets/base.css site/componentes/catalogo.js site/testes/catalogo.test.js
+git commit -m &quot;feat: add searchable lesson catalog&quot;
+</code></pre>
+<hr />
+<h3 id="task-4-abas-e-estado-do-simulador-de-cargas">Task 4: Abas e estado do simulador de cargas</h3>
+<p><strong>Files:</strong></p>
+<ul>
+<li>Create: site/testes/estado-cargas.test.js</li>
+<li>Create: site/componentes/abas.js</li>
+<li>Create: site/componentes/simulador-cargas.js</li>
+<li>Create: site/assets/simulador.css</li>
+</ul>
+<p><strong>Interfaces:</strong></p>
+<ul class="contains-task-list">
+<li><p>Consumes: calculateForceSystem and preset charge shapes.</p>
+</li>
+<li><p>Produces from simulador-cargas.js: createSimulatorState(preset), addSource(state), removeSelectedSource(state), moveSelected(state, dxCm, dyCm), setSelectedMagnitude(state, magnitudeMicroC), flipSelectedSign(state), calculateArrowScale(forceSystem, maximumPixels).</p>
+</li>
+<li><p>Produces: mountChargeSimulator(root, preset), returning reset(), getState() and destroy().</p>
+</li>
+<li><p>Produces from abas.js: setupTabs(root).</p>
+</li>
+<li class="task-list-item"><p><input disabled="disabled" type="checkbox" /> <strong>Step 1: Write failing state tests</strong></p>
+</li>
+</ul>
+<p>Test deep cloning of a preset, sequential source labels and colors, maximum of
+six, removing only a selected source, protecting the test charge, movement,
+clamping magnitude to [0.1, 10], sign inversion and a common positive arrow
+scale based on the largest individual/resultant module.</p>
+<ul class="contains-task-list">
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> <strong>Step 2: Observe the expected failure</strong></li>
+</ul>
+<p>Run: node --test --test-name-pattern=&quot;estado|carga|escala&quot; site/testes/*.test.js</p>
+<p>Expected: FAIL because the state API is absent.</p>
+<ul class="contains-task-list">
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> <strong>Step 3: Implement the minimal state functions</strong></li>
+</ul>
+<p>Keep the functions readable and mutate only the explicit state passed to them.
+Return booleans for add/remove and the adjusted magnitude for numeric controls.
+Never mutate the preset.</p>
+<ul class="contains-task-list">
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> <strong>Step 4: Verify state tests pass</strong></li>
+</ul>
+<p>Run: npm test</p>
+<p>Expected: all suites PASS.</p>
+<ul class="contains-task-list">
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> <strong>Step 5: Implement accessible tabs</strong></li>
+</ul>
+<p>setupTabs must link each aria-controls id, switch hidden and aria-selected,
+support ArrowLeft, ArrowRight, Home and End, and leave one panel visible.</p>
+<ul class="contains-task-list">
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> <strong>Step 6: Implement the SVG charge component</strong></li>
+</ul>
+<p>Render grid, axes, scale labels, source/test charges, one force arrow per source,
+the thick resultant arrow, legend and numerical table. Use pointer capture for
+mouse/touch drag. Wire visible controls and the scoped keyboard shortcuts. On
+ElectrostaticSingularityError, hide affected vectors and show an instruction.</p>
+<ul class="contains-task-list">
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> <strong>Step 7: Add responsive and state styles</strong></li>
+</ul>
+<p>Create two-column desktop layout, stacked mobile layout, 44 px controls,
+positive/negative fills, numbered force rings, selected outline, dashed helper
+lines and reduced-motion behavior.</p>
+<ul class="contains-task-list">
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> <strong>Step 8: Run all tests and commit</strong></li>
+</ul>
+<p>Run: npm test</p>
+<p>Expected: all suites PASS.</p>
+<pre><code class="language-powershell">git add site/componentes/abas.js site/componentes/simulador-cargas.js site/assets/simulador.css site/testes/estado-cargas.test.js
+git commit -m &quot;feat: add interactive charge force component&quot;
+</code></pre>
+<hr />
+<h3 id="task-5-laboratorios-de-soma-e-produto-escalar">Task 5: Laboratórios de soma e produto escalar</h3>
+<p><strong>Files:</strong></p>
+<ul>
+<li>Create: site/testes/laboratorio-vetores.test.js</li>
+<li>Create: site/nucleo/formato.js</li>
+<li>Create: site/componentes/simulador-vetores.js</li>
+<li>Create: site/simuladores/cargas-e-vetores/index.html</li>
+<li>Create: site/simuladores/cargas-e-vetores/app.js</li>
+</ul>
+<p><strong>Interfaces:</strong></p>
+<ul class="contains-task-list">
+<li><p>Consumes: vector core, GENERIC_PRESET, setupTabs and mountChargeSimulator.</p>
+</li>
+<li><p>Produces: createVectorLabState(initial), calculateVectorMetrics(state), moveVectorEndpoint(state, name, point), mountVectorLabs(roots, initial).</p>
+</li>
+<li><p>Metrics: sum, magnitudeA, magnitudeB, magnitudeSum, dot, determinant, angleRadians, projectionBOnA and dotClassification.</p>
+</li>
+<li class="task-list-item"><p><input disabled="disabled" type="checkbox" /> <strong>Step 1: Write failing metric tests</strong></p>
+</li>
+</ul>
+<p>Use A=(4,1), B=(1,3) to assert components, modules, sum, dot, determinant,
+projection and acute classification. Add perpendicular, obtuse and null-vector
+cases.</p>
+<ul class="contains-task-list">
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> <strong>Step 2: Verify failure</strong></li>
+</ul>
+<p>Run: node --test --test-name-pattern=&quot;laboratório|classificação|métricas&quot; site/testes/*.test.js</p>
+<p>Expected: FAIL because the vector-lab API is absent.</p>
+<ul class="contains-task-list">
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> <strong>Step 3: Implement shared state and metrics</strong></li>
+</ul>
+<p>Return “positivo”, “nulo” or “negativo” with tolerance 1e-10. Keep A and B
+shared across every vector tab and return null for undefined angle/projection.</p>
+<ul class="contains-task-list">
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> <strong>Step 4: Verify metric tests pass</strong></li>
+</ul>
+<p>Run: npm test</p>
+<p>Expected: all suites PASS.</p>
+<ul class="contains-task-list">
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> <strong>Step 5: Create the four-tab generic page</strong></li>
+</ul>
+<p>Tabs: Experimento, Soma de vetores, Produto escalar and Teoria guiada. Mount
+one charge simulator and one shared vector state feeding the other three
+panels. Include breadcrumbs back to the catalog.</p>
+<ul class="contains-task-list">
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> <strong>Step 6: Render the vector SVGs and live derivation</strong></li>
+</ul>
+<p>Draw draggable A and B, the head-to-tail copy, dashed parallels, shaded
+parallelogram, resultant, angle arc and orthogonal projection. Update the
+component equations and numeric substitution after every drag. Put the
+sine/determinant area warning next to the shaded area.</p>
+<ul class="contains-task-list">
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> <strong>Step 7: Run tests and browser smoke check</strong></li>
+</ul>
+<p>Run: npm test</p>
+<p>Open: <a href="http://127.0.0.1:8000/simuladores/cargas-e-vetores/">http://127.0.0.1:8000/simuladores/cargas-e-vetores/</a></p>
+<p>Expected: four keyboard-accessible tabs; drag and equations update without
+console errors.</p>
+<ul class="contains-task-list">
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> <strong>Step 8: Commit</strong></li>
+</ul>
+<pre><code class="language-powershell">git add site/nucleo/formato.js site/componentes/simulador-vetores.js site/simuladores/cargas-e-vetores/index.html site/simuladores/cargas-e-vetores/app.js site/testes/laboratorio-vetores.test.js
+git commit -m &quot;feat: add vector addition and dot product labs&quot;
+</code></pre>
+<hr />
+<h3 id="task-6-pagina-halliday-e-documentacao">Task 6: Página Halliday e documentação</h3>
+<p><strong>Files:</strong></p>
+<ul>
+<li>Create: site/exercicios/halliday-21-13/index.html</li>
+<li>Create: site/exercicios/halliday-21-13/app.js</li>
+<li>Modify: site/testes/presets.test.js</li>
+<li>Modify: README.md</li>
+</ul>
+<p><strong>Interfaces:</strong></p>
+<ul class="contains-task-list">
+<li><p>Consumes: HALLIDAY_PRESET, mountChargeSimulator and setupTabs.</p>
+</li>
+<li><p>The page preserves the full mathematical argument already present in
+Força Magnética/Halliday/Capítulo 21/Exercício 13/README.md.</p>
+</li>
+<li class="task-list-item"><p><input disabled="disabled" type="checkbox" /> <strong>Step 1: Extend the failing preset contract</strong></p>
+</li>
+</ul>
+<p>Add assertions for the reset label, locked source count and exact theoretical
+answer -13.660254... cm, plus existence of the three Halliday tab panels.</p>
+<ul class="contains-task-list">
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> <strong>Step 2: Verify the new assertions fail</strong></li>
+</ul>
+<p>Run: node --test --test-name-pattern=&quot;Halliday&quot; site/testes/*.test.js</p>
+<p>Expected: FAIL because the web page and full contract are absent.</p>
+<ul class="contains-task-list">
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> <strong>Step 3: Build the three-tab Halliday page</strong></li>
+</ul>
+<p>Transcribe enunciado and every resolution step into semantic HTML. Mount the
+shared simulator in the third panel, include a “Restaurar equilíbrio” action
+and show x ≈ -13,66 cm, y = 0.</p>
+<ul class="contains-task-list">
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> <strong>Step 4: Update root documentation</strong></li>
+</ul>
+<p>Add the public site address, local npm serve/test commands, site folder
+convention and retain the link/instructions for the py5 version.</p>
+<ul class="contains-task-list">
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> <strong>Step 5: Verify all tests and both pages</strong></li>
+</ul>
+<p>Run: npm test</p>
+<p>Open: <a href="http://127.0.0.1:8000/exercicios/halliday-21-13/">http://127.0.0.1:8000/exercicios/halliday-21-13/</a></p>
+<p>Expected: three tabs, full solution, equilibrium reset and no console error.</p>
+<ul class="contains-task-list">
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> <strong>Step 6: Commit</strong></li>
+</ul>
+<pre><code class="language-powershell">git add site/exercicios/halliday-21-13/index.html site/exercicios/halliday-21-13/app.js site/testes/presets.test.js README.md
+git commit -m &quot;feat: publish Halliday exercise as web preset&quot;
+</code></pre>
+<hr />
+<h3 id="task-7-publicacao-e-verificacao-completa">Task 7: Publicação e verificação completa</h3>
+<p><strong>Files:</strong></p>
+<ul>
+<li>Create: .github/workflows/pages.yml</li>
+<li>Modify only if a reproduced defect requires it: files covered by Tasks 1–6.</li>
+</ul>
+<p><strong>Interfaces:</strong></p>
+<ul class="contains-task-list">
+<li><p>Publishes the exact site/ directory as the Pages artifact.</p>
+</li>
+<li class="task-list-item"><p><input disabled="disabled" type="checkbox" /> <strong>Step 1: Confirm current official GitHub Pages action versions</strong></p>
+</li>
+</ul>
+<p>Check official GitHub documentation or official action repositories. Use the
+current supported major versions for checkout, configure-pages,
+upload-pages-artifact and deploy-pages.</p>
+<ul class="contains-task-list">
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> <strong>Step 2: Add the Pages workflow</strong></li>
+</ul>
+<p>Trigger on main and workflow_dispatch. Grant contents:read, pages:write and
+id-token:write. Upload site/ and deploy it in the github-pages environment with
+concurrency that does not cancel an active deployment.</p>
+<ul class="contains-task-list">
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> <strong>Step 3: Run fresh automated verification</strong></li>
+</ul>
+<p>Run:</p>
+<pre><code class="language-powershell">npm test
+python -m unittest discover -s &quot;Força Magnética/Halliday/Capítulo 21/Exercício 13/tests&quot; -v
+git diff --check
+</code></pre>
+<p>Expected: JavaScript and existing Python suites PASS; diff check is clean.</p>
+<ul class="contains-task-list">
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> <strong>Step 4: Validate real browser behavior</strong></li>
+</ul>
+<p>Start the local server in a hidden process. In desktop and mobile viewports,
+exercise catalog search/filter, add six sources, reject a seventh, remove one,
+flip signs, adjust values, drag the test charge, use keyboard movement, restore
+the preset, drag A/B and inspect every tab. Capture screenshots and verify the
+console has no error.</p>
+<p>If any defect is found, first add a failing test that reproduces its calculable
+behavior, then fix and rerun the full suite.</p>
+<ul class="contains-task-list">
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> <strong>Step 5: Commit the workflow or QA fixes</strong></li>
+</ul>
+<pre><code class="language-powershell">git add .github/workflows/pages.yml
+git commit -m &quot;ci: publish teaching site to GitHub Pages&quot;
+</code></pre>
+<ul class="contains-task-list">
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> <strong>Step 6: Finish the feature branch</strong></li>
+</ul>
+<p>Run the complete verification again, merge the isolated feature branch into
+main, and ensure main contains every implementation commit.</p>
+<ul class="contains-task-list">
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> <strong>Step 7: Push the explicitly authorized delivery</strong></li>
+</ul>
+<pre><code class="language-powershell">git push origin main
+</code></pre>
+<ul class="contains-task-list">
+<li class="task-list-item"><input disabled="disabled" type="checkbox" /> <strong>Step 8: Enable and verify Pages</strong></li>
+</ul>
+<p>If Pages is not already configured for GitHub Actions, set build_type to
+workflow through the GitHub API. Wait for the Pages workflow to complete.
+Verify the deployed commit, request the public URL and navigate through the two
+public pages. Do not report completion until the root returns HTTP 200 and the
+browser validation succeeds.</p>
+
+</article>
+</div>
+<script>
+const slug=value=>value.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
+const headings=[...document.querySelectorAll('article h2,article h3')];
+const used=new Set();
+for(const heading of headings){let id=slug(heading.textContent);let suffix=2;while(used.has(id)){id=slug(heading.textContent)+'-'+suffix++;}used.add(id);heading.id=id;const link=document.createElement('a');link.href='#'+id;link.textContent=heading.textContent;link.className=heading.tagName==='H3'?'sub':'';document.querySelector('#toc').append(link);}
+const links=[...document.querySelectorAll('#toc a')];
+const observer=new IntersectionObserver(entries=>{const current=entries.filter(item=>item.isIntersecting).sort((a,b)=>b.intersectionRatio-a.intersectionRatio)[0];if(!current)return;links.forEach(link=>link.classList.toggle('active',link.hash==='#'+current.target.id));},{rootMargin:'-12% 0px -76%',threshold:[0,.2,.6]});
+headings.forEach(heading=>observer.observe(heading));
+</script>
+</body>
+</html>
