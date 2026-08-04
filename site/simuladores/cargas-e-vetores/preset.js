@@ -1,0 +1,41 @@
+export const GENERIC_PRESET = Object.freeze({
+  id: "cargas-e-vetores",
+  title: "Cargas e vetores",
+  resetLabel: "Restaurar exemplo",
+  maxSources: 6,
+  lockSources: false,
+  viewport: {
+    minX: -20,
+    maxX: 20,
+    minY: -12,
+    maxY: 12,
+  },
+  sources: [
+    {
+      id: "q1",
+      label: "q₁",
+      xCm: -8,
+      yCm: 0,
+      magnitudeMicroC: 2,
+      sign: 1,
+      vectorColor: "#008B95",
+    },
+    {
+      id: "q2",
+      label: "q₂",
+      xCm: 8,
+      yCm: 0,
+      magnitudeMicroC: 2,
+      sign: -1,
+      vectorColor: "#E07A1F",
+    },
+  ],
+  testCharge: {
+    id: "qt",
+    label: "qₜ",
+    xCm: 0,
+    yCm: 6,
+    magnitudeMicroC: 1,
+    sign: 1,
+  },
+});
