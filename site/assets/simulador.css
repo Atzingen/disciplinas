@@ -606,6 +606,18 @@
   pointer-events: none;
 }
 
+.vector-handle .vector-symbol-arrow {
+  stroke: var(--ink);
+  stroke-linecap: round;
+  stroke-width: 1.7;
+  pointer-events: none;
+}
+
+.vector-handle .vector-symbol-arrow-head {
+  fill: var(--ink);
+  pointer-events: none;
+}
+
 .vector-handle.is-selected circle {
   fill: var(--measure);
   stroke-width: 5;

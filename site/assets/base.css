@@ -56,6 +56,38 @@ a {
   color: inherit;
 }
 
+.vector-symbol {
+  position: relative;
+  display: inline-block;
+  min-width: 0.72em;
+  padding-top: 0.22em;
+  font-style: italic;
+  line-height: 1;
+  text-align: center;
+  vertical-align: -0.05em;
+}
+
+.vector-symbol::before {
+  position: absolute;
+  top: 0.04em;
+  right: 0.12em;
+  left: 0.03em;
+  height: 0.075em;
+  background: currentColor;
+  content: "";
+}
+
+.vector-symbol::after {
+  position: absolute;
+  top: -0.02em;
+  right: -0.01em;
+  width: 0.2em;
+  height: 0.2em;
+  background: currentColor;
+  clip-path: polygon(0 0, 100% 50%, 0 100%);
+  content: "";
+}
+
 .skip-link {
   position: fixed;
   z-index: 100;
@@ -270,16 +302,27 @@ h1 {
   font: 700 18px Consolas, monospace;
 }
 
+.hero-label text,
+.hero-label path {
+  fill: currentColor;
+}
+
+.hero-label line {
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-width: 1.7;
+}
+
 .hero-label--a {
-  fill: var(--force-1);
+  color: var(--force-1);
 }
 
 .hero-label--b {
-  fill: var(--force-2);
+  color: var(--force-2);
 }
 
 .hero-label--r {
-  fill: var(--resultant);
+  color: var(--resultant);
 }
 
 .instrument__caption {

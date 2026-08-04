@@ -38,7 +38,13 @@
       <div class="hero__instrument" aria-label="Diagrama de dois vetores e sua resultante">
         <div class="instrument__readout">
           <span>SOMA VETORIAL</span>
-          <strong>R⃗ = A⃗ + B⃗</strong>
+          <strong>
+            <span class="vector-symbol" role="img" aria-label="vetor R">R</span>
+            =
+            <span class="vector-symbol" role="img" aria-label="vetor A">A</span>
+            +
+            <span class="vector-symbol" role="img" aria-label="vetor B">B</span>
+          </strong>
         </div>
         <svg viewBox="0 0 520 330" role="img" aria-labelledby="hero-vector-title hero-vector-desc">
           <title id="hero-vector-title">Construção do paralelogramo</title>
@@ -65,9 +71,21 @@
           <line x1="174" y1="130" x2="414" y2="82" class="hero-helper"></line>
           <line x1="86" y1="258" x2="414" y2="82" class="hero-vector hero-vector--r" marker-end="url(#hero-arrow-r)"></line>
           <circle cx="86" cy="258" r="6" class="hero-origin"></circle>
-          <text x="252" y="254" class="hero-label hero-label--a">A⃗</text>
-          <text x="104" y="174" class="hero-label hero-label--b">B⃗</text>
-          <text x="272" y="140" class="hero-label hero-label--r">R⃗</text>
+          <g class="hero-label hero-label--a" aria-hidden="true">
+            <text x="252" y="254">A</text>
+            <line x1="252" y1="234" x2="266" y2="234"></line>
+            <path d="M266 234 L261 230 L261 238 Z"></path>
+          </g>
+          <g class="hero-label hero-label--b" aria-hidden="true">
+            <text x="104" y="174">B</text>
+            <line x1="104" y1="154" x2="118" y2="154"></line>
+            <path d="M118 154 L113 150 L113 158 Z"></path>
+          </g>
+          <g class="hero-label hero-label--r" aria-hidden="true">
+            <text x="272" y="140">R</text>
+            <line x1="272" y1="120" x2="286" y2="120"></line>
+            <path d="M286 120 L281 116 L281 124 Z"></path>
+          </g>
         </svg>
         <p class="instrument__caption">
           A diagonal não é um atalho gráfico: ela é a soma das componentes.

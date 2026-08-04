@@ -15,6 +15,20 @@ import {
 const SVG_WIDTH = 680;
 const SVG_HEIGHT = 440;
 
+function vectorSymbolMarkup(symbol) {
+  return (
+    '<span class="vector-symbol" role="img" aria-label="vetor ' +
+    symbol +
+    '">' +
+    symbol +
+    "</span>"
+  );
+}
+
+const VECTOR_A = vectorSymbolMarkup("A");
+const VECTOR_B = vectorSymbolMarkup("B");
+const VECTOR_R = vectorSymbolMarkup("R");
+
 function clamp(value, minimum, maximum) {
   return Math.min(maximum, Math.max(minimum, value));
 }
@@ -179,6 +193,11 @@ function vectorLine(start, end, className, markerId, label) {
 }
 
 function vectorHandle(point, name, selected) {
+  const symbol = name.toUpperCase();
+  const labelX = point.x + 15;
+  const labelY = point.y - 13;
+  const arrowY = labelY - 18;
+  const arrowEndX = labelX + 14;
   return (
     '<g class="vector-handle' +
     (selected ? " is-selected" : "") +
@@ -191,12 +210,32 @@ function vectorHandle(point, name, selected) {
     '" cy="' +
     point.y +
     '" r="11"></circle><text x="' +
-    (point.x + 15) +
+    labelX +
     '" y="' +
-    (point.y - 13) +
+    labelY +
     '">' +
-    name.toUpperCase() +
-    "⃗</text></g>"
+    symbol +
+    '</text><line x1="' +
+    labelX +
+    '" y1="' +
+    arrowY +
+    '" x2="' +
+    arrowEndX +
+    '" y2="' +
+    arrowY +
+    '" class="vector-symbol-arrow"></line><path d="M' +
+    arrowEndX +
+    " " +
+    arrowY +
+    " L" +
+    (arrowEndX - 5) +
+    " " +
+    (arrowY - 4) +
+    " L" +
+    (arrowEndX - 5) +
+    " " +
+    (arrowY + 4) +
+    ' Z" class="vector-symbol-arrow-head"></path></g>'
   );
 }
 
@@ -375,12 +414,18 @@ function classificationText(metrics) {
 
 function sumReadoutMarkup(state, metrics) {
   return [
-    '<div class="equation-block"><span>Componentes</span><strong>A⃗ = ' +
+    '<div class="equation-block"><span>Componentes</span><strong>' +
+      VECTOR_A +
+      " = " +
       formatVector(state.a, 1) +
-      "</strong><strong>B⃗ = " +
+      "</strong><strong>" +
+      VECTOR_B +
+      " = " +
       formatVector(state.b, 1) +
       "</strong></div>",
-    '<div class="equation-block equation-block--result"><span>Soma por componentes</span><strong>R⃗ = (Aₓ + Bₓ; Aᵧ + Bᵧ)</strong><strong>= (' +
+    '<div class="equation-block equation-block--result"><span>Soma por componentes</span><strong>' +
+      VECTOR_R +
+      " = (Aₓ + Bₓ; Aᵧ + Bᵧ)</strong><strong>= (" +
       formatDecimal(state.a.x, 1) +
       " + " +
       formatDecimal(state.b.x, 1) +
@@ -391,11 +436,17 @@ function sumReadoutMarkup(state, metrics) {
       ")</strong><strong>= " +
       formatVector(metrics.sum, 1) +
       "</strong></div>",
-    '<dl class="metric-list"><div><dt>|A⃗|</dt><dd>' +
+    '<dl class="metric-list"><div><dt>|' +
+      VECTOR_A +
+      "|</dt><dd>" +
       formatDecimal(metrics.magnitudeA, 2) +
-      "</dd></div><div><dt>|B⃗|</dt><dd>" +
+      "</dd></div><div><dt>|" +
+      VECTOR_B +
+      "|</dt><dd>" +
       formatDecimal(metrics.magnitudeB, 2) +
-      "</dd></div><div><dt>|R⃗|</dt><dd>" +
+      "</dd></div><div><dt>|" +
+      VECTOR_R +
+      "|</dt><dd>" +
       formatDecimal(metrics.magnitudeSum, 2) +
       "</dd></div><div><dt>θ</dt><dd>" +
       formatDegrees(metrics.angleRadians, 1) +
@@ -412,7 +463,11 @@ function dotReadoutMarkup(state, metrics) {
     metrics.magnitudeB ** 2 +
     2 * metrics.dot;
   return [
-    '<div class="equation-block"><span>Por componentes</span><strong>A⃗ · B⃗ = AₓBₓ + AᵧBᵧ</strong><strong>= ' +
+    '<div class="equation-block"><span>Por componentes</span><strong>' +
+      VECTOR_A +
+      " · " +
+      VECTOR_B +
+      " = AₓBₓ + AᵧBᵧ</strong><strong>= " +
       formatDecimal(state.a.x, 1) +
       " × " +
       formatDecimal(state.b.x, 1) +
@@ -423,7 +478,15 @@ function dotReadoutMarkup(state, metrics) {
       " = " +
       formatDecimal(metrics.dot, 2) +
       "</strong></div>",
-    '<div class="equation-block"><span>Por projeção</span><strong>A⃗ · B⃗ = |A⃗||B⃗| cos θ</strong><strong>= ' +
+    '<div class="equation-block"><span>Por projeção</span><strong>' +
+      VECTOR_A +
+      " · " +
+      VECTOR_B +
+      " = |" +
+      VECTOR_A +
+      "||" +
+      VECTOR_B +
+      "| cos θ</strong><strong>= " +
       formatDecimal(metrics.magnitudeA, 2) +
       " × " +
       formatDecimal(metrics.magnitudeB, 2) +
@@ -437,7 +500,19 @@ function dotReadoutMarkup(state, metrics) {
       ".</strong> " +
       classificationText(metrics) +
       "</p>",
-    '<div class="equation-block equation-block--result"><span>Na intensidade da soma</span><strong>|A⃗ + B⃗|² = |A⃗|² + |B⃗|² + 2A⃗ · B⃗</strong><strong>' +
+    '<div class="equation-block equation-block--result"><span>Na intensidade da soma</span><strong>|' +
+      VECTOR_A +
+      " + " +
+      VECTOR_B +
+      "|² = |" +
+      VECTOR_A +
+      "|² + |" +
+      VECTOR_B +
+      "|² + 2" +
+      VECTOR_A +
+      " · " +
+      VECTOR_B +
+      "</strong><strong>" +
       formatDecimal(identityLeft, 2) +
       " = " +
       formatDecimal(metrics.magnitudeA ** 2, 2) +
@@ -448,7 +523,15 @@ function dotReadoutMarkup(state, metrics) {
       " = " +
       formatDecimal(identityRight, 2) +
       "</strong></div>",
-    '<aside class="area-warning"><strong>Área ≠ produto escalar</strong><span>|det(A⃗,B⃗)| = |A⃗||B⃗||sen θ| = ' +
+    '<aside class="area-warning"><strong>Área ≠ produto escalar</strong><span>|det(' +
+      VECTOR_A +
+      "," +
+      VECTOR_B +
+      ")| = |" +
+      VECTOR_A +
+      "||" +
+      VECTOR_B +
+      "||sen θ| = " +
       formatDecimal(Math.abs(metrics.determinant), 2) +
       " unidades². A área usa seno; o produto escalar usa cosseno.</span></aside>",
   ].join("");
@@ -458,22 +541,48 @@ function theoryMarkup(state, metrics) {
   const cosine =
     metrics.angleRadians === null ? null : Math.cos(metrics.angleRadians);
   return [
-    '<div class="theory-intro"><p class="eyebrow">Uma dedução em seis passos</p><h2>Da componente à resultante</h2><p>Os números abaixo acompanham A⃗ = ' +
+    '<div class="theory-intro"><p class="eyebrow">Uma dedução em seis passos</p><h2>Da componente à resultante</h2><p>Os números abaixo acompanham ' +
+      VECTOR_A +
+      " = " +
       formatVector(state.a, 1) +
-      " e B⃗ = " +
+      " e " +
+      VECTOR_B +
+      " = " +
       formatVector(state.b, 1) +
       ".</p></div>",
     '<div class="theory-flow">',
-    '<article><span>01</span><h3>Componentes</h3><p>Um vetor no plano é descrito pelos deslocamentos horizontal e vertical: A⃗ = (Aₓ; Aᵧ).</p><strong>A⃗ = ' +
+    '<article><span>01</span><h3>Componentes</h3><p>Um vetor no plano é descrito pelos deslocamentos horizontal e vertical: ' +
+      VECTOR_A +
+      " = (Aₓ; Aᵧ).</p><strong>" +
+      VECTOR_A +
+      " = " +
       formatVector(state.a, 1) +
       "</strong></article>",
-    '<article><span>02</span><h3>Módulo</h3><p>As componentes formam os catetos de um triângulo retângulo. Por Pitágoras:</p><strong>|A⃗| = √(Aₓ² + Aᵧ²) = ' +
+    '<article><span>02</span><h3>Módulo</h3><p>As componentes formam os catetos de um triângulo retângulo. Por Pitágoras:</p><strong>|' +
+      VECTOR_A +
+      "| = √(Aₓ² + Aᵧ²) = " +
       formatDecimal(metrics.magnitudeA, 2) +
       "</strong></article>",
-    '<article><span>03</span><h3>Soma</h3><p>Somamos deslocamentos da mesma direção. A diagonal do paralelogramo confirma a conta.</p><strong>A⃗ + B⃗ = ' +
+    '<article><span>03</span><h3>Soma</h3><p>Somamos deslocamentos da mesma direção. A diagonal do paralelogramo confirma a conta.</p><strong>' +
+      VECTOR_A +
+      " + " +
+      VECTOR_B +
+      " = " +
       formatVector(metrics.sum, 1) +
       "</strong></article>",
-    '<article><span>04</span><h3>Projeção e cosseno</h3><p>|B⃗| cos θ é o comprimento assinado da projeção de B⃗ sobre A⃗. Multiplicar por |A⃗| produz o produto escalar.</p><strong>|A⃗||B⃗| cos θ = ' +
+    '<article><span>04</span><h3>Projeção e cosseno</h3><p>|' +
+      VECTOR_B +
+      "| cos θ é o comprimento assinado da projeção de " +
+      VECTOR_B +
+      " sobre " +
+      VECTOR_A +
+      ". Multiplicar por |" +
+      VECTOR_A +
+      "| produz o produto escalar.</p><strong>|" +
+      VECTOR_A +
+      "||" +
+      VECTOR_B +
+      "| cos θ = " +
       (cosine === null
         ? "indefinido"
         : formatDecimal(
@@ -481,8 +590,36 @@ function theoryMarkup(state, metrics) {
             2,
           )) +
       "</strong></article>",
-    '<article><span>05</span><h3>Módulo da soma</h3><p>Ao expandir (A⃗ + B⃗) · (A⃗ + B⃗), aparecem dois termos cruzados A⃗ · B⃗.</p><strong>|A⃗ + B⃗|² = |A⃗|² + |B⃗|² + 2A⃗ · B⃗</strong></article>',
-    '<article class="theory-warning"><span>06</span><h3>E a área?</h3><p>A área sombreada do paralelogramo mede a componente perpendicular: usa seno e o determinante, não o produto escalar.</p><strong>|det(A⃗,B⃗)| = ' +
+    '<article><span>05</span><h3>Módulo da soma</h3><p>Ao expandir (' +
+      VECTOR_A +
+      " + " +
+      VECTOR_B +
+      ") · (" +
+      VECTOR_A +
+      " + " +
+      VECTOR_B +
+      "), aparecem dois termos cruzados " +
+      VECTOR_A +
+      " · " +
+      VECTOR_B +
+      ".</p><strong>|" +
+      VECTOR_A +
+      " + " +
+      VECTOR_B +
+      "|² = |" +
+      VECTOR_A +
+      "|² + |" +
+      VECTOR_B +
+      "|² + 2" +
+      VECTOR_A +
+      " · " +
+      VECTOR_B +
+      "</strong></article>",
+    '<article class="theory-warning"><span>06</span><h3>E a área?</h3><p>A área sombreada do paralelogramo mede a componente perpendicular: usa seno e o determinante, não o produto escalar.</p><strong>|det(' +
+      VECTOR_A +
+      "," +
+      VECTOR_B +
+      ")| = " +
       formatDecimal(Math.abs(metrics.determinant), 2) +
       " unidades²</strong></article>",
     "</div>",
