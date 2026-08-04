@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Resolução e simulação do exercício 13, capítulo 21, do Halliday.">
+  <title>Halliday 21.13 · Laboratório de Eletromagnetismo</title>
+  <link rel="stylesheet" href="../../assets/base.css">
+  <link rel="stylesheet" href="../../assets/simulador.css">
+</head>
+<body class="lesson-page halliday-page">
+  <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+
+  <header class="lesson-header">
+    <nav class="breadcrumb" aria-label="Navegação estrutural">
+      <a href="../../">Laboratório</a>
+      <span aria-hidden="true">/</span>
+      <span>Halliday</span>
+      <span aria-hidden="true">/</span>
+      <span>Capítulo 21</span>
+      <span aria-hidden="true">/</span>
+      <strong>Exercício 13</strong>
+    </nav>
+    <div class="lesson-title-row">
+      <div>
+        <p class="eyebrow">Equilíbrio eletrostático</p>
+        <h1>Três partículas</h1>
+      </div>
+      <p class="lesson-intro">
+        Onde colocar uma terceira carga para que duas forças elétricas,
+        produzidas por cargas de sinais opostos, se anulem exatamente?
+      </p>
+    </div>
+  </header>
+
+  <main class="lesson-main" id="conteudo">
+    <div data-tabs>
+      <div class="tab-list" role="tablist" aria-label="Conteúdo do exercício">
+        <button class="tab-button" id="tab-enunciado" type="button" role="tab" aria-selected="true" aria-controls="painel-enunciado">Enunciado</button>
+        <button class="tab-button" id="tab-resolucao" type="button" role="tab" aria-selected="false" aria-controls="painel-resolucao" tabindex="-1">Resolução</button>
+        <button class="tab-button" id="tab-simulacao" type="button" role="tab" aria-selected="false" aria-controls="painel-simulacao" tabindex="-1">Simulação</button>
+      </div>
+
+      <section class="tab-panel" id="painel-enunciado" role="tabpanel" aria-labelledby="tab-enunciado">
+        <article class="problem-sheet">
+          <div class="problem-number">
+            <span>Halliday</span>
+            <strong>21.13</strong>
+          </div>
+          <div class="problem-copy">
+            <p>
+              A partícula 1, de carga <strong>+1,0 µC</strong>, e a partícula 2,
+              de carga <strong>−3,0 µC</strong>, são mantidas a uma distância
+              <strong>L = 10,0 cm</strong> uma da outra, sobre o eixo x.
+            </p>
+            <p>
+              Determine <strong>(a)</strong> a coordenada x e
+              <strong>(b)</strong> a coordenada y de uma partícula 3, de carga
+              não nula e valor desconhecido q₃, para que a força total exercida
+              sobre ela pelas partículas 1 e 2 seja nula.
+            </p>
+          </div>
+
+          <svg class="problem-diagram" viewBox="0 0 760 270" role="img" aria-labelledby="diagram-title diagram-desc">
+            <title id="diagram-title">Duas cargas sobre o eixo x</title>
+            <desc id="diagram-desc">A carga q1 positiva está na origem e q2 negativa está dez centímetros à direita.</desc>
+            <defs>
+              <marker id="dimension-arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+                <path d="M 10 0 L 0 5 L 10 10 z"></path>
+              </marker>
+            </defs>
+            <line x1="95" y1="130" x2="675" y2="130" class="diagram-axis"></line>
+            <line x1="300" y1="48" x2="300" y2="210" class="diagram-axis"></line>
+            <circle cx="300" cy="130" r="20" class="diagram-charge diagram-charge--positive"></circle>
+            <text x="300" y="137" class="diagram-sign">+</text>
+            <text x="300" y="99" class="diagram-label">q₁ = +1,0 µC</text>
+            <circle cx="540" cy="130" r="20" class="diagram-charge diagram-charge--negative"></circle>
+            <text x="540" y="137" class="diagram-sign">−</text>
+            <text x="540" y="99" class="diagram-label">q₂ = −3,0 µC</text>
+            <text x="658" y="119" class="diagram-axis-label">x</text>
+            <text x="312" y="60" class="diagram-axis-label">y</text>
+            <line x1="310" y1="210" x2="530" y2="210" class="diagram-dimension" marker-start="url(#dimension-arrow)" marker-end="url(#dimension-arrow)"></line>
+            <text x="420" y="240" class="diagram-label">L = 10,0 cm</text>
+          </svg>
+
+          <div class="answer-strip">
+            <span>Resposta</span>
+            <strong>(x, y) = (−13,66 cm; 0)</strong>
+          </div>
+        </article>
+      </section>
+
+      <section class="tab-panel" id="painel-resolucao" role="tabpanel" aria-labelledby="tab-resolucao" hidden>
+        <article class="solution-article">
+          <header class="solution-heading">
+            <p class="eyebrow">Resolução passo a passo</p>
+            <h2>Por que o equilíbrio fica à esquerda?</h2>
+            <p>
+              A resposta nasce de duas condições: os vetores precisam ser
+              colineares e seus módulos precisam ser iguais.
+            </p>
+          </header>
+
+          <section>
+            <span class="solution-step">01</span>
+            <h3>Condição para a força total ser nula</h3>
+            <p>A força sobre a partícula 3 pode ser escrita pelo campo produzido pelas partículas 1 e 2:</p>
+            <div class="math-block">F⃗₃,total = q₃(E⃗₁ + E⃗₂).</div>
+            <p>Como q₃ ≠ 0, a condição F⃗₃,total = 0⃗ equivale a:</p>
+            <div class="math-block math-block--result">E⃗₁ + E⃗₂ = 0⃗.</div>
+            <p>Portanto, os campos precisam ter a mesma intensidade e sentidos opostos. O valor e o sinal de q₃ não alteram a posição de equilíbrio.</p>
+          </section>
+
+          <section>
+            <span class="solution-step">02 · pergunta B</span>
+            <h3>Determinação da coordenada y</h3>
+            <p>Em um ponto genérico P = (x, y), os vetores que partem das cargas fixas são:</p>
+            <div class="math-block">r⃗₁ = (x, y) &nbsp;&nbsp; e &nbsp;&nbsp; r⃗₂ = (x − L, y).</div>
+            <p>Dois campos só podem se cancelar se estiverem na mesma reta. Logo, r⃗₁ e r⃗₂ devem ser paralelos, e o determinante precisa ser zero:</p>
+            <div class="math-block">det(r⃗₁,r⃗₂) = xy − y(x − L) = Ly = 0.</div>
+            <p>Como L ≠ 0:</p>
+            <div class="math-block math-block--result">y = 0.</div>
+          </section>
+
+          <section>
+            <span class="solution-step">03</span>
+            <h3>Em qual região do eixo x pode haver equilíbrio?</h3>
+            <div class="region-grid">
+              <article>
+                <strong>0 &lt; x &lt; L</strong>
+                <p>Entre as cargas, E⃗₁ e E⃗₂ apontam para a direita. Somam-se; não se anulam.</p>
+              </article>
+              <article>
+                <strong>x &gt; L</strong>
+                <p>Os sentidos são opostos, mas q₂ tem maior módulo e está mais próxima. Assim, |E⃗₂| &gt; |E⃗₁|.</p>
+              </article>
+              <article class="region-grid__answer">
+                <strong>x &lt; 0</strong>
+                <p>À esquerda de q₁, os campos têm sentidos opostos e podem alcançar o mesmo módulo.</p>
+              </article>
+            </div>
+          </section>
+
+          <section>
+            <span class="solution-step">04 · pergunta A</span>
+            <h3>Determinação da coordenada x</h3>
+            <p>Defina d = −x &gt; 0 como a distância de q₃ até q₁. Então:</p>
+            <div class="math-block">r₁ = d &nbsp;&nbsp; e &nbsp;&nbsp; r₂ = L + d.</div>
+            <p>Pela lei de Coulomb, E = k|q|/r². Igualando os módulos:</p>
+            <div class="math-block">
+              k|q₁|/d² = k|q₂|/(L + d)²
+              <br>
+              1/d² = 3/(L + d)².
+            </div>
+            <p>As distâncias são positivas, então podemos extrair a raiz:</p>
+            <div class="math-block">
+              (L + d)/d = √3
+              <br>
+              L = (√3 − 1)d
+              <br>
+              d = L/(√3 − 1) = L(√3 + 1)/2.
+            </div>
+            <p>Com L = 10,0 cm:</p>
+            <div class="math-block math-block--result">
+              d ≈ 13,66 cm
+              <br>
+              x = −d ≈ −13,66 cm.
+            </div>
+          </section>
+
+          <section>
+            <span class="solution-step">05</span>
+            <h3>Verificação do resultado</h3>
+            <p>No ponto encontrado, r₁ = d e r₂ = L + d = √3d. A razão dos módulos é:</p>
+            <div class="math-block">
+              E₂/E₁ = (|q₂|/|q₁|)(r₁²/r₂²)
+              <br>
+              = 3d²/(√3d)² = 3d²/(3d²) = 1.
+            </div>
+            <p>Os campos têm o mesmo módulo e sentidos opostos:</p>
+            <div class="math-block math-block--result">
+              E⃗₁ + E⃗₂ = 0⃗ &nbsp; ⇒ &nbsp; F⃗₃,total = 0⃗.
+            </div>
+          </section>
+
+          <aside class="solution-note">
+            <strong>Sobre q₃</strong>
+            <p>
+              A solução pressupõe q₃ ≠ 0. Se q₃ = 0 fosse permitido, a força
+              seria trivialmente nula em qualquer ponto e não haveria uma
+              coordenada única.
+            </p>
+          </aside>
+        </article>
+      </section>
+
+      <section class="tab-panel" id="painel-simulacao" role="tabpanel" aria-labelledby="tab-simulacao" hidden>
+        <div class="simulation-intro">
+          <div>
+            <p class="eyebrow">Preset do exercício</p>
+            <h2>Mova q₃ e teste a resposta</h2>
+          </div>
+          <p>
+            q₁ e q₂ permanecem fixas. Arraste q₃ ou use as setas; a resultante
+            volta a zero em x ≈ −13,66 cm e y = 0.
+          </p>
+        </div>
+        <div data-halliday-simulator></div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="lesson-footer site-footer">
+    <p>Halliday · capítulo 21 · exercício 13</p>
+    <a href="../../">Voltar ao catálogo</a>
+  </footer>
+
+  <script type="module" src="./app.js"></script>
+</body>
+</html>

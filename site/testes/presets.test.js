@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { readFile } from "node:fs/promises";
 import test from "node:test";
 
 import { calculateForceSystem } from "../nucleo/eletrostatica.js";
@@ -6,6 +7,7 @@ import { magnitude } from "../nucleo/vetores.js";
 
 let generic = {};
 let halliday = {};
+let hallidayPage = "";
 
 try {
   generic = await import("../simuladores/cargas-e-vetores/preset.js");
@@ -17,6 +19,15 @@ try {
   halliday = await import("../exercicios/halliday-21-13/preset.js");
 } catch {
   halliday = {};
+}
+
+try {
+  hallidayPage = await readFile(
+    new URL("../exercicios/halliday-21-13/index.html", import.meta.url),
+    "utf8",
+  );
+} catch {
+  hallidayPage = "";
 }
 
 const apiAvailable =
@@ -79,4 +90,20 @@ test("preset Halliday fixa as fontes e nomeia a restauração", { skip: !apiAvai
     "Restaurar equilíbrio",
   );
   assert.ok(Object.isFrozen(halliday.HALLIDAY_PRESET));
+});
+
+test("página Halliday contém enunciado, resolução completa e simulação", () => {
+  assert.match(hallidayPage, /role="tabpanel"/);
+  assert.equal(
+    (hallidayPage.match(/role="tabpanel"/g) ?? []).length,
+    3,
+  );
+  assert.match(hallidayPage, /Enunciado/);
+  assert.match(hallidayPage, /Resolução passo a passo/);
+  assert.match(hallidayPage, /Condição para a força total ser nula/);
+  assert.match(hallidayPage, /Determinação da coordenada y/);
+  assert.match(hallidayPage, /Determinação da coordenada x/);
+  assert.match(hallidayPage, /Verificação do resultado/);
+  assert.match(hallidayPage, /−13,66/);
+  assert.match(hallidayPage, /data-halliday-simulator/);
 });
