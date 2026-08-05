@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Simulações interativas para visualizar forças, campos e vetores.">
+  <title>Simulações · Laboratório de Eletromagnetismo</title>
+  <link rel="stylesheet" href="../assets/base.css">
+</head>
+<body class="area-page">
+  <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+  <header class="site-header">
+    <a class="brand" href="../" aria-label="Laboratório de Eletromagnetismo — início">
+      <span class="brand__mark" aria-hidden="true">Σ</span>
+      <span><strong>Laboratório de Eletromagnetismo</strong><small>IFSP · materiais de aula</small></span>
+    </a>
+    <div data-site-navigation data-root-path="../" data-active-section="simulacoes"></div>
+  </header>
+
+  <main class="area-page-main" id="conteudo">
+    <header class="area-hero">
+      <p class="eyebrow">Modelos interativos</p>
+      <h1>Experimente no plano.</h1>
+      <p>Altere posições e parâmetros para acompanhar as componentes, os vetores individuais e a resultante em tempo real.</p>
+    </header>
+    <section class="catalog-section catalog-section--area" aria-labelledby="catalog-title" data-catalog-root>
+      <div class="section-heading">
+        <div><p class="eyebrow">Simulações disponíveis</p><h2 id="catalog-title">Laboratórios virtuais</h2></div>
+        <p class="catalog-count" data-catalog-count aria-live="polite">Carregando materiais…</p>
+      </div>
+      <div class="catalog-controls" data-catalog-controls aria-busy="true">
+        <label class="search-field"><span>Buscar simulação</span><input type="search" placeholder="Ex.: cargas, vetores" autocomplete="off" data-catalog-search></label>
+        <div class="filter-group" aria-label="Filtrar tipo de material">
+          <button type="button" data-catalog-filter="todos" aria-pressed="true">Todos</button>
+          <button type="button" data-catalog-filter="simulador" aria-pressed="false">Simuladores</button>
+        </div>
+      </div>
+      <div class="catalog-grid" data-catalog-results aria-live="polite"></div>
+    </section>
+  </main>
+
+  <footer class="site-footer"><p>Simulações · modelos interativos</p><a href="../">Voltar ao início</a></footer>
+  <script type="module" src="../componentes/navegacao-principal.js"></script>
+  <script type="module">
+    import { mountCatalog } from "../componentes/catalogo.js";
+    mountCatalog(document.querySelector("[data-catalog-root]"), {
+      registryUrl: "../simuladores.json",
+      pathPrefix: "../",
+      scope: { section: "simulacoes" },
+    });
+  </script>
+</body>
+</html>

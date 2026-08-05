@@ -63,7 +63,11 @@ function element(tagName, className, text) {
   return node;
 }
 
-function createCard(item) {
+export function resolveCatalogPath(path, pathPrefix = "") {
+  return `${pathPrefix}${path}`;
+}
+
+function createCard(item, pathPrefix = "") {
   const card = element("article", "catalog-card");
   const link = element("a", "catalog-card__link");
   const kindLabels = {
@@ -82,7 +86,7 @@ function createCard(item) {
   );
   const tags = element("ul", "tag-list");
 
-  link.href = item.path;
+  link.href = resolveCatalogPath(item.path, pathPrefix);
   link.append(eyebrow, title, theme, description);
   for (const tag of item.tags) {
     const tagItem = element("li", "tag-list__item", tag);
@@ -96,6 +100,7 @@ function createCard(item) {
 export async function mountCatalog(root, options = {}) {
   const registryUrl = options.registryUrl ?? "./simuladores.json";
   const scope = options.scope ?? {};
+  const pathPrefix = options.pathPrefix ?? "";
   const controls = root.querySelector("[data-catalog-controls]");
   const results = root.querySelector("[data-catalog-results]");
   const count = root.querySelector("[data-catalog-count]");
@@ -110,7 +115,7 @@ export async function mountCatalog(root, options = {}) {
     results.replaceChildren();
 
     for (const item of visibleItems) {
-      results.append(createCard(item));
+      results.append(createCard(item, pathPrefix));
     }
 
     if (visibleItems.length === 0) {

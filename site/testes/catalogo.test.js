@@ -34,6 +34,18 @@ test("busca ignora acentos e caixa", { skip: !apiAvailable }, () => {
   assert.ok(matches.some((item) => item.id === "cargas-e-vetores"));
 });
 
+test("caminho do cartão respeita a profundidade da página de catálogo", () => {
+  assert.equal(typeof catalog.resolveCatalogPath, "function");
+  assert.equal(
+    catalog.resolveCatalogPath("experimentos/01-campo-corrente/", "../"),
+    "../experimentos/01-campo-corrente/",
+  );
+  assert.equal(
+    catalog.resolveCatalogPath("exercicios/halliday-21-13/", "../../"),
+    "../../exercicios/halliday-21-13/",
+  );
+});
+
 test("busca encontra livro e capítulo nas etiquetas", { skip: !apiAvailable }, () => {
   const byBook = catalog.filterCatalog(items, "Halliday", "todos");
   const byChapter = catalog.filterCatalog(items, "capitulo 21", "todos");

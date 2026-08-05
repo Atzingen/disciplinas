@@ -18,7 +18,7 @@
         <small>IFSP · materiais de aula</small>
       </span>
     </a>
-    <span class="site-header__note">Física em movimento</span>
+    <div data-site-navigation data-root-path="./" data-active-section="inicio"></div>
   </header>
 
   <main id="conteudo">
@@ -93,11 +93,38 @@
       </div>
     </section>
 
+    <section class="area-overview" aria-labelledby="areas-title">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">Organize seu percurso</p>
+          <h2 id="areas-title">Três formas de estudar</h2>
+        </div>
+        <p class="area-overview__intro">Resolva, investigue no laboratório ou teste o modelo na tela.</p>
+      </div>
+      <div class="area-grid">
+        <a class="area-card area-card--exercises" href="./exercicios/">
+          <span class="area-card__index">01</span>
+          <strong>Exercícios</strong>
+          <small>Resoluções separadas por referência e capítulo.</small>
+        </a>
+        <a class="area-card area-card--experiments" href="./experimentos/">
+          <span class="area-card__index">02</span>
+          <strong>Experimentos</strong>
+          <small>Roteiros, fundamentos, dados e relatórios de Física III.</small>
+        </a>
+        <a class="area-card area-card--simulations" href="./simuladores/">
+          <span class="area-card__index">03</span>
+          <strong>Simulações</strong>
+          <small>Modelos interativos de cargas, forças e vetores.</small>
+        </a>
+      </div>
+    </section>
+
     <section class="catalog-section" id="catalogo" aria-labelledby="catalog-title" data-catalog-root>
       <div class="section-heading">
         <div>
           <p class="eyebrow">Acervo inicial</p>
-          <h2 id="catalog-title">Escolha um experimento</h2>
+          <h2 id="catalog-title">Explore o acervo</h2>
         </div>
         <p class="catalog-count" data-catalog-count aria-live="polite">Carregando materiais…</p>
       </div>
@@ -116,6 +143,7 @@
           <button type="button" data-catalog-filter="todos" aria-pressed="true">Todos</button>
           <button type="button" data-catalog-filter="simulador" aria-pressed="false">Simuladores</button>
           <button type="button" data-catalog-filter="resolucao" aria-pressed="false">Resoluções</button>
+          <button type="button" data-catalog-filter="experimento" aria-pressed="false">Experimentos</button>
         </div>
       </div>
 
@@ -128,6 +156,7 @@
     <a href="https://github.com/Atzingen/Eletromagnetismo-aulas">Código-fonte no GitHub</a>
   </footer>
 
+  <script type="module" src="./componentes/navegacao-principal.js"></script>
   <script type="module">
     import { mountCatalog } from "./componentes/catalogo.js";
 

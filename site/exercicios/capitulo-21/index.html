@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Resoluções do capítulo 21 do Halliday sobre carga elétrica e força elétrica.">
+  <title>Halliday · Capítulo 21 · Laboratório de Eletromagnetismo</title>
+  <link rel="stylesheet" href="../../assets/base.css">
+</head>
+<body class="area-page">
+  <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+  <header class="site-header">
+    <a class="brand" href="../../" aria-label="Laboratório de Eletromagnetismo — início">
+      <span class="brand__mark" aria-hidden="true">Σ</span>
+      <span><strong>Laboratório de Eletromagnetismo</strong><small>IFSP · materiais de aula</small></span>
+    </a>
+    <div data-site-navigation data-root-path="../../" data-active-section="exercicios"></div>
+  </header>
+
+  <main class="area-page-main" id="conteudo">
+    <nav class="breadcrumb area-breadcrumb" aria-label="Navegação estrutural">
+      <a href="../">Exercícios</a><span aria-hidden="true">/</span><strong>Capítulo 21</strong>
+    </nav>
+    <header class="area-hero area-hero--compact">
+      <p class="eyebrow">Halliday · capítulo 21</p>
+      <h1>Carga e força elétrica.</h1>
+      <p>Quatro resoluções com diagramas, desenvolvimento algébrico e verificação física.</p>
+    </header>
+
+    <section class="catalog-section catalog-section--area" aria-labelledby="catalog-title" data-catalog-root>
+      <div class="section-heading">
+        <div><p class="eyebrow">Sequência do capítulo</p><h2 id="catalog-title">Exercícios</h2></div>
+        <p class="catalog-count" data-catalog-count aria-live="polite">Carregando materiais…</p>
+      </div>
+      <div class="catalog-controls" data-catalog-controls aria-busy="true">
+        <label class="search-field"><span>Buscar neste capítulo</span><input type="search" placeholder="Ex.: equilíbrio, pêndulo, exercício 34" autocomplete="off" data-catalog-search></label>
+        <div class="filter-group" aria-label="Filtrar tipo de material">
+          <button type="button" data-catalog-filter="todos" aria-pressed="true">Todos</button>
+          <button type="button" data-catalog-filter="resolucao" aria-pressed="false">Resoluções</button>
+        </div>
+      </div>
+      <div class="catalog-grid" data-catalog-results aria-live="polite"></div>
+    </section>
+  </main>
+
+  <footer class="site-footer"><p>Halliday · capítulo 21</p><a href="../">Ver todos os capítulos</a></footer>
+  <script type="module" src="../../componentes/navegacao-principal.js"></script>
+  <script type="module">
+    import { mountCatalog } from "../../componentes/catalogo.js";
+    mountCatalog(document.querySelector("[data-catalog-root]"), {
+      registryUrl: "../../simuladores.json",
+      pathPrefix: "../../",
+      scope: { section: "exercicios", chapter: 21 },
+    });
+  </script>
+</body>
+</html>
