@@ -74,7 +74,6 @@ function createInteractiveFixture() {
   const tabs = [
     makeTab("painel-montagem", true),
     makeTab("painel-fundamentos", false),
-    makeTab("painel-dados", false),
     makeTab("painel-relatorio", false),
   ];
   for (const tab of tabs) {
@@ -98,7 +97,7 @@ function createInteractiveFixture() {
   return { root, tabs, panels, printButton };
 }
 
-test("ação de imprimir ativa primeiro a aba Relatório", () => {
+test("ação de imprimir ativa primeiro a aba Relatório", async () => {
   assert.equal(typeof experimentApi.setupExperiment, "function");
   const fixture = createInteractiveFixture();
   let printCalls = 0;
@@ -106,9 +105,12 @@ test("ação de imprimir ativa primeiro a aba Relatório", () => {
   experimentApi.setupExperiment(fixture.root, () => {
     printCalls += 1;
   });
-  fixture.printButton.clickHandler();
+  const printResult = fixture.printButton.clickHandler();
 
-  assert.equal(fixture.tabs[3].getAttribute("aria-selected"), "true");
+  assert.equal(typeof printResult?.then, "function");
+  await printResult;
+
+  assert.equal(fixture.tabs[2].getAttribute("aria-selected"), "true");
   assert.equal(fixture.panels.get("#painel-relatorio").hidden, false);
   assert.equal(fixture.panels.get("#painel-montagem").hidden, true);
   assert.equal(printCalls, 1);

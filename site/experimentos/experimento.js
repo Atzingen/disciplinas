@@ -1,4 +1,5 @@
 import { setupTabs } from "../componentes/abas.js";
+import { typesetMath } from "../componentes/matematica.js";
 
 export function setupExperiment(root, printPage = () => globalThis.print()) {
   const tabs = [...root.querySelectorAll('[role="tab"]')];
@@ -12,8 +13,9 @@ export function setupExperiment(root, printPage = () => globalThis.print()) {
   }
 
   const tabController = setupTabs(root);
-  printButton.addEventListener("click", () => {
+  printButton.addEventListener("click", async () => {
     tabController.activate(reportIndex);
+    await typesetMath(root);
     printPage();
   });
 
