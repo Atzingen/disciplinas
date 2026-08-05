@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta
     name="description"
-    content="Roteiro avançado de Física III sobre corrente induzida, lei de Faraday–Lenz, movimento de um ímã e resposta RL da bobina."
+    content="Roteiro universitário de Física III sobre lei de Faraday–Lenz, fluxo magnético e resposta RL de uma bobina."
   >
   <title>Indução eletromagnética por variação de fluxo · Experimento 04</title>
   <link rel="stylesheet" href="../../assets/base.css">
@@ -38,13 +38,14 @@
       </div>
       <div>
         <p class="experiment-hero__lead">
-          Mova um ímã em relação à bobina, estabeleça uma convenção de sinais e
-          conecte a deflexão transitória do galvanômetro à taxa de variação do
-          fluxo magnético.
+          Investigue como polo, sentido do movimento e rapidez modificam a
+          força eletromotriz induzida. A leitura do galvanômetro será tratada
+          como evidência de um processo transitório, não como simples efeito de
+          presença ou ausência de campo magnético.
         </p>
         <ul class="experiment-meta" aria-label="Características do roteiro">
           <li>Física III</li>
-          <li>montagem passiva</li>
+          <li>investigação orientada</li>
           <li>Faraday–Lenz · circuito RL</li>
         </ul>
       </div>
@@ -52,7 +53,7 @@
   </header>
 
   <main class="experiment-main" id="conteudo" data-experiment-tabs>
-    <div class="experiment-tab-list" role="tablist" aria-label="Etapas do experimento">
+    <div class="experiment-tab-list" role="tablist" aria-label="Partes do experimento">
       <button
         class="experiment-tab"
         id="aba-montagem"
@@ -70,16 +71,7 @@
         aria-controls="painel-fundamentos"
         aria-selected="false"
         tabindex="-1"
-      >Fundamentos</button>
-      <button
-        class="experiment-tab"
-        id="aba-dados"
-        type="button"
-        role="tab"
-        aria-controls="painel-dados"
-        aria-selected="false"
-        tabindex="-1"
-      >Dados</button>
+      >Fundamentação</button>
       <button
         class="experiment-tab"
         id="aba-relatorio"
@@ -88,7 +80,7 @@
         aria-controls="painel-relatorio"
         aria-selected="false"
         tabindex="-1"
-      >Relatório</button>
+      >Roteiro e relatório</button>
     </div>
 
     <section
@@ -101,146 +93,173 @@
       <header class="experiment-section-heading">
         <h2>Montagem</h2>
         <p>
-          Fixe primeiro a polaridade, os cabos e o sinal do instrumento. A
-          previsão deve ser registrada antes de qualquer movimento do ímã.
+          Construa primeiro a convenção física e o controle experimental. Só
+          depois mova o ímã e observe o instrumento.
         </p>
       </header>
 
-      <div class="experiment-grid">
-        <article class="lab-card">
-          <h3>Objetivos de aprendizagem</h3>
-          <ul>
-            <li>Verificar, pelo galvanômetro, o surgimento de corrente elétrica induzida quando o fluxo magnético através da bobina varia.</li>
-            <li>Distinguir campo magnético, fluxo magnético e taxa de variação do fluxo.</li>
-            <li>Relacionar polo, sentido do movimento e rapidez ao sinal e ao pico da deflexão.</li>
-            <li>Interpretar a resposta real com a lei de Faraday–Lenz e um modelo de circuito RL.</li>
-          </ul>
-        </article>
+      <div class="experiment-prose">
+        <p class="prose-lead">
+          A questão investigativa é: <strong>como a variação temporal do fluxo
+          magnético concatenado com uma bobina determina o sinal e a amplitude
+          da resposta observada no galvanômetro?</strong> O grupo deverá separar
+          os efeitos de polo, sentido do movimento, rapidez e trajetória, além
+          de reconhecer os limites impostos pelo circuito e pelo instrumento.
+        </p>
 
-        <article class="lab-card">
-          <h3>Material do conjunto</h3>
+        <section class="continuous-section" aria-labelledby="objetivos-montagem">
+          <h3 id="objetivos-montagem">Objetivos operacionais</h3>
+          <p>
+            Ao final da bancada, o grupo deverá ser capaz de estabelecer uma
+            convenção de sinais reproduzível; comparar aproximação, repouso e
+            afastamento; verificar as inversões produzidas pela troca de polo e
+            de movimento; avaliar qualitativamente ou quantitativamente o
+            efeito da rapidez; e justificar as observações com Faraday–Lenz e
+            com o modelo de um circuito RL real.
+          </p>
+        </section>
+
+        <section class="continuous-section" aria-labelledby="materiais-montagem">
+          <h3 id="materiais-montagem">Materiais e instrumentos</h3>
           <ul class="materials-list">
-            <li>1 placa para ensaios de experimentos de eletromagnetismo;</li>
-            <li>a bobina montada na própria placa;</li>
-            <li>1 galvanômetro de zero central, 500 µV–0–500 µV;</li>
-            <li>1 ímã de neodímio com soquete plástico;</li>
-            <li>1 par de cabos de ligação banana/jacaré.</li>
+            <li>placa de ensaios de eletromagnetismo com bobina;</li>
+            <li>galvanômetro de zero central, \(500\,\mu\mathrm{V}-0-500\,\mu\mathrm{V}\);</li>
+            <li>ímã de neodímio com suporte plástico;</li>
+            <li>par de cabos banana/jacaré;</li>
+            <li>régua e cronômetro somente se a extensão quantitativa for realizada.</li>
           </ul>
           <p>
-            O manual também relaciona uma fonte de 6 V/1 A ao conjunto. Ela
-            <strong>não alimenta a bobina neste roteiro</strong>: a etapa de
-            indução usa somente o movimento relativo do ímã.
+            A fonte de \(6\,\mathrm{V}\) relacionada ao conjunto não integra o
+            circuito desta prática. A bobina deve ser conectada exclusivamente
+            ao galvanômetro. Sensor de posição ou aquisição digital pode ser
+            empregado como extensão, desde que faixa, taxa de amostragem e
+            proteção de entrada sejam documentadas.
           </p>
-        </article>
-      </div>
+        </section>
 
-      <aside class="experiment-safety">
-        <strong>Segurança da montagem e do instrumento</strong>
-        <p>
-          No roteiro principal, mantenha a fonte desligada e desconectada da
-          bobina, confira os dois cabos antes de mover o ímã e comece com
-          movimentos lentos. Não golpeie nem leve o ímã contra o galvanômetro.
-          Mantenha o neodímio afastado de eletrônicos, mídias magnéticas e
-          pessoas com dispositivos médicos implantáveis. O ciclo de
-          <strong>5–10 s</strong> energizado seguido de igual intervalo
-          desligado para resfriamento vale somente se algum setor energizado da
-          placa ou a fonte for usado em uma extensão separada.
-        </p>
-      </aside>
+        <aside class="experiment-safety">
+          <strong>Segurança e proteção do instrumento</strong>
+          <p>
+            Mantenha a fonte desligada e desconectada da bobina. Apoie o
+            galvanômetro em superfície estável, inicie com movimentos lentos e
+            interrompa o ensaio se houver choque de fim de escala. Não permita
+            que o ímã colida com a bobina ou com o instrumento e mantenha-o
+            afastado de eletrônicos, mídias magnéticas e dispositivos médicos
+            implantáveis. Se algum setor energizado for usado numa extensão
+            independente, limite cada acionamento a <strong>5–10 s</strong> e
+            aguarde o mesmo intervalo desligado para resfriamento.
+          </p>
+        </aside>
 
-      <figure class="experiment-figure">
-        <img
-          src="../../assets/experimentos/azeheb/exp-04-montagem.jpg"
-          alt="Galvanômetro de zero central ligado por dois cabos à bobina da placa, com o ímã ainda afastado"
-        >
-        <figcaption>
-          Montagem de referência: os cabos ligam somente a bobina ao
-          galvanômetro; a fonte não integra o circuito de indução.
-          <strong>Fonte: manual AZEHEB</strong>
-        </figcaption>
-      </figure>
+        <figure class="experiment-figure">
+          <img
+            src="../../assets/experimentos/azeheb/exp-04-montagem.jpg"
+            alt="Galvanômetro de zero central ligado diretamente à bobina por dois cabos, com o ímã afastado"
+          >
+          <figcaption>
+            Montagem de referência. Os dois cabos unem bobina e galvanômetro;
+            a fonte permanece fora do circuito de indução.
+            <strong>Fonte: manual AZEHEB</strong>
+          </figcaption>
+        </figure>
 
-      <div class="prediction-box">
-        <strong>Previsão obrigatória antes de movimentar</strong>
-        <p>
-          Marque uma extremidade do ímã como polo N, escolha a deflexão para a
-          direita como sinal positivo do galvanômetro e desenhe o eixo da
-          bobina. Preveja o sinal para quatro controles: N aproximando, N
-          afastando, S aproximando e S afastando. Preveja também o que ocorrerá
-          ao manter o ímã parado e se o módulo do pico será maior para um
-          movimento lento ou rápido pela mesma trajetória. Preserve essa
-          previsão para confrontá-la com a observação.
-        </p>
-      </div>
+        <section class="continuous-section" aria-labelledby="convencao-sinais">
+          <h3 id="convencao-sinais">Convenção de sinais antes da aquisição</h3>
+          <p>
+            Desenhe a bobina e escolha uma normal positiva \(\hat{\vec{n}}\).
+            Pela regra da mão direita, essa normal determina o sentido positivo
+            de circulação na espira. Defina também o eixo \(z\), o sentido
+            positivo da velocidade \(v=\frac{dz}{dt}\), a cor de cada cabo e o lado da
+            deflexão adotado como positivo. Marque os polos do ímã. Sem esse
+            registro, expressões como “ponteiro para a direita” não podem ser
+            relacionadas de forma inequívoca ao sinal físico da corrente.
+          </p>
+          <dl class="compact-facts">
+            <div><dt>Geometria</dt><dd>movimento aproximadamente axial e mesma profundidade final;</dd></div>
+            <div><dt>Variável de controle</dt><dd>alterar apenas polo, sentido ou rapidez em cada comparação;</dd></div>
+            <div><dt>Resposta</dt><dd>sinal, pico, duração e forma qualitativa do pulso;</dd></div>
+            <div><dt>Repetição</dt><dd>no mínimo três ensaios por condição comparável.</dd></div>
+          </dl>
+        </section>
 
-      <article class="lab-card">
-        <h3>Procedimento sistemático</h3>
-        <ol class="procedure-list">
-          <li>
-            Coloque o galvanômetro em superfície estável e leia sua posição de
-            repouso. Não ajuste nem force o ponteiro. Com a fonte desconectada,
-            ligue os bornes da bobina aos do instrumento e registre qual cabo
-            está em cada terminal.
-          </li>
-          <li>
-            Identifique o polo N do ímã e marque o polo que ficará inicialmente
-            voltado à bobina. Defina o eixo de movimento e mantenha o ímã
-            alinhado ao centro da bobina, sem inclinação lateral.
-          </li>
-          <li>
-            A partir de uma posição afastada, aproxime lentamente o polo
-            escolhido e introduza parcialmente o ímã na bobina. Registre o lado
-            da deflexão, o sinal adotado, o pico e a duração do pulso.
-          </li>
-          <li>
-            Mantenha o ímã parado na mesma posição por alguns instantes. Registre
-            a leitura depois que o transitório mecânico do ponteiro terminar;
-            não confunda a volta do ponteiro com uma inversão sustentada.
-          </li>
-          <li>
-            Retire o ímã lentamente pela mesma trajetória. Registre novamente
-            sentido, sinal, pico e duração, esperando o ponteiro retornar ao
-            repouso antes do próximo ensaio.
-          </li>
-          <li>
-            Repita a sequência aproxima–parado–afasta pelo menos três vezes sem
-            trocar os cabos. A repetição permite avaliar a dispersão causada
-            pelo movimento manual.
-          </li>
-          <li>
-            Inverta o ímã para que o outro polo fique voltado à bobina e repita
-            a sequência. Compare o sinal com o obtido para o primeiro polo.
-          </li>
-          <li>
-            Para cada polo, repita a mesma trajetória com rapidez crescente:
-            comece devagar e só depois use ritmos moderado e mais rápido,
-            sempre sem choque mecânico. Se não houver medida de velocidade,
-            registre apenas categorias qualitativas consistentes.
-          </li>
-        </ol>
-      </article>
+        <section class="continuous-section" aria-labelledby="procedimento-montagem">
+          <h3 id="procedimento-montagem">Sequência experimental</h3>
+          <ol class="procedure-list">
+            <li>
+              Inspecione cabos, bornes e bobina. Registre a posição inicial de
+              repouso do galvanômetro e conecte a bobina diretamente ao
+              instrumento, mantendo a fonte isolada.
+            </li>
+            <li>
+              Identifique o polo inicialmente voltado à bobina e alinhe o ímã
+              ao eixo. Marque posições inicial e final para que a trajetória
+              possa ser repetida.
+            </li>
+            <li>
+              Aproxime lentamente o ímã até a posição final, sem impacto.
+              Registre sentido da deflexão, pico, duração aproximada e qualquer
+              oscilação do ponteiro.
+            </li>
+            <li>
+              Mantenha o ímã imóvel nessa posição. Aguarde o transitório
+              mecânico desaparecer e registre a leitura estacionária.
+            </li>
+            <li>
+              Afaste o mesmo polo pela trajetória inversa. Espere o ponteiro
+              voltar ao zero antes de repetir o ensaio.
+            </li>
+            <li>
+              Faça ao menos três repetições de aproximação e afastamento,
+              mantendo cabos, polo, alinhamento e posições extremas.
+            </li>
+            <li>
+              Inverta apenas o polo do ímã e repita a série. Em seguida,
+              compare condições que diferem por uma e por duas inversões.
+            </li>
+            <li>
+              Repita uma trajetória com movimentos lento, moderado e rápido.
+              Use rótulos qualitativos se não houver medida de velocidade; não
+              transforme categorias subjetivas em valores numéricos.
+            </li>
+            <li>
+              Ao final, verifique novamente o zero do galvanômetro e registre
+              contatos intermitentes, fim de escala, desalinhamento ou mudança
+              involuntária da trajetória.
+            </li>
+          </ol>
+        </section>
 
-      <div class="experiment-grid">
+        <div class="prediction-box">
+          <strong>Registro pré-laboratório obrigatório</strong>
+          <p>
+            Antes do primeiro movimento, preveja o sinal para N aproximando, N
+            parado, N afastando, S aproximando, S parado e S afastando. Preveja
+            também como o pico deve mudar com a rapidez. Preserve o registro
+            original: a comparação entre previsão e evidência fará parte da
+            discussão, mesmo quando a previsão estiver incorreta.
+          </p>
+        </div>
+
         <figure class="experiment-figure">
           <img
             src="../../assets/experimentos/azeheb/exp-04-aproximacao.jpg"
-            alt="Ímã sendo introduzido axialmente na bobina enquanto o ponteiro do galvanômetro deflete para um lado"
+            alt="Ímã sendo introduzido axialmente na bobina enquanto o galvanômetro apresenta deflexão transitória"
           >
           <figcaption>
-            Aproximação e introdução: a variação do fluxo produz uma deflexão
-            transitória cujo sinal depende do polo, do movimento, do enrolamento
-            e da ligação dos cabos. <strong>Fonte: manual AZEHEB</strong>
+            Aproximação axial: o pico depende da taxa de variação do fluxo e da
+            resposta do circuito e do galvanômetro.
+            <strong>Fonte: manual AZEHEB</strong>
           </figcaption>
         </figure>
 
         <figure class="experiment-figure">
           <img
             src="../../assets/experimentos/azeheb/exp-04-afastamento.jpg"
-            alt="Ímã sendo retirado axialmente da bobina enquanto o ponteiro do galvanômetro deflete para o lado oposto"
+            alt="Ímã sendo retirado axialmente da bobina enquanto o galvanômetro deflete para o lado oposto"
           >
           <figcaption>
             Afastamento pela mesma trajetória: mantendo polo e cabos, a taxa de
-            variação do fluxo troca de sinal e a deflexão deve se inverter.
+            variação do fluxo troca de sinal.
             <strong>Fonte: manual AZEHEB</strong>
           </figcaption>
         </figure>
@@ -256,266 +275,181 @@
       hidden
     >
       <header class="experiment-section-heading">
-        <h2>Fundamentos</h2>
+        <h2>Fundamentação</h2>
         <p>
-          O sinal nasce da orientação escolhida; o módulo nasce da rapidez com
-          que o fluxo concatenado muda e da resposta elétrica e mecânica do
-          conjunto.
+          A interpretação parte da área orientada, passa pela derivada do fluxo
+          e termina na resposta elétrica e mecânica do sistema real.
         </p>
       </header>
 
-      <div class="experiment-grid">
-        <article class="theory-card">
-          <h3>1. Fluxo e orientação</h3>
-          <p>
-            Escolha uma normal unitária à área da bobina. Essa normal define a
-            área orientada e, pela regra da mão direita, o sentido positivo de
-            circulação ao redor da espira. Para uma volta:
-          </p>
-          <div class="math-block">Φ_B = ∫ B·dA</div>
-          <p>
-            O produto escalar conta a componente de B normal à área. Se o campo
-            fosse aproximadamente uniforme sobre a área A, teríamos
-            Φ_B ≈ BA cos θ. Campo forte não implica, por si só, fluxo grande:
-            área, orientação e não uniformidade também importam.
-          </p>
-        </article>
-
-        <article class="theory-card">
-          <h3>2. Faraday e o sinal de Lenz</h3>
-          <p>
-            Para N espiras equivalentes, o fluxo concatenado é NΦ_B. A força
-            eletromotriz no sentido positivo escolhido é
-          </p>
-          <div class="math-block">ε = −N dΦ_B/dt</div>
-          <p>
-            O sinal negativo não significa que a força eletromotriz é sempre
-            “negativa”. Ele expressa a lei de Lenz: a corrente induzida cria um
-            campo que se opõe à <strong>mudança</strong> do fluxo externo. Se
-            um fluxo positivo aumenta, ε é negativo; se esse mesmo fluxo
-            diminui, ε é positivo.
-          </p>
-        </article>
-      </div>
-
-      <article class="theory-card">
-        <h3>3. Ímã em movimento: regra da cadeia</h3>
-        <p>
-          Represente por z a posição assinada do ímã ao longo do eixo da bobina
-          e por v = dz/dt sua velocidade. Mantendo geometria e orientação
-          fixas, o fluxo pode ser escrito como Φ_B(z). Então:
+      <div class="experiment-prose">
+        <p class="prose-lead">
+          O galvanômetro não mede diretamente o campo do ímã. Ele responde à
+          corrente produzida por uma força eletromotriz transitória, e essa
+          força eletromotriz depende da variação do fluxo magnético concatenado
+          com as espiras.
         </p>
-        <div class="equation-flow">
-          <div class="equation-step">
-            dΦ_B/dt = (dΦ_B/dz)(dz/dt)
-            <small>A regra da cadeia separa o gradiente espacial do fluxo da velocidade do ímã.</small>
-          </div>
-          <div class="equation-step">
-            dΦ_B/dt = v dΦ_B/dz
-            <small>v é algébrico: aproximação e afastamento possuem sinais opostos.</small>
-          </div>
-          <div class="equation-step">
-            ε = −Nv dΦ_B/dz
-            <small>A expressão vale para a trajetória axial escolhida e N representa o número de espiras, não o polo norte.</small>
-          </div>
+
+        <div class="reasoning-sequence">
+          <article class="reasoning-step">
+            <span class="reasoning-step__number" aria-hidden="true"></span>
+            <div class="reasoning-step__content">
+              <h3>Fluxo magnético e área orientada</h3>
+              <p>
+                Para uma superfície \(S\) limitada por uma espira, a escolha
+                de \(\hat{\vec{n}}\) define
+                \(d\vec{A}=\hat{\vec{n}}\,dA\).
+                O fluxo é uma grandeza escalar com sinal:
+              </p>
+              <div class="math-display">
+                \[
+                  \Phi_B(t)=\int_S \vec{B}(\vec{r},t)\cdot d\vec{A}.
+                \]
+              </div>
+              <p>
+                Para campo aproximadamente uniforme,
+                \(\Phi_B\approx BA\cos\theta\). O produto escalar seleciona a componente
+                normal; portanto, campo, fluxo e variação de fluxo não são
+                conceitos intercambiáveis.
+              </p>
+            </div>
+          </article>
+
+          <article class="reasoning-step">
+            <span class="reasoning-step__number" aria-hidden="true"></span>
+            <div class="reasoning-step__content">
+              <h3>Lei de Faraday e sinal de Lenz</h3>
+              <p>
+                Para \(N\) espiras equivalentes, o fluxo concatenado é
+                \(N\Phi_B\). No sentido positivo fixado pela convenção:
+              </p>
+              <div class="math-display">
+                \[
+                  \mathcal{E}(t)=-N\frac{d\Phi_B}{dt}.
+                \]
+              </div>
+              <p>
+                O sinal negativo codifica a lei de Lenz: a corrente induzida
+                cria um efeito magnético que se opõe à <em>mudança</em> do
+                fluxo externo. Não significa que \(\mathcal{E}\) seja sempre
+                negativa; seu sinal depende da orientação escolhida e de como
+                \(\Phi_B\) varia.
+              </p>
+            </div>
+          </article>
+
+          <article class="reasoning-step">
+            <span class="reasoning-step__number" aria-hidden="true"></span>
+            <div class="reasoning-step__content">
+              <h3>Movimento axial e regra da cadeia</h3>
+              <p>
+                Se a geometria depende da posição axial \(z(t)\), escrevemos
+                \(\Phi_B=\Phi_B(z)\). Com
+                \(v=\frac{dz}{dt}\), a regra da cadeia fornece:
+              </p>
+              <div class="math-display">
+                \[
+                \begin{aligned}
+                  \frac{d\Phi_B}{dt}
+                    &=\frac{d\Phi_B}{dz}\frac{dz}{dt} \\
+                    &=v\frac{d\Phi_B}{dz}, \\
+                  \mathcal{E}(t)
+                    &=-Nv\frac{d\Phi_B}{dz}.
+                \end{aligned}
+                \]
+              </div>
+              <p>
+                Inverter somente o movimento troca o sinal de \(v\). Inverter
+                somente o polo troca o sinal do campo e do gradiente do fluxo
+                para a mesma geometria. Duas inversões recuperam o sinal
+                inicial. A amplitude também depende de
+                \(\frac{d\Phi_B}{dz}\), de modo
+                que rapidez só pode ser comparada na mesma região espacial.
+              </p>
+            </div>
+          </article>
+
+          <article class="reasoning-step">
+            <span class="reasoning-step__number" aria-hidden="true"></span>
+            <div class="reasoning-step__content">
+              <h3>Repouso: fluxo não nulo e força eletromotriz nula</h3>
+              <p>
+                Com o ímã parado e a montagem fixa, pode haver campo intenso e
+                fluxo não nulo. Entretanto, \(v=0\) e o fluxo deixa de variar.
+                Depois do transitório do instrumento:
+              </p>
+              <div class="math-display">
+                \[
+                  \vec{B}\neq\vec{0},\qquad
+                  \Phi_B\neq 0,\qquad
+                  \frac{d\Phi_B}{dt}=0
+                  \;\Longrightarrow\;
+                  \mathcal{E}=0.
+                \]
+              </div>
+              <aside class="semantic-callout semantic-callout--concept">
+                <strong>Distinção essencial.</strong> O retorno do ponteiro ao
+                zero indica que cessou a variação do fluxo, não que o campo do
+                ímã desapareceu.
+              </aside>
+            </div>
+          </article>
+
+          <article class="reasoning-step">
+            <span class="reasoning-step__number" aria-hidden="true"></span>
+            <div class="reasoning-step__content">
+              <h3>Bobina e galvanômetro como sistema RL</h3>
+              <p>
+                A bobina possui resistência e autoindutância; cabos e
+                galvanômetro acrescentam resistência e dinâmica própria. Para
+                uma resistência total \(R\) e indutância efetiva \(L\):
+              </p>
+              <div class="math-display">
+                \[
+                \begin{aligned}
+                  L\frac{di}{dt}+Ri &= \mathcal{E}(t), \\
+                  \tau_e &= \frac{L}{R}, \\
+                  i(t) &\approx \frac{\mathcal{E}(t)}{R}
+                  \quad\text{se }\tau_e\ll\tau_{\mathrm{mov}}.
+                \end{aligned}
+                \]
+              </div>
+              <p>
+                Para pulsos rápidos, autoindutância, inércia e amortecimento do
+                ponteiro filtram a resposta. O pico observado não é uma cópia
+                instantânea perfeita de \(\mathcal{E}(t)\), o que limita
+                comparações quantitativas sem aquisição adequada.
+              </p>
+            </div>
+          </article>
+
+          <article class="reasoning-step">
+            <span class="reasoning-step__number" aria-hidden="true"></span>
+            <div class="reasoning-step__content">
+              <h3>Consistência dimensional e domínio do modelo</h3>
+              <div class="math-display">
+                \[
+                \begin{aligned}
+                  [\Phi_B] &= \mathrm{T\,m^2}=\mathrm{Wb}, \\
+                  \left[\frac{d\Phi_B}{dt}\right]
+                    &=\mathrm{Wb\,s^{-1}}=\mathrm{V}, \\
+                  \left[v\frac{d\Phi_B}{dz}\right]
+                    &=\mathrm{m\,s^{-1}}\,\mathrm{Wb\,m^{-1}}
+                     =\mathrm{V}, \\
+                  \left[L\frac{di}{dt}\right]&=[Ri]=\mathrm{V}.
+                \end{aligned}
+                \]
+              </div>
+              <p>
+                O modelo pressupõe trajetória reprodutível, ausência de fim de
+                escala e contatos estáveis. O campo do ímã é não uniforme, de
+                modo que \(\frac{d\Phi_B}{dz}\) muda ao longo da trajetória. Qualquer
+                tendência linear entre pico e rapidez é local e deve ser
+                confrontada com incertezas e limitações do instrumento.
+              </p>
+            </div>
+          </article>
         </div>
-        <p>
-          Inverter o movimento troca o sinal de v; inverter o polo do ímã troca
-          o sentido do campo e, para a mesma geometria, o sinal de Φ_B e de
-          dΦ_B/dz. Cada inversão isolada troca o sinal de ε. Inverter polo e
-          movimento ao mesmo tempo restaura o sinal original. O sentido real do
-          ponteiro ainda depende do sentido do enrolamento e da ligação dos
-          cabos, por isso a convenção experimental precisa ser documentada.
-        </p>
-      </article>
-
-      <div class="experiment-grid">
-        <article class="theory-card">
-          <h3>4. Exemplo de convenção com o polo N</h3>
-          <p>
-            Suponha a normal positiva apontando da bobina para o lado por onde
-            o ímã entra. Com o polo N voltado à bobina, o campo próximo ao polo
-            aponta para dentro dela, em sentido oposto à normal: Φ_B é
-            negativo. Ao aproximar N, o módulo desse fluxo cresce,
-            dΦ_B/dt fica negativo e ε fica positivo no sentido de circulação
-            definido. Trocar N por S ou aproximar por retirar inverte esse
-            resultado. A indicação “direita” ou “esquerda” só pode ser ligada a
-            esse sinal depois de registrar cabos e enrolamento.
-          </p>
-        </article>
-
-        <aside class="theory-note">
-          <h3>Ímã parado não significa campo nulo</h3>
-          <p>
-            Um ímã parado pode produzir B não nulo e Φ_B não nulo. O que se
-            anula, em uma geometria fixa, é dΦ_B/dt; portanto ε = 0. O ponteiro
-            volta ao zero porque cessa a variação do fluxo, não porque o campo
-            magnético desaparece.
-          </p>
-        </aside>
-      </div>
-
-      <article class="theory-card">
-        <h3>5. Bobina, resistência e autoindutância</h3>
-        <p>
-          A bobina, os cabos e a resistência interna do galvanômetro formam um
-          circuito real. Se R representa a resistência total e L a
-          autoindutância efetiva, a lei das malhas fornece
-        </p>
-        <div class="math-block">L di/dt + Ri = ε(t)</div>
-        <p>
-          A constante de tempo elétrica é τ_e = L/R. Quando τ_e é muito menor
-          que a escala de tempo da variação do fluxo e a dinâmica mecânica do
-          galvanômetro não limita a leitura, o termo indutivo é pequeno e surge
-          o limite quase-estacionário <strong>i≈ε/R</strong>. Em movimentos
-          rápidos, a autoindutância, a inércia e o amortecimento do ponteiro
-          podem reduzir ou atrasar o pico observado; deflexão não é uma cópia
-          instantânea perfeita de ε(t).
-        </p>
-      </article>
-
-      <div class="experiment-grid">
-        <article class="theory-card">
-          <h3>6. Análise dimensional</h3>
-          <ul>
-            <li>[Φ_B] = T·m² = Wb.</li>
-            <li>[dΦ_B/dt] = Wb/s = V, portanto [ε] = V.</li>
-            <li>[v dΦ_B/dz] = (m/s)(Wb/m) = Wb/s = V.</li>
-            <li>[L di/dt] = H·A/s = V e [Ri] = Ω·A = V.</li>
-          </ul>
-          <p>
-            N é adimensional. Assim, todos os termos da equação RL têm unidade
-            de volt e a forma de movimento é dimensionalmente compatível com a
-            lei de Faraday.
-          </p>
-        </article>
-
-        <article class="theory-card">
-          <h3>7. Hipóteses e limites</h3>
-          <ul>
-            <li>o ímã percorre aproximadamente o mesmo eixo em todos os ensaios;</li>
-            <li>a bobina, os cabos e o instrumento não mudam de orientação;</li>
-            <li>a posição inicial e a profundidade final são comparáveis entre velocidades;</li>
-            <li>não há saturação, choque de fim de escala ou contato intermitente;</li>
-            <li>o campo do ímã não é uniforme, logo dΦ_B/dz varia com z;</li>
-            <li>a resposta do galvanômetro pode filtrar transitórios muito rápidos.</li>
-          </ul>
-        </article>
-      </div>
-    </section>
-
-    <section
-      class="experiment-panel"
-      id="painel-dados"
-      role="tabpanel"
-      aria-labelledby="aba-dados"
-      tabindex="0"
-      hidden
-    >
-      <header class="experiment-section-heading">
-        <h2>Dados</h2>
-        <p>
-          Registre somente observações e leituras obtidas na bancada. A tabela
-          permanece vazia porque não há medições simuladas neste roteiro.
-        </p>
-      </header>
-
-      <div class="experiment-grid">
-        <article class="lab-card">
-          <h3>Variáveis operacionais</h3>
-          <ul>
-            <li><strong>Polo:</strong> N ou S voltado à bobina.</li>
-            <li><strong>Estado:</strong> aproxima, parado ou afasta.</li>
-            <li><strong>Rapidez:</strong> lenta, moderada ou rápida; v em m/s somente se medida.</li>
-            <li><strong>Sinal:</strong> lado do ponteiro e sinal +/− conforme a convenção registrada.</li>
-            <li><strong>Pico:</strong> leitura máxima na escala ou divisões, sem extrapolar a calibração.</li>
-            <li><strong>Duração:</strong> intervalo do pulso observado, quando mensurável.</li>
-          </ul>
-        </article>
-
-        <article class="lab-card">
-          <h3>Extensões opcionais</h3>
-          <p>
-            Régua, cronômetro, sensor de posição e sistema de aquisição
-            <strong>não estão incluídos no kit</strong>. Se disponíveis, podem
-            fornecer Δz, Δt, v≈Δz/Δt e a forma temporal do sinal. Identifique
-            instrumento, resolução, taxa de amostragem e interface usada; não
-            conecte aquisição sem verificar faixa e proteção de entrada.
-          </p>
-        </article>
-      </div>
-
-      <div class="data-table-wrapper">
-        <table class="data-table">
-          <thead>
-            <tr>
-              <th scope="col">Ensaio</th>
-              <th scope="col">Polo voltado à bobina</th>
-              <th scope="col">Aproxima / parado / afasta</th>
-              <th scope="col">Rapidez qualitativa ou v opcional (m/s)</th>
-              <th scope="col">Direção do ponteiro / sinal</th>
-              <th scope="col">Pico observado</th>
-              <th scope="col">Duração do pulso (s)</th>
-              <th scope="col">Observações</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
-            <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
-            <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
-            <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
-            <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
-            <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
-            <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
-            <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
-            <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
-          </tbody>
-        </table>
-      </div>
-
-      <div class="experiment-grid">
-        <article class="lab-card">
-          <h3>Tratamento dos dados</h3>
-          <ol>
-            <li>Agrupe cada sequência em aproximação, repouso e afastamento sem trocar cabos ou polo.</li>
-            <li>Verifique se aproximação e afastamento produzem sinais opostos para o mesmo polo.</li>
-            <li>Verifique se a inversão do polo troca o sinal para o mesmo movimento.</li>
-            <li>Compare repetições equivalentes e descreva dispersão, assimetria e eventuais valores atípicos.</li>
-            <li>
-              Se houver velocidade medida, faça o gráfico
-              <strong>|ε_pico| versus rapidez</strong>. Use a mesma trajetória e
-              compare a região em que dΦ_B/dz é semelhante; uma tendência
-              aproximadamente linear é esperada apenas enquanto a resposta RL
-              e o galvanômetro não limitarem o pico.
-            </li>
-          </ol>
-        </article>
-
-        <article class="lab-card">
-          <h3>Teste de consistência dos sinais</h3>
-          <p>
-            Tome um ensaio como referência. Uma única inversão — movimento ou
-            polo — deve inverter o sinal. Duas inversões devem recuperar o sinal
-            de referência. No estado parado, após o transitório do instrumento,
-            a leitura deve retornar ao zero mesmo com o ímã dentro da bobina.
-            Registre discrepâncias em vez de corrigir os dados.
-          </p>
-        </article>
-      </div>
-
-      <div class="uncertainty-box">
-        <h3>Incerteza, resolução e repetibilidade</h3>
-        <p>
-          Determine na própria escala a menor divisão do galvanômetro e registre
-          a regra de leitura adotada; para arredondamento à divisão mais próxima,
-          pode-se usar metade da menor divisão como componente de resolução.
-          Acrescente paralaxe, largura do ponteiro, ajuste de zero, amortecimento
-          e risco de não capturar o pico. Avalie repetibilidade com ensaios
-          equivalentes e sua dispersão. O movimento manual acrescenta incerteza
-          de velocidade e posição; desalinhamento, inclinação e deslocamento
-          lateral alteram dΦ_B/dz. Se v for calculada, propague as resoluções de
-          Δz e Δt e separe essas incertezas dos desvios sistemáticos de trajetória.
-        </p>
       </div>
     </section>
 
@@ -528,162 +462,254 @@
       hidden
     >
       <header class="experiment-section-heading">
-        <h2>Relatório</h2>
+        <h2>Roteiro e relatório</h2>
         <p>
-          Registre a convenção antes de interpretar os sinais. O arquivo
-          <code>relatorio.md</code> contém a mesma estrutura em formato
-          preenchível.
+          Dados, tratamento, incertezas e discussão formam um único encadeamento
+          científico. O arquivo <code>relatorio.md</code> contém a versão
+          preenchível equivalente.
         </p>
       </header>
 
       <div class="report-print-bar">
-        <p>Ao imprimir, somente esta aba será incluída.</p>
+        <p>Ao imprimir, somente este roteiro acadêmico será incluído.</p>
         <button class="report-print-button" type="button" data-print-report>
-          Imprimir modelo de relatório
+          Imprimir roteiro e relatório
         </button>
       </div>
 
-      <div class="report-template">
+      <article class="report-document">
         <div class="report-template__fields" aria-label="Identificação do relatório">
-          <div><strong>Curso/turma:</strong><div class="report-template__line"></div></div>
-          <div><strong>Data:</strong><div class="report-template__line"></div></div>
-          <div><strong>Grupo:</strong><div class="report-template__line"></div></div>
-          <div><strong>Integrantes:</strong><div class="report-template__line"></div></div>
+          <div><strong>Curso, turma e bancada:</strong><div class="report-template__line"></div></div>
+          <div><strong>Data e horário:</strong><div class="report-template__line"></div></div>
+          <div><strong>Grupo e integrantes:</strong><div class="report-template__line"></div></div>
+          <div><strong>Instrumentos opcionais utilizados:</strong><div class="report-template__line"></div></div>
         </div>
 
-        <div class="report-grid">
-          <article class="report-card">
-            <h3>Objetivo e previsão original</h3>
+        <section class="report-section" aria-labelledby="rel-questao">
+          <span class="report-section__number" aria-hidden="true">01</span>
+          <div class="report-section__body">
+            <h3 id="rel-questao">Questão, hipótese e previsão</h3>
             <p>
-              Declare o objetivo com suas palavras e preserve as previsões de
-              sinal e pico feitas antes de mover o ímã.
+              Formule a questão investigativa em termos da variação do fluxo.
+              Registre a hipótese do grupo para as inversões de sinal e para a
+              influência da rapidez. Anexe a tabela de previsão elaborada antes
+              da aquisição e não a corrija retrospectivamente.
             </p>
             <div class="report-template__line"></div>
             <div class="report-template__line"></div>
-          </article>
-
-          <article class="report-card">
-            <h3>Convenção de sinais</h3>
-            <p>
-              Desenhe normal, eixo z, sentido positivo de circulação, polo
-              voltado à bobina, posição dos cabos e lado +/− do ponteiro. Sem
-              esse diagrama, “direita” e “esquerda” não determinam o sinal físico.
-            </p>
-            <div class="report-template__line"></div>
-            <div class="report-template__line"></div>
-          </article>
-
-          <article class="report-card">
-            <h3>Três estados controlados</h3>
-            <p>
-              Para o mesmo polo e os mesmos cabos, descreva separadamente:
-              aproximação, ímã parado e afastamento. Explique por que o estado
-              parado pode ter fluxo não nulo e força eletromotriz nula.
-            </p>
-            <div class="report-template__line"></div>
-            <div class="report-template__line"></div>
-          </article>
-
-          <article class="report-card">
-            <h3>Dados e evidências</h3>
-            <p>
-              Transcreva somente leituras realizadas, com unidades e resolução.
-              Inclua desenho ou fotografia autorizada da montagem e identifique
-              repetições, polo, trajetória e rapidez.
-            </p>
-            <div class="report-template__line"></div>
-          </article>
-
-          <article class="report-card">
-            <h3>Análise Faraday–Lenz e RL</h3>
-            <p>
-              Use Φ_B = ∫ B·dA, derive ε = −N dΦ_B/dt e a forma de movimento.
-              Relacione os sinais observados à lei de Lenz. Depois interprete
-              amplitude e atraso com L di/dt + Ri = ε(t) e com o limite
-              i≈ε/R, quando justificável.
-            </p>
-            <div class="report-template__line"></div>
-            <div class="report-template__line"></div>
-          </article>
-
-          <article class="report-card">
-            <h3>Incerteza e limitações</h3>
-            <p>
-              Informe resolução e leitura do galvanômetro, repetibilidade,
-              incerteza de rapidez e alinhamento. Discuta também resposta
-              mecânica, posição inicial/final e contato dos cabos.
-            </p>
-            <div class="report-template__line"></div>
-            <div class="report-template__line"></div>
-          </article>
-
-          <article class="report-card">
-            <h3>Conclusão</h3>
-            <p>
-              Responda se os sinais e sua inversão são compatíveis com
-              Faraday–Lenz e se os dados sustentam alguma relação entre pico e
-              rapidez. Não apresente comparação quantitativa sem medidas.
-            </p>
-            <div class="report-template__line"></div>
-            <div class="report-template__line"></div>
-          </article>
-        </div>
-
-        <article class="report-card">
-          <h3>Tabela mínima do relatório</h3>
-          <div class="data-table-wrapper">
-            <table class="data-table">
-              <thead>
-                <tr>
-                  <th scope="col">Polo</th>
-                  <th scope="col">Estado</th>
-                  <th scope="col">Rapidez ou v (m/s)</th>
-                  <th scope="col">Direção / sinal</th>
-                  <th scope="col">Pico</th>
-                  <th scope="col">Duração (s)</th>
-                  <th scope="col">Observações</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
-                <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
-                <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
-                <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
-                <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
-                <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
-              </tbody>
-            </table>
           </div>
-        </article>
+        </section>
 
-        <article class="report-card">
-          <h3>Perguntas</h3>
-          <ol class="question-list">
-            <li>Por que a aproximação e o afastamento do mesmo polo produzem sinais opostos?</li>
-            <li>Por que a inversão do polo também inverte o sinal para um movimento fixo?</li>
-            <li>Como pode haver B e Φ_B não nulos sem indicação sustentada no galvanômetro?</li>
-            <li>Em que condições |ε_pico| deve crescer aproximadamente com a rapidez?</li>
-            <li>Como L/R e a dinâmica do ponteiro alteram um pulso muito rápido?</li>
-            <li>Quais desvios de trajetória podem imitar uma mudança de rapidez?</li>
-          </ol>
-        </article>
+        <section class="report-section" aria-labelledby="rel-preparacao">
+          <span class="report-section__number" aria-hidden="true">02</span>
+          <div class="report-section__body">
+            <h3 id="rel-preparacao">Preparação pré-laboratório</h3>
+            <p>
+              Inclua um diagrama com normal, eixo \(z\), sentido positivo de
+              circulação, polos, cores dos cabos e sinal do ponteiro. Explique
+              como uma única inversão e duas inversões devem afetar o sinal de
+              \(\mathcal{E}\). Confirme a análise dimensional antes da bancada.
+            </p>
+            <div class="math-display">
+              \[
+              \begin{aligned}
+                \Phi_B &= \int_S\vec{B}\cdot d\vec{A}, \\
+                \mathcal{E} &= -N\frac{d\Phi_B}{dt}
+                =-Nv\frac{d\Phi_B}{dz}.
+              \end{aligned}
+              \]
+            </div>
+          </div>
+        </section>
 
-        <article class="report-card">
-          <h3>Checklist de entrega</h3>
-          <ul class="report-checklist">
-            <li>□ identificação e objetivo;</li>
-            <li>□ segurança confirmada e fonte desconectada da bobina;</li>
-            <li>□ previsão original preservada;</li>
-            <li>□ convenção de normal, eixo, circulação, polo, cabos e sinal do ponteiro;</li>
-            <li>□ comparação aproxima–parado–afasta;</li>
-            <li>□ tabela com unidades e somente dados obtidos;</li>
-            <li>□ derivação de Faraday–Lenz, regra da cadeia e análise dimensional;</li>
-            <li>□ discussão do circuito RL e do limite quase-estacionário;</li>
-            <li>□ gráfico |ε_pico| versus rapidez, somente se houver dados quantitativos;</li>
-            <li>□ incertezas, perguntas e conclusão compatível com as evidências.</li>
-          </ul>
-        </article>
-      </div>
+        <section class="report-section" aria-labelledby="rel-metodo">
+          <span class="report-section__number" aria-hidden="true">03</span>
+          <div class="report-section__body">
+            <h3 id="rel-metodo">Procedimento e controles</h3>
+            <p>
+              Descreva a montagem real e eventuais desvios do roteiro. Informe
+              como posições inicial e final, alinhamento, polo, cabos e ritmo
+              foram controlados. Registre número de repetições, critério para o
+              pico e como o zero do galvanômetro foi verificado antes e depois.
+            </p>
+            <aside class="experiment-safety">
+              <strong>Registro de segurança</strong>
+              <p>Confirme fonte desconectada, ausência de choque mecânico e inexistência de fim de escala.</p>
+            </aside>
+          </div>
+        </section>
+
+        <section class="report-section" aria-labelledby="rel-dados">
+          <span class="report-section__number" aria-hidden="true">04</span>
+          <div class="report-section__body">
+            <h3 id="rel-dados">Dados brutos</h3>
+            <p>
+              Registre somente observações e leituras feitas pelo grupo. Use
+              velocidade apenas se medida; caso contrário, mantenha categorias
+              qualitativas. Informe a menor divisão, a regra de leitura e a
+              unidade do pico.
+            </p>
+            <div class="report-data">
+              <p class="report-data__caption">Tabela 1 — Ensaios de movimento relativo entre ímã e bobina.</p>
+              <div class="data-table-wrapper">
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th scope="col">Ensaio</th>
+                      <th scope="col">Polo</th>
+                      <th scope="col">Estado</th>
+                      <th scope="col">Rapidez ou \(v\,(\mathrm{m\,s^{-1}})\)</th>
+                      <th scope="col">Sinal</th>
+                      <th scope="col">Pico</th>
+                      <th scope="col">Duração</th>
+                      <th scope="col">Observações</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr><td>1</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                    <tr><td>2</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                    <tr><td>3</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                    <tr><td>4</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                    <tr><td>5</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                    <tr><td>6</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                    <tr><td>7</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                    <tr><td>8</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <p>
+              Menor divisão e resolução adotada: ____________________________<br>
+              Zero antes/depois da série: __________________________________<br>
+              Instrumentos opcionais e resolução: ___________________________
+            </p>
+          </div>
+        </section>
+
+        <section class="report-section" aria-labelledby="rel-tratamento">
+          <span class="report-section__number" aria-hidden="true">05</span>
+          <div class="report-section__body">
+            <h3 id="rel-tratamento">Tratamento e análise</h3>
+            <p>
+              Organize primeiro uma matriz de sinais: aproximação, repouso e
+              afastamento para cada polo. Verifique a regra de uma inversão e
+              duas inversões. Para repetições equivalentes, calcule média e
+              dispersão do pico apenas se a escala permitir uma leitura
+              quantitativa defensável.
+            </p>
+            <div class="math-display">
+              \[
+              \begin{aligned}
+                \bar{x} &= \frac{1}{n}\sum_{j=1}^{n}x_j, \\
+                s_x &= \sqrt{\frac{1}{n-1}\sum_{j=1}^{n}(x_j-\bar{x})^2}, \\
+                v &\approx \frac{\Delta z}{\Delta t}.
+              \end{aligned}
+              \]
+            </div>
+            <p>
+              Se houver velocidade medida, construa
+              \(\lvert\mathcal{E}_{\mathrm{pico}}\rvert\) em função de
+              \(\lvert v\rvert\) para uma mesma trajetória e identifique polo
+              e sentido. Inclua barras de incerteza e ajuste linear somente no
+              intervalo em que os resíduos e os limites do galvanômetro
+              sustentarem essa aproximação.
+            </p>
+          </div>
+        </section>
+
+        <section class="report-section" aria-labelledby="rel-incertezas">
+          <span class="report-section__number" aria-hidden="true">06</span>
+          <div class="report-section__body">
+            <h3 id="rel-incertezas">Incertezas e qualidade da evidência</h3>
+            <p>
+              Diferencie resolução do galvanômetro, repetibilidade e vieses de
+              procedimento. Considere paralaxe, largura e inércia do ponteiro,
+              perda do pico, ajuste de zero, variação de rapidez, posições
+              extremas, desalinhamento e contato dos cabos. Se
+              \(v=\frac{\Delta z}{\Delta t}\), propague as incertezas independentes:
+            </p>
+            <div class="math-display">
+              \[
+                \left(\frac{u_v}{v}\right)^2=
+                \left(\frac{u_{\Delta z}}{\Delta z}\right)^2+
+                \left(\frac{u_{\Delta t}}{\Delta t}\right)^2.
+              \]
+            </div>
+            <div class="uncertainty-box">
+              <strong>Critério de honestidade experimental.</strong>
+              Uma categoria como “rápido” não possui incerteza numérica. Não
+              atribua algarismos significativos que o procedimento não mediu.
+            </div>
+          </div>
+        </section>
+
+        <section class="report-section" aria-labelledby="rel-discussao">
+          <span class="report-section__number" aria-hidden="true">07</span>
+          <div class="report-section__body">
+            <h3 id="rel-discussao">Discussão</h3>
+            <p>
+              Construa uma argumentação contínua, apoiada na tabela, no diagrama
+              de sinais e nos gráficos. Explique por que aproximação e
+              afastamento do mesmo polo produzem sinais opostos; por que a
+              inversão do polo também inverte o sinal; e por que pode haver
+              \(\vec{B}\neq\vec{0}\) e \(\Phi_B\neq0\) sem deflexão sustentada.
+            </p>
+            <p>
+              Avalie se a relação entre pico e rapidez é sustentada pelos dados
+              ou apenas sugerida qualitativamente. Discuta como
+              \(\tau_e=\frac{L}{R}\), a
+              dinâmica mecânica e o gradiente espacial do fluxo modificam o
+              sinal observado. Confronte a previsão inicial, explique
+              discrepâncias e proponha ao menos uma melhoria concreta que
+              aumente o controle ou a resolução.
+            </p>
+          </div>
+        </section>
+
+        <section class="report-section" aria-labelledby="rel-conclusao">
+          <span class="report-section__number" aria-hidden="true">08</span>
+          <div class="report-section__body">
+            <h3 id="rel-conclusao">Conclusão</h3>
+            <p>
+              Responda à questão investigativa em poucas proposições ligadas às
+              evidências. Declare o que foi verificado sobre os sinais, o que
+              os dados permitem afirmar sobre rapidez, qual limitação mais
+              influenciou a interpretação e em que extensão o modelo de
+              Faraday–Lenz com resposta RL descreve a montagem.
+            </p>
+            <div class="report-template__line"></div>
+            <div class="report-template__line"></div>
+          </div>
+        </section>
+
+        <section class="report-section" aria-labelledby="rel-referencias">
+          <span class="report-section__number" aria-hidden="true">09</span>
+          <div class="report-section__body">
+            <h3 id="rel-referencias">Referências e anexos</h3>
+            <p>
+              Cite o roteiro, o manual do equipamento e as fontes teóricas
+              consultadas. Anexe diagrama da convenção, fotografias autorizadas,
+              cálculos completos, gráficos e arquivos brutos. Identifique cada
+              anexo no texto principal.
+            </p>
+          </div>
+        </section>
+
+        <section class="report-section" aria-labelledby="rel-checklist">
+          <span class="report-section__number" aria-hidden="true">10</span>
+          <div class="report-section__body">
+            <h3 id="rel-checklist">Verificação antes da entrega</h3>
+            <ul class="report-checklist">
+              <li>□ previsão original e convenção de sinais preservadas;</li>
+              <li>□ procedimento real e controles descritos;</li>
+              <li>□ dados brutos com unidades, resolução e repetições;</li>
+              <li>□ deduções de Faraday–Lenz e da regra da cadeia;</li>
+              <li>□ tratamento, incertezas e gráficos compatíveis com as medidas;</li>
+              <li>□ discussão argumentativa, conclusão e referências completas.</li>
+            </ul>
+          </div>
+        </section>
+      </article>
     </section>
   </main>
 

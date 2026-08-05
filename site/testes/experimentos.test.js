@@ -29,7 +29,9 @@ const experiments = [
   {
     slug: "04-inducao-eletromagnetica",
     image: "exp-04-montagem.jpg",
-    equations: [/ε\s*=\s*−N\s*dΦ_B\/dt/, /L\s*di\/dt\s*\+\s*Ri\s*=\s*ε\(t\)/],
+    tabs: 3,
+    academicReport: true,
+    equations: [/\\mathcal\{E\}/, /\\frac\{d\\Phi_B\}\{dt\}/, /L\\frac\{di\}\{dt\}/],
   },
 ];
 
@@ -122,12 +124,19 @@ for (const experiment of experiments) {
     const report = await readExperiment(experiment.slug, "relatorio.md");
     const text = plainText(html);
 
-    assert.equal((html.match(/role="tab"/g) ?? []).length, 4);
-    assert.equal((html.match(/role="tabpanel"/g) ?? []).length, 4);
+    const expectedTabs = experiment.tabs ?? 4;
+    assert.equal((html.match(/role="tab"/g) ?? []).length, expectedTabs);
+    assert.equal((html.match(/role="tabpanel"/g) ?? []).length, expectedTabs);
     assert.match(text, /Montagem/);
-    assert.match(text, /Fundamentos/);
-    assert.match(text, /Dados/);
-    assert.match(text, /Relatório/);
+    if (experiment.academicReport) {
+      assert.match(text, /Fundamentação/);
+      assert.match(text, /Roteiro e relatório/);
+      assert.doesNotMatch(html, /painel-dados|>Dados</);
+    } else {
+      assert.match(text, /Fundamentos/);
+      assert.match(text, /Relatório/);
+      assert.match(text, /Dados/);
+    }
     assert.match(html, /class="experiment-safety"/);
     assert.match(text, /5–10 s/);
     assert.match(html, /<table\b/);
@@ -144,7 +153,36 @@ for (const experiment of experiments) {
 
     assert.match(report, /^# /m);
     assert.match(report, /^## Dados/m);
-    assert.match(report, /^## Análise/m);
+    if (experiment.academicReport) {
+      assert.match(report, /^## Tratamento e análise/m);
+      assert.match(report, /^## Discussão/m);
+    } else {
+      assert.match(report, /^## Análise/m);
+    }
     assert.match(report, /^## Conclusão/m);
   });
 }
+
+test("04-inducao adota relatório acadêmico contínuo e matemática LaTeX", async () => {
+  const html = await readExperiment("04-inducao-eletromagnetica", "index.html");
+  const report = await readExperiment("04-inducao-eletromagnetica", "relatorio.md");
+  const reportWords = report
+    .replace(/\|[^\n]+\|/g, " ")
+    .replace(/[^\p{L}\p{N}]+/gu, " ")
+    .trim()
+    .split(/\s+/)
+    .filter(Boolean).length;
+
+  assert.equal((html.match(/role="tab"/g) ?? []).length, 3);
+  assert.equal((html.match(/role="tabpanel"/g) ?? []).length, 3);
+  assert.doesNotMatch(html, /painel-dados|>Dados</);
+  assert.match(html, /class="reasoning-sequence"/);
+  assert.match(html, /class="report-document"/);
+  assert.match(html, /\\frac\{d\\Phi_B\}\{dt\}/);
+  assert.match(html, /\\begin\{aligned\}/);
+  assert.match(report, /^## Dados brutos/m);
+  assert.match(report, /^## Tratamento e análise/m);
+  assert.match(report, /^## Discussão/m);
+  assert.match(report, /\$\$[\s\S]*\\frac[\s\S]*\$\$/);
+  assert.ok(reportWords >= 1500, `o relatório tem somente ${reportWords} palavras`);
+});
