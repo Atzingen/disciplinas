@@ -1,0 +1,911 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Plano — Navegação e experimentos de Física III</title>
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    html {
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    svg {
+      height: auto;
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      white-space: pre-wrap;
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      border: none;
+      border-top: 1px solid #1a1a1a;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { color: #008000; } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { color: #008000; font-weight: bold; } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <style>
+    :root{color-scheme:light dark;--bg:#eef3f5;--panel:#fff;--ink:#142a3b;--muted:#627683;--line:#cad7dd;--cyan:#008b95;--violet:#7040d8;--amber:#b57900;--code:#e8eef1}
+    @media(prefers-color-scheme:dark){:root{--bg:#0e171c;--panel:#17232b;--ink:#edf4f7;--muted:#a9bac5;--line:#344751;--cyan:#58c8d1;--violet:#b19aff;--amber:#e8b951;--code:#0b1419}}
+    *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:linear-gradient(rgb(20 42 59/3%) 1px,transparent 1px),linear-gradient(90deg,rgb(20 42 59/3%) 1px,transparent 1px),var(--bg);background-size:28px 28px;color:var(--ink);font:15.5px/1.68 system-ui,-apple-system,"Segoe UI",sans-serif}
+    #TOC{position:fixed;z-index:2;inset:0 auto 0 0;width:19rem;overflow-y:auto;border-right:1px solid var(--line);background:color-mix(in srgb,var(--panel) 94%,transparent);padding:2rem 1rem 2rem 1.5rem}#TOC::before{display:block;margin:0 0 1rem .5rem;color:var(--cyan);content:"MAPA DO PLANO";font:800 .72rem/1.2 ui-monospace,Consolas,monospace;letter-spacing:.13em}#TOC ul{margin:0;padding:0;list-style:none}#TOC ul ul{padding-left:.75rem}#TOC a{display:block;border-left:3px solid transparent;border-radius:.2rem;color:var(--muted);padding:.34rem .5rem;font-size:.82rem;text-decoration:none}#TOC a:hover,#TOC a.is-active{border-left-color:var(--violet);background:var(--code);color:var(--ink)}
+    .source-banner,body>section.level1{width:min(calc(100% - 23rem),940px);margin-left:max(21rem,calc((100% + 19rem - 940px)/2))}.source-banner{margin-top:2rem;border:1px solid var(--line);background:var(--panel);padding:.75rem 1rem;color:var(--muted);font:.76rem/1.5 ui-monospace,Consolas,monospace;overflow-wrap:anywhere}body>section.level1{margin-top:1rem;margin-bottom:4rem;border:1px solid var(--line);border-top:.38rem solid var(--violet);background:var(--panel);padding:clamp(1.35rem,4vw,3.7rem);box-shadow:0 1.2rem 3rem rgb(20 42 59/8%)}
+    h1{margin:0 0 1.4rem;font-size:clamp(2.3rem,5vw,4.1rem);line-height:1.02;letter-spacing:-.055em}h2{margin-top:3.8rem;border-top:1px solid var(--line);padding-top:2.2rem;font-size:clamp(1.65rem,3vw,2.5rem);line-height:1.1}h3{margin-top:2.6rem;border-left:.3rem solid var(--cyan);padding:.5rem .8rem;color:var(--ink);font-size:1.38rem}h4{margin-top:2rem;color:var(--violet)}h1,h2,h3,h4{scroll-margin-top:1.5rem;text-wrap:balance}p,li{max-width:78ch}a{color:var(--cyan)}code{border-radius:.22rem;background:var(--code);padding:.1rem .34rem;color:var(--ink)}pre{overflow-x:auto;border:1px solid var(--line);border-left:.3rem solid var(--amber);background:var(--code);padding:1rem}pre code{padding:0}blockquote{margin:1.5rem 0;border-left:.3rem solid var(--amber);background:var(--code);padding:.8rem 1rem}table{display:block;width:100%;overflow-x:auto;border-collapse:collapse}th,td{border:1px solid var(--line);padding:.7rem .8rem;text-align:left;vertical-align:top}th{background:var(--ink);color:#fff;font-size:.78rem;letter-spacing:.06em;text-transform:uppercase}tbody tr:nth-child(even){background:var(--code)}input[type=checkbox]{width:1rem;height:1rem;vertical-align:-.12rem}
+    @media(max-width:920px){#TOC{position:static;width:auto;max-height:23rem;border:0;border-bottom:1px solid var(--line);columns:2}#TOC::before{column-span:all}.source-banner,body>section.level1{width:min(calc(100% - 1.2rem),940px);margin-left:auto;margin-right:auto}.source-banner{margin-top:.6rem}body>section.level1{padding:1.2rem}}@media(max-width:560px){#TOC{columns:1}}
+  </style>
+  <script>
+  document.addEventListener("DOMContentLoaded",()=>{const links=[...document.querySelectorAll("#TOC a")];const headings=links.map(link=>document.querySelector(link.hash)).filter(Boolean);const observer=new IntersectionObserver(entries=>{const visible=entries.filter(entry=>entry.isIntersecting).at(-1);if(!visible)return;links.forEach(link=>link.classList.toggle("is-active",link.hash===`#${visible.target.id}`))},{rootMargin:"-12% 0px -76% 0px",threshold:0});headings.forEach(heading=>observer.observe(heading))});
+  </script>
+</head>
+<body>
+<div class="source-banner">
+  Fonte oficial: docs/superpowers/plans/2026-08-05-navegacao-experimentos-fisica-3.md<br>
+  Visualização gerada em 05/08/2026 · Markdown permanece como fonte de verdade.
+</div>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a
+href="#navegação-por-capítulos-e-experimentos-de-física-iii-implementation-plan"
+id="toc-navegação-por-capítulos-e-experimentos-de-física-iii-implementation-plan">Navegação
+por capítulos e experimentos de Física III Implementation Plan</a>
+<ul>
+<li><a href="#global-constraints" id="toc-global-constraints">Global
+Constraints</a></li>
+<li><a href="#mapa-de-arquivos" id="toc-mapa-de-arquivos">Mapa de
+arquivos</a>
+<ul>
+<li><a href="#registro-e-componentes"
+id="toc-registro-e-componentes">Registro e componentes</a></li>
+<li><a href="#páginas-de-entrada" id="toc-páginas-de-entrada">Páginas de
+entrada</a></li>
+<li><a href="#conteúdo-dos-experimentos"
+id="toc-conteúdo-dos-experimentos">Conteúdo dos experimentos</a></li>
+<li><a href="#estilos-e-testes" id="toc-estilos-e-testes">Estilos e
+testes</a></li>
+<li><a href="#task-1-metadados-e-filtros-do-catálogo"
+id="toc-task-1-metadados-e-filtros-do-catálogo">Task 1: Metadados e
+filtros do catálogo</a></li>
+<li><a href="#task-2-navegação-principal-e-páginas-das-áreas"
+id="toc-task-2-navegação-principal-e-páginas-das-áreas">Task 2:
+Navegação principal e páginas das áreas</a></li>
+<li><a href="#task-3-sequência-automática-dos-exercícios"
+id="toc-task-3-sequência-automática-dos-exercícios">Task 3: Sequência
+automática dos exercícios</a></li>
+<li><a href="#task-4-infraestrutura-comum-e-imagens-dos-experimentos"
+id="toc-task-4-infraestrutura-comum-e-imagens-dos-experimentos">Task 4:
+Infraestrutura comum e imagens dos experimentos</a></li>
+<li><a href="#task-5-quatro-roteiros-em-agentes-independentes"
+id="toc-task-5-quatro-roteiros-em-agentes-independentes">Task 5: Quatro
+roteiros em agentes independentes</a></li>
+<li><a href="#task-6-integração-validação-e-publicação"
+id="toc-task-6-integração-validação-e-publicação">Task 6: Integração,
+validação e publicação</a></li>
+</ul></li>
+</ul></li>
+</ul>
+</nav>
+<section
+id="navegação-por-capítulos-e-experimentos-de-física-iii-implementation-plan"
+class="level1">
+<h1>Navegação por capítulos e experimentos de Física III Implementation
+Plan</h1>
+<blockquote>
+<p><strong>For agentic workers:</strong> REQUIRED SUB-SKILL: Use
+superpowers:subagent-driven-development (recommended) or
+superpowers:executing-plans to implement this plan task-by-task. Steps
+use checkbox (<code>- [ ]</code>) syntax for tracking.</p>
+</blockquote>
+<p><strong>Goal:</strong> Reorganizar o acervo em Exercícios,
+Experimentos e Simulações, criar navegação escalável por capítulo e
+publicar quatro roteiros avançados de laboratório baseados no conjunto
+AZEHEB.</p>
+<p><strong>Architecture:</strong> O catálogo JSON continuará como fonte
+única de metadados e passará a classificar cada item por área,
+referência e capítulo. Componentes JavaScript pequenos montarão a
+navegação principal, a sequência de exercícios e as abas dos
+experimentos. Depois da infraestrutura comum, quatro agentes trabalharão
+em pastas exclusivas, um por experimento.</p>
+<p><strong>Tech Stack:</strong> HTML5 semântico, CSS responsivo e de
+impressão, JavaScript ES modules, Node.js test runner, imagens JPEG
+extraídas com Poppler, Python/py5 existente e GitHub Pages.</p>
+<section id="global-constraints" class="level2">
+<h2>Global Constraints</h2>
+<ul>
+<li>Preservar a identidade visual de caderno de laboratório já
+publicada.</li>
+<li>Não adicionar framework, empacotador ou dependência JavaScript.</li>
+<li>Manter <code>site/simuladores.json</code> como registro único nesta
+entrega.</li>
+<li>Áreas válidas: <code>exercicios</code>, <code>experimentos</code> e
+<code>simulacoes</code>.</li>
+<li>Tipos válidos: <code>resolucao</code>, <code>experimento</code> e
+<code>simulador</code>.</li>
+<li>Exercícios devem informar <code>reference</code>,
+<code>chapter</code> e <code>exerciseNumber</code>.</li>
+<li>Experimentos devem possuir quatro abas: Montagem, Fundamentos, Dados
+e Relatório.</li>
+<li>Toda figura do manual deve ter texto alternativo, legenda e crédito
+à AZEHEB.</li>
+<li>Não publicar o PDF original nem páginas inteiras renderizadas.</li>
+<li>Não usar U+20D7; vetores textuais continuam usando
+<code>.vector-symbol</code>.</li>
+<li>Fórmulas e tabelas podem rolar localmente no celular; a página não
+pode ter overflow horizontal global.</li>
+<li>O equipamento deve ser energizado por no máximo 5–10 s, seguido de
+5–10 s desligado.</li>
+<li>Os quatro agentes editam apenas suas pastas designadas e não fazem
+commit.</li>
+<li>Toda mudança de comportamento começa por teste falhando e termina
+com verificação completa.</li>
+</ul>
+<hr />
+</section>
+<section id="mapa-de-arquivos" class="level2">
+<h2>Mapa de arquivos</h2>
+<section id="registro-e-componentes" class="level3">
+<h3>Registro e componentes</h3>
+<ul>
+<li><strong>site/simuladores.json:</strong> nove materiais com área e
+metadados de capítulo.</li>
+<li><strong>site/componentes/catalogo.js:</strong> busca e filtragem por
+tipo, área e capítulo.</li>
+<li><strong>site/componentes/navegacao-principal.js:</strong> links
+globais montados a partir do caminho da raiz.</li>
+<li><strong>site/componentes/navegacao-exercicios.js:</strong>
+sequência, anterior e próximo dentro do capítulo.</li>
+<li><strong>site/experimentos/experimento.js:</strong> montagem das
+quatro abas e ação de impressão.</li>
+</ul>
+</section>
+<section id="páginas-de-entrada" class="level3">
+<h3>Páginas de entrada</h3>
+<ul>
+<li><strong>site/index.html:</strong> seletor das três áreas e catálogo
+completo.</li>
+<li><strong>site/exercicios/index.html:</strong> capítulos
+disponíveis.</li>
+<li><strong>site/exercicios/capitulo-21/index.html:</strong> quatro
+exercícios Halliday.</li>
+<li><strong>site/experimentos/index.html:</strong> quatro roteiros de
+laboratório.</li>
+<li><strong>site/simuladores/index.html:</strong> simuladores
+interativos.</li>
+</ul>
+</section>
+<section id="conteúdo-dos-experimentos" class="level3">
+<h3>Conteúdo dos experimentos</h3>
+<ul>
+<li><strong>site/experimentos/01-campo-corrente/{index.html,relatorio.md}</strong></li>
+<li><strong>site/experimentos/02-campo-solenoide/{index.html,relatorio.md}</strong></li>
+<li><strong>site/experimentos/03-forca-magnetica-motor/{index.html,relatorio.md}</strong></li>
+<li><strong>site/experimentos/04-inducao-eletromagnetica/{index.html,relatorio.md}</strong></li>
+<li><strong>site/assets/experimentos/azeheb/</strong>: onze imagens e um
+README de proveniência.</li>
+</ul>
+</section>
+<section id="estilos-e-testes" class="level3">
+<h3>Estilos e testes</h3>
+<ul>
+<li><strong>site/assets/base.css:</strong> navegação global, entradas de
+área e capítulos.</li>
+<li><strong>site/assets/experimentos.css:</strong> roteiro, segurança,
+teoria, dados, impressão e figuras.</li>
+<li><strong>site/testes/catalogo.test.js:</strong> esquema e filtros
+ampliados.</li>
+<li><strong>site/testes/navegacao.test.js:</strong> links globais e
+adjacência do capítulo.</li>
+<li><strong>site/testes/estrutura-site.test.js:</strong> rotas e
+destinos das páginas de entrada.</li>
+<li><strong>site/testes/experimentos.test.js:</strong> contrato
+educacional e matemático das quatro páginas.</li>
+</ul>
+<hr />
+</section>
+<section id="task-1-metadados-e-filtros-do-catálogo" class="level3">
+<h3>Task 1: Metadados e filtros do catálogo</h3>
+<p><strong>Files:</strong></p>
+<ul>
+<li>Modify: <code>site/testes/catalogo.test.js</code></li>
+<li>Modify: <code>site/componentes/catalogo.js</code></li>
+<li>Modify: <code>site/simuladores.json</code></li>
+</ul>
+<p><strong>Interfaces:</strong></p>
+<ul>
+<li>Produces:
+<code>filterCatalog(items, query, type, scope)</code>.</li>
+<li><code>scope</code> shape:
+<code>{ section?: string, chapter?: number, reference?: string }</code>.</li>
+<li>Produces registry fields: <code>section</code>, optional
+<code>reference</code>, <code>chapter</code>,
+<code>exerciseNumber</code>.</li>
+<li>Existing calls with three arguments remain valid.</li>
+</ul>
+<ul class="task-list">
+<li><label><input type="checkbox" /><strong>Step 1: Escrever os testes
+de esquema e escopo que falham</strong></label></li>
+</ul>
+<p>Adicionar casos com fixtures literais:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode js"><code class="sourceCode javascript"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> byChapter <span class="op">=</span> catalog<span class="op">.</span><span class="fu">filterCatalog</span>(items<span class="op">,</span> <span class="st">&quot;&quot;</span><span class="op">,</span> <span class="st">&quot;todos&quot;</span><span class="op">,</span> {</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">section</span><span class="op">:</span> <span class="st">&quot;exercicios&quot;</span><span class="op">,</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">chapter</span><span class="op">:</span> <span class="dv">21</span><span class="op">,</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>assert<span class="op">.</span><span class="fu">deepEqual</span>(byChapter<span class="op">.</span><span class="fu">map</span>((item) <span class="kw">=&gt;</span> item<span class="op">.</span><span class="at">id</span>)<span class="op">,</span> [</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;halliday-21-13&quot;</span><span class="op">,</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;halliday-21-18&quot;</span><span class="op">,</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;halliday-21-34&quot;</span><span class="op">,</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;halliday-21-42&quot;</span><span class="op">,</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>])<span class="op">;</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> experiments <span class="op">=</span> catalog<span class="op">.</span><span class="fu">filterCatalog</span>(items<span class="op">,</span> <span class="st">&quot;&quot;</span><span class="op">,</span> <span class="st">&quot;experimento&quot;</span><span class="op">,</span> {</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>  <span class="dt">section</span><span class="op">:</span> <span class="st">&quot;experimentos&quot;</span><span class="op">,</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>assert<span class="op">.</span><span class="fu">equal</span>(experiments<span class="op">.</span><span class="at">length</span><span class="op">,</span> <span class="dv">4</span>)<span class="op">;</span></span></code></pre></div>
+<p>Exigir nove itens, três áreas válidas e os campos numéricos dos
+exercícios.</p>
+<ul class="task-list">
+<li><label><input type="checkbox" /><strong>Step 2: Executar e observar
+a falha correta</strong></label></li>
+</ul>
+<p>Run: <code>node --test site/testes/catalogo.test.js</code></p>
+<p>Expected: FAIL porque o registro ainda contém cinco itens e
+<code>filterCatalog</code> não aceita escopo.</p>
+<ul class="task-list">
+<li><label><input type="checkbox" /><strong>Step 3: Implementar a
+filtragem mínima</strong></label></li>
+</ul>
+<p>Aplicar escopo antes da busca textual:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode js"><code class="sourceCode javascript"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> matchesSection <span class="op">=</span> <span class="op">!</span>scope<span class="op">.</span><span class="at">section</span> <span class="op">||</span> item<span class="op">.</span><span class="at">section</span> <span class="op">===</span> scope<span class="op">.</span><span class="at">section</span><span class="op">;</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> matchesChapter <span class="op">=</span> scope<span class="op">.</span><span class="at">chapter</span> <span class="op">===</span> <span class="kw">undefined</span> <span class="op">||</span> item<span class="op">.</span><span class="at">chapter</span> <span class="op">===</span> scope<span class="op">.</span><span class="at">chapter</span><span class="op">;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> matchesReference <span class="op">=</span> <span class="op">!</span>scope<span class="op">.</span><span class="at">reference</span> <span class="op">||</span> item<span class="op">.</span><span class="at">reference</span> <span class="op">===</span> scope<span class="op">.</span><span class="at">reference</span><span class="op">;</span></span></code></pre></div>
+<p>Adicionar <code>experimento</code> ao rótulo de cartões e à validação
+do registro.</p>
+<ul class="task-list">
+<li><label><input type="checkbox" /><strong>Step 4: Registrar os quatro
+experimentos e enriquecer os cinco itens
+existentes</strong></label></li>
+</ul>
+<p>Usar exatamente os IDs e caminhos:</p>
+<pre class="text"><code>experimento-01-campo-corrente       experimentos/01-campo-corrente/
+experimento-02-campo-solenoide      experimentos/02-campo-solenoide/
+experimento-03-forca-magnetica-motor experimentos/03-forca-magnetica-motor/
+experimento-04-inducao-eletromagnetica experimentos/04-inducao-eletromagnetica/</code></pre>
+<ul class="task-list">
+<li><label><input type="checkbox" /><strong>Step 5: Rodar os testes do
+catálogo</strong></label></li>
+</ul>
+<p>Run: <code>node --test site/testes/catalogo.test.js</code></p>
+<p>Expected: todos os casos PASS, incluindo busca sem acentos por
+<code>inducao</code>, <code>solenoide</code> e
+<code>capitulo 21</code>.</p>
+<ul class="task-list">
+<li><label><input type="checkbox" /><strong>Step 6:
+Commit</strong></label></li>
+</ul>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode powershell"><code class="sourceCode powershell"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>git add site<span class="op">/</span>testes<span class="op">/</span>catalogo<span class="op">.</span><span class="fu">test</span><span class="op">.</span><span class="fu">js</span> site<span class="op">/</span>componentes<span class="op">/</span>catalogo<span class="op">.</span><span class="fu">js</span> site<span class="op">/</span>simuladores<span class="op">.</span><span class="fu">json</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>git commit <span class="op">-</span>m <span class="st">&quot;feat: organize catalog by teaching area&quot;</span></span></code></pre></div>
+<hr />
+</section>
+<section id="task-2-navegação-principal-e-páginas-das-áreas"
+class="level3">
+<h3>Task 2: Navegação principal e páginas das áreas</h3>
+<p><strong>Files:</strong></p>
+<ul>
+<li>Create: <code>site/testes/navegacao.test.js</code></li>
+<li>Create: <code>site/testes/estrutura-site.test.js</code></li>
+<li>Create: <code>site/componentes/navegacao-principal.js</code></li>
+<li>Create: <code>site/exercicios/index.html</code></li>
+<li>Create: <code>site/exercicios/capitulo-21/index.html</code></li>
+<li>Create: <code>site/experimentos/index.html</code></li>
+<li>Create: <code>site/simuladores/index.html</code></li>
+<li>Modify: <code>site/index.html</code></li>
+<li>Modify: <code>site/assets/base.css</code></li>
+</ul>
+<p><strong>Interfaces:</strong></p>
+<ul>
+<li>Produces: <code>buildMainNavigation(rootPath, activeSection)</code>
+returning link data.</li>
+<li>Produces: <code>mountMainNavigation(root)</code> using
+<code>data-root-path</code> and <code>data-active-section</code>.</li>
+<li>Each landing catalog calls
+<code>mountCatalog(root, { registryUrl, scope })</code>.</li>
+</ul>
+<ul class="task-list">
+<li><label><input type="checkbox" /><strong>Step 1: Escrever testes de
+links e rotas que falham</strong></label></li>
+</ul>
+<p>Verificar o resultado literal:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode js"><code class="sourceCode javascript"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>assert<span class="op">.</span><span class="fu">deepEqual</span>(<span class="fu">buildMainNavigation</span>(<span class="st">&quot;../../&quot;</span><span class="op">,</span> <span class="st">&quot;exercicios&quot;</span>)<span class="op">,</span> [</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  { <span class="dt">id</span><span class="op">:</span> <span class="st">&quot;inicio&quot;</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">&quot;Início&quot;</span><span class="op">,</span> <span class="dt">href</span><span class="op">:</span> <span class="st">&quot;../../&quot;</span><span class="op">,</span> <span class="dt">current</span><span class="op">:</span> <span class="kw">false</span> }<span class="op">,</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  { <span class="dt">id</span><span class="op">:</span> <span class="st">&quot;exercicios&quot;</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">&quot;Exercícios&quot;</span><span class="op">,</span> <span class="dt">href</span><span class="op">:</span> <span class="st">&quot;../../exercicios/&quot;</span><span class="op">,</span> <span class="dt">current</span><span class="op">:</span> <span class="kw">true</span> }<span class="op">,</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  { <span class="dt">id</span><span class="op">:</span> <span class="st">&quot;experimentos&quot;</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">&quot;Experimentos&quot;</span><span class="op">,</span> <span class="dt">href</span><span class="op">:</span> <span class="st">&quot;../../experimentos/&quot;</span><span class="op">,</span> <span class="dt">current</span><span class="op">:</span> <span class="kw">false</span> }<span class="op">,</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  { <span class="dt">id</span><span class="op">:</span> <span class="st">&quot;simulacoes&quot;</span><span class="op">,</span> <span class="dt">label</span><span class="op">:</span> <span class="st">&quot;Simulações&quot;</span><span class="op">,</span> <span class="dt">href</span><span class="op">:</span> <span class="st">&quot;../../simuladores/&quot;</span><span class="op">,</span> <span class="dt">current</span><span class="op">:</span> <span class="kw">false</span> }<span class="op">,</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>])<span class="op">;</span></span></code></pre></div>
+<p>O teste de estrutura deve ler as quatro páginas de entrada e
+confirmar seus links principais e um único <code>h1</code>.</p>
+<ul class="task-list">
+<li><label><input type="checkbox" /><strong>Step 2: Rodar e confirmar
+falha por módulo e páginas ausentes</strong></label></li>
+</ul>
+<p>Run:
+<code>node --test site/testes/navegacao.test.js site/testes/estrutura-site.test.js</code></p>
+<ul class="task-list">
+<li><label><input type="checkbox" /><strong>Step 3: Implementar o
+componente global</strong></label></li>
+</ul>
+<p>Montar um <code>&lt;nav aria-label="Áreas do acervo"&gt;</code>, usar
+<code>aria-current="page"</code> na área ativa e não aceitar HTML vindo
+de dados externos.</p>
+<ul class="task-list">
+<li><label><input type="checkbox" /><strong>Step 4: Criar as três
+páginas de área e a página do Capítulo 21</strong></label></li>
+</ul>
+<ul>
+<li><code>exercicios/index.html</code>: um cartão Halliday/Capítulo 21
+com quatro exercícios;</li>
+<li><code>exercicios/capitulo-21/index.html</code>: catálogo com escopo
+<code>{section:"exercicios", chapter:21}</code>;</li>
+<li><code>experimentos/index.html</code>: catálogo com escopo
+<code>{section:"experimentos"}</code>;</li>
+<li><code>simuladores/index.html</code>: catálogo com escopo
+<code>{section:"simulacoes"}</code>.</li>
+</ul>
+<ul class="task-list">
+<li><label><input type="checkbox" /><strong>Step 5: Atualizar a página
+inicial</strong></label></li>
+</ul>
+<p>Trocar “Escolha um experimento” por “Explore o acervo”, acrescentar
+três placas de área antes do catálogo e adicionar o filtro
+<code>Experimentos</code>.</p>
+<ul class="task-list">
+<li><label><input type="checkbox" /><strong>Step 6: Implementar os
+estilos responsivos</strong></label></li>
+</ul>
+<p>Usar a paleta existente. A área ativa deve ser reconhecível por cor e
+<code>aria-current</code>; em 390 px, a navegação pode rolar
+internamente sem aumentar a largura do documento.</p>
+<ul class="task-list">
+<li><label><input type="checkbox" /><strong>Step 7: Rodar os testes e
+commitar</strong></label></li>
+</ul>
+<p>Run: <code>npm test</code></p>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode powershell"><code class="sourceCode powershell"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>git add site<span class="op">/</span>index<span class="op">.</span><span class="fu">html</span> site<span class="op">/</span>exercicios<span class="op">/</span>index<span class="op">.</span><span class="fu">html</span> site<span class="op">/</span>exercicios<span class="op">/</span>capitulo-21<span class="op">/</span>index<span class="op">.</span><span class="fu">html</span> site<span class="op">/</span>experimentos<span class="op">/</span>index<span class="op">.</span><span class="fu">html</span> site<span class="op">/</span>simuladores<span class="op">/</span>index<span class="op">.</span><span class="fu">html</span> site<span class="op">/</span>componentes<span class="op">/</span>navegacao-principal<span class="op">.</span><span class="fu">js</span> site<span class="op">/</span>assets<span class="op">/</span>base<span class="op">.</span><span class="fu">css</span> site<span class="op">/</span>testes<span class="op">/</span>navegacao<span class="op">.</span><span class="fu">test</span><span class="op">.</span><span class="fu">js</span> site<span class="op">/</span>testes<span class="op">/</span>estrutura-site<span class="op">.</span><span class="fu">test</span><span class="op">.</span><span class="fu">js</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>git commit <span class="op">-</span>m <span class="st">&quot;feat: add area and chapter navigation&quot;</span></span></code></pre></div>
+<hr />
+</section>
+<section id="task-3-sequência-automática-dos-exercícios" class="level3">
+<h3>Task 3: Sequência automática dos exercícios</h3>
+<p><strong>Files:</strong></p>
+<ul>
+<li>Create: <code>site/componentes/navegacao-exercicios.js</code></li>
+<li>Modify: <code>site/testes/navegacao.test.js</code></li>
+<li>Modify: <code>site/exercicios/halliday-21-13/index.html</code></li>
+<li>Modify: <code>site/exercicios/halliday-21-18/index.html</code></li>
+<li>Modify: <code>site/exercicios/halliday-21-34/index.html</code></li>
+<li>Modify: <code>site/exercicios/halliday-21-42/index.html</code></li>
+<li>Modify: <code>site/assets/simulador.css</code></li>
+</ul>
+<p><strong>Interfaces:</strong></p>
+<ul>
+<li>Produces: <code>chapterSequence(items, reference, chapter)</code>
+sorted by <code>exerciseNumber</code>.</li>
+<li>Produces: <code>adjacentExercises(sequence, currentId)</code>
+returning <code>{ previous, current, next }</code>, with
+<code>null</code> at each boundary.</li>
+<li>Produces: <code>mountExerciseNavigation(root)</code> consuming
+<code>data-current-id</code>, <code>data-registry-url</code> and
+<code>data-chapter-url</code>.</li>
+</ul>
+<ul class="task-list">
+<li><label><input type="checkbox" /><strong>Step 1: Escrever os testes
+de ordenação e fronteiras</strong></label></li>
+</ul>
+<div class="sourceCode" id="cb7"><pre class="sourceCode js"><code class="sourceCode javascript"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>assert<span class="op">.</span><span class="fu">equal</span>(<span class="fu">adjacentExercises</span>(sequence<span class="op">,</span> <span class="st">&quot;halliday-21-13&quot;</span>)<span class="op">.</span><span class="at">previous</span><span class="op">,</span> <span class="kw">null</span>)<span class="op">;</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>assert<span class="op">.</span><span class="fu">equal</span>(<span class="fu">adjacentExercises</span>(sequence<span class="op">,</span> <span class="st">&quot;halliday-21-13&quot;</span>)<span class="op">.</span><span class="at">next</span><span class="op">.</span><span class="at">id</span><span class="op">,</span> <span class="st">&quot;halliday-21-18&quot;</span>)<span class="op">;</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>assert<span class="op">.</span><span class="fu">equal</span>(<span class="fu">adjacentExercises</span>(sequence<span class="op">,</span> <span class="st">&quot;halliday-21-42&quot;</span>)<span class="op">.</span><span class="at">next</span><span class="op">,</span> <span class="kw">null</span>)<span class="op">;</span></span></code></pre></div>
+<ul class="task-list">
+<li><label><input type="checkbox" /><strong>Step 2: Rodar e confirmar a
+falha por API ausente</strong></label></li>
+</ul>
+<p>Run: <code>node --test site/testes/navegacao.test.js</code></p>
+<ul class="task-list">
+<li><label><input type="checkbox" /><strong>Step 3: Implementar funções
+puras e montagem</strong></label></li>
+</ul>
+<p>Renderizar os números 13, 18, 34 e 42 como links, marcar o atual com
+<code>aria-current="page"</code> e acrescentar anterior/próximo quando
+existirem.</p>
+<ul class="task-list">
+<li><label><input type="checkbox" /><strong>Step 4: Inserir os pontos de
+montagem nas quatro páginas</strong></label></li>
+</ul>
+<p>Cada página recebe:</p>
+<div class="sourceCode" id="cb8"><pre
+class="sourceCode html"><code class="sourceCode html"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">div</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="ot">  data-exercise-navigation</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="ot">  data-current-id</span><span class="op">=</span><span class="st">&quot;halliday-21-18&quot;</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="ot">  data-registry-url</span><span class="op">=</span><span class="st">&quot;../../simuladores.json&quot;</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="ot">  data-chapter-url</span><span class="op">=</span><span class="st">&quot;../capitulo-21/&quot;</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="dt">&gt;&lt;/</span><span class="kw">div</span><span class="dt">&gt;</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">script</span><span class="ot"> type=</span><span class="st">&quot;module&quot;</span><span class="ot"> src</span><span class="op">=</span><span class="st">&quot;../navegacao-exercicios.js&quot;</span><span class="dt">&gt;&lt;/</span><span class="kw">script</span><span class="dt">&gt;</span></span></code></pre></div>
+<p>Alterar somente <code>data-current-id</code> em cada exercício.</p>
+<ul class="task-list">
+<li><label><input type="checkbox" /><strong>Step 5: Verificar teclado,
+limites e testes</strong></label></li>
+</ul>
+<p>Run: <code>npm test</code></p>
+<ul class="task-list">
+<li><label><input type="checkbox" /><strong>Step 6:
+Commit</strong></label></li>
+</ul>
+<div class="sourceCode" id="cb9"><pre
+class="sourceCode powershell"><code class="sourceCode powershell"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>git add site<span class="op">/</span>componentes<span class="op">/</span>navegacao-exercicios<span class="op">.</span><span class="fu">js</span> site<span class="op">/</span>testes<span class="op">/</span>navegacao<span class="op">.</span><span class="fu">test</span><span class="op">.</span><span class="fu">js</span> site<span class="op">/</span>exercicios<span class="op">/</span>halliday-21-13<span class="op">/</span>index<span class="op">.</span><span class="fu">html</span> site<span class="op">/</span>exercicios<span class="op">/</span>halliday-21-18<span class="op">/</span>index<span class="op">.</span><span class="fu">html</span> site<span class="op">/</span>exercicios<span class="op">/</span>halliday-21-34<span class="op">/</span>index<span class="op">.</span><span class="fu">html</span> site<span class="op">/</span>exercicios<span class="op">/</span>halliday-21-42<span class="op">/</span>index<span class="op">.</span><span class="fu">html</span> site<span class="op">/</span>assets<span class="op">/</span>simulador<span class="op">.</span><span class="fu">css</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>git commit <span class="op">-</span>m <span class="st">&quot;feat: navigate exercises within each chapter&quot;</span></span></code></pre></div>
+<hr />
+</section>
+<section id="task-4-infraestrutura-comum-e-imagens-dos-experimentos"
+class="level3">
+<h3>Task 4: Infraestrutura comum e imagens dos experimentos</h3>
+<p><strong>Files:</strong></p>
+<ul>
+<li>Create: <code>site/testes/experimentos.test.js</code></li>
+<li>Create: <code>site/experimentos/experimento.js</code></li>
+<li>Create: <code>site/assets/experimentos.css</code></li>
+<li>Create: <code>site/assets/experimentos/azeheb/README.md</code></li>
+<li>Create: eleven JPEG files under
+<code>site/assets/experimentos/azeheb/</code></li>
+</ul>
+<p><strong>Interfaces:</strong></p>
+<ul>
+<li><code>experimento.js</code> mounts <code>setupTabs(root)</code> for
+every <code>[data-experiment-tabs]</code>.</li>
+<li>A <code>[data-print-report]</code> button activates the Report tab
+and calls <code>globalThis.print()</code>.</li>
+<li>Agent pages consume only the shared CSS, JS and prepared image
+paths.</li>
+</ul>
+<ul class="task-list">
+<li><label><input type="checkbox" /><strong>Step 1: Escrever o contrato
+que falha para os quatro roteiros</strong></label></li>
+</ul>
+<p>Para cada slug, exigir:</p>
+<div class="sourceCode" id="cb10"><pre
+class="sourceCode js"><code class="sourceCode javascript"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>assert<span class="op">.</span><span class="fu">equal</span>((html<span class="op">.</span><span class="fu">match</span>(<span class="ss">/role=&quot;tabpanel&quot;/g</span>) <span class="op">??</span> [])<span class="op">.</span><span class="at">length</span><span class="op">,</span> <span class="dv">4</span>)<span class="op">;</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>assert<span class="op">.</span><span class="fu">match</span>(html<span class="op">,</span> <span class="ss">/class=&quot;experiment-safety&quot;/</span>)<span class="op">;</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>assert<span class="op">.</span><span class="fu">match</span>(html<span class="op">,</span> <span class="ss">/Fonte: manual AZEHEB/</span>)<span class="op">;</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>assert<span class="op">.</span><span class="fu">match</span>(html<span class="op">,</span> <span class="ss">/&lt;table/</span>)<span class="op">;</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>assert<span class="op">.</span><span class="fu">match</span>(html<span class="op">,</span> <span class="ss">/data-print-report/</span>)<span class="op">;</span></span></code></pre></div>
+<p>Adicionar requisitos matemáticos literais por experimento:</p>
+<ul>
+<li>01: <code>B(r) = μ₀I/(2πr)</code> e <code>tan φ</code>;</li>
+<li>02: <code>B = μ₀nI</code> e expressão de campo finito;</li>
+<li>03: <code>F = BIL sin θ</code>, <code>τ = μ × B</code> e
+<code>U = −μ·B</code>;</li>
+<li>04: <code>ε = −N dΦ</code> e <code>L di/dt + Ri</code>.</li>
+</ul>
+<ul class="task-list">
+<li><label><input type="checkbox" /><strong>Step 2: Rodar e observar
+quatro falhas por páginas ausentes</strong></label></li>
+</ul>
+<p>Run: <code>node --test site/testes/experimentos.test.js</code></p>
+<ul class="task-list">
+<li><label><input type="checkbox" /><strong>Step 3: Extrair e nomear as
+imagens</strong></label></li>
+</ul>
+<p>Usar <code>pdfimages -j</code> sobre o PDF local e copiar os objetos
+já identificados para:</p>
+<pre class="text"><code>exp-01-oersted-montagem.jpg
+exp-02-solenoide-montagem.jpg
+exp-02-solenoide-limalha.jpg
+exp-02-solenoide-visao-geral.jpg
+exp-03-balanco-magnetico.jpg
+exp-03-balanco-deslocado.jpg
+exp-03-motor-elementar.jpg
+exp-03-motor-forcas.jpg
+exp-04-montagem.jpg
+exp-04-aproximacao.jpg
+exp-04-afastamento.jpg</code></pre>
+<ul class="task-list">
+<li><label><input type="checkbox" /><strong>Step 4: Documentar
+proveniência</strong></label></li>
+</ul>
+<p>O README deve mapear arquivo, página PDF, objeto e legenda, além de
+registrar a permissão educacional declarada pelo manual.</p>
+<ul class="task-list">
+<li><label><input type="checkbox" /><strong>Step 5: Implementar JS e CSS
+comuns</strong></label></li>
+</ul>
+<p>Adicionar abas, avisos, figuras, tabelas, blocos de derivação,
+checklist e <code>@media print</code>. Esconder navegação, botões e abas
+não relacionadas durante a impressão do relatório.</p>
+<ul class="task-list">
+<li><label><input type="checkbox" /><strong>Step 6: Verificar sintaxe e
+commitar a infraestrutura</strong></label></li>
+</ul>
+<p>Run: <code>node --check site/experimentos/experimento.js</code></p>
+<div class="sourceCode" id="cb12"><pre
+class="sourceCode powershell"><code class="sourceCode powershell"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>git add site<span class="op">/</span>testes<span class="op">/</span>experimentos<span class="op">.</span><span class="fu">test</span><span class="op">.</span><span class="fu">js</span> site<span class="op">/</span>experimentos<span class="op">/</span>experimento<span class="op">.</span><span class="fu">js</span> site<span class="op">/</span>assets<span class="op">/</span>experimentos<span class="op">.</span><span class="fu">css</span> site<span class="op">/</span>assets<span class="op">/</span>experimentos<span class="op">/</span>azeheb</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>git commit <span class="op">-</span>m <span class="st">&quot;feat: add shared physics experiment infrastructure&quot;</span></span></code></pre></div>
+<hr />
+</section>
+<section id="task-5-quatro-roteiros-em-agentes-independentes"
+class="level3">
+<h3>Task 5: Quatro roteiros em agentes independentes</h3>
+<p><strong>Files:</strong></p>
+<ul>
+<li>Agent 1 owns: <code>site/experimentos/01-campo-corrente/</code></li>
+<li>Agent 2 owns:
+<code>site/experimentos/02-campo-solenoide/</code></li>
+<li>Agent 3 owns:
+<code>site/experimentos/03-forca-magnetica-motor/</code></li>
+<li>Agent 4 owns:
+<code>site/experimentos/04-inducao-eletromagnetica/</code></li>
+</ul>
+<p><strong>Shared contract for all agents:</strong></p>
+<ul>
+<li>Create <code>index.html</code> and <code>relatorio.md</code> only
+inside the assigned folder.</li>
+<li>Do not edit shared files or commit.</li>
+<li>Use four accessible tabs, global navigation mount, source credits
+and print button.</li>
+<li>Include material, safety, predictions, procedure, theory, data
+table, uncertainty, questions and delivery checklist.</li>
+<li>Do not fabricate measured values.</li>
+<li>State when an amperimeter, ruler or Hall sensor is an optional
+extension not included in the kit.</li>
+</ul>
+<ul class="task-list">
+<li><label><input type="checkbox" /><strong>Step 1: Dispatch Agent 1 —
+Oersted</strong></label></li>
+</ul>
+<p>Required derivation sequence:</p>
+<pre class="text"><code>dB = (μ₀/4π) I(dℓ × r̂)/r²
+∮B·dℓ = μ₀I
+B(r)2πr = μ₀I
+B(r) = μ₀I/(2πr)
+tan φ = B_fio/B_T,h</code></pre>
+<p>Explicitly correct the manual’s <code>1/r²</code> statement and
+derive the optional uncertainty <code>σ_B/B</code> from I and r.</p>
+<ul class="task-list">
+<li><label><input type="checkbox" /><strong>Step 2: Dispatch Agent 2 —
+solenoide</strong></label></li>
+</ul>
+<p>Required derivation sequence:</p>
+<pre class="text"><code>B_ideal = μ₀(N/ℓ)I = μ₀nI
+B(z) = (μ₀nI/2)[(z+ℓ/2)/√(a²+(z+ℓ/2)²) − (z−ℓ/2)/√(a²+(z−ℓ/2)²)]</code></pre>
+<p>Explain the center limit, edge effects and why filings indicate
+direction but not field magnitude.</p>
+<ul class="task-list">
+<li><label><input type="checkbox" /><strong>Step 3: Dispatch Agent 3 —
+força e motor</strong></label></li>
+</ul>
+<p>Required derivation sequence:</p>
+<pre class="text"><code>F = qv × B
+dF = I dℓ × B
+F = BIL sin θ
+μ = NIA
+τ = μ × B
+U = −μ·B
+Jθ¨ + bθ˙ = τ_em(θ) − τ_carga</code></pre>
+<p>Keep Part I and Part II distinct and explain the role of
+commutation.</p>
+<ul class="task-list">
+<li><label><input type="checkbox" /><strong>Step 4: Dispatch Agent 4 —
+indução</strong></label></li>
+</ul>
+<p>Required derivation sequence:</p>
+<pre class="text"><code>Φ_B = ∫ B·dA
+ε = −N dΦ_B/dt
+ε = −Nv dΦ_B/dz
+L di/dt + Ri = ε(t)</code></pre>
+<p>Relate direction, pole and speed to the sign and peak of the
+galvanometer, without interpreting a stationary magnet as zero
+field.</p>
+<ul class="task-list">
+<li><label><input type="checkbox" /><strong>Step 5: Review every
+returned folder</strong></label></li>
+</ul>
+<p>Check mathematical signs, dimensions, image paths, source
+attribution, safety, blank tables, report requirements and file
+ownership. Reject changes outside the assigned folder.</p>
+<ul class="task-list">
+<li><label><input type="checkbox" /><strong>Step 6: Run the contract
+after all four integrations</strong></label></li>
+</ul>
+<p>Run: <code>node --test site/testes/experimentos.test.js</code></p>
+<p>Expected: 4 PASS, no skipped tests.</p>
+<ul class="task-list">
+<li><label><input type="checkbox" /><strong>Step 7: Commit the four
+folders together</strong></label></li>
+</ul>
+<div class="sourceCode" id="cb17"><pre
+class="sourceCode powershell"><code class="sourceCode powershell"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>git add site<span class="op">/</span>experimentos<span class="op">/</span><span class="dv">01</span><span class="op">-</span>campo-corrente site<span class="op">/</span>experimentos<span class="op">/</span><span class="dv">02</span><span class="op">-</span>campo-solenoide site<span class="op">/</span>experimentos<span class="op">/</span><span class="dv">03</span><span class="op">-</span>forca-magnetica-motor site<span class="op">/</span>experimentos<span class="op">/</span><span class="dv">04</span><span class="op">-</span>inducao-eletromagnetica</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>git commit <span class="op">-</span>m <span class="st">&quot;feat: add four advanced electromagnetism lab guides&quot;</span></span></code></pre></div>
+<hr />
+</section>
+<section id="task-6-integração-validação-e-publicação" class="level3">
+<h3>Task 6: Integração, validação e publicação</h3>
+<p><strong>Files:</strong></p>
+<ul>
+<li>Modify: <code>README.md</code></li>
+<li>Modify shared files only if integration reveals a tested
+defect.</li>
+</ul>
+<ul class="task-list">
+<li><label><input type="checkbox" /><strong>Step 1: Atualizar o
+README</strong></label></li>
+</ul>
+<p>Documentar as três áreas, o Capítulo 21, os quatro experimentos e o
+caminho para impressão dos relatórios.</p>
+<ul class="task-list">
+<li><label><input type="checkbox" /><strong>Step 2: Executar a regressão
+completa</strong></label></li>
+</ul>
+<p>Run:</p>
+<div class="sourceCode" id="cb18"><pre
+class="sourceCode powershell"><code class="sourceCode powershell"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>npm test</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="va">$repoRoot</span> <span class="op">=</span> <span class="st">&#39;C:\Users\Gustavo\Desktop\dev\Eletromagnetismo-aulas&#39;</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="va">$env</span><span class="op">:</span><span class="va">PYTHONPATH</span> <span class="op">=</span> <span class="st">&quot;</span><span class="va">$PWD</span><span class="st">\simulacao_forcas&quot;</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="op">&amp;</span> <span class="st">&quot;</span><span class="va">$repoRoot</span><span class="st">\.venv\Scripts\python.exe&quot;</span> <span class="op">-</span>m unittest discover <span class="op">-</span>s tests <span class="op">-</span>v</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="op">&amp;</span> <span class="st">&quot;</span><span class="va">$repoRoot</span><span class="st">\.venv\Scripts\python.exe&quot;</span> simulacao_forcas\run_py5<span class="op">.</span><span class="fu">py</span> <span class="op">--</span>check</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>node <span class="op">--</span>check site<span class="op">/</span>componentes<span class="op">/</span>navegacao-principal<span class="op">.</span><span class="fu">js</span></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>node <span class="op">--</span>check site<span class="op">/</span>componentes<span class="op">/</span>navegacao-exercicios<span class="op">.</span><span class="fu">js</span></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>node <span class="op">--</span>check site<span class="op">/</span>experimentos<span class="op">/</span>experimento<span class="op">.</span><span class="fu">js</span></span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>git <span class="fu">diff</span> <span class="op">--</span>check</span></code></pre></div>
+<p>Os comandos Python devem ser executados dentro de
+<code>Força Magnética/Halliday/Capítulo 21/Exercício 13</code>.</p>
+<ul class="task-list">
+<li><label><input type="checkbox" /><strong>Step 3: Validar localmente
+em navegador real</strong></label></li>
+</ul>
+<p>Verificar início, três áreas, Capítulo 21, quatro exercícios e quatro
+experimentos. Em cada experimento, alternar as quatro abas, carregar
+imagens e acionar o modo de relatório. Repetir com viewport de 390 px e
+confirmar
+<code>documentElement.scrollWidth === documentElement.clientWidth</code>.</p>
+<ul class="task-list">
+<li><label><input type="checkbox" /><strong>Step 4: Revisar o PDF de
+origem contra as montagens publicadas</strong></label></li>
+</ul>
+<p>Conferir visualmente que cada fotografia pertence ao experimento
+correto e que nenhuma figura foi espelhada, recortada de modo enganoso
+ou atribuída à etapa errada.</p>
+<ul class="task-list">
+<li><label><input type="checkbox" /><strong>Step 5: Commit final de
+documentação</strong></label></li>
+</ul>
+<div class="sourceCode" id="cb19"><pre
+class="sourceCode powershell"><code class="sourceCode powershell"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>git add README<span class="op">.</span><span class="fu">md</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>git commit <span class="op">-</span>m <span class="st">&quot;docs: document chapters and physics experiments&quot;</span></span></code></pre></div>
+<ul class="task-list">
+<li><label><input type="checkbox" /><strong>Step 6: Push e acompanhar
+Pages</strong></label></li>
+</ul>
+<div class="sourceCode" id="cb20"><pre
+class="sourceCode powershell"><code class="sourceCode powershell"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>git push origin main</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>gh run watch <span class="op">--</span>exit-status</span></code></pre></div>
+<ul class="task-list">
+<li><label><input type="checkbox" /><strong>Step 7: Verificar a
+publicação real</strong></label></li>
+</ul>
+<p>Exigir HTTP 200 para a raiz, três páginas de área, página do Capítulo
+21 e os quatro experimentos. No navegador publicado, confirmar nove
+cartões, navegação do capítulo, abas, imagens e ausência de
+overflow.</p>
+</section>
+</section>
+</section>
+</body>
+</html>
