@@ -1,0 +1,281 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Resolução ilustrada do exercício 34, capítulo 21, do Halliday: equilíbrio de um elétron por simetria.">
+  <title>Halliday 21.34 · Laboratório de Eletromagnetismo</title>
+  <link rel="stylesheet" href="../../assets/base.css">
+  <link rel="stylesheet" href="../../assets/simulador.css">
+</head>
+<body class="lesson-page halliday-page">
+  <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+
+  <header class="lesson-header">
+    <nav class="breadcrumb" aria-label="Navegação estrutural">
+      <a href="../../">Laboratório</a>
+      <span aria-hidden="true">/</span>
+      <span>Halliday</span>
+      <span aria-hidden="true">/</span>
+      <span>Capítulo 21</span>
+      <span aria-hidden="true">/</span>
+      <strong>Exercício 34</strong>
+    </nav>
+    <div class="lesson-title-row">
+      <div>
+        <p class="eyebrow">Simetria e equilíbrio</p>
+        <h1>Ângulos possíveis</h1>
+      </div>
+      <p class="lesson-intro">
+        Duas forças diagonais podem equilibrar uma força horizontal porque suas
+        componentes verticais se cancelam e as horizontais se reforçam.
+      </p>
+    </div>
+  </header>
+
+  <main class="lesson-main" id="conteudo">
+    <div data-tabs>
+      <div class="tab-list" role="tablist" aria-label="Conteúdo do exercício">
+        <button class="tab-button" id="tab-enunciado" type="button" role="tab" aria-selected="true" aria-controls="painel-enunciado">Enunciado</button>
+        <button class="tab-button" id="tab-resolucao" type="button" role="tab" aria-selected="false" aria-controls="painel-resolucao" tabindex="-1">Resolução</button>
+        <button class="tab-button" id="tab-diagrama" type="button" role="tab" aria-selected="false" aria-controls="painel-diagrama" tabindex="-1">Diagrama</button>
+      </div>
+
+      <section class="tab-panel" id="painel-enunciado" role="tabpanel" aria-labelledby="tab-enunciado">
+        <article class="problem-sheet">
+          <div class="problem-number">
+            <span>Halliday</span>
+            <strong>21.34</strong>
+          </div>
+          <div class="problem-copy">
+            <p>
+              Dois elétrons, 1 e 2, estão sobre o eixo x. Dois íons, 3 e 4,
+              ambos de carga <strong>−q</strong>, ocupam posições simétricas
+              acima e abaixo do eixo. A distância horizontal entre o elétron 2
+              e cada uma das outras partículas é R.
+            </p>
+            <p>
+              O elétron 2 pode se mover; os outros três permanecem fixos. Para
+              impedir seu movimento, determine os três menores valores
+              positivos de θ fisicamente possíveis, sabendo que
+              <strong>q ≤ 5e</strong> e que a carga é quantizada.
+            </p>
+          </div>
+          <div class="answer-strip">
+            <span>Respostas a, b e c</span>
+            <strong>θ₁ = 37,47° · θ₂ = 50,95° · θ₃ = 56,61°</strong>
+          </div>
+        </article>
+      </section>
+
+      <section class="tab-panel" id="painel-resolucao" role="tabpanel" aria-labelledby="tab-resolucao" hidden>
+        <article class="solution-article">
+          <header class="solution-heading">
+            <p class="eyebrow">Resolução passo a passo</p>
+            <h2>Primeiro a simetria, depois a conta</h2>
+            <p>
+              Considere q como o módulo positivo da carga dos íons; a carga de
+              cada um deles é −q.
+            </p>
+          </header>
+
+          <section>
+            <span class="solution-step">01 · sentidos</span>
+            <h3>Quais forças atuam no elétron 2?</h3>
+            <p>
+              Todas as partículas têm carga negativa, então todas as interações
+              são repulsivas. O elétron 1, à esquerda, empurra o elétron 2 para
+              +x. Os íons 3 e 4, à direita, empurram o elétron 2 para a esquerda
+              e também produzem componentes verticais opostas.
+            </p>
+            <div class="math-block">
+              F<sub>12</sub> = ke<sup>2</sup>/R<sup>2</sup>
+              &nbsp; (sentido +x).
+            </div>
+          </section>
+
+          <section>
+            <span class="solution-step">02 · simetria</span>
+            <h3>As componentes verticais se anulam</h3>
+            <p>
+              Os íons têm a mesma carga, a mesma distância ao elétron 2 e
+              formam ângulos +θ e −θ. Portanto, suas forças têm módulos iguais:
+            </p>
+            <div class="math-block math-block--result">
+              F<sub>3y</sub> + F<sub>4y</sub> = 0,
+              <br>
+              F<sub>3x</sub> = F<sub>4x</sub> &lt; 0.
+            </div>
+            <p>
+              Assim, basta equilibrar F<sub>12</sub> com a soma das duas
+              componentes horizontais.
+            </p>
+          </section>
+
+          <section>
+            <span class="solution-step">03 · geometria</span>
+            <h3>Calcule a distância inclinada</h3>
+            <p>
+              A projeção horizontal do segmento entre o elétron 2 e cada íon é
+              R. Se r é a distância completa, então:
+            </p>
+            <div class="math-block">
+              cos θ = R/r
+              &nbsp; ⇒ &nbsp;
+              r = R/cos θ.
+            </div>
+            <p>O módulo da força produzida por um íon é:</p>
+            <div class="math-block">
+              F<sub>íon</sub> = keq/r<sup>2</sup>
+              = keq cos<sup>2</sup> θ/R<sup>2</sup>.
+            </div>
+          </section>
+
+          <section>
+            <span class="solution-step">04 · componente horizontal</span>
+            <h3>De onde surge o cos³ θ?</h3>
+            <p>
+              A distância inclinada já forneceu cos<sup>2</sup> θ. Projetar a
+              força sobre x fornece mais um fator cos θ:
+            </p>
+            <div class="math-block">
+              |F<sub>íon,x</sub>|
+              = F<sub>íon</sub> cos θ
+              = keq cos<sup>3</sup> θ/R<sup>2</sup>.
+            </div>
+            <p>No equilíbrio, a força do elétron 1 iguala duas dessas componentes:</p>
+            <div class="math-block">
+              ke<sup>2</sup>/R<sup>2</sup>
+              = 2keq cos<sup>3</sup> θ/R<sup>2</sup>.
+            </div>
+            <p>Cancelando k, R<sup>2</sup> e um fator e:</p>
+            <div class="math-block math-block--result">
+              q/e = 1/(2 cos<sup>3</sup> θ).
+            </div>
+          </section>
+
+          <section>
+            <span class="solution-step">05 · quantização</span>
+            <h3>Nem todo valor de q é fisicamente permitido</h3>
+            <p>
+              A carga de um íon deve ser um múltiplo inteiro da carga elementar:
+              q = ne. Como q ≤ 5e, os valores possíveis são n = 1, 2, 3, 4 e 5.
+            </p>
+            <div class="math-block">
+              n = 1/(2 cos<sup>3</sup> θ)
+              &nbsp; ⇒ &nbsp;
+              θ<sub>n</sub> = arccos[(1/(2n))<sup>1/3</sup>].
+            </div>
+            <table class="value-table">
+              <thead>
+                <tr>
+                  <th>n = q/e</th>
+                  <th>θ<sub>n</sub></th>
+                  <th>Classificação</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="is-answer"><td>1</td><td>37,47°</td><td>menor</td></tr>
+                <tr class="is-answer"><td>2</td><td>50,95°</td><td>2º menor</td></tr>
+                <tr class="is-answer"><td>3</td><td>56,61°</td><td>3º menor</td></tr>
+                <tr><td>4</td><td>60,00°</td><td>seguinte</td></tr>
+                <tr><td>5</td><td>62,34°</td><td>seguinte</td></tr>
+              </tbody>
+            </table>
+            <div class="result-callout">
+              <span>Resposta</span>
+              <strong>(a) 37,47° &nbsp; (b) 50,95° &nbsp; (c) 56,61°</strong>
+            </div>
+          </section>
+        </article>
+      </section>
+
+      <section class="tab-panel" id="painel-diagrama" role="tabpanel" aria-labelledby="tab-diagrama" hidden>
+        <article class="static-diagram-shell">
+          <header class="static-diagram-heading">
+            <div>
+              <p class="eyebrow">Geometria vetorial</p>
+              <h2>Como três repulsões se equilibram</h2>
+            </div>
+            <p>As diagonais têm a mesma inclinação e o mesmo módulo. Observe separadamente as componentes em x e y.</p>
+          </header>
+
+          <svg class="teaching-diagram" viewBox="0 0 940 620" role="img" aria-labelledby="diagram-34-title diagram-34-desc">
+            <title id="diagram-34-title">Geometria e forças do exercício 21.34</title>
+            <desc id="diagram-34-desc">O elétron 1 está à esquerda do elétron 2. Dois íons negativos estão à direita, simetricamente acima e abaixo. A força do elétron 1 aponta para a direita; as forças dos íons apontam diagonalmente para a esquerda, com componentes verticais que se cancelam.</desc>
+            <defs>
+              <marker id="arrow-34-one" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+                <path d="M 0 0 L 10 5 L 0 10 z" fill="#008b95"></path>
+              </marker>
+              <marker id="arrow-34-two" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+                <path d="M 0 0 L 10 5 L 0 10 z" fill="#e07a1f"></path>
+              </marker>
+              <marker id="dimension-34" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                <path d="M 10 0 L 0 5 L 10 10 z" fill="#7a3ce7"></path>
+              </marker>
+            </defs>
+
+            <rect class="diagram-panel" x="28" y="28" width="884" height="470" rx="4"></rect>
+            <text class="diagram-panel-title" x="55" y="62">POSIÇÕES E FORÇAS SOBRE O ELÉTRON 2</text>
+            <line class="diagram-axis" x1="65" y1="275" x2="870" y2="275"></line>
+            <line class="diagram-axis" x1="700" y1="75" x2="700" y2="475"></line>
+            <text class="diagram-axis-label" x="850" y="261">+x</text>
+            <text class="diagram-axis-label" x="715" y="92">+y</text>
+
+            <circle class="diagram-charge diagram-charge--negative" cx="120" cy="275" r="22"></circle>
+            <text class="diagram-sign" x="120" y="283">−</text>
+            <text class="diagram-label" x="120" y="318">1 · −e</text>
+            <circle class="diagram-charge diagram-charge--negative" cx="350" cy="275" r="22"></circle>
+            <text class="diagram-sign" x="350" y="283">−</text>
+            <text class="diagram-label" x="350" y="318">2 · −e</text>
+            <circle class="diagram-charge diagram-charge--negative" cx="700" cy="125" r="22"></circle>
+            <text class="diagram-sign" x="700" y="133">−</text>
+            <text class="diagram-label" x="755" y="129">3 · −q</text>
+            <circle class="diagram-charge diagram-charge--negative" cx="700" cy="425" r="22"></circle>
+            <text class="diagram-sign" x="700" y="433">−</text>
+            <text class="diagram-label" x="755" y="429">4 · −q</text>
+
+            <line class="diagram-guide" x1="350" y1="275" x2="700" y2="125"></line>
+            <line class="diagram-guide" x1="350" y1="275" x2="700" y2="425"></line>
+            <path class="diagram-angle" d="M 410 275 A 60 60 0 0 0 405 251"></path>
+            <path class="diagram-angle" d="M 410 275 A 60 60 0 0 1 405 299"></path>
+            <text class="diagram-value" x="424" y="251">θ</text>
+            <text class="diagram-value" x="424" y="307">θ</text>
+
+            <line class="diagram-dimension" x1="130" y1="365" x2="340" y2="365" marker-start="url(#dimension-34)" marker-end="url(#dimension-34)"></line>
+            <text class="diagram-value" x="235" y="390">R</text>
+            <line class="diagram-dimension" x1="360" y1="365" x2="690" y2="365" marker-start="url(#dimension-34)" marker-end="url(#dimension-34)"></line>
+            <text class="diagram-value" x="525" y="390">R horizontal</text>
+
+            <line class="diagram-force diagram-force--one" x1="365" y1="235" x2="525" y2="235" marker-end="url(#arrow-34-one)"></line>
+            <text class="diagram-force-label" x="445" y="219">F_12</text>
+            <line class="diagram-force diagram-force--two" x1="337" y1="263" x2="208" y2="207" marker-end="url(#arrow-34-two)"></line>
+            <text class="diagram-force-label" x="238" y="190">F_3</text>
+            <line class="diagram-force diagram-force--two" x1="337" y1="287" x2="208" y2="343" marker-end="url(#arrow-34-two)"></line>
+            <text class="diagram-force-label" x="238" y="370">F_4</text>
+
+            <rect class="diagram-panel" x="28" y="518" width="884" height="74" rx="4"></rect>
+            <text class="diagram-force-label" x="60" y="550">VERTICAL:</text>
+            <text class="diagram-note" x="155" y="550">F_3y + F_4y = 0</text>
+            <text class="diagram-force-label" x="390" y="550">HORIZONTAL:</text>
+            <text class="diagram-note" x="520" y="550">F_12 = |F_3x| + |F_4x|</text>
+            <text class="diagram-value" x="520" y="578">equilíbrio total</text>
+          </svg>
+          <p class="diagram-caption">
+            Cada força diagonal fornece uma componente horizontal
+            F<sub>íon</sub>cos θ. As componentes verticais iguais e opostas não
+            participam do equilíbrio em x.
+          </p>
+        </article>
+      </section>
+    </div>
+  </main>
+
+  <footer class="lesson-footer site-footer">
+    <p>Halliday 21.34 · capítulo 21 · exercício 34</p>
+    <a href="../../">Voltar ao catálogo</a>
+  </footer>
+
+  <script type="module" src="../exercicio-estatico.js"></script>
+</body>
+</html>
