@@ -80,3 +80,37 @@ export async function typesetMath(root) {
   await mathJax.typesetPromise(targets);
   return true;
 }
+
+function requestVisualFrame(callback) {
+  if (typeof globalThis.requestAnimationFrame === "function") {
+    return globalThis.requestAnimationFrame(callback);
+  }
+  queueMicrotask(callback);
+  return null;
+}
+
+export function createMathRenderScheduler(
+  typesetter = typesetMath,
+  requestFrame = requestVisualFrame,
+) {
+  let framePending = false;
+  let latestRoot = null;
+  let typesetting = Promise.resolve();
+
+  return function scheduleMathRender(root) {
+    latestRoot = root;
+    if (framePending) return false;
+
+    framePending = true;
+    requestFrame(() => {
+      framePending = false;
+      const target = latestRoot;
+      latestRoot = null;
+      typesetting = typesetting
+        .then(() => typesetter(target))
+        .catch(() => false);
+      return typesetting;
+    });
+    return true;
+  };
+}

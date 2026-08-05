@@ -8,26 +8,43 @@ import {
 } from "../nucleo/vetores.js";
 import {
   formatDecimal,
-  formatDegrees,
-  formatVector,
 } from "../nucleo/formato.js";
+import { createMathRenderScheduler } from "./matematica.js";
 
 const SVG_WIDTH = 680;
 const SVG_HEIGHT = 440;
 
-function vectorSymbolMarkup(symbol) {
+const VECTOR_A = "\\vec{A}";
+const VECTOR_B = "\\vec{B}";
+const VECTOR_R = "\\vec{R}";
+
+function latexDecimal(value, digits) {
+  return formatDecimal(value, digits)
+    .replace("−", "-")
+    .replace(",", "{,}");
+}
+function latexVector(vector, digits) {
   return (
-    '<span class="vector-symbol" role="img" aria-label="vetor ' +
-    symbol +
-    '">' +
-    symbol +
-    "</span>"
+    "\\left(" +
+    latexDecimal(vector.x, digits) +
+    "\\,;\\," +
+    latexDecimal(vector.y, digits) +
+    "\\right)"
   );
 }
 
-const VECTOR_A = vectorSymbolMarkup("A");
-const VECTOR_B = vectorSymbolMarkup("B");
-const VECTOR_R = vectorSymbolMarkup("R");
+function latexDegrees(radians, digits = 1) {
+  if (radians === null) return "\\text{indefinido}";
+  return latexDecimal((radians * 180) / Math.PI, digits) + "^{\\circ}";
+}
+
+function displayMath(contents) {
+  return '<div class="math-display">\\[' + contents + "\\]</div>";
+}
+
+function inlineMath(contents) {
+  return "\\(" + contents + "\\)";
+}
 
 function clamp(value, minimum, maximum) {
   return Math.min(maximum, Math.max(minimum, value));
@@ -413,43 +430,87 @@ function classificationText(metrics) {
 }
 
 function sumReadoutMarkup(state, metrics) {
+  const a = latexVector(state.a, 1);
+  const b = latexVector(state.b, 1);
+  const sum = latexVector(metrics.sum, 1);
+
   return [
-    '<div class="equation-block"><span>Componentes</span><strong>' +
-      VECTOR_A +
-      " = " +
-      formatVector(state.a, 1) +
-      "</strong><strong>" +
-      VECTOR_B +
-      " = " +
-      formatVector(state.b, 1) +
-      "</strong></div>",
-    '<div class="equation-block equation-block--result"><span>Soma por componentes</span><strong>' +
-      VECTOR_R +
-      " = (Aₓ + Bₓ; Aᵧ + Bᵧ)</strong><strong>= (" +
-      formatDecimal(state.a.x, 1) +
-      " + " +
-      formatDecimal(state.b.x, 1) +
-      "; " +
-      formatDecimal(state.a.y, 1) +
-      " + " +
-      formatDecimal(state.b.y, 1) +
-      ")</strong><strong>= " +
-      formatVector(metrics.sum, 1) +
-      "</strong></div>",
-    '<dl class="metric-list"><div><dt>|' +
-      VECTOR_A +
-      "|</dt><dd>" +
+    '<div class="equation-block"><span>Componentes</span>' +
+      displayMath(
+        "\\begin{aligned}" +
+          VECTOR_A +
+          "&=" +
+          a +
+          ",&" +
+          VECTOR_B +
+          "&=" +
+          b +
+          "\\\\ " +
+          "A_x&=" +
+          latexDecimal(state.a.x, 1) +
+          ",&A_y&=" +
+          latexDecimal(state.a.y, 1) +
+          "\\\\ " +
+          "B_x&=" +
+          latexDecimal(state.b.x, 1) +
+          ",&B_y&=" +
+          latexDecimal(state.b.y, 1) +
+          "\\end{aligned}",
+      ) +
+      "</div>",
+    '<div class="equation-block equation-block--result"><span>Soma por componentes</span>' +
+      displayMath(
+        "\\begin{aligned}" +
+          VECTOR_R +
+          "&=" +
+          VECTOR_A +
+          "+" +
+          VECTOR_B +
+          "\\\\ R_x&=A_x+B_x=" +
+          latexDecimal(state.a.x, 1) +
+          "+" +
+          latexDecimal(state.b.x, 1) +
+          "=" +
+          latexDecimal(metrics.sum.x, 1) +
+          "\\\\ R_y&=A_y+B_y=" +
+          latexDecimal(state.a.y, 1) +
+          "+" +
+          latexDecimal(state.b.y, 1) +
+          "=" +
+          latexDecimal(metrics.sum.y, 1) +
+          "\\\\ " +
+          VECTOR_R +
+          "&=" +
+          sum +
+          "\\\\ \\lVert" +
+          VECTOR_R +
+          "\\rVert&=\\sqrt{R_x^2+R_y^2}=" +
+          latexDecimal(metrics.magnitudeSum, 2) +
+          "\\end{aligned}",
+      ) +
+      "</div>",
+    '<dl class="metric-list"><div><dt>' +
+      inlineMath("\\lVert" + VECTOR_A + "\\rVert") +
+      "</dt><dd>" +
       formatDecimal(metrics.magnitudeA, 2) +
-      "</dd></div><div><dt>|" +
-      VECTOR_B +
-      "|</dt><dd>" +
+      "</dd></div><div><dt>" +
+      inlineMath("\\lVert" + VECTOR_B + "\\rVert") +
+      "</dt><dd>" +
       formatDecimal(metrics.magnitudeB, 2) +
-      "</dd></div><div><dt>|" +
-      VECTOR_R +
-      "|</dt><dd>" +
+      "</dd></div><div><dt>" +
+      inlineMath("\\lVert" + VECTOR_R + "\\rVert") +
+      "</dt><dd>" +
       formatDecimal(metrics.magnitudeSum, 2) +
-      "</dd></div><div><dt>θ</dt><dd>" +
-      formatDegrees(metrics.angleRadians, 1) +
+      "</dd></div><div><dt>" +
+      inlineMath("\\theta") +
+      "</dt><dd>" +
+      formatDecimal(
+        metrics.angleRadians === null
+          ? Number.NaN
+          : (metrics.angleRadians * 180) / Math.PI,
+        1,
+      ).replace("NaN", "indefinido") +
+      (metrics.angleRadians === null ? "" : "°") +
       "</dd></div></dl>",
   ].join("");
 }
@@ -462,37 +523,55 @@ function dotReadoutMarkup(state, metrics) {
     metrics.magnitudeA ** 2 +
     metrics.magnitudeB ** 2 +
     2 * metrics.dot;
+  const cosineLine =
+    cosine === null
+      ? "\\theta&\\text{ não está definido para vetor nulo}"
+      : "\\cos\\theta&=\\frac{" +
+        VECTOR_A +
+        "\\cdot" +
+        VECTOR_B +
+        "}{\\lVert" +
+        VECTOR_A +
+        "\\rVert\\lVert" +
+        VECTOR_B +
+        "\\rVert}=" +
+        latexDecimal(cosine, 3);
+
   return [
-    '<div class="equation-block"><span>Por componentes</span><strong>' +
-      VECTOR_A +
-      " · " +
-      VECTOR_B +
-      " = AₓBₓ + AᵧBᵧ</strong><strong>= " +
-      formatDecimal(state.a.x, 1) +
-      " × " +
-      formatDecimal(state.b.x, 1) +
-      " + " +
-      formatDecimal(state.a.y, 1) +
-      " × " +
-      formatDecimal(state.b.y, 1) +
-      " = " +
-      formatDecimal(metrics.dot, 2) +
-      "</strong></div>",
-    '<div class="equation-block"><span>Por projeção</span><strong>' +
-      VECTOR_A +
-      " · " +
-      VECTOR_B +
-      " = |" +
-      VECTOR_A +
-      "||" +
-      VECTOR_B +
-      "| cos θ</strong><strong>= " +
-      formatDecimal(metrics.magnitudeA, 2) +
-      " × " +
-      formatDecimal(metrics.magnitudeB, 2) +
-      " × " +
-      (cosine === null ? "indefinido" : formatDecimal(cosine, 3)) +
-      "</strong></div>",
+    '<div class="equation-block"><span>Produto escalar por componentes</span>' +
+      displayMath(
+        "\\begin{aligned}" +
+          VECTOR_A +
+          "\\cdot" +
+          VECTOR_B +
+          "&=A_xB_x+A_yB_y\\\\ &=" +
+          latexDecimal(state.a.x, 1) +
+          "\\cdot" +
+          latexDecimal(state.b.x, 1) +
+          "+" +
+          latexDecimal(state.a.y, 1) +
+          "\\cdot" +
+          latexDecimal(state.b.y, 1) +
+          "\\\\ &=" +
+          latexDecimal(metrics.dot, 2) +
+          "\\end{aligned}",
+      ) +
+      "</div>",
+    '<div class="equation-block"><span>Produto escalar por projeção</span>' +
+      displayMath(
+        "\\begin{aligned}" +
+          VECTOR_A +
+          "\\cdot" +
+          VECTOR_B +
+          "&=\\lVert" +
+          VECTOR_A +
+          "\\rVert\\lVert" +
+          VECTOR_B +
+          "\\rVert\\cos\\theta\\\\ " +
+          cosineLine +
+          "\\end{aligned}",
+      ) +
+      "</div>",
     '<p class="classification classification--' +
       metrics.dotClassification +
       '"><strong>Produto ' +
@@ -500,130 +579,162 @@ function dotReadoutMarkup(state, metrics) {
       ".</strong> " +
       classificationText(metrics) +
       "</p>",
-    '<div class="equation-block equation-block--result"><span>Na intensidade da soma</span><strong>|' +
-      VECTOR_A +
-      " + " +
-      VECTOR_B +
-      "|² = |" +
-      VECTOR_A +
-      "|² + |" +
-      VECTOR_B +
-      "|² + 2" +
-      VECTOR_A +
-      " · " +
-      VECTOR_B +
-      "</strong><strong>" +
-      formatDecimal(identityLeft, 2) +
-      " = " +
-      formatDecimal(metrics.magnitudeA ** 2, 2) +
-      " + " +
-      formatDecimal(metrics.magnitudeB ** 2, 2) +
-      " + 2 × " +
-      formatDecimal(metrics.dot, 2) +
-      " = " +
-      formatDecimal(identityRight, 2) +
-      "</strong></div>",
-    '<aside class="area-warning"><strong>Área ≠ produto escalar</strong><span>|det(' +
-      VECTOR_A +
-      "," +
-      VECTOR_B +
-      ")| = |" +
-      VECTOR_A +
-      "||" +
-      VECTOR_B +
-      "||sen θ| = " +
-      formatDecimal(Math.abs(metrics.determinant), 2) +
-      " unidades². A área usa seno; o produto escalar usa cosseno.</span></aside>",
+    '<div class="equation-block equation-block--result"><span>Produto escalar no módulo da soma</span>' +
+      displayMath(
+        "\\begin{aligned}" +
+          "\\lVert" +
+          VECTOR_R +
+          "\\rVert^2&=\\lVert" +
+          VECTOR_A +
+          "\\rVert^2+\\lVert" +
+          VECTOR_B +
+          "\\rVert^2+2" +
+          VECTOR_A +
+          "\\cdot" +
+          VECTOR_B +
+          "\\\\ " +
+          latexDecimal(identityLeft, 2) +
+          "&=" +
+          latexDecimal(metrics.magnitudeA ** 2, 2) +
+          "+" +
+          latexDecimal(metrics.magnitudeB ** 2, 2) +
+          "+2(" +
+          latexDecimal(metrics.dot, 2) +
+          ")\\\\" +
+          "&=" +
+          latexDecimal(identityRight, 2) +
+          "\\end{aligned}",
+      ) +
+      "</div>",
+    '<aside class="area-warning"><strong>Área não é produto escalar</strong><p>A área usa a componente perpendicular e o seno; o produto escalar usa a projeção paralela e o cosseno.</p>' +
+      displayMath(
+        "\\begin{aligned}\\mathcal{A}&=\\lvert\\det(" +
+          VECTOR_A +
+          "," +
+          VECTOR_B +
+          ")\\rvert\\\\ &=\\lvert A_xB_y-A_yB_x\\rvert\\\\ &=\\lVert" +
+          VECTOR_A +
+          "\\rVert\\lVert" +
+          VECTOR_B +
+          "\\rVert\\lvert\\sin\\theta\\rvert\\\\ &=" +
+          latexDecimal(Math.abs(metrics.determinant), 2) +
+          "\\end{aligned}",
+      ) +
+      "</aside>",
   ].join("");
 }
 
 function theoryMarkup(state, metrics) {
   const cosine =
     metrics.angleRadians === null ? null : Math.cos(metrics.angleRadians);
+  const projectionValue =
+    cosine === null
+      ? "\\text{indefinido}"
+      : latexDecimal(metrics.magnitudeB * cosine, 2);
+
   return [
-    '<div class="theory-intro"><p class="eyebrow">Uma dedução em seis passos</p><h2>Da componente à resultante</h2><p>Os números abaixo acompanham ' +
-      VECTOR_A +
-      " = " +
-      formatVector(state.a, 1) +
+    '<div class="theory-intro"><p class="eyebrow">Uma dedução em seis passos</p><h2>Da componente à resultante</h2><p>Os valores acompanham ' +
+      inlineMath(VECTOR_A + "=" + latexVector(state.a, 1)) +
       " e " +
-      VECTOR_B +
-      " = " +
-      formatVector(state.b, 1) +
+      inlineMath(VECTOR_B + "=" + latexVector(state.b, 1)) +
       ".</p></div>",
     '<div class="theory-flow">',
-    '<article><span>01</span><h3>Componentes</h3><p>Um vetor no plano é descrito pelos deslocamentos horizontal e vertical: ' +
-      VECTOR_A +
-      " = (Aₓ; Aᵧ).</p><strong>" +
-      VECTOR_A +
-      " = " +
-      formatVector(state.a, 1) +
-      "</strong></article>",
-    '<article><span>02</span><h3>Módulo</h3><p>As componentes formam os catetos de um triângulo retângulo. Por Pitágoras:</p><strong>|' +
-      VECTOR_A +
-      "| = √(Aₓ² + Aᵧ²) = " +
-      formatDecimal(metrics.magnitudeA, 2) +
-      "</strong></article>",
-    '<article><span>03</span><h3>Soma</h3><p>Somamos deslocamentos da mesma direção. A diagonal do paralelogramo confirma a conta.</p><strong>' +
-      VECTOR_A +
-      " + " +
-      VECTOR_B +
-      " = " +
-      formatVector(metrics.sum, 1) +
-      "</strong></article>",
-    '<article><span>04</span><h3>Projeção e cosseno</h3><p>|' +
-      VECTOR_B +
-      "| cos θ é o comprimento assinado da projeção de " +
-      VECTOR_B +
-      " sobre " +
-      VECTOR_A +
-      ". Multiplicar por |" +
-      VECTOR_A +
-      "| produz o produto escalar.</p><strong>|" +
-      VECTOR_A +
-      "||" +
-      VECTOR_B +
-      "| cos θ = " +
-      (cosine === null
-        ? "indefinido"
-        : formatDecimal(
-            metrics.magnitudeA * metrics.magnitudeB * cosine,
-            2,
-          )) +
-      "</strong></article>",
-    '<article><span>05</span><h3>Módulo da soma</h3><p>Ao expandir (' +
-      VECTOR_A +
-      " + " +
-      VECTOR_B +
-      ") · (" +
-      VECTOR_A +
-      " + " +
-      VECTOR_B +
-      "), aparecem dois termos cruzados " +
-      VECTOR_A +
-      " · " +
-      VECTOR_B +
-      ".</p><strong>|" +
-      VECTOR_A +
-      " + " +
-      VECTOR_B +
-      "|² = |" +
-      VECTOR_A +
-      "|² + |" +
-      VECTOR_B +
-      "|² + 2" +
-      VECTOR_A +
-      " · " +
-      VECTOR_B +
-      "</strong></article>",
-    '<article class="theory-warning"><span>06</span><h3>E a área?</h3><p>A área sombreada do paralelogramo mede a componente perpendicular: usa seno e o determinante, não o produto escalar.</p><strong>|det(' +
-      VECTOR_A +
-      "," +
-      VECTOR_B +
-      ")| = " +
-      formatDecimal(Math.abs(metrics.determinant), 2) +
-      " unidades²</strong></article>",
+    '<article><span>01</span><h3>Componentes</h3><p>Um vetor no plano reúne deslocamentos horizontal e vertical.</p>' +
+      displayMath(
+        VECTOR_A +
+          "=A_x\\hat{\\vec{x}}+A_y\\hat{\\vec{y}}=" +
+          latexVector(state.a, 1),
+      ) +
+      "</article>",
+    '<article><span>02</span><h3>Módulo</h3><p>As componentes são catetos ortogonais; o teorema de Pitágoras fornece o comprimento.</p>' +
+      displayMath(
+        "\\lVert" +
+          VECTOR_A +
+          "\\rVert=\\sqrt{A_x^2+A_y^2}=" +
+          latexDecimal(metrics.magnitudeA, 2),
+      ) +
+      "</article>",
+    '<article><span>03</span><h3>Soma</h3><p>Somam-se componentes associadas ao mesmo eixo. A diagonal do paralelogramo representa a resultante.</p>' +
+      displayMath(
+        "\\begin{aligned}" +
+          VECTOR_R +
+          "&=" +
+          VECTOR_A +
+          "+" +
+          VECTOR_B +
+          "\\\\ &=(A_x+B_x)\\hat{\\vec{x}}+(A_y+B_y)\\hat{\\vec{y}}" +
+          "\\\\ &=" +
+          latexVector(metrics.sum, 1) +
+          "\\end{aligned}",
+      ) +
+      "</article>",
+    '<article><span>04</span><h3>Projeção e cosseno</h3><p>A projeção assinada de um vetor sobre o outro mede quanto eles apontam na mesma direção.</p>' +
+      displayMath(
+        "\\begin{aligned}\\operatorname{comp}_{\\vec{A}}" +
+          VECTOR_B +
+          "&=\\frac{" +
+          VECTOR_A +
+          "\\cdot" +
+          VECTOR_B +
+          "}{\\lVert" +
+          VECTOR_A +
+          "\\rVert}\\\\ &=\\lVert" +
+          VECTOR_B +
+          "\\rVert\\cos\\theta=" +
+          projectionValue +
+          "\\end{aligned}",
+      ) +
+      "</article>",
+    '<article><span>05</span><h3>Módulo da soma</h3><p>Ao expandir o produto da resultante por ela mesma surgem dois termos cruzados iguais.</p>' +
+      displayMath(
+        "\\begin{aligned}\\lVert" +
+          VECTOR_A +
+          "+" +
+          VECTOR_B +
+          "\\rVert^2&=(" +
+          VECTOR_A +
+          "+" +
+          VECTOR_B +
+          ")\\cdot(" +
+          VECTOR_A +
+          "+" +
+          VECTOR_B +
+          ")\\\\ &=\\lVert" +
+          VECTOR_A +
+          "\\rVert^2+\\lVert" +
+          VECTOR_B +
+          "\\rVert^2+2" +
+          VECTOR_A +
+          "\\cdot" +
+          VECTOR_B +
+          "\\end{aligned}",
+      ) +
+      "</article>",
+    '<article class="theory-warning"><span>06</span><h3>E a área?</h3><p>O paralelogramo mede a componente perpendicular. Por isso sua área envolve seno e determinante, não produto escalar.</p>' +
+      displayMath(
+        "\\mathcal{A}=\\lvert\\det(" +
+          VECTOR_A +
+          "," +
+          VECTOR_B +
+          ")\\rvert=\\lVert" +
+          VECTOR_A +
+          "\\rVert\\lVert" +
+          VECTOR_B +
+          "\\rVert\\lvert\\sin\\theta\\rvert=" +
+          latexDecimal(Math.abs(metrics.determinant), 2),
+      ) +
+      "</article>",
     "</div>",
   ].join("");
+}
+
+export function createVectorReadoutMarkup(state) {
+  const metrics = calculateVectorMetrics(state);
+  return {
+    sum: sumReadoutMarkup(state, metrics),
+    dot: dotReadoutMarkup(state, metrics),
+    theory: theoryMarkup(state, metrics),
+  };
 }
 
 function labShell(kind) {
@@ -647,7 +758,7 @@ function labShell(kind) {
   ].join("");
 }
 
-export function mountVectorLabs(roots, initial = {}) {
+export function mountVectorLabs(roots, initial = {}, options = {}) {
   let state = createVectorLabState(initial);
   let dragging = null;
 
@@ -657,16 +768,24 @@ export function mountVectorLabs(roots, initial = {}) {
     roots.sum.querySelector("[data-vector-plane]"),
     roots.dot.querySelector("[data-vector-plane]"),
   ];
+  const mathRoot =
+    options.mathRoot ?? roots.sum.closest?.("[data-tabs]") ?? roots.theory;
+  const scheduleMath = createMathRenderScheduler(
+    options.typesetMath,
+    options.requestFrame,
+  );
 
   function render() {
     const metrics = calculateVectorMetrics(state);
+    const markup = createVectorReadoutMarkup(state);
     planes[0].innerHTML = sumSvgMarkup(state, metrics);
     planes[1].innerHTML = dotSvgMarkup(state, metrics);
     roots.sum.querySelector("[data-vector-readout]").innerHTML =
-      sumReadoutMarkup(state, metrics);
+      markup.sum;
     roots.dot.querySelector("[data-vector-readout]").innerHTML =
-      dotReadoutMarkup(state, metrics);
-    roots.theory.innerHTML = theoryMarkup(state, metrics);
+      markup.dot;
+    roots.theory.innerHTML = markup.theory;
+    scheduleMath(mathRoot);
   }
 
   function pointFromEvent(plane, event) {

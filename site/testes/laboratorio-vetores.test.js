@@ -19,6 +19,7 @@ try {
 const expectedFunctions = [
   "createVectorLabState",
   "calculateVectorMetrics",
+  "createVectorReadoutMarkup",
   "moveVectorEndpoint",
   "mountVectorLabs",
 ];
@@ -108,6 +109,24 @@ test("movimento altera a extremidade e respeita os limites", { skip: !apiAvailab
     laboratory.moveVectorEndpoint(state, "c", { x: 1, y: 1 }),
     false,
   );
+});
+
+test("leituras vetoriais usam LaTeX para soma, módulo, produto e área", { skip: !apiAvailable }, () => {
+  const state = laboratory.createVectorLabState({
+    a: { x: 3.7, y: -1.9 },
+    b: { x: 1, y: 4.2 },
+  });
+  const markup = laboratory.createVectorReadoutMarkup(state);
+  const combined = markup.sum + markup.dot + markup.theory;
+
+  assert.match(combined, /\\begin\{aligned\}/);
+  assert.match(combined, /\\vec\{R\}/);
+  assert.match(combined, /\\frac\{/);
+  assert.match(combined, /\\cos\\theta/);
+  assert.match(combined, /\\lVert\\vec\{R\}\\rVert/);
+  assert.match(combined, /\\sin\\theta/);
+  assert.doesNotMatch(combined, /class="vector-symbol"/);
+  assert.doesNotMatch(combined, /\u20d7/);
 });
 
 test("formatação apresenta vírgula, vetores, graus e notação científica", { skip: !apiAvailable }, () => {
