@@ -28,5 +28,58 @@
       "equilíbrio",
       "resolução"
     ]
+  },
+  {
+    "id": "halliday-21-18",
+    "title": "Halliday — capítulo 21 — exercício 18",
+    "kind": "resolucao",
+    "theme": "Forças colineares e razão entre cargas",
+    "description": "Resolução ilustrada que separa duas contribuições elétricas por meio da soma e da diferença das forças medidas.",
+    "path": "exercicios/halliday-21-18/",
+    "tags": [
+      "Halliday",
+      "capítulo 21",
+      "exercício 18",
+      "21.18",
+      "forças colineares",
+      "lei de Coulomb",
+      "resolução"
+    ]
+  },
+  {
+    "id": "halliday-21-34",
+    "title": "Halliday — capítulo 21 — exercício 34",
+    "kind": "resolucao",
+    "theme": "Simetria, componentes e equilíbrio",
+    "description": "Resolução visual do equilíbrio de um elétron por forças simétricas e da quantização que seleciona os ângulos possíveis.",
+    "path": "exercicios/halliday-21-34/",
+    "tags": [
+      "Halliday",
+      "capítulo 21",
+      "exercício 34",
+      "21.34",
+      "simetria",
+      "componentes vetoriais",
+      "quantização da carga",
+      "resolução"
+    ]
+  },
+  {
+    "id": "halliday-21-42",
+    "title": "Halliday — capítulo 21 — exercício 42",
+    "kind": "resolucao",
+    "theme": "Pêndulos eletrostáticos",
+    "description": "Resolução passo a passo que combina equilíbrio, lei de Coulomb e a aproximação de pequeno ângulo.",
+    "path": "exercicios/halliday-21-42/",
+    "tags": [
+      "Halliday",
+      "capítulo 21",
+      "exercício 42",
+      "21.42",
+      "pêndulo",
+      "equilíbrio",
+      "pequeno ângulo",
+      "resolução"
+    ]
   }
 ]

@@ -42,6 +42,12 @@ tema/
   [simulador web genérico](site/simuladores/cargas-e-vetores/);
 - **Halliday — Capítulo 21 — Exercício 13:**
   [resolução e preset web](site/exercicios/halliday-21-13/).
+- **Halliday — Capítulo 21 — Exercício 18:**
+  [forças colineares e razão entre cargas](site/exercicios/halliday-21-18/).
+- **Halliday — Capítulo 21 — Exercício 34:**
+  [simetria, componentes e ângulos possíveis](site/exercicios/halliday-21-34/).
+- **Halliday — Capítulo 21 — Exercício 42:**
+  [pêndulos carregados e equilíbrio](site/exercicios/halliday-21-42/).
 
 Cada pasta de exercício contém as instruções necessárias para executar seus
 códigos e simulações.

@@ -25,7 +25,7 @@ const apiAvailable =
 test("catálogo expõe busca e possui registro inicial", () => {
   assert.equal(typeof catalog.normalizeSearchText, "function");
   assert.equal(typeof catalog.filterCatalog, "function");
-  assert.equal(items.length, 2);
+  assert.equal(items.length, 5);
 });
 
 test("busca ignora acentos e caixa", { skip: !apiAvailable }, () => {
@@ -38,8 +38,24 @@ test("busca encontra livro e capítulo nas etiquetas", { skip: !apiAvailable }, 
   const byBook = catalog.filterCatalog(items, "Halliday", "todos");
   const byChapter = catalog.filterCatalog(items, "21", "todos");
 
-  assert.deepEqual(byBook.map((item) => item.id), ["halliday-21-13"]);
-  assert.deepEqual(byChapter.map((item) => item.id), ["halliday-21-13"]);
+  const expected = [
+    "halliday-21-13",
+    "halliday-21-18",
+    "halliday-21-34",
+    "halliday-21-42",
+  ];
+  assert.deepEqual(byBook.map((item) => item.id), expected);
+  assert.deepEqual(byChapter.map((item) => item.id), expected);
+});
+
+test("busca encontra as novas resoluções por número e conceito", { skip: !apiAvailable }, () => {
+  const exercise18 = catalog.filterCatalog(items, "21.18", "todos");
+  const pendulum = catalog.filterCatalog(items, "pendulo", "todos");
+  const symmetry = catalog.filterCatalog(items, "simetria", "todos");
+
+  assert.deepEqual(exercise18.map((item) => item.id), ["halliday-21-18"]);
+  assert.deepEqual(pendulum.map((item) => item.id), ["halliday-21-42"]);
+  assert.deepEqual(symmetry.map((item) => item.id), ["halliday-21-34"]);
 });
 
 test("filtro separa simuladores de resoluções", { skip: !apiAvailable }, () => {
@@ -47,7 +63,12 @@ test("filtro separa simuladores de resoluções", { skip: !apiAvailable }, () =>
   const solutions = catalog.filterCatalog(items, "", "resolucao");
 
   assert.deepEqual(simulations.map((item) => item.id), ["cargas-e-vetores"]);
-  assert.deepEqual(solutions.map((item) => item.id), ["halliday-21-13"]);
+  assert.deepEqual(solutions.map((item) => item.id), [
+    "halliday-21-13",
+    "halliday-21-18",
+    "halliday-21-34",
+    "halliday-21-42",
+  ]);
 });
 
 test("registro tem ids únicos, tipos válidos e caminhos locais seguros", () => {
