@@ -1,0 +1,576 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta
+    name="description"
+    content="Roteiro avançado de Física III para visualizar as linhas de campo, identificar os polos e modelar o campo de um solenoide ideal e finito."
+  >
+  <title>Campo magnético de um solenoide · Experimento 2</title>
+  <link rel="stylesheet" href="../../assets/base.css">
+  <link rel="stylesheet" href="../../assets/experimentos.css">
+</head>
+<body class="experiment-page">
+  <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+
+  <header class="experiment-header">
+    <div class="experiment-header__navigation">
+      <div
+        data-site-navigation
+        data-root-path="../../"
+        data-active-section="experimentos"
+      ></div>
+    </div>
+
+    <nav class="experiment-breadcrumb" aria-label="Navegação estrutural">
+      <a href="../../">Início</a>
+      <span aria-hidden="true">/</span>
+      <a href="../">Experimentos</a>
+      <span aria-hidden="true">/</span>
+      <span aria-current="page">Campo do solenoide</span>
+    </nav>
+
+    <div class="experiment-hero">
+      <div>
+        <p class="eyebrow">Experimento 02 · Linhas de indução</p>
+        <h1 id="titulo-experimento">Do enrolamento às linhas de campo.</h1>
+        <ul class="experiment-meta" aria-label="Características do roteiro">
+          <li>Física III</li>
+          <li>Kit AZEHEB · 6 VCC</li>
+          <li>Observação + modelo finito</li>
+        </ul>
+      </div>
+      <p class="experiment-hero__lead">
+        Faça o campo aparecer com limalha, determine seu sentido com a bússola
+        e confronte a aproximação de Ampère com as bordas de um solenoide real.
+      </p>
+    </div>
+  </header>
+
+  <main class="experiment-main" id="conteudo" data-experiment-tabs>
+    <div class="experiment-tab-list" role="tablist" aria-label="Etapas do experimento">
+      <button
+        class="experiment-tab"
+        id="aba-montagem"
+        type="button"
+        role="tab"
+        aria-controls="painel-montagem"
+        aria-selected="true"
+        tabindex="0"
+      >Montagem</button>
+      <button
+        class="experiment-tab"
+        id="aba-fundamentos"
+        type="button"
+        role="tab"
+        aria-controls="painel-fundamentos"
+        aria-selected="false"
+        tabindex="-1"
+      >Fundamentos</button>
+      <button
+        class="experiment-tab"
+        id="aba-dados"
+        type="button"
+        role="tab"
+        aria-controls="painel-dados"
+        aria-selected="false"
+        tabindex="-1"
+      >Dados</button>
+      <button
+        class="experiment-tab"
+        id="aba-relatorio"
+        type="button"
+        role="tab"
+        aria-controls="painel-relatorio"
+        aria-selected="false"
+        tabindex="-1"
+      >Relatório</button>
+    </div>
+
+    <section
+      class="experiment-panel"
+      id="painel-montagem"
+      role="tabpanel"
+      aria-labelledby="aba-montagem"
+      tabindex="0"
+    >
+      <div class="experiment-section-heading">
+        <h2>Preparar, prever, observar</h2>
+        <p>
+          A limalha revela a geometria do campo; a bússola acrescenta o sentido
+          necessário para distinguir norte e sul.
+        </p>
+      </div>
+
+      <div class="experiment-grid">
+        <article class="lab-card">
+          <h3>Objetivos</h3>
+          <ul>
+            <li>Reconhecer a topologia das linhas de campo de um solenoide percorrido por corrente.</li>
+            <li>Usar a bússola nas duas extremidades para inferir os polos magnéticos.</li>
+            <li>Comparar interior, extremidades e exterior sem confundir linhas com trajetórias materiais.</li>
+            <li>Relacionar o padrão real aos modelos de solenoide ideal e finito.</li>
+          </ul>
+        </article>
+
+        <article class="lab-card">
+          <h3>Materiais do kit</h3>
+          <ul class="materials-list">
+            <li>1 placa para ensaios de experimentos de eletromagnetismo, no módulo dos solenoides;</li>
+            <li>1 fonte de alimentação de 6 VCC / 1 A;</li>
+            <li>1 frasco de ferro em pó, usado como limalha, com 25 g;</li>
+            <li>1 bússola.</li>
+          </ul>
+        </article>
+      </div>
+
+      <div class="prediction-box">
+        <strong>Previsão antes de ligar.</strong>
+        No caderno, desenhe como espera que as linhas atravessem o interior e
+        retornem pelo exterior. Marque onde a concentração aparente deve ser
+        maior e preveja o comportamento da ponta norte da bússola nas duas
+        extremidades. Se o sentido do enrolamento não puder ser rastreado,
+        registre o critério de identificação dos polos em vez de adivinhar qual
+        lado será norte.
+      </div>
+
+      <div class="experiment-safety" role="note" aria-label="Segurança do experimento">
+        <strong>Segurança · alimentação e limalha</strong>
+        <p>
+          Com a chave desligada, coloque o dial no mínimo antes de conectar a
+          fonte. Energize por <b>5–10 s</b> e desligue por <b>5–10 s</b> antes do
+          próximo ciclo; aumente o dial lentamente e trabalhe, no máximo, até a
+          metade do curso. Se o LED da fonte piscar, reduza o dial até o aviso
+          cessar. Segure a placa somente pelas bordas. Não sopre a limalha, evite
+          olhos, conexões, eletrônicos e ímãs, e recolha todo o material somente
+          com a fonte desligada.
+        </p>
+      </div>
+
+      <div class="experiment-grid">
+        <figure class="experiment-figure">
+          <img
+            src="../../assets/experimentos/azeheb/exp-02-solenoide-montagem.jpg"
+            alt="Placa azul do kit com três solenoides, bússola junto a uma extremidade, dial de alimentação e chave liga-desliga."
+          >
+          <figcaption>
+            O retângulo claro delimita a região para distribuir a limalha; dial,
+            chave e bússola permanecem visíveis para os ciclos breves.
+            <strong>Fonte: manual AZEHEB</strong>.
+          </figcaption>
+        </figure>
+
+        <article class="lab-card">
+          <h3>Procedimento</h3>
+          <ol class="procedure-list">
+            <li>Confirme a chave desligada e o dial no mínimo. Conecte a fonte de 6 VCC / 1 A ao módulo dos solenoides.</li>
+            <li>Distribua uma camada fina e uniforme de limalha no retângulo branco da placa, sem formar montes sobre as espiras ou conexões.</li>
+            <li>Energize por um ciclo curto, aumente o dial gradualmente dentro do limite seguro e bata levemente na borda da placa para acomodar os grãos.</li>
+            <li>Desligue a fonte antes de observar, fotografar ou aproximar as mãos. Registre a curvatura e a concentração aparente do padrão.</li>
+            <li>Com a fonte desligada, recolha a limalha antes da etapa com a bússola para impedir que os grãos sejam atraídos pelo ímã da agulha.</li>
+            <li>Com chave desligada e dial em zero, posicione a bússola em uma extremidade, com a agulha inicialmente paralela aos planos das espiras. Energize brevemente, observe a ponta norte e desligue.</li>
+            <li>Repita o ciclo na outra extremidade. Atração da ponta norte indica uma extremidade sul; repulsão, uma extremidade norte.</li>
+            <li>Ao terminar, deixe chave desligada e dial no mínimo, desconecte a fonte e confira se placa e bancada estão sem limalha.</li>
+          </ol>
+        </article>
+      </div>
+
+      <div class="experiment-grid">
+        <figure class="experiment-figure">
+          <img
+            src="../../assets/experimentos/azeheb/exp-02-solenoide-limalha.jpg"
+            alt="Limalha de ferro alinhada em padrões curvos ao redor dos três solenoides no retângulo branco da placa."
+          >
+          <figcaption>
+            Os grãos formam cadeias tangentes ao campo e tornam visíveis as
+            regiões interna, de borda e de retorno externo.
+            <strong>Fonte: manual AZEHEB</strong>.
+          </figcaption>
+        </figure>
+
+        <figure class="experiment-figure">
+          <img
+            src="../../assets/experimentos/azeheb/exp-02-solenoide-visao-geral.jpg"
+            alt="Visão geral da placa AZEHEB conectada, com a bússola junto à extremidade esquerda dos solenoides e a chave de alimentação à direita."
+          >
+          <figcaption>
+            Visão de bancada para conferir a posição relativa entre bússola,
+            solenoides, controle da fonte e chave antes de energizar.
+            <strong>Fonte: manual AZEHEB</strong>.
+          </figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section
+      class="experiment-panel"
+      id="painel-fundamentos"
+      role="tabpanel"
+      aria-labelledby="aba-fundamentos"
+      tabindex="0"
+      hidden
+    >
+      <div class="experiment-section-heading">
+        <h2>Do modelo infinito às bordas</h2>
+        <p>
+          A lei de Ampère produz o limite ideal; a geometria finita explica a
+          redução nas extremidades e o campo de retorno observado fora da bobina.
+        </p>
+      </div>
+
+      <div class="experiment-grid">
+        <article class="theory-card">
+          <h3>Variáveis e hipóteses</h3>
+          <p>
+            Considere <i>N</i> espiras distribuídas uniformemente em um
+            comprimento ativo ℓ, com raio <i>a</i>, corrente estacionária
+            <i>I</i> e eixo <i>z</i> cuja origem está no centro. A densidade
+            linear de espiras é <b>n = N/ℓ</b>. O modelo usa núcleo de ar,
+            espiras próximas e simetria axial; fios de ligação, espaçamento entre
+            espiras, aquecimento e dimensões reais quebram parcialmente essas
+            hipóteses.
+          </p>
+        </article>
+
+        <article class="theory-card">
+          <h3>O que a experiência mede</h3>
+          <p>
+            A bússola responde à direção do campo resultante, que inclui o campo
+            terrestre, e permite definir seu sentido local. A limalha fornece
+            direção, topologia e uma indicação qualitativa de concentração. Ela
+            não mede o módulo de <i>B</i>, não determina sozinha o sentido das
+            linhas e não representa trajetórias de partículas.
+          </p>
+        </article>
+      </div>
+
+      <article class="theory-card">
+        <h3>Lei de Ampère e solenoide ideal</h3>
+        <p>
+          Escolha uma curva amperiana retangular: um lado de comprimento
+          <i>L</i> fica dentro de um solenoide muito longo, o lado oposto fica
+          fora e os lados curtos são perpendiculares ao campo. A forma integral é:
+        </p>
+        <div class="equation-flow" aria-label="Derivação do campo ideal">
+          <div class="equation-step">
+            ∮<sub>C</sub> B·dℓ = μ₀I<sub>enc</sub>
+            <small>Lei de Ampère para corrente estacionária.</small>
+          </div>
+          <div class="equation-step">
+            I<sub>enc</sub> = (nL)I
+            <small>O trecho de comprimento L intercepta nL espiras.</small>
+          </div>
+          <div class="equation-step">
+            BL + 0 = μ₀(nL)I
+            <small>No limite ideal, o campo interno é uniforme e o campo externo é aproximadamente nulo.</small>
+          </div>
+          <div class="equation-step">
+            B_ideal = μ₀(N/ℓ)I = μ₀nI
+            <small>O comprimento L da curva cancela; o resultado é o módulo axial no interior.</small>
+          </div>
+        </div>
+        <p class="theory-note">
+          Análise dimensional: [μ₀][n][I] = (T·m/A)(1/m)(A) = T. O campo
+          externo exatamente nulo é uma propriedade do solenoide ideal infinito,
+          não da placa do laboratório.
+        </p>
+      </article>
+
+      <article class="theory-card">
+        <h3>Campo no eixo de um solenoide finito</h3>
+        <p>
+          Somando a contribuição das espiras entre −ℓ/2 e +ℓ/2, a componente
+          axial a uma coordenada <i>z</i> é:
+        </p>
+        <div class="math-block">B(z) = (μ₀nI/2)[(z+ℓ/2)/√(a²+(z+ℓ/2)²) − (z−ℓ/2)/√(a²+(z−ℓ/2)²)]</div>
+        <p>
+          No centro, <i>z</i> = 0, os dois termos se somam e
+          B(0) = μ₀nI/√(1+(2a/ℓ)²). Quando ℓ ≫ a, o fator geométrico tende a
+          1 e recupera B(0) → μ₀nI. Perto das extremidades, as contribuições
+          deixam de ser quase paralelas e o campo axial diminui; fora da bobina
+          finita, ele não é zero, pois as linhas precisam retornar de um polo ao
+          outro. Muito longe, as duas parcelas da expressão se cancelam
+          progressivamente.
+        </p>
+      </article>
+
+      <div class="experiment-grid">
+        <article class="theory-card">
+          <h3>Polaridade e regra da mão direita</h3>
+          <p>
+            Curve os dedos da mão direita no sentido da corrente convencional
+            em cada espira. O polegar aponta o campo no interior e a extremidade
+            norte do solenoide. No exterior, as linhas saem do norte e entram no
+            sul. A ponta norte da bússola se orienta no sentido do campo
+            resultante: é repelida por um polo norte e atraída por um polo sul.
+          </p>
+          <p>
+            Como o campo terrestre também atua, registre a orientação da agulha
+            antes e durante cada pulso; a mudança, e não uma direção presumida da
+            bancada, sustenta a inferência de polaridade.
+          </p>
+        </article>
+
+        <article class="theory-card">
+          <h3>Como ler a limalha</h3>
+          <p>
+            Cada grão se magnetiza por indução e sofre torque até se alinhar
+            aproximadamente à direção local. Cadeias de grãos desenham tangentes
+            às linhas e evidenciam a curvatura nas bordas. Uma região visualmente
+            mais densa pode indicar campo mais intenso, mas também depende da
+            quantidade inicial, tamanho dos grãos, atrito e modo de bater na
+            placa. Por isso, a densidade aparente é comparação qualitativa, nunca
+            um valor de |B|.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <section
+      class="experiment-panel"
+      id="painel-dados"
+      role="tabpanel"
+      aria-labelledby="aba-dados"
+      tabindex="0"
+      hidden
+    >
+      <div class="experiment-section-heading">
+        <h2>Registrar antes de interpretar</h2>
+        <p>
+          Separe descrição, inferência de polo e comparação de modelo. Não
+          converta densidade de limalha em tesla.
+        </p>
+      </div>
+
+      <article class="lab-card">
+        <h3>Mapa observacional</h3>
+        <p>
+          Defina no esquema uma extremidade A e uma extremidade B. Use sempre a
+          ponta norte da agulha como referência e anote se a observação ocorreu
+          antes, durante ou depois do pulso.
+        </p>
+        <div class="data-table-wrapper">
+          <table class="data-table">
+            <caption>Observações qualitativas do campo e da polaridade</caption>
+            <thead>
+              <tr>
+                <th scope="col">Posição</th>
+                <th scope="col">Orientação da bússola</th>
+                <th scope="col">Polo inferido</th>
+                <th scope="col">Padrão, curvatura e densidade aparente</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td></td><td></td><td></td><td></td></tr>
+              <tr><td></td><td></td><td></td><td></td></tr>
+              <tr><td></td><td></td><td></td><td></td></tr>
+              <tr><td></td><td></td><td></td><td></td></tr>
+              <tr><td></td><td></td><td></td><td></td></tr>
+              <tr><td></td><td></td><td></td><td></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </article>
+
+      <div class="experiment-grid">
+        <article class="lab-card">
+          <h3>Confronto qualitativo</h3>
+          <ol class="procedure-list">
+            <li>Sobreponha ao esboço as orientações da bússola e feche as linhas pelo exterior.</li>
+            <li>Compare a região central, as extremidades e o exterior usando somente categorias relativas de concentração.</li>
+            <li>Procure assimetria entre as extremidades e discuta fios de ligação, geometria, campo terrestre e distribuição irregular dos grãos.</li>
+            <li>Diga quais observações distinguem o modelo finito da previsão ideal de campo externo aproximadamente nulo.</li>
+          </ol>
+        </article>
+
+        <article class="lab-card">
+          <h3>Controle de evidência</h3>
+          <p>
+            Fotografe de cima antes de remover a limalha, com uma identificação
+            da orientação da placa fora da área dos grãos. No desenho, use setas
+            apenas depois de obter o sentido com a bússola. Uma fotografia sem
+            eixo, polos ou critério de orientação não substitui o registro.
+          </p>
+        </article>
+      </div>
+
+      <article class="theory-card">
+        <h3>Extensão quantitativa opcional</h3>
+        <p>
+          Esta etapa requer <strong>sensor Hall, régua e amperímetro, que não
+          estão incluídos no kit</strong>. Execute-a somente com instrumentos
+          fornecidos e autorizados pelo laboratório. Defina z = 0 no centro,
+          mantenha o sensor alinhado ao eixo, registre seu zero e o campo de
+          fundo, meça as dimensões <i>a</i> e ℓ e conecte o amperímetro em série.
+          Nunca ligue um amperímetro diretamente entre os terminais da fonte.
+        </p>
+        <p>
+          Faça amostras em posições positivas e negativas durante pulsos com o
+          mesmo ciclo térmico. Registre a coordenada do elemento sensível do
+          sensor, não apenas a borda de sua cápsula, e anote a corrente em cada
+          ponto caso ela varie.
+        </p>
+        <div class="data-table-wrapper">
+          <table class="data-table">
+            <caption>Mapeamento opcional do campo axial B(z), sem valores simulados</caption>
+            <thead>
+              <tr>
+                <th scope="col">Ponto</th>
+                <th scope="col">z (m)</th>
+                <th scope="col">σ<sub>z</sub> (m)</th>
+                <th scope="col">I (A)</th>
+                <th scope="col">σ<sub>I</sub> (A)</th>
+                <th scope="col">B(z) (T)</th>
+                <th scope="col">σ<sub>B</sub> (T)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+              <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+              <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+              <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+              <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+              <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+              <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+              <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </article>
+
+      <div class="uncertainty-box">
+        <h3>Análise de σ e ajuste do modelo finito</h3>
+        <p>
+          Para cada ponto, use o resíduo r<sub>i</sub> = B<sub>i</sub> −
+          B<sub>modelo</sub>(z<sub>i</sub>, I<sub>i</sub>). Se as incertezas forem
+          independentes, combine as contribuições de posição, corrente e leitura
+          Hall por
+          σ<sub>ef,i</sub>² = σ<sub>B,i</sub>² +
+          (∂B/∂z · σ<sub>z,i</sub>)² +
+          (∂B/∂I · σ<sub>I,i</sub>)². Inclua também <i>a</i> e ℓ quando suas
+          incertezas não forem desprezíveis; erros comuns de zero ou calibração
+          devem ser discutidos como sistemáticos, não repetidos como se fossem
+          independentes.
+        </p>
+        <p>
+          Ajuste a expressão finita com mínimos quadrados ponderados, permitindo
+          um campo de fundo B<sub>fundo</sub> e, se necessário, um deslocamento
+          z<sub>0</sub>. Fixe <i>a</i> e ℓ nas medidas geométricas e ajuste apenas
+          parâmetros que os dados possam determinar, como a amplitude ligada a
+          <i>n</i>. Examine r<sub>i</sub>/σ<sub>ef,i</sub>, informe as incertezas
+          dos parâmetros e calcule χ²<sub>red</sub> =
+          Σ(r<sub>i</sub>/σ<sub>ef,i</sub>)²/ν. Compare o padrão dos resíduos com
+          o modelo ideal constante no interior e aproximadamente nulo no exterior.
+          Sem sensor Hall, limite a conclusão à comparação qualitativa.
+        </p>
+      </div>
+    </section>
+
+    <section
+      class="experiment-panel"
+      id="painel-relatorio"
+      role="tabpanel"
+      aria-labelledby="aba-relatorio"
+      tabindex="0"
+      hidden
+    >
+      <div class="experiment-section-heading">
+        <h2>Relatório de bancada</h2>
+        <p>
+          Entregue evidências observáveis, o encadeamento matemático e uma
+          conclusão compatível com o tipo de dado realmente obtido.
+        </p>
+      </div>
+
+      <div class="report-print-bar">
+        <p>A impressão mostra somente esta folha de relatório.</p>
+        <button class="report-print-button" type="button" data-print-report>
+          Imprimir folha de relatório
+        </button>
+      </div>
+
+      <div class="report-template">
+        <div class="report-template__fields" aria-label="Identificação do relatório">
+          <div><strong>Grupo e integrantes</strong><div class="report-template__line"></div></div>
+          <div><strong>Turma</strong><div class="report-template__line"></div></div>
+          <div><strong>Data e bancada</strong><div class="report-template__line"></div></div>
+          <div><strong>Professor</strong><div class="report-template__line"></div></div>
+        </div>
+
+        <div class="report-grid">
+          <article class="report-card">
+            <h3>1. Esquema e dados</h3>
+            <p>
+              Desenhe a placa, o eixo z, as extremidades A e B, as linhas
+              fechadas com setas e os polos inferidos. Anexe a fotografia da
+              limalha e transcreva a tabela observacional sem preencher lacunas
+              com resultados presumidos.
+            </p>
+          </article>
+
+          <article class="report-card">
+            <h3>2. Ideal versus finito</h3>
+            <p>
+              Derive o resultado de Ampère, obtenha o limite da expressão finita
+              no centro e compare interior, bordas e exterior. Identifique quais
+              observações são incompatíveis com um solenoide infinito.
+            </p>
+          </article>
+
+          <article class="report-card">
+            <h3>3. Incerteza</h3>
+            <p>
+              No roteiro qualitativo, discuta repetibilidade da distribuição,
+              atrito, batidas, campo terrestre e critério de leitura da bússola.
+              Na extensão Hall, informe cada σ, o método do ajuste, parâmetros,
+              resíduos normalizados e efeitos sistemáticos.
+            </p>
+          </article>
+
+          <article class="report-card">
+            <h3>4. Perguntas</h3>
+            <ol class="question-list">
+              <li>Por que a limalha mostra tangentes às linhas, mas não seu sentido nem o módulo em tesla?</li>
+              <li>Como atração e repulsão da ponta norte da bússola identificam cada polo?</li>
+              <li>Qual hipótese permite desprezar o trecho externo da curva amperiana?</li>
+              <li>Por que o fator geométrico no centro tende a 1 quando ℓ/a cresce?</li>
+              <li>Que assinatura nos dados ou resíduos favoreceria o modelo finito?</li>
+            </ol>
+          </article>
+
+          <article class="report-card">
+            <h3>5. Checklist de entrega</h3>
+            <ul class="report-checklist">
+              <li>Identificação, previsão e confirmação do protocolo de segurança;</li>
+              <li>esquema com linhas, setas, eixo, polos e posições da bússola;</li>
+              <li>fotografia creditada e tabela de dados brutos;</li>
+              <li>derivação do modelo ideal e limite central do modelo finito;</li>
+              <li>incertezas e ajuste apenas se houve medição quantitativa;</li>
+              <li>respostas às perguntas e conclusão sem resultados fabricados.</li>
+            </ul>
+          </article>
+
+          <article class="report-card">
+            <h3>6. Conclusão</h3>
+            <p>
+              Responda aos objetivos com base nas evidências. Separe o que foi
+              observado do que foi inferido, declare o alcance da comparação e
+              proponha uma melhoria experimental que reduza a principal fonte de
+              incerteza identificada.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="experiment-footer">
+    <p>Experimento 02 · Campo magnético de um solenoide</p>
+    <p>Laboratório de Eletromagnetismo · IFSP</p>
+  </footer>
+
+  <script type="module" src="../../componentes/navegacao-principal.js"></script>
+  <script type="module" src="../experimento.js"></script>
+</body>
+</html>
