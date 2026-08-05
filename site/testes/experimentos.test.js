@@ -14,17 +14,23 @@ const experiments = [
   {
     slug: "01-campo-corrente",
     image: "exp-01-oersted-montagem.jpg",
-    equations: [/B\(r\)\s*=\s*μ₀I\/\(2πr\)/, /tan\s*φ\s*=\s*B_fio\/B_T,h/],
+    tabs: 3,
+    academicReport: true,
+    equations: [/\\frac\{\\mu_0 I\}\{2\\pi r\}/, /\\tan\\varphi/, /\\oint_C/],
   },
   {
     slug: "02-campo-solenoide",
     image: "exp-02-solenoide-montagem.jpg",
-    equations: [/B_ideal\s*=\s*μ₀\(N\/ℓ\)I\s*=\s*μ₀nI/, /B\(z\).*z\+ℓ\/2.*z−ℓ\/2/s],
+    tabs: 3,
+    academicReport: true,
+    equations: [/B_\{\\mathrm\{ideal\}\}/, /\\frac\{N\}\{\\ell\}/, /\\sqrt\{a\^2/],
   },
   {
     slug: "03-forca-magnetica-motor",
     image: "exp-03-balanco-magnetico.jpg",
-    equations: [/F\s*=\s*BIL\s*sin\s*θ/, /τ\s*=\s*μ\s*×\s*B/, /U\s*=\s*−μ·B/],
+    tabs: 3,
+    academicReport: true,
+    equations: [/d\\vec\{F\}/, /\\vec\{\\tau\}/, /J\\ddot\{\\theta\}/],
   },
   {
     slug: "04-inducao-eletromagnetica",
@@ -123,20 +129,24 @@ for (const experiment of experiments) {
     const html = await readExperiment(experiment.slug, "index.html");
     const report = await readExperiment(experiment.slug, "relatorio.md");
     const text = plainText(html);
+    const reportWords = report
+      .replace(/^\|.*$/gm, " ")
+      .replace(/[^\p{L}\p{N}]+/gu, " ")
+      .trim()
+      .split(/\s+/)
+      .filter(Boolean).length;
 
     const expectedTabs = experiment.tabs ?? 4;
     assert.equal((html.match(/role="tab"/g) ?? []).length, expectedTabs);
     assert.equal((html.match(/role="tabpanel"/g) ?? []).length, expectedTabs);
     assert.match(text, /Montagem/);
-    if (experiment.academicReport) {
-      assert.match(text, /Fundamentação/);
-      assert.match(text, /Roteiro e relatório/);
-      assert.doesNotMatch(html, /painel-dados|>Dados</);
-    } else {
-      assert.match(text, /Fundamentos/);
-      assert.match(text, /Relatório/);
-      assert.match(text, /Dados/);
-    }
+    assert.match(text, /Fundamentação/);
+    assert.match(text, /Roteiro e relatório/);
+    assert.doesNotMatch(html, /painel-dados|>Dados</);
+    assert.match(html, /class="reasoning-sequence"/);
+    assert.match(html, /class="report-document"/);
+    assert.match(html, /\\begin\{aligned\}/);
+    assert.match(html, /\\frac\{/);
     assert.match(html, /class="experiment-safety"/);
     assert.match(text, /5–10 s/);
     assert.match(html, /<table\b/);
@@ -152,14 +162,14 @@ for (const experiment of experiments) {
     }
 
     assert.match(report, /^# /m);
-    assert.match(report, /^## Dados/m);
-    if (experiment.academicReport) {
-      assert.match(report, /^## Tratamento e análise/m);
-      assert.match(report, /^## Discussão/m);
-    } else {
-      assert.match(report, /^## Análise/m);
-    }
+    assert.match(report, /^## Dados brutos/m);
+    assert.match(report, /^## Tratamento e análise/m);
+    assert.match(report, /^## Discussão/m);
     assert.match(report, /^## Conclusão/m);
+    assert.ok(
+      reportWords >= 1500,
+      experiment.slug + " tem somente " + reportWords + " palavras no relatório",
+    );
   });
 }
 

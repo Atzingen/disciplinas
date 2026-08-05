@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta
     name="description"
-    content="Roteiro avançado da experiência de Oersted: campo magnético de um fio retilíneo, lei de Ampère, lei da tangente e análise de incertezas."
+    content="Roteiro universitário de Física III sobre a experiência de Oersted, lei de Ampère, lei da tangente e campo de um fio retilíneo."
   >
   <title>Campo magnético gerado por corrente · Experimento 01</title>
   <link rel="stylesheet" href="../../assets/base.css">
@@ -16,516 +16,507 @@
 
   <header class="experiment-header">
     <div class="experiment-header__navigation">
-      <div
-        data-site-navigation
-        data-root-path="../../"
-        data-active-section="experimentos"
-      ></div>
+      <div data-site-navigation data-root-path="../../" data-active-section="experimentos"></div>
     </div>
-
-    <nav class="experiment-breadcrumb" aria-label="Trilha de navegação">
-      <a href="../../">Início</a>
-      <span aria-hidden="true">›</span>
-      <a href="../">Experimentos</a>
-      <span aria-hidden="true">›</span>
+    <nav class="experiment-breadcrumb" aria-label="Caminho de navegação">
+      <a href="../../">Início</a><span aria-hidden="true">/</span>
+      <a href="../">Experimentos</a><span aria-hidden="true">/</span>
       <span aria-current="page">Experimento 01</span>
     </nav>
-
     <div class="experiment-hero">
       <div>
-        <p class="eyebrow">Experimento 01 · experiência de Oersted</p>
+        <p class="eyebrow">Experimento 01 · Oersted</p>
         <h1>Campo magnético gerado por corrente</h1>
       </div>
       <div>
         <p class="experiment-hero__lead">
-          Observe a deflexão de uma bússola, determine o sentido do campo e
-          confronte a montagem real com o modelo de um fio retilíneo longo.
+          Use uma bússola como detector vetorial, teste a regra da mão direita
+          e relacione a deflexão ao campo de um condutor retilíneo longo.
         </p>
         <ul class="experiment-meta" aria-label="Características do roteiro">
           <li>Física III</li>
-          <li>qualitativo + extensão quantitativa</li>
-          <li>corrente contínua de 6 V</li>
+          <li>experiência de Oersted</li>
+          <li>Biot–Savart · Ampère</li>
         </ul>
       </div>
     </div>
   </header>
 
   <main class="experiment-main" id="conteudo" data-experiment-tabs>
-    <div class="experiment-tab-list" role="tablist" aria-label="Etapas do experimento">
-      <button
-        class="experiment-tab"
-        id="aba-montagem"
-        type="button"
-        role="tab"
-        aria-selected="true"
-        aria-controls="painel-montagem"
-        tabindex="0"
-      >Montagem</button>
-      <button
-        class="experiment-tab"
-        id="aba-fundamentos"
-        type="button"
-        role="tab"
-        aria-selected="false"
-        aria-controls="painel-fundamentos"
-        tabindex="-1"
-      >Fundamentos</button>
-      <button
-        class="experiment-tab"
-        id="aba-dados"
-        type="button"
-        role="tab"
-        aria-selected="false"
-        aria-controls="painel-dados"
-        tabindex="-1"
-      >Dados</button>
-      <button
-        class="experiment-tab"
-        id="aba-relatorio"
-        type="button"
-        role="tab"
-        aria-selected="false"
-        aria-controls="painel-relatorio"
-        tabindex="-1"
-      >Relatório</button>
+    <div class="experiment-tab-list" role="tablist" aria-label="Partes do experimento">
+      <button class="experiment-tab" id="aba-montagem" type="button" role="tab"
+        aria-controls="painel-montagem" aria-selected="true" tabindex="0">Montagem</button>
+      <button class="experiment-tab" id="aba-fundamentos" type="button" role="tab"
+        aria-controls="painel-fundamentos" aria-selected="false" tabindex="-1">Fundamentação</button>
+      <button class="experiment-tab" id="aba-relatorio" type="button" role="tab"
+        aria-controls="painel-relatorio" aria-selected="false" tabindex="-1">Roteiro e relatório</button>
     </div>
 
-    <section
-      class="experiment-panel"
-      id="painel-montagem"
-      role="tabpanel"
-      aria-labelledby="aba-montagem"
-      tabindex="0"
-    >
+    <section class="experiment-panel" id="painel-montagem" role="tabpanel"
+      aria-labelledby="aba-montagem" tabindex="0">
       <header class="experiment-section-heading">
         <h2>Montagem</h2>
         <p>
-          Primeiro registre o que a regra da mão direita prevê; só então use a
-          fonte para testar a previsão.
+          Oriente fio e bússola antes de ligar. A inversão da corrente deve ser
+          tratada como teste controlado de direção e sentido.
         </p>
       </header>
 
-      <div class="experiment-grid">
-        <article class="lab-card">
-          <h3>Objetivos de aprendizagem</h3>
-          <ul>
-            <li>Verificar que uma corrente elétrica produz campo magnético ao redor do condutor.</li>
-            <li>Relacionar a inversão da corrente e a troca acima/abaixo do fio à inversão da deflexão.</li>
-            <li>Usar simetria, lei de Ampère e regra da mão direita para prever direção e sentido.</li>
-            <li>Conectar a observação à dependência <strong>1/r</strong> e, opcionalmente, à lei da tangente.</li>
-          </ul>
-        </article>
+      <div class="experiment-prose">
+        <p class="prose-lead">
+          A questão investigativa é: <strong>como o sentido e o módulo do campo
+          magnético produzido por um condutor retilíneo dependem do sentido da
+          corrente e da distância ao fio?</strong> A bússola fornece direção e
+          sentido do campo resultante; medidas angulares permitem uma extensão
+          quantitativa pela lei da tangente.
+        </p>
 
-        <article class="lab-card">
-          <h3>Material do kit</h3>
+        <section class="continuous-section" aria-labelledby="exp1-objetivos">
+          <h3 id="exp1-objetivos">Objetivos operacionais</h3>
+          <p>
+            Verificar a deflexão produzida por corrente; testar a inversão de
+            sentido com a chave comutadora e com a mudança de lado da bússola;
+            aplicar a regra da mão direita; deduzir o campo do fio por
+            Biot–Savart e Ampère; e, quando houver medidas suficientes,
+            confrontar \(B\propto I\) e \(B\propto r^{-1}\).
+          </p>
+        </section>
+
+        <section class="continuous-section" aria-labelledby="exp1-materiais">
+          <h3 id="exp1-materiais">Materiais e instrumentos</h3>
           <ul class="materials-list">
-            <li>1 placa para ensaios de experimentos de eletromagnetismo;</li>
-            <li>1 fonte de alimentação 6 V/1 A;</li>
-            <li>1 bússola;</li>
-            <li>1 acessório para a experiência de Oersted.</li>
+            <li>placa para ensaios de eletromagnetismo;</li>
+            <li>fonte de alimentação de \(6\,\mathrm{V}\) e \(1\,\mathrm{A}\);</li>
+            <li>bússola;</li>
+            <li>acessório de Oersted com trecho retilíneo;</li>
+            <li>régua e transferidor, se a extensão quantitativa for realizada.</li>
           </ul>
-        </article>
-      </div>
+        </section>
 
-      <aside class="experiment-safety">
-        <strong>Segurança e proteção da fonte</strong>
-        <p>
-          Antes de conectar, deixe o dial no mínimo e a chave desligada. Em cada
-          observação, energize por <strong>5–10 s</strong>, desligue por
-          <strong>5–10 s</strong> para resfriamento e aumente o dial apenas de
-          modo gradual, sem ultrapassar metade do curso. Manuseie a placa pelas
-          bordas, evitando contato com sua face inferior.
-        </p>
-      </aside>
-
-      <figure class="experiment-figure">
-        <img
-          src="../../assets/experimentos/azeheb/exp-01-oersted-montagem.jpg"
-          alt="Placa de eletromagnetismo com a bússola posicionada sob o trecho retilíneo do acessório de Oersted"
-        >
-        <figcaption>
-          A bússola fica diretamente junto ao trecho retilíneo do condutor; antes
-          da energização, fio e agulha devem estar paralelos ao campo terrestre.
-          <strong>Fonte: manual AZEHEB.</strong>
-        </figcaption>
-      </figure>
-
-      <div class="prediction-box">
-        <strong>Previsão obrigatória antes de ligar</strong>
-        <p>
-          Desenhe o sentido convencional da corrente para cada posição da chave.
-          Para a bússola abaixo e acima do fio, use a regra da mão direita e
-          indique para que lado espera que o polo norte desvie. Depois preveja o
-          que muda quando a corrente é invertida. Não altere a previsão após ver
-          o resultado: registre o confronto separadamente.
-        </p>
-      </div>
-
-      <article class="lab-card">
-        <h3>Procedimento</h3>
-        <ol class="procedure-list">
-          <li>Use o setor “força magnética/Oersted” da placa e afaste ímãs, celulares, ferramentas ferromagnéticas e cabos que possam perturbar a bússola.</li>
-          <li>Posicione inicialmente a bússola <strong>abaixo do fio</strong>. Com a fonte desconectada, gire a placa até a agulha se alinhar ao campo magnético terrestre e ficar paralela ao condutor.</li>
-          <li>Com a chave desligada e o dial em zero, conecte a fonte de 6,0 VCC ao variador da placa. Identifique nas marcações da chave o sentido convencional esperado da corrente.</li>
-          <li>Registre a previsão. Selecione o sentido do borne vermelho para o preto, ligue apenas durante o intervalo de segurança e aumente lentamente o dial até uma posição intermediária, nunca além da metade. Observe a deflexão e desligue.</li>
-          <li>Respeite o intervalo de resfriamento. Sem mudar o sentido da corrente, coloque a bússola <strong>acima do fio</strong>, confira novamente o alinhamento e repita a observação.</li>
-          <li>Depois de novo resfriamento, volte a bússola para baixo, <strong>inverta o sentido da corrente</strong> pela chave e repita. Compare o sinal da deflexão com a previsão.</li>
-          <li>Para completar a matriz de controle, repita também com a bússola acima e a corrente invertida. Em todas as quatro configurações, desligue antes de reposicionar a bússola ou a chave.</li>
-        </ol>
-      </article>
-    </section>
-
-    <section
-      class="experiment-panel"
-      id="painel-fundamentos"
-      role="tabpanel"
-      aria-labelledby="aba-fundamentos"
-      tabindex="0"
-      hidden
-    >
-      <header class="experiment-section-heading">
-        <h2>Fundamentos</h2>
-        <p>
-          O modelo ideal é um fio retilíneo muito mais longo que a distância à
-          bússola, com corrente estacionária e espessura desprezível.
-        </p>
-      </header>
-
-      <article class="theory-card">
-        <h3>1. Do elemento de corrente ao fio completo</h3>
-        <p>
-          A lei de Biot–Savart fornece a contribuição de um elemento do fio. Na
-          expressão abaixo, <em>r</em> é a separação entre o elemento fonte e o
-          ponto de observação, e r̂ aponta do elemento para esse ponto.
-        </p>
-        <div class="equation-flow" aria-label="Derivação por Biot-Savart">
-          <div class="equation-step">dB = (μ₀/4π) I(dℓ × r̂)/r²</div>
-          <div class="equation-step">
-            dB_φ = (μ₀I/4π) a dz/(a² + z²)^(3/2)
-            <small>Para um fio ao longo de z, a é a distância perpendicular ao fio; componentes não azimutais se cancelam por pares.</small>
-          </div>
-          <div class="equation-step">
-            B(a) = (μ₀I/4π) ∫[−∞,+∞] a dz/(a² + z²)^(3/2) = μ₀I/(2πa)
-            <small>A soma sobre todo o fio modifica a dependência radial presente em cada contribuição elementar.</small>
-          </div>
-        </div>
-      </article>
-
-      <article class="theory-card">
-        <h3>2. Simetria e lei de Ampère</h3>
-        <p>
-          Um fio ideal infinito é invariável por translações ao longo do eixo e
-          por rotações em torno dele. Portanto, o campo não pode depender da
-          coordenada longitudinal nem do ângulo azimutal: ele é tangente a
-          circunferências concêntricas e tem módulo constante em uma
-          circunferência de raio <em>r</em>. Escolhendo essa circunferência como
-          caminho amperiano:
-        </p>
-        <div class="equation-flow" aria-label="Derivação pela lei de Ampère">
-          <div class="equation-step">∮B·dℓ = μ₀I</div>
-          <div class="equation-step">B(r)2πr = μ₀I</div>
-          <div class="equation-step">B(r) = μ₀I/(2πr)</div>
-        </div>
-        <p>
-          A regra da mão direita fixa o sentido: polegar na corrente
-          convencional, dedos curvados no sentido de B. Trocar o sinal de I ou
-          atravessar o plano do fio, passando de abaixo para acima, inverte o
-          campo transversal percebido pela bússola.
-        </p>
-      </article>
-
-      <aside class="theory-note">
-        <strong>Correção conceitual ao texto do manual.</strong>
-        Para um fio retilíneo longo, <strong>B varia como 1/r, não 1/r²</strong>.
-        O fator 1/r² aparece na contribuição de cada elemento na lei de
-        Biot–Savart, mas a integração ao longo do fio altera a dependência para
-        1/r. Essa correção preserva as observações e a regra da mão direita
-        apresentadas no manual; apenas ajusta a lei radial do modelo ideal.
-      </aside>
-
-      <div class="experiment-grid">
-        <article class="theory-card">
-          <h3>3. Análise dimensional</h3>
+        <aside class="experiment-safety">
+          <strong>Segurança elétrica e térmica</strong>
           <p>
-            No SI, [μ₀] = T·m/A. Logo,
-            [μ₀I/(2πr)] = (T·m/A)·A/m = T. A forma elementar também é
-            consistente: [μ₀I dℓ/r²] = (T·m/A)·A·m/m² = T.
+            Com a chave desligada, leve o dial ao mínimo antes de conectar a
+            fonte. Energize por <strong>5–10 s</strong> e mantenha o circuito
+            desligado por <strong>5–10 s</strong> entre observações. Aumente a
+            corrente gradualmente e não ultrapasse metade do curso do dial.
+            Desligue antes de inverter conexões ou mover a bússola. Manuseie a
+            placa pelas bordas e interrompa o ensaio se houver aquecimento,
+            odor, oscilação da fonte ou contato instável.
           </p>
+        </aside>
+
+        <figure class="experiment-figure">
+          <img
+            src="../../assets/experimentos/azeheb/exp-01-oersted-montagem.jpg"
+            alt="Placa de eletromagnetismo com bússola posicionada junto ao trecho retilíneo do acessório de Oersted"
+          >
+          <figcaption>
+            Antes da energização, alinhe o fio e a agulha aproximadamente com o
+            campo terrestre horizontal. Meça \(r\) do eixo do condutor ao
+            centro da bússola. <strong>Fonte: manual AZEHEB.</strong>
+          </figcaption>
+        </figure>
+
+        <section class="continuous-section" aria-labelledby="exp1-convencao">
+          <h3 id="exp1-convencao">Referencial e variáveis</h3>
           <p>
-            O resultado dimensional não prova o fator 2π, mas detecta erros de
-            unidade e mostra que uma potência radial incorreta exigiria outra
-            escala de comprimento.
+            Desenhe o fio e declare o sentido positivo da corrente convencional.
+            Identifique se a bússola está acima ou abaixo do condutor e marque o
+            norte geográfico. Adote \(\varphi=0\) com a fonte desligada e
+            defina o sinal de \(\varphi\) pelo sentido de rotação da agulha.
           </p>
-        </article>
+          <dl class="compact-facts">
+            <div><dt>Controle</dt><dd>sentido de \(I\), módulo de \(I\) e distância \(r\);</dd></div>
+            <div><dt>Resposta</dt><dd>sentido da deflexão e ângulo estacionário \(\varphi\);</dd></div>
+            <div><dt>Constantes</dt><dd>orientação da placa, posição da fonte e objetos magnéticos próximos;</dd></div>
+            <div><dt>Repetições</dt><dd>três leituras por condição quantitativa.</dd></div>
+          </dl>
+        </section>
 
-        <article class="theory-card">
-          <h3>4. Superposição e lei da tangente</h3>
-          <p>
-            Com fio e agulha inicialmente paralelos à componente horizontal do
-            campo terrestre B_T,h, o campo do fio no ponto da bússola é
-            horizontal e perpendicular a B_T,h. A agulha se orienta pela soma
-            dos dois campos, formando o ângulo φ com a direção inicial.
-          </p>
-          <div class="math-block">tan φ = B_fio/B_T,h</div>
-          <p>
-            Assim, se B_T,h for conhecido, B_fio = B_T,h tan φ. A relação exige
-            campos aproximadamente perpendiculares, bússola nivelada e pequena
-            perturbação magnética local. Para ângulos próximos de 0° ou 90°, a
-            incerteza relativa tende a se tornar desfavorável.
-          </p>
-        </article>
-      </div>
-
-      <article class="theory-card">
-        <h3>5. Onde o modelo deixa de ser ideal</h3>
-        <p>
-          O condutor real tem comprimento e espessura finitos, terminais e
-          trechos de retorno que também produzem campo. A bússola amostra o
-          campo numa região, não em um ponto; atrito no pivô, inclinação,
-          desalinhamento e campos de estruturas metálicas ou da própria fonte
-          também deslocam o ângulo. A aproximação de fio longo é melhor quando a
-          distância ao trecho central é pequena comparada ao comprimento desse
-          trecho, mas ainda grande frente ao raio do condutor.
-        </p>
-      </article>
-    </section>
-
-    <section
-      class="experiment-panel"
-      id="painel-dados"
-      role="tabpanel"
-      aria-labelledby="aba-dados"
-      tabindex="0"
-      hidden
-    >
-      <header class="experiment-section-heading">
-        <h2>Dados</h2>
-        <p>
-          A atividade básica é qualitativa. Preencha somente valores realmente
-          observados ou medidos; deixe em branco o que não foi instrumentado.
-        </p>
-      </header>
-
-      <aside class="theory-note">
-        <strong>Extensão quantitativa opcional.</strong>
-        Amperímetro e régua não estão incluídos no kit descrito para este
-        experimento. Use-os apenas se estiverem disponíveis e forem conectados
-        com orientação docente: amperímetro em série e régua para medir a menor
-        distância entre o eixo do fio e o centro da bússola.
-      </aside>
-
-      <div class="data-table-wrapper">
-        <table class="data-table">
-          <caption>Registro das configurações e das medições — não preencher com valores simulados</caption>
-          <thead>
-            <tr>
-              <th scope="col">Sentido da corrente</th>
-              <th scope="col">Posição acima/abaixo</th>
-              <th scope="col">r (m)</th>
-              <th scope="col">I (A)</th>
-              <th scope="col">Ângulo φ (°)</th>
-              <th scope="col">B_fio (T)</th>
-              <th scope="col">Observações</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
-            <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
-            <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
-            <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
-            <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
-            <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
-          </tbody>
-        </table>
-      </div>
-
-      <div class="experiment-grid">
-        <article class="lab-card">
-          <h3>Tratamento dos dados</h3>
-          <ol>
-            <li>Adote sinais para I e φ e declare a convenção no diagrama.</li>
-            <li>Confira se inverter I, mantendo a posição, inverte o sinal de φ.</li>
-            <li>Confira se trocar acima por abaixo, mantendo I, também inverte o sinal.</li>
-            <li>Se B_T,h for conhecido, calcule B_fio pela lei da tangente e compare com μ₀I/(2πr).</li>
-            <li>Com vários valores de r, teste a proporcionalidade 1/r por um gráfico de B_fio versus 1/r; não conclua sobre a lei radial a partir de um único ponto.</li>
+        <section class="continuous-section" aria-labelledby="exp1-procedimento">
+          <h3 id="exp1-procedimento">Sequência experimental</h3>
+          <ol class="procedure-list">
+            <li>Com a fonte desligada, monte o acessório, alinhe fio e bússola e registre o zero angular.</li>
+            <li>Desenhe a previsão para a corrente de referência usando a regra da mão direita.</li>
+            <li>Energize por poucos segundos e registre o primeiro sentido de deflexão; desligue e aguarde o resfriamento.</li>
+            <li>Inverta somente a corrente, repita a observação e compare os sentidos.</li>
+            <li>Com a fonte desligada, transfira a bússola do lado inferior para o superior do fio, mantendo a corrente de referência.</li>
+            <li>Se houver leitura angular, obtenha três repetições para pelo menos três valores de corrente em uma distância fixa.</li>
+            <li>Depois, mantenha a corrente e obtenha leituras em ao menos três distâncias medidas a partir do eixo do fio.</li>
+            <li>Ao fim de cada série, desligue e verifique se a agulha retorna ao zero inicial.</li>
           </ol>
-        </article>
+        </section>
 
-        <article class="lab-card">
-          <h3>Controles e desvios</h3>
+        <div class="prediction-box">
+          <strong>Previsão pré-laboratório</strong>
           <p>
-            Registre o ângulo com a corrente desligada antes e depois da série.
-            Um zero que deriva sugere campo local variável ou deslocamento da
-            montagem. O desalinhamento inicial faz B_fio deixar de ser exatamente
-            perpendicular a B_T,h, invalidando a forma simples da lei da
-            tangente. Afaste materiais magnéticos e mantenha fonte e cabos na
-            mesma posição em todas as leituras.
+            Registre o sentido esperado da deflexão para quatro combinações:
+            corrente direta e invertida, com a bússola acima e abaixo do fio.
+            Preveja também o efeito de duplicar \(I\) e de duplicar \(r\).
+            Preserve a previsão original para confronto na discussão.
           </p>
-        </article>
-      </div>
-
-      <div class="uncertainty-box">
-        <h3>Propagação opcional para o modelo de Ampère</h3>
-        <div class="math-block">σ_B/B = √[(σ_I/I)² + (σ_r/r)²]</div>
-        <p>
-          Esta forma supõe incertezas pequenas e independentes em I e r. Ela não
-          inclui sistemáticos como comprimento finito, posição efetiva do centro
-          da bússola, campo dos terminais, desalinhamento ou campo magnético local;
-          discuta esses efeitos separadamente. Se B for obtido pela lei da
-          tangente, inclua também as incertezas de φ e de B_T,h.
-        </p>
+        </div>
       </div>
     </section>
 
-    <section
-      class="experiment-panel"
-      id="painel-relatorio"
-      role="tabpanel"
-      aria-labelledby="aba-relatorio"
-      tabindex="0"
-      hidden
-    >
+    <section class="experiment-panel" id="painel-fundamentos" role="tabpanel"
+      aria-labelledby="aba-fundamentos" tabindex="0" hidden>
       <header class="experiment-section-heading">
-        <h2>Relatório</h2>
+        <h2>Fundamentação</h2>
         <p>
-          Organize evidência, modelo e limites da conclusão. O arquivo
-          <code>relatorio.md</code> oferece a mesma estrutura em formato editável.
+          A dependência \(r^{-2}\) pertence ao elemento de corrente. A integração
+          do fio longo produz o comportamento \(r^{-1}\) observado no modelo.
+        </p>
+      </header>
+
+      <div class="experiment-prose">
+        <p class="prose-lead">
+          A experiência de Oersted revela que corrente elétrica produz campo
+          magnético circulante. A geometria do fio permite chegar ao mesmo
+          resultado por integração direta e por simetria.
+        </p>
+
+        <div class="reasoning-sequence">
+          <article class="reasoning-step">
+            <span class="reasoning-step__number" aria-hidden="true"></span>
+            <div class="reasoning-step__content">
+              <h3>Contribuição elementar de Biot–Savart</h3>
+              <p>
+                Para um elemento orientado \(d\vec{\ell}\), a contribuição no
+                ponto de observação é:
+              </p>
+              <div class="math-display">
+                \[
+                  d\vec{B}=
+                  \frac{\mu_0}{4\pi}
+                  \frac{I\,d\vec{\ell}\times\hat{\vec{r}}}{r^2}.
+                \]
+              </div>
+              <p>
+                A potência \(r^{-2}\) descreve cada elemento. Somar todos os
+                elementos de um fio extenso muda a dependência final porque
+                elementos distantes também contribuem.
+              </p>
+            </div>
+          </article>
+
+          <article class="reasoning-step">
+            <span class="reasoning-step__number" aria-hidden="true"></span>
+            <div class="reasoning-step__content">
+              <h3>Integração ao longo do fio</h3>
+              <p>
+                Para um fio sobre \(z\) e um ponto à distância perpendicular
+                \(a\), somente a componente azimutal sobrevive por simetria:
+              </p>
+              <div class="math-display">
+                \[
+                \begin{aligned}
+                  B(a)
+                    &=\frac{\mu_0 I}{4\pi}
+                      \int_{-\infty}^{+\infty}
+                      \frac{a\,dz}{(a^2+z^2)^{3/2}} \\
+                    &=\frac{\mu_0 I}{2\pi a}.
+                \end{aligned}
+                \]
+              </div>
+              <p>
+                O resultado é proporcional a \(I\) e inversamente proporcional
+                à distância perpendicular. O sentido é azimutal e segue a regra
+                da mão direita.
+              </p>
+            </div>
+          </article>
+
+          <article class="reasoning-step">
+            <span class="reasoning-step__number" aria-hidden="true"></span>
+            <div class="reasoning-step__content">
+              <h3>Lei de Ampère e simetria cilíndrica</h3>
+              <p>
+                Em uma circunferência de raio \(r\), o campo tem módulo
+                constante e é paralelo ao elemento de linha:
+              </p>
+              <div class="math-display">
+                \[
+                \begin{aligned}
+                  \oint_C\vec{B}\cdot d\vec{\ell}
+                    &=\mu_0 I_{\mathrm{enc}}, \\
+                  B(r)\,2\pi r &=\mu_0 I, \\
+                  B(r)&=\frac{\mu_0 I}{2\pi r}.
+                \end{aligned}
+                \]
+              </div>
+              <p>
+                Essa dedução exige fio aproximadamente longo e retilíneo, meio
+                não magnético e ponto distante das conexões e extremidades.
+              </p>
+            </div>
+          </article>
+
+          <article class="reasoning-step">
+            <span class="reasoning-step__number" aria-hidden="true"></span>
+            <div class="reasoning-step__content">
+              <h3>Superposição com o campo terrestre</h3>
+              <p>
+                Quando o fio é alinhado com a componente horizontal
+                \(\vec{B}_{T,h}\), o campo do fio é aproximadamente
+                perpendicular a ela. A bússola se orienta pelo vetor resultante:
+              </p>
+              <div class="math-display">
+                \[
+                \begin{aligned}
+                  \vec{B}_{\mathrm{res}}
+                    &=\vec{B}_{T,h}+\vec{B}_{\mathrm{fio}}, \\
+                  \tan\varphi
+                    &=\frac{B_{\mathrm{fio}}}{B_{T,h}}, \\
+                  B_{\mathrm{fio}}
+                    &=B_{T,h}\tan\varphi.
+                \end{aligned}
+                \]
+              </div>
+              <p>
+                A relação deixa de ser adequada se os campos não forem
+                perpendiculares, se houver materiais magnéticos próximos ou se
+                a agulha sofrer atrito e não atingir equilíbrio.
+              </p>
+            </div>
+          </article>
+
+          <article class="reasoning-step">
+            <span class="reasoning-step__number" aria-hidden="true"></span>
+            <div class="reasoning-step__content">
+              <h3>Linearizações e testes do modelo</h3>
+              <div class="math-display">
+                \[
+                \begin{aligned}
+                  B &= \left(\frac{\mu_0}{2\pi r}\right)I
+                  &&\text{para }r\text{ fixo}, \\
+                  B &= \left(\frac{\mu_0 I}{2\pi}\right)\frac{1}{r}
+                  &&\text{para }I\text{ fixo}.
+                \end{aligned}
+                \]
+              </div>
+              <p>
+                Gráficos \(B\) versus \(I\) e \(B\) versus \(1/r\) devem ser
+                aproximadamente lineares no domínio ideal. Intercepto diferente
+                de zero pode indicar campo residual, erro de zero ou geometria
+                não modelada; não deve ser apagado do ajuste.
+              </p>
+            </div>
+          </article>
+
+          <article class="reasoning-step">
+            <span class="reasoning-step__number" aria-hidden="true"></span>
+            <div class="reasoning-step__content">
+              <h3>Incerteza e consistência dimensional</h3>
+              <div class="math-display">
+                \[
+                \begin{aligned}
+                  [B]&=\frac{\mathrm{T\,m\,A^{-1}}\,\mathrm{A}}{\mathrm{m}}
+                      =\mathrm{T}, \\
+                  \left(\frac{u_B}{B}\right)^2
+                    &=\left(\frac{u_I}{I}\right)^2
+                     +\left(\frac{u_r}{r}\right)^2.
+                \end{aligned}
+                \]
+              </div>
+              <p>
+                A propagação supõe incertezas pequenas e independentes. Na lei
+                da tangente, a incerteza angular cresce em importância para
+                ângulos pequenos; a incerteza de \(B_{T,h}\) também deve ser
+                incluída quando esse valor vier de fonte externa.
+              </p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="experiment-panel" id="painel-relatorio" role="tabpanel"
+      aria-labelledby="aba-relatorio" tabindex="0" hidden>
+      <header class="experiment-section-heading">
+        <h2>Roteiro e relatório</h2>
+        <p>
+          O sentido observado, as medidas e as limitações entram no mesmo fluxo
+          de análise. O arquivo <code>relatorio.md</code> oferece a versão
+          preenchível equivalente.
         </p>
       </header>
 
       <div class="report-print-bar">
-        <p>Ao imprimir, somente esta aba será incluída.</p>
+        <p>Ao imprimir, somente este roteiro acadêmico será incluído.</p>
         <button class="report-print-button" type="button" data-print-report>
-          Imprimir modelo de relatório
+          Imprimir roteiro e relatório
         </button>
       </div>
 
-      <div class="report-template">
+      <article class="report-document">
         <div class="report-template__fields" aria-label="Identificação do relatório">
-          <div><strong>Curso/turma:</strong><div class="report-template__line"></div></div>
-          <div><strong>Data:</strong><div class="report-template__line"></div></div>
-          <div><strong>Grupo:</strong><div class="report-template__line"></div></div>
-          <div><strong>Integrantes:</strong><div class="report-template__line"></div></div>
+          <div><strong>Curso, turma e bancada:</strong><div class="report-template__line"></div></div>
+          <div><strong>Data e horário:</strong><div class="report-template__line"></div></div>
+          <div><strong>Grupo e integrantes:</strong><div class="report-template__line"></div></div>
+          <div><strong>Instrumentos e resoluções:</strong><div class="report-template__line"></div></div>
         </div>
 
-        <div class="report-grid">
-          <article class="report-card">
-            <h3>Objetivo e previsão</h3>
+        <section class="report-section">
+          <span class="report-section__number" aria-hidden="true">01</span>
+          <div class="report-section__body">
+            <h3>Questão, hipótese e previsão</h3>
             <p>
-              Declare o objetivo com suas palavras. Anexe a previsão feita antes
-              da energização e diferencie-a do que foi observado.
+              Declare o teste de inversão e as relações esperadas entre campo,
+              corrente e distância. Anexe a tabela de sinais prevista antes da
+              energização e preserve eventuais erros conceituais para discussão.
             </p>
-            <div class="report-template__line"></div>
-            <div class="report-template__line"></div>
-          </article>
+          </div>
+        </section>
 
-          <article class="report-card">
-            <h3>Diagrama e sentidos</h3>
+        <section class="report-section">
+          <span class="report-section__number" aria-hidden="true">02</span>
+          <div class="report-section__body">
+            <h3>Preparação e diagrama vetorial</h3>
             <p>
-              Desenhe fio, corrente convencional, bússola acima/abaixo, norte
-              terrestre, campo do fio e sinal adotado para φ. Aplique a regra da
-              mão direita às quatro configurações.
+              Desenhe fio, corrente, posição da bússola,
+              \(\vec{B}_{T,h}\), \(\vec{B}_{\mathrm{fio}}\) e
+              \(\vec{B}_{\mathrm{res}}\). Defina o sinal de \(\varphi\) e
+              justifique a lei da tangente pela geometria dos vetores.
             </p>
-            <div class="report-template__line"></div>
-            <div class="report-template__line"></div>
-            <div class="report-template__line"></div>
-          </article>
+          </div>
+        </section>
 
-          <article class="report-card">
-            <h3>Dados e evidências</h3>
+        <section class="report-section">
+          <span class="report-section__number" aria-hidden="true">03</span>
+          <div class="report-section__body">
+            <h3>Procedimento e controles</h3>
             <p>
-              Transcreva a tabela sem completar lacunas com estimativas. Inclua
-              uma fotografia da montagem, se autorizada, e descreva o estado da
-              corrente em cada registro.
+              Relate a montagem real, os ciclos de energização, a sequência das
+              inversões, o modo de medir \(r\) e \(\varphi\), as repetições e a
+              verificação do zero. Identifique desvios do roteiro.
             </p>
-            <div class="report-template__line"></div>
-          </article>
+            <aside class="experiment-safety">
+              <strong>Registro de segurança</strong>
+              <p>Confirme dial inicial, pulsos de 5–10 s e resfriamento entre leituras.</p>
+            </aside>
+          </div>
+        </section>
 
-          <article class="report-card">
-            <h3>Análise</h3>
+        <section class="report-section">
+          <span class="report-section__number" aria-hidden="true">04</span>
+          <div class="report-section__body">
+            <h3>Dados brutos</h3>
             <p>
-              Confronte sinais previstos e observados. Demonstre
-              B(r) = μ₀I/(2πr), explique a lei da tangente e, se houver medidas
-              em diferentes distâncias, compare os dados com 1/r.
+              Registre valores sem substituir lacunas por previsões. Inclua o
+              sentido da corrente, o lado da bússola, \(I\), \(r\),
+              \(\varphi\), repetição e observações.
             </p>
-            <div class="report-template__line"></div>
-            <div class="report-template__line"></div>
-          </article>
+            <div class="report-data">
+              <div class="data-table-wrapper">
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th scope="col">Ensaio</th><th scope="col">Sentido de \(I\)</th>
+                      <th scope="col">Posição</th><th scope="col">\(I\,(\mathrm{A})\)</th>
+                      <th scope="col">\(r\,(\mathrm{m})\)</th><th scope="col">\(\varphi\)</th>
+                      <th scope="col">Repetição</th><th scope="col">Observações</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr><td>1</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                    <tr><td>2</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                    <tr><td>3</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                    <tr><td>4</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                    <tr><td>5</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                    <tr><td>6</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </section>
 
-          <article class="report-card">
-            <h3>Incerteza e limitações</h3>
+        <section class="report-section">
+          <span class="report-section__number" aria-hidden="true">05</span>
+          <div class="report-section__body">
+            <h3>Tratamento e análise</h3>
             <p>
-              Apresente resoluções instrumentais e propagação quando aplicável.
-              Discuta desalinhamento, campo local, fio finito, terminais, atrito
-              da bússola e aquecimento sem confundir dispersão com viés.
+              Converta ângulos em campo somente se \(B_{T,h}\) for conhecido e
+              a ortogonalidade for justificável. Calcule média e dispersão das
+              repetições. Produza \(B\) versus \(I\) ou \(B\) versus \(1/r\),
+              com barras de incerteza, ajuste e resíduos.
             </p>
-            <div class="report-template__line"></div>
-            <div class="report-template__line"></div>
-          </article>
+            <div class="math-display">
+              \[
+              \begin{aligned}
+                B_{\mathrm{fio}}&=B_{T,h}\tan\varphi, \\
+                B_{\mathrm{modelo}}&=\frac{\mu_0 I}{2\pi r}.
+              \end{aligned}
+              \]
+            </div>
+          </div>
+        </section>
 
-          <article class="report-card">
+        <section class="report-section">
+          <span class="report-section__number" aria-hidden="true">06</span>
+          <div class="report-section__body">
+            <h3>Incertezas</h3>
+            <p>
+              Separe resolução de corrente, distância e ângulo, repetibilidade e
+              vieses de alinhamento, campo externo, comprimento finito e
+              aquecimento. Mostre uma propagação completa e identifique a fonte
+              dominante.
+            </p>
+          </div>
+        </section>
+
+        <section class="report-section">
+          <span class="report-section__number" aria-hidden="true">07</span>
+          <div class="report-section__body">
+            <h3>Discussão</h3>
+            <p>
+              Confronte sinais com a regra da mão direita; explique por que
+              Biot–Savart contém \(r^{-2}\), mas o fio longo produz \(r^{-1}\);
+              avalie linearidade, intercepto e limites da lei da tangente; e
+              proponha uma melhoria ligada à principal incerteza.
+            </p>
+          </div>
+        </section>
+
+        <section class="report-section">
+          <span class="report-section__number" aria-hidden="true">08</span>
+          <div class="report-section__body">
             <h3>Conclusão</h3>
             <p>
-              Responda apenas ao que os dados sustentam: existência, sentido e,
-              se houve extensão quantitativa suficiente, dependência radial do
-              campo. Não transforme uma observação qualitativa em confirmação
-              numérica.
+              Responda à questão usando os sinais e parâmetros obtidos. Separe
+              resultados qualitativos de comparações quantitativas e declare o
+              domínio em que o modelo do fio longo foi sustentado.
             </p>
-            <div class="report-template__line"></div>
-            <div class="report-template__line"></div>
-          </article>
-        </div>
-
-        <article class="report-card">
-          <h3>Tabela de dados do relatório</h3>
-          <div class="data-table-wrapper">
-            <table class="data-table">
-              <thead>
-                <tr>
-                  <th scope="col">Sentido de I</th>
-                  <th scope="col">Acima/abaixo</th>
-                  <th scope="col">r (m)</th>
-                  <th scope="col">I (A)</th>
-                  <th scope="col">φ (°)</th>
-                  <th scope="col">B_fio (T)</th>
-                  <th scope="col">Observações</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
-                <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
-                <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
-                <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
-              </tbody>
-            </table>
           </div>
-        </article>
+        </section>
 
-        <article class="report-card">
-          <h3>Perguntas conceituais</h3>
-          <ol class="question-list">
-            <li>Por que a troca de abaixo para acima inverte o campo do fio no ponto da bússola?</li>
-            <li>Por que inverter a corrente produz efeito equivalente sobre o sentido da deflexão?</li>
-            <li>Que simetrias justificam escolher uma circunferência como caminho amperiano?</li>
-            <li>Por que o fator 1/r² de Biot–Savart não é a dependência final do campo de um fio longo?</li>
-            <li>Em quais condições tan φ = B_fio/B_T,h deixa de ser uma boa aproximação?</li>
-            <li>Quais dados seriam necessários para distinguir experimentalmente 1/r de 1/r²?</li>
-          </ol>
-        </article>
+        <section class="report-section">
+          <span class="report-section__number" aria-hidden="true">09</span>
+          <div class="report-section__body">
+            <h3>Referências e anexos</h3>
+            <p>
+              Cite roteiro, manual e fontes teóricas. Anexe diagrama, dados
+              brutos, cálculos, gráficos e fotografias autorizadas.
+            </p>
+          </div>
+        </section>
 
-        <article class="report-card">
-          <h3>Checklist de entrega</h3>
-          <ul class="report-checklist">
-            <li>□ identificação e objetivo;</li>
-            <li>□ previsão original e diagrama com sentidos;</li>
-            <li>□ fotografia ou desenho fiel da montagem;</li>
-            <li>□ tabela com unidades e dados realmente obtidos;</li>
-            <li>□ derivação, cálculos e gráfico B_fio versus 1/r, quando houver dados quantitativos;</li>
-            <li>□ análise de incerteza e limitações;</li>
-            <li>□ respostas conceituais e conclusão compatível com as evidências.</li>
-          </ul>
-        </article>
-      </div>
+        <section class="report-section">
+          <span class="report-section__number" aria-hidden="true">10</span>
+          <div class="report-section__body">
+            <h3>Verificação antes da entrega</h3>
+            <ul class="report-checklist">
+              <li>□ previsão e diagrama vetorial preservados;</li>
+              <li>□ dados, unidades, resolução e repetições registrados;</li>
+              <li>□ deduções de Biot–Savart, Ampère e lei da tangente;</li>
+              <li>□ ajuste, resíduos e incertezas compatíveis com os dados;</li>
+              <li>□ discussão, conclusão, referências e anexos completos.</li>
+            </ul>
+          </div>
+        </section>
+      </article>
     </section>
   </main>
 
@@ -533,7 +524,6 @@
     <p>Experimento 01 · Campo magnético gerado por corrente</p>
     <a href="../">Voltar aos experimentos</a>
   </footer>
-
   <script type="module" src="../../componentes/navegacao-principal.js"></script>
   <script type="module" src="../experimento.js"></script>
 </body>
