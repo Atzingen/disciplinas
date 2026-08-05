@@ -1,0 +1,290 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Resolução ilustrada do exercício 42, capítulo 21, do Halliday: equilíbrio de duas esferas carregadas suspensas.">
+  <title>Halliday 21.42 · Laboratório de Eletromagnetismo</title>
+  <link rel="stylesheet" href="../../assets/base.css">
+  <link rel="stylesheet" href="../../assets/simulador.css">
+</head>
+<body class="lesson-page halliday-page">
+  <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+
+  <header class="lesson-header">
+    <nav class="breadcrumb" aria-label="Navegação estrutural">
+      <a href="../../">Laboratório</a>
+      <span aria-hidden="true">/</span>
+      <span>Halliday</span>
+      <span aria-hidden="true">/</span>
+      <span>Capítulo 21</span>
+      <span aria-hidden="true">/</span>
+      <strong>Exercício 42</strong>
+    </nav>
+    <div class="lesson-title-row">
+      <div>
+        <p class="eyebrow">Pêndulos eletrostáticos</p>
+        <h1>Equilíbrio das esferas</h1>
+      </div>
+      <p class="lesson-intro">
+        A separação horizontal revela a carga porque conecta três ideias:
+        equilíbrio de forças, lei de Coulomb e geometria de pequeno ângulo.
+      </p>
+    </div>
+  </header>
+
+  <main class="lesson-main" id="conteudo">
+    <div data-tabs>
+      <div class="tab-list" role="tablist" aria-label="Conteúdo do exercício">
+        <button class="tab-button" id="tab-enunciado" type="button" role="tab" aria-selected="true" aria-controls="painel-enunciado">Enunciado</button>
+        <button class="tab-button" id="tab-resolucao" type="button" role="tab" aria-selected="false" aria-controls="painel-resolucao" tabindex="-1">Resolução</button>
+        <button class="tab-button" id="tab-diagrama" type="button" role="tab" aria-selected="false" aria-controls="painel-diagrama" tabindex="-1">Diagrama</button>
+      </div>
+
+      <section class="tab-panel" id="painel-enunciado" role="tabpanel" aria-labelledby="tab-enunciado">
+        <article class="problem-sheet">
+          <div class="problem-number">
+            <span>Halliday</span>
+            <strong>21.42</strong>
+          </div>
+          <div class="problem-copy">
+            <p>
+              Duas pequenas esferas condutoras, cada uma de massa m e carga q,
+              ficam suspensas por fios isolantes de comprimento L. A repulsão
+              elétrica estabelece uma separação horizontal de equilíbrio x.
+            </p>
+            <p>
+              Admitindo θ suficientemente pequeno para usar
+              <strong>tan θ ≈ sin θ</strong>, mostre a expressão de x. Depois,
+              calcule |q| para <strong>L = 120 cm</strong>,
+              <strong>m = 10 g</strong> e <strong>x = 5,0 cm</strong>.
+            </p>
+          </div>
+          <div class="answer-strip">
+            <span>Respostas a e b</span>
+            <strong>x = [q²L/(2π ε₀mg)]<sup>1/3</sup> · |q| ≈ 2,38 × 10<sup>−8</sup> C ≈ 24 nC</strong>
+          </div>
+        </article>
+      </section>
+
+      <section class="tab-panel" id="painel-resolucao" role="tabpanel" aria-labelledby="tab-resolucao" hidden>
+        <article class="solution-article">
+          <header class="solution-heading">
+            <p class="eyebrow">Resolução passo a passo</p>
+            <h2>Uma esfera já contém toda a solução</h2>
+            <p>
+              Pela simetria, basta analisar a esfera da direita. A esfera da
+              esquerda obedece às mesmas equações, com os sentidos horizontais
+              invertidos.
+            </p>
+          </header>
+
+          <section>
+            <span class="solution-step">01 · diagrama de corpo livre</span>
+            <h3>Separe as três forças</h3>
+            <p>Sobre a esfera da direita atuam:</p>
+            <div class="derivation-grid">
+              <article>
+                <strong>Tensão T</strong>
+                <p>Ao longo do fio, apontando para o ponto de suspensão.</p>
+              </article>
+              <article>
+                <strong>Peso mg</strong>
+                <p>Vertical e para baixo.</p>
+              </article>
+              <article>
+                <strong>Força elétrica F<sub>e</sub></strong>
+                <p>Horizontal e para fora, pois as cargas iguais se repelem.</p>
+              </article>
+              <article>
+                <strong>Equilíbrio</strong>
+                <p>A soma das forças é nula tanto em x quanto em y.</p>
+              </article>
+            </div>
+          </section>
+
+          <section>
+            <span class="solution-step">02 · componentes</span>
+            <h3>Elimine a tensão por divisão</h3>
+            <p>As condições de equilíbrio horizontal e vertical são:</p>
+            <div class="math-block">
+              T sin θ = F<sub>e</sub>,
+              <br>
+              T cos θ = mg.
+            </div>
+            <p>Dividindo a primeira equação pela segunda:</p>
+            <div class="math-block math-block--result">
+              tan θ = F<sub>e</sub>/(mg).
+            </div>
+          </section>
+
+          <section>
+            <span class="solution-step">03 · geometria</span>
+            <h3>Cada esfera desloca-se x/2</h3>
+            <p>
+              O sistema é simétrico em torno da vertical central. Assim, o
+              cateto horizontal do triângulo de cada fio é x/2:
+            </p>
+            <div class="math-block">
+              sin θ = (x/2)/L = x/(2L).
+            </div>
+            <p>
+              Para ângulos pequenos, tan θ ≈ sin θ. Logo, combinando com a etapa
+              anterior:
+            </p>
+            <div class="math-block">
+              x/(2L) ≈ F<sub>e</sub>/(mg).
+            </div>
+          </section>
+
+          <section>
+            <span class="solution-step">04 · pergunta A</span>
+            <h3>Introduza a lei de Coulomb</h3>
+            <p>A distância entre as cargas é x, então:</p>
+            <div class="math-block">
+              F<sub>e</sub> = kq<sup>2</sup>/x<sup>2</sup>
+              = q<sup>2</sup>/(4π ε₀x<sup>2</sup>).
+            </div>
+            <p>Substituindo essa força na relação de pequeno ângulo:</p>
+            <div class="math-block">
+              x/(2L) = q<sup>2</sup>/(4π ε₀mgx<sup>2</sup>)
+              <br>
+              x<sup>3</sup> = q<sup>2</sup>L/(2π ε₀mg).
+            </div>
+            <div class="math-block math-block--result">
+              x = [q<sup>2</sup>L/(2π ε₀mg)]<sup>1/3</sup>.
+            </div>
+          </section>
+
+          <section>
+            <span class="solution-step">05 · pergunta B</span>
+            <h3>Converta os dados para o SI</h3>
+            <div class="derivation-grid">
+              <article><strong>L = 1,20 m</strong><p>120 cm ÷ 100</p></article>
+              <article><strong>m = 0,010 kg</strong><p>10 g ÷ 1000</p></article>
+              <article><strong>x = 0,050 m</strong><p>5,0 cm ÷ 100</p></article>
+              <article><strong>g = 9,81 m/s²</strong><p>aceleração gravitacional</p></article>
+            </div>
+            <p>Isolando o módulo da carga:</p>
+            <div class="math-block">
+              |q| = √(2π ε₀mgx<sup>3</sup>/L)
+              <br>
+              = √[2π(8,854 × 10<sup>−12</sup>)(0,010)(9,81)(0,050)<sup>3</sup>/1,20]
+              <br>
+              = 2,38 × 10<sup>−8</sup> C.
+            </div>
+            <div class="result-callout">
+              <span>Resposta</span>
+              <strong>|q| ≈ 2,4 × 10<sup>−8</sup> C ≈ 24 nC.</strong>
+            </div>
+          </section>
+
+          <section>
+            <span class="solution-step">06 · verificação da aproximação</span>
+            <h3>O ângulo é realmente pequeno?</h3>
+            <div class="math-block">
+              sin θ = x/(2L) = 0,050/(2 × 1,20) = 0,0208
+              <br>
+              θ ≈ 1,19°.
+            </div>
+            <p>
+              Esse valor é pequeno; portanto, usar tan θ ≈ sin θ é coerente com
+              os dados do problema.
+            </p>
+          </section>
+        </article>
+      </section>
+
+      <section class="tab-panel" id="painel-diagrama" role="tabpanel" aria-labelledby="tab-diagrama" hidden>
+        <article class="static-diagram-shell">
+          <header class="static-diagram-heading">
+            <div>
+              <p class="eyebrow">Geometria + forças</p>
+              <h2>Do pêndulo ao corpo livre</h2>
+            </div>
+            <p>A metade esquerda mostra a geometria; a metade direita isola uma esfera para decompor a tensão.</p>
+          </header>
+
+          <svg class="teaching-diagram" viewBox="0 0 940 660" role="img" aria-labelledby="diagram-42-title diagram-42-desc">
+            <title id="diagram-42-title">Pêndulos carregados e diagrama de corpo livre do exercício 21.42</title>
+            <desc id="diagram-42-desc">Duas esferas iguais pendem simetricamente de um suporte e se repelem. Ao lado, a esfera direita aparece isolada com tensão para cima e para a esquerda, peso para baixo e força elétrica para a direita.</desc>
+            <defs>
+              <marker id="arrow-42-tension" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+                <path d="M 0 0 L 10 5 L 0 10 z" fill="#008b95"></path>
+              </marker>
+              <marker id="arrow-42-electric" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+                <path d="M 0 0 L 10 5 L 0 10 z" fill="#e07a1f"></path>
+              </marker>
+              <marker id="arrow-42-weight" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+                <path d="M 0 0 L 10 5 L 0 10 z" fill="#7a3ce7"></path>
+              </marker>
+              <marker id="dimension-42" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                <path d="M 10 0 L 0 5 L 10 10 z" fill="#7a3ce7"></path>
+              </marker>
+            </defs>
+
+            <rect class="diagram-panel" x="28" y="28" width="530" height="520" rx="4"></rect>
+            <text class="diagram-panel-title" x="55" y="62">GEOMETRIA DO SISTEMA</text>
+            <rect class="diagram-support" x="245" y="85" width="96" height="18" rx="3"></rect>
+            <circle cx="293" cy="107" r="8" fill="#142a3b"></circle>
+            <line class="diagram-guide" x1="293" y1="107" x2="293" y2="480"></line>
+            <line class="diagram-string" x1="293" y1="107" x2="150" y2="445"></line>
+            <line class="diagram-string" x1="293" y1="107" x2="436" y2="445"></line>
+            <circle class="diagram-mass" cx="150" cy="445" r="27"></circle>
+            <text class="diagram-sign" x="150" y="453">q</text>
+            <circle class="diagram-mass" cx="436" cy="445" r="27"></circle>
+            <text class="diagram-sign" x="436" y="453">q</text>
+
+            <path class="diagram-angle" d="M 293 160 A 53 53 0 0 1 272 156"></path>
+            <path class="diagram-angle" d="M 293 160 A 53 53 0 0 0 314 156"></path>
+            <text class="diagram-value" x="255" y="171">θ</text>
+            <text class="diagram-value" x="324" y="171">θ</text>
+            <text class="diagram-force-label" x="195" y="274" transform="rotate(-67 195 274)">L</text>
+            <text class="diagram-force-label" x="392" y="274" transform="rotate(67 392 274)">L</text>
+
+            <line class="diagram-guide" x1="150" y1="445" x2="150" y2="512"></line>
+            <line class="diagram-guide" x1="436" y1="445" x2="436" y2="512"></line>
+            <line class="diagram-dimension" x1="160" y1="505" x2="426" y2="505" marker-start="url(#dimension-42)" marker-end="url(#dimension-42)"></line>
+            <text class="diagram-value" x="293" y="535">separação x</text>
+            <line class="diagram-guide" x1="293" y1="460" x2="436" y2="460"></line>
+            <text class="diagram-note" x="365" y="482">x/2</text>
+
+            <rect class="diagram-panel" x="580" y="28" width="332" height="520" rx="4"></rect>
+            <text class="diagram-panel-title" x="607" y="62">CORPO LIVRE · ESFERA DIREITA</text>
+            <line class="diagram-guide" x1="746" y1="120" x2="746" y2="490"></line>
+            <line class="diagram-guide" x1="630" y1="315" x2="870" y2="315"></line>
+            <circle class="diagram-mass" cx="746" cy="315" r="30"></circle>
+            <text class="diagram-sign" x="746" y="323">q</text>
+
+            <line class="diagram-force diagram-force--one" x1="730" y1="294" x2="653" y2="178" marker-end="url(#arrow-42-tension)"></line>
+            <text class="diagram-force-label" x="658" y="159">T</text>
+            <line class="diagram-force diagram-force--two" x1="778" y1="315" x2="865" y2="315" marker-end="url(#arrow-42-electric)"></line>
+            <text class="diagram-force-label" x="825" y="299">F_e</text>
+            <line class="diagram-force diagram-force--resultant" x1="746" y1="348" x2="746" y2="466" marker-end="url(#arrow-42-weight)"></line>
+            <text class="diagram-force-label" x="774" y="426">mg</text>
+            <path class="diagram-angle" d="M 746 242 A 73 73 0 0 0 706 254"></path>
+            <text class="diagram-value" x="695" y="238">θ</text>
+
+            <rect class="diagram-panel" x="28" y="572" width="884" height="60" rx="4"></rect>
+            <text class="diagram-force-label" x="55" y="608">EQUILÍBRIO:</text>
+            <text class="diagram-note" x="165" y="608">T cos θ = mg</text>
+            <text class="diagram-note" x="390" y="608">T sin θ = F_e</text>
+            <text class="diagram-value" x="625" y="608">tan θ = F_e/(mg)</text>
+          </svg>
+          <p class="diagram-caption">
+            A tensão não precisa ser calculada: dividir suas componentes faz T
+            desaparecer. A geometria fornece sin θ = x/(2L).
+          </p>
+        </article>
+      </section>
+    </div>
+  </main>
+
+  <footer class="lesson-footer site-footer">
+    <p>Halliday 21.42 · capítulo 21 · exercício 42</p>
+    <a href="../../">Voltar ao catálogo</a>
+  </footer>
+
+  <script type="module" src="../exercicio-estatico.js"></script>
+</body>
+</html>
