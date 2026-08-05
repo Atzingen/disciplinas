@@ -61,7 +61,7 @@ test("cada exercício expõe navegação global e sequência do capítulo", asyn
     assert.match(html, /data-active-section="exercicios"/);
     assert.match(html, new RegExp(`data-current-id="halliday-21-${number}"`));
     assert.match(html, /data-chapter-url="\.\.\/capitulo-21\/"/);
-    assert.match(html, /navegacao-exercicios\.js/);
+    assert.match(html, /src="\.\.\/\.\.\/componentes\/navegacao-exercicios\.js"/);
   }
 });
 
