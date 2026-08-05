@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Plano — Exercícios Halliday 21.18, 21.34 e 21.42</title>
+  <style>
+    :root {
+      color-scheme: light dark;
+      --paper: #f3f6f7;
+      --panel: #fff;
+      --ink: #142a3b;
+      --muted: #647584;
+      --line: #d5dfe5;
+      --cyan: #008da8;
+      --violet: #7048d8;
+      --amber: #b77700;
+      --code: #edf2f5;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root { --paper:#0f171d; --panel:#17232c; --ink:#e9f1f5; --muted:#a6b7c3; --line:#324550; --cyan:#56cce2; --violet:#ad96ff; --amber:#f0bb55; --code:#0d151a; }
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin:0; background:var(--paper); color:var(--ink); font:15.5px/1.65 system-ui,-apple-system,"Segoe UI",sans-serif; }
+    .layout { display:grid; grid-template-columns:17rem minmax(0,64rem); gap:2.5rem; max-width:88rem; margin:auto; padding:2rem; }
+    nav { position:sticky; top:1.25rem; align-self:start; border-right:1px solid var(--line); padding-right:1rem; }
+    nav strong { display:block; margin-bottom:.75rem; letter-spacing:.08em; text-transform:uppercase; font-size:.78rem; }
+    nav a { display:block; padding:.34rem .5rem; color:var(--muted); text-decoration:none; border-radius:.35rem; }
+    nav a:hover { background:var(--code); color:var(--ink); }
+    main { min-width:0; }
+    .hero, .task, .checks { background:var(--panel); border:1px solid var(--line); border-radius:1rem; box-shadow:0 1rem 3rem rgba(20,42,59,.06); }
+    .hero { padding:clamp(1.5rem,4vw,3.5rem); border-top:.35rem solid var(--cyan); }
+    .eyebrow { color:var(--cyan); font-weight:750; letter-spacing:.12em; text-transform:uppercase; font-size:.78rem; }
+    h1 { margin:.45rem 0 1rem; font-size:clamp(2rem,5vw,3.5rem); line-height:1.05; letter-spacing:-.045em; }
+    h2 { margin:0 0 .65rem; line-height:1.2; }
+    h3 { margin:1.4rem 0 .5rem; }
+    .lead { max-width:48rem; color:var(--muted); font-size:1.05rem; }
+    .meta { display:grid; grid-template-columns:repeat(3,1fr); gap:1px; margin-top:2rem; background:var(--line); border:1px solid var(--line); }
+    .meta div { background:var(--panel); padding:1rem; }
+    .meta small { display:block; color:var(--muted); text-transform:uppercase; letter-spacing:.08em; }
+    section { scroll-margin-top:1.5rem; }
+    .task, .checks { margin-top:1.25rem; padding:clamp(1.25rem,3vw,2rem); }
+    .task { border-left:.3rem solid var(--violet); }
+    .task:nth-of-type(even) { border-left-color:var(--cyan); }
+    .number { display:inline-grid; place-items:center; width:2rem; height:2rem; border-radius:50%; color:#fff; background:var(--violet); font-weight:800; margin-right:.55rem; }
+    ul, ol { padding-left:1.35rem; }
+    li + li { margin-top:.4rem; }
+    code { background:var(--code); border-radius:.25rem; padding:.12rem .35rem; }
+    pre { overflow:auto; padding:1rem; background:var(--code); border:1px solid var(--line); border-radius:.6rem; }
+    pre code { padding:0; }
+    .formula { overflow:auto; margin:.8rem 0; padding:1rem; border-left:.25rem solid var(--amber); background:var(--code); font-family:"Cascadia Code",Consolas,monospace; }
+    .done { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:.75rem; }
+    .done div { border:1px solid var(--line); padding:.8rem 1rem; }
+    footer { color:var(--muted); padding:2rem .25rem; }
+    @media (max-width:850px) {
+      .layout { display:block; padding:.75rem; }
+      nav { position:static; border:0; border-bottom:1px solid var(--line); margin-bottom:1rem; padding:1rem 0; columns:2; }
+      nav strong { column-span:all; }
+      .meta, .done { grid-template-columns:1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="layout">
+    <nav aria-label="Sumário do plano">
+      <strong>Plano de execução</strong>
+      <a href="#visao">Visão geral</a>
+      <a href="#tarefa-1">1. Contrato comum</a>
+      <a href="#tarefa-2">2. Exercício 21.18</a>
+      <a href="#tarefa-3">3. Exercício 21.34</a>
+      <a href="#tarefa-4">4. Exercício 21.42</a>
+      <a href="#tarefa-5">5. Publicação</a>
+      <a href="#criterios">Critérios finais</a>
+    </nav>
+
+    <main>
+      <header class="hero" id="visao">
+        <div class="eyebrow">Halliday · Capítulo 21</div>
+        <h1>Três novas resoluções visuais de eletrostática</h1>
+        <p class="lead">Páginas independentes, com enunciados parafraseados, deduções passo a passo e diagramas SVG autorais que tornam os sentidos das forças e as relações geométricas visíveis.</p>
+        <div class="meta">
+          <div><small>Interface</small><strong>3 abas por exercício</strong></div>
+          <div><small>Figuras</small><strong>SVG acessível e responsivo</strong></div>
+          <div><small>Entrega</small><strong>Catálogo + GitHub Pages</strong></div>
+        </div>
+      </header>
+
+      <section class="task" id="tarefa-1">
+        <h2><span class="number">1</span>Contrato e infraestrutura comum</h2>
+        <p>Criar primeiro um teste que procura as três páginas e exige três painéis de abas, SVG com <code>title</code> e <code>desc</code>, inicializador comum e os resultados finais esperados.</p>
+        <ol>
+          <li>Adicionar <code>site/testes/exercicios-halliday.test.js</code> e observar a falha por arquivos ausentes.</li>
+          <li>Criar <code>site/exercicios/exercicio-estatico.js</code> usando o componente <code>setupTabs</code> existente.</li>
+          <li>Acrescentar ao CSS somente as classes comuns de figura, dedução, tabela e conclusão.</li>
+        </ol>
+      </section>
+
+      <section class="task" id="tarefa-2">
+        <h2><span class="number">2</span>Exercício 21.18</h2>
+        <p>Resolver o sistema formado pelas duas configurações e relacionar diretamente a razão entre forças à razão entre cargas.</p>
+        <div class="formula">F<sub>B</sub> + F<sub>C</sub> = F<sub>a</sub><br>F<sub>C</sub> − F<sub>B</sub> = F<sub>b</sub><br>q<sub>C</sub>/q<sub>B</sub> = (F<sub>a</sub> + F<sub>b</sub>)/(F<sub>a</sub> − F<sub>b</sub>) ≈ 1,33</div>
+        <p>O SVG mostrará as duas disposições no eixo x e as setas de força aplicadas sobre A, inclusive o sentido oposto de B após a mudança de lado.</p>
+      </section>
+
+      <section class="task" id="tarefa-3">
+        <h2><span class="number">3</span>Exercício 21.34</h2>
+        <p>Começar pela simetria: as componentes verticais produzidas pelos íons se anulam e as horizontais se somam contra a força do elétron 1.</p>
+        <div class="formula">q/e = 1/(2 cos³θ)<br>θ<sub>n</sub> = arccos[(1/(2n))<sup>1/3</sup>]</div>
+        <p>Aplicando <code>q = ne</code> com <code>n = 1…5</code>, destacar os três menores valores: <strong>37,47°</strong>, <strong>50,95°</strong> e <strong>56,61°</strong>.</p>
+      </section>
+
+      <section class="task" id="tarefa-4">
+        <h2><span class="number">4</span>Exercício 21.42</h2>
+        <p>Combinar o equilíbrio de uma esfera, a geometria do pêndulo e a aproximação de pequeno ângulo.</p>
+        <div class="formula">tan θ = F<sub>e</sub>/(mg) ≈ x/(2L)<br>x = [q²L/(2π ε₀mg)]<sup>1/3</sup><br>|q| = √(2π ε₀mgx³/L) = 2,38 × 10⁻⁸ C ≈ 24 nC</div>
+        <p>A figura reunirá a geometria dos dois fios e um diagrama de corpo livre com <code>T</code>, <code>mg</code> e <code>F<sub>e</sub></code>.</p>
+      </section>
+
+      <section class="task" id="tarefa-5">
+        <h2><span class="number">5</span>Catálogo, regressão e publicação</h2>
+        <ol>
+          <li>Atualizar primeiro os testes para cinco itens e quatro resoluções Halliday.</li>
+          <li>Registrar as três novas rotas em <code>site/simuladores.json</code>.</li>
+          <li>Executar testes Node, testes Python, verificação sintática e inspeção em navegador real.</li>
+          <li>Validar desktop e viewport móvel de aproximadamente 390 px.</li>
+          <li>Fazer commit, push, acompanhar o workflow e verificar as quatro URLs públicas com HTTP 200.</li>
+        </ol>
+        <pre><code>npm test
+python -m unittest discover -s tests -v
+python -m py_compile py5_app/main.py
+node --check site/exercicios/exercicio-estatico.js</code></pre>
+      </section>
+
+      <section class="checks" id="criterios">
+        <h2>Critérios finais de aceite</h2>
+        <div class="done">
+          <div>✓ Resoluções fisicamente corretas e completas</div>
+          <div>✓ Diagramas autorais com descrição acessível</div>
+          <div>✓ Três abas navegáveis por teclado</div>
+          <div>✓ Sem quebra de fórmulas ou overflow móvel</div>
+          <div>✓ Cinco cartões no catálogo publicado</div>
+          <div>✓ Testes locais e workflow remoto aprovados</div>
+        </div>
+      </section>
+
+      <footer>Companheiro visual de <code>2026-08-05-halliday-exercicios-18-34-42.md</code> · 05/08/2026</footer>
+    </main>
+  </div>
+</body>
+</html>
