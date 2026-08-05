@@ -19,7 +19,7 @@ function searchableText(item) {
   );
 }
 
-export function filterCatalog(items, query = "", type = "todos") {
+export function filterCatalog(items, query = "", type = "todos", scope = {}) {
   if (!Array.isArray(items)) {
     throw new TypeError("O catálogo deve ser uma lista.");
   }
@@ -27,9 +27,20 @@ export function filterCatalog(items, query = "", type = "todos") {
   const normalizedQuery = normalizeSearchText(query);
   return items.filter((item) => {
     const matchesType = type === "todos" || item.kind === type;
+    const matchesSection = !scope.section || item.section === scope.section;
+    const matchesChapter =
+      scope.chapter === undefined || item.chapter === scope.chapter;
+    const matchesReference =
+      !scope.reference || item.reference === scope.reference;
     const matchesQuery =
       normalizedQuery === "" || searchableText(item).includes(normalizedQuery);
-    return matchesType && matchesQuery;
+    return (
+      matchesType &&
+      matchesSection &&
+      matchesChapter &&
+      matchesReference &&
+      matchesQuery
+    );
   });
 }
 
@@ -55,7 +66,12 @@ function element(tagName, className, text) {
 function createCard(item) {
   const card = element("article", "catalog-card");
   const link = element("a", "catalog-card__link");
-  const kindLabel = item.kind === "simulador" ? "Simulador" : "Resolução";
+  const kindLabels = {
+    experimento: "Experimento",
+    resolucao: "Resolução",
+    simulador: "Simulador",
+  };
+  const kindLabel = kindLabels[item.kind] ?? "Material";
   const eyebrow = element("span", "catalog-card__kind", kindLabel);
   const title = element("h3", "catalog-card__title", item.title);
   const theme = element("p", "catalog-card__theme", item.theme);
@@ -79,6 +95,7 @@ function createCard(item) {
 
 export async function mountCatalog(root, options = {}) {
   const registryUrl = options.registryUrl ?? "./simuladores.json";
+  const scope = options.scope ?? {};
   const controls = root.querySelector("[data-catalog-controls]");
   const results = root.querySelector("[data-catalog-results]");
   const count = root.querySelector("[data-catalog-count]");
@@ -89,7 +106,7 @@ export async function mountCatalog(root, options = {}) {
   let activeType = "todos";
 
   function render() {
-    const visibleItems = filterCatalog(items, search.value, activeType);
+    const visibleItems = filterCatalog(items, search.value, activeType, scope);
     results.replaceChildren();
 
     for (const item of visibleItems) {

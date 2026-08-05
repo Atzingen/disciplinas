@@ -3,83 +3,106 @@
     "id": "cargas-e-vetores",
     "title": "Cargas e vetores",
     "kind": "simulador",
+    "section": "simulacoes",
     "theme": "Força elétrica e soma vetorial",
     "description": "Adicione cargas positivas e negativas, mova a carga de prova e acompanhe cada força e a resultante.",
     "path": "simuladores/cargas-e-vetores/",
-    "tags": [
-      "força",
-      "Coulomb",
-      "vetores",
-      "produto escalar",
-      "simulação"
-    ]
+    "tags": ["força", "Coulomb", "vetores", "produto escalar", "simulação"]
   },
   {
     "id": "halliday-21-13",
     "title": "Halliday — capítulo 21 — exercício 13",
     "kind": "resolucao",
+    "section": "exercicios",
+    "reference": "Halliday",
+    "chapter": 21,
+    "exerciseNumber": 13,
     "theme": "Equilíbrio eletrostático",
     "description": "Resolução passo a passo e simulação do ponto onde duas forças elétricas se anulam.",
     "path": "exercicios/halliday-21-13/",
-    "tags": [
-      "Halliday",
-      "capítulo 21",
-      "exercício 13",
-      "equilíbrio",
-      "resolução"
-    ]
+    "tags": ["Halliday", "capítulo 21", "exercício 13", "21.13", "equilíbrio", "resolução"]
   },
   {
     "id": "halliday-21-18",
     "title": "Halliday — capítulo 21 — exercício 18",
     "kind": "resolucao",
+    "section": "exercicios",
+    "reference": "Halliday",
+    "chapter": 21,
+    "exerciseNumber": 18,
     "theme": "Forças colineares e razão entre cargas",
     "description": "Resolução ilustrada que separa duas contribuições elétricas por meio da soma e da diferença das forças medidas.",
     "path": "exercicios/halliday-21-18/",
-    "tags": [
-      "Halliday",
-      "capítulo 21",
-      "exercício 18",
-      "21.18",
-      "forças colineares",
-      "lei de Coulomb",
-      "resolução"
-    ]
+    "tags": ["Halliday", "capítulo 21", "exercício 18", "21.18", "forças colineares", "lei de Coulomb", "resolução"]
   },
   {
     "id": "halliday-21-34",
     "title": "Halliday — capítulo 21 — exercício 34",
     "kind": "resolucao",
+    "section": "exercicios",
+    "reference": "Halliday",
+    "chapter": 21,
+    "exerciseNumber": 34,
     "theme": "Simetria, componentes e equilíbrio",
     "description": "Resolução visual do equilíbrio de um elétron por forças simétricas e da quantização que seleciona os ângulos possíveis.",
     "path": "exercicios/halliday-21-34/",
-    "tags": [
-      "Halliday",
-      "capítulo 21",
-      "exercício 34",
-      "21.34",
-      "simetria",
-      "componentes vetoriais",
-      "quantização da carga",
-      "resolução"
-    ]
+    "tags": ["Halliday", "capítulo 21", "exercício 34", "21.34", "simetria", "componentes vetoriais", "quantização da carga", "resolução"]
   },
   {
     "id": "halliday-21-42",
     "title": "Halliday — capítulo 21 — exercício 42",
     "kind": "resolucao",
+    "section": "exercicios",
+    "reference": "Halliday",
+    "chapter": 21,
+    "exerciseNumber": 42,
     "theme": "Pêndulos eletrostáticos",
     "description": "Resolução passo a passo que combina equilíbrio, lei de Coulomb e a aproximação de pequeno ângulo.",
     "path": "exercicios/halliday-21-42/",
-    "tags": [
-      "Halliday",
-      "capítulo 21",
-      "exercício 42",
-      "21.42",
-      "pêndulo",
-      "equilíbrio",
-      "pequeno ângulo",
-      "resolução"
-    ]
+    "tags": ["Halliday", "capítulo 21", "exercício 42", "21.42", "pêndulo", "equilíbrio", "pequeno ângulo", "resolução"]
+  },
+  {
+    "id": "experimento-01-campo-corrente",
+    "title": "Experimento 1 — Campo de uma corrente elétrica",
+    "kind": "experimento",
+    "section": "experimentos",
+    "reference": "Manual AZEHEB",
+    "theme": "Experiência de Oersted e lei de Ampère",
+    "description": "Observe a deflexão de uma bússola e investigue quantitativamente o campo magnético produzido por um condutor retilíneo.",
+    "path": "experimentos/01-campo-corrente/",
+    "tags": ["Oersted", "campo magnético", "corrente", "lei de Ampère", "Biot-Savart"]
+  },
+  {
+    "id": "experimento-02-campo-solenoide",
+    "title": "Experimento 2 — Campo de um solenoide",
+    "kind": "experimento",
+    "section": "experimentos",
+    "reference": "Manual AZEHEB",
+    "theme": "Geometria das linhas de campo",
+    "description": "Mapeie o campo de uma bobina, compare o modelo ideal com o solenoide finito e discuta os efeitos de borda.",
+    "path": "experimentos/02-campo-solenoide/",
+    "tags": ["solenoide", "bobina", "linhas de campo", "campo finito", "efeitos de borda"]
+  },
+  {
+    "id": "experimento-03-forca-magnetica-motor",
+    "title": "Experimento 3 — Força magnética e motor elementar",
+    "kind": "experimento",
+    "section": "experimentos",
+    "reference": "Manual AZEHEB",
+    "theme": "Força sobre corrente, torque e comutação",
+    "description": "Relacione a força magnética sobre um condutor ao torque de uma espira e ao funcionamento de um motor de corrente contínua.",
+    "path": "experimentos/03-forca-magnetica-motor/",
+    "tags": ["força magnética", "motor", "torque", "momento de dipolo", "comutação"]
+  },
+  {
+    "id": "experimento-04-inducao-eletromagnetica",
+    "title": "Experimento 4 — Indução eletromagnética",
+    "kind": "experimento",
+    "section": "experimentos",
+    "reference": "Manual AZEHEB",
+    "theme": "Fluxo, Faraday e Lenz",
+    "description": "Use uma bobina e um galvanômetro para conectar a variação do fluxo magnético ao sinal e à intensidade da força eletromotriz induzida.",
+    "path": "experimentos/04-inducao-eletromagnetica/",
+    "tags": ["indução", "Faraday", "Lenz", "fluxo magnético", "galvanômetro"]
   }
 ]
