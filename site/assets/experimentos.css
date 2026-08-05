@@ -382,7 +382,7 @@
   }
 
   .experiment-hero h1 {
-    font-size: clamp(3rem, 16vw, 4.7rem);
+    font-size: clamp(2.6rem, 14vw, 4.7rem);
   }
 
   .report-print-bar,

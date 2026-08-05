@@ -1,0 +1,23 @@
+import assert from "node:assert/strict";
+import { readFile } from "node:fs/promises";
+import test from "node:test";
+
+const baseCss = await readFile(new URL("../assets/base.css", import.meta.url), "utf8");
+const experimentCss = await readFile(
+  new URL("../assets/experimentos.css", import.meta.url),
+  "utf8",
+);
+
+test("títulos das áreas permanecem dentro da largura móvel", () => {
+  assert.match(
+    baseCss,
+    /@media\s*\(max-width:\s*560px\)[\s\S]*?h1\s*\{[\s\S]*?font-size:\s*clamp\(3\.25rem,\s*17vw,\s*5rem\)/,
+  );
+});
+
+test("títulos longos dos experimentos permanecem dentro da largura móvel", () => {
+  assert.match(
+    experimentCss,
+    /@media\s*\(max-width:\s*520px\)[\s\S]*?\.experiment-hero h1\s*\{[\s\S]*?font-size:\s*clamp\(2\.6rem,\s*14vw,\s*4\.7rem\)/,
+  );
+});
