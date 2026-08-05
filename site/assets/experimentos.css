@@ -1,0 +1,452 @@
+.experiment-page {
+  min-height: 100vh;
+}
+
+.experiment-header,
+.experiment-main,
+.experiment-footer {
+  width: min(calc(100% - 2rem), 1240px);
+  margin-inline: auto;
+}
+
+.experiment-header {
+  padding: 1rem 0 2.5rem;
+  border-bottom: 1px solid var(--line-strong);
+}
+
+.experiment-header__navigation {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 0.65rem;
+}
+
+.experiment-breadcrumb {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  align-items: center;
+  margin: 1rem 0 2.5rem;
+  color: var(--ink-soft);
+  font: 0.76rem/1.4 Consolas, monospace;
+}
+
+.experiment-breadcrumb a {
+  text-underline-offset: 0.18em;
+}
+
+.experiment-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(250px, 0.38fr);
+  gap: clamp(2rem, 6vw, 5rem);
+  align-items: end;
+}
+
+.experiment-hero h1 {
+  max-width: 13ch;
+  font-size: clamp(3rem, 7vw, 6.2rem);
+  line-height: 0.93;
+}
+
+.experiment-hero__lead {
+  margin: 0 0 0.35rem;
+  color: var(--ink-soft);
+  font-size: 1.05rem;
+}
+
+.experiment-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  margin: 1.5rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.experiment-meta li {
+  padding: 0.35rem 0.55rem;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  color: var(--ink-soft);
+  font: 0.72rem/1.2 Consolas, monospace;
+}
+
+.experiment-main {
+  padding: 1.5rem 0 6rem;
+}
+
+.experiment-tab-list {
+  display: flex;
+  overflow-x: auto;
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid var(--line-strong);
+  scrollbar-width: thin;
+}
+
+.experiment-tab {
+  min-height: 54px;
+  flex: 0 0 auto;
+  border: 0;
+  border-bottom: 4px solid transparent;
+  background: transparent;
+  color: var(--ink-soft);
+  padding: 0.8rem 1.15rem;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.experiment-tab[aria-selected="true"] {
+  border-bottom-color: var(--force-3);
+  color: var(--ink);
+}
+
+.experiment-panel[hidden] {
+  display: none;
+}
+
+.experiment-panel > :first-child {
+  margin-top: 0;
+}
+
+.experiment-section-heading {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(240px, 0.45fr);
+  gap: 2rem;
+  align-items: end;
+  margin-bottom: 1.5rem;
+}
+
+.experiment-section-heading h2 {
+  margin: 0;
+  font-size: clamp(2rem, 5vw, 3.7rem);
+  line-height: 1;
+}
+
+.experiment-section-heading p {
+  margin: 0;
+  color: var(--ink-soft);
+}
+
+.experiment-grid,
+.report-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.lab-card,
+.theory-card,
+.report-card {
+  min-width: 0;
+  padding: clamp(1.15rem, 3vw, 1.8rem);
+  border: 1px solid var(--line-strong);
+  background: var(--surface);
+}
+
+.lab-card h3,
+.theory-card h3,
+.report-card h3 {
+  margin: 0 0 0.8rem;
+  font-size: 1.35rem;
+}
+
+.lab-card > :last-child,
+.theory-card > :last-child,
+.report-card > :last-child {
+  margin-bottom: 0;
+}
+
+.experiment-safety {
+  margin: 1rem 0;
+  padding: 1.1rem 1.25rem;
+  border: 1px solid #b94b23;
+  border-left-width: 7px;
+  background: #fff5ed;
+}
+
+.experiment-safety strong {
+  display: block;
+  margin-bottom: 0.35rem;
+  color: #8a3314;
+  font: 700 0.78rem/1.3 Consolas, monospace;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.experiment-safety p {
+  margin: 0;
+}
+
+.experiment-figure {
+  margin: 0;
+  border: 1px solid var(--line-strong);
+  background: var(--surface);
+}
+
+.experiment-figure img {
+  display: block;
+  width: 100%;
+  max-height: 620px;
+  object-fit: contain;
+  background: white;
+}
+
+.experiment-figure figcaption {
+  padding: 0.8rem 1rem;
+  border-top: 1px solid var(--line);
+  color: var(--ink-soft);
+  font-size: 0.82rem;
+}
+
+.experiment-figure figcaption strong {
+  color: var(--ink);
+}
+
+.materials-list,
+.procedure-list,
+.report-checklist,
+.question-list {
+  padding-left: 1.35rem;
+}
+
+.procedure-list li,
+.report-checklist li,
+.question-list li {
+  margin-bottom: 0.65rem;
+}
+
+.prediction-box {
+  margin: 1rem 0;
+  padding: 1rem 1.2rem;
+  border: 1px dashed var(--resultant);
+  background: #f5f0ff;
+}
+
+.prediction-box strong {
+  color: var(--resultant);
+}
+
+.equation-flow {
+  display: grid;
+  gap: 0.8rem;
+  margin: 1rem 0;
+}
+
+.equation-step,
+.experiment-page .math-block {
+  min-width: 0;
+  overflow-x: auto;
+  padding: 1rem 1.1rem;
+  border-left: 5px solid var(--force-3);
+  background: var(--paper-deep);
+  font: 700 clamp(0.88rem, 2vw, 1.05rem)/1.75 Consolas, monospace;
+  white-space: nowrap;
+}
+
+.equation-step small {
+  display: block;
+  color: var(--ink-soft);
+  font: 0.72rem/1.4 "Segoe UI", sans-serif;
+  white-space: normal;
+}
+
+.theory-note {
+  padding: 1rem 1.2rem;
+  border: 1px solid var(--measure);
+  background: #fffae8;
+}
+
+.data-table-wrapper {
+  max-width: 100%;
+  overflow-x: auto;
+  margin: 1rem 0;
+  border: 1px solid var(--line-strong);
+  background: var(--surface);
+}
+
+.data-table {
+  width: 100%;
+  min-width: 660px;
+  border-collapse: collapse;
+}
+
+.data-table th,
+.data-table td {
+  min-width: 7.5rem;
+  padding: 0.75rem;
+  border: 1px solid var(--line);
+  text-align: left;
+  vertical-align: top;
+}
+
+.data-table th {
+  background: var(--ink);
+  color: white;
+  font: 700 0.72rem/1.4 Consolas, monospace;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.data-table td {
+  height: 3rem;
+}
+
+.uncertainty-box {
+  padding: 1rem 1.2rem;
+  border-left: 5px solid var(--measure);
+  background: var(--surface);
+}
+
+.report-print-bar {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+  padding: 1rem;
+  border: 1px solid var(--line-strong);
+  background: var(--ink);
+  color: white;
+}
+
+.report-print-bar p {
+  margin: 0;
+}
+
+.report-print-button {
+  min-height: 46px;
+  flex: 0 0 auto;
+  border: 1px solid white;
+  background: white;
+  color: var(--ink);
+  padding: 0.65rem 0.9rem;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.report-template {
+  background: white;
+}
+
+.report-template__fields {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.8rem 1.5rem;
+  margin-bottom: 1rem;
+  padding: 1rem;
+  border: 1px solid var(--line);
+}
+
+.report-template__line {
+  min-height: 2rem;
+  border-bottom: 1px solid var(--ink-soft);
+}
+
+.experiment-footer {
+  display: flex;
+  justify-content: space-between;
+  padding: 1.7rem 0 2.5rem;
+  border-top: 1px solid var(--line-strong);
+  color: var(--ink-soft);
+  font-size: 0.82rem;
+}
+
+.experiment-footer p {
+  margin: 0;
+}
+
+@media (max-width: 760px) {
+  .experiment-hero,
+  .experiment-section-heading,
+  .experiment-grid,
+  .report-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .experiment-header__navigation {
+    justify-content: flex-start;
+    overflow-x: auto;
+  }
+
+  .report-template__fields {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 520px) {
+  .experiment-header,
+  .experiment-main,
+  .experiment-footer {
+    width: min(calc(100% - 1.1rem), 1240px);
+  }
+
+  .experiment-hero h1 {
+    font-size: clamp(3rem, 16vw, 4.7rem);
+  }
+
+  .report-print-bar,
+  .experiment-footer {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
+
+@media print {
+  @page {
+    margin: 1.4cm;
+  }
+
+  body {
+    background: white;
+    color: black;
+    font-size: 10.5pt;
+  }
+
+  .skip-link,
+  .experiment-header__navigation,
+  .experiment-breadcrumb,
+  .experiment-tab-list,
+  .report-print-bar,
+  .experiment-footer,
+  .experiment-panel[hidden] {
+    display: none !important;
+  }
+
+  .experiment-header {
+    padding: 0 0 0.7cm;
+  }
+
+  .experiment-hero {
+    display: block;
+  }
+
+  .experiment-hero h1 {
+    max-width: none;
+    font-size: 26pt;
+  }
+
+  .experiment-main {
+    width: 100%;
+    padding: 0.7cm 0 0;
+  }
+
+  .experiment-panel:not(#painel-relatorio) {
+    display: none !important;
+  }
+
+  #painel-relatorio {
+    display: block !important;
+  }
+
+  .report-card,
+  .report-template__fields,
+  .data-table-wrapper {
+    break-inside: avoid;
+    box-shadow: none;
+  }
+
+  .data-table {
+    min-width: 0;
+  }
+}
