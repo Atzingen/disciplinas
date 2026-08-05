@@ -1,0 +1,260 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Resolução ilustrada do exercício 18, capítulo 21, do Halliday: razão entre cargas a partir de forças colineares.">
+  <title>Halliday 21.18 · Laboratório de Eletromagnetismo</title>
+  <link rel="stylesheet" href="../../assets/base.css">
+  <link rel="stylesheet" href="../../assets/simulador.css">
+</head>
+<body class="lesson-page halliday-page">
+  <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+
+  <header class="lesson-header">
+    <nav class="breadcrumb" aria-label="Navegação estrutural">
+      <a href="../../">Laboratório</a>
+      <span aria-hidden="true">/</span>
+      <span>Halliday</span>
+      <span aria-hidden="true">/</span>
+      <span>Capítulo 21</span>
+      <span aria-hidden="true">/</span>
+      <strong>Exercício 18</strong>
+    </nav>
+    <div class="lesson-title-row">
+      <div>
+        <p class="eyebrow">Forças colineares</p>
+        <h1>Razão entre cargas</h1>
+      </div>
+      <p class="lesson-intro">
+        Duas medições de força e uma mudança de posição bastam para separar as
+        contribuições de B e C — sem conhecer as distâncias nem a carga de A.
+      </p>
+    </div>
+  </header>
+
+  <main class="lesson-main" id="conteudo">
+    <div data-tabs>
+      <div class="tab-list" role="tablist" aria-label="Conteúdo do exercício">
+        <button class="tab-button" id="tab-enunciado" type="button" role="tab" aria-selected="true" aria-controls="painel-enunciado">Enunciado</button>
+        <button class="tab-button" id="tab-resolucao" type="button" role="tab" aria-selected="false" aria-controls="painel-resolucao" tabindex="-1">Resolução</button>
+        <button class="tab-button" id="tab-diagrama" type="button" role="tab" aria-selected="false" aria-controls="painel-diagrama" tabindex="-1">Diagrama</button>
+      </div>
+
+      <section class="tab-panel" id="painel-enunciado" role="tabpanel" aria-labelledby="tab-enunciado">
+        <article class="problem-sheet">
+          <div class="problem-number">
+            <span>Halliday</span>
+            <strong>21.18</strong>
+          </div>
+          <div class="problem-copy">
+            <p>
+              Três partículas positivas A, B e C estão inicialmente sobre o
+              eixo x, com B e C muito próximas entre si. Por isso, suas
+              distâncias até A podem ser tratadas como iguais.
+            </p>
+            <p>
+              Na primeira disposição, a força total sobre A vale
+              <strong>2,014 × 10<sup>−23</sup> N</strong> no sentido negativo de x.
+              Depois, B é levada para o outro lado de A, mantendo a mesma
+              distância, e a força total passa a
+              <strong>2,877 × 10<sup>−24</sup> N</strong>, ainda no sentido
+              negativo de x. Determine <strong>q<sub>C</sub>/q<sub>B</sub></strong>.
+            </p>
+          </div>
+          <div class="answer-strip">
+            <span>Resposta</span>
+            <strong>q<sub>C</sub>/q<sub>B</sub> ≈ 1,33</strong>
+          </div>
+        </article>
+      </section>
+
+      <section class="tab-panel" id="painel-resolucao" role="tabpanel" aria-labelledby="tab-resolucao" hidden>
+        <article class="solution-article">
+          <header class="solution-heading">
+            <p class="eyebrow">Resolução passo a passo</p>
+            <h2>Somar e subtrair as mesmas forças</h2>
+            <p>
+              O ponto decisivo é atribuir um módulo a cada contribuição e usar
+              os sentidos mostrados nas duas configurações.
+            </p>
+          </header>
+
+          <section>
+            <span class="solution-step">01 · convenção de sinais</span>
+            <h3>Identifique a direção de cada força</h3>
+            <p>
+              Todas as cargas são positivas, portanto a interação é repulsiva.
+              Chame de F<sub>B</sub> e F<sub>C</sub> os módulos das forças que B e
+              C exercem sobre A.
+            </p>
+            <div class="derivation-grid">
+              <article>
+                <strong>Configuração (a)</strong>
+                <p>B e C estão à direita de A. As duas forças sobre A apontam para −x e seus módulos se somam.</p>
+              </article>
+              <article>
+                <strong>Configuração (b)</strong>
+                <p>B está à esquerda e empurra A para +x; C permanece à direita e empurra A para −x.</p>
+              </article>
+            </div>
+          </section>
+
+          <section>
+            <span class="solution-step">02</span>
+            <h3>Traduza as medições em duas equações</h3>
+            <p>Use apenas os módulos positivos das resultantes informadas:</p>
+            <div class="math-block">
+              F<sub>B</sub> + F<sub>C</sub> = S
+              = 2,014 × 10<sup>−23</sup> N
+              <br>
+              F<sub>C</sub> − F<sub>B</sub> = D
+              = 2,877 × 10<sup>−24</sup> N.
+            </div>
+            <p>
+              Na segunda linha, F<sub>C</sub> aparece primeiro porque a
+              resultante continua apontando para −x: a contribuição de C é a
+              maior das duas.
+            </p>
+          </section>
+
+          <section>
+            <span class="solution-step">03</span>
+            <h3>Isole cada módulo</h3>
+            <p>Somando e subtraindo as equações:</p>
+            <div class="math-block">
+              2F<sub>C</sub> = S + D
+              &nbsp; ⇒ &nbsp;
+              F<sub>C</sub> = (S + D)/2 = 1,15085 × 10<sup>−23</sup> N
+              <br>
+              2F<sub>B</sub> = S − D
+              &nbsp; ⇒ &nbsp;
+              F<sub>B</sub> = (S − D)/2 = 8,6315 × 10<sup>−24</sup> N.
+            </div>
+          </section>
+
+          <section>
+            <span class="solution-step">04</span>
+            <h3>Converta a razão de forças em razão de cargas</h3>
+            <p>
+              Pela lei de Coulomb, para a força que uma carga i exerce sobre A:
+            </p>
+            <div class="math-block">
+              F<sub>i</sub> = k|q<sub>A</sub>q<sub>i</sub>|/r<sub>i</sub><sup>2</sup>.
+            </div>
+            <p>
+              Como r<sub>B</sub> ≈ r<sub>C</sub>, os fatores k,
+              |q<sub>A</sub>| e r<sup>2</sup> são comuns e se cancelam na razão:
+            </p>
+            <div class="math-block math-block--result">
+              q<sub>C</sub>/q<sub>B</sub>
+              = F<sub>C</sub>/F<sub>B</sub>
+              = (S + D)/(S − D)
+              = 1,3333… ≈ 1,33.
+            </div>
+          </section>
+
+          <section>
+            <span class="solution-step">05 · verificação</span>
+            <h3>A diferença precisa reproduzir a segunda medida</h3>
+            <div class="math-block">
+              F<sub>C</sub> − F<sub>B</sub>
+              = 1,15085 × 10<sup>−23</sup>
+              − 8,6315 × 10<sup>−24</sup>
+              = 2,877 × 10<sup>−24</sup> N.
+            </div>
+            <div class="result-callout">
+              <span>Conclusão</span>
+              <strong>q<sub>C</sub> é aproximadamente 4/3 de q<sub>B</sub>.</strong>
+            </div>
+          </section>
+        </article>
+      </section>
+
+      <section class="tab-panel" id="painel-diagrama" role="tabpanel" aria-labelledby="tab-diagrama" hidden>
+        <article class="static-diagram-shell">
+          <header class="static-diagram-heading">
+            <div>
+              <p class="eyebrow">Leitura vetorial</p>
+              <h2>O que muda quando B atravessa A</h2>
+            </div>
+            <p>A posição de B inverte apenas a força produzida por B. A força de C mantém direção e módulo.</p>
+          </header>
+
+          <svg class="teaching-diagram" viewBox="0 0 900 560" role="img" aria-labelledby="diagram-18-title diagram-18-desc">
+            <title id="diagram-18-title">Forças sobre A nas duas configurações do exercício 21.18</title>
+            <desc id="diagram-18-desc">Na configuração a, B e C estão à direita de A e as duas forças apontam para a esquerda. Na configuração b, B está à esquerda e sua força aponta para a direita, enquanto a força maior de C aponta para a esquerda, produzindo uma pequena resultante para a esquerda.</desc>
+            <defs>
+              <marker id="arrow-18-one" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+                <path d="M 0 0 L 10 5 L 0 10 z" fill="#008b95"></path>
+              </marker>
+              <marker id="arrow-18-two" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+                <path d="M 0 0 L 10 5 L 0 10 z" fill="#e07a1f"></path>
+              </marker>
+              <marker id="arrow-18-result" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+                <path d="M 0 0 L 10 5 L 0 10 z" fill="#7a3ce7"></path>
+              </marker>
+            </defs>
+
+            <rect class="diagram-panel" x="28" y="28" width="844" height="228" rx="4"></rect>
+            <text class="diagram-panel-title" x="55" y="60">(a) B e C no mesmo lado</text>
+            <line class="diagram-axis" x1="75" y1="145" x2="825" y2="145"></line>
+            <text class="diagram-axis-label" x="810" y="133">+x</text>
+
+            <circle class="diagram-charge diagram-charge--positive" cx="285" cy="145" r="22"></circle>
+            <text class="diagram-sign" x="285" y="153">+</text>
+            <text class="diagram-label" x="285" y="185">A</text>
+            <circle class="diagram-charge diagram-charge--positive" cx="620" cy="145" r="22"></circle>
+            <text class="diagram-sign" x="620" y="153">+</text>
+            <text class="diagram-label" x="620" y="185">B</text>
+            <circle class="diagram-charge diagram-charge--positive" cx="680" cy="145" r="22"></circle>
+            <text class="diagram-sign" x="680" y="153">+</text>
+            <text class="diagram-label" x="680" y="185">C</text>
+
+            <line class="diagram-guide" x1="285" y1="118" x2="285" y2="84"></line>
+            <line class="diagram-force diagram-force--one" x1="275" y1="105" x2="170" y2="105" marker-end="url(#arrow-18-one)"></line>
+            <text class="diagram-force-label" x="218" y="91">F_B</text>
+            <line class="diagram-force diagram-force--two" x1="275" y1="215" x2="135" y2="215" marker-end="url(#arrow-18-two)"></line>
+            <text class="diagram-force-label" x="205" y="238">F_C</text>
+            <text class="diagram-note" x="485" y="221">as duas contribuições apontam para −x</text>
+
+            <rect class="diagram-panel" x="28" y="280" width="844" height="252" rx="4"></rect>
+            <text class="diagram-panel-title" x="55" y="312">(b) B transferida para o lado oposto</text>
+            <line class="diagram-axis" x1="75" y1="405" x2="825" y2="405"></line>
+            <text class="diagram-axis-label" x="810" y="393">+x</text>
+
+            <circle class="diagram-charge diagram-charge--positive" cx="160" cy="405" r="22"></circle>
+            <text class="diagram-sign" x="160" y="413">+</text>
+            <text class="diagram-label" x="160" y="445">B</text>
+            <circle class="diagram-charge diagram-charge--positive" cx="430" cy="405" r="22"></circle>
+            <text class="diagram-sign" x="430" y="413">+</text>
+            <text class="diagram-label" x="430" y="445">A</text>
+            <circle class="diagram-charge diagram-charge--positive" cx="700" cy="405" r="22"></circle>
+            <text class="diagram-sign" x="700" y="413">+</text>
+            <text class="diagram-label" x="700" y="445">C</text>
+
+            <line class="diagram-force diagram-force--one" x1="440" y1="365" x2="545" y2="365" marker-end="url(#arrow-18-one)"></line>
+            <text class="diagram-force-label" x="493" y="351">F_B (+x)</text>
+            <line class="diagram-force diagram-force--two" x1="420" y1="475" x2="280" y2="475" marker-end="url(#arrow-18-two)"></line>
+            <text class="diagram-force-label" x="350" y="502">F_C (−x)</text>
+            <line class="diagram-force diagram-force--resultant" x1="430" y1="520" x2="386" y2="520" marker-end="url(#arrow-18-result)"></line>
+            <text class="diagram-value" x="565" y="525">resultante pequena para −x</text>
+          </svg>
+          <p class="diagram-caption">
+            O comprimento relativo das setas reforça o dado experimental:
+            F<sub>C</sub> &gt; F<sub>B</sub>. As distâncias B–A e A–C na segunda
+            configuração são iguais.
+          </p>
+        </article>
+      </section>
+    </div>
+  </main>
+
+  <footer class="lesson-footer site-footer">
+    <p>Halliday 21.18 · capítulo 21 · exercício 18</p>
+    <a href="../../">Voltar ao catálogo</a>
+  </footer>
+
+  <script type="module" src="../exercicio-estatico.js"></script>
+</body>
+</html>

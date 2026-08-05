@@ -993,6 +993,211 @@
   margin-bottom: 0;
 }
 
+.static-diagram-shell {
+  max-width: 1000px;
+  margin: 2.5rem auto;
+  border: 1px solid var(--line-strong);
+  background: var(--surface);
+  box-shadow: var(--shadow);
+}
+
+.static-diagram-heading {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(240px, 0.55fr);
+  gap: 2rem;
+  align-items: end;
+  padding: clamp(1.2rem, 4vw, 2.4rem);
+  border-bottom: 1px solid var(--line);
+}
+
+.static-diagram-heading h2 {
+  margin: 0;
+  font-size: clamp(2rem, 5vw, 3.8rem);
+  line-height: 1;
+  letter-spacing: -0.045em;
+}
+
+.static-diagram-heading p:last-child {
+  margin: 0;
+  color: var(--ink-soft);
+}
+
+.teaching-diagram {
+  display: block;
+  width: 100%;
+  height: auto;
+  background:
+    linear-gradient(rgb(20 42 59 / 3%) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(20 42 59 / 3%) 1px, transparent 1px),
+    var(--paper);
+  background-size: 24px 24px;
+}
+
+.diagram-panel {
+  fill: rgb(255 255 255 / 76%);
+  stroke: var(--line);
+  stroke-width: 1.5;
+}
+
+.diagram-panel-title,
+.diagram-force-label,
+.diagram-note,
+.diagram-value {
+  fill: var(--ink);
+  font-family: Consolas, monospace;
+}
+
+.diagram-panel-title {
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+.diagram-force-label {
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.diagram-note {
+  fill: var(--ink-soft);
+  font-size: 12px;
+}
+
+.diagram-value {
+  fill: var(--resultant);
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.diagram-guide {
+  fill: none;
+  stroke: var(--line-strong);
+  stroke-width: 1.5;
+  stroke-dasharray: 6 6;
+}
+
+.diagram-force {
+  fill: none;
+  stroke-width: 5;
+  stroke-linecap: round;
+}
+
+.diagram-force--one {
+  stroke: var(--force-1);
+}
+
+.diagram-force--two {
+  stroke: var(--force-2);
+}
+
+.diagram-force--resultant {
+  stroke: var(--resultant);
+  stroke-width: 7;
+}
+
+.diagram-angle {
+  fill: none;
+  stroke: var(--measure);
+  stroke-width: 3;
+}
+
+.diagram-support {
+  fill: var(--ink);
+}
+
+.diagram-string {
+  stroke: var(--ink);
+  stroke-width: 3;
+}
+
+.diagram-mass {
+  fill: var(--positive);
+  stroke: white;
+  stroke-width: 3;
+}
+
+.diagram-caption {
+  margin: 0;
+  border-top: 1px solid var(--line);
+  padding: 1rem clamp(1.2rem, 4vw, 2.4rem);
+  color: var(--ink-soft);
+  font-size: 0.92rem;
+}
+
+.derivation-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1px;
+  margin: 1.5rem 0;
+  border: 1px solid var(--line);
+  background: var(--line);
+}
+
+.derivation-grid article {
+  background: var(--paper);
+  padding: 1.1rem;
+}
+
+.derivation-grid strong {
+  display: block;
+  color: var(--ink);
+  font-family: Consolas, monospace;
+}
+
+.derivation-grid p {
+  margin-bottom: 0;
+  font-size: 0.9rem;
+}
+
+.value-table {
+  width: 100%;
+  margin: 1.2rem 0;
+  border-collapse: collapse;
+}
+
+.value-table th,
+.value-table td {
+  border: 1px solid var(--line);
+  padding: 0.75rem;
+  text-align: center;
+}
+
+.value-table th {
+  background: var(--paper-deep);
+  font: 700 0.78rem/1.3 Consolas, monospace;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.value-table tr.is-answer td {
+  background: #f1ebff;
+  color: var(--resultant);
+  font-weight: 700;
+}
+
+.result-callout {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 1rem;
+  align-items: center;
+  margin-top: 1rem;
+  border: 1px solid var(--resultant);
+  background: #f1ebff;
+  padding: 1rem 1.2rem;
+}
+
+.result-callout span {
+  color: var(--resultant);
+  font: 700 0.7rem/1 Consolas, monospace;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.result-callout strong {
+  color: var(--ink);
+  font: 700 clamp(1rem, 3vw, 1.3rem)/1.4 Consolas, monospace;
+}
+
 .simulation-intro {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(250px, 0.45fr);
@@ -1090,7 +1295,13 @@
   }
 
   .simulation-intro,
-  .region-grid {
+  .region-grid,
+  .static-diagram-heading,
+  .derivation-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .result-callout {
     grid-template-columns: 1fr;
   }
 }
