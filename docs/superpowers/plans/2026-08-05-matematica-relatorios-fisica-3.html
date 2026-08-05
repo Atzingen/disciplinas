@@ -1,0 +1,1283 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Plano de implementação · Matemática e relatórios de Física
+III</title>
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    html {
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    svg {
+      height: auto;
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      white-space: pre-wrap;
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      border: none;
+      border-top: 1px solid #1a1a1a;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { color: #008000; } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { color: #008000; font-weight: bold; } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <style>
+    :root {
+      --page: #e9eff0;
+      --paper: #fffdf8;
+      --ink: #17242c;
+      --muted: #596a72;
+      --line: #ccd7d9;
+      --accent: #006b72;
+      --accent-soft: #dceff0;
+      --warm: #a4472e;
+      --sidebar: 310px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; background: var(--page); }
+
+    body {
+      width: min(100%, 1360px);
+      max-width: none;
+      min-height: 100vh;
+      margin: 0 auto;
+      padding: 60px 58px 120px calc(var(--sidebar) + 76px);
+      background: var(--paper);
+      color: var(--ink);
+      box-shadow: 0 0 44px rgba(35, 55, 62, 0.13);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system,
+        BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 16.5px;
+      line-height: 1.7;
+    }
+
+    body > :not(#TOC) { max-width: 900px; }
+
+    #TOC {
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      width: var(--sidebar);
+      margin-left: calc(-1 * (var(--sidebar) + 42px));
+      padding: 48px 28px 40px 0;
+      overflow-y: auto;
+      border-right: 1px solid var(--line);
+      background: rgba(255, 253, 248, 0.96);
+      scrollbar-width: thin;
+    }
+
+    #TOC ul { margin: 0; padding: 0; list-style: none; }
+
+    #TOC > ul > li > a {
+      display: block;
+      margin-bottom: 20px;
+      color: var(--ink);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 1.08rem;
+      font-weight: 700;
+      line-height: 1.3;
+    }
+
+    #TOC li li a {
+      display: block;
+      margin: 2px 0;
+      padding: 7px 9px 7px 12px;
+      border-left: 2px solid transparent;
+      border-radius: 0 6px 6px 0;
+      color: var(--muted);
+      font-size: 0.78rem;
+      line-height: 1.3;
+      text-decoration: none;
+      transition: 140ms ease;
+    }
+
+    #TOC li li li a { padding-left: 24px; font-size: 0.73rem; }
+    #TOC a:hover, #TOC a.is-active { color: var(--accent); }
+
+    #TOC li li a.is-active {
+      border-left-color: var(--accent);
+      background: var(--accent-soft);
+      font-weight: 650;
+    }
+
+    h1, h2, h3, h4 { color: var(--ink); scroll-margin-top: 28px; }
+
+    h1 {
+      margin: 0 0 26px;
+      padding-bottom: 28px;
+      border-bottom: 3px solid var(--accent);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(2.2rem, 5vw, 3.75rem);
+      line-height: 1.04;
+      letter-spacing: -0.035em;
+    }
+
+    h2 {
+      margin: 62px 0 20px;
+      padding-top: 20px;
+      border-top: 1px solid var(--line);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 1.85rem;
+      line-height: 1.2;
+    }
+
+    h3 {
+      margin: 52px 0 16px;
+      padding: 15px 18px;
+      border-left: 4px solid var(--accent);
+      background: linear-gradient(90deg, var(--accent-soft), transparent 82%);
+      color: #16484c;
+      font-size: 1.25rem;
+      line-height: 1.35;
+    }
+
+    h4 { margin: 30px 0 10px; color: var(--warm); }
+    p { margin: 0 0 1.1em; }
+    a { color: var(--accent); text-underline-offset: 0.16em; }
+    strong { color: #101b21; }
+    ul, ol { padding-left: 1.45em; }
+    li { margin: 0.34em 0; }
+
+    blockquote {
+      margin: 28px 0;
+      padding: 17px 22px;
+      border-left: 4px solid var(--warm);
+      background: #f8eee9;
+      color: #493128;
+    }
+
+    blockquote > :last-child { margin-bottom: 0; }
+
+    ul.task-list {
+      margin: 25px 0 10px;
+      padding: 0;
+    }
+
+    ul.task-list > li {
+      padding: 12px 15px;
+      border-top: 1px solid var(--line);
+      color: #21444a;
+      list-style: none;
+    }
+
+    ul.task-list input[type="checkbox"] {
+      width: 1rem;
+      height: 1rem;
+      margin-right: 0.6rem;
+      accent-color: var(--accent);
+    }
+
+    code {
+      padding: 0.12em 0.35em;
+      border: 1px solid #d6dfe0;
+      border-radius: 4px;
+      background: #f1f5f5;
+      color: #30444b;
+      font-size: 0.87em;
+    }
+
+    div.sourceCode, pre {
+      margin: 20px 0 30px;
+      border-radius: 7px;
+      background: #16262d;
+    }
+
+    pre {
+      padding: 18px 20px;
+      overflow-x: auto;
+      border-left: 3px solid #47b0b5;
+      color: #edf7f7;
+    }
+
+    pre code, code.sourceCode {
+      padding: 0;
+      border: 0;
+      background: transparent;
+      color: inherit;
+    }
+
+    table {
+      display: table;
+      width: 100%;
+      margin: 28px 0 36px;
+      border-collapse: collapse;
+      font-size: 0.92rem;
+    }
+
+    th, td { padding: 11px 13px; border: 1px solid var(--line); }
+    th { background: var(--accent-soft); color: #16464b; text-align: left; }
+    tbody tr:nth-child(even) { background: #f5f8f7; }
+
+    @media (max-width: 1060px) {
+      body { width: 100%; padding: 36px clamp(22px, 6vw, 64px) 90px; }
+
+      #TOC {
+        position: relative;
+        top: auto;
+        bottom: auto;
+        width: 100%;
+        max-height: 44vh;
+        margin: 0 0 48px;
+        padding: 24px;
+        border: 1px solid var(--line);
+        background: #f5f8f7;
+      }
+    }
+
+    @media print {
+      html, body { background: #fff; }
+      body { width: 100%; padding: 0; box-shadow: none; font-size: 10.5pt; }
+      #TOC { display: none; }
+      h2, h3 { break-after: avoid; }
+      pre, blockquote, ul.task-list { break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a
+href="#matemática-renderizada-e-relatórios-de-física-iii-implementation-plan"
+id="toc-matemática-renderizada-e-relatórios-de-física-iii-implementation-plan">Matemática
+renderizada e relatórios de Física III Implementation Plan</a>
+<ul>
+<li><a href="#global-constraints" id="toc-global-constraints">Global
+Constraints</a></li>
+<li><a href="#mapa-de-arquivos" id="toc-mapa-de-arquivos">Mapa de
+arquivos</a>
+<ul>
+<li><a href="#infraestrutura-matemática"
+id="toc-infraestrutura-matemática">Infraestrutura matemática</a></li>
+<li><a href="#infraestrutura-experimental"
+id="toc-infraestrutura-experimental">Infraestrutura
+experimental</a></li>
+<li><a href="#conteúdo-experimental"
+id="toc-conteúdo-experimental">Conteúdo experimental</a></li>
+<li><a href="#exercícios-e-simulações"
+id="toc-exercícios-e-simulações">Exercícios e simulações</a></li>
+<li><a href="#task-1-componente-mathjax-compartilhado"
+id="toc-task-1-componente-mathjax-compartilhado">Task 1: Componente
+MathJax compartilhado</a></li>
+<li><a href="#task-2-estrutura-editorial-comum-dos-experimentos"
+id="toc-task-2-estrutura-editorial-comum-dos-experimentos">Task 2:
+Estrutura editorial comum dos experimentos</a></li>
+<li><a href="#task-3-experimento-4-como-padrão-de-referência"
+id="toc-task-3-experimento-4-como-padrão-de-referência">Task 3:
+Experimento 4 como padrão de referência</a></li>
+<li><a href="#task-4-aplicar-o-padrão-aos-experimentos-1-2-e-3"
+id="toc-task-4-aplicar-o-padrão-aos-experimentos-1-2-e-3">Task 4:
+Aplicar o padrão aos experimentos 1, 2 e 3</a></li>
+<li><a
+href="#task-5-converter-os-quatro-exercícios-para-latex-renderizado"
+id="toc-task-5-converter-os-quatro-exercícios-para-latex-renderizado">Task
+5: Converter os quatro exercícios para LaTeX renderizado</a></li>
+<li><a href="#task-6-renderizar-matemática-dinâmica-nos-simuladores"
+id="toc-task-6-renderizar-matemática-dinâmica-nos-simuladores">Task 6:
+Renderizar matemática dinâmica nos simuladores</a></li>
+<li><a href="#task-7-integração-impressão-e-validação-visual"
+id="toc-task-7-integração-impressão-e-validação-visual">Task 7:
+Integração, impressão e validação visual</a></li>
+</ul></li>
+</ul></li>
+</ul>
+</nav>
+<h1
+id="matemática-renderizada-e-relatórios-de-física-iii-implementation-plan">Matemática
+renderizada e relatórios de Física III Implementation Plan</h1>
+<blockquote>
+<p><strong>For agentic workers:</strong> REQUIRED SUB-SKILL: Use
+superpowers:subagent-driven-development (recommended) or
+superpowers:executing-plans to implement this plan task-by-task. Steps
+use checkbox (<code>- [ ]</code>) syntax for tracking.</p>
+</blockquote>
+<p><strong>Goal:</strong> Transformar exercícios, simulações e quatro
+experimentos em material universitário de Física III, com matemática
+MathJax corretamente composta e relatórios contínuos de seis a dez
+páginas.</p>
+<p><strong>Architecture:</strong> Um módulo ES compartilhado configurará
+e carregará MathJax 4.1.2 e oferecerá uma função de recomposição para
+conteúdo dinâmico. As páginas experimentais passarão de quatro para três
+abas e usarão uma estrutura editorial contínua; dados, tratamento,
+incertezas e discussão ficarão integrados ao roteiro e relatório. O HTML
+e o Markdown dos relatórios manterão a mesma sequência acadêmica.</p>
+<p><strong>Tech Stack:</strong> HTML5 semântico, CSS responsivo e de
+impressão, JavaScript ES modules, MathJax 4.1.2 via jsDelivr, Node.js
+test runner e Markdown matemático compatível com GitHub.</p>
+<h2 id="global-constraints">Global Constraints</h2>
+<ul>
+<li>Fixar MathJax em <code>4.1.2</code>; não usar URL
+<code>latest</code>.</li>
+<li>Não adicionar framework, empacotador ou dependência npm.</li>
+<li>Em HTML, usar <code>\(...\)</code> para matemática em linha e
+<code>\[...\]</code> para equações destacadas.</li>
+<li>Em Markdown, usar <code>$...$</code> e <code>$$...$$</code> para
+renderização matemática no GitHub.</li>
+<li>Frações pedagógicas usam <code>\frac{numerador}{denominador}</code>;
+deduções usam <code>\begin{aligned}</code>.</li>
+<li>Vetores usam <code>\vec{}</code> ou <code>\boldsymbol{}</code>; não
+usar U+20D7.</li>
+<li>Grandezas e unidades ficam separadas por espaço estreito, com
+unidades em romano, por exemplo <code>24\,\mathrm{nC}</code>.</li>
+<li>Números apresentados ao aluno usam vírgula decimal; literais
+JavaScript continuam usando ponto.</li>
+<li>As páginas experimentais terão exatamente três abas: Montagem,
+Fundamentação e Roteiro e relatório.</li>
+<li>Não haverá aba Dados independente.</li>
+<li>Cada relatório integrará dados brutos, tratamento, incertezas,
+gráficos, discussão e conclusão.</li>
+<li>Cada <code>relatorio.md</code> deve produzir aproximadamente seis a
+dez páginas impressas, conforme figuras e tabelas.</li>
+<li>Caixas serão reservadas a segurança, previsão, alerta conceitual e
+resultado; o restante será fluxo editorial contínuo.</li>
+<li>A energização do equipamento permanece limitada a 5–10 s, seguida de
+5–10 s desligado.</li>
+<li>Figuras do manual mantêm texto alternativo, legenda e crédito à
+AZEHEB.</li>
+<li>Não inventar resultados experimentais nem preencher tabelas com
+medidas fictícias.</li>
+<li>Todas as mudanças de comportamento começam por teste falhando e
+terminam com regressão completa.</li>
+</ul>
+<hr />
+<h2 id="mapa-de-arquivos">Mapa de arquivos</h2>
+<h3 id="infraestrutura-matemática">Infraestrutura matemática</h3>
+<ul>
+<li><strong>Criar <code>site/componentes/matematica.js</code>:</strong>
+configuração, carregamento e recomposição MathJax.</li>
+<li><strong>Criar <code>site/testes/matematica.test.js</code>:</strong>
+versão, delimitadores, segurança e API do componente.</li>
+<li><strong>Modificar <code>site/assets/base.css</code>:</strong>
+overflow local, estado de carregamento e tipografia matemática
+comum.</li>
+</ul>
+<h3 id="infraestrutura-experimental">Infraestrutura experimental</h3>
+<ul>
+<li><strong>Modificar
+<code>site/experimentos/experimento.js</code>:</strong> três abas,
+impressão e recomposição matemática.</li>
+<li><strong>Modificar
+<code>site/assets/experimentos.css</code>:</strong> artigo contínuo,
+sequência numerada, relatório e impressão.</li>
+<li><strong>Modificar
+<code>site/testes/experimentos.test.js</code>:</strong> novo contrato
+estrutural, matemático e editorial.</li>
+</ul>
+<h3 id="conteúdo-experimental">Conteúdo experimental</h3>
+<ul>
+<li><strong>Modificar
+<code>site/experimentos/01-campo-corrente/{index.html,relatorio.md}</code>.</strong></li>
+<li><strong>Modificar
+<code>site/experimentos/02-campo-solenoide/{index.html,relatorio.md}</code>.</strong></li>
+<li><strong>Modificar
+<code>site/experimentos/03-forca-magnetica-motor/{index.html,relatorio.md}</code>.</strong></li>
+<li><strong>Modificar
+<code>site/experimentos/04-inducao-eletromagnetica/{index.html,relatorio.md}</code>.</strong></li>
+</ul>
+<h3 id="exercícios-e-simulações">Exercícios e simulações</h3>
+<ul>
+<li><strong>Modificar <code>site/exercicios/exercicio-estatico.js</code>
+e <code>site/exercicios/halliday-21-13/app.js</code>:</strong> carregar
+matemática.</li>
+<li><strong>Modificar os quatro
+<code>site/exercicios/halliday-21-*/index.html</code>:</strong> fórmulas
+e deduções LaTeX.</li>
+<li><strong>Modificar
+<code>site/componentes/simulador-vetores.js</code>:</strong> leituras
+MathJax e recomposição dinâmica.</li>
+<li><strong>Modificar
+<code>site/componentes/simulador-cargas.js</code>:</strong> forças,
+componentes e resultante em MathJax.</li>
+<li><strong>Modificar testes de exercícios, vetores e
+eletrostática:</strong> contrato de notação renderizada.</li>
+</ul>
+<hr />
+<h3 id="task-1-componente-mathjax-compartilhado">Task 1: Componente
+MathJax compartilhado</h3>
+<p><strong>Files:</strong></p>
+<ul>
+<li>Create: <code>site/componentes/matematica.js</code></li>
+<li>Create: <code>site/testes/matematica.test.js</code></li>
+<li>Modify: <code>site/assets/base.css</code></li>
+</ul>
+<p><strong>Interfaces:</strong></p>
+<ul>
+<li><p>Produces: <code>MATHJAX_VERSION: string</code> equal to
+<code>"4.1.2"</code>.</p></li>
+<li><p>Produces: <code>MATHJAX_URL: string</code> equal to the pinned
+jsDelivr component URL.</p></li>
+<li><p>Produces: <code>MATHJAX_CONFIG: Readonly&lt;object&gt;</code>
+with TeX delimiters.</p></li>
+<li><p>Produces:
+<code>mathReady: Promise&lt;object | null&gt;</code>.</p></li>
+<li><p>Produces:
+<code>typesetMath(root?: ParentNode): Promise&lt;boolean&gt;</code>.</p></li>
+<li><p><label><input type="checkbox" /><strong>Step 1: Escrever os
+testes que falham</strong></label></p></li>
+</ul>
+<p>Criar o teste com estas asserções literais:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode js"><code class="sourceCode javascript"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> assert <span class="im">from</span> <span class="st">&quot;node:assert/strict&quot;</span><span class="op">;</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> test <span class="im">from</span> <span class="st">&quot;node:test&quot;</span><span class="op">;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> {</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  MATHJAX_CONFIG<span class="op">,</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  MATHJAX_URL<span class="op">,</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  MATHJAX_VERSION<span class="op">,</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  typesetMath<span class="op">,</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>} <span class="im">from</span> <span class="st">&quot;../componentes/matematica.js&quot;</span><span class="op">;</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="fu">test</span>(<span class="st">&quot;MathJax usa versão fixa e delimitadores explícitos&quot;</span><span class="op">,</span> () <span class="kw">=&gt;</span> {</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  assert<span class="op">.</span><span class="fu">equal</span>(MATHJAX_VERSION<span class="op">,</span> <span class="st">&quot;4.1.2&quot;</span>)<span class="op">;</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>  assert<span class="op">.</span><span class="fu">equal</span>(</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    MATHJAX_URL<span class="op">,</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;https://cdn.jsdelivr.net/npm/mathjax@4.1.2/tex-mml-chtml.js&quot;</span><span class="op">,</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>  )<span class="op">;</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>  assert<span class="op">.</span><span class="fu">deepEqual</span>(MATHJAX_CONFIG<span class="op">.</span><span class="at">tex</span><span class="op">.</span><span class="at">inlineMath</span><span class="op">,</span> [[<span class="st">&quot;</span><span class="sc">\\</span><span class="st">(&quot;</span><span class="op">,</span> <span class="st">&quot;</span><span class="sc">\\</span><span class="st">)&quot;</span>]])<span class="op">;</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>  assert<span class="op">.</span><span class="fu">deepEqual</span>(MATHJAX_CONFIG<span class="op">.</span><span class="at">tex</span><span class="op">.</span><span class="at">displayMath</span><span class="op">,</span> [[<span class="st">&quot;</span><span class="sc">\\</span><span class="st">[&quot;</span><span class="op">,</span> <span class="st">&quot;</span><span class="sc">\\</span><span class="st">]&quot;</span>]])<span class="op">;</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>  assert<span class="op">.</span><span class="fu">equal</span>(<span class="kw">typeof</span> typesetMath<span class="op">,</span> <span class="st">&quot;function&quot;</span>)<span class="op">;</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="fu">test</span>(<span class="st">&quot;typesetMath é inofensivo fora do navegador&quot;</span><span class="op">,</span> <span class="kw">async</span> () <span class="kw">=&gt;</span> {</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>  assert<span class="op">.</span><span class="fu">equal</span>(<span class="cf">await</span> <span class="fu">typesetMath</span>()<span class="op">,</span> <span class="kw">false</span>)<span class="op">;</span></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span></code></pre></div>
+<ul class="task-list">
+<li><label><input type="checkbox" /><strong>Step 2: Executar e confirmar
+a falha por módulo ausente</strong></label></li>
+</ul>
+<p>Run: <code>node --test site/testes/matematica.test.js</code></p>
+<p>Expected: FAIL com <code>ERR_MODULE_NOT_FOUND</code>.</p>
+<ul class="task-list">
+<li><label><input type="checkbox" /><strong>Step 3: Implementar o
+carregador mínimo</strong></label></li>
+</ul>
+<p>Usar a seguinte forma pública:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode js"><code class="sourceCode javascript"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">export</span> <span class="kw">const</span> MATHJAX_VERSION <span class="op">=</span> <span class="st">&quot;4.1.2&quot;</span><span class="op">;</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">export</span> <span class="kw">const</span> MATHJAX_URL <span class="op">=</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;https://cdn.jsdelivr.net/npm/mathjax@4.1.2/tex-mml-chtml.js&quot;</span><span class="op">;</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="im">export</span> <span class="kw">const</span> MATHJAX_CONFIG <span class="op">=</span> <span class="bu">Object</span><span class="op">.</span><span class="fu">freeze</span>({</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="dt">tex</span><span class="op">:</span> {</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    <span class="dt">inlineMath</span><span class="op">:</span> [[<span class="st">&quot;</span><span class="sc">\\</span><span class="st">(&quot;</span><span class="op">,</span> <span class="st">&quot;</span><span class="sc">\\</span><span class="st">)&quot;</span>]]<span class="op">,</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    <span class="dt">displayMath</span><span class="op">:</span> [[<span class="st">&quot;</span><span class="sc">\\</span><span class="st">[&quot;</span><span class="op">,</span> <span class="st">&quot;</span><span class="sc">\\</span><span class="st">]&quot;</span>]]<span class="op">,</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    <span class="dt">processEscapes</span><span class="op">:</span> <span class="kw">true</span><span class="op">,</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  }<span class="op">,</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  <span class="dt">chtml</span><span class="op">:</span> { <span class="dt">displayAlign</span><span class="op">:</span> <span class="st">&quot;center&quot;</span><span class="op">,</span> <span class="dt">displayIndent</span><span class="op">:</span> <span class="st">&quot;0&quot;</span> }<span class="op">,</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span></code></pre></div>
+<p>No navegador, atribuir a configuração a
+<code>globalThis.MathJax</code>, inserir uma única tag
+<code>script[data-eletro-mathjax]</code> e resolver
+<code>mathReady</code> somente depois de
+<code>globalThis.MathJax.startup.promise</code>. Em Node,
+<code>mathReady</code> resolve <code>null</code>.</p>
+<p><code>typesetMath(root)</code> deve limpar e recompor somente
+<code>root</code>, retornando <code>false</code> quando DOM ou MathJax
+não estiverem disponíveis.</p>
+<ul class="task-list">
+<li><label><input type="checkbox" /><strong>Step 4: Adicionar os estilos
+matemáticos comuns</strong></label></li>
+</ul>
+<p>Adicionar a <code>base.css</code>:</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">.math-display</span> {</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">margin</span><span class="ch">:</span> <span class="dv">1.5</span><span class="dt">rem</span> <span class="dv">0</span><span class="op">;</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">overflow-x</span><span class="ch">:</span> <span class="bu">auto</span><span class="op">;</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="kw">overflow-y</span><span class="ch">:</span> <span class="dv">hidden</span><span class="op">;</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>mjx-container<span class="ex">[</span><span class="ss">display</span><span class="op">=</span><span class="st">&quot;true&quot;</span><span class="ex">]</span> {</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="kw">min-width</span><span class="ch">:</span> <span class="dv">max-content</span><span class="op">;</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>  <span class="kw">padding-block</span><span class="ch">:</span> <span class="dv">0.25</span><span class="dt">rem</span><span class="op">;</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>No celular, a rolagem deve ocorrer dentro de
+<code>.math-display</code>, nunca no documento. No modo de impressão,
+impedir quebra dentro de uma única equação.</p>
+<ul class="task-list">
+<li><label><input type="checkbox" /><strong>Step 5: Rodar testes e
+verificação de sintaxe</strong></label></li>
+</ul>
+<p>Run:</p>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode powershell"><code class="sourceCode powershell"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>node <span class="op">--</span>test site<span class="op">/</span>testes<span class="op">/</span>matematica<span class="op">.</span><span class="fu">test</span><span class="op">.</span><span class="fu">js</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>node <span class="op">--</span>check site<span class="op">/</span>componentes<span class="op">/</span>matematica<span class="op">.</span><span class="fu">js</span></span></code></pre></div>
+<p>Expected: todos os casos PASS e nenhum erro de sintaxe.</p>
+<ul class="task-list">
+<li><label><input type="checkbox" /><strong>Step 6:
+Commit</strong></label></li>
+</ul>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode powershell"><code class="sourceCode powershell"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>git add site<span class="op">/</span>componentes<span class="op">/</span>matematica<span class="op">.</span><span class="fu">js</span> site<span class="op">/</span>testes<span class="op">/</span>matematica<span class="op">.</span><span class="fu">test</span><span class="op">.</span><span class="fu">js</span> site<span class="op">/</span>assets<span class="op">/</span>base<span class="op">.</span><span class="fu">css</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>git commit <span class="op">-</span>m <span class="st">&quot;feat: add shared MathJax rendering&quot;</span></span></code></pre></div>
+<hr />
+<h3 id="task-2-estrutura-editorial-comum-dos-experimentos">Task 2:
+Estrutura editorial comum dos experimentos</h3>
+<p><strong>Files:</strong></p>
+<ul>
+<li>Modify: <code>site/experimentos/experimento.js</code></li>
+<li>Modify: <code>site/assets/experimentos.css</code></li>
+<li>Modify: <code>site/testes/experimentos.test.js</code></li>
+</ul>
+<p><strong>Interfaces:</strong></p>
+<ul>
+<li><p>Consumes: <code>typesetMath(root)</code> from Task 1.</p></li>
+<li><p>Preserves: <code>setupExperiment(root, printPage)</code>
+returning the tab controller.</p></li>
+<li><p>Produces CSS contracts: <code>.experiment-prose</code>,
+<code>.reasoning-sequence</code>, <code>.report-section</code>,
+<code>.report-data</code>, <code>.semantic-callout</code>.</p></li>
+<li><p><label><input type="checkbox" /><strong>Step 1: Alterar a fixture
+de impressão para três abas</strong></label></p></li>
+</ul>
+<p>Na fixture, usar somente:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode js"><code class="sourceCode javascript"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> tabs <span class="op">=</span> [</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">makeTab</span>(<span class="st">&quot;painel-montagem&quot;</span><span class="op">,</span> <span class="kw">true</span>)<span class="op">,</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">makeTab</span>(<span class="st">&quot;painel-fundamentos&quot;</span><span class="op">,</span> <span class="kw">false</span>)<span class="op">,</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">makeTab</span>(<span class="st">&quot;painel-relatorio&quot;</span><span class="op">,</span> <span class="kw">false</span>)<span class="op">,</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>]<span class="op">;</span></span></code></pre></div>
+<p>O teste deve exigir que a impressão ative <code>tabs[2]</code>,
+esconda montagem e fundamentação e chame <code>printPage()</code> uma
+vez.</p>
+<ul class="task-list">
+<li><label><input type="checkbox" /><strong>Step 2: Rodar o teste e
+confirmar a falha de índice</strong></label></li>
+</ul>
+<p>Run:
+<code>node --test --test-name-pattern="imprimir" site/testes/experimentos.test.js</code></p>
+<p>Expected: FAIL porque o teste antigo e o índice do relatório ainda
+pressupõem quatro abas.</p>
+<ul class="task-list">
+<li><label><input type="checkbox" /><strong>Step 3: Integrar a
+matemática ao controlador</strong></label></li>
+</ul>
+<p>Importar <code>typesetMath</code> e chamar
+<code>await typesetMath(root)</code> depois de ativar a aba de relatório
+e antes de <code>printPage()</code>. Preservar navegação por teclado de
+<code>setupTabs</code> e localizar o relatório por
+<code>aria-controls</code>, nunca por índice fixo.</p>
+<ul class="task-list">
+<li><label><input type="checkbox" /><strong>Step 4: Substituir a grade
+de cartões por fluxo editorial</strong></label></li>
+</ul>
+<p>Implementar no CSS:</p>
+<div class="sourceCode" id="cb7"><pre
+class="sourceCode css"><code class="sourceCode css"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">.experiment-prose</span><span class="op">,</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">.report-document</span> {</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">width</span><span class="ch">:</span> <span class="fu">min(</span><span class="dv">100</span><span class="dt">%</span><span class="op">,</span> <span class="dv">52</span><span class="dt">rem</span><span class="fu">)</span><span class="op">;</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="kw">margin-inline</span><span class="ch">:</span> <span class="bu">auto</span><span class="op">;</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="fu">.reasoning-step</span><span class="op">,</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="fu">.report-section</span> {</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>  <span class="kw">display</span><span class="ch">:</span> <span class="dv">grid</span><span class="op">;</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>  <span class="kw">grid-template-columns</span><span class="ch">:</span> <span class="dv">3.25</span><span class="dt">rem</span> <span class="fu">minmax(</span><span class="dv">0</span><span class="op">,</span> <span class="dv">1</span><span class="dt">fr</span><span class="fu">)</span><span class="op">;</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>  <span class="kw">gap</span><span class="ch">:</span> <span class="dv">1</span><span class="dt">rem</span><span class="op">;</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>  <span class="kw">padding-block</span><span class="ch">:</span> <span class="dv">1.75</span><span class="dt">rem</span><span class="op">;</span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>  <span class="kw">border-top</span><span class="ch">:</span> <span class="dv">1</span><span class="dt">px</span> <span class="dv">solid</span> <span class="fu">var(</span><span class="va">--line</span><span class="fu">)</span><span class="op">;</span></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>Em até 620 px, recolher a numeração para cima do texto. Manter
+<code>.experiment-safety</code>, <code>.prediction-box</code> e
+<code>.uncertainty-box</code> como chamadas semânticas. Remover o uso
+visual de <code>.experiment-grid</code>, <code>.report-grid</code>,
+<code>.lab-card</code>, <code>.theory-card</code> e
+<code>.report-card</code> nas páginas novas sem apagar seletores
+necessários durante a transição.</p>
+<ul class="task-list">
+<li><label><input type="checkbox" /><strong>Step 5: Corrigir o contrato
+de impressão</strong></label></li>
+</ul>
+<p>No <code>@media print</code>, esconder navegação, lista de abas,
+botões e os dois painéis que não sejam <code>#painel-relatorio</code>.
+Imprimir o relatório em branco, sem sombras, com tabelas repetindo
+cabeçalhos e sem cortar figuras ou equações.</p>
+<ul class="task-list">
+<li><label><input type="checkbox" /><strong>Step 6: Rodar a regressão do
+componente e commitar</strong></label></li>
+</ul>
+<p>Run:</p>
+<div class="sourceCode" id="cb8"><pre
+class="sourceCode powershell"><code class="sourceCode powershell"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>node <span class="op">--</span>test <span class="op">--</span>test-name-pattern<span class="op">=</span><span class="st">&quot;imprimir&quot;</span> site<span class="op">/</span>testes<span class="op">/</span>experimentos<span class="op">.</span><span class="fu">test</span><span class="op">.</span><span class="fu">js</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>node <span class="op">--</span>check site<span class="op">/</span>experimentos<span class="op">/</span>experimento<span class="op">.</span><span class="fu">js</span></span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre
+class="sourceCode powershell"><code class="sourceCode powershell"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>git add site<span class="op">/</span>experimentos<span class="op">/</span>experimento<span class="op">.</span><span class="fu">js</span> site<span class="op">/</span>assets<span class="op">/</span>experimentos<span class="op">.</span><span class="fu">css</span> site<span class="op">/</span>testes<span class="op">/</span>experimentos<span class="op">.</span><span class="fu">test</span><span class="op">.</span><span class="fu">js</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>git commit <span class="op">-</span>m <span class="st">&quot;refactor: establish academic experiment layout&quot;</span></span></code></pre></div>
+<hr />
+<h3 id="task-3-experimento-4-como-padrão-de-referência">Task 3:
+Experimento 4 como padrão de referência</h3>
+<p><strong>Files:</strong></p>
+<ul>
+<li>Modify:
+<code>site/experimentos/04-inducao-eletromagnetica/index.html</code></li>
+<li>Modify:
+<code>site/experimentos/04-inducao-eletromagnetica/relatorio.md</code></li>
+<li>Modify: <code>site/testes/experimentos.test.js</code></li>
+</ul>
+<p><strong>Interfaces:</strong></p>
+<ul>
+<li><p>Consumes: three-tab shell and continuous classes from Task
+2.</p></li>
+<li><p>Produces: canonical report sequence reused as editorial standard
+by Task 4.</p></li>
+<li><p><label><input type="checkbox" /><strong>Step 1: Escrever o
+contrato específico que falha</strong></label></p></li>
+</ul>
+<p>Exigir para o Experimento 4:</p>
+<div class="sourceCode" id="cb10"><pre
+class="sourceCode js"><code class="sourceCode javascript"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>assert<span class="op">.</span><span class="fu">equal</span>((html<span class="op">.</span><span class="fu">match</span>(<span class="ss">/role=&quot;tab&quot;/g</span>) <span class="op">??</span> [])<span class="op">.</span><span class="at">length</span><span class="op">,</span> <span class="dv">3</span>)<span class="op">;</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>assert<span class="op">.</span><span class="fu">equal</span>((html<span class="op">.</span><span class="fu">match</span>(<span class="ss">/role=&quot;tabpanel&quot;/g</span>) <span class="op">??</span> [])<span class="op">.</span><span class="at">length</span><span class="op">,</span> <span class="dv">3</span>)<span class="op">;</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>assert<span class="op">.</span><span class="fu">doesNotMatch</span>(html<span class="op">,</span> <span class="ss">/painel-dados</span><span class="sc">|</span><span class="ss">&gt;Dados&lt;/</span>)<span class="op">;</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>assert<span class="op">.</span><span class="fu">match</span>(html<span class="op">,</span> <span class="ss">/class=&quot;reasoning-sequence&quot;/</span>)<span class="op">;</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>assert<span class="op">.</span><span class="fu">match</span>(html<span class="op">,</span> <span class="ss">/class=&quot;report-document&quot;/</span>)<span class="op">;</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>assert<span class="op">.</span><span class="fu">match</span>(html<span class="op">,</span> <span class="ss">/</span><span class="sc">\\</span><span class="ss">frac</span><span class="sc">\{</span><span class="ss">d</span><span class="sc">\\</span><span class="ss">Phi_B</span><span class="sc">\}\{</span><span class="ss">dt</span><span class="sc">\}</span><span class="ss">/</span>)<span class="op">;</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>assert<span class="op">.</span><span class="fu">match</span>(html<span class="op">,</span> <span class="ss">/</span><span class="sc">\\</span><span class="ss">begin</span><span class="sc">\{</span><span class="ss">aligned</span><span class="sc">\}</span><span class="ss">/</span>)<span class="op">;</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>assert<span class="op">.</span><span class="fu">match</span>(report<span class="op">,</span> <span class="ss">/</span><span class="sc">^</span><span class="ss">## Dados brutos/m</span>)<span class="op">;</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>assert<span class="op">.</span><span class="fu">match</span>(report<span class="op">,</span> <span class="ss">/</span><span class="sc">^</span><span class="ss">## Tratamento e análise/m</span>)<span class="op">;</span></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>assert<span class="op">.</span><span class="fu">match</span>(report<span class="op">,</span> <span class="ss">/</span><span class="sc">^</span><span class="ss">## Discussão/m</span>)<span class="op">;</span></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>assert<span class="op">.</span><span class="fu">match</span>(report<span class="op">,</span> <span class="ss">/</span><span class="sc">\$\$[\s\S]*\\</span><span class="ss">frac</span><span class="sc">[\s\S]*\$\$</span><span class="ss">/</span>)<span class="op">;</span></span></code></pre></div>
+<p>Exigir pelo menos 1.500 palavras no Markdown, sem contar linhas de
+tabela.</p>
+<ul class="task-list">
+<li><label><input type="checkbox" /><strong>Step 2: Rodar e observar as
+falhas estruturais e matemáticas</strong></label></li>
+</ul>
+<p>Run:
+<code>node --test --test-name-pattern="04-inducao" site/testes/experimentos.test.js</code></p>
+<ul class="task-list">
+<li><label><input type="checkbox" /><strong>Step 3: Reescrever Montagem
+em sequência operacional</strong></label></li>
+</ul>
+<p>Usar esta ordem contínua:</p>
+<ol type="1">
+<li>questão investigativa e objetivos mensuráveis;</li>
+<li>materiais em lista compacta;</li>
+<li>segurança em faixa única;</li>
+<li>fotografia AZEHEB em largura integral;</li>
+<li>convenções de sinal do galvanômetro, eixo e polo;</li>
+<li>inspeção, ajuste de zero e teste de continuidade;</li>
+<li>aproximação, repouso, afastamento e inversão do ímã;</li>
+<li>repetição com velocidade e amplitude controladas;</li>
+<li>previsão registrada antes da aquisição.</li>
+</ol>
+<ul class="task-list">
+<li><label><input type="checkbox" /><strong>Step 4: Reescrever
+Fundamentação como capítulo curto</strong></label></li>
+</ul>
+<p>Apresentar verticalmente:</p>
+<div class="sourceCode" id="cb11"><pre
+class="sourceCode tex"><code class="sourceCode latex"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="kw">\begin</span>{<span class="ex">aligned</span>}</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">\Phi</span>_B(t) &amp;= <span class="fu">\int</span>_S <span class="fu">\vec</span>{B}(<span class="fu">\vec</span>{r},t)<span class="fu">\cdot</span> d<span class="fu">\vec</span>{A}, <span class="fu">\\</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="fu">\mathcal</span>{E}(t) &amp;= -N<span class="fu">\frac</span>{d<span class="fu">\Phi</span>_B}{dt}, <span class="fu">\\</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="fu">\mathcal</span>{E}(t) &amp;= -Nv<span class="fu">\frac</span>{d<span class="fu">\Phi</span>_B}{dz}, <span class="fu">\\</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>L<span class="fu">\frac</span>{di}{dt}+Ri &amp;= <span class="fu">\mathcal</span>{E}(t), <span class="fu">\\</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="fu">\tau</span>_e &amp;= <span class="fu">\frac</span>{L}{R}.</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="kw">\end</span>{<span class="ex">aligned</span>}</span></code></pre></div>
+<p>Explicar hipótese, sinal de Lenz, diferença entre fluxo e campo,
+regime quase estacionário e resposta transitória RL. Não interpretar ímã
+parado como campo nulo.</p>
+<ul class="task-list">
+<li><label><input type="checkbox" /><strong>Step 5: Escrever o roteiro e
+relatório completo no HTML</strong></label></li>
+</ul>
+<p>Usar a sequência: identificação, pergunta e hipótese, preparação
+pré-laboratório, procedimento e controles, dados brutos, tratamento e
+análise, incertezas, discussão, conclusão, referências e anexos. Inserir
+tabelas dentro de Dados brutos e Tratamento, não em aba separada.
+Integrar as perguntas conceituais à Discussão em parágrafos
+argumentativos.</p>
+<ul class="task-list">
+<li><label><input type="checkbox" /><strong>Step 6: Tornar o Markdown
+equivalente e extenso</strong></label></li>
+</ul>
+<p>O <code>relatorio.md</code> deve ter os mesmos títulos e fórmulas,
+campos para medidas, orientações para gráficos e critérios
+quantitativos. Toda divisão matemática deve usar <code>\frac{}</code>
+dentro de <code>$...$</code> ou <code>$$...$$</code>.</p>
+<ul class="task-list">
+<li><label><input type="checkbox" /><strong>Step 7: Rodar testes e
+commitar o padrão</strong></label></li>
+</ul>
+<p>Run:
+<code>node --test --test-name-pattern="04-inducao" site/testes/experimentos.test.js</code></p>
+<div class="sourceCode" id="cb12"><pre
+class="sourceCode powershell"><code class="sourceCode powershell"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>git add site<span class="op">/</span>experimentos<span class="op">/</span><span class="dv">04</span><span class="op">-</span>inducao-eletromagnetica site<span class="op">/</span>testes<span class="op">/</span>experimentos<span class="op">.</span><span class="fu">test</span><span class="op">.</span><span class="fu">js</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>git commit <span class="op">-</span>m <span class="st">&quot;feat: elevate induction experiment report&quot;</span></span></code></pre></div>
+<hr />
+<h3 id="task-4-aplicar-o-padrão-aos-experimentos-1-2-e-3">Task 4:
+Aplicar o padrão aos experimentos 1, 2 e 3</h3>
+<p><strong>Files:</strong></p>
+<ul>
+<li>Modify:
+<code>site/experimentos/01-campo-corrente/index.html</code></li>
+<li>Modify:
+<code>site/experimentos/01-campo-corrente/relatorio.md</code></li>
+<li>Modify:
+<code>site/experimentos/02-campo-solenoide/index.html</code></li>
+<li>Modify:
+<code>site/experimentos/02-campo-solenoide/relatorio.md</code></li>
+<li>Modify:
+<code>site/experimentos/03-forca-magnetica-motor/index.html</code></li>
+<li>Modify:
+<code>site/experimentos/03-forca-magnetica-motor/relatorio.md</code></li>
+<li>Modify: <code>site/testes/experimentos.test.js</code></li>
+</ul>
+<p><strong>Interfaces:</strong></p>
+<ul>
+<li><p>Consumes: canonical section names and layout from Task
+3.</p></li>
+<li><p>Produces: all four experiments with the same three-tab
+contract.</p></li>
+<li><p><label><input type="checkbox" /><strong>Step 1: Generalizar os
+testes e confirmar três falhas</strong></label></p></li>
+</ul>
+<p>Para todos os experimentos, exigir três abas, ausência de
+<code>painel-dados</code>, <code>.reasoning-sequence</code>,
+<code>.report-document</code>, três ou mais equações LaTeX e os títulos
+Markdown Dados brutos, Tratamento e análise, Discussão e Conclusão.
+Exigir ao menos 1.500 palavras por relatório.</p>
+<p>Run: <code>node --test site/testes/experimentos.test.js</code></p>
+<p>Expected: Experimento 4 PASS; experimentos 1, 2 e 3 FAIL.</p>
+<ul class="task-list">
+<li><label><input type="checkbox" /><strong>Step 2: Reescrever o
+Experimento 1 — campo de uma corrente</strong></label></li>
+</ul>
+<p>Sequência matemática obrigatória:</p>
+<div class="sourceCode" id="cb13"><pre
+class="sourceCode tex"><code class="sourceCode latex"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="kw">\begin</span>{<span class="ex">aligned</span>}</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>d<span class="fu">\vec</span>{B} &amp;= <span class="fu">\frac</span>{<span class="fu">\mu</span>_0}{4<span class="fu">\pi</span>}<span class="fu">\frac</span>{I<span class="fu">\,</span>d<span class="fu">\vec</span>{<span class="fu">\ell</span>}<span class="fu">\times\hat</span>{<span class="fu">\vec</span>{r}}}{r^2}, <span class="fu">\\</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="fu">\oint</span>_C <span class="fu">\vec</span>{B}<span class="fu">\cdot</span> d<span class="fu">\vec</span>{<span class="fu">\ell</span>} &amp;= <span class="fu">\mu</span>_0 I_{<span class="fu">\mathrm</span>{enc}}, <span class="fu">\\</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>B(r) &amp;= <span class="fu">\frac</span>{<span class="fu">\mu</span>_0 I}{2<span class="fu">\pi</span> r}, <span class="fu">\\</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="fu">\tan\varphi</span> &amp;= <span class="fu">\frac</span>{B_{<span class="fu">\mathrm</span>{fio}}}{B_{T,h}}.</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="kw">\end</span>{<span class="ex">aligned</span>}</span></code></pre></div>
+<p>O relatório deve separar observação de Oersted e extensão
+quantitativa, exigir gráfico <code>B</code> versus <code>1/r</code>,
+ajuste linear, incerteza de corrente e raio, análise de intercepto e
+discussão do campo terrestre.</p>
+<ul class="task-list">
+<li><label><input type="checkbox" /><strong>Step 3: Reescrever o
+Experimento 2 — solenoide</strong></label></li>
+</ul>
+<p>Sequência matemática obrigatória:</p>
+<div class="sourceCode" id="cb14"><pre
+class="sourceCode tex"><code class="sourceCode latex"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="kw">\begin</span>{<span class="ex">aligned</span>}</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>n &amp;= <span class="fu">\frac</span>{N}{<span class="fu">\ell</span>}, <span class="fu">\\</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>B_{<span class="fu">\mathrm</span>{ideal}} &amp;= <span class="fu">\mu</span>_0 n I, <span class="fu">\\</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>B(z) &amp;= <span class="fu">\frac</span>{<span class="fu">\mu</span>_0 n I}{2}</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="fu">\left</span>[</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="fu">\frac</span>{z+<span class="fu">\ell</span>/2}{<span class="fu">\sqrt</span>{a^2+(z+<span class="fu">\ell</span>/2)^2}}</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>-<span class="fu">\frac</span>{z-<span class="fu">\ell</span>/2}{<span class="fu">\sqrt</span>{a^2+(z-<span class="fu">\ell</span>/2)^2}}</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="fu">\right</span>].</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a><span class="kw">\end</span>{<span class="ex">aligned</span>}</span></code></pre></div>
+<p>O relatório deve pedir mapa qualitativo com limalha, perfil axial
+normalizado, comparação entre modelo ideal e finito, análise de borda e
+propagação das incertezas de <code>N</code>, <code>\ell</code>,
+<code>I</code>, <code>a</code> e <code>z</code>.</p>
+<ul class="task-list">
+<li><label><input type="checkbox" /><strong>Step 4: Reescrever o
+Experimento 3 — força e motor</strong></label></li>
+</ul>
+<p>Sequência matemática obrigatória:</p>
+<div class="sourceCode" id="cb15"><pre
+class="sourceCode tex"><code class="sourceCode latex"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="kw">\begin</span>{<span class="ex">aligned</span>}</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>d<span class="fu">\vec</span>{F} &amp;= I<span class="fu">\,</span>d<span class="fu">\vec</span>{<span class="fu">\ell</span>}<span class="fu">\times\vec</span>{B}, <span class="fu">\\</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>F &amp;= B I <span class="fu">\ell\sin\theta</span>, <span class="fu">\\</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="fu">\vec</span>{<span class="fu">\mu</span>} &amp;= N I A<span class="fu">\,\hat</span>{<span class="fu">\vec</span>{n}}, <span class="fu">\\</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="fu">\vec</span>{<span class="fu">\tau</span>} &amp;= <span class="fu">\vec</span>{<span class="fu">\mu</span>}<span class="fu">\times\vec</span>{B}, <span class="fu">\\</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>U &amp;= -<span class="fu">\vec</span>{<span class="fu">\mu</span>}<span class="fu">\cdot\vec</span>{B}, <span class="fu">\\</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>J<span class="fu">\ddot</span>{<span class="fu">\theta</span>}+b<span class="fu">\dot</span>{<span class="fu">\theta</span>} &amp;= <span class="fu">\tau</span>_{<span class="fu">\mathrm</span>{em}}(<span class="fu">\theta</span>)-<span class="fu">\tau</span>_{<span class="fu">\mathrm</span>{carga}}.</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a><span class="kw">\end</span>{<span class="ex">aligned</span>}</span></code></pre></div>
+<p>Manter Parte I e Parte II distintas, relacionar balança magnética e
+motor, exigir gráfico <code>F</code> versus <code>I</code>, análise do
+sentido pelo produto vetorial e discussão de comutação, torque e
+perdas.</p>
+<ul class="task-list">
+<li><label><input type="checkbox" /><strong>Step 5: Rodar regressão
+experimental e commitar</strong></label></li>
+</ul>
+<p>Run: <code>node --test site/testes/experimentos.test.js</code></p>
+<div class="sourceCode" id="cb16"><pre
+class="sourceCode powershell"><code class="sourceCode powershell"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>git add site<span class="op">/</span>experimentos<span class="op">/</span><span class="dv">01</span><span class="op">-</span>campo-corrente site<span class="op">/</span>experimentos<span class="op">/</span><span class="dv">02</span><span class="op">-</span>campo-solenoide site<span class="op">/</span>experimentos<span class="op">/</span><span class="dv">03</span><span class="op">-</span>forca-magnetica-motor site<span class="op">/</span>testes<span class="op">/</span>experimentos<span class="op">.</span><span class="fu">test</span><span class="op">.</span><span class="fu">js</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>git commit <span class="op">-</span>m <span class="st">&quot;feat: expand university physics lab reports&quot;</span></span></code></pre></div>
+<hr />
+<h3
+id="task-5-converter-os-quatro-exercícios-para-latex-renderizado">Task
+5: Converter os quatro exercícios para LaTeX renderizado</h3>
+<p><strong>Files:</strong></p>
+<ul>
+<li>Modify: <code>site/exercicios/exercicio-estatico.js</code></li>
+<li>Modify: <code>site/exercicios/halliday-21-13/app.js</code></li>
+<li>Modify: <code>site/exercicios/halliday-21-13/index.html</code></li>
+<li>Modify: <code>site/exercicios/halliday-21-18/index.html</code></li>
+<li>Modify: <code>site/exercicios/halliday-21-34/index.html</code></li>
+<li>Modify: <code>site/exercicios/halliday-21-42/index.html</code></li>
+<li>Modify: <code>site/testes/exercicios-halliday.test.js</code></li>
+<li>Modify: <code>site/testes/notacao-vetorial.test.js</code></li>
+</ul>
+<p><strong>Interfaces:</strong></p>
+<ul>
+<li><p>Consumes: side-effect import of <code>matematica.js</code> for
+static pages.</p></li>
+<li><p>Preserves: answers <code>1,33</code>, <code>37,47°</code>,
+<code>50,95°</code>, <code>56,61°</code>, <code>24 nC</code> and the
+equilibrium coordinate of exercise 13.</p></li>
+<li><p><label><input type="checkbox" /><strong>Step 1: Escrever testes
+de composição matemática</strong></label></p></li>
+</ul>
+<p>Para cada página, exigir <code>\\begin{aligned}</code>,
+<code>\\frac{</code> e ao menos um vetor LaTeX. Rejeitar sequências
+conhecidas como <code>μ₀I/(2πr)</code>, <code>x³/(...)</code>,
+<code>L/R</code> e frações pedagógicas construídas apenas com
+<code>/</code>.</p>
+<ul class="task-list">
+<li><label><input type="checkbox" /><strong>Step 2: Rodar e observar
+quatro falhas</strong></label></li>
+</ul>
+<p>Run:
+<code>node --test site/testes/exercicios-halliday.test.js site/testes/notacao-vetorial.test.js</code></p>
+<ul class="task-list">
+<li><label><input type="checkbox" /><strong>Step 3: Carregar MathJax nas
+duas rotas de JavaScript</strong></label></li>
+</ul>
+<p>Adicionar em <code>exercicio-estatico.js</code>:</p>
+<div class="sourceCode" id="cb17"><pre
+class="sourceCode js"><code class="sourceCode javascript"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> <span class="st">&quot;../componentes/matematica.js&quot;</span><span class="op">;</span></span></code></pre></div>
+<p>Adicionar em <code>halliday-21-13/app.js</code>:</p>
+<div class="sourceCode" id="cb18"><pre
+class="sourceCode js"><code class="sourceCode javascript"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> <span class="st">&quot;../../componentes/matematica.js&quot;</span><span class="op">;</span></span></code></pre></div>
+<ul class="task-list">
+<li><label><input type="checkbox" /><strong>Step 4: Converter cada
+dedução em alinhamento vertical</strong></label></li>
+</ul>
+<p>Preservar os argumentos e resultados, mas expressar vetores com
+<code>\vec{E}</code> e <code>\vec{F}</code>, módulos com
+<code>\lvert\cdot\rvert</code>, raízes com <code>\sqrt{}</code>,
+expoentes e frações em LaTeX. Cada igualdade que muda de hipótese deve
+ter texto anterior explicando a transformação.</p>
+<ul class="task-list">
+<li><label><input type="checkbox" /><strong>Step 5: Rodar testes e
+commitar</strong></label></li>
+</ul>
+<p>Run:</p>
+<div class="sourceCode" id="cb19"><pre
+class="sourceCode powershell"><code class="sourceCode powershell"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>node <span class="op">--</span>test site<span class="op">/</span>testes<span class="op">/</span>exercicios-halliday<span class="op">.</span><span class="fu">test</span><span class="op">.</span><span class="fu">js</span> site<span class="op">/</span>testes<span class="op">/</span>notacao-vetorial<span class="op">.</span><span class="fu">test</span><span class="op">.</span><span class="fu">js</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>node <span class="op">--</span>check site<span class="op">/</span>exercicios<span class="op">/</span>exercicio-estatico<span class="op">.</span><span class="fu">js</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>node <span class="op">--</span>check site<span class="op">/</span>exercicios<span class="op">/</span>halliday-21-13<span class="op">/</span>app<span class="op">.</span><span class="fu">js</span></span></code></pre></div>
+<div class="sourceCode" id="cb20"><pre
+class="sourceCode powershell"><code class="sourceCode powershell"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>git add site<span class="op">/</span>exercicios site<span class="op">/</span>testes<span class="op">/</span>exercicios-halliday<span class="op">.</span><span class="fu">test</span><span class="op">.</span><span class="fu">js</span> site<span class="op">/</span>testes<span class="op">/</span>notacao-vetorial<span class="op">.</span><span class="fu">test</span><span class="op">.</span><span class="fu">js</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>git commit <span class="op">-</span>m <span class="st">&quot;feat: typeset Halliday solutions with LaTeX&quot;</span></span></code></pre></div>
+<hr />
+<h3 id="task-6-renderizar-matemática-dinâmica-nos-simuladores">Task 6:
+Renderizar matemática dinâmica nos simuladores</h3>
+<p><strong>Files:</strong></p>
+<ul>
+<li>Modify: <code>site/componentes/simulador-vetores.js</code></li>
+<li>Modify: <code>site/componentes/simulador-cargas.js</code></li>
+<li>Modify: <code>site/testes/laboratorio-vetores.test.js</code></li>
+<li>Modify: <code>site/testes/eletrostatica.test.js</code></li>
+<li>Modify: <code>site/assets/simulador.css</code></li>
+</ul>
+<p><strong>Interfaces:</strong></p>
+<ul>
+<li><p>Consumes:
+<code>typesetMath(root): Promise&lt;boolean&gt;</code>.</p></li>
+<li><p>Preserves: funções puras de física, arraste, teclado, cargas
+adicionáveis e resultados numéricos existentes.</p></li>
+<li><p><label><input type="checkbox" /><strong>Step 1: Escrever testes
+para o markup dinâmico</strong></label></p></li>
+</ul>
+<p>Exigir que as leituras geradas contenham delimitadores MathJax e
+comandos <code>\begin{aligned}</code>, <code>\vec</code>,
+<code>\frac</code>, <code>\cos</code> e <code>\lVert</code>. Manter o
+teste que garante <code>A⃗</code> ausente. Testar a chamada de
+recomposição com um stub que conta uma execução por atualização
+visual.</p>
+<ul class="task-list">
+<li><label><input type="checkbox" /><strong>Step 2: Rodar e confirmar
+falhas de notação</strong></label></li>
+</ul>
+<p>Run:
+<code>node --test site/testes/laboratorio-vetores.test.js site/testes/eletrostatica.test.js</code></p>
+<ul class="task-list">
+<li><label><input type="checkbox" /><strong>Step 3: Converter o
+laboratório de vetores</strong></label></li>
+</ul>
+<p>Apresentar componentes, soma, módulo e produto escalar como:</p>
+<div class="sourceCode" id="cb21"><pre
+class="sourceCode tex"><code class="sourceCode latex"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="kw">\begin</span>{<span class="ex">aligned</span>}</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="fu">\vec</span>{R} &amp;= <span class="fu">\vec</span>{A}+<span class="fu">\vec</span>{B}, <span class="fu">\\</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>R_x &amp;= A_x+B_x, &amp; R_y &amp;= A_y+B_y, <span class="fu">\\</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="fu">\lVert\vec</span>{R}<span class="fu">\rVert</span> &amp;= <span class="fu">\sqrt</span>{R_x^2+R_y^2}, <span class="fu">\\</span></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a><span class="fu">\vec</span>{A}<span class="fu">\cdot\vec</span>{B} &amp;= A_xB_x+A_yB_y</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>=<span class="fu">\lVert\vec</span>{A}<span class="fu">\rVert\lVert\vec</span>{B}<span class="fu">\rVert\cos\theta</span>.</span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a><span class="kw">\end</span>{<span class="ex">aligned</span>}</span></code></pre></div>
+<p>Manter a área do paralelogramo explicitamente separada pelo
+determinante e <code>\sin\theta</code>.</p>
+<ul class="task-list">
+<li><label><input type="checkbox" /><strong>Step 4: Converter o
+simulador de cargas</strong></label></li>
+</ul>
+<p>Renderizar lei de Coulomb vetorial, componentes individuais e
+soma:</p>
+<div class="sourceCode" id="cb22"><pre
+class="sourceCode tex"><code class="sourceCode latex"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">\vec</span>{F}_{i<span class="fu">\to</span> t}=k<span class="fu">\frac</span>{q_iq_t}{<span class="fu">\lVert\vec</span>{r}_t-<span class="fu">\vec</span>{r}_i<span class="fu">\rVert</span>^3}</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>(<span class="fu">\vec</span>{r}_t-<span class="fu">\vec</span>{r}_i),</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="fu">\qquad</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="fu">\vec</span>{F}_{<span class="fu">\mathrm</span>{res}}=<span class="fu">\sum</span>_i<span class="fu">\vec</span>{F}_{i<span class="fu">\to</span> t}.</span></code></pre></div>
+<p>Os valores numéricos continuam escapados e formatados antes de entrar
+no markup. Após cada atualização, chamar <code>typesetMath</code> apenas
+no painel alterado.</p>
+<ul class="task-list">
+<li><label><input type="checkbox" /><strong>Step 5: Ajustar estilo e
+desempenho</strong></label></li>
+</ul>
+<p>Permitir rolagem local em equações longas, manter alinhamento das
+tabelas e evitar que recomposição matemática recrie SVGs ou listeners.
+Não chamar MathJax durante cada evento <code>pointermove</code>; agendar
+no próximo frame visual.</p>
+<ul class="task-list">
+<li><label><input type="checkbox" /><strong>Step 6: Rodar testes e
+commitar</strong></label></li>
+</ul>
+<p>Run:</p>
+<div class="sourceCode" id="cb23"><pre
+class="sourceCode powershell"><code class="sourceCode powershell"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>node <span class="op">--</span>test site<span class="op">/</span>testes<span class="op">/</span>laboratorio-vetores<span class="op">.</span><span class="fu">test</span><span class="op">.</span><span class="fu">js</span> site<span class="op">/</span>testes<span class="op">/</span>eletrostatica<span class="op">.</span><span class="fu">test</span><span class="op">.</span><span class="fu">js</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>node <span class="op">--</span>check site<span class="op">/</span>componentes<span class="op">/</span>simulador-vetores<span class="op">.</span><span class="fu">js</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>node <span class="op">--</span>check site<span class="op">/</span>componentes<span class="op">/</span>simulador-cargas<span class="op">.</span><span class="fu">js</span></span></code></pre></div>
+<div class="sourceCode" id="cb24"><pre
+class="sourceCode powershell"><code class="sourceCode powershell"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>git add site<span class="op">/</span>componentes<span class="op">/</span>simulador-vetores<span class="op">.</span><span class="fu">js</span> site<span class="op">/</span>componentes<span class="op">/</span>simulador-cargas<span class="op">.</span><span class="fu">js</span> site<span class="op">/</span>testes<span class="op">/</span>laboratorio-vetores<span class="op">.</span><span class="fu">test</span><span class="op">.</span><span class="fu">js</span> site<span class="op">/</span>testes<span class="op">/</span>eletrostatica<span class="op">.</span><span class="fu">test</span><span class="op">.</span><span class="fu">js</span> site<span class="op">/</span>assets<span class="op">/</span>simulador<span class="op">.</span><span class="fu">css</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>git commit <span class="op">-</span>m <span class="st">&quot;feat: typeset interactive vector equations&quot;</span></span></code></pre></div>
+<hr />
+<h3 id="task-7-integração-impressão-e-validação-visual">Task 7:
+Integração, impressão e validação visual</h3>
+<p><strong>Files:</strong></p>
+<ul>
+<li>Modify: <code>README.md</code></li>
+<li>Modify shared files only when a reproduced regression demands a
+tested fix.</li>
+</ul>
+<p><strong>Interfaces:</strong></p>
+<ul>
+<li><p>Consumes all deliverables from Tasks 1–6.</p></li>
+<li><p>Produces a clean, locally committed candidate ready for push
+approval.</p></li>
+<li><p><label><input type="checkbox" /><strong>Step 1: Atualizar a
+documentação</strong></label></p></li>
+</ul>
+<p>Registrar MathJax 4.1.2, as três abas experimentais, a incorporação
+de dados ao relatório e a forma de imprimir ou abrir
+<code>relatorio.md</code>.</p>
+<ul class="task-list">
+<li><label><input type="checkbox" /><strong>Step 2: Executar a regressão
+JavaScript completa</strong></label></li>
+</ul>
+<p>Run:</p>
+<div class="sourceCode" id="cb25"><pre
+class="sourceCode powershell"><code class="sourceCode powershell"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>npm test</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>node <span class="op">--</span>check site<span class="op">/</span>componentes<span class="op">/</span>matematica<span class="op">.</span><span class="fu">js</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>node <span class="op">--</span>check site<span class="op">/</span>experimentos<span class="op">/</span>experimento<span class="op">.</span><span class="fu">js</span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>node <span class="op">--</span>check site<span class="op">/</span>componentes<span class="op">/</span>simulador-vetores<span class="op">.</span><span class="fu">js</span></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>node <span class="op">--</span>check site<span class="op">/</span>componentes<span class="op">/</span>simulador-cargas<span class="op">.</span><span class="fu">js</span></span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>git <span class="fu">diff</span> <span class="op">--</span>check</span></code></pre></div>
+<p>Expected: todos os testes PASS e nenhum erro de sintaxe ou
+whitespace.</p>
+<ul class="task-list">
+<li><label><input type="checkbox" /><strong>Step 3: Executar a regressão
+Python existente</strong></label></li>
+</ul>
+<p>Dentro de
+<code>Força Magnética/Halliday/Capítulo 21/Exercício 13</code>:</p>
+<div class="sourceCode" id="cb26"><pre
+class="sourceCode powershell"><code class="sourceCode powershell"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="va">$env</span><span class="op">:</span><span class="va">PYTHONPATH</span> <span class="op">=</span> <span class="st">&quot;</span><span class="va">$PWD</span><span class="st">\simulacao_forcas&quot;</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="op">&amp;</span> <span class="st">&quot;C:\Users\Gustavo\Desktop\dev\Eletromagnetismo-aulas\.venv\Scripts\python.exe&quot;</span> <span class="op">-</span>m unittest discover <span class="op">-</span>s tests <span class="op">-</span>v</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="op">&amp;</span> <span class="st">&quot;C:\Users\Gustavo\Desktop\dev\Eletromagnetismo-aulas\.venv\Scripts\python.exe&quot;</span> simulacao_forcas\run_py5<span class="op">.</span><span class="fu">py</span> <span class="op">--</span>check</span></code></pre></div>
+<ul class="task-list">
+<li><label><input type="checkbox" /><strong>Step 4: Validar em navegador
+desktop</strong></label></li>
+</ul>
+<p>Servir <code>site/</code>, abrir os quatro exercícios, os quatro
+experimentos e o simulador. Confirmar:</p>
+<ul>
+<li><p>zero erros de console;</p></li>
+<li><p>nenhuma fórmula TeX crua visível após carregamento;</p></li>
+<li><p>três abas por experimento;</p></li>
+<li><p>navegação e impressão do relatório;</p></li>
+<li><p>figuras, legendas e créditos presentes;</p></li>
+<li><p>atualização dinâmica das equações do simulador.</p></li>
+<li><p><label><input type="checkbox" /><strong>Step 5: Validar celular e
+impressão</strong></label></p></li>
+</ul>
+<p>Em 390 × 844 px, exigir
+<code>document.documentElement.scrollWidth === document.documentElement.clientWidth</code>
+nas nove páginas principais. Em mídia <code>print</code>, confirmar
+apenas o painel do relatório, equações não cortadas, cabeçalhos de
+tabela repetidos e extensão aproximada de seis a dez páginas por
+experimento.</p>
+<ul class="task-list">
+<li><label><input type="checkbox" /><strong>Step 6: Fazer auditoria
+editorial final</strong></label></li>
+</ul>
+<p>Pesquisar <code>/</code>, <code>painel-dados</code>,
+<code>report-grid</code>, <code>theory-card</code> e
+<code>report-card</code> no conteúdo pedagógico. Classificar cada
+ocorrência restante: URL, caminho de arquivo, operador JavaScript ou
+dívida real. Corrigir somente a dívida real.</p>
+<ul class="task-list">
+<li><label><input type="checkbox" /><strong>Step 7: Commit
+final</strong></label></li>
+</ul>
+<div class="sourceCode" id="cb27"><pre
+class="sourceCode powershell"><code class="sourceCode powershell"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>git add README<span class="op">.</span><span class="fu">md</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>git commit <span class="op">-</span>m <span class="st">&quot;docs: explain academic lab report workflow&quot;</span></span></code></pre></div>
+<ul class="task-list">
+<li><label><input type="checkbox" /><strong>Step 8: Preparar publicação
+sem executar push</strong></label></li>
+</ul>
+<p>Exibir commits locais, confirmar worktree limpa e solicitar
+autorização para <code>git push origin main</code>. Após autorização,
+acompanhar GitHub Pages e verificar HTTP 200 e comportamento real antes
+de declarar a publicação concluída.</p>
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const links = Array.from(document.querySelectorAll('#TOC a[href^="#"]'));
+    const headings = Array.from(document.querySelectorAll("h1[id], h2[id], h3[id]"));
+    const linkById = new Map(
+      links.map((link) => [decodeURIComponent(link.getAttribute("href").slice(1)), link])
+    );
+    let scheduled = false;
+
+    const update = () => {
+      let current = headings[0];
+      for (const heading of headings) {
+        if (heading.getBoundingClientRect().top <= 150) current = heading;
+        else break;
+      }
+      links.forEach((link) => link.classList.remove("is-active"));
+      if (current && linkById.has(current.id)) {
+        linkById.get(current.id).classList.add("is-active");
+      }
+      scheduled = false;
+    };
+
+    const schedule = () => {
+      if (scheduled) return;
+      scheduled = true;
+      window.requestAnimationFrame(update);
+    };
+
+    window.addEventListener("scroll", schedule, { passive: true });
+    window.addEventListener("resize", schedule);
+    update();
+  });
+</script>
+</body>
+</html>
