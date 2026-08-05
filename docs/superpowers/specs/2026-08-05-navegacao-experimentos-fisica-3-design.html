@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Navegação por capítulos e experimentos de Física III</title>
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    html {
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    svg {
+      height: auto;
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      white-space: pre-wrap;
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      border: none;
+      border-top: 1px solid #1a1a1a;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <style>
+    :root {
+      color-scheme: light dark;
+      --paper: #eef3f5;
+      --panel: #ffffff;
+      --ink: #142a3b;
+      --muted: #627683;
+      --line: #cad7dd;
+      --cyan: #008b95;
+      --violet: #7040d8;
+      --amber: #b57900;
+      --code: #e8eef1;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --paper: #0e171c;
+        --panel: #17232b;
+        --ink: #edf4f7;
+        --muted: #a9bac5;
+        --line: #344751;
+        --cyan: #58c8d1;
+        --violet: #b19aff;
+        --amber: #e8b951;
+        --code: #0b1419;
+      }
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background:
+        linear-gradient(rgb(20 42 59 / 3%) 1px, transparent 1px),
+        linear-gradient(90deg, rgb(20 42 59 / 3%) 1px, transparent 1px),
+        var(--paper);
+      background-size: 28px 28px;
+      color: var(--ink);
+      font: 15.5px/1.68 system-ui, -apple-system, "Segoe UI", sans-serif;
+    }
+    #TOC {
+      position: fixed;
+      z-index: 2;
+      inset: 0 auto 0 0;
+      width: 19rem;
+      overflow-y: auto;
+      border-right: 1px solid var(--line);
+      background: color-mix(in srgb, var(--panel) 94%, transparent);
+      padding: 2rem 1rem 2rem 1.5rem;
+    }
+    #TOC::before {
+      display: block;
+      margin: 0 0 1rem .5rem;
+      color: var(--cyan);
+      content: "MAPA DA ENTREGA";
+      font: 800 .72rem/1.2 ui-monospace, Consolas, monospace;
+      letter-spacing: .13em;
+    }
+    #TOC ul { margin: 0; padding: 0; list-style: none; }
+    #TOC ul ul { padding-left: .75rem; }
+    #TOC li + li { margin-top: .12rem; }
+    #TOC a {
+      display: block;
+      border-left: 3px solid transparent;
+      border-radius: .2rem;
+      color: var(--muted);
+      padding: .34rem .5rem;
+      font-size: .83rem;
+      text-decoration: none;
+    }
+    #TOC a:hover, #TOC a.is-active {
+      border-left-color: var(--violet);
+      background: var(--code);
+      color: var(--ink);
+    }
+    .source-banner,
+    body > section.level1 {
+      width: min(calc(100% - 23rem), 930px);
+      margin-left: max(21rem, calc((100% + 19rem - 930px) / 2));
+    }
+    .source-banner {
+      margin-top: 2rem;
+      border: 1px solid var(--line);
+      background: var(--panel);
+      padding: .75rem 1rem;
+      color: var(--muted);
+      font: .76rem/1.5 ui-monospace, Consolas, monospace;
+      overflow-wrap: anywhere;
+    }
+    body > section.level1 {
+      margin-top: 1rem;
+      margin-bottom: 4rem;
+      border: 1px solid var(--line);
+      border-top: .38rem solid var(--cyan);
+      background: var(--panel);
+      padding: clamp(1.35rem, 4vw, 3.7rem);
+      box-shadow: 0 1.2rem 3rem rgb(20 42 59 / 8%);
+    }
+    h1 { margin: 0 0 1.4rem; font-size: clamp(2.3rem, 5vw, 4.2rem); line-height: 1.02; letter-spacing: -.055em; }
+    h2 { margin-top: 3.8rem; border-top: 1px solid var(--line); padding-top: 2.2rem; font-size: clamp(1.65rem, 3vw, 2.5rem); line-height: 1.1; }
+    h3 { margin-top: 2.5rem; color: var(--violet); font-size: 1.35rem; }
+    h1, h2, h3 { scroll-margin-top: 1.5rem; text-wrap: balance; }
+    p, li { max-width: 76ch; }
+    strong { color: var(--ink); }
+    a { color: var(--cyan); }
+    code { border-radius: .22rem; background: var(--code); padding: .1rem .34rem; color: var(--ink); }
+    pre { overflow-x: auto; border: 1px solid var(--line); border-left: .3rem solid var(--amber); background: var(--code); padding: 1rem; }
+    pre code { padding: 0; }
+    blockquote { margin: 1.5rem 0; border-left: .3rem solid var(--amber); background: var(--code); padding: .8rem 1rem; }
+    table { display: block; width: 100%; overflow-x: auto; border-collapse: collapse; }
+    th, td { border: 1px solid var(--line); padding: .7rem .8rem; text-align: left; vertical-align: top; }
+    th { background: var(--ink); color: white; font-size: .78rem; letter-spacing: .06em; text-transform: uppercase; }
+    tbody tr:nth-child(even) { background: var(--code); }
+    hr { margin: 3rem 0; border: 0; border-top: 1px solid var(--line); }
+    @media (max-width: 920px) {
+      #TOC { position: static; width: auto; max-height: 22rem; border: 0; border-bottom: 1px solid var(--line); columns: 2; }
+      #TOC::before { column-span: all; }
+      .source-banner, body > section.level1 { width: min(calc(100% - 1.2rem), 930px); margin-left: auto; margin-right: auto; }
+      .source-banner { margin-top: .6rem; }
+      body > section.level1 { padding: 1.2rem; }
+    }
+    @media (max-width: 560px) { #TOC { columns: 1; } }
+  </style>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const links = [...document.querySelectorAll("#TOC a")];
+      const headings = links
+        .map((link) => document.querySelector(link.getAttribute("href")))
+        .filter(Boolean);
+      const observer = new IntersectionObserver((entries) => {
+        const visible = entries.filter((entry) => entry.isIntersecting).at(-1);
+        if (!visible) return;
+        for (const link of links) {
+          link.classList.toggle("is-active", link.hash === `#${visible.target.id}`);
+        }
+      }, { rootMargin: "-12% 0px -76% 0px", threshold: 0 });
+      headings.forEach((heading) => observer.observe(heading));
+    });
+  </script>
+</head>
+<body>
+<div class="source-banner">
+  Fonte oficial: docs/superpowers/specs/2026-08-05-navegacao-experimentos-fisica-3-design.md<br>
+  Visualização gerada em 05/08/2026 · Markdown permanece como fonte de verdade.
+</div>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a
+href="#navegação-por-capítulos-e-experimentos-de-física-iii--design"
+id="toc-navegação-por-capítulos-e-experimentos-de-física-iii--design">Navegação
+por capítulos e experimentos de Física III — Design</a>
+<ul>
+<li><a href="#objetivo" id="toc-objetivo">Objetivo</a></li>
+<li><a href="#decisões-de-organização"
+id="toc-decisões-de-organização">Decisões de organização</a></li>
+<li><a href="#navegação-dos-exercícios"
+id="toc-navegação-dos-exercícios">Navegação dos exercícios</a></li>
+<li><a href="#navegação-das-áreas"
+id="toc-navegação-das-áreas">Navegação das áreas</a></li>
+<li><a href="#estrutura-comum-dos-experimentos"
+id="toc-estrutura-comum-dos-experimentos">Estrutura comum dos
+experimentos</a>
+<ul>
+<li><a href="#1-montagem" id="toc-1-montagem">1. Montagem</a></li>
+<li><a href="#2-fundamentos" id="toc-2-fundamentos">2.
+Fundamentos</a></li>
+<li><a href="#3-dados-e-análise" id="toc-3-dados-e-análise">3. Dados e
+análise</a></li>
+<li><a href="#4-relatório" id="toc-4-relatório">4. Relatório</a></li>
+</ul></li>
+<li><a href="#conteúdo-dos-quatro-roteiros"
+id="toc-conteúdo-dos-quatro-roteiros">Conteúdo dos quatro roteiros</a>
+<ul>
+<li><a
+href="#experimento-1--campo-magnético-gerado-por-corrente-elétrica"
+id="toc-experimento-1--campo-magnético-gerado-por-corrente-elétrica">Experimento
+1 — Campo magnético gerado por corrente elétrica</a></li>
+<li><a href="#experimento-2--campo-magnético-de-um-solenoide"
+id="toc-experimento-2--campo-magnético-de-um-solenoide">Experimento 2 —
+Campo magnético de um solenoide</a></li>
+<li><a href="#experimento-3--força-magnética-e-motor-elementar"
+id="toc-experimento-3--força-magnética-e-motor-elementar">Experimento 3
+— Força magnética e motor elementar</a></li>
+<li><a href="#experimento-4--corrente-induzida-por-variação-de-fluxo"
+id="toc-experimento-4--corrente-induzida-por-variação-de-fluxo">Experimento
+4 — Corrente induzida por variação de fluxo</a></li>
+</ul></li>
+<li><a href="#imagens-e-direitos" id="toc-imagens-e-direitos">Imagens e
+direitos</a></li>
+<li><a href="#segurança" id="toc-segurança">Segurança</a></li>
+<li><a href="#paralelização-e-propriedade-de-arquivos"
+id="toc-paralelização-e-propriedade-de-arquivos">Paralelização e
+propriedade de arquivos</a></li>
+<li><a href="#testes-e-critérios-de-aceite"
+id="toc-testes-e-critérios-de-aceite">Testes e critérios de
+aceite</a></li>
+<li><a href="#fora-de-escopo-nesta-entrega"
+id="toc-fora-de-escopo-nesta-entrega">Fora de escopo nesta
+entrega</a></li>
+</ul></li>
+</ul>
+</nav>
+<section
+id="navegação-por-capítulos-e-experimentos-de-física-iii--design"
+class="level1">
+<h1>Navegação por capítulos e experimentos de Física III — Design</h1>
+<p><strong>Data:</strong> 05/08/2026<br />
+<strong>Projeto:</strong> Eletromagnetismo-aulas<br />
+<strong>Fonte técnica principal:</strong> AZEHEB, <em>Manual de
+Instruções e Guia de Experimentos — Conjunto de Eletromagnetismo
+(Basic)</em>, revisão 12, 20/11/2020.</p>
+<section id="objetivo" class="level2">
+<h2>Objetivo</h2>
+<p>Transformar o catálogo atual em um acervo didático escalável,
+organizado por áreas e capítulos, e publicar quatro roteiros de
+laboratório de Física III baseados no equipamento recém-recebido pelo
+IFSP. Os roteiros devem conservar a montagem real do manual, mas elevar
+o tratamento conceitual e matemático ao nível de estudantes de
+Engenharia e Física.</p>
+</section>
+<section id="decisões-de-organização" class="level2">
+<h2>Decisões de organização</h2>
+<p>O site terá quatro destinos permanentes na navegação principal:</p>
+<ol type="1">
+<li><strong>Início:</strong> visão geral e busca em todo o acervo;</li>
+<li><strong>Exercícios:</strong> escolha da referência e do
+capítulo;</li>
+<li><strong>Experimentos:</strong> roteiros de laboratório e
+relatórios;</li>
+<li><strong>Simulações:</strong> atividades interativas.</li>
+</ol>
+<p>A separação não dependerá somente de filtros. Cada área terá uma URL
+própria e compartilhável:</p>
+<pre class="text"><code>site/
+├── index.html
+├── exercicios/
+│   ├── index.html
+│   ├── capitulo-21/index.html
+│   └── halliday-21-*/index.html
+├── experimentos/
+│   ├── index.html
+│   ├── 01-campo-corrente/index.html
+│   ├── 02-campo-solenoide/index.html
+│   ├── 03-forca-magnetica-motor/index.html
+│   └── 04-inducao-eletromagnetica/index.html
+└── simuladores/
+    ├── index.html
+    └── cargas-e-vetores/index.html</code></pre>
+<p>O arquivo de catálogo continuará sendo a fonte única de metadados.
+Cada item receberá uma área (<code>exercicios</code>,
+<code>experimentos</code> ou <code>simulacoes</code>); exercícios
+receberão também referência, capítulo e número. Isso permitirá
+acrescentar capítulos sem alterar o componente de navegação.</p>
+</section>
+<section id="navegação-dos-exercícios" class="level2">
+<h2>Navegação dos exercícios</h2>
+<p>A página <code>exercicios/index.html</code> mostrará os capítulos
+disponíveis. Inicialmente haverá um cartão para <strong>Halliday —
+Capítulo 21</strong>, com quantidade de exercícios e os temas
+abordados.</p>
+<p>A página <code>exercicios/capitulo-21/index.html</code> reunirá os
+exercícios 13, 18, 34 e 42. Cada página individual ganhará uma faixa
+gerada pelos metadados do catálogo:</p>
+<pre class="text"><code>Capítulo 21  [13] [18] [34] [42]
+← exercício anterior                  próximo exercício →</code></pre>
+<p>A faixa indicará o exercício atual, funcionará por teclado e manterá
+um link para a visão completa do capítulo. Assim, um novo exercício do
+capítulo passará a aparecer automaticamente após ser registrado.</p>
+</section>
+<section id="navegação-das-áreas" class="level2">
+<h2>Navegação das áreas</h2>
+<p>Um componente único montará a navegação principal em todas as
+páginas. Cada página informará apenas o caminho relativo até a raiz e a
+área ativa. A marca visual permanecerá a de um caderno de laboratório:
+papel quadriculado, linhas técnicas, códigos de experimento e cores já
+usadas para vetores.</p>
+<p>A mudança visual será evolutiva, não uma reformulação. A assinatura
+nova será um <strong>seletor de bancada</strong>: três grandes placas
+rotuladas Exercícios, Experimentos e Simulações, com contagem de
+materiais. A hierarquia visual representará a organização real, sem
+ornamentos que não tenham função.</p>
+</section>
+<section id="estrutura-comum-dos-experimentos" class="level2">
+<h2>Estrutura comum dos experimentos</h2>
+<p>Cada experimento será uma página independente com quatro abas:</p>
+<section id="1-montagem" class="level3">
+<h3>1. Montagem</h3>
+<ul>
+<li>objetivos de aprendizagem;</li>
+<li>material do kit realmente utilizado;</li>
+<li>alerta de segurança sobre aquecimento e ciclos de energização;</li>
+<li>fotografia extraída do manual;</li>
+<li>sequência operacional reescrita para a turma;</li>
+<li>previsões que o grupo deve registrar antes de ligar a fonte.</li>
+</ul>
+</section>
+<section id="2-fundamentos" class="level3">
+<h3>2. Fundamentos</h3>
+<ul>
+<li>modelo físico e hipóteses;</li>
+<li>desenvolvimento matemático passo a passo;</li>
+<li>conexão entre o modelo ideal e a montagem real;</li>
+<li>análise dimensional;</li>
+<li>limites de validade e fontes de desvio.</li>
+</ul>
+</section>
+<section id="3-dados-e-análise" class="level3">
+<h3>3. Dados e análise</h3>
+<ul>
+<li>tabelas em branco adequadas à grandeza observada;</li>
+<li>definição de variáveis e unidades;</li>
+<li>gráficos ou comparações exigidos;</li>
+<li>propagação de incertezas quando houver dados quantitativos;</li>
+<li>roteiro para confronto entre previsão e observação.</li>
+</ul>
+</section>
+<section id="4-relatório" class="level3">
+<h3>4. Relatório</h3>
+<ul>
+<li>estrutura mínima da entrega;</li>
+<li>perguntas conceituais e quantitativas;</li>
+<li>equações que devem ser demonstradas;</li>
+<li>itens de discussão crítica;</li>
+<li>checklist de evidências: fotografia, tabela, gráfico, cálculo e
+conclusão.</li>
+</ul>
+<p>As páginas serão imprimíveis. No celular, tabelas e fórmulas terão
+rolagem local, sem produzir overflow na página.</p>
+</section>
+</section>
+<section id="conteúdo-dos-quatro-roteiros" class="level2">
+<h2>Conteúdo dos quatro roteiros</h2>
+<section
+id="experimento-1--campo-magnético-gerado-por-corrente-elétrica"
+class="level3">
+<h3>Experimento 1 — Campo magnético gerado por corrente elétrica</h3>
+<p><strong>Base do manual:</strong> páginas PDF 4 a 6 (manual do
+professor) e 18 a 20 (manual do aluno).</p>
+<p>O roteiro manterá a bússola acima e abaixo do condutor e a inversão
+da corrente. O aprofundamento incluirá:</p>
+<ul>
+<li>lei de Biot-Savart;</li>
+<li>dedução por simetria e lei de Ampère:
+<code>B(r) = μ₀I/(2πr)</code>;</li>
+<li>correção explícita da afirmação do manual de que o campo variaria
+com <code>1/r²</code>;</li>
+<li>superposição com a componente horizontal do campo terrestre;</li>
+<li>relação de deflexão <code>tan φ = B_fio/B_T</code>;</li>
+<li>extensão quantitativa opcional com amperímetro e régua.</li>
+</ul>
+</section>
+<section id="experimento-2--campo-magnético-de-um-solenoide"
+class="level3">
+<h3>Experimento 2 — Campo magnético de um solenoide</h3>
+<p><strong>Base do manual:</strong> páginas PDF 7 a 9 e 21 a 23.</p>
+<p>O roteiro manterá limalha de ferro, bússola e identificação dos
+polos. O aprofundamento incluirá:</p>
+<ul>
+<li>dedução do solenoide ideal <code>B = μ₀nI</code>;</li>
+<li>campo sobre o eixo de um solenoide finito;</li>
+<li>fator geométrico e efeitos de borda;</li>
+<li>interpretação das linhas de campo sem tratá-las como trajetórias
+materiais;</li>
+<li>comparação entre interior, extremidades e exterior;</li>
+<li>proposta opcional de mapeamento quantitativo com sensor Hall.</li>
+</ul>
+</section>
+<section id="experimento-3--força-magnética-e-motor-elementar"
+class="level3">
+<h3>Experimento 3 — Força magnética e motor elementar</h3>
+<p><strong>Base do manual:</strong> páginas PDF 10 a 14 e 24 a 27. As
+duas partes permanecerão na mesma página.</p>
+<p>O aprofundamento incluirá:</p>
+<ul>
+<li>força de Lorentz e passagem para <code>dF = I dℓ × B</code>;</li>
+<li>resultado <code>F = BIL sin θ</code> para trecho retilíneo;</li>
+<li>análise de sinais ao inverter corrente e campo;</li>
+<li>momento de dipolo <code>μ = NIA</code>;</li>
+<li>torque <code>τ = μ × B</code> e energia <code>U = -μ·B</code>;</li>
+<li>equação dinâmica simplificada do rotor;</li>
+<li>papel da comutação na manutenção do torque.</li>
+</ul>
+</section>
+<section id="experimento-4--corrente-induzida-por-variação-de-fluxo"
+class="level3">
+<h3>Experimento 4 — Corrente induzida por variação de fluxo</h3>
+<p><strong>Base do manual:</strong> páginas PDF 15 a 16 e 28 a 29.</p>
+<p>O roteiro manterá o galvanômetro e os movimentos de aproximação,
+repouso e afastamento do ímã. O aprofundamento incluirá:</p>
+<ul>
+<li>fluxo <code>Φ_B = ∫ B·dA</code>;</li>
+<li>lei de Faraday-Lenz <code>ε = -N dΦ_B/dt</code>;</li>
+<li>ímã em movimento: <code>ε = -Nv dΦ_B/dz</code>;</li>
+<li>relação entre rapidez e pico de deflexão;</li>
+<li>inversão de polo e de movimento;</li>
+<li>modelo de circuito <code>L di/dt + Ri = ε(t)</code>;</li>
+<li>distinção entre fluxo magnético e campo magnético.</li>
+</ul>
+</section>
+</section>
+<section id="imagens-e-direitos" class="level2">
+<h2>Imagens e direitos</h2>
+<p>O próprio manual declara permitida a reprodução para instituições de
+ensino e uso em laboratório, sem venda. Serão extraídas apenas as
+figuras de montagem necessárias, sem publicar o PDF completo. Cada
+figura terá:</p>
+<ul>
+<li>texto alternativo próprio;</li>
+<li>legenda explicando o que observar;</li>
+<li>crédito “Fonte: manual AZEHEB, revisão 12 (2020), uso
+educacional”;</li>
+<li>nome de arquivo associado ao experimento e à ação mostrada.</li>
+</ul>
+<p>As imagens escolhidas são:</p>
+<ul>
+<li>experimento 1: placa com condutor e bússola;</li>
+<li>experimento 2: placa com solenoides, padrão de limalha e montagem
+completa;</li>
+<li>experimento 3: balanço magnético e rotor do motor elementar;</li>
+<li>experimento 4: montagem geral, aproximação e afastamento do
+ímã.</li>
+</ul>
+</section>
+<section id="segurança" class="level2">
+<h2>Segurança</h2>
+<p>Todos os roteiros repetirão os limites operacionais relevantes do
+fabricante:</p>
+<ul>
+<li>iniciar com chave desligada e controle no mínimo;</li>
+<li>aumentar a alimentação gradualmente;</li>
+<li>limitar a energização contínua a 5–10 s;</li>
+<li>intercalar 5–10 s de resfriamento;</li>
+<li>trabalhar preferencialmente até metade do curso do controle;</li>
+<li>manusear a placa pelas bordas;</li>
+<li>afastar limalha de ferro de conexões e limpar a bancada após o
+uso.</li>
+</ul>
+<p>Os roteiros não pressuporão tensão de rede exposta; a alimentação
+será a fonte de 6 VCC fornecida com o conjunto.</p>
+</section>
+<section id="paralelização-e-propriedade-de-arquivos" class="level2">
+<h2>Paralelização e propriedade de arquivos</h2>
+<p>Depois da infraestrutura comum estar pronta, quatro subagentes
+trabalharão em paralelo. Cada um será proprietário de uma única pasta de
+experimento e não editará catálogo, CSS compartilhado, componentes ou
+páginas dos colegas.</p>
+<table>
+<thead>
+<tr>
+<th>Agente</th>
+<th>Pasta exclusiva</th>
+<th>Responsabilidade</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><code>site/experimentos/01-campo-corrente/</code></td>
+<td>Oersted, Biot-Savart e Ampère</td>
+</tr>
+<tr>
+<td>2</td>
+<td><code>site/experimentos/02-campo-solenoide/</code></td>
+<td>solenoide ideal e finito</td>
+</tr>
+<tr>
+<td>3</td>
+<td><code>site/experimentos/03-forca-magnetica-motor/</code></td>
+<td>força, torque e motor</td>
+</tr>
+<tr>
+<td>4</td>
+<td><code>site/experimentos/04-inducao-eletromagnetica/</code></td>
+<td>Faraday-Lenz e circuito induzido</td>
+</tr>
+</tbody>
+</table>
+<p>Cada agente criará <code>index.html</code> e
+<code>relatorio.md</code>, usará somente as imagens já preparadas pelo
+agente principal e devolverá um resumo das derivações e das decisões
+experimentais.</p>
+</section>
+<section id="testes-e-critérios-de-aceite" class="level2">
+<h2>Testes e critérios de aceite</h2>
+<ul>
+<li>catálogo com nove materiais: uma simulação, quatro exercícios e
+quatro experimentos;</li>
+<li>filtros das três áreas funcionando com e sem acentos;</li>
+<li>página de Exercícios mostra Capítulo 21 e quatro exercícios;</li>
+<li>todas as páginas de exercício apresentam a navegação do
+capítulo;</li>
+<li>cada experimento possui quatro abas, ao menos uma imagem creditada,
+aviso de segurança, desenvolvimento matemático, tabela de dados e
+roteiro de relatório;</li>
+<li>nenhuma página contém U+20D7, links quebrados ou overflow horizontal
+global;</li>
+<li>navegação por teclado, títulos e descrições alternativas
+presentes;</li>
+<li>testes Node e testes Python/py5 existentes permanecem verdes;</li>
+<li>validação em navegador real no desktop e em largura de 390 px;</li>
+<li>GitHub Pages publica o mesmo SHA validado localmente e todas as
+novas rotas respondem HTTP 200.</li>
+</ul>
+</section>
+<section id="fora-de-escopo-nesta-entrega" class="level2">
+<h2>Fora de escopo nesta entrega</h2>
+<ul>
+<li>transformar os roteiros em simulações numéricas novas;</li>
+<li>gerar PDFs finais dos relatórios;</li>
+<li>inventariar componentes que não aparecem no manual ou no conjunto
+entregue;</li>
+<li>substituir medições reais por valores simulados;</li>
+<li>reproduzir integralmente o manual da AZEHEB.</li>
+</ul>
+</section>
+</section>
+</body>
+</html>
