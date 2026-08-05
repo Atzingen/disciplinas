@@ -50,14 +50,15 @@
           </div>
           <div class="problem-copy">
             <p>
-              A partícula 1, de carga <strong>+1,0 µC</strong>, e a partícula 2,
-              de carga <strong>−3,0 µC</strong>, são mantidas a uma distância
-              <strong>L = 10,0 cm</strong> uma da outra, sobre o eixo x.
+              A partícula 1, de carga \(q_1=+1,0\,\mathrm{\mu C}\), e a
+              partícula 2, de carga \(q_2=-3,0\,\mathrm{\mu C}\), são mantidas
+              a uma distância \(L=10,0\,\mathrm{cm}\) uma da outra, sobre o
+              eixo \(x\).
             </p>
             <p>
               Determine <strong>(a)</strong> a coordenada x e
               <strong>(b)</strong> a coordenada y de uma partícula 3, de carga
-              não nula e valor desconhecido q₃, para que a força total exercida
+              não nula e valor desconhecido \(q_3\), para que a força total exercida
               sobre ela pelas partículas 1 e 2 seja nula.
             </p>
           </div>
@@ -86,7 +87,7 @@
 
           <div class="answer-strip">
             <span>Resposta</span>
-            <strong>(x, y) = (−13,66 cm; 0)</strong>
+            <strong>\((x,y)=(-13,66\,\mathrm{cm},0)\)</strong>
           </div>
         </article>
       </section>
@@ -106,21 +107,21 @@
             <span class="solution-step">01</span>
             <h3>Condição para a força total ser nula</h3>
             <p>A força sobre a partícula 3 pode ser escrita pelo campo produzido pelas partículas 1 e 2:</p>
-            <div class="math-block">
-              <span class="vector-symbol" role="img" aria-label="vetor F">F</span>₃,total =
-              q₃(<span class="vector-symbol" role="img" aria-label="vetor E">E</span>₁ +
-              <span class="vector-symbol" role="img" aria-label="vetor E">E</span>₂).
+            <div class="math-block math-display">
+              \[
+              \vec{F}_{3,\mathrm{total}}
+              =q_3\left(\vec{E}_1+\vec{E}_2\right).
+              \]
             </div>
             <p>
-              Como q₃ ≠ 0, a condição
-              <span class="vector-symbol" role="img" aria-label="vetor F">F</span>₃,total =
-              <span class="vector-symbol" role="img" aria-label="vetor nulo">0</span>
+              Como \(q_3\neq 0\), a condição
+              \(\vec{F}_{3,\mathrm{total}}=\vec{0}\)
               equivale a:
             </p>
-            <div class="math-block math-block--result">
-              <span class="vector-symbol" role="img" aria-label="vetor E">E</span>₁ +
-              <span class="vector-symbol" role="img" aria-label="vetor E">E</span>₂ =
-              <span class="vector-symbol" role="img" aria-label="vetor nulo">0</span>.
+            <div class="math-block math-block--result math-display">
+              \[
+              \vec{E}_1+\vec{E}_2=\vec{0}.
+              \]
             </div>
             <p>Portanto, os campos precisam ter a mesma intensidade e sentidos opostos. O valor e o sinal de q₃ não alteram a posição de equilíbrio.</p>
           </section>
@@ -128,25 +129,37 @@
           <section>
             <span class="solution-step">02 · pergunta B</span>
             <h3>Determinação da coordenada y</h3>
-            <p>Em um ponto genérico P = (x, y), os vetores que partem das cargas fixas são:</p>
-            <div class="math-block">
-              <span class="vector-symbol" role="img" aria-label="vetor r">r</span>₁ = (x, y)
-              &nbsp;&nbsp; e &nbsp;&nbsp;
-              <span class="vector-symbol" role="img" aria-label="vetor r">r</span>₂ = (x − L, y).
+            <p>Em um ponto genérico \(P=(x,y)\), os vetores que partem das cargas fixas são:</p>
+            <div class="math-block math-display">
+              \[
+              \begin{aligned}
+              \vec{r}_1&=(x,y),&
+              \vec{r}_2&=(x-L,y).
+              \end{aligned}
+              \]
             </div>
             <p>
               Dois campos só podem se cancelar se estiverem na mesma reta. Logo,
-              <span class="vector-symbol" role="img" aria-label="vetor r">r</span>₁ e
-              <span class="vector-symbol" role="img" aria-label="vetor r">r</span>₂
+              \(\vec{r}_1\) e \(\vec{r}_2\)
               devem ser paralelos, e o determinante precisa ser zero:
             </p>
-            <div class="math-block">
-              det(<span class="vector-symbol" role="img" aria-label="vetor r">r</span>₁,
-              <span class="vector-symbol" role="img" aria-label="vetor r">r</span>₂)
-              = xy − y(x − L) = Ly = 0.
+            <div class="math-block math-display">
+              \[
+              \begin{aligned}
+              \det\!\left(\vec{r}_1,\vec{r}_2\right)
+              &=xy-y(x-L)\\
+              &=Ly=0.
+              \end{aligned}
+              \]
             </div>
-            <p>Como L ≠ 0:</p>
-            <div class="math-block math-block--result">y = 0.</div>
+            <p>Como \(L\neq 0\), resta apenas:</p>
+            <div class="math-block math-block--result math-display">
+              \[
+              \begin{aligned}
+              y&=0.
+              \end{aligned}
+              \]
+            </div>
           </section>
 
           <section>
@@ -156,9 +169,7 @@
               <article>
                 <strong>0 &lt; x &lt; L</strong>
                 <p>
-                  Entre as cargas,
-                  <span class="vector-symbol" role="img" aria-label="vetor E">E</span>₁ e
-                  <span class="vector-symbol" role="img" aria-label="vetor E">E</span>₂
+                  Entre as cargas, \(\vec{E}_1\) e \(\vec{E}_2\)
                   apontam para a direita. Somam-se; não se anulam.
                 </p>
               </article>
@@ -166,8 +177,8 @@
                 <strong>x &gt; L</strong>
                 <p>
                   Os sentidos são opostos, mas q₂ tem maior módulo e está mais próxima.
-                  Assim, |<span class="vector-symbol" role="img" aria-label="vetor E">E</span>₂|
-                  &gt; |<span class="vector-symbol" role="img" aria-label="vetor E">E</span>₁|.
+                  Assim, \(\lvert\vec{E}_2\rvert
+                  &gt;\lvert\vec{E}_1\rvert\).
                 </p>
               </article>
               <article class="region-grid__answer">
@@ -180,47 +191,76 @@
           <section>
             <span class="solution-step">04 · pergunta A</span>
             <h3>Determinação da coordenada x</h3>
-            <p>Defina d = −x &gt; 0 como a distância de q₃ até q₁. Então:</p>
-            <div class="math-block">r₁ = d &nbsp;&nbsp; e &nbsp;&nbsp; r₂ = L + d.</div>
-            <p>Pela lei de Coulomb, E = k|q|/r². Igualando os módulos:</p>
-            <div class="math-block">
-              k|q₁|/d² = k|q₂|/(L + d)²
-              <br>
-              1/d² = 3/(L + d)².
+            <p>Defina \(d=-x&gt;0\) como a distância de \(q_3\) até \(q_1\). Então:</p>
+            <div class="math-block math-display">
+              \[
+              \begin{aligned}
+              r_1&=d,&r_2&=L+d.
+              \end{aligned}
+              \]
+            </div>
+            <p>
+              Pela lei de Coulomb,
+              \(E=k\frac{\lvert q\rvert}{r^2}\). Igualando os módulos e cancelando o
+              fator comum \(k\):
+            </p>
+            <div class="math-block math-display">
+              \[
+              \begin{aligned}
+              \frac{k\lvert q_1\rvert}{d^2}
+              &=\frac{k\lvert q_2\rvert}{(L+d)^2},\\
+              \frac{1}{d^2}
+              &=\frac{3}{(L+d)^2}.
+              \end{aligned}
+              \]
             </div>
             <p>As distâncias são positivas, então podemos extrair a raiz:</p>
-            <div class="math-block">
-              (L + d)/d = √3
-              <br>
-              L = (√3 − 1)d
-              <br>
-              d = L/(√3 − 1) = L(√3 + 1)/2.
+            <div class="math-block math-display">
+              \[
+              \begin{aligned}
+              \frac{L+d}{d}&=\sqrt{3},\\
+              L&=(\sqrt{3}-1)d,\\
+              d&=\frac{L}{\sqrt{3}-1}
+              =\frac{L(\sqrt{3}+1)}{2}.
+              \end{aligned}
+              \]
             </div>
-            <p>Com L = 10,0 cm:</p>
-            <div class="math-block math-block--result">
-              d ≈ 13,66 cm
-              <br>
-              x = −d ≈ −13,66 cm.
+            <p>Com \(L=10,0\,\mathrm{cm}\):</p>
+            <div class="math-block math-block--result math-display">
+              \[
+              \begin{aligned}
+              d&\approx13,66\,\mathrm{cm},\\
+              x&=-d\approx-13,66\,\mathrm{cm}.
+              \end{aligned}
+              \]
             </div>
           </section>
 
           <section>
             <span class="solution-step">05</span>
             <h3>Verificação do resultado</h3>
-            <p>No ponto encontrado, r₁ = d e r₂ = L + d = √3d. A razão dos módulos é:</p>
-            <div class="math-block">
-              E₂/E₁ = (|q₂|/|q₁|)(r₁²/r₂²)
-              <br>
-              = 3d²/(√3d)² = 3d²/(3d²) = 1.
+            <p>
+              No ponto encontrado, \(r_1=d\) e
+              \(r_2=L+d=\sqrt{3}\,d\). A razão dos módulos é:
+            </p>
+            <div class="math-block math-display">
+              \[
+              \begin{aligned}
+              \frac{E_2}{E_1}
+              &=\frac{\lvert q_2\rvert}{\lvert q_1\rvert}
+                \frac{r_1^2}{r_2^2}\\
+              &=3\frac{d^2}{(\sqrt{3}\,d)^2}
+              =\frac{3d^2}{3d^2}=1.
+              \end{aligned}
+              \]
             </div>
             <p>Os campos têm o mesmo módulo e sentidos opostos:</p>
-            <div class="math-block math-block--result">
-              <span class="vector-symbol" role="img" aria-label="vetor E">E</span>₁ +
-              <span class="vector-symbol" role="img" aria-label="vetor E">E</span>₂ =
-              <span class="vector-symbol" role="img" aria-label="vetor nulo">0</span>
-              &nbsp; ⇒ &nbsp;
-              <span class="vector-symbol" role="img" aria-label="vetor F">F</span>₃,total =
-              <span class="vector-symbol" role="img" aria-label="vetor nulo">0</span>.
+            <div class="math-block math-block--result math-display">
+              \[
+              \vec{E}_1+\vec{E}_2=\vec{0}
+              \quad\Longrightarrow\quad
+              \vec{F}_{3,\mathrm{total}}=\vec{0}.
+              \]
             </div>
           </section>
 

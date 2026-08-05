@@ -56,16 +56,17 @@
             </p>
             <p>
               Na primeira disposição, a força total sobre A vale
-              <strong>2,014 × 10<sup>−23</sup> N</strong> no sentido negativo de x.
+              \(2,014\times10^{-23}\,\mathrm{N}\) no sentido negativo de \(x\).
               Depois, B é levada para o outro lado de A, mantendo a mesma
               distância, e a força total passa a
-              <strong>2,877 × 10<sup>−24</sup> N</strong>, ainda no sentido
-              negativo de x. Determine <strong>q<sub>C</sub>/q<sub>B</sub></strong>.
+              \(2,877\times10^{-24}\,\mathrm{N}\), ainda no sentido
+              negativo de \(x\). Determine
+              \(\displaystyle \frac{q_C}{q_B}\).
             </p>
           </div>
           <div class="answer-strip">
             <span>Resposta</span>
-            <strong>q<sub>C</sub>/q<sub>B</sub> ≈ 1,33</strong>
+            <strong>\(\displaystyle \frac{q_C}{q_B}\approx 1,33\)</strong>
           </div>
         </article>
       </section>
@@ -86,8 +87,9 @@
             <h3>Identifique a direção de cada força</h3>
             <p>
               Todas as cargas são positivas, portanto a interação é repulsiva.
-              Chame de F<sub>B</sub> e F<sub>C</sub> os módulos das forças que B e
-              C exercem sobre A.
+              Chame de \(F_B=\lVert\vec{F}_{B\to A}\rVert\) e
+              \(F_C=\lVert\vec{F}_{C\to A}\rVert\) os módulos das forças que B
+              e C exercem sobre A.
             </p>
             <div class="derivation-grid">
               <article>
@@ -105,12 +107,13 @@
             <span class="solution-step">02</span>
             <h3>Traduza as medições em duas equações</h3>
             <p>Use apenas os módulos positivos das resultantes informadas:</p>
-            <div class="math-block">
-              F<sub>B</sub> + F<sub>C</sub> = S
-              = 2,014 × 10<sup>−23</sup> N
-              <br>
-              F<sub>C</sub> − F<sub>B</sub> = D
-              = 2,877 × 10<sup>−24</sup> N.
+            <div class="math-block math-display">
+              \[
+              \begin{aligned}
+              F_B+F_C&=S=2,014\times10^{-23}\,\mathrm{N},\\
+              F_C-F_B&=D=2,877\times10^{-24}\,\mathrm{N}.
+              \end{aligned}
+              \]
             </div>
             <p>
               Na segunda linha, F<sub>C</sub> aparece primeiro porque a
@@ -123,14 +126,17 @@
             <span class="solution-step">03</span>
             <h3>Isole cada módulo</h3>
             <p>Somando e subtraindo as equações:</p>
-            <div class="math-block">
-              2F<sub>C</sub> = S + D
-              &nbsp; ⇒ &nbsp;
-              F<sub>C</sub> = (S + D)/2 = 1,15085 × 10<sup>−23</sup> N
-              <br>
-              2F<sub>B</sub> = S − D
-              &nbsp; ⇒ &nbsp;
-              F<sub>B</sub> = (S − D)/2 = 8,6315 × 10<sup>−24</sup> N.
+            <div class="math-block math-display">
+              \[
+              \begin{aligned}
+              2F_C&=S+D,
+              &F_C&=\frac{S+D}{2}
+              =1,15085\times10^{-23}\,\mathrm{N},\\
+              2F_B&=S-D,
+              &F_B&=\frac{S-D}{2}
+              =8,6315\times10^{-24}\,\mathrm{N}.
+              \end{aligned}
+              \]
             </div>
           </section>
 
@@ -140,33 +146,48 @@
             <p>
               Pela lei de Coulomb, para a força que uma carga i exerce sobre A:
             </p>
-            <div class="math-block">
-              F<sub>i</sub> = k|q<sub>A</sub>q<sub>i</sub>|/r<sub>i</sub><sup>2</sup>.
+            <div class="math-block math-display">
+              \[
+              \begin{aligned}
+              \vec{F}_{i\to A}
+              &=k\frac{q_iq_A}{r_i^2}\,\hat{\vec{r}}_{i\to A},\\
+              F_i
+              &=k\frac{\lvert q_Aq_i\rvert}{r_i^2}.
+              \end{aligned}
+              \]
             </div>
             <p>
-              Como r<sub>B</sub> ≈ r<sub>C</sub>, os fatores k,
-              |q<sub>A</sub>| e r<sup>2</sup> são comuns e se cancelam na razão:
+              Como \(r_B\approx r_C\), os fatores \(k\),
+              \(\lvert q_A\rvert\) e \(r^2\) são comuns e se cancelam na razão:
             </p>
-            <div class="math-block math-block--result">
-              q<sub>C</sub>/q<sub>B</sub>
-              = F<sub>C</sub>/F<sub>B</sub>
-              = (S + D)/(S − D)
-              = 1,3333… ≈ 1,33.
+            <div class="math-block math-block--result math-display">
+              \[
+              \begin{aligned}
+              \frac{q_C}{q_B}
+              &=\frac{F_C}{F_B}\\
+              &=\frac{S+D}{S-D}\\
+              &=1,3333\ldots\approx1,33.
+              \end{aligned}
+              \]
             </div>
           </section>
 
           <section>
             <span class="solution-step">05 · verificação</span>
             <h3>A diferença precisa reproduzir a segunda medida</h3>
-            <div class="math-block">
-              F<sub>C</sub> − F<sub>B</sub>
-              = 1,15085 × 10<sup>−23</sup>
-              − 8,6315 × 10<sup>−24</sup>
-              = 2,877 × 10<sup>−24</sup> N.
+            <div class="math-block math-display">
+              \[
+              \begin{aligned}
+              F_C-F_B
+              &=1,15085\times10^{-23}
+              -8,6315\times10^{-24}\\
+              &=2,877\times10^{-24}\,\mathrm{N}.
+              \end{aligned}
+              \]
             </div>
             <div class="result-callout">
               <span>Conclusão</span>
-              <strong>q<sub>C</sub> é aproximadamente 4/3 de q<sub>B</sub>.</strong>
+              <strong>\(q_C\) é aproximadamente \(\frac{4}{3}\) de \(q_B\).</strong>
             </div>
           </section>
         </article>

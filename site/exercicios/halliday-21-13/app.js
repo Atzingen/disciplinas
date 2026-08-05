@@ -1,4 +1,5 @@
 import { setupTabs } from "../../componentes/abas.js";
+import "../../componentes/matematica.js";
 import { mountChargeSimulator } from "../../componentes/simulador-cargas.js";
 import { HALLIDAY_PRESET } from "./preset.js";
 
