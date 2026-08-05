@@ -1304,6 +1304,15 @@
   .result-callout {
     grid-template-columns: 1fr;
   }
+
+  .static-diagram-shell {
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+  }
+
+  .teaching-diagram {
+    min-width: 720px;
+  }
 }
 
 @media (max-width: 480px) {
