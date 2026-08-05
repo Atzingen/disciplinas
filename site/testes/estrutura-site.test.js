@@ -54,3 +54,19 @@ test("índices de experimentos e simulações limitam seus catálogos", async ()
   assert.match(experiments, /pathPrefix:\s*"\.\.\/"/);
   assert.match(simulations, /pathPrefix:\s*"\.\.\/"/);
 });
+
+test("cada exercício expõe navegação global e sequência do capítulo", async () => {
+  for (const number of [13, 18, 34, 42]) {
+    const html = await readSitePage(`exercicios/halliday-21-${number}/index.html`);
+    assert.match(html, /data-active-section="exercicios"/);
+    assert.match(html, new RegExp(`data-current-id="halliday-21-${number}"`));
+    assert.match(html, /data-chapter-url="\.\.\/capitulo-21\/"/);
+    assert.match(html, /navegacao-exercicios\.js/);
+  }
+});
+
+test("simulador individual mantém acesso às quatro áreas", async () => {
+  const html = await readSitePage("simuladores/cargas-e-vetores/index.html");
+  assert.match(html, /data-active-section="simulacoes"/);
+  assert.match(html, /navegacao-principal\.js/);
+});
