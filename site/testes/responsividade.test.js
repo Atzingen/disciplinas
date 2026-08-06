@@ -21,3 +21,20 @@ test("títulos longos dos experimentos permanecem dentro da largura móvel", () 
     /@media\s*\(max-width:\s*520px\)[\s\S]*?\.experiment-hero h1\s*\{[\s\S]*?font-size:\s*clamp\(2\.6rem,\s*14vw,\s*4\.7rem\)/,
   );
 });
+
+test("relatório Markdown mantém hierarquia contínua na tela e na impressão", () => {
+  assert.match(experimentCss, /\.report-document--markdown\s*>\s*h2/);
+  assert.match(experimentCss, /\.report-document--markdown\s+\.data-table-wrapper/);
+  assert.match(
+    experimentCss,
+    /@media\s+print[\s\S]*?\.report-document--markdown\s*>\s*h2/,
+  );
+  assert.match(
+    experimentCss,
+    /@media\s+print[\s\S]*?body\s*\{[\s\S]*?font-size:\s*12pt/,
+  );
+  assert.doesNotMatch(
+    experimentCss,
+    /\.(?:experiment-grid|report-grid|lab-card|theory-card|report-card)\b/,
+  );
+});

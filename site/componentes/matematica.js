@@ -4,8 +4,14 @@ export const MATHJAX_URL =
 
 export const MATHJAX_CONFIG = Object.freeze({
   tex: Object.freeze({
-    inlineMath: Object.freeze([["\\(", "\\)"]]),
-    displayMath: Object.freeze([["\\[", "\\]"]]),
+    inlineMath: Object.freeze([
+      ["\\(", "\\)"],
+      ["$", "$"],
+    ]),
+    displayMath: Object.freeze([
+      ["\\[", "\\]"],
+      ["$$", "$$"],
+    ]),
     processEscapes: true,
   }),
   chtml: Object.freeze({
@@ -17,8 +23,14 @@ export const MATHJAX_CONFIG = Object.freeze({
 function browserConfig() {
   return {
     tex: {
-      inlineMath: [["\\(", "\\)"]],
-      displayMath: [["\\[", "\\]"]],
+      inlineMath: [
+        ["\\(", "\\)"],
+        ["$", "$"],
+      ],
+      displayMath: [
+        ["\\[", "\\]"],
+        ["$$", "$$"],
+      ],
       processEscapes: true,
     },
     chtml: {

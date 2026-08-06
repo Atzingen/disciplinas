@@ -13,8 +13,12 @@ A navegação possui três áreas independentes:
 
 - **Exercícios:** resoluções organizadas por referência e capítulo;
 - **Experimentos:** roteiros avançados de Física III, com montagem,
-  fundamentos, dados e relatório;
+  fundamentação e relatório acadêmico;
 - **Simulações:** modelos interativos para explorar cargas, forças e vetores.
+
+Equações, deduções e leituras dinâmicas são compostas com **MathJax 4.1.2**.
+Os relatórios usam **Marked 18.0.7** para transformar o Markdown acadêmico em
+HTML; os delimitadores LaTeX são preservados e então renderizados pelo MathJax.
 
 ## Exercícios
 
@@ -32,10 +36,18 @@ ampliados para turmas de Engenharia e Física:
 3. força magnética e motor elementar;
 4. indução eletromagnética.
 
-Na página de cada experimento, a aba **Relatório** contém uma folha preparada
-para impressão. O botão de impressão ativa essa aba e remove da cópia os
-controles de navegação. A mesma estrutura também está disponível em
-`relatorio.md` dentro da pasta do experimento.
+Cada experimento possui três abas:
+
+1. **Montagem**, com materiais, segurança, convenções e procedimento;
+2. **Fundamentação**, com as deduções e os limites do modelo físico;
+3. **Roteiro e relatório**, que integra dados brutos, tratamento, incertezas,
+   discussão, conclusão, referências e anexos.
+
+O conteúdo da terceira aba vem diretamente do arquivo editável `relatorio.md`
+de cada experimento, evitando duas versões divergentes. O botão de impressão
+ativa essa aba, aguarda o carregamento do Markdown e a composição das equações,
+remove os controles de navegação e prepara um documento A4 de aproximadamente
+seis a dez páginas.
 
 As fotografias selecionadas do manual permanecem creditadas à AZEHEB. O PDF
 original não é publicado neste repositório; a proveniência das imagens está em

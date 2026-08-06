@@ -3,11 +3,18 @@ import { readFile } from "node:fs/promises";
 import test from "node:test";
 
 let experimentApi = {};
+let markdownReportApi = {};
 
 try {
   experimentApi = await import("../experimentos/experimento.js");
 } catch {
   experimentApi = {};
+}
+
+try {
+  markdownReportApi = await import("../componentes/relatorio-markdown.js");
+} catch {
+  markdownReportApi = {};
 }
 
 const experiments = [
@@ -63,7 +70,7 @@ function plainText(html) {
     .replace(/\s+/g, " ");
 }
 
-function createInteractiveFixture() {
+function createInteractiveFixture({ withReport = false } = {}) {
   const panels = new Map();
   const makeTab = (controls, selected) => {
     const attributes = new Map([
@@ -93,16 +100,18 @@ function createInteractiveFixture() {
       if (type === "click") this.clickHandler = handler;
     },
   };
+  const reportDocument = withReport ? {} : null;
   const root = {
     querySelectorAll(selector) {
       return selector === '[role="tab"]' ? tabs : [];
     },
     querySelector(selector) {
       if (selector === "[data-print-report]") return printButton;
+      if (selector === "[data-markdown-report]") return reportDocument;
       return panels.get(selector) ?? null;
     },
   };
-  return { root, tabs, panels, printButton };
+  return { root, tabs, panels, printButton, reportDocument };
 }
 
 test("ação de imprimir ativa primeiro a aba Relatório", async () => {
@@ -122,6 +131,50 @@ test("ação de imprimir ativa primeiro a aba Relatório", async () => {
   assert.equal(fixture.panels.get("#painel-relatorio").hidden, false);
   assert.equal(fixture.panels.get("#painel-montagem").hidden, true);
   assert.equal(printCalls, 1);
+});
+
+test("ação de imprimir aguarda o relatório Markdown completo", async () => {
+  const fixture = createInteractiveFixture({ withReport: true });
+  let releaseReport;
+  let printCalls = 0;
+  const reportReady = new Promise((resolve) => {
+    releaseReport = resolve;
+  });
+
+  experimentApi.setupExperiment(
+    fixture.root,
+    () => {
+      printCalls += 1;
+    },
+    () => reportReady,
+  );
+  const printResult = fixture.printButton.clickHandler();
+
+  await Promise.resolve();
+  assert.equal(printCalls, 0);
+  releaseReport();
+  await printResult;
+  assert.equal(printCalls, 1);
+});
+
+test("renderização Markdown preserva delimitadores e comandos LaTeX", () => {
+  assert.equal(typeof markdownReportApi.renderMarkdownWithMath, "function");
+  const source = [
+    "## Modelo",
+    "",
+    "O campo é $B_{T,h}=B_0\\cos\\alpha$.",
+    "",
+    "$$\\frac{d\\Phi_B}{dt}=-\\mathcal{E}$$",
+    "",
+    "Também vale \\(\\vec F=q\\vec v\\times\\vec B\\).",
+  ].join("\n");
+  const parseMarkdown = (markdown) => `<article>${markdown}</article>`;
+  const html = markdownReportApi.renderMarkdownWithMath(source, parseMarkdown);
+
+  assert.match(html, /\$B_\{T,h\}=B_0\\cos\\alpha\$/);
+  assert.match(html, /\$\$\\frac\{d\\Phi_B\}\{dt\}=-\\mathcal\{E\}\$\$/);
+  assert.match(html, /\\\(\\vec F=q\\vec v\\times\\vec B\\\)/);
+  assert.doesNotMatch(html, /MATHPLACEHOLDER/);
 });
 
 for (const experiment of experiments) {
@@ -145,6 +198,7 @@ for (const experiment of experiments) {
     assert.doesNotMatch(html, /painel-dados|>Dados</);
     assert.match(html, /class="reasoning-sequence"/);
     assert.match(html, /class="report-document"/);
+    assert.match(html, /data-markdown-report="\.\/relatorio\.md"/);
     assert.match(html, /\\begin\{aligned\}/);
     assert.match(html, /\\frac\{/);
     assert.match(html, /class="experiment-safety"/);

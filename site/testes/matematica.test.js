@@ -15,8 +15,14 @@ test("MathJax usa versão fixa e delimitadores explícitos", () => {
     MATHJAX_URL,
     "https://cdn.jsdelivr.net/npm/mathjax@4.1.2/tex-mml-chtml.js",
   );
-  assert.deepEqual(MATHJAX_CONFIG.tex.inlineMath, [["\\(", "\\)"]]);
-  assert.deepEqual(MATHJAX_CONFIG.tex.displayMath, [["\\[", "\\]"]]);
+  assert.deepEqual(MATHJAX_CONFIG.tex.inlineMath, [
+    ["\\(", "\\)"],
+    ["$", "$"],
+  ]);
+  assert.deepEqual(MATHJAX_CONFIG.tex.displayMath, [
+    ["\\[", "\\]"],
+    ["$$", "$$"],
+  ]);
   assert.equal(MATHJAX_CONFIG.tex.processEscapes, true);
   assert.equal(typeof typesetMath, "function");
   assert.equal(typeof createMathRenderScheduler, "function");

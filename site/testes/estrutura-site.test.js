@@ -14,6 +14,37 @@ function count(html, pattern) {
   return (html.match(pattern) ?? []).length;
 }
 
+const sitePages = [
+  ["index.html", "./favicon.svg"],
+  ["exercicios/index.html", "../favicon.svg"],
+  ["exercicios/capitulo-21/index.html", "../../favicon.svg"],
+  ["exercicios/halliday-21-13/index.html", "../../favicon.svg"],
+  ["exercicios/halliday-21-18/index.html", "../../favicon.svg"],
+  ["exercicios/halliday-21-34/index.html", "../../favicon.svg"],
+  ["exercicios/halliday-21-42/index.html", "../../favicon.svg"],
+  ["experimentos/index.html", "../favicon.svg"],
+  ["experimentos/01-campo-corrente/index.html", "../../favicon.svg"],
+  ["experimentos/02-campo-solenoide/index.html", "../../favicon.svg"],
+  ["experimentos/03-forca-magnetica-motor/index.html", "../../favicon.svg"],
+  ["experimentos/04-inducao-eletromagnetica/index.html", "../../favicon.svg"],
+  ["simuladores/index.html", "../favicon.svg"],
+  ["simuladores/cargas-e-vetores/index.html", "../../favicon.svg"],
+];
+
+test("todas as páginas declaram o favicon compartilhado", async () => {
+  const icon = await readSitePage("favicon.svg");
+  assert.match(icon, /<svg\b/);
+
+  for (const [path, href] of sitePages) {
+    const html = await readSitePage(path);
+    assert.match(
+      html,
+      new RegExp(`<link rel="icon" href="${href.replaceAll(".", "\\.")}" type="image/svg\\+xml">`),
+      `favicon ausente ou incorreto em ${path}`,
+    );
+  }
+});
+
 test("página inicial oferece as três áreas e o filtro de experimentos", async () => {
   const html = await readSitePage("index.html");
 
