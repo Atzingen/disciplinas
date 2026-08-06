@@ -7,21 +7,32 @@
   <title>Halliday 21.42 · Laboratório de Eletromagnetismo</title>
   <link rel="stylesheet" href="../../assets/base.css">
   <link rel="stylesheet" href="../../assets/simulador.css">
+  <script>try{if(localStorage.getItem("tema")==="escuro"){document.documentElement.dataset.theme="escuro"}}catch(erro){}</script>
 </head>
 <body class="lesson-page halliday-page">
   <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
 
-  <header class="lesson-header">
-    <div class="lesson-area-navigation" data-site-navigation data-root-path="../../" data-active-section="exercicios"></div>
-    <nav class="breadcrumb" aria-label="Navegação estrutural">
-      <a href="../../">Laboratório</a>
-      <span aria-hidden="true">/</span>
-      <span>Halliday</span>
-      <span aria-hidden="true">/</span>
-      <span>Capítulo 21</span>
-      <span aria-hidden="true">/</span>
-      <strong>Exercício 42</strong>
+  <div class="site-topbar" data-topbar>
+    <div class="site-topbar__inner">
+      <nav class="breadcrumb" aria-label="Navegação estrutural">
+        <a href="../../">Laboratório</a>
+        <span aria-hidden="true">/</span>
+        <a href="../">Exercícios</a>
+        <span aria-hidden="true">/</span>
+        <a href="../capitulo-21/">Halliday · Capítulo 21</a>
+        <span aria-hidden="true">/</span>
+        <strong aria-current="page">Exercício 42</strong>
+      </nav>
+      <div class="lesson-area-navigation" data-site-navigation data-root-path="../../" data-active-section="exercicios"></div>
+    </div>
+    <nav class="section-nav" aria-label="Seções do exercício" data-section-nav>
+      <a href="#enunciado">Enunciado</a>
+      <a href="#resolucao">Resolução</a>
+      <a href="#diagrama">Diagrama</a>
     </nav>
+  </div>
+
+  <header class="lesson-header">
     <div class="lesson-title-row">
       <div>
         <p class="eyebrow">Pêndulos eletrostáticos</p>
@@ -35,14 +46,9 @@
   </header>
 
   <main class="lesson-main" id="conteudo">
-    <div data-tabs>
-      <div class="tab-list" role="tablist" aria-label="Conteúdo do exercício">
-        <button class="tab-button" id="tab-enunciado" type="button" role="tab" aria-selected="true" aria-controls="painel-enunciado">Enunciado</button>
-        <button class="tab-button" id="tab-resolucao" type="button" role="tab" aria-selected="false" aria-controls="painel-resolucao" tabindex="-1">Resolução</button>
-        <button class="tab-button" id="tab-diagrama" type="button" role="tab" aria-selected="false" aria-controls="painel-diagrama" tabindex="-1">Diagrama</button>
-      </div>
+    <div class="lesson-sections">
 
-      <section class="tab-panel" id="painel-enunciado" role="tabpanel" aria-labelledby="tab-enunciado">
+      <section class="lesson-section" id="enunciado" aria-label="Enunciado">
         <article class="problem-sheet">
           <div class="problem-number">
             <span>Halliday</span>
@@ -68,7 +74,7 @@
         </article>
       </section>
 
-      <section class="tab-panel" id="painel-resolucao" role="tabpanel" aria-labelledby="tab-resolucao" hidden>
+      <section class="lesson-section" id="resolucao" aria-label="Resolução">
         <article class="solution-article">
           <header class="solution-heading">
             <p class="eyebrow">Resolução passo a passo</p>
@@ -81,7 +87,7 @@
           </header>
 
           <section>
-            <span class="solution-step">01 · diagrama de corpo livre</span>
+            <span class="solution-step">diagrama de corpo livre</span>
             <h3>Separe as três forças</h3>
             <p>Sobre a esfera da direita atuam:</p>
             <div class="derivation-grid">
@@ -105,7 +111,7 @@
           </section>
 
           <section>
-            <span class="solution-step">02 · componentes</span>
+            <span class="solution-step">componentes</span>
             <h3>Elimine a tensão por divisão</h3>
             <p>As condições de equilíbrio horizontal e vertical são:</p>
             <div class="math-block">
@@ -120,7 +126,7 @@
           </section>
 
           <section>
-            <span class="solution-step">03 · geometria</span>
+            <span class="solution-step">geometria</span>
             <h3>Cada esfera desloca-se x/2</h3>
             <p>
               O sistema é simétrico em torno da vertical central. Assim, o
@@ -139,7 +145,7 @@
           </section>
 
           <section>
-            <span class="solution-step">04 · pergunta A</span>
+            <span class="solution-step">pergunta A</span>
             <h3>Introduza a lei de Coulomb</h3>
             <p>A distância entre as cargas é x, então:</p>
             <div class="math-block">
@@ -158,7 +164,7 @@
           </section>
 
           <section>
-            <span class="solution-step">05 · pergunta B</span>
+            <span class="solution-step">pergunta B</span>
             <h3>Converta os dados para o SI</h3>
             <div class="derivation-grid">
               <article><strong>L = 1,20 m</strong><p>120 cm ÷ 100</p></article>
@@ -181,7 +187,7 @@
           </section>
 
           <section>
-            <span class="solution-step">06 · verificação da aproximação</span>
+            <span class="solution-step">verificação da aproximação</span>
             <h3>O ângulo é realmente pequeno?</h3>
             <div class="math-block">
               sin θ = x/(2L) = 0,050/(2 × 1,20) = 0,0208
@@ -196,7 +202,7 @@
         </article>
       </section>
 
-      <section class="tab-panel" id="painel-diagrama" role="tabpanel" aria-labelledby="tab-diagrama" hidden>
+      <section class="lesson-section" id="diagrama" aria-label="Diagrama">
         <article class="static-diagram-shell">
           <header class="static-diagram-heading">
             <div>
@@ -211,23 +217,23 @@
             <desc id="diagram-42-desc">Duas esferas iguais pendem simetricamente de um suporte e se repelem. Ao lado, a esfera direita aparece isolada com tensão para cima e para a esquerda, peso para baixo e força elétrica para a direita.</desc>
             <defs>
               <marker id="arrow-42-tension" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto">
-                <path d="M 0 0 L 10 5 L 0 10 z" fill="#008b95"></path>
+                <path d="M 0 0 L 10 5 L 0 10 z" style="fill: var(--force-1)"></path>
               </marker>
               <marker id="arrow-42-electric" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto">
-                <path d="M 0 0 L 10 5 L 0 10 z" fill="#e07a1f"></path>
+                <path d="M 0 0 L 10 5 L 0 10 z" fill="#e8963f"></path>
               </marker>
               <marker id="arrow-42-weight" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto">
-                <path d="M 0 0 L 10 5 L 0 10 z" fill="#7a3ce7"></path>
+                <path d="M 0 0 L 10 5 L 0 10 z" style="fill: var(--resultant)"></path>
               </marker>
               <marker id="dimension-42" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-                <path d="M 10 0 L 0 5 L 10 10 z" fill="#7a3ce7"></path>
+                <path d="M 10 0 L 0 5 L 10 10 z" style="fill: var(--resultant)"></path>
               </marker>
             </defs>
 
             <rect class="diagram-panel" x="28" y="28" width="530" height="520" rx="4"></rect>
             <text class="diagram-panel-title" x="55" y="62">GEOMETRIA DO SISTEMA</text>
             <rect class="diagram-support" x="245" y="85" width="96" height="18" rx="3"></rect>
-            <circle cx="293" cy="107" r="8" fill="#142a3b"></circle>
+            <circle cx="293" cy="107" r="8" fill="#e7ecf3"></circle>
             <line class="diagram-guide" x1="293" y1="107" x2="293" y2="480"></line>
             <line class="diagram-string" x1="293" y1="107" x2="150" y2="445"></line>
             <line class="diagram-string" x1="293" y1="107" x2="436" y2="445"></line>

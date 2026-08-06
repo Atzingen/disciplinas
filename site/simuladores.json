@@ -36,6 +36,19 @@
     "tags": ["Halliday", "capítulo 21", "exercício 18", "21.18", "forças colineares", "lei de Coulomb", "resolução"]
   },
   {
+    "id": "halliday-21-33",
+    "title": "Halliday — capítulo 21 — exercício 33",
+    "kind": "resolucao",
+    "section": "exercicios",
+    "reference": "Halliday",
+    "chapter": 21,
+    "exerciseNumber": 33,
+    "theme": "Contagem de partículas e carga elementar",
+    "description": "Resolução interativa da carga positiva contida em 250 cm³ de água, com a mesma cadeia de conversão aplicada a seis substâncias.",
+    "path": "exercicios/halliday-21-33/",
+    "tags": ["Halliday", "capítulo 21", "exercício 33", "21.33", "número de Avogadro", "carga elementar", "quantização da carga", "resolução"]
+  },
+  {
     "id": "halliday-21-34",
     "title": "Halliday — capítulo 21 — exercício 34",
     "kind": "resolucao",

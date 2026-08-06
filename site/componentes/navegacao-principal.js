@@ -27,6 +27,67 @@ export function buildMainNavigation(rootPath = "./", activeSection = "inicio") {
   ];
 }
 
+export const THEME_KEY = "tema";
+
+export function nextTheme(current) {
+  return current === "escuro" ? "claro" : "escuro";
+}
+
+export function storedTheme() {
+  try {
+    return localStorage.getItem(THEME_KEY);
+  } catch {
+    return null;
+  }
+}
+
+export function applyTheme(theme) {
+  const chosen = theme === "escuro" ? "escuro" : "claro";
+  if (chosen === "escuro") {
+    document.documentElement.dataset.theme = "escuro";
+  } else {
+    delete document.documentElement.dataset.theme;
+  }
+  try {
+    localStorage.setItem(THEME_KEY, chosen);
+  } catch {
+    /* navegação privativa: a escolha vale só para esta página */
+  }
+  return chosen;
+}
+
+function createThemeToggle() {
+  const button = document.createElement("button");
+  button.type = "button";
+  button.className = "theme-toggle";
+  button.dataset.themeToggle = "";
+
+  const mark = document.createElement("span");
+  mark.className = "theme-toggle__mark";
+  mark.setAttribute("aria-hidden", "true");
+  const label = document.createElement("span");
+  label.className = "theme-toggle__label";
+  button.append(mark, label);
+
+  function refresh(theme) {
+    const escuro = theme === "escuro";
+    mark.textContent = escuro ? "☀" : "☾";
+    label.textContent = escuro ? "Tema claro" : "Tema escuro";
+    button.setAttribute(
+      "aria-label",
+      escuro ? "Mudar para o tema claro" : "Mudar para o tema escuro",
+    );
+    button.setAttribute("aria-pressed", String(escuro));
+  }
+
+  refresh(document.documentElement.dataset.theme ?? "claro");
+  button.addEventListener("click", () => {
+    refresh(applyTheme(nextTheme(document.documentElement.dataset.theme ?? "claro")));
+  });
+
+  return button;
+}
+
 export function mountMainNavigation(root) {
   if (!root) {
     return;
@@ -53,7 +114,7 @@ export function mountMainNavigation(root) {
   }
 
   nav.append(list);
-  root.replaceChildren(nav);
+  root.replaceChildren(nav, createThemeToggle());
 }
 
 if (typeof document !== "undefined") {

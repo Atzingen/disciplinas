@@ -7,26 +7,69 @@
   <title>Força magnética e motor elementar · Experimento 03</title>
   <link rel="stylesheet" href="../../assets/base.css">
   <link rel="stylesheet" href="../../assets/experimentos.css">
+  <script>try{if(localStorage.getItem("tema")==="escuro"){document.documentElement.dataset.theme="escuro"}}catch(erro){}</script>
 </head>
 <body class="experiment-page">
   <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
 
+  <div class="page-shell" data-experiment-tabs>
+  <div class="site-topbar" data-topbar>
+    <div class="site-topbar__inner">
+      <nav class="experiment-breadcrumb" aria-label="Caminho de navegação">
+        <a href="../../">Início</a>
+        <span aria-hidden="true">/</span>
+        <a href="../">Experimentos</a>
+        <span aria-hidden="true">/</span>
+        <span aria-current="page">Experimento 03</span>
+      </nav>
+      <div
+        class="experiment-header__navigation"
+        data-site-navigation
+        data-root-path="../../"
+        data-active-section="experimentos"
+      ></div>
+    </div>
+      <div class="experiment-tab-list" role="tablist" aria-label="Etapas do roteiro">
+        <button
+          class="experiment-tab"
+          id="aba-montagem"
+          type="button"
+          role="tab"
+          aria-controls="painel-montagem"
+          aria-selected="true"
+          tabindex="0"
+        >Montagem</button>
+        <button
+          class="experiment-tab"
+          id="aba-fundamentos"
+          type="button"
+          role="tab"
+          aria-controls="painel-fundamentos"
+          aria-selected="false"
+          tabindex="-1"
+        >Fundamentos</button>
+        <button
+          class="experiment-tab"
+          id="aba-dados"
+          type="button"
+          role="tab"
+          aria-controls="painel-dados"
+          aria-selected="false"
+          tabindex="-1"
+        >Dados</button>
+        <button
+          class="experiment-tab"
+          id="aba-relatorio"
+          type="button"
+          role="tab"
+          aria-controls="painel-relatorio"
+          aria-selected="false"
+          tabindex="-1"
+        >Relatório</button>
+      </div>
+  </div>
+
   <header class="experiment-header">
-    <div
-      class="experiment-header__navigation"
-      data-site-navigation
-      data-root-path="../../"
-      data-active-section="experimentos"
-    ></div>
-
-    <nav class="experiment-breadcrumb" aria-label="Caminho de navegação">
-      <a href="../../">Início</a>
-      <span aria-hidden="true">/</span>
-      <a href="../">Experimentos</a>
-      <span aria-hidden="true">/</span>
-      <span aria-current="page">Experimento 03</span>
-    </nav>
-
     <div class="experiment-hero">
       <div>
         <p class="eyebrow">Experimento 03 · Física III</p>
@@ -46,45 +89,7 @@
     </div>
   </header>
 
-  <main class="experiment-main" id="conteudo" data-experiment-tabs>
-    <div class="experiment-tab-list" role="tablist" aria-label="Etapas do roteiro">
-      <button
-        class="experiment-tab"
-        id="aba-montagem"
-        type="button"
-        role="tab"
-        aria-controls="painel-montagem"
-        aria-selected="true"
-        tabindex="0"
-      >Montagem</button>
-      <button
-        class="experiment-tab"
-        id="aba-fundamentos"
-        type="button"
-        role="tab"
-        aria-controls="painel-fundamentos"
-        aria-selected="false"
-        tabindex="-1"
-      >Fundamentos</button>
-      <button
-        class="experiment-tab"
-        id="aba-dados"
-        type="button"
-        role="tab"
-        aria-controls="painel-dados"
-        aria-selected="false"
-        tabindex="-1"
-      >Dados</button>
-      <button
-        class="experiment-tab"
-        id="aba-relatorio"
-        type="button"
-        role="tab"
-        aria-controls="painel-relatorio"
-        aria-selected="false"
-        tabindex="-1"
-      >Relatório</button>
-    </div>
+  <main class="experiment-main" id="conteudo">
 
     <section
       class="experiment-panel"
@@ -706,5 +711,6 @@
 
   <script type="module" src="../../componentes/navegacao-principal.js"></script>
   <script type="module" src="../experimento.js"></script>
+  </div>
 </body>
 </html>

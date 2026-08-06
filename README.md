@@ -18,9 +18,17 @@ A navegação possui três áreas independentes:
 
 ## Exercícios
 
-Em **Halliday → Capítulo 21**, os exercícios 13, 18, 34 e 42 formam uma
-sequência navegável. Cada página possui resolução passo a passo, diagrama ou
-simulação e links para o exercício anterior, o próximo e o índice do capítulo.
+Em **Halliday → Capítulo 21**, os exercícios 13, 18, 33, 34 e 42 formam uma
+sequência navegável. Enunciado, resolução e o apoio visual (diagrama ou
+simulação) ficam na mesma página, em leitura contínua: a barra fixa no topo é
+só atalho de rolagem e acompanha a seção em foco. O rodapé leva ao exercício
+anterior, ao próximo e ao índice do capítulo.
+
+O exercício 33 — a carga positiva contida em 250 cm³ de água — traz um
+explorador interativo: a mesma cadeia de conversão (volume → massa → mols →
+moléculas → prótons → carga) é recalculada para seis substâncias, o que
+evidencia o salto de mil vezes entre líquidos/sólidos e gases em CNTP. O cálculo
+puro fica em [site/nucleo/contagem-particulas.js](site/nucleo/contagem-particulas.js).
 
 ## Experimentos e relatórios
 
