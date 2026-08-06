@@ -93,11 +93,12 @@ test("preset Halliday fixa as fontes e nomeia a restauração", { skip: !apiAvai
 });
 
 test("página Halliday contém enunciado, resolução completa e simulação", () => {
-  assert.match(hallidayPage, /role="tabpanel"/);
+  assert.match(hallidayPage, /class="lesson-section"/);
   assert.equal(
-    (hallidayPage.match(/role="tabpanel"/g) ?? []).length,
+    (hallidayPage.match(/class="lesson-section"/g) ?? []).length,
     3,
   );
+  assert.match(hallidayPage, /<a href="#simulacao">/);
   assert.match(hallidayPage, /Enunciado/);
   assert.match(hallidayPage, /Resolução passo a passo/);
   assert.match(hallidayPage, /Condição para a força total ser nula/);

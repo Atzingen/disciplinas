@@ -1,7 +1,7 @@
-import { setupTabs } from "../componentes/abas.js";
+import { mountSectionNav } from "../componentes/navegacao-secoes.js";
 
-const tabsRoot = document.querySelector("[data-tabs]");
+const navRoot = document.querySelector("[data-section-nav]");
 
-if (tabsRoot) {
-  setupTabs(tabsRoot);
+if (navRoot) {
+  mountSectionNav(navRoot);
 }

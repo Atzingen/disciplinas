@@ -7,21 +7,32 @@
   <title>Halliday 21.34 · Laboratório de Eletromagnetismo</title>
   <link rel="stylesheet" href="../../assets/base.css">
   <link rel="stylesheet" href="../../assets/simulador.css">
+  <script>try{if(localStorage.getItem("tema")==="escuro"){document.documentElement.dataset.theme="escuro"}}catch(erro){}</script>
 </head>
 <body class="lesson-page halliday-page">
   <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
 
-  <header class="lesson-header">
-    <div class="lesson-area-navigation" data-site-navigation data-root-path="../../" data-active-section="exercicios"></div>
-    <nav class="breadcrumb" aria-label="Navegação estrutural">
-      <a href="../../">Laboratório</a>
-      <span aria-hidden="true">/</span>
-      <span>Halliday</span>
-      <span aria-hidden="true">/</span>
-      <span>Capítulo 21</span>
-      <span aria-hidden="true">/</span>
-      <strong>Exercício 34</strong>
+  <div class="site-topbar" data-topbar>
+    <div class="site-topbar__inner">
+      <nav class="breadcrumb" aria-label="Navegação estrutural">
+        <a href="../../">Laboratório</a>
+        <span aria-hidden="true">/</span>
+        <a href="../">Exercícios</a>
+        <span aria-hidden="true">/</span>
+        <a href="../capitulo-21/">Halliday · Capítulo 21</a>
+        <span aria-hidden="true">/</span>
+        <strong aria-current="page">Exercício 34</strong>
+      </nav>
+      <div class="lesson-area-navigation" data-site-navigation data-root-path="../../" data-active-section="exercicios"></div>
+    </div>
+    <nav class="section-nav" aria-label="Seções do exercício" data-section-nav>
+      <a href="#enunciado">Enunciado</a>
+      <a href="#resolucao">Resolução</a>
+      <a href="#diagrama">Diagrama</a>
     </nav>
+  </div>
+
+  <header class="lesson-header">
     <div class="lesson-title-row">
       <div>
         <p class="eyebrow">Simetria e equilíbrio</p>
@@ -35,14 +46,9 @@
   </header>
 
   <main class="lesson-main" id="conteudo">
-    <div data-tabs>
-      <div class="tab-list" role="tablist" aria-label="Conteúdo do exercício">
-        <button class="tab-button" id="tab-enunciado" type="button" role="tab" aria-selected="true" aria-controls="painel-enunciado">Enunciado</button>
-        <button class="tab-button" id="tab-resolucao" type="button" role="tab" aria-selected="false" aria-controls="painel-resolucao" tabindex="-1">Resolução</button>
-        <button class="tab-button" id="tab-diagrama" type="button" role="tab" aria-selected="false" aria-controls="painel-diagrama" tabindex="-1">Diagrama</button>
-      </div>
+    <div class="lesson-sections">
 
-      <section class="tab-panel" id="painel-enunciado" role="tabpanel" aria-labelledby="tab-enunciado">
+      <section class="lesson-section" id="enunciado" aria-label="Enunciado">
         <article class="problem-sheet">
           <div class="problem-number">
             <span>Halliday</span>
@@ -69,7 +75,7 @@
         </article>
       </section>
 
-      <section class="tab-panel" id="painel-resolucao" role="tabpanel" aria-labelledby="tab-resolucao" hidden>
+      <section class="lesson-section" id="resolucao" aria-label="Resolução">
         <article class="solution-article">
           <header class="solution-heading">
             <p class="eyebrow">Resolução passo a passo</p>
@@ -81,7 +87,7 @@
           </header>
 
           <section>
-            <span class="solution-step">01 · sentidos</span>
+            <span class="solution-step">sentidos</span>
             <h3>Quais forças atuam no elétron 2?</h3>
             <p>
               Todas as partículas têm carga negativa, então todas as interações
@@ -96,7 +102,7 @@
           </section>
 
           <section>
-            <span class="solution-step">02 · simetria</span>
+            <span class="solution-step">simetria</span>
             <h3>As componentes verticais se anulam</h3>
             <p>
               Os íons têm a mesma carga, a mesma distância ao elétron 2 e
@@ -114,7 +120,7 @@
           </section>
 
           <section>
-            <span class="solution-step">03 · geometria</span>
+            <span class="solution-step">geometria</span>
             <h3>Calcule a distância inclinada</h3>
             <p>
               A projeção horizontal do segmento entre o elétron 2 e cada íon é
@@ -133,7 +139,7 @@
           </section>
 
           <section>
-            <span class="solution-step">04 · componente horizontal</span>
+            <span class="solution-step">componente horizontal</span>
             <h3>De onde surge o cos³ θ?</h3>
             <p>
               A distância inclinada já forneceu cos<sup>2</sup> θ. Projetar a
@@ -156,7 +162,7 @@
           </section>
 
           <section>
-            <span class="solution-step">05 · quantização</span>
+            <span class="solution-step">quantização</span>
             <h3>Nem todo valor de q é fisicamente permitido</h3>
             <p>
               A carga de um íon deve ser um múltiplo inteiro da carga elementar:
@@ -191,7 +197,7 @@
         </article>
       </section>
 
-      <section class="tab-panel" id="painel-diagrama" role="tabpanel" aria-labelledby="tab-diagrama" hidden>
+      <section class="lesson-section" id="diagrama" aria-label="Diagrama">
         <article class="static-diagram-shell">
           <header class="static-diagram-heading">
             <div>
@@ -206,13 +212,13 @@
             <desc id="diagram-34-desc">O elétron 1 está à esquerda do elétron 2. Dois íons negativos estão à direita, simetricamente acima e abaixo. A força do elétron 1 aponta para a direita; as forças dos íons apontam diagonalmente para a esquerda, com componentes verticais que se cancelam.</desc>
             <defs>
               <marker id="arrow-34-one" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto">
-                <path d="M 0 0 L 10 5 L 0 10 z" fill="#008b95"></path>
+                <path d="M 0 0 L 10 5 L 0 10 z" style="fill: var(--force-1)"></path>
               </marker>
               <marker id="arrow-34-two" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto">
-                <path d="M 0 0 L 10 5 L 0 10 z" fill="#e07a1f"></path>
+                <path d="M 0 0 L 10 5 L 0 10 z" fill="#e8963f"></path>
               </marker>
               <marker id="dimension-34" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-                <path d="M 10 0 L 0 5 L 10 10 z" fill="#7a3ce7"></path>
+                <path d="M 10 0 L 0 5 L 10 10 z" style="fill: var(--resultant)"></path>
               </marker>
             </defs>
 

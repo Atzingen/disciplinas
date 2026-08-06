@@ -29,7 +29,7 @@
   align-items: center;
   margin: 1rem 0 2.5rem;
   color: var(--ink-soft);
-  font: 0.76rem/1.4 Consolas, monospace;
+  font: 0.76rem/1.4 var(--font-mono);
 }
 
 .experiment-breadcrumb a {
@@ -69,7 +69,8 @@
   border: 1px solid var(--line);
   background: var(--surface);
   color: var(--ink-soft);
-  font: 0.72rem/1.2 Consolas, monospace;
+  font: 0.72rem/1.2 var(--font-mono);
+  border-radius: var(--radius-pill);
 }
 
 .experiment-main {
@@ -139,8 +140,9 @@
 .theory-card,
 .report-card {
   min-width: 0;
+  border-radius: var(--radius-lg);
   padding: clamp(1.15rem, 3vw, 1.8rem);
-  border: 1px solid var(--line-strong);
+  border: 1px solid var(--line);
   background: var(--surface);
 }
 
@@ -160,16 +162,17 @@
 .experiment-safety {
   margin: 1rem 0;
   padding: 1.1rem 1.25rem;
-  border: 1px solid #b94b23;
+  border: 1px solid var(--positive);
   border-left-width: 7px;
-  background: #fff5ed;
+  background: var(--tint-danger);
+  border-radius: var(--radius-md);
 }
 
 .experiment-safety strong {
   display: block;
   margin-bottom: 0.35rem;
-  color: #8a3314;
-  font: 700 0.78rem/1.3 Consolas, monospace;
+  color: var(--positive);
+  font: 700 0.78rem/1.3 var(--font-mono);
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
@@ -180,8 +183,10 @@
 
 .experiment-figure {
   margin: 0;
-  border: 1px solid var(--line-strong);
+  overflow: hidden;
+  border-radius: var(--radius-lg);
   background: var(--surface);
+  box-shadow: var(--shadow);
 }
 
 .experiment-figure img {
@@ -194,7 +199,7 @@
 
 .experiment-figure figcaption {
   padding: 0.8rem 1rem;
-  border-top: 1px solid var(--line);
+  border-top: 1px solid var(--line-soft);
   color: var(--ink-soft);
   font-size: 0.82rem;
 }
@@ -220,7 +225,8 @@
   margin: 1rem 0;
   padding: 1rem 1.2rem;
   border: 1px dashed var(--resultant);
-  background: #f5f0ff;
+  background: var(--tint-cool);
+  border-radius: var(--radius-md);
 }
 
 .prediction-box strong {
@@ -236,25 +242,27 @@
 .equation-step,
 .experiment-page .math-block {
   min-width: 0;
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
   overflow-x: auto;
   padding: 1rem 1.1rem;
   border-left: 5px solid var(--force-3);
   background: var(--paper-deep);
-  font: 700 clamp(0.88rem, 2vw, 1.05rem)/1.75 Consolas, monospace;
+  font: 700 clamp(0.88rem, 2vw, 1.05rem)/1.75 var(--font-mono);
   white-space: nowrap;
 }
 
 .equation-step small {
   display: block;
   color: var(--ink-soft);
-  font: 0.72rem/1.4 "Segoe UI", sans-serif;
+  font: 0.72rem/1.4 var(--font-body);
   white-space: normal;
 }
 
 .theory-note {
   padding: 1rem 1.2rem;
   border: 1px solid var(--measure);
-  background: #fffae8;
+  background: var(--tint-warm);
+  border-radius: var(--radius-md);
 }
 
 .data-table-wrapper {
@@ -263,6 +271,7 @@
   margin: 1rem 0;
   border: 1px solid var(--line-strong);
   background: var(--surface);
+  border-radius: var(--radius-lg);
 }
 
 .data-table {
@@ -281,9 +290,9 @@
 }
 
 .data-table th {
-  background: var(--ink);
-  color: white;
-  font: 700 0.72rem/1.4 Consolas, monospace;
+  background: var(--paper-deep);
+  color: var(--ink-soft);
+  font: 700 0.72rem/1.4 var(--font-mono);
   letter-spacing: 0.04em;
   text-transform: uppercase;
 }
@@ -296,6 +305,7 @@
   padding: 1rem 1.2rem;
   border-left: 5px solid var(--measure);
   background: var(--surface);
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
 }
 
 .report-print-bar {
@@ -306,8 +316,9 @@
   margin-bottom: 1rem;
   padding: 1rem;
   border: 1px solid var(--line-strong);
-  background: var(--ink);
-  color: white;
+  background: var(--paper-deep);
+  color: var(--ink);
+  border-radius: var(--radius-md);
 }
 
 .report-print-bar p {
@@ -317,16 +328,28 @@
 .report-print-button {
   min-height: 46px;
   flex: 0 0 auto;
-  border: 1px solid white;
-  background: white;
-  color: var(--ink);
+  border: 1px solid var(--accent);
+  background: var(--accent);
+  color: var(--on-accent);
   padding: 0.65rem 0.9rem;
   cursor: pointer;
   font-weight: 700;
+  border-radius: var(--radius-sm);
 }
 
 .report-template {
-  background: white;
+  background: #ffffff;
+  color: #142a3b;
+}
+
+.report-template .data-table th {
+  background: #142a3b;
+  color: #ffffff;
+}
+
+.report-template .data-table th,
+.report-template .data-table td {
+  border-color: #cbd7dd;
 }
 
 .report-template__fields {
@@ -336,11 +359,12 @@
   margin-bottom: 1rem;
   padding: 1rem;
   border: 1px solid var(--line);
+  border-radius: var(--radius-md);
 }
 
 .report-template__line {
   min-height: 2rem;
-  border-bottom: 1px solid var(--ink-soft);
+  border-bottom: 1px solid #8297a3;
 }
 
 .experiment-footer {
@@ -404,6 +428,7 @@
   }
 
   .skip-link,
+  .site-topbar,
   .experiment-header__navigation,
   .experiment-breadcrumb,
   .experiment-tab-list,
