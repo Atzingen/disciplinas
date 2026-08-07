@@ -13,18 +13,22 @@ A navegação possui três áreas independentes:
 
 - **Exercícios:** resoluções organizadas por referência e capítulo;
 - **Experimentos:** roteiros avançados de Física III, com montagem,
-  fundamentação e relatório acadêmico;
+  fundamentos, dados e relatório;
 - **Simulações:** modelos interativos para explorar cargas, forças e vetores.
-
-Equações, deduções e leituras dinâmicas são compostas com **MathJax 4.1.2**.
-Os relatórios usam **Marked 18.0.7** para transformar o Markdown acadêmico em
-HTML; os delimitadores LaTeX são preservados e então renderizados pelo MathJax.
 
 ## Exercícios
 
-Em **Halliday → Capítulo 21**, os exercícios 13, 18, 34 e 42 formam uma
-sequência navegável. Cada página possui resolução passo a passo, diagrama ou
-simulação e links para o exercício anterior, o próximo e o índice do capítulo.
+Em **Halliday → Capítulo 21**, os exercícios 13, 18, 33, 34 e 42 formam uma
+sequência navegável. Enunciado, resolução e o apoio visual (diagrama ou
+simulação) ficam na mesma página, em leitura contínua: a barra fixa no topo é
+só atalho de rolagem e acompanha a seção em foco. O rodapé leva ao exercício
+anterior, ao próximo e ao índice do capítulo.
+
+O exercício 33 — a carga positiva contida em 250 cm³ de água — traz um
+explorador interativo: a mesma cadeia de conversão (volume → massa → mols →
+moléculas → prótons → carga) é recalculada para seis substâncias, o que
+evidencia o salto de mil vezes entre líquidos/sólidos e gases em CNTP. O cálculo
+puro fica em [site/nucleo/contagem-particulas.js](site/nucleo/contagem-particulas.js).
 
 ## Experimentos e relatórios
 
@@ -36,18 +40,10 @@ ampliados para turmas de Engenharia e Física:
 3. força magnética e motor elementar;
 4. indução eletromagnética.
 
-Cada experimento possui três abas:
-
-1. **Montagem**, com materiais, segurança, convenções e procedimento;
-2. **Fundamentação**, com as deduções e os limites do modelo físico;
-3. **Roteiro e relatório**, que integra dados brutos, tratamento, incertezas,
-   discussão, conclusão, referências e anexos.
-
-O conteúdo da terceira aba vem diretamente do arquivo editável `relatorio.md`
-de cada experimento, evitando duas versões divergentes. O botão de impressão
-ativa essa aba, aguarda o carregamento do Markdown e a composição das equações,
-remove os controles de navegação e prepara um documento A4 de aproximadamente
-seis a dez páginas.
+Na página de cada experimento, a aba **Relatório** contém uma folha preparada
+para impressão. O botão de impressão ativa essa aba e remove da cópia os
+controles de navegação. A mesma estrutura também está disponível em
+`relatorio.md` dentro da pasta do experimento.
 
 As fotografias selecionadas do manual permanecem creditadas à AZEHEB. O PDF
 original não é publicado neste repositório; a proveniência das imagens está em

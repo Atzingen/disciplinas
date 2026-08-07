@@ -16,6 +16,14 @@ try {
   exerciseNavigation = {};
 }
 
+let sectionNavigation = {};
+
+try {
+  sectionNavigation = await import("../componentes/navegacao-secoes.js");
+} catch {
+  sectionNavigation = {};
+}
+
 test("navegação principal resolve as quatro áreas a partir da raiz informada", () => {
   assert.equal(typeof navigation.buildMainNavigation, "function");
   assert.deepEqual(navigation.buildMainNavigation("../../", "exercicios"), [
@@ -85,4 +93,28 @@ test("adjacência respeita as duas fronteiras do capítulo", () => {
   assert.equal(middle.next.id, "halliday-21-34");
   assert.equal(last.previous.id, "halliday-21-34");
   assert.equal(last.next, null);
+});
+
+test("alternância de tema parte do claro e volta ao claro", () => {
+  assert.equal(typeof navigation.nextTheme, "function");
+  assert.equal(navigation.nextTheme("claro"), "escuro");
+  assert.equal(navigation.nextTheme("escuro"), "claro");
+  assert.equal(navigation.nextTheme(undefined), "escuro");
+  assert.equal(navigation.THEME_KEY, "tema");
+});
+
+test("a seção ativa é a última que já passou pelo topo", () => {
+  assert.equal(typeof sectionNavigation.currentSection, "function");
+
+  const secoes = [
+    { id: "enunciado", top: 0 },
+    { id: "resolucao", top: 900 },
+    { id: "substancias", top: 2400 },
+  ];
+
+  assert.equal(sectionNavigation.currentSection(secoes, 0), "enunciado");
+  assert.equal(sectionNavigation.currentSection(secoes, 880), "enunciado");
+  assert.equal(sectionNavigation.currentSection(secoes, 900), "resolucao");
+  assert.equal(sectionNavigation.currentSection(secoes, 5000), "substancias");
+  assert.equal(sectionNavigation.currentSection([], 10), null);
 });

@@ -5,24 +5,34 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Resolução ilustrada do exercício 18, capítulo 21, do Halliday: razão entre cargas a partir de forças colineares.">
   <title>Halliday 21.18 · Laboratório de Eletromagnetismo</title>
-  <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="../../assets/base.css">
   <link rel="stylesheet" href="../../assets/simulador.css">
+  <script>try{if(localStorage.getItem("tema")==="escuro"){document.documentElement.dataset.theme="escuro"}}catch(erro){}</script>
 </head>
 <body class="lesson-page halliday-page">
   <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
 
-  <header class="lesson-header">
-    <div class="lesson-area-navigation" data-site-navigation data-root-path="../../" data-active-section="exercicios"></div>
-    <nav class="breadcrumb" aria-label="Navegação estrutural">
-      <a href="../../">Laboratório</a>
-      <span aria-hidden="true">/</span>
-      <span>Halliday</span>
-      <span aria-hidden="true">/</span>
-      <span>Capítulo 21</span>
-      <span aria-hidden="true">/</span>
-      <strong>Exercício 18</strong>
+  <div class="site-topbar" data-topbar>
+    <div class="site-topbar__inner">
+      <nav class="breadcrumb" aria-label="Navegação estrutural">
+        <a href="../../">Laboratório</a>
+        <span aria-hidden="true">/</span>
+        <a href="../">Exercícios</a>
+        <span aria-hidden="true">/</span>
+        <a href="../capitulo-21/">Halliday · Capítulo 21</a>
+        <span aria-hidden="true">/</span>
+        <strong aria-current="page">Exercício 18</strong>
+      </nav>
+      <div class="lesson-area-navigation" data-site-navigation data-root-path="../../" data-active-section="exercicios"></div>
+    </div>
+    <nav class="section-nav" aria-label="Seções do exercício" data-section-nav>
+      <a href="#enunciado">Enunciado</a>
+      <a href="#resolucao">Resolução</a>
+      <a href="#diagrama">Diagrama</a>
     </nav>
+  </div>
+
+  <header class="lesson-header">
     <div class="lesson-title-row">
       <div>
         <p class="eyebrow">Forças colineares</p>
@@ -36,14 +46,9 @@
   </header>
 
   <main class="lesson-main" id="conteudo">
-    <div data-tabs>
-      <div class="tab-list" role="tablist" aria-label="Conteúdo do exercício">
-        <button class="tab-button" id="tab-enunciado" type="button" role="tab" aria-selected="true" aria-controls="painel-enunciado">Enunciado</button>
-        <button class="tab-button" id="tab-resolucao" type="button" role="tab" aria-selected="false" aria-controls="painel-resolucao" tabindex="-1">Resolução</button>
-        <button class="tab-button" id="tab-diagrama" type="button" role="tab" aria-selected="false" aria-controls="painel-diagrama" tabindex="-1">Diagrama</button>
-      </div>
+    <div class="lesson-sections">
 
-      <section class="tab-panel" id="painel-enunciado" role="tabpanel" aria-labelledby="tab-enunciado">
+      <section class="lesson-section" id="enunciado" aria-label="Enunciado">
         <article class="problem-sheet">
           <div class="problem-number">
             <span>Halliday</span>
@@ -72,7 +77,7 @@
         </article>
       </section>
 
-      <section class="tab-panel" id="painel-resolucao" role="tabpanel" aria-labelledby="tab-resolucao" hidden>
+      <section class="lesson-section" id="resolucao" aria-label="Resolução">
         <article class="solution-article">
           <header class="solution-heading">
             <p class="eyebrow">Resolução passo a passo</p>
@@ -84,7 +89,7 @@
           </header>
 
           <section>
-            <span class="solution-step">01 · convenção de sinais</span>
+            <span class="solution-step">convenção de sinais</span>
             <h3>Identifique a direção de cada força</h3>
             <p>
               Todas as cargas são positivas, portanto a interação é repulsiva.
@@ -105,7 +110,6 @@
           </section>
 
           <section>
-            <span class="solution-step">02</span>
             <h3>Traduza as medições em duas equações</h3>
             <p>Use apenas os módulos positivos das resultantes informadas:</p>
             <div class="math-block math-display">
@@ -124,7 +128,6 @@
           </section>
 
           <section>
-            <span class="solution-step">03</span>
             <h3>Isole cada módulo</h3>
             <p>Somando e subtraindo as equações:</p>
             <div class="math-block math-display">
@@ -142,7 +145,6 @@
           </section>
 
           <section>
-            <span class="solution-step">04</span>
             <h3>Converta a razão de forças em razão de cargas</h3>
             <p>
               Pela lei de Coulomb, para a força que uma carga i exerce sobre A:
@@ -174,7 +176,7 @@
           </section>
 
           <section>
-            <span class="solution-step">05 · verificação</span>
+            <span class="solution-step">verificação</span>
             <h3>A diferença precisa reproduzir a segunda medida</h3>
             <div class="math-block math-display">
               \[
@@ -194,7 +196,7 @@
         </article>
       </section>
 
-      <section class="tab-panel" id="painel-diagrama" role="tabpanel" aria-labelledby="tab-diagrama" hidden>
+      <section class="lesson-section" id="diagrama" aria-label="Diagrama">
         <article class="static-diagram-shell">
           <header class="static-diagram-heading">
             <div>
@@ -209,13 +211,13 @@
             <desc id="diagram-18-desc">Na configuração a, B e C estão à direita de A e as duas forças apontam para a esquerda. Na configuração b, B está à esquerda e sua força aponta para a direita, enquanto a força maior de C aponta para a esquerda, produzindo uma pequena resultante para a esquerda.</desc>
             <defs>
               <marker id="arrow-18-one" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto">
-                <path d="M 0 0 L 10 5 L 0 10 z" fill="#008b95"></path>
+                <path d="M 0 0 L 10 5 L 0 10 z" style="fill: var(--force-1)"></path>
               </marker>
               <marker id="arrow-18-two" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto">
-                <path d="M 0 0 L 10 5 L 0 10 z" fill="#e07a1f"></path>
+                <path d="M 0 0 L 10 5 L 0 10 z" fill="#e8963f"></path>
               </marker>
               <marker id="arrow-18-result" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto">
-                <path d="M 0 0 L 10 5 L 0 10 z" fill="#7a3ce7"></path>
+                <path d="M 0 0 L 10 5 L 0 10 z" style="fill: var(--resultant)"></path>
               </marker>
             </defs>
 

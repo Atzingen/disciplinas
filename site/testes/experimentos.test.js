@@ -21,29 +21,25 @@ const experiments = [
   {
     slug: "01-campo-corrente",
     image: "exp-01-oersted-montagem.jpg",
-    tabs: 3,
-    academicReport: true,
+    tabs: 4,
     equations: [/\\frac\{\\mu_0 I\}\{2\\pi r\}/, /\\tan\\varphi/, /\\oint_C/],
   },
   {
     slug: "02-campo-solenoide",
     image: "exp-02-solenoide-montagem.jpg",
-    tabs: 3,
-    academicReport: true,
+    tabs: 4,
     equations: [/B_\{\\mathrm\{ideal\}\}/, /\\frac\{N\}\{\\ell\}/, /\\sqrt\{a\^2/],
   },
   {
     slug: "03-forca-magnetica-motor",
     image: "exp-03-balanco-magnetico.jpg",
-    tabs: 3,
-    academicReport: true,
-    equations: [/d\\vec\{F\}/, /\\vec\{\\tau\}/, /J\\ddot\{\\theta\}/],
+    tabs: 4,
+    equations: [/d\\vec/, /\\vec\\tau/, /J\\ddot\{\\theta\}/],
   },
   {
     slug: "04-inducao-eletromagnetica",
     image: "exp-04-montagem.jpg",
-    tabs: 3,
-    academicReport: true,
+    tabs: 4,
     equations: [/\\mathcal\{E\}/, /\\frac\{d\\Phi_B\}\{dt\}/, /L\\frac\{di\}\{dt\}/],
   },
 ];
@@ -89,6 +85,7 @@ function createInteractiveFixture({ withReport = false } = {}) {
   const tabs = [
     makeTab("painel-montagem", true),
     makeTab("painel-fundamentos", false),
+    makeTab("painel-dados", false),
     makeTab("painel-relatorio", false),
   ];
   for (const tab of tabs) {
@@ -127,7 +124,7 @@ test("ação de imprimir ativa primeiro a aba Relatório", async () => {
   assert.equal(typeof printResult?.then, "function");
   await printResult;
 
-  assert.equal(fixture.tabs[2].getAttribute("aria-selected"), "true");
+  assert.equal(fixture.tabs[3].getAttribute("aria-selected"), "true");
   assert.equal(fixture.panels.get("#painel-relatorio").hidden, false);
   assert.equal(fixture.panels.get("#painel-montagem").hidden, true);
   assert.equal(printCalls, 1);
@@ -189,18 +186,16 @@ for (const experiment of experiments) {
       .split(/\s+/)
       .filter(Boolean).length;
 
-    const expectedTabs = experiment.tabs ?? 4;
-    assert.equal((html.match(/role="tab"/g) ?? []).length, expectedTabs);
-    assert.equal((html.match(/role="tabpanel"/g) ?? []).length, expectedTabs);
+    assert.equal((html.match(/role="tab"/g) ?? []).length, experiment.tabs);
+    assert.equal((html.match(/role="tabpanel"/g) ?? []).length, experiment.tabs);
     assert.match(text, /Montagem/);
-    assert.match(text, /Fundamentação/);
-    assert.match(text, /Roteiro e relatório/);
-    assert.doesNotMatch(html, /painel-dados|>Dados</);
-    assert.match(html, /class="reasoning-sequence"/);
-    assert.match(html, /class="report-document"/);
-    assert.match(html, /data-markdown-report="\.\/relatorio\.md"/);
-    assert.match(html, /\\begin\{aligned\}/);
-    assert.match(html, /\\frac\{/);
+    assert.match(text, /Fundamentos/);
+    assert.match(text, /Dados/);
+    assert.match(text, /Relatório/);
+    assert.match(
+      html,
+      /class="report-template"[^>]*data-markdown-report="\.\/relatorio\.md"/,
+    );
     assert.match(html, /class="experiment-safety"/);
     assert.match(text, /5–10 s/);
     assert.match(html, /<table\b/);
@@ -210,16 +205,29 @@ for (const experiment of experiments) {
     assert.match(text, /Fonte: manual AZEHEB/);
     assert.match(html, /data-active-section="experimentos"/);
     assert.match(html, /experimento\.js/);
-
-    for (const equation of experiment.equations) {
-      assert.match(text, equation);
-    }
+    assert.match(
+      html,
+      /class="[^"]*math-display[^"]*"/,
+      `${experiment.slug} deve renderizar as equações da fundamentação com MathJax`,
+    );
+    assert.match(html, /\\begin\{aligned\}/);
+    assert.match(html, /\\frac\{/);
+    assert.doesNotMatch(
+      html,
+      /<div class="math-block">[^<]*\/[^<]*<\/div>/,
+      `${experiment.slug} não deve exibir divisões tipográficas cruas`,
+    );
 
     assert.match(report, /^# /m);
     assert.match(report, /^## Dados brutos/m);
     assert.match(report, /^## Tratamento e análise/m);
     assert.match(report, /^## Discussão/m);
     assert.match(report, /^## Conclusão/m);
+    assert.match(report, /\\begin\{aligned\}/);
+    assert.match(report, /\\frac\{/);
+    for (const equation of experiment.equations) {
+      assert.match(report, equation);
+    }
     assert.ok(
       reportWords >= 1500,
       experiment.slug + " tem somente " + reportWords + " palavras no relatório",
@@ -237,16 +245,16 @@ test("04-inducao adota relatório acadêmico contínuo e matemática LaTeX", asy
     .split(/\s+/)
     .filter(Boolean).length;
 
-  assert.equal((html.match(/role="tab"/g) ?? []).length, 3);
-  assert.equal((html.match(/role="tabpanel"/g) ?? []).length, 3);
-  assert.doesNotMatch(html, /painel-dados|>Dados</);
-  assert.match(html, /class="reasoning-sequence"/);
-  assert.match(html, /class="report-document"/);
-  assert.match(html, /\\frac\{d\\Phi_B\}\{dt\}/);
-  assert.match(html, /\\begin\{aligned\}/);
+  assert.equal((html.match(/role="tab"/g) ?? []).length, 4);
+  assert.equal((html.match(/role="tabpanel"/g) ?? []).length, 4);
+  assert.match(
+    html,
+    /class="report-template"[^>]*data-markdown-report="\.\/relatorio\.md"/,
+  );
   assert.match(report, /^## Dados brutos/m);
   assert.match(report, /^## Tratamento e análise/m);
   assert.match(report, /^## Discussão/m);
   assert.match(report, /\$\$[\s\S]*\\frac[\s\S]*\$\$/);
+  assert.match(report, /\\begin\{aligned\}/);
   assert.ok(reportWords >= 1500, `o relatório tem somente ${reportWords} palavras`);
 });

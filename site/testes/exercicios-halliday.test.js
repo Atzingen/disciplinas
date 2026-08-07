@@ -16,15 +16,14 @@ async function readExercisePage(slug) {
 function assertAccessibleLessonPage(html, exerciseNumber) {
   assert.ok(html.length > 0, `a página do exercício ${exerciseNumber} deve existir`);
   assert.equal(
-    (html.match(/role="tab"/g) ?? []).length,
+    (html.match(/class="lesson-section"/g) ?? []).length,
     3,
-    "a página deve oferecer três abas",
+    "enunciado, resolução e apoio ficam na mesma página",
   );
-  assert.equal(
-    (html.match(/role="tabpanel"/g) ?? []).length,
-    3,
-    "cada aba deve controlar um painel",
-  );
+  assert.match(html, /data-section-nav/);
+  assert.match(html, /<a href="#enunciado">/);
+  assert.match(html, /<a href="#resolucao">/);
+  assert.match(html, /<a href="\.\.\/capitulo-21\/">/);
   assert.match(html, /<svg[^>]+role="img"[^>]+aria-labelledby=/);
   assert.match(html, /<title(?:\s+id="[^"]+")?>[^<]+<\/title>/);
   assert.match(html, /<desc(?:\s+id="[^"]+")?>[^<]+<\/desc>/);
@@ -40,17 +39,17 @@ function assertTypesetMathematics(html, exerciseNumber) {
   assert.match(
     html,
     /\\begin\{aligned\}/,
-    "o exercício " + exerciseNumber + " deve alinhar deduções em LaTeX",
+    `o exercício ${exerciseNumber} deve alinhar deduções em LaTeX`,
   );
   assert.match(
     html,
     /\\frac\{/,
-    "o exercício " + exerciseNumber + " deve compor frações com \\frac",
+    `o exercício ${exerciseNumber} deve compor frações com \\frac`,
   );
   assert.match(
     html,
     /\\vec\{/,
-    "o exercício " + exerciseNumber + " deve representar vetores em LaTeX",
+    `o exercício ${exerciseNumber} deve representar vetores em LaTeX`,
   );
   assert.doesNotMatch(html, /μ₀I\/\(2πr\)/);
   assert.doesNotMatch(html, /x<sup>3<\/sup>\s*=/);
@@ -75,6 +74,21 @@ test("21.18 publica a razão entre as cargas com diagrama acessível", async () 
   assert.match(html, /1,33/);
   assert.match(html, /2,014/);
   assert.match(html, /2,877/);
+});
+
+test("21.33 publica a carga positiva e o explorador de substâncias", async () => {
+  const html = await readExercisePage("halliday-21-33");
+
+  assert.ok(html.length > 0, "a página do exercício 33 deve existir");
+  assert.equal((html.match(/class="lesson-section"/g) ?? []).length, 3);
+  assert.match(html, /<a href="#substancias">/);
+  assert.match(html, /<svg[^>]+role="img"[^>]+aria-labelledby=/);
+  assert.match(html, /Halliday[^<]*21\.33/);
+  assert.match(html, /1,34 × 10<sup>7<\/sup> C/);
+  assert.match(html, /8,35 × 10<sup>25<\/sup> prótons/);
+  assert.match(html, /Z = 2\(1\) \+ 8 = 10/);
+  assert.match(html, /data-substance-explorer/);
+  assert.match(html, /src="\.\/app\.js"/);
 });
 
 test("21.34 publica os três menores ângulos possíveis", async () => {

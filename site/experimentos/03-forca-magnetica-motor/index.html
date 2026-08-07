@@ -3,31 +3,73 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Roteiro universitário sobre força magnética em condutores, torque em espiras e dinâmica de um motor elementar.">
+  <meta name="description" content="Roteiro avançado sobre força magnética em um condutor, torque em uma espira e funcionamento de um motor elementar.">
   <title>Força magnética e motor elementar · Experimento 03</title>
-  <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="../../assets/base.css">
   <link rel="stylesheet" href="../../assets/experimentos.css">
+  <script>try{if(localStorage.getItem("tema")==="escuro"){document.documentElement.dataset.theme="escuro"}}catch(erro){}</script>
 </head>
 <body class="experiment-page">
   <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
 
+  <div class="page-shell" data-experiment-tabs>
+  <div class="site-topbar" data-topbar>
+    <div class="site-topbar__inner">
+      <nav class="experiment-breadcrumb" aria-label="Caminho de navegação">
+        <a href="../../">Início</a>
+        <span aria-hidden="true">/</span>
+        <a href="../">Experimentos</a>
+        <span aria-hidden="true">/</span>
+        <span aria-current="page">Experimento 03</span>
+      </nav>
+      <div
+        class="experiment-header__navigation"
+        data-site-navigation
+        data-root-path="../../"
+        data-active-section="experimentos"
+      ></div>
+    </div>
+      <div class="experiment-tab-list" role="tablist" aria-label="Etapas do roteiro">
+        <button
+          class="experiment-tab"
+          id="aba-montagem"
+          type="button"
+          role="tab"
+          aria-controls="painel-montagem"
+          aria-selected="true"
+          tabindex="0"
+        >Montagem</button>
+        <button
+          class="experiment-tab"
+          id="aba-fundamentos"
+          type="button"
+          role="tab"
+          aria-controls="painel-fundamentos"
+          aria-selected="false"
+          tabindex="-1"
+        >Fundamentos</button>
+        <button
+          class="experiment-tab"
+          id="aba-dados"
+          type="button"
+          role="tab"
+          aria-controls="painel-dados"
+          aria-selected="false"
+          tabindex="-1"
+        >Dados</button>
+        <button
+          class="experiment-tab"
+          id="aba-relatorio"
+          type="button"
+          role="tab"
+          aria-controls="painel-relatorio"
+          aria-selected="false"
+          tabindex="-1"
+        >Relatório</button>
+      </div>
+  </div>
+
   <header class="experiment-header">
-    <div
-      class="experiment-header__navigation"
-      data-site-navigation
-      data-root-path="../../"
-      data-active-section="experimentos"
-    ></div>
-
-    <nav class="experiment-breadcrumb" aria-label="Caminho de navegação">
-      <a href="../../">Início</a>
-      <span aria-hidden="true">/</span>
-      <a href="../">Experimentos</a>
-      <span aria-hidden="true">/</span>
-      <span aria-current="page">Experimento 03</span>
-    </nav>
-
     <div class="experiment-hero">
       <div>
         <p class="eyebrow">Experimento 03 · Física III</p>
@@ -35,49 +77,19 @@
       </div>
       <div>
         <p class="experiment-hero__lead">
-          Da força transversal sobre um fio ao torque sobre uma espira:
-          previsões vetoriais, inversões controladas e um modelo dinâmico para
-          interpretar a rotação.
+          Do desvio de um condutor ao torque sustentado de um rotor: preveja os
+          sinais, observe a montagem real e confronte o modelo com o movimento.
         </p>
         <ul class="experiment-meta" aria-label="Informações do experimento">
-          <li>Duas etapas conectadas</li>
-          <li>Fonte de 6 V / 1 A</li>
-          <li>Força · torque · energia</li>
+          <li>Duas partes</li>
+          <li>Fonte 6 V / 1 A</li>
+          <li>Força · torque · comutação</li>
         </ul>
       </div>
     </div>
   </header>
 
-  <main class="experiment-main" id="conteudo" data-experiment-tabs>
-    <div class="experiment-tab-list" role="tablist" aria-label="Etapas do roteiro">
-      <button
-        class="experiment-tab"
-        id="aba-montagem"
-        type="button"
-        role="tab"
-        aria-controls="painel-montagem"
-        aria-selected="true"
-        tabindex="0"
-      >Montagem</button>
-      <button
-        class="experiment-tab"
-        id="aba-fundamentos"
-        type="button"
-        role="tab"
-        aria-controls="painel-fundamentos"
-        aria-selected="false"
-        tabindex="-1"
-      >Fundamentação</button>
-      <button
-        class="experiment-tab"
-        id="aba-relatorio"
-        type="button"
-        role="tab"
-        aria-controls="painel-relatorio"
-        aria-selected="false"
-        tabindex="-1"
-      >Roteiro e relatório</button>
-    </div>
+  <main class="experiment-main" id="conteudo">
 
     <section
       class="experiment-panel"
@@ -88,205 +100,193 @@
       <div class="experiment-section-heading">
         <div>
           <p class="eyebrow">Bancada e protocolo</p>
-          <h2>Montagem experimental</h2>
+          <h2>Montagem</h2>
         </div>
         <p>
-          A primeira etapa isola o sinal da força sobre um condutor. A segunda
-          reorganiza os mesmos elementos para mostrar como forças distribuídas
-          produzem torque e movimento rotacional.
+          A Parte I isola o sinal da força sobre um condutor. A Parte II troca o
+          balanço pelo rotor e investiga como um par de forças produz rotação.
         </p>
       </div>
 
-      <div class="experiment-prose">
-        <section class="continuous-section" aria-labelledby="objetivos-exp03">
-          <h3 id="objetivos-exp03">Objetivos e questão investigativa</h3>
-          <p>
-            O experimento testa a estrutura vetorial da força magnética por
-            inversões independentes da corrente e do campo. Em seguida,
-            investiga como a força resultante sobre uma espira pode ser nula
-            enquanto o torque resultante é diferente de zero. O problema
-            central é explicar, com um único encadeamento físico, o desvio do
-            balanço, o par de forças no rotor, as posições de torque nulo e a
-            necessidade da comutação.
-          </p>
-          <p class="prose-lead">
-            Antes de cada energização, registre a previsão. O primeiro
-            deslocamento observado é a evidência principal; oscilações
-            posteriores incluem inércia, atrito e retorno mecânico.
-          </p>
-        </section>
-
-        <section class="continuous-section" aria-labelledby="materiais-exp03">
-          <h3 id="materiais-exp03">Materiais e organização da bancada</h3>
-          <ul class="materials-list">
-            <li>placa para ensaios de eletromagnetismo;</li>
-            <li>ímã permanente em forma de U;</li>
-            <li>fonte de alimentação de \(6\ \mathrm{V}/1\ \mathrm{A}\);</li>
-            <li>balanço magnético;</li>
-            <li>duas torres para os ensaios de força;</li>
-            <li>rotor para o motor elementar;</li>
-            <li>cabos do conjunto e folha para o referencial vetorial.</li>
+      <div class="experiment-grid">
+        <article class="lab-card">
+          <h3>Objetivos de aprendizagem</h3>
+          <ul>
+            <li>Aplicar o produto vetorial para prever a direção da força magnética antes de ligar a fonte.</li>
+            <li>Testar separadamente o efeito de inverter a corrente e de inverter o campo magnético.</li>
+            <li>Relacionar o par de forças na espira ao torque, à energia potencial e à estabilidade.</li>
+            <li>Explicar por que comutação, inércia e dissipação são essenciais ao motor elementar.</li>
           </ul>
-          <p>
-            Amperímetro, régua, cronômetro ou análise de vídeo podem ampliar a
-            atividade, mas não fazem parte do conjunto básico. Qualquer medida
-            quantitativa deve identificar instrumento, resolução, faixa e
-            procedimento de calibração.
-          </p>
-        </section>
+        </article>
 
-        <aside class="experiment-safety">
-          <strong>Segurança elétrica, térmica e mecânica</strong>
-          <p>
-            Faça toda alteração com a chave desligada e o controle no mínimo.
-            Trabalhe em ciclos de 5–10 s. Energize durante
-            \(5\)–\(10\ \mathrm{s}\) e mantenha o circuito
-            desligado por \(5\)–\(10\ \mathrm{s}\) entre tentativas. Não
-            ultrapasse metade do curso do controle sem autorização. Segure o
-            ímã em U com firmeza e evite prender os dedos. Na etapa do motor,
-            mantenha cabelos, roupas, cabos e mãos longe do rotor.
-          </p>
-        </aside>
-
-        <section class="continuous-section" aria-labelledby="referencial-exp03">
-          <h3 id="referencial-exp03">Referencial comum às duas etapas</h3>
-          <p>
-            Declare três eixos e o ponto de vista do observador. Oriente
-            \(d\vec{\ell}\) no sentido convencional da corrente, do borne
-            vermelho para o preto, e \(\vec B\) do polo norte para o polo sul no
-            vão do ímã. Termos como “para dentro”, “para fora”, “horário” e
-            “anti-horário” só são válidos quando acompanhados desse referencial.
-          </p>
-        </section>
-
-        <section class="continuous-section" aria-labelledby="parte-i-exp03">
-          <p class="eyebrow">Parte I</p>
-          <h3 id="parte-i-exp03">Balanço magnético e inversões de sinal</h3>
-
-          <figure class="experiment-figure">
-            <img
-              src="../../assets/experimentos/azeheb/exp-03-balanco-magnetico.jpg"
-              alt="Balanço magnético suspenso nas torres e atravessando o vão de um ímã em U sobre a placa experimental."
-            >
-            <figcaption>
-              <strong>Figura 1 — configuração inicial do balanço.</strong>
-              O trecho ativo do condutor ocupa o vão do ímã. Fonte: manual AZEHEB.
-            </figcaption>
-          </figure>
-
-          <div class="semantic-callout">
-            <strong>Previsão obrigatória.</strong>
-            Para a configuração inicial, desenhe \(d\vec{\ell}\), \(\vec B\) e
-            \(d\vec{F}\). Preveja separadamente o que acontece ao inverter apenas
-            a corrente, apenas o ímã e as duas grandezas simultaneamente.
-            Preserve a previsão original mesmo que o dado posterior a contrarie.
-          </div>
-
-          <ol class="procedure-list">
-            <li>
-              Com a fonte desligada e o controle no mínimo, instale as torres,
-              o balanço e o ímã como na Figura 1. Verifique se o condutor se move
-              livremente sem tocar o ímã.
-            </li>
-            <li>
-              Identifique os polos e registre o sentido de \(\vec B\) no vão.
-              Marque também o sentido convencional da corrente no trecho ativo.
-            </li>
-            <li>
-              Anote a posição de repouso e a previsão do primeiro deslocamento.
-              Energize por \(5\)–\(10\ \mathrm{s}\), aumentando lentamente o
-              controle, e registre o movimento inicial. Desligue e aguarde.
-            </li>
-            <li>
-              Inverta somente a corrente. Refaça o diagrama, repita o pulso e
-              registre se o sinal do deslocamento foi invertido.
-            </li>
-            <li>
-              Com a fonte desligada, retorne à corrente inicial e gire o ímã
-              para inverter \(\vec B\). Preveja e observe novamente.
-            </li>
-            <li>
-              Mantenha o ímã invertido e inverta também a corrente. Verifique se
-              a dupla inversão recupera o sinal da configuração inicial.
-            </li>
-            <li>
-              Repita configurações ambíguas. Registre folga, contato, oscilação,
-              retorno incompleto ao zero e assimetrias da montagem.
-            </li>
-          </ol>
-
-          <figure class="experiment-figure">
-            <img
-              src="../../assets/experimentos/azeheb/exp-03-balanco-deslocado.jpg"
-              alt="Balanço magnético inclinado para fora do vão do ímã durante a passagem de corrente."
-            >
-            <figcaption>
-              <strong>Figura 2 — resposta mecânica visível.</strong>
-              A inclinação ilustra o sinal da força, mas não substitui o dado
-              observado na bancada. Fonte: manual AZEHEB.
-            </figcaption>
-          </figure>
-        </section>
-
-        <section class="continuous-section" aria-labelledby="parte-ii-exp03">
-          <p class="eyebrow">Parte II</p>
-          <h3 id="parte-ii-exp03">Espira, torque e motor elementar</h3>
-
-          <figure class="experiment-figure">
-            <img
-              src="../../assets/experimentos/azeheb/exp-03-motor-elementar.jpg"
-              alt="Rotor retangular apoiado nos suportes e posicionado entre os polos do ímã em U."
-            >
-            <figcaption>
-              <strong>Figura 3 — rotor instalado.</strong>
-              A espira deve girar sem tocar o ímã, os suportes ou os cabos.
-              Fonte: manual AZEHEB.
-            </figcaption>
-          </figure>
-
-          <div class="semantic-callout">
-            <strong>Previsão do torque.</strong>
-            Desenhe a corrente nos dois ramos longos, aplique o produto vetorial
-            em cada ramo e determine o sentido do par de forças. Indique as
-            orientações em que \(|\vec\tau|\) deve ser máximo ou nulo e preveja
-            o sentido inicial de rotação.
-          </div>
-
-          <ol class="procedure-list">
-            <li>
-              Desligue a fonte, retorne o controle ao mínimo e substitua o
-              balanço pelo rotor. Posicione a espira no vão do ímã.
-            </li>
-            <li>
-              Gire o conjunto à mão, ainda sem corrente, para verificar
-              liberdade de movimento, alinhamento do eixo e ausência de contato.
-            </li>
-            <li>
-              Registre o diagrama vetorial e a previsão. Ajuste o controle a uma
-              posição intermediária apenas depois de finalizar o esquema.
-            </li>
-            <li>
-              Energize por no máximo \(5\)–\(10\ \mathrm{s}\). Dê um pequeno
-              impulso somente se o rotor estiver em uma posição de torque nulo
-              ou se precisar vencer o atrito estático.
-            </li>
-            <li>
-              Registre sentido de partida, regularidade, posições mortas, ruído
-              e eventual necessidade de impulso. Desligue e aguarde o
-              resfriamento.
-            </li>
-            <li>
-              Em nova tentativa, reduza a corrente ou afaste ligeiramente o ímã
-              e compare qualitativamente a resposta. Toda alteração deve ser
-              feita sem corrente.
-            </li>
-            <li>
-              Finalize com chave desligada e controle no mínimo. Identifique
-              qualquer ensaio que tenha sido interrompido por segurança.
-            </li>
-          </ol>
-        </section>
+        <article class="lab-card">
+          <h3>Material efetivamente utilizado</h3>
+          <ul class="materials-list">
+            <li>1 placa para ensaios de eletromagnetismo;</li>
+            <li>1 ímã em forma de U;</li>
+            <li>1 fonte de alimentação de 6 V / 1 A;</li>
+            <li>1 balanço magnético;</li>
+            <li>2 torres para experimentos de força magnética;</li>
+            <li>1 rotor para motor elementar.</li>
+          </ul>
+        </article>
       </div>
+
+      <aside class="experiment-safety">
+        <strong>Segurança elétrica, térmica e mecânica</strong>
+        <p>
+          Monte sempre com a chave desligada e o dial no mínimo. Energize por
+          <b>5–10 s</b>, desligue por <b>5–10 s</b> para resfriamento e trabalhe
+          no máximo até metade do curso do dial. Manuseie a placa somente pelas
+          bordas. Na Parte II, mantenha dedos, cabelos, roupas e cabos longe do
+          rotor. Segure o ímã em U com firmeza: ele pode atrair peças e prender
+          os dedos quando for aproximado, afastado ou invertido.
+        </p>
+      </aside>
+
+      <article class="lab-card">
+        <h3>Referencial para todas as previsões</h3>
+        <p>
+          Antes de energizar, desenhe três eixos e declare o ponto de vista do
+          observador. Use no registro as expressões <em>para dentro do ímã</em>,
+          <em>para fora do ímã</em>, <em>para cima</em> e <em>para baixo</em>.
+          Marque o sentido convencional da corrente, do borne vermelho para o
+          preto, e o campo do polo norte para o sul. Sem esse referencial, um
+          acerto de sinal não pode ser auditado.
+        </p>
+      </article>
+
+      <section aria-labelledby="parte-i-montagem">
+        <div class="experiment-section-heading">
+          <div>
+            <p class="eyebrow">Parte I</p>
+            <h2 id="parte-i-montagem">Balanço e força magnética</h2>
+          </div>
+          <p>
+            Uma variável é invertida por vez. Registre a previsão antes de cada
+            pulso e a observação somente depois.
+          </p>
+        </div>
+
+        <figure class="experiment-figure">
+          <img
+            src="../../assets/experimentos/azeheb/exp-03-balanco-magnetico.jpg"
+            alt="Balanço magnético suspenso entre as duas torres, atravessando o vão de um ímã em U sobre a placa experimental."
+          >
+          <figcaption>
+            <strong>Figura 1 — configuração inicial.</strong> O trecho inferior
+            do balanço ocupa o vão do ímã; o polo norte vermelho fica para cima.
+            Fonte: manual AZEHEB.
+          </figcaption>
+        </figure>
+
+        <div class="prediction-box">
+          <strong>Previsão obrigatória antes de energizar.</strong>
+          Com o polo N vermelho para cima, indique o sentido vertical do campo.
+          Para a corrente do vermelho para o preto, aplique a regra da mão
+          direita e preveja se o balanço irá para dentro ou para fora do ímã.
+          Em seguida, preveja o que muda ao inverter apenas a corrente, apenas o
+          ímã e ambos. Não corrija a previsão depois de observar.
+        </div>
+
+        <div class="experiment-grid">
+          <article class="lab-card">
+            <h3>Procedimento da Parte I</h3>
+            <ol class="procedure-list">
+              <li>Com chave desligada e dial no mínimo, instale as duas torres, o balanço e o ímã em U como na Figura 1. Deixe o polo N vermelho para cima.</li>
+              <li>Identifique o campo no vão: ele parte do norte e chega ao sul; nesta configuração, o manual o descreve verticalmente para baixo.</li>
+              <li>Conecte a fonte de 6 V à placa sem alterar o estado desligado. Confira se o balanço se move livremente e anote sua posição de repouso.</li>
+              <li>Configure a corrente convencional do borne vermelho para o preto e registre a previsão da força.</li>
+              <li>Ligue por 5–10 s e aumente o dial lentamente, sem ultrapassar metade do curso. Observe o primeiro deslocamento; desligue e aguarde 5–10 s.</li>
+              <li>Inverta somente o sentido da corrente. Faça uma nova previsão, repita o pulso e registre o deslocamento.</li>
+              <li>Com chave desligada e dial no mínimo, gire o ímã em U para inverter os polos e o campo. Repita as duas orientações de corrente, sempre prevendo antes de ligar.</li>
+              <li>Ao terminar, volte o dial ao mínimo e deixe a chave desligada.</li>
+            </ol>
+          </article>
+
+          <article class="lab-card">
+            <h3>O que observar</h3>
+            <ul>
+              <li>O sentido do primeiro deslocamento, não a posição final após oscilações.</li>
+              <li>Se a inversão de uma única variável inverte o sinal do movimento.</li>
+              <li>Se inverter corrente e campo simultaneamente restaura o sinal inicial.</li>
+              <li>Folgas, contato com o ímã, assimetria do balanço ou retorno incompleto ao zero.</li>
+            </ul>
+          </article>
+        </div>
+
+        <figure class="experiment-figure">
+          <img
+            src="../../assets/experimentos/azeheb/exp-03-balanco-deslocado.jpg"
+            alt="Balanço magnético inclinado para fora do vão do ímã em U durante a passagem de corrente."
+          >
+          <figcaption>
+            <strong>Figura 2 — resposta do balanço.</strong> A inclinação torna
+            visível o sinal da força; compare-a com sua previsão vetorial, sem
+            tomar a ilustração como dado medido. Fonte: manual AZEHEB.
+          </figcaption>
+        </figure>
+      </section>
+
+      <section aria-labelledby="parte-ii-montagem">
+        <div class="experiment-section-heading">
+          <div>
+            <p class="eyebrow">Parte II</p>
+            <h2 id="parte-ii-montagem">Motor elementar</h2>
+          </div>
+          <p>
+            O balanço dá lugar à espira: forças opostas nos ramos longos formam
+            um binário e transferem trabalho ao rotor.
+          </p>
+        </div>
+
+        <figure class="experiment-figure">
+          <img
+            src="../../assets/experimentos/azeheb/exp-03-motor-elementar.jpg"
+            alt="Rotor retangular do motor elementar apoiado em dois suportes circulares e posicionado entre os polos do ímã em U."
+          >
+          <figcaption>
+            <strong>Figura 3 — rotor instalado.</strong> A espira deve girar sem
+            tocar o ímã, os suportes ou cabos. A instalação é feita somente com
+            a chave desligada. Fonte: manual AZEHEB.
+          </figcaption>
+        </figure>
+
+        <div class="prediction-box">
+          <strong>Previsão antes da partida.</strong>
+          Desenhe a corrente nos dois ramos longos da espira, aplique o produto
+          vetorial em cada ramo e preveja o sentido do par de forças e da
+          rotação inicial. Indique também as orientações em que o torque seria
+          máximo ou nulo.
+        </div>
+
+        <div class="experiment-grid">
+          <article class="lab-card">
+            <h3>Procedimento da Parte II</h3>
+            <ol class="procedure-list">
+              <li>Reutilize a placa, as torres e o ímã da Parte I. Desligue a chave, retorne o dial ao mínimo e retire o balanço.</li>
+              <li>Com a chave ainda desligada, apoie o rotor nos dois suportes circulares e posicione a espira entre os polos do ímã, como na Figura 3.</li>
+              <li>Gire o rotor à mão, sem energizar, apenas para verificar liberdade de movimento e distância segura de ímã e cabos.</li>
+              <li>Registre a previsão vetorial. Só então, mantendo a chave desligada, ajuste o dial a uma posição intermediária, correspondente a aproximadamente metade do curso.</li>
+              <li>Ligue a chave. Dê um pequeno impulso no rotor apenas se necessário para vencer uma posição de torque nulo ou o atrito estático.</li>
+              <li>Se a rotação ficar muito alta, reduza imediatamente a corrente pelo dial ou, com cuidado, afaste ligeiramente o ímã em U.</li>
+              <li>Observe o sentido de partida e a regularidade durante no máximo 5–10 s. Desligue por 5–10 s antes de uma nova tentativa.</li>
+              <li>Finalize com a chave desligada e o dial no mínimo.</li>
+            </ol>
+          </article>
+
+          <article class="lab-card">
+            <h3>Critérios de observação</h3>
+            <ul>
+              <li>Sentido de partida comparado ao par de forças previsto.</li>
+              <li>Existência de posições mortas e necessidade real do impulso inicial.</li>
+              <li>Rotação estável, intermitente, oscilatória ou interrompida.</li>
+              <li>Efeito qualitativo de reduzir a corrente ou afastar o ímã.</li>
+              <li>Ruído de contato, atrito nos suportes e desalinhamento do eixo.</li>
+            </ul>
+          </article>
+        </div>
+      </section>
     </section>
 
     <section
@@ -298,212 +298,337 @@
     >
       <div class="experiment-section-heading">
         <div>
-          <p class="eyebrow">Modelo físico encadeado</p>
-          <h2>Fundamentação</h2>
+          <p class="eyebrow">Modelo e derivação</p>
+          <h2>Fundamentos</h2>
         </div>
         <p>
-          A dedução parte da força de Lorentz, passa ao elemento de corrente e
-          chega ao torque, à energia e à equação dinâmica do rotor.
+          A sequência parte da carga individual, passa ao fio e fecha no modelo
+          energético e dinâmico do rotor.
         </p>
       </div>
 
-      <div class="reasoning-sequence">
-        <section class="reasoning-step">
-          <div class="reasoning-step__number" aria-hidden="true">1</div>
-          <div class="reasoning-step__content">
-            <h3>Da carga em movimento ao elemento de corrente</h3>
-            <p>
-              A parte magnética da força de Lorentz sobre uma carga é
-              perpendicular à velocidade e ao campo:
-            </p>
-            <div class="math-display">
-              \[
-              \vec F_B=q\,\vec v\times\vec B.
-              \]
-            </div>
-            <p>
-              Em um volume \(A\,d\ell\), com densidade \(n\) de portadores,
-              somam-se \(nA\,d\ell\) contribuições. Usando
-              \(I=nqAv_d\), obtém-se
-            </p>
-            <div class="math-display">
-              \[
-              \begin{aligned}
-              d\vec{F}
-              &=(nA\,d\ell)\,q\,\vec v_d\times\vec B\\
+      <article class="theory-card">
+        <h3>1. Da partícula ao elemento de corrente</h3>
+        <p>
+          Para uma carga <i>q</i> com velocidade <i>v</i> em um campo <i>B</i>,
+          a parte magnética da força de Lorentz é um produto vetorial:
+        </p>
+        <div class="equation-flow" aria-label="Derivação da força em um fio">
+          <div class="equation-step math-display">
+            \[
+            \vec F_B=q\,\vec v\times\vec B.
+            \]
+            <small>A força é perpendicular à velocidade e ao campo; por isso o campo magnético não altera diretamente a energia cinética de uma carga pontual.</small>
+          </div>
+          <div class="equation-step math-display">
+            \[
+            \begin{aligned}
+            d\vec F
+              &=(nA\,d\ell)q\,\vec v_d\times\vec B\\
               &=I\,d\vec\ell\times\vec B.
-              \end{aligned}
-              \]
-            </div>
-            <p>
-              O vetor \(d\vec\ell\) segue a corrente convencional, inclusive
-              quando os portadores microscópicos são elétrons.
-            </p>
+            \end{aligned}
+            \]
+            <small>O volume A dℓ contém nA dℓ portadores, cada um com velocidade de deriva v_d.</small>
           </div>
-        </section>
-
-        <section class="reasoning-step">
-          <div class="reasoning-step__number" aria-hidden="true">2</div>
-          <div class="reasoning-step__content">
-            <h3>Módulo, direção e teste das inversões</h3>
-            <p>
-              Para um trecho retilíneo de comprimento \(\ell\) em campo
-              uniforme, a integração fornece
-            </p>
-            <div class="math-display">
-              \[
-              \begin{aligned}
-              \vec F&=I\,\vec\ell\times\vec B,\\
-              F&=BI\ell\sin\alpha,
-              \end{aligned}
-              \]
-            </div>
-            <p>
-              em que \(\alpha\) é o ângulo entre o fio orientado e o campo.
-              Inverter apenas \(I\) ou apenas \(\vec B\) inverte \(\vec F\);
-              inverter ambos preserva a força:
-            </p>
-            <div class="math-display">
-              \[
-              \begin{aligned}
-              \vec F(-I,\vec B)&=-\vec F(I,\vec B),\\
-              \vec F(I,-\vec B)&=-\vec F(I,\vec B),\\
-              \vec F(-I,-\vec B)&=\vec F(I,\vec B).
-              \end{aligned}
-              \]
-            </div>
+          <div class="equation-step math-display">
+            \[
+            \begin{aligned}
+            \vec F&=I\,\vec\ell\times\vec B,\\
+            F&=BI\ell\sin\alpha.
+            \end{aligned}
+            \]
+            <small>A orientação de dℓ acompanha a corrente convencional, inclusive quando os portadores microscópicos são elétrons.</small>
           </div>
-        </section>
+        </div>
+        <p>
+          A orientação segue a regra da mão direita para carga positiva ou
+          corrente convencional. Carga negativa inverte a força microscópica.
+          No fio, inverter apenas <i>I</i> ou apenas <i>B</i> troca o sinal de
+          <i>F</i>; inverter ambos preserva o sinal. A força é máxima para 90° e
+          nula quando o trecho é paralelo ao campo.
+        </p>
+      </article>
 
-        <section class="reasoning-step">
-          <div class="reasoning-step__number" aria-hidden="true">3</div>
-          <div class="reasoning-step__content">
-            <h3>Da força distribuída ao torque da espira</h3>
-            <p>
-              Os ramos opostos de uma espira recebem forças de mesmo módulo e
-              sentidos contrários. A força resultante pode ser nula, mas as
-              linhas de ação distintas formam um binário. Para \(N\) espiras de
-              área \(A\), define-se o momento de dipolo magnético
-            </p>
-            <div class="math-display">
+      <div class="experiment-grid">
+        <article class="theory-card">
+          <h3>2. Da força ao par de forças</h3>
+          <p>
+            Em uma espira retangular situada em campo aproximadamente uniforme,
+            os ramos opostos recebem forças de mesmo módulo e sentidos opostos.
+            A soma das forças pode ser zero, mas suas linhas de ação não
+            coincidem: elas formam um binário. Somando o momento de cada força
+            em relação ao eixo resulta, para <i>N</i> espiras de área <i>A</i>,
+            o módulo \(\tau=NIAB\sin\theta\).
+          </p>
+          <div class="equation-flow">
+            <div class="equation-step math-display">
               \[
               \begin{aligned}
               \vec\mu&=NIA\,\hat n,\\
-              \vec{\tau}&=\vec\mu\times\vec B,\\
+              \vec\tau&=\vec\mu\times\vec B,\\
               \tau&=NIAB\sin\theta.
               \end{aligned}
               \]
+              <small>O momento de dipolo magnético tem direção normal ao plano da espira, definida pela regra da mão direita.</small>
             </div>
-            <p>
-              Agora \(\theta\) é o ângulo entre a normal \(\hat n\) da espira e
-              \(\vec B\), não o ângulo \(\alpha\) usado para cada fio.
-            </p>
-            <figure class="experiment-figure">
-              <img
-                src="../../assets/experimentos/azeheb/exp-03-motor-forcas.jpg"
-                alt="Espira entre os polos do ímã com forças opostas nos dois ramos e indicação do sentido da corrente."
-              >
-              <figcaption>
-                <strong>Figura 4 — par de forças no rotor.</strong>
-                Forças opostas em linhas de ação diferentes produzem torque.
-                Fonte: manual AZEHEB.
-              </figcaption>
-            </figure>
           </div>
-        </section>
+          <p>
+            Na expressão do torque, θ é o ângulo entre a normal da espira e o
+            campo. A Figura 4 deve ser redesenhada no relatório com <i>I</i>,
+            <i>B</i> e <i>F</i> nos dois ramos, não apenas copiada.
+          </p>
+        </article>
 
-        <section class="reasoning-step">
-          <div class="reasoning-step__number" aria-hidden="true">4</div>
-          <div class="reasoning-step__content">
-            <h3>Energia potencial, trabalho e estabilidade</h3>
-            <p>
-              A energia potencial de um dipolo em campo uniforme é expressa
-              pelo produto escalar:
-            </p>
-            <div class="math-display">
-              \[
-              \begin{aligned}
-              U(\theta)&=-\vec\mu\cdot\vec B=-\mu B\cos\theta,\\
-              \tau_\theta&=-\frac{dU}{d\theta}
-              =-\mu B\sin\theta,\\
-              dW_{\mathrm{em}}&=-dU.
-              \end{aligned}
-              \]
-            </div>
-            <p>
-              O estado \(\theta=0\) minimiza \(U\) e é estável; o estado
-              \(\theta=\pi\) maximiza \(U\) e é instável. O torque tem módulo
-              máximo em \(\theta=\pi/2\) e \(3\pi/2\), embora a energia não seja
-              extrema nessas orientações.
-            </p>
+        <figure class="experiment-figure">
+          <img
+            src="../../assets/experimentos/azeheb/exp-03-motor-forcas.jpg"
+            alt="Rotor retangular entre os polos do ímã com setas opostas de força nos dois ramos e seta indicando o sentido da corrente."
+          >
+          <figcaption>
+            <strong>Figura 4 — par de forças no rotor.</strong> As forças são
+            opostas, mas atuam em linhas distintas; por isso o torque resultante
+            pode ser não nulo. Fonte: manual AZEHEB.
+          </figcaption>
+        </figure>
+      </div>
+
+      <article class="theory-card">
+        <h3>3. Energia, trabalho e estabilidade</h3>
+        <div class="equation-flow">
+          <div class="equation-step math-display">
+            \[
+            \begin{aligned}
+            U(\theta)&=-\vec\mu\cdot\vec B=-\mu B\cos\theta,\\
+            \tau_\theta&=-\frac{dU}{d\theta}=-\mu B\sin\theta,\\
+            dW_{\mathrm{em}}&=\tau_\theta\,d\theta=-dU.
+            \end{aligned}
+            \]
+            <small>O trabalho eletromagnético positivo reduz U e pode aumentar a energia cinética ou vencer uma carga.</small>
           </div>
-        </section>
+        </div>
+        <p>
+          O alinhamento μ paralelo a B, θ = 0, minimiza U e é estável. O estado
+          antiparalelo, θ = π, maximiza U e é instável. Um rotor alimentado sem
+          comutação não gira indefinidamente: ele tende a alinhar-se, ultrapassa
+          o mínimo por inércia e pode oscilar até o atrito dissipar a energia.
+          A fonte elétrica repõe a energia convertida em trabalho mecânico e em
+          perdas resistivas e de contato.
+        </p>
+      </article>
 
-        <section class="reasoning-step">
-          <div class="reasoning-step__number" aria-hidden="true">5</div>
-          <div class="reasoning-step__content">
-            <h3>Comutação e continuidade da rotação</h3>
-            <p>
-              Sem mudança da corrente, o torque troca de sinal após meia volta
-              e tende a devolver a espira à orientação de menor energia. Um
-              comutador ideal inverte \(I\) a cada meia volta, invertendo também
-              \(\vec\mu\) e preservando o sentido mecânico útil:
-            </p>
-            <div class="math-display">
-              \[
-              \tau_{\mathrm{em}}(\theta)
-              \simeq \tau_0\lvert\sin\theta\rvert.
-              \]
-            </div>
-            <p>
-              Em rotores didáticos, o contato pode simplesmente interromper a
-              corrente durante parte do giro. A inércia atravessa essa região
-              até que o contato útil seja restabelecido. Por isso posição morta,
-              mau contato e torque insuficiente precisam ser distinguidos.
-            </p>
-          </div>
-        </section>
+      <article class="theory-card">
+        <h3>4. Por que a comutação mantém torque útil</h3>
+        <p>
+          Após meia volta, uma corrente fixa faria o torque mudar de sinal e
+          frear a rotação que acabou de produzir. Em um motor de corrente
+          contínua ideal, o comutador inverte a corrente da espira a cada meia
+          volta; assim, μ também se inverte e o torque mecânico conserva o
+          sentido útil. O envelope idealizado torna-se aproximadamente:
+        </p>
+        <div class="math-block math-display">
+          \[
+          \tau_{\mathrm{em}}(\theta)
+          \simeq\tau_0\lvert\sin\theta\rvert.
+          \]
+        </div>
+        <p>
+          Em rotores didáticos simples, o contato pode interromper a corrente
+          durante a metade desfavorável em vez de realizar uma reversão
+          contínua perfeita. Nesse caso, a inércia atravessa a região sem torque
+          até o contato útil retornar. Nos dois mecanismos, a função da
+          comutação é impedir um torque eletromagnético sustentado contrário ao
+          movimento. Atrito, contato imperfeito e as posições em que sin θ = 0
+          explicam por que um pequeno impulso pode ser necessário.
+        </p>
+      </article>
 
-        <section class="reasoning-step">
-          <div class="reasoning-step__number" aria-hidden="true">6</div>
-          <div class="reasoning-step__content">
-            <h3>Modelo dinâmico mínimo e balanço de energia</h3>
-            <p>
-              Uma descrição concentrada da rotação inclui inércia, perdas e
-              torque resistente:
-            </p>
-            <div class="math-display">
-              \[
-              \begin{aligned}
-              J\ddot{\theta}+b\dot{\theta}
+      <div class="experiment-grid">
+        <article class="theory-card">
+          <h3>5. Equação dinâmica mínima</h3>
+          <div class="math-block math-display">
+            \[
+            \begin{aligned}
+            J\ddot{\theta}+b\dot{\theta}
               &=\tau_{\mathrm{em}}(\theta)-\tau_{\mathrm{carga}},\\
-              \frac{d}{dt}\left(\frac{J\dot{\theta}^{\,2}}{2}\right)
+            \frac{d}{dt}\left(\frac{J\dot{\theta}^{,2}}{2}\right)
               &=\tau_{\mathrm{em}}\dot{\theta}
-              -b\dot{\theta}^{\,2}
+              -b\dot{\theta}^{,2}
               -\tau_{\mathrm{carga}}\dot{\theta}.
-              \end{aligned}
-              \]
-            </div>
-            <p>
-              A fonte fornece energia elétrica; parte aumenta a energia
-              cinética ou realiza trabalho na carga, e parte é dissipada por
-              efeito Joule, atrito e contato. A força magnética sobre uma carga
-              individual é perpendicular à sua velocidade, mas o campo transfere
-              força ao condutor, enquanto a fonte mantém a corrente e realiza o
-              balanço energético completo.
-            </p>
+            \end{aligned}
+            \]
           </div>
-        </section>
+          <p>
+            <i>J</i> é o momento de inércia do rotor, θ˙ sua velocidade angular,
+            θ¨ sua aceleração, <i>b</i> um coeficiente efetivo de atrito viscoso
+            e τ_carga o torque resistente. Aumentar a corrente eleva o torque
+            eletromagnético; afastar o ímã reduz o campo e, portanto, o torque.
+            Em regime médio estável, o torque motor equilibra carga e perdas.
+          </p>
+        </article>
+
+        <article class="theory-card">
+          <h3>6. Análise dimensional</h3>
+          <ul>
+            <li>\([qvB]=\mathrm{C}\,\frac{\mathrm m}{\mathrm s}\,\mathrm T=\mathrm N\), pois \(\mathrm T=\frac{\mathrm N}{\mathrm{A\,m}}\) e \(\frac{\mathrm C}{\mathrm A}=\mathrm s\).</li>
+            <li>\([BI\ell]=\mathrm{T\,A\,m=N}\), unidade de força.</li>
+            <li>\([\mu]=\mathrm{A\,m^2}\); o número de espiras \(N\) é adimensional.</li>
+            <li>\([\mu B]=\mathrm{A\,m^2\,T=N\,m=J}\): torque e energia têm a mesma dimensão, embora sejam grandezas distintas.</li>
+            <li>\([J\ddot\theta]=\frac{\mathrm{kg\,m^2}}{\mathrm{s^2}}=\mathrm{N\,m}\) e \([b]=\mathrm{N\,m\,s}\), com o radiano tratado como adimensional.</li>
+          </ul>
+        </article>
       </div>
 
       <aside class="theory-note">
-        <strong>Limites do modelo.</strong>
-        O campo no vão não é perfeitamente uniforme; apenas partes da espira
-        permanecem na região ativa. A corrente varia com aquecimento e contato,
-        o eixo tem atrito e o balanço oscila. Por isso, o teste de sinais é mais
-        robusto que uma estimativa de módulo sem medidas independentes de
-        \(B\), \(I\), \(\ell\) e da resposta mecânica.
+        <strong>Limites do modelo ideal.</strong>
+        O campo do ímã em U não é perfeitamente uniforme; apenas partes da
+        espira ficam no vão. A corrente muda com resistência, aquecimento e
+        contato; o eixo tem atrito e pode estar desalinhado; a comutação é
+        descontínua; o balanço tem inércia e oscila. Portanto, a simetria de
+        sinais é uma previsão mais robusta do que o módulo da força sem uma
+        caracterização independente de B, I, L e da resposta mecânica.
       </aside>
+    </section>
+
+    <section
+      class="experiment-panel"
+      id="painel-dados"
+      role="tabpanel"
+      aria-labelledby="aba-dados"
+      hidden
+    >
+      <div class="experiment-section-heading">
+        <div>
+          <p class="eyebrow">Registro sem valores fabricados</p>
+          <h2>Dados</h2>
+        </div>
+        <p>
+          Preencha durante a prática. As células permanecem vazias porque o
+          roteiro não substitui observações por números simulados.
+        </p>
+      </div>
+
+      <article class="lab-card">
+        <h3>Convenções antes da primeira medida</h3>
+        <ul>
+          <li>Desenhe o referencial usado e registre quais polos delimitam o vão.</li>
+          <li>Use o sentido convencional de I e descreva B do norte para o sul.</li>
+          <li>Para cada linha, escreva a previsão de F antes de energizar e preserve eventuais previsões incorretas.</li>
+          <li>Classifique uma observação ambígua como inconclusiva, sem forçar concordância.</li>
+        </ul>
+      </article>
+
+      <section aria-labelledby="dados-parte-i">
+        <h3 id="dados-parte-i">Parte I — balanço e sinal da força</h3>
+        <div class="data-table-wrapper">
+          <table class="data-table">
+            <caption>Tabela 1 — inversões independentes de corrente e campo</caption>
+            <thead>
+              <tr>
+                <th scope="col">Sentido de I</th>
+                <th scope="col">Polos / sentido de B</th>
+                <th scope="col">Previsão de F</th>
+                <th scope="col">Deslocamento observado</th>
+                <th scope="col">Concordância</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td></td><td></td><td></td><td></td><td></td></tr>
+              <tr><td></td><td></td><td></td><td></td><td></td></tr>
+              <tr><td></td><td></td><td></td><td></td><td></td></tr>
+              <tr><td></td><td></td><td></td><td></td><td></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section aria-labelledby="dados-parte-ii">
+        <h3 id="dados-parte-ii">Parte II — partida e regime do motor</h3>
+        <div class="data-table-wrapper">
+          <table class="data-table">
+            <caption>Tabela 2 — comportamento do rotor em cada tentativa</caption>
+            <thead>
+              <tr>
+                <th scope="col">Configuração</th>
+                <th scope="col">Sentido de partida</th>
+                <th scope="col">Estabilidade</th>
+                <th scope="col">Corrente opcional</th>
+                <th scope="col">Período / rotação opcional</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td></td><td></td><td></td><td></td><td></td></tr>
+              <tr><td></td><td></td><td></td><td></td><td></td></tr>
+              <tr><td></td><td></td><td></td><td></td><td></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <aside class="theory-note">
+        <strong>Extensões opcionais, não incluídas no kit.</strong>
+        Um amperímetro pode registrar I; uma régua pode quantificar o
+        deslocamento; e um cronômetro pode estimar período ou rotação. Esses
+        instrumentos não fazem parte da lista do conjunto usado neste roteiro.
+        Uma régua não transforma o balanço em dinamômetro: para obter força a
+        partir do deslocamento é indispensável conhecer uma calibração mecânica
+        independente.
+      </aside>
+
+      <div class="experiment-grid">
+        <article class="theory-card">
+          <h3>Comparação qualitativa</h3>
+          <p>
+            Teste as relações de sinal \(\vec F(-I,\vec B)=-\vec F(I,\vec B)\),
+            \(\vec F(I,-\vec B)=-\vec F(I,\vec B)\) e
+            \(\vec F(-I,-\vec B)=\vec F(I,\vec B)\). A evidência é o primeiro
+            sentido de deslocamento, acompanhado da repetibilidade e do retorno
+            ao repouso. Para o motor, confronte o sentido inicial com o diagrama
+            do par de forças e compare a regularidade antes e depois de reduzir
+            corrente ou campo.
+          </p>
+        </article>
+
+        <article class="theory-card">
+          <h3>Comparação quantitativa possível</h3>
+          <p>
+            Se \(B\), \(I\), o comprimento ativo \(\ell\) e o ângulo forem medidos
+            independentemente, compare \(F_{\mathrm{mod}}=BI\ell\sin\theta\) a uma força
+            experimental obtida de uma calibração conhecida do balanço. Para o
+            rotor, com \(n\) voltas observadas em um intervalo \(\Delta t\), use
+            \(T=\frac{\Delta t}{n}\) e \(\omega=\frac{2\pi n}{\Delta t}\). Sem esses instrumentos e calibrações, limite
+            a conclusão ao sinal e à ordem de grandeza qualitativa.
+          </p>
+        </article>
+      </div>
+
+      <div class="uncertainty-box">
+        <h3>Incerteza e rastreabilidade</h3>
+        <p>
+          Registre a resolução dos instrumentos opcionais, repetição, oscilação
+          do balanço, folga, atrito, alinhamento, posição do ímã, aquecimento e
+          contato elétrico. Para leitura uniforme com menor divisão \(\delta x\), uma
+          estimativa é \(u(x)=\delta x/\sqrt{12}\). Com grandezas independentes, a propagação
+          do modelo pode ser escrita como:
+        </p>
+        <div class="math-block math-display">
+          \[
+          \frac{u(F_{\mathrm{mod}})}{F_{\mathrm{mod}}}
+          =\sqrt{
+            \left(\frac{u(B)}{B}\right)^2
+            +\left(\frac{u(I)}{I}\right)^2
+            +\left(\frac{u(\ell)}{\ell}\right)^2
+            +\left(\cot\theta\,u(\theta)\right)^2
+          }.
+          \]
+        </div>
+        <p>
+          Para \(T=\frac{\Delta t}{n}\), se \(n\) for contado sem ambiguidade,
+          \(\frac{u(T)}{T}\approx\frac{u(\Delta t)}{\Delta t}\) e
+          \(\frac{u(\omega)}{\omega}\) tem a mesma contribuição relativa. Se o
+          objetivo for apenas o sentido, relate a incerteza como concordante,
+          discordante ou inconclusiva e justifique pela observação.
+        </p>
+      </div>
     </section>
 
     <section
@@ -515,13 +640,12 @@
     >
       <div class="experiment-section-heading">
         <div>
-          <p class="eyebrow">Documento de laboratório</p>
-          <h2>Roteiro e relatório</h2>
+          <p class="eyebrow">Entrega individual ou em grupo</p>
+          <h2>Relatório</h2>
         </div>
         <p>
-          Registre previsão, observação e interpretação como etapas distintas.
-          A análise deve conectar as duas montagens sem transformar a entrega
-          em um questionário fragmentado.
+          Mostre o encadeamento previsão → observação → modelo. Um desenho
+          vetorial legível vale mais que uma resposta de sinal sem referencial.
         </p>
       </div>
 
@@ -530,16 +654,7 @@
         <button class="report-print-button" type="button" data-print-report>Imprimir relatório</button>
       </div>
 
-      <article class="report-document" data-markdown-report="./relatorio.md">
-        <header class="report-document__header">
-          <p class="eyebrow">Relatório de Física III</p>
-          <h3>Força magnética e motor elementar</h3>
-          <p>
-            O modelo completo e editável também está disponível em
-            <a href="./relatorio.md">Markdown</a>.
-          </p>
-        </header>
-
+      <article class="report-template" data-markdown-report="./relatorio.md">
         <div class="report-template__fields" aria-label="Identificação do relatório">
           <div><strong>Estudante(s)</strong><div class="report-template__line"></div></div>
           <div><strong>Turma / curso</strong><div class="report-template__line"></div></div>
@@ -549,152 +664,74 @@
           <div><strong>Referencial adotado</strong><div class="report-template__line"></div></div>
         </div>
 
-        <section class="report-section">
-          <div class="report-section__number" aria-hidden="true">1</div>
-          <div class="report-section__body">
-            <h3>Questão, hipótese e previsões</h3>
+        <div class="report-grid">
+          <section class="report-card">
+            <h3>Parte I — balanço</h3>
+            <ol>
+              <li>Inclua a Tabela 1 completa, sem apagar previsões divergentes.</li>
+              <li>Desenhe I, B e F para as quatro combinações de sinais.</li>
+              <li>Explique as inversões usando dF = I dℓ × B.</li>
+              <li>Discuta retorno ao zero, oscilação e eventuais resultados inconclusivos.</li>
+            </ol>
+          </section>
+
+          <section class="report-card">
+            <h3>Parte II — motor</h3>
+            <ol>
+              <li>Inclua a Tabela 2 e o sentido de partida previsto.</li>
+              <li>Desenhe o par de forças nos dois ramos e o eixo do torque.</li>
+              <li>Relacione τ = μ × B, U = −μ·B e estabilidade.</li>
+              <li>Explique comutação, posição morta, impulso inicial e regime observado.</li>
+            </ol>
+          </section>
+
+          <section class="report-card">
+            <h3>Incerteza e comparação</h3>
             <p>
-              Explique que relações vetoriais serão testadas. Preserve os
-              diagramas e sinais previstos para as quatro configurações do
-              balanço e para a partida do rotor.
+              Separe incerteza de leitura, repetibilidade e limitações do
+              modelo. Compare quantitativamente apenas as grandezas de fato
+              medidas com instrumentos identificados; caso contrário, faça a
+              comparação qualitativa de sinais e declare esse limite.
             </p>
-          </div>
-        </section>
+          </section>
 
-        <section class="report-section">
-          <div class="report-section__number" aria-hidden="true">2</div>
-          <div class="report-section__body">
-            <h3>Dados brutos — Parte I</h3>
-            <div class="report-data">
-              <p class="report-data__caption">Tabela 1 — inversões independentes de corrente e campo</p>
-              <div class="data-table-wrapper">
-                <table class="data-table">
-                  <thead>
-                    <tr>
-                      <th scope="col">Sentido de \(I\)</th>
-                      <th scope="col">Polos e \(\vec B\)</th>
-                      <th scope="col">\(\vec F\) prevista</th>
-                      <th scope="col">Primeiro deslocamento</th>
-                      <th scope="col">Repetição / concordância</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr><td></td><td></td><td></td><td></td><td></td></tr>
-                    <tr><td></td><td></td><td></td><td></td><td></td></tr>
-                    <tr><td></td><td></td><td></td><td></td><td></td></tr>
-                    <tr><td></td><td></td><td></td><td></td><td></td></tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section class="report-section">
-          <div class="report-section__number" aria-hidden="true">3</div>
-          <div class="report-section__body">
-            <h3>Dados brutos — Parte II</h3>
-            <div class="report-data">
-              <p class="report-data__caption">Tabela 2 — partida e regime do rotor</p>
-              <div class="data-table-wrapper">
-                <table class="data-table">
-                  <thead>
-                    <tr>
-                      <th scope="col">Configuração</th>
-                      <th scope="col">Partida prevista</th>
-                      <th scope="col">Partida observada</th>
-                      <th scope="col">Regime e posição morta</th>
-                      <th scope="col">Ocorrências</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr><td></td><td></td><td></td><td></td><td></td></tr>
-                    <tr><td></td><td></td><td></td><td></td><td></td></tr>
-                    <tr><td></td><td></td><td></td><td></td><td></td></tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section class="report-section">
-          <div class="report-section__number" aria-hidden="true">4</div>
-          <div class="report-section__body">
-            <h3>Tratamento e análise</h3>
+          <section class="report-card">
+            <h3>Conclusão</h3>
             <p>
-              Reproduza a passagem de \(q\vec v\times\vec B\) para
-              \(I\,d\vec\ell\times\vec B\), teste as três relações de inversão e
-              deduza o torque do par de forças. Integre
-              \(\vec\tau=\vec\mu\times\vec B\),
-              \(U=-\vec\mu\cdot\vec B\) e a equação dinâmica em uma única
-              interpretação das observações.
+              Responda aos objetivos com evidências das duas partes. Diferencie
+              confirmação do produto vetorial, explicação do torque e condições
+              necessárias para rotação sustentada.
             </p>
-            <div class="math-display">
-              \[
-              \begin{aligned}
-              d\vec F&=I\,d\vec\ell\times\vec B,\\
-              \vec\mu&=NIA\,\hat n,\\
-              \vec{\tau}&=\vec\mu\times\vec B,\\
-              J\ddot{\theta}+b\dot{\theta}
-              &=\tau_{\mathrm{em}}-\tau_{\mathrm{carga}}.
-              \end{aligned}
-              \]
-            </div>
-          </div>
+            <p><a href="./relatorio.md">Abrir o modelo preenchível em Markdown</a></p>
+          </section>
+        </div>
+
+        <section class="report-card">
+          <h3>Perguntas para análise</h3>
+          <ol class="question-list">
+            <li>Por que a força magnética é perpendicular ao fio e ao campo, e qual inversão preserva seu sinal?</li>
+            <li>Como a força sobre cargas individuais conduz à expressão dF = I dℓ × B?</li>
+            <li>Como uma espira pode ter força resultante nula e torque resultante não nulo?</li>
+            <li>Quais orientações do rotor são estável, instável e de torque máximo segundo U = −μ·B?</li>
+            <li>O que ocorreria depois de meia volta se a corrente não fosse comutada nem interrompida?</li>
+            <li>Por que o impulso inicial pode ajudar sem ser a fonte da rotação sustentada?</li>
+            <li>Quais observações permitem distinguir torque insuficiente, posição morta, mau contato e atrito excessivo?</li>
+            <li>Que conclusão ainda é defensável se nenhuma medida quantitativa opcional tiver sido realizada?</li>
+          </ol>
         </section>
 
-        <section class="report-section">
-          <div class="report-section__number" aria-hidden="true">5</div>
-          <div class="report-section__body">
-            <h3>Incertezas e limites</h3>
-            <p>
-              Discuta retorno ao zero, oscilação, atrito, alinhamento, campo não
-              uniforme, aquecimento e contato. Só calcule força ou velocidade
-              angular se houver instrumentos e calibrações identificados. Para
-              grandezas independentes, uma comparação quantitativa pode usar
-            </p>
-            <div class="math-display">
-              \[
-              \frac{u(F)}{F}
-              =
-              \sqrt{
-              \left(\frac{u(B)}{B}\right)^2+
-              \left(\frac{u(I)}{I}\right)^2+
-              \left(\frac{u(\ell)}{\ell}\right)^2+
-              \left(\cot\alpha\,u(\alpha)\right)^2
-              }.
-              \]
-            </div>
-          </div>
-        </section>
-
-        <section class="report-section">
-          <div class="report-section__number" aria-hidden="true">6</div>
-          <div class="report-section__body">
-            <h3>Discussão e conclusão</h3>
-            <p>
-              Diferencie confirmação do produto vetorial, explicação do torque
-              e condições para rotação sustentada. Compare previsões e dados,
-              declare resultados inconclusivos e responda aos objetivos com
-              evidências das duas etapas.
-            </p>
-          </div>
-        </section>
-
-        <section class="report-section">
-          <div class="report-section__number" aria-hidden="true">7</div>
-          <div class="report-section__body">
-            <h3>Checklist de entrega</h3>
-            <ul class="report-checklist">
-              <li>referencial, hipótese e previsões originais;</li>
-              <li>diagramas de \(I\), \(\vec B\), \(\vec F\), \(\vec\mu\) e \(\vec\tau\);</li>
-              <li>duas tabelas de dados brutos e ocorrências;</li>
-              <li>deduções, teste de sinais e interpretação energética;</li>
-              <li>incertezas coerentes com os instrumentos utilizados;</li>
-              <li>discussão integrada e conclusão baseada nos dados.</li>
-            </ul>
-          </div>
+        <section class="report-card">
+          <h3>Checklist de entrega</h3>
+          <ul class="report-checklist">
+            <li>Identificação, objetivo e referencial de sinais.</li>
+            <li>Fotografia ou desenho identificado das montagens das Partes I e II.</li>
+            <li>Quatro diagramas vetoriais da Parte I e diagrama do par de forças da Parte II.</li>
+            <li>Duas tabelas preenchidas com previsão e observação separadas.</li>
+            <li>Derivação da força no fio, do torque e interpretação energética.</li>
+            <li>Análise explícita da comutação e da equação dinâmica.</li>
+            <li>Incertezas, limitações e instrumentos opcionais declarados.</li>
+            <li>Respostas às perguntas e conclusão sustentada pelos dados.</li>
+          </ul>
         </section>
       </article>
     </section>
@@ -707,5 +744,6 @@
 
   <script type="module" src="../../componentes/navegacao-principal.js"></script>
   <script type="module" src="../experimento.js"></script>
+  </div>
 </body>
 </html>

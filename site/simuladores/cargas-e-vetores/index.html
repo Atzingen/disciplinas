@@ -5,22 +5,65 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Simulador de forças entre cargas, soma vetorial e produto escalar.">
   <title>Cargas e vetores · Laboratório de Eletromagnetismo</title>
-  <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="../../assets/base.css">
   <link rel="stylesheet" href="../../assets/simulador.css">
+  <script>try{if(localStorage.getItem("tema")==="escuro"){document.documentElement.dataset.theme="escuro"}}catch(erro){}</script>
 </head>
 <body class="lesson-page">
   <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
 
+  <div class="page-shell" data-tabs>
+  <div class="site-topbar" data-topbar>
+    <div class="site-topbar__inner">
+      <nav class="breadcrumb" aria-label="Navegação estrutural">
+        <a href="../../">Laboratório</a>
+        <span aria-hidden="true">/</span>
+        <span>Simuladores</span>
+        <span aria-hidden="true">/</span>
+        <strong>Cargas e vetores</strong>
+      </nav>
+      <div class="lesson-area-navigation" data-site-navigation data-root-path="../../" data-active-section="simulacoes"></div>
+    </div>
+    <div class="tab-list" role="tablist" aria-label="Modos do laboratório">
+      <button
+        class="tab-button"
+        id="tab-experimento"
+        type="button"
+        role="tab"
+        aria-selected="true"
+        aria-controls="painel-experimento"
+      >Experimento</button>
+      <button
+        class="tab-button"
+        id="tab-soma"
+        type="button"
+        role="tab"
+        aria-selected="false"
+        aria-controls="painel-soma"
+        tabindex="-1"
+      >Soma de vetores</button>
+      <button
+        class="tab-button"
+        id="tab-produto"
+        type="button"
+        role="tab"
+        aria-selected="false"
+        aria-controls="painel-produto"
+        tabindex="-1"
+      >Produto escalar</button>
+      <button
+        class="tab-button"
+        id="tab-teoria"
+        type="button"
+        role="tab"
+        aria-selected="false"
+        aria-controls="painel-teoria"
+        tabindex="-1"
+      >Teoria guiada</button>
+    </div>
+  </div>
+
   <header class="lesson-header">
-    <div class="lesson-area-navigation" data-site-navigation data-root-path="../../" data-active-section="simulacoes"></div>
-    <nav class="breadcrumb" aria-label="Navegação estrutural">
-      <a href="../../">Laboratório</a>
-      <span aria-hidden="true">/</span>
-      <span>Simuladores</span>
-      <span aria-hidden="true">/</span>
-      <strong>Cargas e vetores</strong>
-    </nav>
     <div class="lesson-title-row">
       <div>
         <p class="eyebrow">Experimento interativo</p>
@@ -34,44 +77,7 @@
   </header>
 
   <main class="lesson-main" id="conteudo">
-    <div data-tabs>
-      <div class="tab-list" role="tablist" aria-label="Modos do laboratório">
-        <button
-          class="tab-button"
-          id="tab-experimento"
-          type="button"
-          role="tab"
-          aria-selected="true"
-          aria-controls="painel-experimento"
-        >Experimento</button>
-        <button
-          class="tab-button"
-          id="tab-soma"
-          type="button"
-          role="tab"
-          aria-selected="false"
-          aria-controls="painel-soma"
-          tabindex="-1"
-        >Soma de vetores</button>
-        <button
-          class="tab-button"
-          id="tab-produto"
-          type="button"
-          role="tab"
-          aria-selected="false"
-          aria-controls="painel-produto"
-          tabindex="-1"
-        >Produto escalar</button>
-        <button
-          class="tab-button"
-          id="tab-teoria"
-          type="button"
-          role="tab"
-          aria-selected="false"
-          aria-controls="painel-teoria"
-          tabindex="-1"
-        >Teoria guiada</button>
-      </div>
+    <div class="lesson-panels">
 
       <section
         class="tab-panel"
@@ -121,5 +127,6 @@
 
   <script type="module" src="../../componentes/navegacao-principal.js"></script>
   <script type="module" src="./app.js"></script>
+  </div>
 </body>
 </html>

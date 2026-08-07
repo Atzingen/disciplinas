@@ -5,24 +5,34 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Resolução e simulação do exercício 13, capítulo 21, do Halliday.">
   <title>Halliday 21.13 · Laboratório de Eletromagnetismo</title>
-  <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="../../assets/base.css">
   <link rel="stylesheet" href="../../assets/simulador.css">
+  <script>try{if(localStorage.getItem("tema")==="escuro"){document.documentElement.dataset.theme="escuro"}}catch(erro){}</script>
 </head>
 <body class="lesson-page halliday-page">
   <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
 
-  <header class="lesson-header">
-    <div class="lesson-area-navigation" data-site-navigation data-root-path="../../" data-active-section="exercicios"></div>
-    <nav class="breadcrumb" aria-label="Navegação estrutural">
-      <a href="../../">Laboratório</a>
-      <span aria-hidden="true">/</span>
-      <span>Halliday</span>
-      <span aria-hidden="true">/</span>
-      <span>Capítulo 21</span>
-      <span aria-hidden="true">/</span>
-      <strong>Exercício 13</strong>
+  <div class="site-topbar" data-topbar>
+    <div class="site-topbar__inner">
+      <nav class="breadcrumb" aria-label="Navegação estrutural">
+        <a href="../../">Laboratório</a>
+        <span aria-hidden="true">/</span>
+        <a href="../">Exercícios</a>
+        <span aria-hidden="true">/</span>
+        <a href="../capitulo-21/">Halliday · Capítulo 21</a>
+        <span aria-hidden="true">/</span>
+        <strong aria-current="page">Exercício 13</strong>
+      </nav>
+      <div class="lesson-area-navigation" data-site-navigation data-root-path="../../" data-active-section="exercicios"></div>
+    </div>
+    <nav class="section-nav" aria-label="Seções do exercício" data-section-nav>
+      <a href="#enunciado">Enunciado</a>
+      <a href="#resolucao">Resolução</a>
+      <a href="#simulacao">Simulação</a>
     </nav>
+  </div>
+
+  <header class="lesson-header">
     <div class="lesson-title-row">
       <div>
         <p class="eyebrow">Equilíbrio eletrostático</p>
@@ -36,14 +46,9 @@
   </header>
 
   <main class="lesson-main" id="conteudo">
-    <div data-tabs>
-      <div class="tab-list" role="tablist" aria-label="Conteúdo do exercício">
-        <button class="tab-button" id="tab-enunciado" type="button" role="tab" aria-selected="true" aria-controls="painel-enunciado">Enunciado</button>
-        <button class="tab-button" id="tab-resolucao" type="button" role="tab" aria-selected="false" aria-controls="painel-resolucao" tabindex="-1">Resolução</button>
-        <button class="tab-button" id="tab-simulacao" type="button" role="tab" aria-selected="false" aria-controls="painel-simulacao" tabindex="-1">Simulação</button>
-      </div>
+    <div class="lesson-sections">
 
-      <section class="tab-panel" id="painel-enunciado" role="tabpanel" aria-labelledby="tab-enunciado">
+      <section class="lesson-section" id="enunciado" aria-label="Enunciado">
         <article class="problem-sheet">
           <div class="problem-number">
             <span>Halliday</span>
@@ -93,7 +98,7 @@
         </article>
       </section>
 
-      <section class="tab-panel" id="painel-resolucao" role="tabpanel" aria-labelledby="tab-resolucao" hidden>
+      <section class="lesson-section" id="resolucao" aria-label="Resolução">
         <article class="solution-article">
           <header class="solution-heading">
             <p class="eyebrow">Resolução passo a passo</p>
@@ -105,7 +110,6 @@
           </header>
 
           <section>
-            <span class="solution-step">01</span>
             <h3>Condição para a força total ser nula</h3>
             <p>A força sobre a partícula 3 pode ser escrita pelo campo produzido pelas partículas 1 e 2:</p>
             <div class="math-block math-display">
@@ -128,7 +132,7 @@
           </section>
 
           <section>
-            <span class="solution-step">02 · pergunta B</span>
+            <span class="solution-step">pergunta B</span>
             <h3>Determinação da coordenada y</h3>
             <p>Em um ponto genérico \(P=(x,y)\), os vetores que partem das cargas fixas são:</p>
             <div class="math-block math-display">
@@ -164,7 +168,6 @@
           </section>
 
           <section>
-            <span class="solution-step">03</span>
             <h3>Em qual região do eixo x pode haver equilíbrio?</h3>
             <div class="region-grid">
               <article>
@@ -190,7 +193,7 @@
           </section>
 
           <section>
-            <span class="solution-step">04 · pergunta A</span>
+            <span class="solution-step">pergunta A</span>
             <h3>Determinação da coordenada x</h3>
             <p>Defina \(d=-x&gt;0\) como a distância de \(q_3\) até \(q_1\). Então:</p>
             <div class="math-block math-display">
@@ -238,7 +241,6 @@
           </section>
 
           <section>
-            <span class="solution-step">05</span>
             <h3>Verificação do resultado</h3>
             <p>
               No ponto encontrado, \(r_1=d\) e
@@ -276,7 +278,7 @@
         </article>
       </section>
 
-      <section class="tab-panel" id="painel-simulacao" role="tabpanel" aria-labelledby="tab-simulacao" hidden>
+      <section class="lesson-section" id="simulacao" aria-label="Simulação">
         <div class="simulation-intro">
           <div>
             <p class="eyebrow">Preset do exercício</p>

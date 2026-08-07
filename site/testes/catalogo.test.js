@@ -22,10 +22,10 @@ const apiAvailable =
   typeof catalog.normalizeSearchText === "function" &&
   typeof catalog.filterCatalog === "function";
 
-test("catálogo expõe busca e registra os nove materiais", () => {
+test("catálogo expõe busca e registra os dez materiais", () => {
   assert.equal(typeof catalog.normalizeSearchText, "function");
   assert.equal(typeof catalog.filterCatalog, "function");
-  assert.equal(items.length, 9);
+  assert.equal(items.length, 10);
 });
 
 test("busca ignora acentos e caixa", { skip: !apiAvailable }, () => {
@@ -53,6 +53,7 @@ test("busca encontra livro e capítulo nas etiquetas", { skip: !apiAvailable }, 
   const expected = [
     "halliday-21-13",
     "halliday-21-18",
+    "halliday-21-33",
     "halliday-21-34",
     "halliday-21-42",
   ];
@@ -73,6 +74,7 @@ test("escopo combina área e capítulo sem alterar a busca", { skip: !apiAvailab
   assert.deepEqual(chapter.map((item) => item.id), [
     "halliday-21-13",
     "halliday-21-18",
+    "halliday-21-33",
     "halliday-21-34",
     "halliday-21-42",
   ]);
@@ -106,6 +108,7 @@ test("escopo por referência exclui exercícios de outros livros", { skip: !apiA
   assert.deepEqual(matches.map((item) => item.id), [
     "halliday-21-13",
     "halliday-21-18",
+    "halliday-21-33",
     "halliday-21-34",
     "halliday-21-42",
   ]);
@@ -122,6 +125,7 @@ test("filtro separa simuladores, resoluções e experimentos", { skip: !apiAvail
   assert.deepEqual(solutions.map((item) => item.id), [
     "halliday-21-13",
     "halliday-21-18",
+    "halliday-21-33",
     "halliday-21-34",
     "halliday-21-42",
   ]);

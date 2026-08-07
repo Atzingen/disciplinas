@@ -33,8 +33,5 @@ test("relatório Markdown mantém hierarquia contínua na tela e na impressão",
     experimentCss,
     /@media\s+print[\s\S]*?body\s*\{[\s\S]*?font-size:\s*12pt/,
   );
-  assert.doesNotMatch(
-    experimentCss,
-    /\.(?:experiment-grid|report-grid|lab-card|theory-card|report-card)\b/,
-  );
+  assert.match(experimentCss, /@page\s*\{[\s\S]*?size:\s*A4/);
 });

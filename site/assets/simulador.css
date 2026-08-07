@@ -11,8 +11,8 @@
 }
 
 .lesson-header {
-  padding: 1.2rem 0 2.2rem;
-  border-bottom: 1px solid var(--line-strong);
+  padding: 2.4rem 0 2.2rem;
+  border-bottom: 1px solid var(--line);
 }
 
 .lesson-area-navigation {
@@ -34,7 +34,7 @@
   align-items: center;
   margin-bottom: 2.2rem;
   color: var(--ink-soft);
-  font: 0.76rem/1.4 Consolas, monospace;
+  font: 0.76rem/1.4 var(--font-mono);
 }
 
 .breadcrumb a {
@@ -75,7 +75,8 @@
 .exercise-navigation {
   padding: 1.2rem;
   border: 1px solid var(--line-strong);
-  background: rgb(255 255 255 / 78%);
+  background: var(--surface);
+  border-radius: var(--radius-lg);
 }
 
 .exercise-navigation__heading,
@@ -88,7 +89,7 @@
 
 .exercise-navigation__heading {
   color: var(--ink-soft);
-  font: 0.75rem/1.4 Consolas, monospace;
+  font: 0.75rem/1.4 var(--font-mono);
   text-transform: uppercase;
 }
 
@@ -113,14 +114,14 @@
   place-items: center;
   border: 1px solid var(--line-strong);
   background: var(--surface);
-  font: 700 0.9rem/1 Consolas, monospace;
+  font: 700 0.9rem/1 var(--font-mono);
   text-decoration: none;
 }
 
 .exercise-navigation__sequence a[aria-current="page"] {
   border-color: var(--resultant);
   background: var(--resultant);
-  color: white;
+  color: var(--on-accent);
 }
 
 .exercise-navigation__previous,
@@ -136,7 +137,7 @@
 
 .exercise-navigation__previous span,
 .exercise-navigation__next span {
-  font: 0.7rem/1.4 Consolas, monospace;
+  font: 0.7rem/1.4 var(--font-mono);
   text-transform: uppercase;
 }
 
@@ -198,6 +199,7 @@
   min-width: 0;
   border: 1px solid var(--line-strong);
   background: var(--surface);
+  border-radius: var(--radius-lg);
 }
 
 .charge-stage-panel {
@@ -212,13 +214,14 @@
   align-items: center;
   justify-content: space-between;
   padding: 0.65rem 0.9rem;
-  background: var(--ink);
-  color: white;
-  font: 0.76rem/1.3 Consolas, monospace;
+  background: var(--paper-deep);
+  color: var(--ink);
+  font: 0.76rem/1.3 var(--font-mono);
+  border-radius: var(--radius-md) var(--radius-md) 0 0;
 }
 
 .stage-readout span:last-child {
-  color: #bdd0dc;
+  color: var(--ink-soft);
   text-align: right;
 }
 
@@ -237,7 +240,7 @@
 }
 
 .plane-grid-line {
-  stroke: #dce5e9;
+  stroke: var(--line);
   stroke-width: 1;
 }
 
@@ -249,7 +252,7 @@
 .plane-tick,
 .plane-axis-label {
   fill: var(--ink-soft);
-  font: 11px Consolas, monospace;
+  font: 11px var(--font-mono);
   pointer-events: none;
 }
 
@@ -271,7 +274,7 @@
 
 .resultant-zero {
   fill: var(--resultant);
-  stroke: white;
+  stroke: var(--paper);
   stroke-width: 2;
 }
 
@@ -309,24 +312,24 @@
 
 .charge-node.is-selected .charge-disc {
   stroke-width: 9;
-  filter: drop-shadow(0 3px 5px rgb(20 42 59 / 30%));
+  filter: drop-shadow(0 3px 7px rgb(0 0 0 / 65%));
 }
 
 .charge-sign {
-  fill: white;
-  font: 700 22px/1 Consolas, monospace;
+  fill: var(--on-accent);
+  font: 700 22px/1 var(--font-mono);
   text-anchor: middle;
   pointer-events: none;
 }
 
 .charge-force-badge {
-  stroke: white;
+  stroke: var(--paper);
   stroke-width: 2;
 }
 
 .charge-force-number {
-  fill: white;
-  font: 700 10px Consolas, monospace;
+  fill: var(--on-accent);
+  font: 700 10px var(--font-mono);
   text-anchor: middle;
   pointer-events: none;
 }
@@ -336,14 +339,14 @@
 }
 
 .charge-label rect {
-  fill: rgb(255 255 255 / 92%);
+  fill: var(--surface);
   stroke: var(--line);
   stroke-width: 1;
 }
 
 .charge-label text {
   fill: var(--ink);
-  font: 11px Consolas, monospace;
+  font: 11px var(--font-mono);
 }
 
 .keyboard-guide {
@@ -370,7 +373,7 @@
 .control-kicker {
   margin: 0 0 0.32rem;
   color: var(--negative);
-  font: 700 0.68rem/1.2 Consolas, monospace;
+  font: 700 0.68rem/1.2 var(--font-mono);
   letter-spacing: 0.12em;
   text-transform: uppercase;
 }
@@ -384,7 +387,7 @@
 .selected-position {
   margin: 0.4rem 0 1rem;
   color: var(--ink-soft);
-  font: 0.78rem/1.4 Consolas, monospace;
+  font: 0.78rem/1.4 var(--font-mono);
 }
 
 .magnitude-control {
@@ -403,7 +406,7 @@
   background: var(--paper);
   color: var(--ink);
   padding: 0.6rem 0.7rem;
-  font-family: Consolas, monospace;
+  font-family: var(--font-mono);
 }
 
 .control-heading {
@@ -416,7 +419,7 @@
 
 .control-heading > span {
   color: var(--ink-soft);
-  font: 0.75rem/1.2 Consolas, monospace;
+  font: 0.75rem/1.2 var(--font-mono);
 }
 
 .source-list {
@@ -432,7 +435,7 @@
   align-items: center;
   min-height: 42px;
   border: 1px solid var(--line);
-  border-radius: 0;
+  border-radius: var(--radius-sm);
   background: transparent;
   color: var(--ink);
   padding: 0.45rem 0.55rem;
@@ -452,7 +455,7 @@
 
 .source-chip small {
   color: var(--ink-soft);
-  font-family: Consolas, monospace;
+  font-family: var(--font-mono);
 }
 
 .force-swatch,
@@ -471,7 +474,7 @@
   height: 20px;
   border: 2px solid var(--ink);
   background: var(--surface);
-  font: 700 0.65rem/1 Consolas, monospace;
+  font: 700 0.65rem/1 var(--font-mono);
 }
 
 .button-row {
@@ -483,7 +486,7 @@
 .control-button {
   min-height: 44px;
   border: 1px solid var(--line-strong);
-  border-radius: 0;
+  border-radius: var(--radius-sm);
   background: var(--surface);
   color: var(--ink);
   padding: 0.55rem 0.65rem;
@@ -497,14 +500,14 @@
 }
 
 .control-button--primary {
-  border-color: var(--ink);
-  background: var(--ink);
-  color: white;
+  border-color: var(--accent);
+  background: var(--accent);
+  color: var(--on-accent);
 }
 
 .control-button--primary:hover:not(:disabled) {
-  background: #23465f;
-  color: white;
+  background: var(--accent-hover);
+  color: var(--on-accent);
 }
 
 .control-button--reset {
@@ -526,7 +529,7 @@
 .force-table {
   width: 100%;
   border-collapse: collapse;
-  font: 0.7rem/1.35 Consolas, monospace;
+  font: 0.7rem/1.35 var(--font-mono);
 }
 
 .force-table th,
@@ -610,7 +613,7 @@
 }
 
 .vector-grid-line {
-  stroke: #dce5e9;
+  stroke: var(--line);
   stroke-width: 1;
 }
 
@@ -703,7 +706,7 @@
 
 .vector-handle text {
   fill: var(--ink);
-  font: 700 16px Consolas, monospace;
+  font: 700 16px var(--font-mono);
   pointer-events: none;
 }
 
@@ -733,46 +736,20 @@
 .equation-block {
   display: grid;
   gap: 0.38rem;
-  padding: 0.85rem;
-  border-left: 4px solid var(--force-1);
-  background: var(--paper);
-}
-
-.equation-block .math-display {
-  max-width: 100%;
-  margin: 0.35rem 0 0;
-  padding-bottom: 0.2rem;
-}
-
-.equation-block mjx-container {
-  font-size: 92%;
-}
-
-.force-equations {
-  display: grid;
-  gap: 0.75rem;
-  min-width: 0;
-}
-
-.equation-caption,
-.simulator-equation-warning {
-  margin: 0;
-  color: var(--ink-soft);
-  font-size: 0.78rem;
-  line-height: 1.5;
-}
-
-.simulator-equation-warning {
-  padding: 0.75rem;
-  border-left: 4px solid var(--positive);
-  background: rgb(191 58 69 / 8%);
+  padding: 0.7rem 1.1rem;
+  border-left: 3px solid var(--force-1);
 }
 
 .equation-block > span {
   color: var(--ink-soft);
-  font: 700 0.68rem/1.3 Consolas, monospace;
+  font: 700 0.68rem/1.3 var(--font-mono);
   letter-spacing: 0.08em;
   text-transform: uppercase;
+}
+
+.equation-block strong {
+  overflow-wrap: anywhere;
+  font: 700 0.83rem/1.45 var(--font-mono);
 }
 
 .equation-block--result {
@@ -782,15 +759,21 @@
 .metric-list {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 1px;
+  gap: 0;
   margin: 0;
-  background: var(--line);
-  border: 1px solid var(--line);
 }
 
 .metric-list > div {
-  padding: 0.7rem;
-  background: var(--surface);
+  border-top: 1px solid var(--line);
+  padding: 0.75rem 0.9rem;
+}
+
+.metric-list > div:nth-child(even) {
+  border-left: 1px solid var(--line);
+}
+
+.metric-list > div:nth-child(-n + 2) {
+  border-top: 0;
 }
 
 .metric-list dt {
@@ -800,7 +783,7 @@
 
 .metric-list dd {
   margin: 0.15rem 0 0;
-  font: 700 1.05rem/1.2 Consolas, monospace;
+  font: 700 1.05rem/1.2 var(--font-mono);
 }
 
 .classification {
@@ -830,11 +813,12 @@
   border: 1px solid var(--measure);
   background: rgb(227 160 24 / 12%);
   font-size: 0.82rem;
+  border-radius: var(--radius-md);
 }
 
 .area-warning strong {
-  color: #876008;
-  font-family: "Trebuchet MS", sans-serif;
+  color: var(--measure);
+  font-family: var(--font-display);
 }
 
 .theory-intro {
@@ -863,6 +847,8 @@
   margin: 0 auto;
   border: 1px solid var(--line-strong);
   background: var(--line-strong);
+  overflow: hidden;
+  border-radius: var(--radius-lg);
 }
 
 .theory-flow article {
@@ -873,7 +859,7 @@
 
 .theory-flow article > span {
   color: var(--negative);
-  font: 700 0.72rem/1 Consolas, monospace;
+  font: 700 0.72rem/1 var(--font-mono);
   letter-spacing: 0.1em;
 }
 
@@ -886,17 +872,15 @@
   color: var(--ink-soft);
 }
 
-.theory-flow .math-display {
-  max-width: 100%;
-  margin: 1.2rem 0 0;
-}
-
-.theory-flow mjx-container {
-  font-size: 92%;
+.theory-flow article > strong {
+  display: block;
+  margin-top: 1.2rem;
+  color: var(--resultant);
+  font-family: var(--font-mono);
 }
 
 .theory-flow .theory-warning {
-  background: #fff7df;
+  background: var(--tint-warm);
 }
 
 .problem-sheet {
@@ -905,10 +889,10 @@
   gap: 2rem;
   max-width: 1000px;
   margin: 2.5rem auto;
-  border: 1px solid var(--line-strong);
   background: var(--surface);
   box-shadow: var(--shadow);
-  padding: clamp(1.2rem, 4vw, 3rem);
+  padding: clamp(1.4rem, 4vw, 3rem);
+  border-radius: var(--radius-lg);
 }
 
 .problem-number {
@@ -922,13 +906,13 @@
 
 .problem-number span {
   color: var(--ink-soft);
-  font: 0.72rem/1 Consolas, monospace;
+  font: 0.72rem/1 var(--font-mono);
   letter-spacing: 0.12em;
   text-transform: uppercase;
 }
 
 .problem-number strong {
-  font: 700 2.7rem/1 "Trebuchet MS", sans-serif;
+  font: 700 2.7rem/1 var(--font-display);
 }
 
 .problem-copy {
@@ -944,12 +928,7 @@
   grid-column: 1 / -1;
   display: block;
   width: 100%;
-  border: 1px solid var(--line);
-  background:
-    linear-gradient(rgb(20 42 59 / 3%) 1px, transparent 1px),
-    linear-gradient(90deg, rgb(20 42 59 / 3%) 1px, transparent 1px),
-    var(--paper);
-  background-size: 24px 24px;
+  margin: 0.5rem 0;
 }
 
 .diagram-axis {
@@ -958,7 +937,7 @@
 }
 
 .diagram-charge {
-  stroke: white;
+  stroke: var(--paper);
   stroke-width: 3;
 }
 
@@ -971,15 +950,15 @@
 }
 
 .diagram-sign {
-  fill: white;
-  font: 700 23px Consolas, monospace;
+  fill: var(--on-accent);
+  font: 700 23px var(--font-mono);
   text-anchor: middle;
 }
 
 .diagram-label,
 .diagram-axis-label {
   fill: var(--ink);
-  font: 700 14px Consolas, monospace;
+  font: 700 14px var(--font-mono);
   text-anchor: middle;
 }
 
@@ -998,25 +977,27 @@
 
 .answer-strip {
   grid-column: 1 / -1;
+  border-radius: var(--radius-md);
   display: flex;
   gap: 1rem;
   align-items: center;
   justify-content: space-between;
-  padding: 1rem 1.2rem;
-  background: var(--ink);
-  color: white;
+  padding: 1rem 1.3rem;
+  border-left: 3px solid var(--resultant);
+  background: var(--tint-cool);
+  color: var(--ink);
 }
 
 .answer-strip span {
-  color: #c3d3dd;
-  font: 0.7rem/1 Consolas, monospace;
+  color: var(--ink-soft);
+  font: 0.7rem/1 var(--font-mono);
   letter-spacing: 0.12em;
   text-transform: uppercase;
 }
 
 .answer-strip strong {
-  color: #d6c6ff;
-  font: 700 1.15rem/1.3 Consolas, monospace;
+  color: var(--resultant);
+  font: 700 1.15rem/1.3 var(--font-mono);
 }
 
 .solution-article {
@@ -1042,23 +1023,73 @@
   font-size: 1.1rem;
 }
 
+.solution-article {
+  counter-reset: passo;
+}
+
 .solution-article > section {
   position: relative;
-  margin: 0 0 1px;
+  margin: 0;
+  counter-increment: passo;
+  padding: 0 0 2.8rem 4.6rem;
+}
+
+.solution-article > section::before {
+  content: counter(passo, decimal-leading-zero);
+  position: absolute;
+  top: -0.15rem;
+  left: 0;
+  display: grid;
+  width: 2.9rem;
+  height: 2.9rem;
+  place-items: center;
   border: 1px solid var(--line);
+  border-radius: 50%;
   background: var(--surface);
-  padding: clamp(1.2rem, 4vw, 2.4rem);
+  color: var(--accent);
+  font: 600 0.82rem/1 var(--font-mono);
+}
+
+.solution-article > section::after {
+  content: "";
+  position: absolute;
+  top: 3.1rem;
+  bottom: 0.4rem;
+  left: 1.45rem;
+  width: 1px;
+  background: linear-gradient(to bottom, var(--line-strong), transparent);
+}
+
+.solution-article > section:last-child::after {
+  display: none;
+}
+
+@media (max-width: 620px) {
+  .solution-article > section {
+    padding-left: 3.6rem;
+  }
+
+  .solution-article > section::before {
+    width: 2.3rem;
+    height: 2.3rem;
+    font-size: 0.72rem;
+  }
+
+  .solution-article > section::after {
+    left: 1.15rem;
+    top: 2.5rem;
+  }
 }
 
 .solution-step {
   color: var(--negative);
-  font: 700 0.7rem/1 Consolas, monospace;
+  font: 700 0.7rem/1 var(--font-mono);
   letter-spacing: 0.1em;
   text-transform: uppercase;
 }
 
 .solution-article h3 {
-  margin: 0.8rem 0 1rem;
+  margin: 0.35rem 0 0.9rem;
   font-size: clamp(1.5rem, 3vw, 2.2rem);
   line-height: 1.1;
 }
@@ -1069,12 +1100,11 @@
 
 .math-block {
   overflow-x: auto;
-  margin: 1.2rem 0;
-  border-left: 4px solid var(--force-1);
-  background: var(--paper);
-  padding: 1rem 1.2rem;
+  margin: 1.4rem 0;
+  border-left: 3px solid var(--force-1);
+  padding: 0.9rem 1.4rem;
   color: var(--ink);
-  font: 700 1rem/1.75 Consolas, monospace;
+  font: 500 0.98rem/1.8 var(--font-mono);
   text-align: center;
 }
 
@@ -1086,19 +1116,22 @@
 .region-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 1px;
-  margin-top: 1.5rem;
-  border: 1px solid var(--line);
-  background: var(--line);
+  gap: 0;
+  margin-top: 1.6rem;
 }
 
 .region-grid article {
-  padding: 1rem;
-  background: var(--paper);
+  border-left: 1px solid var(--line);
+  padding: 0.2rem 1.3rem;
+}
+
+.region-grid article:first-child {
+  border-left: 0;
+  padding-left: 0;
 }
 
 .region-grid strong {
-  font-family: Consolas, monospace;
+  font-family: var(--font-mono);
 }
 
 .region-grid p {
@@ -1106,15 +1139,36 @@
   font-size: 0.86rem;
 }
 
+.region-grid__answer strong {
+  color: var(--resultant);
+}
+
 .region-grid__answer {
-  box-shadow: inset 0 -5px 0 var(--resultant);
+  box-shadow: inset 0 -2px 0 var(--resultant);
+}
+
+@media (max-width: 760px) {
+  .region-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .region-grid article {
+    border-top: 1px solid var(--line);
+    border-left: 0;
+    padding: 1rem 0;
+  }
+
+  .region-grid article:first-child {
+    border-top: 0;
+    padding-top: 0;
+  }
 }
 
 .solution-note {
-  margin-top: 1rem;
-  border: 1px solid var(--measure);
-  background: #fff7df;
-  padding: 1.2rem;
+  margin-top: 1.4rem;
+  border-left: 3px solid var(--measure);
+  background: var(--tint-warm);
+  padding: 1.1rem 1.3rem;
 }
 
 .solution-note p {
@@ -1124,9 +1178,10 @@
 .static-diagram-shell {
   max-width: 1000px;
   margin: 2.5rem auto;
-  border: 1px solid var(--line-strong);
   background: var(--surface);
   box-shadow: var(--shadow);
+  overflow: hidden;
+  border-radius: var(--radius-lg);
 }
 
 .static-diagram-heading {
@@ -1135,7 +1190,7 @@
   gap: 2rem;
   align-items: end;
   padding: clamp(1.2rem, 4vw, 2.4rem);
-  border-bottom: 1px solid var(--line);
+  border-bottom: 1px solid var(--line-soft);
 }
 
 .static-diagram-heading h2 {
@@ -1154,15 +1209,11 @@
   display: block;
   width: 100%;
   height: auto;
-  background:
-    linear-gradient(rgb(20 42 59 / 3%) 1px, transparent 1px),
-    linear-gradient(90deg, rgb(20 42 59 / 3%) 1px, transparent 1px),
-    var(--paper);
-  background-size: 24px 24px;
+  margin: 0.5rem 0;
 }
 
 .diagram-panel {
-  fill: rgb(255 255 255 / 76%);
+  fill: var(--veil);
   stroke: var(--line);
   stroke-width: 1.5;
 }
@@ -1172,7 +1223,7 @@
 .diagram-note,
 .diagram-value {
   fill: var(--ink);
-  font-family: Consolas, monospace;
+  font-family: var(--font-mono);
 }
 
 .diagram-panel-title {
@@ -1240,13 +1291,13 @@
 
 .diagram-mass {
   fill: var(--positive);
-  stroke: white;
+  stroke: var(--paper);
   stroke-width: 3;
 }
 
 .diagram-caption {
   margin: 0;
-  border-top: 1px solid var(--line);
+  border-top: 1px solid var(--line-soft);
   padding: 1rem clamp(1.2rem, 4vw, 2.4rem);
   color: var(--ink-soft);
   font-size: 0.92rem;
@@ -1255,21 +1306,24 @@
 .derivation-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 1px;
-  margin: 1.5rem 0;
-  border: 1px solid var(--line);
-  background: var(--line);
+  gap: 0;
+  margin: 1.6rem 0;
 }
 
 .derivation-grid article {
-  background: var(--paper);
-  padding: 1.1rem;
+  border-left: 1px solid var(--line);
+  padding: 0.2rem 1.3rem;
+}
+
+.derivation-grid article:first-child {
+  border-left: 0;
+  padding-left: 0;
 }
 
 .derivation-grid strong {
   display: block;
   color: var(--ink);
-  font-family: Consolas, monospace;
+  font-family: var(--font-mono);
 }
 
 .derivation-grid p {
@@ -1279,26 +1333,31 @@
 
 .value-table {
   width: 100%;
-  margin: 1.2rem 0;
-  border-collapse: collapse;
+  margin: 1.4rem 0;
+  border-collapse: separate;
+  border-spacing: 0;
 }
 
 .value-table th,
 .value-table td {
-  border: 1px solid var(--line);
-  padding: 0.75rem;
+  border-bottom: 1px solid var(--line-soft);
+  padding: 0.78rem 0.9rem;
   text-align: center;
 }
 
+.value-table tbody tr:last-child td {
+  border-bottom: 0;
+}
+
 .value-table th {
-  background: var(--paper-deep);
-  font: 700 0.78rem/1.3 Consolas, monospace;
+  border-bottom: 1px solid var(--line-strong);
+  font: 700 0.72rem/1.3 var(--font-mono);
   letter-spacing: 0.06em;
   text-transform: uppercase;
 }
 
 .value-table tr.is-answer td {
-  background: #f1ebff;
+  background: var(--tint-cool);
   color: var(--resultant);
   font-weight: 700;
 }
@@ -1308,22 +1367,22 @@
   grid-template-columns: auto minmax(0, 1fr);
   gap: 1rem;
   align-items: center;
-  margin-top: 1rem;
-  border: 1px solid var(--resultant);
-  background: #f1ebff;
-  padding: 1rem 1.2rem;
+  margin-top: 1.2rem;
+  border-left: 3px solid var(--resultant);
+  background: var(--tint-cool);
+  padding: 1rem 1.3rem;
 }
 
 .result-callout span {
   color: var(--resultant);
-  font: 700 0.7rem/1 Consolas, monospace;
+  font: 700 0.7rem/1 var(--font-mono);
   letter-spacing: 0.1em;
   text-transform: uppercase;
 }
 
 .result-callout strong {
   color: var(--ink);
-  font: 700 clamp(1rem, 3vw, 1.3rem)/1.4 Consolas, monospace;
+  font: 700 clamp(1rem, 3vw, 1.3rem)/1.4 var(--font-mono);
 }
 
 .simulation-intro {
@@ -1464,4 +1523,85 @@
   .exercise-navigation__next {
     align-self: flex-end;
   }
+}
+
+/* ── seções contínuas do exercício ─────────────────────────────────── */
+.section-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  padding: 0.55rem 0;
+}
+
+.section-nav a {
+  border-radius: var(--radius-pill);
+  color: var(--ink-soft);
+  padding: 0.45rem 1rem;
+  font: 700 0.76rem/1 var(--font-mono);
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  transition: background 160ms ease, color 160ms ease;
+}
+
+.section-nav a:hover {
+  background: var(--paper-deep);
+  color: var(--ink);
+}
+
+.section-nav a[aria-current="true"] {
+  background: var(--ink);
+  color: var(--on-ink);
+}
+
+.lesson-section {
+  scroll-margin-top: 8.5rem;
+}
+
+.lesson-section + .lesson-section {
+  margin-top: 4rem;
+  border-top: 1px solid var(--line);
+  padding-top: 3rem;
+}
+
+@media (max-width: 760px) {
+  .lesson-section {
+    scroll-margin-top: 11rem;
+  }
+}
+
+/* Equações geradas dinamicamente, usando o mesmo tema do simulador. */
+.equation-block .math-display {
+  max-width: 100%;
+  margin: 0.35rem 0 0;
+  padding-bottom: 0.2rem;
+}
+
+.equation-block mjx-container,
+.theory-flow mjx-container {
+  font-size: 92%;
+}
+
+.force-equations {
+  display: grid;
+  gap: 0.75rem;
+  min-width: 0;
+}
+
+.equation-caption,
+.simulator-equation-warning {
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: 0.78rem;
+  line-height: 1.5;
+}
+
+.simulator-equation-warning {
+  padding: 0.75rem;
+  border-left: 4px solid var(--positive);
+  background: rgb(191 58 69 / 8%);
+}
+
+.theory-flow .math-display {
+  max-width: 100%;
+  margin: 1.2rem 0 0;
 }
