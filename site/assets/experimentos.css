@@ -258,6 +258,12 @@
   white-space: normal;
 }
 
+.equation-step.math-display,
+.experiment-page .math-block.math-display {
+  margin-block: 0;
+  white-space: normal;
+}
+
 .theory-note {
   padding: 1rem 1.2rem;
   border: 1px solid var(--measure);
@@ -367,6 +373,78 @@
   border-bottom: 1px solid #8297a3;
 }
 
+.report-document--markdown {
+  counter-reset: report-heading;
+  color: var(--ink);
+}
+
+.report-document--markdown > h1 {
+  max-width: 22ch;
+  margin: 0 0 2.25rem;
+  font-size: clamp(2.25rem, 6vw, 4.25rem);
+  line-height: 1;
+  letter-spacing: -0.045em;
+}
+
+.report-document--markdown > h2 {
+  display: flex;
+  gap: 1rem;
+  align-items: baseline;
+  margin: 3.25rem 0 1rem;
+  padding-top: 1.35rem;
+  border-top: 1px solid var(--line-strong);
+  counter-increment: report-heading;
+  font-size: clamp(1.55rem, 3vw, 2rem);
+  line-height: 1.2;
+}
+
+.report-document--markdown > h2::before {
+  flex: 0 0 2.2rem;
+  color: var(--force-3);
+  content: counter(report-heading, decimal-leading-zero);
+  font: 700 0.78rem/1 var(--font-mono);
+  letter-spacing: 0.08em;
+}
+
+.report-document--markdown h3 {
+  margin: 2rem 0 0.7rem;
+  font-size: 1.2rem;
+  line-height: 1.3;
+}
+
+.report-document--markdown p,
+.report-document--markdown li {
+  line-height: 1.75;
+}
+
+.report-document--markdown ul,
+.report-document--markdown ol {
+  padding-left: 1.4rem;
+}
+
+.report-document--markdown li + li {
+  margin-top: 0.45rem;
+}
+
+.report-document--markdown hr {
+  margin: 1.1rem 0;
+  border: 0;
+  border-top: 1px solid var(--line-strong);
+}
+
+.report-document--markdown input[type="checkbox"] {
+  margin-right: 0.45rem;
+  accent-color: var(--force-3);
+}
+
+.report-document--markdown .data-table-wrapper {
+  margin: 1.75rem 0;
+}
+
+.report-document--markdown mjx-container[display="true"] {
+  margin-block: 1.35rem;
+}
+
 .experiment-footer {
   display: flex;
   justify-content: space-between;
@@ -418,13 +496,14 @@
 
 @media print {
   @page {
+    size: A4;
     margin: 1.4cm;
   }
 
   body {
     background: white;
     color: black;
-    font-size: 10.5pt;
+    font-size: 12pt;
   }
 
   .skip-link,
@@ -473,5 +552,67 @@
 
   .data-table {
     min-width: 0;
+  }
+
+  .report-document--markdown {
+    width: 100%;
+    color: black;
+  }
+
+  .report-document--markdown > h1 {
+    max-width: none;
+    margin-bottom: 0.8cm;
+    font-size: 23pt;
+    break-after: avoid;
+  }
+
+  .report-document--markdown > h2 {
+    gap: 0.35cm;
+    margin: 0.9cm 0 0.3cm;
+    padding-top: 0.35cm;
+    border-color: #777;
+    font-size: 15pt;
+    break-after: avoid;
+  }
+
+  .report-document--markdown > h2::before {
+    flex-basis: 0.75cm;
+    color: black;
+    font-size: 8.5pt;
+  }
+
+  .report-document--markdown h3 {
+    margin: 0.55cm 0 0.2cm;
+    font-size: 12pt;
+    break-after: avoid;
+  }
+
+  .report-document--markdown p,
+  .report-document--markdown li {
+    line-height: 1.55;
+  }
+
+  .report-document--markdown hr {
+    margin: 0.45cm 0;
+    border-color: #777;
+  }
+
+  .report-document--markdown .data-table-wrapper {
+    overflow: visible;
+    margin: 0.5cm 0;
+  }
+
+  .report-document--markdown .data-table {
+    font-size: 8pt;
+  }
+
+  .data-table thead {
+    display: table-header-group;
+  }
+
+  .experiment-figure,
+  .math-display,
+  mjx-container {
+    break-inside: avoid;
   }
 }

@@ -3,6 +3,7 @@ import {
   ElectrostaticSingularityError,
 } from "../nucleo/eletrostatica.js";
 import { magnitude } from "../nucleo/vetores.js";
+import { createMathRenderScheduler } from "./matematica.js";
 
 const FORCE_COLORS = [
   "#008B95",
@@ -176,11 +177,35 @@ function chargeValue(charge) {
   return sign + charge.magnitudeMicroC.toFixed(1).replace(".", ",") + " µC";
 }
 
-function forceValue(value) {
-  if (Math.abs(value) < 1e-14) {
-    return "0,00";
-  }
-  return value.toExponential(2).replace(".", ",");
+function forceLatexValue(value) {
+  if (Math.abs(value) < 1e-14) return "0{,}00";
+
+  const parts = value.toExponential(2).split("e");
+  return (
+    parts[0].replace(".", "{,}") +
+    "\\times10^{" +
+    String(Number(parts[1])) +
+    "}"
+  );
+}
+
+function displayMath(contents) {
+  return '<div class="math-display">\\[' + contents + "\\]</div>";
+}
+
+function forceSubscript(source) {
+  const number = sourceNumber(source);
+  return number > 0 ? String(number) + "\\to t" : "i\\to t";
+}
+
+function forceVectorLatex(force) {
+  return (
+    "\\left(" +
+    forceLatexValue(force.x) +
+    "\\,;\\," +
+    forceLatexValue(force.y) +
+    "\\right)"
+  );
 }
 
 function toSvgPoint(state, xCm, yCm) {
@@ -457,6 +482,54 @@ function svgMarkup(state, forceSystem) {
   );
 }
 
+export function forceEquationsMarkup(state, forceSystem) {
+  const law = [
+    '<div class="equation-block"><span>Lei de Coulomb vetorial</span>',
+    displayMath(
+      "\\vec{F}_{i\\to t}=k\\frac{q_iq_t}{\\lVert\\vec{r}_t-\\vec{r}_i\\rVert^3}" +
+        "\\left(\\vec{r}_t-\\vec{r}_i\\right)",
+    ),
+    '<p class="equation-caption">O sinal de \\(q_iq_t\\) determina atração ou repulsão; o vetor posição determina a direção.</p></div>',
+  ].join("");
+
+  if (!forceSystem) {
+    return (
+      law +
+      '<p class="simulator-equation-warning">Separe as cargas coincidentes para calcular componentes e resultante.</p>'
+    );
+  }
+
+  const componentLines = forceSystem.individual.map(
+    (entry) =>
+      "\\vec{F}_{" +
+      forceSubscript(entry.source) +
+      "}&=" +
+      forceVectorLatex(entry.force) +
+      "\\,\\mathrm{N}",
+  );
+  componentLines.push(
+    "\\vec{F}_{\\mathrm{res}}&=\\sum_i\\vec{F}_{i\\to t}=" +
+      forceVectorLatex(forceSystem.resultant) +
+      "\\,\\mathrm{N}",
+  );
+  componentLines.push(
+    "\\lVert\\vec{F}_{\\mathrm{res}}\\rVert&=" +
+      forceLatexValue(magnitude(forceSystem.resultant)) +
+      "\\,\\mathrm{N}",
+  );
+
+  return (
+    law +
+    '<div class="equation-block equation-block--result"><span>Componentes e superposição</span>' +
+    displayMath(
+      "\\begin{aligned}" +
+        componentLines.join("\\\\") +
+        "\\end{aligned}",
+    ) +
+    "</div>"
+  );
+}
+
 function forceTableMarkup(state, forceSystem) {
   if (!forceSystem) {
     return "";
@@ -467,28 +540,27 @@ function forceTableMarkup(state, forceSystem) {
     return (
       '<tr><th scope="row"><span class="force-swatch" style="--vector-color:' +
       entry.source.vectorColor +
-      '"></span>F(' +
-      entry.source.label +
-      "→" +
-      state.testCharge.label +
-      ")</th><td>" +
-      forceValue(entry.force.x) +
-      "</td><td>" +
-      forceValue(entry.force.y) +
-      "</td><td>" +
-      forceValue(module) +
+      '"></span>\\(\\vec{F}_{' +
+      forceSubscript(entry.source) +
+      "}\\)</th><td>\\(" +
+      forceLatexValue(entry.force.x) +
+      "\\)</td><td>\\(" +
+      forceLatexValue(entry.force.y) +
+      "\\)</td><td>\\(" +
+      forceLatexValue(module) +
+      "\\)" +
       "</td></tr>"
     );
   });
   const resultant = forceSystem.resultant;
   rows.push(
-    '<tr class="force-result-row"><th scope="row"><span class="force-swatch force-swatch--resultant"></span>F<sub>R</sub></th><td>' +
-      forceValue(resultant.x) +
-      "</td><td>" +
-      forceValue(resultant.y) +
-      "</td><td>" +
-      forceValue(magnitude(resultant)) +
-      "</td></tr>",
+    '<tr class="force-result-row"><th scope="row"><span class="force-swatch force-swatch--resultant"></span>\\(\\vec{F}_{\\mathrm{res}}\\)</th><td>\\(' +
+      forceLatexValue(resultant.x) +
+      "\\)</td><td>\\(" +
+      forceLatexValue(resultant.y) +
+      "\\)</td><td>\\(" +
+      forceLatexValue(magnitude(resultant)) +
+      "\\)</td></tr>",
   );
   return rows.join("");
 }
@@ -512,8 +584,9 @@ function simulatorShell() {
     '<div class="button-row"><button type="button" class="control-button control-button--primary" data-action="add-source">Adicionar carga</button><button type="button" class="control-button" data-action="remove-source">Remover</button></div>',
     '<button type="button" class="control-button control-button--reset" data-action="reset"></button>',
     "</section>",
-    '<section class="control-block results-block"><div class="control-heading"><div><p class="control-kicker">Superposição</p><h3>Forças sobre a carga de prova</h3></div><span>N</span></div>',
-    '<div class="table-scroll"><table class="force-table"><thead><tr><th>Vetor</th><th>F<sub>x</sub></th><th>F<sub>y</sub></th><th>|F|</th></tr></thead><tbody data-force-table></tbody></table></div>',
+    '<section class="control-block results-block"><div class="control-heading"><div><p class="control-kicker">Superposição</p><h3>Forças sobre a carga de prova</h3></div><span>SI</span></div>',
+    '<div class="force-equations" data-force-equations></div>',
+    '<div class="table-scroll"><table class="force-table"><thead><tr><th>Vetor</th><th>\\(F_x\\)</th><th>\\(F_y\\)</th><th>\\(\\lVert\\vec{F}\\rVert\\)</th></tr></thead><tbody data-force-table></tbody></table></div>',
     '<p class="simulator-message" data-simulator-message aria-live="polite"></p>',
     "</section>",
     "</aside>",
@@ -521,7 +594,7 @@ function simulatorShell() {
   ].join("");
 }
 
-export function mountChargeSimulator(root, preset) {
+export function mountChargeSimulator(root, preset, options = {}) {
   let state = createSimulatorState(preset);
   let draggingId = null;
   let forceSystem = null;
@@ -536,11 +609,16 @@ export function mountChargeSimulator(root, preset) {
   const signValue = root.querySelector("[data-sign-value]");
   const sourceCount = root.querySelector("[data-source-count]");
   const sourceList = root.querySelector("[data-source-list]");
+  const forceEquations = root.querySelector("[data-force-equations]");
   const forceTable = root.querySelector("[data-force-table]");
   const message = root.querySelector("[data-simulator-message]");
   const addButton = root.querySelector('[data-action="add-source"]');
   const removeButton = root.querySelector('[data-action="remove-source"]');
   const resetButton = root.querySelector('[data-action="reset"]');
+  const scheduleMath = createMathRenderScheduler(
+    options.typesetMath,
+    options.requestFrame,
+  );
 
   function render() {
     let calculationError = "";
@@ -614,6 +692,7 @@ export function mountChargeSimulator(root, preset) {
         chargeValue(state.testCharge) +
         "</small></button>",
     );
+    forceEquations.innerHTML = forceEquationsMarkup(state, forceSystem);
     forceTable.innerHTML = forceTableMarkup(state, forceSystem);
     message.textContent = calculationError || state.message;
     message.classList.toggle("is-error", Boolean(calculationError));
@@ -626,6 +705,7 @@ export function mountChargeSimulator(root, preset) {
         : "";
     removeButton.disabled = state.lockSources || !selectedIsSource;
     resetButton.textContent = state.resetLabel;
+    scheduleMath(root);
   }
 
   function selectFromTarget(target) {

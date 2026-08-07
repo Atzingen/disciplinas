@@ -3,6 +3,7 @@ import { readFile } from "node:fs/promises";
 import test from "node:test";
 
 let experimentApi = {};
+let markdownReportApi = {};
 
 try {
   experimentApi = await import("../experimentos/experimento.js");
@@ -10,26 +11,36 @@ try {
   experimentApi = {};
 }
 
+try {
+  markdownReportApi = await import("../componentes/relatorio-markdown.js");
+} catch {
+  markdownReportApi = {};
+}
+
 const experiments = [
   {
     slug: "01-campo-corrente",
     image: "exp-01-oersted-montagem.jpg",
-    equations: [/B\(r\)\s*=\s*μ₀I\/\(2πr\)/, /tan\s*φ\s*=\s*B_fio\/B_T,h/],
+    tabs: 4,
+    equations: [/\\frac\{\\mu_0 I\}\{2\\pi r\}/, /\\tan\\varphi/, /\\oint_C/],
   },
   {
     slug: "02-campo-solenoide",
     image: "exp-02-solenoide-montagem.jpg",
-    equations: [/B_ideal\s*=\s*μ₀\(N\/ℓ\)I\s*=\s*μ₀nI/, /B\(z\).*z\+ℓ\/2.*z−ℓ\/2/s],
+    tabs: 4,
+    equations: [/B_\{\\mathrm\{ideal\}\}/, /\\frac\{N\}\{\\ell\}/, /\\sqrt\{a\^2/],
   },
   {
     slug: "03-forca-magnetica-motor",
     image: "exp-03-balanco-magnetico.jpg",
-    equations: [/F\s*=\s*BIL\s*sin\s*θ/, /τ\s*=\s*μ\s*×\s*B/, /U\s*=\s*−μ·B/],
+    tabs: 4,
+    equations: [/d\\vec/, /\\vec\\tau/, /J\\ddot\{\\theta\}/],
   },
   {
     slug: "04-inducao-eletromagnetica",
     image: "exp-04-montagem.jpg",
-    equations: [/ε\s*=\s*−N\s*dΦ_B\/dt/, /L\s*di\/dt\s*\+\s*Ri\s*=\s*ε\(t\)/],
+    tabs: 4,
+    equations: [/\\mathcal\{E\}/, /\\frac\{d\\Phi_B\}\{dt\}/, /L\\frac\{di\}\{dt\}/],
   },
 ];
 
@@ -55,7 +66,7 @@ function plainText(html) {
     .replace(/\s+/g, " ");
 }
 
-function createInteractiveFixture() {
+function createInteractiveFixture({ withReport = false } = {}) {
   const panels = new Map();
   const makeTab = (controls, selected) => {
     const attributes = new Map([
@@ -86,19 +97,21 @@ function createInteractiveFixture() {
       if (type === "click") this.clickHandler = handler;
     },
   };
+  const reportDocument = withReport ? {} : null;
   const root = {
     querySelectorAll(selector) {
       return selector === '[role="tab"]' ? tabs : [];
     },
     querySelector(selector) {
       if (selector === "[data-print-report]") return printButton;
+      if (selector === "[data-markdown-report]") return reportDocument;
       return panels.get(selector) ?? null;
     },
   };
-  return { root, tabs, panels, printButton };
+  return { root, tabs, panels, printButton, reportDocument };
 }
 
-test("ação de imprimir ativa primeiro a aba Relatório", () => {
+test("ação de imprimir ativa primeiro a aba Relatório", async () => {
   assert.equal(typeof experimentApi.setupExperiment, "function");
   const fixture = createInteractiveFixture();
   let printCalls = 0;
@@ -106,7 +119,10 @@ test("ação de imprimir ativa primeiro a aba Relatório", () => {
   experimentApi.setupExperiment(fixture.root, () => {
     printCalls += 1;
   });
-  fixture.printButton.clickHandler();
+  const printResult = fixture.printButton.clickHandler();
+
+  assert.equal(typeof printResult?.then, "function");
+  await printResult;
 
   assert.equal(fixture.tabs[3].getAttribute("aria-selected"), "true");
   assert.equal(fixture.panels.get("#painel-relatorio").hidden, false);
@@ -114,18 +130,72 @@ test("ação de imprimir ativa primeiro a aba Relatório", () => {
   assert.equal(printCalls, 1);
 });
 
+test("ação de imprimir aguarda o relatório Markdown completo", async () => {
+  const fixture = createInteractiveFixture({ withReport: true });
+  let releaseReport;
+  let printCalls = 0;
+  const reportReady = new Promise((resolve) => {
+    releaseReport = resolve;
+  });
+
+  experimentApi.setupExperiment(
+    fixture.root,
+    () => {
+      printCalls += 1;
+    },
+    () => reportReady,
+  );
+  const printResult = fixture.printButton.clickHandler();
+
+  await Promise.resolve();
+  assert.equal(printCalls, 0);
+  releaseReport();
+  await printResult;
+  assert.equal(printCalls, 1);
+});
+
+test("renderização Markdown preserva delimitadores e comandos LaTeX", () => {
+  assert.equal(typeof markdownReportApi.renderMarkdownWithMath, "function");
+  const source = [
+    "## Modelo",
+    "",
+    "O campo é $B_{T,h}=B_0\\cos\\alpha$.",
+    "",
+    "$$\\frac{d\\Phi_B}{dt}=-\\mathcal{E}$$",
+    "",
+    "Também vale \\(\\vec F=q\\vec v\\times\\vec B\\).",
+  ].join("\n");
+  const parseMarkdown = (markdown) => `<article>${markdown}</article>`;
+  const html = markdownReportApi.renderMarkdownWithMath(source, parseMarkdown);
+
+  assert.match(html, /\$B_\{T,h\}=B_0\\cos\\alpha\$/);
+  assert.match(html, /\$\$\\frac\{d\\Phi_B\}\{dt\}=-\\mathcal\{E\}\$\$/);
+  assert.match(html, /\\\(\\vec F=q\\vec v\\times\\vec B\\\)/);
+  assert.doesNotMatch(html, /MATHPLACEHOLDER/);
+});
+
 for (const experiment of experiments) {
   test(`${experiment.slug} entrega roteiro avançado e relatório`, async () => {
     const html = await readExperiment(experiment.slug, "index.html");
     const report = await readExperiment(experiment.slug, "relatorio.md");
     const text = plainText(html);
+    const reportWords = report
+      .replace(/^\|.*$/gm, " ")
+      .replace(/[^\p{L}\p{N}]+/gu, " ")
+      .trim()
+      .split(/\s+/)
+      .filter(Boolean).length;
 
-    assert.equal((html.match(/role="tab"/g) ?? []).length, 4);
-    assert.equal((html.match(/role="tabpanel"/g) ?? []).length, 4);
+    assert.equal((html.match(/role="tab"/g) ?? []).length, experiment.tabs);
+    assert.equal((html.match(/role="tabpanel"/g) ?? []).length, experiment.tabs);
     assert.match(text, /Montagem/);
     assert.match(text, /Fundamentos/);
     assert.match(text, /Dados/);
     assert.match(text, /Relatório/);
+    assert.match(
+      html,
+      /class="report-template"[^>]*data-markdown-report="\.\/relatorio\.md"/,
+    );
     assert.match(html, /class="experiment-safety"/);
     assert.match(text, /5–10 s/);
     assert.match(html, /<table\b/);
@@ -135,14 +205,56 @@ for (const experiment of experiments) {
     assert.match(text, /Fonte: manual AZEHEB/);
     assert.match(html, /data-active-section="experimentos"/);
     assert.match(html, /experimento\.js/);
-
-    for (const equation of experiment.equations) {
-      assert.match(text, equation);
-    }
+    assert.match(
+      html,
+      /class="[^"]*math-display[^"]*"/,
+      `${experiment.slug} deve renderizar as equações da fundamentação com MathJax`,
+    );
+    assert.match(html, /\\begin\{aligned\}/);
+    assert.match(html, /\\frac\{/);
+    assert.doesNotMatch(
+      html,
+      /<div class="math-block">[^<]*\/[^<]*<\/div>/,
+      `${experiment.slug} não deve exibir divisões tipográficas cruas`,
+    );
 
     assert.match(report, /^# /m);
-    assert.match(report, /^## Dados/m);
-    assert.match(report, /^## Análise/m);
+    assert.match(report, /^## Dados brutos/m);
+    assert.match(report, /^## Tratamento e análise/m);
+    assert.match(report, /^## Discussão/m);
     assert.match(report, /^## Conclusão/m);
+    assert.match(report, /\\begin\{aligned\}/);
+    assert.match(report, /\\frac\{/);
+    for (const equation of experiment.equations) {
+      assert.match(report, equation);
+    }
+    assert.ok(
+      reportWords >= 1500,
+      experiment.slug + " tem somente " + reportWords + " palavras no relatório",
+    );
   });
 }
+
+test("04-inducao adota relatório acadêmico contínuo e matemática LaTeX", async () => {
+  const html = await readExperiment("04-inducao-eletromagnetica", "index.html");
+  const report = await readExperiment("04-inducao-eletromagnetica", "relatorio.md");
+  const reportWords = report
+    .replace(/\|[^\n]+\|/g, " ")
+    .replace(/[^\p{L}\p{N}]+/gu, " ")
+    .trim()
+    .split(/\s+/)
+    .filter(Boolean).length;
+
+  assert.equal((html.match(/role="tab"/g) ?? []).length, 4);
+  assert.equal((html.match(/role="tabpanel"/g) ?? []).length, 4);
+  assert.match(
+    html,
+    /class="report-template"[^>]*data-markdown-report="\.\/relatorio\.md"/,
+  );
+  assert.match(report, /^## Dados brutos/m);
+  assert.match(report, /^## Tratamento e análise/m);
+  assert.match(report, /^## Discussão/m);
+  assert.match(report, /\$\$[\s\S]*\\frac[\s\S]*\$\$/);
+  assert.match(report, /\\begin\{aligned\}/);
+  assert.ok(reportWords >= 1500, `o relatório tem somente ${reportWords} palavras`);
+});

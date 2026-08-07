@@ -231,7 +231,7 @@
             Considere <i>N</i> espiras distribuídas uniformemente em um
             comprimento ativo ℓ, com raio <i>a</i>, corrente estacionária
             <i>I</i> e eixo <i>z</i> cuja origem está no centro. A densidade
-            linear de espiras é <b>n = N/ℓ</b>. O modelo usa núcleo de ar,
+            linear de espiras é \(n=\frac{N}{\ell}\). O modelo usa núcleo de ar,
             espiras próximas e simetria axial; fios de ligação, espaçamento entre
             espiras, aquecimento e dimensões reais quebram parcialmente essas
             hipóteses.
@@ -258,21 +258,19 @@
           fora e os lados curtos são perpendiculares ao campo. A forma integral é:
         </p>
         <div class="equation-flow" aria-label="Derivação do campo ideal">
-          <div class="equation-step">
-            ∮<sub>C</sub> B·dℓ = μ₀I<sub>enc</sub>
-            <small>Lei de Ampère para corrente estacionária.</small>
-          </div>
-          <div class="equation-step">
-            I<sub>enc</sub> = (nL)I
-            <small>O trecho de comprimento L intercepta nL espiras.</small>
-          </div>
-          <div class="equation-step">
-            BL + 0 = μ₀(nL)I
-            <small>No limite ideal, o campo interno é uniforme e o campo externo é aproximadamente nulo.</small>
-          </div>
-          <div class="equation-step">
-            B_ideal = μ₀(N/ℓ)I = μ₀nI
-            <small>O comprimento L da curva cancela; o resultado é o módulo axial no interior.</small>
+          <div class="equation-step math-display">
+            \[
+            \begin{aligned}
+            \oint_C\vec{B}\cdot d\vec{\ell}
+              &=\mu_0 I_{\mathrm{enc}},\\
+            I_{\mathrm{enc}}&=(nL)I,\\
+            BL&=\mu_0(nL)I,\\
+            B_{\mathrm{ideal}}
+              &=\mu_0 nI
+              =\mu_0\frac{N}{\ell}I.
+            \end{aligned}
+            \]
+            <small>O comprimento L da curva cancela; o resultado é o módulo axial no interior de um solenoide ideal.</small>
           </div>
         </div>
         <p class="theory-note">
@@ -288,11 +286,20 @@
           Somando a contribuição das espiras entre −ℓ/2 e +ℓ/2, a componente
           axial a uma coordenada <i>z</i> é:
         </p>
-        <div class="math-block">B(z) = (μ₀nI/2)[(z+ℓ/2)/√(a²+(z+ℓ/2)²) − (z−ℓ/2)/√(a²+(z−ℓ/2)²)]</div>
+        <div class="math-block math-display">
+          \[
+          B(z)=\frac{\mu_0 nI}{2}
+          \left[
+          \frac{z+\ell/2}{\sqrt{a^2+(z+\ell/2)^2}}
+          -
+          \frac{z-\ell/2}{\sqrt{a^2+(z-\ell/2)^2}}
+          \right].
+          \]
+        </div>
         <p>
-          No centro, <i>z</i> = 0, os dois termos se somam e
-          B(0) = μ₀nI/√(1+(2a/ℓ)²). Quando ℓ ≫ a, o fator geométrico tende a
-          1 e recupera B(0) → μ₀nI. Perto das extremidades, as contribuições
+          No centro, \(z=0\), os dois termos se somam e
+          \(B(0)=\mu_0nI/\sqrt{1+(2a/\ell)^2}\). Quando \(\ell\gg a\), o fator geométrico tende a
+          1 e recupera \(B(0)\to\mu_0nI\). Perto das extremidades, as contribuições
           deixam de ser quase paralelas e o campo axial diminui; fora da bobina
           finita, ele não é zero, pois as linhas precisam retornar de um polo ao
           outro. Muito longe, as duas parcelas da expressão se cancelam
@@ -447,25 +454,34 @@
       <div class="uncertainty-box">
         <h3>Análise de σ e ajuste do modelo finito</h3>
         <p>
-          Para cada ponto, use o resíduo r<sub>i</sub> = B<sub>i</sub> −
-          B<sub>modelo</sub>(z<sub>i</sub>, I<sub>i</sub>). Se as incertezas forem
+          Para cada ponto, use o resíduo
+          \(r_i=B_i-B_{\mathrm{modelo}}(z_i,I_i)\). Se as incertezas forem
           independentes, combine as contribuições de posição, corrente e leitura
-          Hall por
-          σ<sub>ef,i</sub>² = σ<sub>B,i</sub>² +
-          (∂B/∂z · σ<sub>z,i</sub>)² +
-          (∂B/∂I · σ<sub>I,i</sub>)². Inclua também <i>a</i> e ℓ quando suas
+          Hall por:
+        </p>
+        <div class="math-block math-display">
+          \[
+          \sigma_{\mathrm{ef},i}^2
+          =\sigma_{B,i}^2
+          +\left(\frac{\partial B}{\partial z}\sigma_{z,i}\right)^2
+          +\left(\frac{\partial B}{\partial I}\sigma_{I,i}\right)^2.
+          \]
+        </div>
+        <p>
+          Inclua também \(a\) e \(\ell\) quando suas
           incertezas não forem desprezíveis; erros comuns de zero ou calibração
           devem ser discutidos como sistemáticos, não repetidos como se fossem
           independentes.
         </p>
         <p>
           Ajuste a expressão finita com mínimos quadrados ponderados, permitindo
-          um campo de fundo B<sub>fundo</sub> e, se necessário, um deslocamento
-          z<sub>0</sub>. Fixe <i>a</i> e ℓ nas medidas geométricas e ajuste apenas
+          um campo de fundo \(B_{\mathrm{fundo}}\) e, se necessário, um deslocamento
+          \(z_0\). Fixe \(a\) e \(\ell\) nas medidas geométricas e ajuste apenas
           parâmetros que os dados possam determinar, como a amplitude ligada a
-          <i>n</i>. Examine r<sub>i</sub>/σ<sub>ef,i</sub>, informe as incertezas
-          dos parâmetros e calcule χ²<sub>red</sub> =
-          Σ(r<sub>i</sub>/σ<sub>ef,i</sub>)²/ν. Compare o padrão dos resíduos com
+          \(n\). Examine \(\frac{r_i}{\sigma_{\mathrm{ef},i}}\), informe as incertezas
+          dos parâmetros e calcule
+          \(\chi^2_{\mathrm{red}}=\frac{1}{\nu}\sum_i\left(\frac{r_i}{\sigma_{\mathrm{ef},i}}\right)^2\).
+          Compare o padrão dos resíduos com
           o modelo ideal constante no interior e aproximadamente nulo no exterior.
           Sem sensor Hall, limite a conclusão à comparação qualitativa.
         </p>
@@ -495,7 +511,7 @@
         </button>
       </div>
 
-      <div class="report-template">
+      <div class="report-template" data-markdown-report="./relatorio.md">
         <div class="report-template__fields" aria-label="Identificação do relatório">
           <div><strong>Grupo e integrantes</strong><div class="report-template__line"></div></div>
           <div><strong>Turma</strong><div class="report-template__line"></div></div>

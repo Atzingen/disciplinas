@@ -1,4 +1,5 @@
 import { mountSectionNav } from "../../componentes/navegacao-secoes.js";
+import "../../componentes/matematica.js";
 import { mountChargeSimulator } from "../../componentes/simulador-cargas.js";
 import { HALLIDAY_PRESET } from "./preset.js";
 

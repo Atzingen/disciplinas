@@ -1568,3 +1568,40 @@
     scroll-margin-top: 11rem;
   }
 }
+
+/* Equações geradas dinamicamente, usando o mesmo tema do simulador. */
+.equation-block .math-display {
+  max-width: 100%;
+  margin: 0.35rem 0 0;
+  padding-bottom: 0.2rem;
+}
+
+.equation-block mjx-container,
+.theory-flow mjx-container {
+  font-size: 92%;
+}
+
+.force-equations {
+  display: grid;
+  gap: 0.75rem;
+  min-width: 0;
+}
+
+.equation-caption,
+.simulator-equation-warning {
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: 0.78rem;
+  line-height: 1.5;
+}
+
+.simulator-equation-warning {
+  padding: 0.75rem;
+  border-left: 4px solid var(--positive);
+  background: rgb(191 58 69 / 8%);
+}
+
+.theory-flow .math-display {
+  max-width: 100%;
+  margin: 1.2rem 0 0;
+}

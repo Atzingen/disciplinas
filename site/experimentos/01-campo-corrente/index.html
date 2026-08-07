@@ -204,13 +204,31 @@
           ponto de observação, e r̂ aponta do elemento para esse ponto.
         </p>
         <div class="equation-flow" aria-label="Derivação por Biot-Savart">
-          <div class="equation-step">dB = (μ₀/4π) I(dℓ × r̂)/r²</div>
-          <div class="equation-step">
-            dB_φ = (μ₀I/4π) a dz/(a² + z²)^(3/2)
+          <div class="equation-step math-display">
+            \[
+            d\vec{B}=
+            \frac{\mu_0}{4\pi}
+            \frac{I\,d\vec{\ell}\times\hat{\vec{r}}}{r^2}.
+            \]
+          </div>
+          <div class="equation-step math-display">
+            \[
+            dB_{\varphi}=
+            \frac{\mu_0 I}{4\pi}
+            \frac{a\,dz}{(a^2+z^2)^{3/2}}.
+            \]
             <small>Para um fio ao longo de z, a é a distância perpendicular ao fio; componentes não azimutais se cancelam por pares.</small>
           </div>
-          <div class="equation-step">
-            B(a) = (μ₀I/4π) ∫[−∞,+∞] a dz/(a² + z²)^(3/2) = μ₀I/(2πa)
+          <div class="equation-step math-display">
+            \[
+            \begin{aligned}
+            B(a)
+              &=\frac{\mu_0 I}{4\pi}
+                \int_{-\infty}^{+\infty}
+                \frac{a\,dz}{(a^2+z^2)^{3/2}} \\
+              &=\frac{\mu_0 I}{2\pi a}.
+            \end{aligned}
+            \]
             <small>A soma sobre todo o fio modifica a dependência radial presente em cada contribuição elementar.</small>
           </div>
         </div>
@@ -227,9 +245,16 @@
           caminho amperiano:
         </p>
         <div class="equation-flow" aria-label="Derivação pela lei de Ampère">
-          <div class="equation-step">∮B·dℓ = μ₀I</div>
-          <div class="equation-step">B(r)2πr = μ₀I</div>
-          <div class="equation-step">B(r) = μ₀I/(2πr)</div>
+          <div class="equation-step math-display">
+            \[
+            \begin{aligned}
+            \oint_C\vec{B}\cdot d\vec{\ell}
+              &=\mu_0 I_{\mathrm{enc}}, \\
+            B(r)\,2\pi r&=\mu_0 I, \\
+            B(r)&=\frac{\mu_0 I}{2\pi r}.
+            \end{aligned}
+            \]
+          </div>
         </div>
         <p>
           A regra da mão direita fixa o sentido: polegar na corrente
@@ -251,11 +276,19 @@
       <div class="experiment-grid">
         <article class="theory-card">
           <h3>3. Análise dimensional</h3>
-          <p>
-            No SI, [μ₀] = T·m/A. Logo,
-            [μ₀I/(2πr)] = (T·m/A)·A/m = T. A forma elementar também é
-            consistente: [μ₀I dℓ/r²] = (T·m/A)·A·m/m² = T.
-          </p>
+          <div class="math-block math-display">
+            \[
+            \begin{aligned}
+            [\mu_0]&=\mathrm{T\,m\,A^{-1}},\\
+            \left[\frac{\mu_0 I}{2\pi r}\right]
+              &=\frac{\mathrm{T\,m\,A^{-1}}\,\mathrm{A}}{\mathrm{m}}
+              =\mathrm{T},\\
+            \left[\frac{\mu_0 I\,d\ell}{r^2}\right]
+              &=\frac{\mathrm{T\,m\,A^{-1}}\,\mathrm{A\,m}}{\mathrm{m^2}}
+              =\mathrm{T}.
+            \end{aligned}
+            \]
+          </div>
           <p>
             O resultado dimensional não prova o fator 2π, mas detecta erros de
             unidade e mostra que uma potência radial incorreta exigiria outra
@@ -271,7 +304,14 @@
             horizontal e perpendicular a B_T,h. A agulha se orienta pela soma
             dos dois campos, formando o ângulo φ com a direção inicial.
           </p>
-          <div class="math-block">tan φ = B_fio/B_T,h</div>
+          <div class="math-block math-display">
+            \[
+            \begin{aligned}
+            \tan\varphi&=\frac{B_{\mathrm{fio}}}{B_{T,h}},\\
+            B_{\mathrm{fio}}&=B_{T,h}\tan\varphi.
+            \end{aligned}
+            \]
+          </div>
           <p>
             Assim, se B_T,h for conhecido, B_fio = B_T,h tan φ. A relação exige
             campos aproximadamente perpendiculares, bússola nivelada e pequena
@@ -351,7 +391,7 @@
             <li>Adote sinais para I e φ e declare a convenção no diagrama.</li>
             <li>Confira se inverter I, mantendo a posição, inverte o sinal de φ.</li>
             <li>Confira se trocar acima por abaixo, mantendo I, também inverte o sinal.</li>
-            <li>Se B_T,h for conhecido, calcule B_fio pela lei da tangente e compare com μ₀I/(2πr).</li>
+            <li>Se \(B_{T,h}\) for conhecido, calcule \(B_{\mathrm{fio}}\) pela lei da tangente e compare com \(\frac{\mu_0I}{2\pi r}\).</li>
             <li>Com vários valores de r, teste a proporcionalidade 1/r por um gráfico de B_fio versus 1/r; não conclua sobre a lei radial a partir de um único ponto.</li>
           </ol>
         </article>
@@ -371,7 +411,15 @@
 
       <div class="uncertainty-box">
         <h3>Propagação opcional para o modelo de Ampère</h3>
-        <div class="math-block">σ_B/B = √[(σ_I/I)² + (σ_r/r)²]</div>
+        <div class="math-block math-display">
+          \[
+          \left(\frac{u_B}{B}\right)^2
+          =
+          \left(\frac{u_I}{I}\right)^2
+          +
+          \left(\frac{u_r}{r}\right)^2.
+          \]
+        </div>
         <p>
           Esta forma supõe incertezas pequenas e independentes em I e r. Ela não
           inclui sistemáticos como comprimento finito, posição efetiva do centro
@@ -405,7 +453,7 @@
         </button>
       </div>
 
-      <div class="report-template">
+      <div class="report-template" data-markdown-report="./relatorio.md">
         <div class="report-template__fields" aria-label="Identificação do relatório">
           <div><strong>Curso/turma:</strong><div class="report-template__line"></div></div>
           <div><strong>Data:</strong><div class="report-template__line"></div></div>
@@ -450,7 +498,7 @@
             <h3>Análise</h3>
             <p>
               Confronte sinais previstos e observados. Demonstre
-              B(r) = μ₀I/(2πr), explique a lei da tangente e, se houver medidas
+              \(B(r)=\frac{\mu_0I}{2\pi r}\), explique a lei da tangente e, se houver medidas
               em diferentes distâncias, compare os dados com 1/r.
             </p>
             <div class="report-template__line"></div>
@@ -513,7 +561,7 @@
             <li>Por que inverter a corrente produz efeito equivalente sobre o sentido da deflexão?</li>
             <li>Que simetrias justificam escolher uma circunferência como caminho amperiano?</li>
             <li>Por que o fator 1/r² de Biot–Savart não é a dependência final do campo de um fio longo?</li>
-            <li>Em quais condições tan φ = B_fio/B_T,h deixa de ser uma boa aproximação?</li>
+            <li>Em quais condições \(\tan\varphi=\frac{B_{\mathrm{fio}}}{B_{T,h}}\) deixa de ser uma boa aproximação?</li>
             <li>Quais dados seriam necessários para distinguir experimentalmente 1/r de 1/r²?</li>
           </ol>
         </article>

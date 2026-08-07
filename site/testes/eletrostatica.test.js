@@ -2,11 +2,18 @@ import assert from "node:assert/strict";
 import test from "node:test";
 
 let electrostatics = {};
+let chargeSimulator = {};
 
 try {
   electrostatics = await import("../nucleo/eletrostatica.js");
 } catch {
   electrostatics = {};
+}
+
+try {
+  chargeSimulator = await import("../componentes/simulador-cargas.js");
+} catch {
+  chargeSimulator = {};
 }
 
 const apiAvailable =
@@ -36,6 +43,7 @@ test("núcleo eletrostático expõe a API de Coulomb", () => {
     typeof electrostatics.ElectrostaticSingularityError,
     "function",
   );
+  assert.equal(typeof chargeSimulator.forceEquationsMarkup, "function");
 });
 
 test("Coulomb calcula 1 µC a 1 metro com direção de repulsão", { skip: !apiAvailable }, () => {
@@ -82,6 +90,28 @@ test("superposição soma forças individuais e resultante", { skip: !apiAvailab
   assert.ok(system.individual[1].force.x < 0);
   assert.ok(nearlyEqual(system.resultant.x, 0));
   assert.ok(nearlyEqual(system.resultant.y, 0));
+});
+
+test("painel dinâmico compõe Coulomb vetorial, componentes e superposição", { skip: !apiAvailable }, () => {
+  const state = {
+    sources: [
+      charge("q1", -100, 0, 2, 1),
+      charge("q2", 100, 0, 3, -1),
+    ],
+    testCharge: charge("qt", 0, 50, 1, 1),
+  };
+  const forceSystem = electrostatics.calculateForceSystem(
+    state.sources,
+    state.testCharge,
+  );
+  const markup = chargeSimulator.forceEquationsMarkup(state, forceSystem);
+
+  assert.match(markup, /\\vec\{F\}_\{i\\to t\}/);
+  assert.match(markup, /\\frac\{q_iq_t\}\{\\lVert/);
+  assert.match(markup, /\\begin\{aligned\}/);
+  assert.match(markup, /\\vec\{F\}_\{\\mathrm\{res\}\}/);
+  assert.match(markup, /\\sum_i/);
+  assert.match(markup, /\\lVert\\vec\{F\}_\{\\mathrm\{res\}\}\\rVert/);
 });
 
 test("superposição aceita seis fontes", { skip: !apiAvailable }, () => {

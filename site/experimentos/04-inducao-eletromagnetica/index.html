@@ -277,11 +277,15 @@
             área orientada e, pela regra da mão direita, o sentido positivo de
             circulação ao redor da espira. Para uma volta:
           </p>
-          <div class="math-block">Φ_B = ∫ B·dA</div>
+          <div class="math-block math-display">
+            \[
+            \Phi_B(t)=\int_S\vec B(\vec r,t)\cdot d\vec A.
+            \]
+          </div>
           <p>
             O produto escalar conta a componente de B normal à área. Se o campo
             fosse aproximadamente uniforme sobre a área A, teríamos
-            Φ_B ≈ BA cos θ. Campo forte não implica, por si só, fluxo grande:
+            \(\Phi_B\approx BA\cos\theta\). Campo forte não implica, por si só, fluxo grande:
             área, orientação e não uniformidade também importam.
           </p>
         </article>
@@ -292,7 +296,11 @@
             Para N espiras equivalentes, o fluxo concatenado é NΦ_B. A força
             eletromotriz no sentido positivo escolhido é
           </p>
-          <div class="math-block">ε = −N dΦ_B/dt</div>
+          <div class="math-block math-display">
+            \[
+            \mathcal{E}(t)=-N\frac{d\Phi_B}{dt}.
+            \]
+          </div>
           <p>
             O sinal negativo não significa que a força eletromotriz é sempre
             “negativa”. Ele expressa a lei de Lenz: a corrente induzida cria um
@@ -306,22 +314,22 @@
       <article class="theory-card">
         <h3>3. Ímã em movimento: regra da cadeia</h3>
         <p>
-          Represente por z a posição assinada do ímã ao longo do eixo da bobina
-          e por v = dz/dt sua velocidade. Mantendo geometria e orientação
+          Represente por \(z\) a posição assinada do ímã ao longo do eixo da bobina
+          e por \(v=\frac{dz}{dt}\) sua velocidade. Mantendo geometria e orientação
           fixas, o fluxo pode ser escrito como Φ_B(z). Então:
         </p>
         <div class="equation-flow">
-          <div class="equation-step">
-            dΦ_B/dt = (dΦ_B/dz)(dz/dt)
+          <div class="equation-step math-display">
+            \[
+            \begin{aligned}
+            \frac{d\Phi_B}{dt}
+              &=\frac{d\Phi_B}{dz}\frac{dz}{dt}\\
+              &=v\frac{d\Phi_B}{dz},\\
+            \mathcal{E}(t)
+              &=-Nv\frac{d\Phi_B}{dz}.
+            \end{aligned}
+            \]
             <small>A regra da cadeia separa o gradiente espacial do fluxo da velocidade do ímã.</small>
-          </div>
-          <div class="equation-step">
-            dΦ_B/dt = v dΦ_B/dz
-            <small>v é algébrico: aproximação e afastamento possuem sinais opostos.</small>
-          </div>
-          <div class="equation-step">
-            ε = −Nv dΦ_B/dz
-            <small>A expressão vale para a trajetória axial escolhida e N representa o número de espiras, não o polo norte.</small>
           </div>
         </div>
         <p>
@@ -342,7 +350,7 @@
             o ímã entra. Com o polo N voltado à bobina, o campo próximo ao polo
             aponta para dentro dela, em sentido oposto à normal: Φ_B é
             negativo. Ao aproximar N, o módulo desse fluxo cresce,
-            dΦ_B/dt fica negativo e ε fica positivo no sentido de circulação
+            \(\frac{d\Phi_B}{dt}\) fica negativo e \(\mathcal E\) fica positiva no sentido de circulação
             definido. Trocar N por S ou aproximar por retirar inverte esse
             resultado. A indicação “direita” ou “esquerda” só pode ser ligada a
             esse sinal depois de registrar cabos e enrolamento.
@@ -352,8 +360,8 @@
         <aside class="theory-note">
           <h3>Ímã parado não significa campo nulo</h3>
           <p>
-            Um ímã parado pode produzir B não nulo e Φ_B não nulo. O que se
-            anula, em uma geometria fixa, é dΦ_B/dt; portanto ε = 0. O ponteiro
+            Um ímã parado pode produzir \(\vec B\neq\vec 0\) e \(\Phi_B\neq0\). O que se
+            anula, em uma geometria fixa, é \(\frac{d\Phi_B}{dt}\); portanto \(\mathcal E=0\). O ponteiro
             volta ao zero porque cessa a variação do fluxo, não porque o campo
             magnético desaparece.
           </p>
@@ -367,12 +375,21 @@
           circuito real. Se R representa a resistência total e L a
           autoindutância efetiva, a lei das malhas fornece
         </p>
-        <div class="math-block">L di/dt + Ri = ε(t)</div>
+        <div class="math-block math-display">
+          \[
+          \begin{aligned}
+          L\frac{di}{dt}+Ri&=\mathcal E(t),\\
+          \tau_e&=\frac{L}{R},\\
+          i(t)&\approx\frac{\mathcal E(t)}{R}
+          \quad\text{se }\tau_e\ll\tau_{\mathrm{mov}}.
+          \end{aligned}
+          \]
+        </div>
         <p>
-          A constante de tempo elétrica é τ_e = L/R. Quando τ_e é muito menor
+          A constante de tempo elétrica é \(\tau_e=\frac{L}{R}\). Quando \(\tau_e\) é muito menor
           que a escala de tempo da variação do fluxo e a dinâmica mecânica do
           galvanômetro não limita a leitura, o termo indutivo é pequeno e surge
-          o limite quase-estacionário <strong>i≈ε/R</strong>. Em movimentos
+          o limite quase-estacionário \(i\approx\frac{\mathcal E}{R}\). Em movimentos
           rápidos, a autoindutância, a inércia e o amortecimento do ponteiro
           podem reduzir ou atrasar o pico observado; deflexão não é uma cópia
           instantânea perfeita de ε(t).
@@ -382,12 +399,17 @@
       <div class="experiment-grid">
         <article class="theory-card">
           <h3>6. Análise dimensional</h3>
-          <ul>
-            <li>[Φ_B] = T·m² = Wb.</li>
-            <li>[dΦ_B/dt] = Wb/s = V, portanto [ε] = V.</li>
-            <li>[v dΦ_B/dz] = (m/s)(Wb/m) = Wb/s = V.</li>
-            <li>[L di/dt] = H·A/s = V e [Ri] = Ω·A = V.</li>
-          </ul>
+          <div class="math-block math-display">
+            \[
+            \begin{aligned}
+            [\Phi_B]&=\mathrm{T\,m^2=Wb},\\
+            \left[\frac{d\Phi_B}{dt}\right]&=\mathrm{Wb\,s^{-1}=V},\\
+            \left[v\frac{d\Phi_B}{dz}\right]
+              &=\mathrm{m\,s^{-1}\,Wb\,m^{-1}=V},\\
+            \left[L\frac{di}{dt}\right]&=[Ri]=\mathrm{V}.
+            \end{aligned}
+            \]
+          </div>
           <p>
             N é adimensional. Assim, todos os termos da equação RL têm unidade
             de volt e a forma de movimento é dimensionalmente compatível com a
@@ -488,8 +510,8 @@
             <li>Compare repetições equivalentes e descreva dispersão, assimetria e eventuais valores atípicos.</li>
             <li>
               Se houver velocidade medida, faça o gráfico
-              <strong>|ε_pico| versus rapidez</strong>. Use a mesma trajetória e
-              compare a região em que dΦ_B/dz é semelhante; uma tendência
+              \(\lvert\mathcal E_{\mathrm{pico}}\rvert\) versus rapidez. Use a mesma trajetória e
+              compare a região em que \(\frac{d\Phi_B}{dz}\) é semelhante; uma tendência
               aproximadamente linear é esperada apenas enquanto a resposta RL
               e o galvanômetro não limitarem o pico.
             </li>
@@ -518,8 +540,8 @@
           e risco de não capturar o pico. Avalie repetibilidade com ensaios
           equivalentes e sua dispersão. O movimento manual acrescenta incerteza
           de velocidade e posição; desalinhamento, inclinação e deslocamento
-          lateral alteram dΦ_B/dz. Se v for calculada, propague as resoluções de
-          Δz e Δt e separe essas incertezas dos desvios sistemáticos de trajetória.
+          lateral alteram \(\frac{d\Phi_B}{dz}\). Se \(v\) for calculada, propague as resoluções de
+          \(\Delta z\) e \(\Delta t\) e separe essas incertezas dos desvios sistemáticos de trajetória.
         </p>
       </div>
     </section>
@@ -548,7 +570,7 @@
         </button>
       </div>
 
-      <div class="report-template">
+      <div class="report-template" data-markdown-report="./relatorio.md">
         <div class="report-template__fields" aria-label="Identificação do relatório">
           <div><strong>Curso/turma:</strong><div class="report-template__line"></div></div>
           <div><strong>Data:</strong><div class="report-template__line"></div></div>
@@ -602,7 +624,8 @@
           <article class="report-card">
             <h3>Análise Faraday–Lenz e RL</h3>
             <p>
-              Use Φ_B = ∫ B·dA, derive ε = −N dΦ_B/dt e a forma de movimento.
+              Use \(\Phi_B=\int_S\vec B\cdot d\vec A\), derive
+              \(\mathcal E=-N\frac{d\Phi_B}{dt}\) e a forma de movimento.
               Relacione os sinais observados à lei de Lenz. Depois interprete
               amplitude e atraso com L di/dt + Ri = ε(t) e com o limite
               i≈ε/R, quando justificável.

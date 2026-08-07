@@ -314,25 +314,30 @@
           a parte magnética da força de Lorentz é um produto vetorial:
         </p>
         <div class="equation-flow" aria-label="Derivação da força em um fio">
-          <div class="equation-step">
-            F = qv × B
+          <div class="equation-step math-display">
+            \[
+            \vec F_B=q\,\vec v\times\vec B.
+            \]
             <small>A força é perpendicular à velocidade e ao campo; por isso o campo magnético não altera diretamente a energia cinética de uma carga pontual.</small>
           </div>
-          <div class="equation-step">
-            dF = (nA dℓ) qv_d × B
+          <div class="equation-step math-display">
+            \[
+            \begin{aligned}
+            d\vec F
+              &=(nA\,d\ell)q\,\vec v_d\times\vec B\\
+              &=I\,d\vec\ell\times\vec B.
+            \end{aligned}
+            \]
             <small>O volume A dℓ contém nA dℓ portadores, cada um com velocidade de deriva v_d.</small>
           </div>
-          <div class="equation-step">
-            I dℓ = nAqv_d dℓ
+          <div class="equation-step math-display">
+            \[
+            \begin{aligned}
+            \vec F&=I\,\vec\ell\times\vec B,\\
+            F&=BI\ell\sin\alpha.
+            \end{aligned}
+            \]
             <small>A orientação de dℓ acompanha a corrente convencional, inclusive quando os portadores microscópicos são elétrons.</small>
-          </div>
-          <div class="equation-step">
-            dF = I dℓ × B
-            <small>A soma das forças microscópicas fornece a força sobre um elemento do condutor.</small>
-          </div>
-          <div class="equation-step">
-            F = BIL sin θ
-            <small>Para um trecho retilíneo de comprimento L em campo uniforme; aqui θ é o ângulo entre o fio orientado pela corrente e B.</small>
           </div>
         </div>
         <p>
@@ -353,16 +358,18 @@
             A soma das forças pode ser zero, mas suas linhas de ação não
             coincidem: elas formam um binário. Somando o momento de cada força
             em relação ao eixo resulta, para <i>N</i> espiras de área <i>A</i>,
-            o módulo τ = NIAB sin θ.
+            o módulo \(\tau=NIAB\sin\theta\).
           </p>
           <div class="equation-flow">
-            <div class="equation-step">
-              μ = NIA
+            <div class="equation-step math-display">
+              \[
+              \begin{aligned}
+              \vec\mu&=NIA\,\hat n,\\
+              \vec\tau&=\vec\mu\times\vec B,\\
+              \tau&=NIAB\sin\theta.
+              \end{aligned}
+              \]
               <small>O momento de dipolo magnético tem direção normal ao plano da espira, definida pela regra da mão direita.</small>
-            </div>
-            <div class="equation-step">
-              τ = μ × B
-              <small>O torque tende a alinhar o momento magnético com o campo; seu módulo é μB sin θ.</small>
             </div>
           </div>
           <p>
@@ -388,16 +395,14 @@
       <article class="theory-card">
         <h3>3. Energia, trabalho e estabilidade</h3>
         <div class="equation-flow">
-          <div class="equation-step">
-            U = −μ·B
-            <small>Em campo uniforme, U = −μB cos θ.</small>
-          </div>
-          <div class="equation-step">
-            τ_θ = −dU/dθ
-            <small>O torque aponta para a redução da energia potencial.</small>
-          </div>
-          <div class="equation-step">
-            dW_em = τ_θ dθ = −dU
+          <div class="equation-step math-display">
+            \[
+            \begin{aligned}
+            U(\theta)&=-\vec\mu\cdot\vec B=-\mu B\cos\theta,\\
+            \tau_\theta&=-\frac{dU}{d\theta}=-\mu B\sin\theta,\\
+            dW_{\mathrm{em}}&=\tau_\theta\,d\theta=-dU.
+            \end{aligned}
+            \]
             <small>O trabalho eletromagnético positivo reduz U e pode aumentar a energia cinética ou vencer uma carga.</small>
           </div>
         </div>
@@ -418,9 +423,14 @@
           frear a rotação que acabou de produzir. Em um motor de corrente
           contínua ideal, o comutador inverte a corrente da espira a cada meia
           volta; assim, μ também se inverte e o torque mecânico conserva o
-          sentido útil. O envelope idealizado torna-se aproximadamente
-          τ_em(θ) = τ₀|sin θ|.
+          sentido útil. O envelope idealizado torna-se aproximadamente:
         </p>
+        <div class="math-block math-display">
+          \[
+          \tau_{\mathrm{em}}(\theta)
+          \simeq\tau_0\lvert\sin\theta\rvert.
+          \]
+        </div>
         <p>
           Em rotores didáticos simples, o contato pode interromper a corrente
           durante a metade desfavorável em vez de realizar uma reversão
@@ -435,7 +445,18 @@
       <div class="experiment-grid">
         <article class="theory-card">
           <h3>5. Equação dinâmica mínima</h3>
-          <div class="math-block">Jθ¨ + bθ˙ = τ_em(θ) − τ_carga</div>
+          <div class="math-block math-display">
+            \[
+            \begin{aligned}
+            J\ddot{\theta}+b\dot{\theta}
+              &=\tau_{\mathrm{em}}(\theta)-\tau_{\mathrm{carga}},\\
+            \frac{d}{dt}\left(\frac{J\dot{\theta}^{,2}}{2}\right)
+              &=\tau_{\mathrm{em}}\dot{\theta}
+              -b\dot{\theta}^{,2}
+              -\tau_{\mathrm{carga}}\dot{\theta}.
+            \end{aligned}
+            \]
+          </div>
           <p>
             <i>J</i> é o momento de inércia do rotor, θ˙ sua velocidade angular,
             θ¨ sua aceleração, <i>b</i> um coeficiente efetivo de atrito viscoso
@@ -448,11 +469,11 @@
         <article class="theory-card">
           <h3>6. Análise dimensional</h3>
           <ul>
-            <li>[qvB] = C·(m/s)·T = N, pois T = N/(A·m) e C/A = s.</li>
-            <li>[BIL] = T·A·m = N, unidade de força.</li>
-            <li>[μ] = A·m²; o número de espiras N é adimensional.</li>
-            <li>[μB] = A·m²·T = N·m = J: torque e energia têm a mesma dimensão, embora sejam grandezas distintas.</li>
-            <li>[Jθ¨] = kg·m²/s² = N·m e [b] = N·m·s, com o radiano tratado como adimensional.</li>
+            <li>\([qvB]=\mathrm{C}\,\frac{\mathrm m}{\mathrm s}\,\mathrm T=\mathrm N\), pois \(\mathrm T=\frac{\mathrm N}{\mathrm{A\,m}}\) e \(\frac{\mathrm C}{\mathrm A}=\mathrm s\).</li>
+            <li>\([BI\ell]=\mathrm{T\,A\,m=N}\), unidade de força.</li>
+            <li>\([\mu]=\mathrm{A\,m^2}\); o número de espiras \(N\) é adimensional.</li>
+            <li>\([\mu B]=\mathrm{A\,m^2\,T=N\,m=J}\): torque e energia têm a mesma dimensão, embora sejam grandezas distintas.</li>
+            <li>\([J\ddot\theta]=\frac{\mathrm{kg\,m^2}}{\mathrm{s^2}}=\mathrm{N\,m}\) e \([b]=\mathrm{N\,m\,s}\), com o radiano tratado como adimensional.</li>
           </ul>
         </article>
       </div>
@@ -557,8 +578,9 @@
         <article class="theory-card">
           <h3>Comparação qualitativa</h3>
           <p>
-            Teste as relações de sinal F(−I, B) = −F(I, B),
-            F(I, −B) = −F(I, B) e F(−I, −B) = F(I, B). A evidência é o primeiro
+            Teste as relações de sinal \(\vec F(-I,\vec B)=-\vec F(I,\vec B)\),
+            \(\vec F(I,-\vec B)=-\vec F(I,\vec B)\) e
+            \(\vec F(-I,-\vec B)=\vec F(I,\vec B)\). A evidência é o primeiro
             sentido de deslocamento, acompanhado da repetibilidade e do retorno
             ao repouso. Para o motor, confronte o sentido inicial com o diagrama
             do par de forças e compare a regularidade antes e depois de reduzir
@@ -569,11 +591,11 @@
         <article class="theory-card">
           <h3>Comparação quantitativa possível</h3>
           <p>
-            Se B, I, o comprimento ativo L e o ângulo forem medidos
-            independentemente, compare F_mod = BIL sin θ a uma força
+            Se \(B\), \(I\), o comprimento ativo \(\ell\) e o ângulo forem medidos
+            independentemente, compare \(F_{\mathrm{mod}}=BI\ell\sin\theta\) a uma força
             experimental obtida de uma calibração conhecida do balanço. Para o
-            rotor, com n voltas observadas em um intervalo Δt, use
-            T = Δt/n e ω = 2πn/Δt. Sem esses instrumentos e calibrações, limite
+            rotor, com \(n\) voltas observadas em um intervalo \(\Delta t\), use
+            \(T=\frac{\Delta t}{n}\) e \(\omega=\frac{2\pi n}{\Delta t}\). Sem esses instrumentos e calibrações, limite
             a conclusão ao sinal e à ordem de grandeza qualitativa.
           </p>
         </article>
@@ -584,14 +606,25 @@
         <p>
           Registre a resolução dos instrumentos opcionais, repetição, oscilação
           do balanço, folga, atrito, alinhamento, posição do ímã, aquecimento e
-          contato elétrico. Para leitura uniforme com menor divisão δx, uma
-          estimativa é u(x) = δx/√12. Com grandezas independentes, a propagação
+          contato elétrico. Para leitura uniforme com menor divisão \(\delta x\), uma
+          estimativa é \(u(x)=\delta x/\sqrt{12}\). Com grandezas independentes, a propagação
           do modelo pode ser escrita como:
         </p>
-        <div class="math-block">u(F_mod)/F_mod = √[(u(B)/B)² + (u(I)/I)² + (u(L)/L)² + (cot θ · u(θ))²]</div>
+        <div class="math-block math-display">
+          \[
+          \frac{u(F_{\mathrm{mod}})}{F_{\mathrm{mod}}}
+          =\sqrt{
+            \left(\frac{u(B)}{B}\right)^2
+            +\left(\frac{u(I)}{I}\right)^2
+            +\left(\frac{u(\ell)}{\ell}\right)^2
+            +\left(\cot\theta\,u(\theta)\right)^2
+          }.
+          \]
+        </div>
         <p>
-          Para T = Δt/n, se n for contado sem ambiguidade,
-          u(T)/T ≈ u(Δt)/Δt e u(ω)/ω tem a mesma contribuição relativa. Se o
+          Para \(T=\frac{\Delta t}{n}\), se \(n\) for contado sem ambiguidade,
+          \(\frac{u(T)}{T}\approx\frac{u(\Delta t)}{\Delta t}\) e
+          \(\frac{u(\omega)}{\omega}\) tem a mesma contribuição relativa. Se o
           objetivo for apenas o sentido, relate a incerteza como concordante,
           discordante ou inconclusiva e justifique pela observação.
         </p>
@@ -621,7 +654,7 @@
         <button class="report-print-button" type="button" data-print-report>Imprimir relatório</button>
       </div>
 
-      <article class="report-template">
+      <article class="report-template" data-markdown-report="./relatorio.md">
         <div class="report-template__fields" aria-label="Identificação do relatório">
           <div><strong>Estudante(s)</strong><div class="report-template__line"></div></div>
           <div><strong>Turma / curso</strong><div class="report-template__line"></div></div>

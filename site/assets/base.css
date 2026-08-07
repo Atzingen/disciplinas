@@ -1025,3 +1025,24 @@ h1 {
     gap: 0.5rem;
   }
 }
+
+/* Tipografia matemática: complemento funcional do tema visual. */
+.math-display {
+  max-width: 100%;
+  margin: 1.5rem 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: thin;
+}
+
+mjx-container[display="true"] {
+  min-width: max-content;
+  padding-block: 0.25rem;
+}
+
+@media print {
+  .math-display,
+  mjx-container {
+    break-inside: avoid;
+  }
+}

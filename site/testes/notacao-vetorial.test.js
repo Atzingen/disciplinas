@@ -38,3 +38,23 @@ test("artefatos exibidos não dependem do acento vetorial sem suporte", async ()
 
   assert.deepEqual(offenders, []);
 });
+
+test("resoluções Halliday não simulam vetores com decoração CSS", async () => {
+  const exerciseDirectories = [
+    "halliday-21-13",
+    "halliday-21-18",
+    "halliday-21-34",
+    "halliday-21-42",
+  ];
+  const offenders = [];
+
+  for (const slug of exerciseDirectories) {
+    const page = new URL("exercicios/" + slug + "/index.html", SITE_ROOT);
+    const contents = await readFile(page, "utf8");
+    if (contents.includes('class="vector-symbol"')) {
+      offenders.push(slug);
+    }
+  }
+
+  assert.deepEqual(offenders, []);
+});

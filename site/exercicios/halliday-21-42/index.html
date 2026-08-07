@@ -61,15 +61,22 @@
               elétrica estabelece uma separação horizontal de equilíbrio x.
             </p>
             <p>
-              Admitindo θ suficientemente pequeno para usar
-              <strong>tan θ ≈ sin θ</strong>, mostre a expressão de x. Depois,
-              calcule |q| para <strong>L = 120 cm</strong>,
-              <strong>m = 10 g</strong> e <strong>x = 5,0 cm</strong>.
+              Admitindo \(\theta\) suficientemente pequeno para usar
+              \(\tan\theta\approx\sin\theta\), mostre a expressão de \(x\).
+              Depois, calcule \(\lvert q\rvert\) para
+              \(L=120\,\mathrm{cm}\), \(m=10\,\mathrm{g}\) e
+              \(x=5,0\,\mathrm{cm}\).
             </p>
           </div>
           <div class="answer-strip">
             <span>Respostas a e b</span>
-            <strong>x = [q²L/(2π ε₀mg)]<sup>1/3</sup> · |q| ≈ 2,38 × 10<sup>−8</sup> C ≈ 24 nC</strong>
+            <strong>
+              \(\displaystyle
+              x=\left(\frac{q^2L}{2\pi\varepsilon_0mg}\right)^{1/3},
+              \quad
+              \lvert q\rvert\approx2,38\times10^{-8}\,\mathrm{C}
+              \approx24\,\mathrm{nC}\)
+            </strong>
           </div>
         </article>
       </section>
@@ -114,33 +121,48 @@
             <span class="solution-step">componentes</span>
             <h3>Elimine a tensão por divisão</h3>
             <p>As condições de equilíbrio horizontal e vertical são:</p>
-            <div class="math-block">
-              T sin θ = F<sub>e</sub>,
-              <br>
-              T cos θ = mg.
+            <div class="math-block math-display">
+              \[
+              \begin{aligned}
+              \vec{T}+\vec{F}_e+m\vec{g}&=\vec{0},\\
+              T\sin\theta&=F_e,\\
+              T\cos\theta&=mg.
+              \end{aligned}
+              \]
             </div>
             <p>Dividindo a primeira equação pela segunda:</p>
-            <div class="math-block math-block--result">
-              tan θ = F<sub>e</sub>/(mg).
+            <div class="math-block math-block--result math-display">
+              \[
+              \tan\theta
+              =\frac{T\sin\theta}{T\cos\theta}
+              =\frac{F_e}{mg}.
+              \]
             </div>
           </section>
 
           <section>
-            <span class="solution-step">geometria</span>
-            <h3>Cada esfera desloca-se x/2</h3>
+            <span class="solution-step">03 · geometria</span>
+            <h3>Cada esfera desloca-se \(\frac{x}{2}\)</h3>
             <p>
               O sistema é simétrico em torno da vertical central. Assim, o
-              cateto horizontal do triângulo de cada fio é x/2:
+              cateto horizontal do triângulo de cada fio é \(\frac{x}{2}\):
             </p>
-            <div class="math-block">
-              sin θ = (x/2)/L = x/(2L).
+            <div class="math-block math-display">
+              \[
+              \sin\theta
+              =\frac{x}{2}\frac{1}{L}
+              =\frac{x}{2L}.
+              \]
             </div>
             <p>
-              Para ângulos pequenos, tan θ ≈ sin θ. Logo, combinando com a etapa
+              Para ângulos pequenos,
+              \(\tan\theta\approx\sin\theta\). Logo, combinando com a etapa
               anterior:
             </p>
-            <div class="math-block">
-              x/(2L) ≈ F<sub>e</sub>/(mg).
+            <div class="math-block math-display">
+              \[
+              \frac{x}{2L}\approx\frac{F_e}{mg}.
+              \]
             </div>
           </section>
 
@@ -148,18 +170,32 @@
             <span class="solution-step">pergunta A</span>
             <h3>Introduza a lei de Coulomb</h3>
             <p>A distância entre as cargas é x, então:</p>
-            <div class="math-block">
-              F<sub>e</sub> = kq<sup>2</sup>/x<sup>2</sup>
-              = q<sup>2</sup>/(4π ε₀x<sup>2</sup>).
+            <div class="math-block math-display">
+              \[
+              \begin{aligned}
+              F_e
+              &=k\frac{q^2}{x^2}\\
+              &=\frac{q^2}{4\pi\varepsilon_0x^2}.
+              \end{aligned}
+              \]
             </div>
             <p>Substituindo essa força na relação de pequeno ângulo:</p>
-            <div class="math-block">
-              x/(2L) = q<sup>2</sup>/(4π ε₀mgx<sup>2</sup>)
-              <br>
-              x<sup>3</sup> = q<sup>2</sup>L/(2π ε₀mg).
+            <div class="math-block math-display">
+              \[
+              \begin{aligned}
+              \frac{x}{2L}
+              &=\frac{q^2}{4\pi\varepsilon_0mgx^2},\\
+              2\pi\varepsilon_0mgx^3&=q^2L,\\
+              x^3&=\frac{q^2L}{2\pi\varepsilon_0mg}.
+              \end{aligned}
+              \]
             </div>
-            <div class="math-block math-block--result">
-              x = [q<sup>2</sup>L/(2π ε₀mg)]<sup>1/3</sup>.
+            <div class="math-block math-block--result math-display">
+              \[
+              x=\left(
+              \frac{q^2L}{2\pi\varepsilon_0mg}
+              \right)^{1/3}.
+              \]
             </div>
           </section>
 
@@ -167,36 +203,53 @@
             <span class="solution-step">pergunta B</span>
             <h3>Converta os dados para o SI</h3>
             <div class="derivation-grid">
-              <article><strong>L = 1,20 m</strong><p>120 cm ÷ 100</p></article>
-              <article><strong>m = 0,010 kg</strong><p>10 g ÷ 1000</p></article>
-              <article><strong>x = 0,050 m</strong><p>5,0 cm ÷ 100</p></article>
-              <article><strong>g = 9,81 m/s²</strong><p>aceleração gravitacional</p></article>
+              <article><strong>\(L=1,20\,\mathrm{m}\)</strong><p>comprimento do fio</p></article>
+              <article><strong>\(m=0,010\,\mathrm{kg}\)</strong><p>massa de cada esfera</p></article>
+              <article><strong>\(x=0,050\,\mathrm{m}\)</strong><p>separação entre as cargas</p></article>
+              <article><strong>\(g=9,81\,\mathrm{m\,s^{-2}}\)</strong><p>aceleração gravitacional</p></article>
             </div>
             <p>Isolando o módulo da carga:</p>
-            <div class="math-block">
-              |q| = √(2π ε₀mgx<sup>3</sup>/L)
-              <br>
-              = √[2π(8,854 × 10<sup>−12</sup>)(0,010)(9,81)(0,050)<sup>3</sup>/1,20]
-              <br>
-              = 2,38 × 10<sup>−8</sup> C.
+            <div class="math-block math-display">
+              \[
+              \begin{aligned}
+              \lvert q\rvert
+              &=\sqrt{\frac{2\pi\varepsilon_0mgx^3}{L}}\\
+              &=\sqrt{
+                \frac{
+                  2\pi(8,854\times10^{-12})(0,010)(9,81)(0,050)^3
+                }{1,20}
+              }\\
+              &=2,38\times10^{-8}\,\mathrm{C}.
+              \end{aligned}
+              \]
             </div>
             <div class="result-callout">
               <span>Resposta</span>
-              <strong>|q| ≈ 2,4 × 10<sup>−8</sup> C ≈ 24 nC.</strong>
+              <strong>
+                \(\lvert q\rvert\approx2,4\times10^{-8}\,\mathrm{C}
+                \approx24\,\mathrm{nC}\).
+              </strong>
             </div>
           </section>
 
           <section>
             <span class="solution-step">verificação da aproximação</span>
             <h3>O ângulo é realmente pequeno?</h3>
-            <div class="math-block">
-              sin θ = x/(2L) = 0,050/(2 × 1,20) = 0,0208
-              <br>
-              θ ≈ 1,19°.
+            <div class="math-block math-display">
+              \[
+              \begin{aligned}
+              \sin\theta
+              &=\frac{x}{2L}
+              =\frac{0,050}{2(1,20)}
+              =0,0208,\\
+              \theta&\approx1,19^\circ.
+              \end{aligned}
+              \]
             </div>
             <p>
-              Esse valor é pequeno; portanto, usar tan θ ≈ sin θ é coerente com
-              os dados do problema.
+              Esse valor é pequeno; portanto, usar
+              \(\tan\theta\approx\sin\theta\) é coerente com os dados do
+              problema.
             </p>
           </section>
         </article>
@@ -254,7 +307,7 @@
             <line class="diagram-dimension" x1="160" y1="505" x2="426" y2="505" marker-start="url(#dimension-42)" marker-end="url(#dimension-42)"></line>
             <text class="diagram-value" x="293" y="535">separação x</text>
             <line class="diagram-guide" x1="293" y1="460" x2="436" y2="460"></line>
-            <text class="diagram-note" x="365" y="482">x/2</text>
+            <text class="diagram-note" x="365" y="482">meia separação</text>
 
             <rect class="diagram-panel" x="580" y="28" width="332" height="520" rx="4"></rect>
             <text class="diagram-panel-title" x="607" y="62">CORPO LIVRE · ESFERA DIREITA</text>
@@ -274,13 +327,14 @@
 
             <rect class="diagram-panel" x="28" y="572" width="884" height="60" rx="4"></rect>
             <text class="diagram-force-label" x="55" y="608">EQUILÍBRIO:</text>
-            <text class="diagram-note" x="165" y="608">T cos θ = mg</text>
-            <text class="diagram-note" x="390" y="608">T sin θ = F_e</text>
-            <text class="diagram-value" x="625" y="608">tan θ = F_e/(mg)</text>
+            <text class="diagram-note" x="165" y="608">balanço vertical</text>
+            <text class="diagram-note" x="390" y="608">balanço horizontal</text>
+            <text class="diagram-value" x="625" y="608">ver dedução na resolução</text>
           </svg>
           <p class="diagram-caption">
             A tensão não precisa ser calculada: dividir suas componentes faz T
-            desaparecer. A geometria fornece sin θ = x/(2L).
+            desaparecer. A geometria fornece
+            \(\sin\theta=\frac{x}{2L}\).
           </p>
         </article>
       </section>
