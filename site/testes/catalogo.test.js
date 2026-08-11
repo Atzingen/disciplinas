@@ -22,10 +22,10 @@ const apiAvailable =
   typeof catalog.normalizeSearchText === "function" &&
   typeof catalog.filterCatalog === "function";
 
-test("catálogo expõe busca e registra os dez materiais", () => {
+test("catálogo expõe busca e registra os onze materiais", () => {
   assert.equal(typeof catalog.normalizeSearchText, "function");
   assert.equal(typeof catalog.filterCatalog, "function");
-  assert.equal(items.length, 10);
+  assert.equal(items.length, 11);
 });
 
 test("busca ignora acentos e caixa", { skip: !apiAvailable }, () => {
@@ -134,6 +134,7 @@ test("filtro separa simuladores, resoluções e experimentos", { skip: !apiAvail
     "experimento-02-campo-solenoide",
     "experimento-03-forca-magnetica-motor",
     "experimento-04-inducao-eletromagnetica",
+    "experimento-05-escada-resistores",
   ]);
 });
 

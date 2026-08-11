@@ -1,0 +1,161 @@
+.escada {
+  display: grid;
+  gap: 1.2rem;
+  margin: 1.6rem 0 0.4rem;
+}
+
+.escada-controles {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.escada-botao {
+  display: inline-flex;
+  gap: 0.5rem;
+  align-items: baseline;
+  min-height: 46px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-pill);
+  background: var(--surface);
+  color: var(--ink-soft);
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  font: 700 0.85rem/1.2 var(--font-mono);
+  transition: border-color 160ms ease, background 160ms ease, transform 160ms ease;
+}
+
+.escada-botao:hover {
+  border-color: var(--line-strong);
+  color: var(--ink);
+  transform: translateY(-1px);
+}
+
+.escada-botao[aria-pressed="true"] {
+  border-color: var(--force-3);
+  background: color-mix(in srgb, var(--force-3) 14%, var(--surface));
+  color: var(--ink);
+}
+
+.escada-botao small {
+  color: var(--ink-faint);
+  font-size: 0.72rem;
+  font-weight: 400;
+}
+
+.escada-palco {
+  overflow-x: auto;
+}
+
+.escada-diagrama {
+  display: block;
+  min-width: 560px;
+  width: 100%;
+  height: auto;
+}
+
+.escada-fio {
+  stroke: var(--ink);
+  stroke-width: 2.4;
+  stroke-linecap: round;
+}
+
+.escada-fio--corte {
+  stroke: var(--ink-faint);
+  stroke-dasharray: 3 8;
+}
+
+.escada-resistor {
+  fill: var(--surface);
+  stroke: var(--force-3);
+  stroke-width: 2.4;
+}
+
+.escada-resistor--destacado {
+  stroke: var(--measure);
+  stroke-dasharray: 5 4;
+}
+
+.escada-terminal {
+  fill: var(--positive);
+  stroke: var(--paper);
+  stroke-width: 2;
+}
+
+.escada-borne {
+  fill: var(--ink);
+  font: 700 20px var(--font-display);
+  text-anchor: middle;
+}
+
+.escada-simbolo {
+  fill: var(--ink);
+  font: 700 14px var(--font-mono);
+  text-anchor: middle;
+}
+
+.escada-simbolo--vertical {
+  text-anchor: start;
+}
+
+.escada-aberto {
+  fill: var(--ink-faint);
+  font: 0.72rem var(--font-mono);
+}
+
+.escada-tensao {
+  fill: var(--resultant);
+  font: 700 13px var(--font-mono);
+  text-anchor: middle;
+}
+
+.escada-leitura {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: 0;
+  margin: 0;
+}
+
+.escada-leitura > div {
+  border-left: 1px solid var(--line);
+  padding: 0.2rem 1.1rem;
+}
+
+.escada-leitura > div:first-child {
+  border-left: 0;
+  padding-left: 0;
+}
+
+.escada-leitura dt {
+  color: var(--ink-faint);
+  font: 700 0.68rem/1.4 var(--font-mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.escada-leitura dd {
+  margin: 0.2rem 0 0;
+  font: 700 1.15rem/1.3 var(--font-mono);
+}
+
+.escada-nota {
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: 0.94rem;
+}
+
+@media (max-width: 700px) {
+  .escada-leitura {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .escada-leitura > div {
+    border-left: 0;
+    border-top: 1px solid var(--line);
+    padding: 0.6rem 0 0.2rem;
+  }
+
+  .escada-leitura > div:nth-child(-n + 2) {
+    border-top: 0;
+  }
+}

@@ -40,6 +40,14 @@ ampliados para turmas de Engenharia e Física:
 3. força magnética e motor elementar;
 4. indução eletromagnética.
 
+O quinto roteiro é uma montagem própria em protoboard:
+
+5. varal de resistores — a escada infinita montada degrau a degrau com nove
+   resistores de 10 kΩ medidos um a um, convergindo para (1 + √3)R. A
+   recorrência da escada vive em
+   [site/nucleo/escada-resistores.js](site/nucleo/escada-resistores.js) e a
+   página traz um explorador interativo de degraus.
+
 Na página de cada experimento, a aba **Relatório** contém uma folha preparada
 para impressão. O botão de impressão ativa essa aba e remove da cópia os
 controles de navegação. A mesma estrutura também está disponível em

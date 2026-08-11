@@ -42,6 +42,16 @@ const experiments = [
     tabs: 4,
     equations: [/\\mathcal\{E\}/, /\\frac\{d\\Phi_B\}\{dt\}/, /L\\frac\{di\}\{dt\}/],
   },
+  {
+    slug: "05-escada-resistores",
+    image: null,
+    tabs: 4,
+    equations: [
+      /\\frac\{R\\,R_\{N-1\}\}\{R \+ R_\{N-1\}\}/,
+      /R_\\infty\^2 - 2R\\,R_\\infty - 2R\^2 = 0/,
+      /\\left\(1\+\\sqrt\{3\}\\right\)R/,
+    ],
+  },
 ];
 
 async function readExperiment(slug, filename) {
@@ -200,9 +210,13 @@ for (const experiment of experiments) {
     assert.match(text, /5–10 s/);
     assert.match(html, /<table\b/);
     assert.match(html, /data-print-report/);
-    assert.match(html, new RegExp(experiment.image.replace(".", "\\.")));
-    assert.match(html, /<img\b[^>]*alt="[^"]+"/);
-    assert.match(text, /Fonte: manual AZEHEB/);
+    if (experiment.image) {
+      assert.match(html, new RegExp(experiment.image.replace(".", "\\.")));
+      assert.match(html, /<img\b[^>]*alt="[^"]+"/);
+      assert.match(text, /Fonte: manual AZEHEB/);
+    } else {
+      assert.match(html, /<svg[^>]+role="img"[^>]+aria-labelledby=|data-escada-resistores-app/);
+    }
     assert.match(html, /data-active-section="experimentos"/);
     assert.match(html, /experimento\.js/);
     assert.match(

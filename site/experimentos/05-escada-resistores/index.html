@@ -1,0 +1,621 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta
+    name="description"
+    content="Roteiro de Física III sobre a escada infinita de resistores: medição degrau a degrau, convergência para (1 + √3)R e comparação entre previsão e experimento."
+  >
+  <title>Varal de resistores: a escada infinita · Experimento 05</title>
+  <link rel="stylesheet" href="../../assets/base.css">
+  <link rel="stylesheet" href="../../assets/experimentos.css">
+  <link rel="stylesheet" href="../../assets/escada.css">
+  <script>try{if(localStorage.getItem("tema")==="escuro"){document.documentElement.dataset.theme="escuro"}}catch(erro){}</script>
+</head>
+<body class="experiment-page">
+  <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+
+  <div class="page-shell" data-experiment-tabs>
+  <div class="site-topbar" data-topbar>
+    <div class="site-topbar__inner">
+      <nav class="experiment-breadcrumb" aria-label="Caminho de navegação">
+        <a href="../../">Início</a>
+        <span aria-hidden="true">/</span>
+        <a href="../">Experimentos</a>
+        <span aria-hidden="true">/</span>
+        <span aria-current="page">Experimento 05</span>
+      </nav>
+      <div class="experiment-header__navigation">
+        <div
+          data-site-navigation
+          data-root-path="../../"
+          data-active-section="experimentos"
+        ></div>
+      </div>
+    </div>
+      <div class="experiment-tab-list" role="tablist" aria-label="Etapas do experimento">
+        <button
+          class="experiment-tab"
+          id="aba-montagem"
+          type="button"
+          role="tab"
+          aria-controls="painel-montagem"
+          aria-selected="true"
+          tabindex="0"
+        >Montagem</button>
+        <button
+          class="experiment-tab"
+          id="aba-fundamentos"
+          type="button"
+          role="tab"
+          aria-controls="painel-fundamentos"
+          aria-selected="false"
+          tabindex="-1"
+        >Fundamentos</button>
+        <button
+          class="experiment-tab"
+          id="aba-dados"
+          type="button"
+          role="tab"
+          aria-controls="painel-dados"
+          aria-selected="false"
+          tabindex="-1"
+        >Dados</button>
+        <button
+          class="experiment-tab"
+          id="aba-relatorio"
+          type="button"
+          role="tab"
+          aria-controls="painel-relatorio"
+          aria-selected="false"
+          tabindex="-1"
+        >Relatório</button>
+      </div>
+  </div>
+
+  <header class="experiment-header">
+    <div class="experiment-hero">
+      <div>
+        <p class="eyebrow">Experimento 05 · circuitos resistivos</p>
+        <h1>Varal de resistores: a escada infinita</h1>
+      </div>
+      <div>
+        <p class="experiment-hero__lead">
+          Monte a escada degrau a degrau, meça R_AB a cada etapa e observe a
+          resistência convergir para (1 + √3)R — um circuito infinito que cabe
+          em nove resistores.
+        </p>
+        <ul class="experiment-meta" aria-label="Características do roteiro">
+          <li>Física III</li>
+          <li>9 resistores de 10 kΩ</li>
+          <li>recorrência · autossemelhança</li>
+        </ul>
+      </div>
+    </div>
+  </header>
+
+  <main class="experiment-main" id="conteudo">
+
+    <section
+      class="experiment-panel"
+      id="painel-montagem"
+      role="tabpanel"
+      aria-labelledby="aba-montagem"
+      tabindex="0"
+    >
+      <header class="experiment-section-heading">
+        <h2>Montagem</h2>
+        <p>
+          Antes de montar qualquer degrau, cada um dos nove resistores é medido
+          individualmente. Os valores reais — não os 10 kΩ nominais — alimentam
+          a previsão teórica.
+        </p>
+      </header>
+
+      <div class="experiment-grid">
+        <article class="lab-card">
+          <h3>Objetivos de aprendizagem</h3>
+          <ul>
+            <li>Medir a resistência equivalente de uma rede que cresce por repetição de um mesmo bloco.</li>
+            <li>Verificar experimentalmente a convergência rápida da escada para o limite (1 + √3)R.</li>
+            <li>Usar a recorrência R_{N} = 2R + (R ∥ R_{N−1}) para prever cada etapa antes de medir.</li>
+            <li>Propagar a tolerância dos resistores reais para a incerteza da previsão.</li>
+            <li>Reconhecer autossemelhança: acrescentar um degrau a uma escada infinita não muda nada.</li>
+          </ul>
+        </article>
+
+        <article class="lab-card">
+          <h3>Material utilizado</h3>
+          <ul>
+            <li>9 resistores de 10 kΩ (1/4 W, tolerância 5%);</li>
+            <li>1 protoboard;</li>
+            <li>1 multímetro digital na escala de resistência;</li>
+            <li>fios de ligação (jumpers);</li>
+            <li>opcional: fonte de 6 V ou pilhas em série para a extensão de tensões.</li>
+          </ul>
+        </article>
+      </div>
+
+      <div class="experiment-safety">
+        <strong>Segurança e cuidado com o instrumento</strong>
+        <p>
+          A medição de resistência é feita <em>sempre com o circuito desenergizado</em>:
+          nunca conecte o ohmímetro a uma rede alimentada. Na extensão com fonte,
+          confira a polaridade antes de ligar e energize por períodos curtos —
+          <strong>5–10 s</strong> bastam para cada leitura de tensão; a potência
+          total aqui é inferior a 2 mW, mas o hábito vale para qualquer bancada.
+          Não toque nas pontas metálicas durante a leitura: a resistência do corpo
+          em paralelo altera a medida em redes de dezenas de kΩ.
+        </p>
+      </div>
+
+      <div class="experiment-grid">
+        <article class="lab-card">
+          <h3>Procedimento — etapa 0: os nove resistores</h3>
+          <ol class="procedure-list">
+            <li>Numere os resistores de 1 a 9 (etiqueta ou posição fixa na bancada).</li>
+            <li>Meça cada um com o multímetro, anotando na tabela da aba <strong>Dados</strong> com todas as casas que o instrumento mostrar.</li>
+            <li>Calcule a média dos nove valores. Ela — e não 10 kΩ — será o R da previsão teórica.</li>
+            <li>Verifique se algum resistor foge da tolerância de 5% (9,5 a 10,5 kΩ). Se fugir, troque-o e registre.</li>
+          </ol>
+        </article>
+
+        <article class="lab-card">
+          <h3>Procedimento — etapas 1 a 3: a escada cresce</h3>
+          <ol class="procedure-list">
+            <li><strong>1 degrau (3 resistores):</strong> monte o primeiro bloco — um resistor no fio de cima, um no de baixo e um na vertical fechando o degrau. Meça R_AB entre os bornes A (fio de cima) e B (fio de baixo) com a extremidade direita aberta.</li>
+            <li><strong>2 degraus (6 resistores):</strong> acrescente o segundo bloco à direita do primeiro, sem desmontar nada. Meça R_AB novamente.</li>
+            <li><strong>3 degraus (9 resistores):</strong> acrescente o terceiro bloco e meça R_AB pela última vez.</li>
+            <li>Registre cada leitura antes de montar o degrau seguinte. Compare com a previsão da recorrência calculada com o R médio medido.</li>
+            <li>Anote quais resistores (números 1 a 9) ocupam cada posição, para permitir a previsão exata resistor a resistor.</li>
+          </ol>
+        </article>
+      </div>
+
+      <div class="prediction-box">
+        <strong>Previsão obrigatória antes de medir.</strong>
+        Com o R médio dos seus resistores, calcule R_AB esperado para 1, 2 e 3
+        degraus usando a recorrência — os valores nominais são 3R, 11R/4 e
+        41R/15. Escreva os três números antes de encostar as pontas do
+        multímetro nos bornes. Não corrija a previsão depois.
+      </div>
+    </section>
+
+    <section
+      class="experiment-panel"
+      id="painel-fundamentos"
+      role="tabpanel"
+      aria-labelledby="aba-fundamentos"
+      tabindex="0"
+      hidden
+    >
+      <header class="experiment-section-heading">
+        <h2>Fundamentos</h2>
+        <p>
+          A escada infinita se resolve com uma única ideia: uma rede que se
+          repete é igual a si mesma com um degrau a menos.
+        </p>
+      </header>
+
+      <div class="experiment-grid">
+        <article class="theory-card">
+          <h3>A recorrência de um degrau</h3>
+          <p>
+            Olhe a escada pelos bornes A–B. O primeiro degrau contribui com um
+            resistor R no fio de cima e outro no fio de baixo — 2R em série —
+            e o resistor vertical R fica em paralelo com <em>todo o resto da
+            escada</em>, que chamamos de R_{N−1}:
+          </p>
+          <div class="math-block math-display">
+            \[
+            \begin{aligned}
+            R_N &= 2R + \left(R \parallel R_{N-1}\right)\\
+                &= 2R + \frac{R\,R_{N-1}}{R + R_{N-1}}.
+            \end{aligned}
+            \]
+          </div>
+          <p>
+            Com a extremidade aberta (R₀ = ∞), a sequência produz frações
+            exatas:
+          </p>
+          <div class="math-block math-display">
+            \[
+            R_1 = 3R, \qquad R_2 = \frac{11R}{4}, \qquad R_3 = \frac{41R}{15}.
+            \]
+          </div>
+        </article>
+
+        <article class="theory-card">
+          <h3>O limite pela autossemelhança</h3>
+          <p>
+            Se a escada é infinita, acrescentar um degrau não muda nada:
+            R_∞ satisfaz a própria recorrência.
+          </p>
+          <div class="math-block math-display">
+            \[
+            R_\infty = 2R + \frac{R\,R_\infty}{R + R_\infty}.
+            \]
+          </div>
+          <p>Multiplicando por (R + R_∞) e simplificando:</p>
+          <div class="math-block math-display">
+            \[
+            R_\infty^2 - 2R\,R_\infty - 2R^2 = 0.
+            \]
+          </div>
+          <p>A raiz positiva da equação quadrática é o limite:</p>
+          <div class="math-block math-block--result math-display">
+            \[
+            R_\infty = \left(1+\sqrt{3}\right)R \approx 2{,}732\,R.
+            \]
+          </div>
+          <p>
+            Para R = 10 kΩ: <strong>R_∞ ≈ 27,32 kΩ</strong>. Note que √3
+            aparece em um circuito feito só de resistores iguais — nenhum
+            componente vale √3 de nada.
+          </p>
+        </article>
+      </div>
+
+      <div class="experiment-grid">
+        <article class="theory-card">
+          <h3>Por que a convergência é tão rápida?</h3>
+          <p>
+            O desvio de cada etapa em relação ao limite cai por um fator de
+            aproximadamente (2 − √3)² ≈ 0,072 a cada degrau — mais de uma ordem
+            de grandeza. Por isso três degraus bastam:
+          </p>
+          <div class="data-table-wrapper">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th scope="col">Degraus</th>
+                  <th scope="col">Resistores</th>
+                  <th scope="col">R_AB teórico (fração)</th>
+                  <th scope="col">Com R = 10 kΩ</th>
+                  <th scope="col">Acima do limite</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td>1</td><td>3</td><td>3R</td><td>30,000 kΩ</td><td>+9,81%</td></tr>
+                <tr><td>2</td><td>6</td><td>11R/4</td><td>27,500 kΩ</td><td>+0,66%</td></tr>
+                <tr><td>3</td><td>9</td><td>41R/15</td><td>27,333 kΩ</td><td>+0,047%</td></tr>
+                <tr><td>∞</td><td>∞</td><td>(1 + √3)R</td><td>27,321 kΩ</td><td>—</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p>
+            No terceiro degrau, o erro de truncamento (0,047%) já é <em>cem
+            vezes menor</em> que a tolerância dos resistores (5%). A partir daí,
+            quem manda na medida é a dispersão dos componentes, não o número de
+            degraus — é nesse sentido que nove resistores realizam um circuito
+            infinito.
+          </p>
+        </article>
+
+        <article class="theory-card">
+          <h3>Resistores reais, não nominais</h3>
+          <p>
+            R_AB é uma função homogênea de grau 1 dos resistores: multiplicar
+            todos por um fator k multiplica R_AB por k. Se os seus nove
+            resistores têm média R̄, a melhor previsão simples é usar R̄ no
+            lugar de R nas frações acima. A previsão fina — resistor a
+            resistor — resolve a mesma recorrência da direita para a esquerda
+            com os valores individuais de cada posição:
+          </p>
+          <div class="math-block math-display">
+            \[
+            R_\text{visto} = R_\text{topo} + R_\text{base}
+            + \left(R_\text{vert} \parallel R_\text{adiante}\right).
+            \]
+          </div>
+          <p>
+            A diferença entre as duas previsões estima o efeito da dispersão;
+            a diferença entre previsão e medida, o efeito de contatos,
+            protoboard e instrumento.
+          </p>
+          <div class="theory-note">
+            <strong>Extensão — a escada como atenuador.</strong> Alimentando os
+            bornes com uma fonte, a tensão em cada resistor vertical cai por um
+            fator fixo 2 − √3 ≈ 0,268 por degrau (na escada infinita). É o
+            princípio do atenuador em escada e do modelo de linha de transmissão
+            — e explica o apelido de "varal": os valores de tensão pendurados
+            degrau a degrau formam uma progressão geométrica.
+          </div>
+        </article>
+      </div>
+
+      <header class="experiment-section-heading">
+        <h3>Explore a escada antes da bancada</h3>
+        <p>
+          Acrescente degraus e acompanhe R_AB, o desvio em relação ao limite e
+          as tensões de cada degrau para uma fonte de 6 V.
+        </p>
+      </header>
+      <div
+        data-escada-resistores-app
+        data-resistencia="10000"
+        data-max-degraus="6"
+        data-fonte="6"
+        data-degraus-iniciais="3"
+      ></div>
+    </section>
+
+    <section
+      class="experiment-panel"
+      id="painel-dados"
+      role="tabpanel"
+      aria-labelledby="aba-dados"
+      tabindex="0"
+      hidden
+    >
+      <header class="experiment-section-heading">
+        <h2>Dados</h2>
+        <p>
+          Duas tabelas: os nove resistores medidos um a um, e as três etapas da
+          escada com previsão e medida lado a lado.
+        </p>
+      </header>
+
+      <div class="experiment-grid">
+        <article class="lab-card">
+          <h3>Tabela 1 — resistores individuais</h3>
+          <p>
+            Registre o valor de cada resistor com a resolução completa do
+            multímetro e a posição que ele ocupará na escada (ex.: degrau 2,
+            fio de cima).
+          </p>
+          <div class="data-table-wrapper">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th scope="col">Resistor nº</th>
+                  <th scope="col">Valor medido (kΩ)</th>
+                  <th scope="col">Desvio do nominal (%)</th>
+                  <th scope="col">Posição na escada</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td>1</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+                <tr><td>2</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+                <tr><td>3</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+                <tr><td>4</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+                <tr><td>5</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+                <tr><td>6</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+                <tr><td>7</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+                <tr><td>8</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+                <tr><td>9</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+                <tr><td><strong>média R̄</strong></td><td>&nbsp;</td><td>&nbsp;</td><td>—</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </article>
+
+        <article class="lab-card">
+          <h3>Tabela 2 — a escada cresce</h3>
+          <p>
+            Para cada etapa: a previsão com o R̄ medido (3R̄, 11R̄/4, 41R̄/15),
+            a previsão fina com os resistores individuais (opcional) e a medida
+            de R_AB.
+          </p>
+          <div class="data-table-wrapper">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th scope="col">Degraus</th>
+                  <th scope="col">Previsão com R̄ (kΩ)</th>
+                  <th scope="col">Previsão fina (kΩ)</th>
+                  <th scope="col">R_AB medido (kΩ)</th>
+                  <th scope="col">Diferença (%)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td>1</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+                <tr><td>2</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+                <tr><td>3</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </article>
+      </div>
+
+      <div class="experiment-grid">
+        <article class="lab-card">
+          <h3>Tratamento dos dados</h3>
+          <ol>
+            <li>Calcule R̄ e o desvio-padrão dos nove resistores; expresse a dispersão em %.</li>
+            <li>Confirme que as medidas de R_AB caem: R₁ &gt; R₂ &gt; R₃, aproximando o limite por cima.</li>
+            <li>Compare cada R_AB medido com a previsão com R̄: a diferença deve ser compatível com a dispersão dos resistores.</li>
+            <li>Calcule (R₂ − R_∞)/(R₁ − R_∞) e (R₃ − R_∞)/(R₂ − R_∞) com R_∞ = (1 + √3)R̄ e compare com (2 − √3)² ≈ 0,072.</li>
+            <li>Se fez a previsão fina, verifique se ela aproxima a medida melhor que a previsão com R̄.</li>
+          </ol>
+        </article>
+
+        <article class="lab-card">
+          <h3>Extensão opcional — tensões no varal</h3>
+          <p>
+            Alimente os bornes com 6 V e meça a tensão sobre cada resistor
+            vertical. As três leituras devem cair em progressão aproximadamente
+            geométrica (≈ 1,61 V, 0,44 V e 0,15 V para R̄ = 10 kΩ). Compare a
+            razão entre leituras vizinhas com 2 − √3 e explique por que o
+            último degrau foge mais do padrão — a escada truncada não é
+            autossemelhante na ponta.
+          </p>
+        </article>
+      </div>
+
+      <div class="uncertainty-box">
+        <h3>Incerteza, resolução e contatos</h3>
+        <p>
+          Registre a resolução do multímetro na escala usada (tipicamente
+          0,01 kΩ em 200 kΩ) e a exatidão declarada no manual (ex.:
+          ±0,8% + 3 dígitos). A protoboard acrescenta resistência de contato —
+          dezenas de mΩ por ponto, desprezível diante de 10 kΩ, mas um contato
+          mal encaixado não é: se uma leitura oscilar, reassente o resistor
+          antes de anotar. Não toque nas pontas durante a medida. A previsão
+          com R̄ herda a incerteza da média; a diferença entre previsão e
+          medida deve ser discutida em relação a essas fontes, não apenas
+          declarada.
+        </p>
+      </div>
+    </section>
+
+    <section
+      class="experiment-panel"
+      id="painel-relatorio"
+      role="tabpanel"
+      aria-labelledby="aba-relatorio"
+      tabindex="0"
+      hidden
+    >
+      <header class="experiment-section-heading">
+        <h2>Relatório</h2>
+        <p>
+          A previsão registrada antes das medidas é parte da avaliação. O
+          arquivo <code>relatorio.md</code> contém a mesma estrutura em formato
+          preenchível.
+        </p>
+      </header>
+
+      <div class="report-print-bar">
+        <p>Ao imprimir, somente esta aba será incluída.</p>
+        <button class="report-print-button" type="button" data-print-report>
+          Imprimir modelo de relatório
+        </button>
+      </div>
+
+      <div class="report-template" data-markdown-report="./relatorio.md">
+        <div class="report-template__fields" aria-label="Identificação do relatório">
+          <div><strong>Curso/turma:</strong><div class="report-template__line"></div></div>
+          <div><strong>Data:</strong><div class="report-template__line"></div></div>
+          <div><strong>Grupo:</strong><div class="report-template__line"></div></div>
+          <div><strong>Integrantes:</strong><div class="report-template__line"></div></div>
+        </div>
+
+        <div class="report-grid">
+          <article class="report-card">
+            <h3>Objetivo e previsão original</h3>
+            <p>
+              Declare o objetivo com suas palavras e preserve as três previsões
+              de R_AB feitas antes de medir, com o R̄ usado no cálculo.
+            </p>
+            <div class="report-template__line"></div>
+            <div class="report-template__line"></div>
+          </article>
+
+          <article class="report-card">
+            <h3>Derivação do limite</h3>
+            <p>
+              Deduza R_∞ = (1 + √3)R a partir da autossemelhança: escreva a
+              equação R_∞ = 2R + (R ∥ R_∞), transforme na quadrática
+              R_∞² − 2R·R_∞ − 2R² = 0 e justifique o descarte da raiz negativa.
+            </p>
+            <div class="report-template__line"></div>
+            <div class="report-template__line"></div>
+          </article>
+
+          <article class="report-card">
+            <h3>Dados e evidências</h3>
+            <p>
+              Transcreva as duas tabelas completas, com unidades, resolução do
+              instrumento e a posição de cada resistor na escada.
+            </p>
+            <div class="report-template__line"></div>
+            <div class="report-template__line"></div>
+          </article>
+
+          <article class="report-card">
+            <h3>Análise da convergência</h3>
+            <p>
+              Compare medidas e previsões etapa a etapa. Verifique a queda do
+              desvio em relação ao limite e diga a partir de qual degrau a
+              tolerância dos resistores domina o erro de truncamento.
+            </p>
+            <div class="report-template__line"></div>
+            <div class="report-template__line"></div>
+          </article>
+
+          <article class="report-card">
+            <h3>Incerteza e limitações</h3>
+            <p>
+              Informe resolução e exatidão do multímetro, dispersão dos nove
+              resistores, contatos da protoboard e qualquer leitura instável.
+            </p>
+            <div class="report-template__line"></div>
+            <div class="report-template__line"></div>
+          </article>
+
+          <article class="report-card">
+            <h3>Conclusão</h3>
+            <p>
+              Responda: nove resistores bastam para realizar a escada infinita?
+              Sustente com a comparação entre erro de truncamento e dispersão
+              dos componentes.
+            </p>
+            <div class="report-template__line"></div>
+            <div class="report-template__line"></div>
+          </article>
+        </div>
+
+        <article class="report-card">
+          <h3>Tabela mínima do relatório</h3>
+          <div class="data-table-wrapper">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th scope="col">Degraus</th>
+                  <th scope="col">Previsão com R̄ (kΩ)</th>
+                  <th scope="col">R_AB medido (kΩ)</th>
+                  <th scope="col">Diferença (%)</th>
+                  <th scope="col">Observações</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td>1</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+                <tr><td>2</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+                <tr><td>3</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </article>
+
+        <article class="report-card">
+          <h3>Perguntas</h3>
+          <ol class="question-list">
+            <li>Por que a resistência da escada <em>diminui</em> a cada degrau acrescentado, se estamos adicionando resistores?</li>
+            <li>De onde vem o √3 em um circuito montado só com resistores iguais?</li>
+            <li>Por que o erro de truncamento cai tão rápido — que fator o controla?</li>
+            <li>Se a escada fosse terminada com um resistor de 27 kΩ em vez de ficar aberta, o que aconteceria com R_AB já no primeiro degrau?</li>
+            <li>A previsão fina (resistor a resistor) aproximou a medida melhor que a previsão com R̄? Por quê?</li>
+            <li>Que analogia é possível entre este circuito e uma linha de transmissão vista da entrada?</li>
+          </ol>
+        </article>
+
+        <article class="report-card">
+          <h3>Checklist de entrega</h3>
+          <ul class="report-checklist">
+            <li>□ identificação e objetivo;</li>
+            <li>□ previsão original das três etapas preservada;</li>
+            <li>□ tabela dos nove resistores com média e dispersão;</li>
+            <li>□ tabela das três etapas com previsão, medida e diferença;</li>
+            <li>□ derivação de R_∞ = (1 + √3)R com o descarte da raiz negativa justificado;</li>
+            <li>□ análise da convergência e do papel da tolerância;</li>
+            <li>□ incertezas do instrumento e dos contatos discutidas;</li>
+            <li>□ conclusão compatível com as evidências.</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="experiment-footer">
+    <p>Experimento 05 · Varal de resistores: a escada infinita</p>
+    <a href="../">Voltar aos experimentos</a>
+  </footer>
+
+  <script type="module" src="../../componentes/navegacao-principal.js"></script>
+  <script type="module" src="../experimento.js"></script>
+  <script type="module" src="../../componentes/escada-resistores.js"></script>
+  </div>
+</body>
+</html>
