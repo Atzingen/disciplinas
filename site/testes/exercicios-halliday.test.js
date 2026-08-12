@@ -27,12 +27,16 @@ function assertAccessibleLessonPage(html, exerciseNumber) {
   assert.match(html, /<svg[^>]+role="img"[^>]+aria-labelledby=/);
   assert.match(html, /<title(?:\s+id="[^"]+")?>[^<]+<\/title>/);
   assert.match(html, /<desc(?:\s+id="[^"]+")?>[^<]+<\/desc>/);
-  if (exerciseNumber === "13") {
-    assert.match(html, /src="\.\/app\.js"/);
-  } else {
-    assert.match(html, /src="\.\.\/exercicio-estatico\.js"/);
-  }
   assert.match(html, new RegExp(`Halliday[^<]*21\\.${exerciseNumber}`));
+}
+
+function assertDidacticProgression(html) {
+  assert.equal((html.match(/data-didactic-visualization/g) ?? []).length, 1);
+  for (const label of ["Reproduzir", "Pausar", "Reiniciar", "Próximo passo", "Velocidade"]) {
+    assert.match(html, new RegExp(label));
+  }
+  assert.match(html, /aria-live="polite"/);
+  assert.match(html, /src="\.\/app\.js"/);
 }
 
 function assertTypesetMathematics(html, exerciseNumber) {
@@ -61,6 +65,7 @@ test("21.13 compõe a solução de equilíbrio com notação matemática", async
   const html = await readExercisePage("halliday-21-13");
 
   assertAccessibleLessonPage(html, "13");
+  assertDidacticProgression(html);
   assertTypesetMathematics(html, "13");
   assert.match(html, /-13,66/);
   assert.match(html, /y\s*&=\s*0/);
@@ -70,6 +75,7 @@ test("21.18 publica a razão entre as cargas com diagrama acessível", async () 
   const html = await readExercisePage("halliday-21-18");
 
   assertAccessibleLessonPage(html, "18");
+  assertDidacticProgression(html);
   assertTypesetMathematics(html, "18");
   assert.match(html, /1,33/);
   assert.match(html, /2,014/);
@@ -89,12 +95,14 @@ test("21.33 publica a carga positiva e o explorador de substâncias", async () =
   assert.match(html, /Z = 2\(1\) \+ 8 = 10/);
   assert.match(html, /data-substance-explorer/);
   assert.match(html, /src="\.\/app\.js"/);
+  assertDidacticProgression(html);
 });
 
 test("21.34 publica os três menores ângulos possíveis", async () => {
   const html = await readExercisePage("halliday-21-34");
 
   assertAccessibleLessonPage(html, "34");
+  assertDidacticProgression(html);
   assertTypesetMathematics(html, "34");
   assert.match(html, /37,47°/);
   assert.match(html, /50,95°/);
@@ -106,6 +114,7 @@ test("21.42 publica a expressão e o módulo da carga", async () => {
   const html = await readExercisePage("halliday-21-42");
 
   assertAccessibleLessonPage(html, "42");
+  assertDidacticProgression(html);
   assertTypesetMathematics(html, "42");
   assert.match(html, /2,38/);
   assert.match(html, /24\\,\\mathrm\{nC\}/);
