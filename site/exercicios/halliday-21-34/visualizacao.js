@@ -55,6 +55,27 @@ function decimal(value, digits = 2) {
   });
 }
 
+export function handleQuantizedBalanceShortcut(event, root, actions) {
+  if (event.target !== root) {
+    return false;
+  }
+
+  const action = {
+    ArrowRight: actions.next,
+    ArrowLeft: actions.previous,
+    Home: actions.reset,
+    " ": actions.togglePlay,
+  }[event.key];
+
+  if (!action) {
+    return false;
+  }
+
+  event.preventDefault();
+  action();
+  return true;
+}
+
 export function mountQuantizedBalance(root) {
   if (!root) {
     return null;
@@ -317,23 +338,17 @@ export function mountQuantizedBalance(root) {
     setSpeed(event.currentTarget.value);
   });
   root.addEventListener("keydown", (event) => {
-    if (event.target === elements.speed) {
-      return;
-    }
-    if (event.key === "ArrowRight") {
-      event.preventDefault();
-      pause();
-      stepForward();
-    } else if (event.key === "ArrowLeft") {
-      event.preventDefault();
-      stepBack();
-    } else if (event.key === "Home") {
-      event.preventDefault();
-      reset();
-    } else if (event.key === " ") {
-      event.preventDefault();
-      playState === "playing" ? pause() : play();
-    }
+    handleQuantizedBalanceShortcut(event, root, {
+      next: () => {
+        pause();
+        stepForward();
+      },
+      previous: stepBack,
+      reset,
+      togglePlay: () => {
+        playState === "playing" ? pause() : play();
+      },
+    });
   });
   document.addEventListener("visibilitychange", () => {
     if (document.hidden) {

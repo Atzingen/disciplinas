@@ -6,6 +6,7 @@ import {
   equilibriumAngleDegrees,
   normalizedForceComponents,
 } from "../exercicios/halliday-21-34/modelo.js";
+import { handleQuantizedBalanceShortcut } from "../exercicios/halliday-21-34/visualizacao.js";
 
 test("21.34 converte cargas inteiras nos ângulos físicos", () => {
   const angles = [1, 2, 3, 4, 5].map(equilibriumAngleDegrees);
@@ -55,4 +56,57 @@ test("21.34 publica seletor quantizado, roteiro e SVG acessível", async () => {
   assert.match(html, /56,61°/);
   assert.match(html, /<svg[^>]+role="img"[^>]+aria-labelledby=/);
   assert.match(html, /<link rel="icon" href="data:image\/svg\+xml,/);
+});
+
+test("21.34 associa o sinal vertical ao íon correspondente", async () => {
+  const htmlUrl = new URL(
+    "../exercicios/halliday-21-34/index.html",
+    import.meta.url,
+  );
+  const html = await readFile(htmlUrl, "utf8");
+
+  assert.match(
+    html,
+    /<span>íon 3<\/span><strong>−<span data-vertical-one>/,
+  );
+  assert.match(
+    html,
+    /<span>íon 4<\/span><strong>\+<span data-vertical-one>/,
+  );
+});
+
+test("21.34 preserva Space nativo em botões descendentes", () => {
+  const root = {};
+  const button = {};
+  let actionCalls = 0;
+  let prevented = false;
+
+  const handled = handleQuantizedBalanceShortcut(
+    {
+      target: button,
+      key: " ",
+      preventDefault() {
+        prevented = true;
+      },
+    },
+    root,
+    {
+      next: () => {
+        actionCalls += 1;
+      },
+      previous: () => {
+        actionCalls += 1;
+      },
+      reset: () => {
+        actionCalls += 1;
+      },
+      togglePlay: () => {
+        actionCalls += 1;
+      },
+    },
+  );
+
+  assert.equal(handled, false);
+  assert.equal(prevented, false);
+  assert.equal(actionCalls, 0);
 });
