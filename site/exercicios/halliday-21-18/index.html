@@ -5,8 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Resolução ilustrada do exercício 18, capítulo 21, do Halliday: razão entre cargas a partir de forças colineares.">
   <title>Halliday 21.18 · Laboratório de Eletromagnetismo</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='28' fill='%237a3ce7'/%3E%3Cpath d='M18 32h28M32 18v28' stroke='white' stroke-width='6'/%3E%3C/svg%3E">
   <link rel="stylesheet" href="../../assets/base.css">
   <link rel="stylesheet" href="../../assets/simulador.css">
+  <link rel="stylesheet" href="./visualizacao.css">
   <script>try{if(localStorage.getItem("tema")==="escuro"){document.documentElement.dataset.theme="escuro"}}catch(erro){}</script>
 </head>
 <body class="lesson-page halliday-page">
@@ -28,7 +30,7 @@
     <nav class="section-nav" aria-label="Seções do exercício" data-section-nav>
       <a href="#enunciado">Enunciado</a>
       <a href="#resolucao">Resolução</a>
-      <a href="#diagrama">Diagrama</a>
+      <a href="#diagrama">Mesa de forças</a>
     </nav>
   </div>
 
@@ -196,80 +198,115 @@
         </article>
       </section>
 
-      <section class="lesson-section" id="diagrama" aria-label="Diagrama">
-        <article class="static-diagram-shell">
-          <header class="static-diagram-heading">
+      <section class="lesson-section" id="diagrama" aria-label="Mesa de forças">
+        <div class="simulation-intro">
+          <div>
+            <p class="eyebrow">Leitura vetorial</p>
+            <h2>Transfira B sem alterar a distância AB</h2>
+          </div>
+          <p>
+            A fica no centro e C permanece fixa à direita. B percorre o
+            semicírculo de raio r; só as duas extremidades correspondem às
+            configurações medidas no enunciado.
+          </p>
+        </div>
+
+        <article class="force-locus" data-didactic-visualization data-force-locus data-play-state="paused" data-step="0" data-progress="0" data-motion="full" data-measured="true" aria-labelledby="force-locus-title">
+          <header class="force-locus__header">
             <div>
-              <p class="eyebrow">Leitura vetorial</p>
-              <h2>O que muda quando B atravessa A</h2>
+              <p class="eyebrow">Mesa de forças · composição ponta a cauda</p>
+              <h3 id="force-locus-title" data-frame-title>Soma: B e C repelem A para −x</h3>
             </div>
-            <p>A posição de B inverte apenas a força produzida por B. A força de C mantém direção e módulo.</p>
+            <p data-frame-explanation>Configuração medida (a): B e C estão à direita de A; as duas forças têm o mesmo sentido e F_B + F_C = S = 2,014 × 10⁻²³ N.</p>
           </header>
 
-          <svg class="teaching-diagram" viewBox="0 0 900 560" role="img" aria-labelledby="diagram-18-title diagram-18-desc">
-            <title id="diagram-18-title">Forças sobre A nas duas configurações do exercício 21.18</title>
-            <desc id="diagram-18-desc">Na configuração a, B e C estão à direita de A e as duas forças apontam para a esquerda. Na configuração b, B está à esquerda e sua força aponta para a direita, enquanto a força maior de C aponta para a esquerda, produzindo uma pequena resultante para a esquerda.</desc>
-            <defs>
-              <marker id="arrow-18-one" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto">
-                <path d="M 0 0 L 10 5 L 0 10 z" style="fill: var(--force-1)"></path>
-              </marker>
-              <marker id="arrow-18-two" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto">
-                <path d="M 0 0 L 10 5 L 0 10 z" fill="#e8963f"></path>
-              </marker>
-              <marker id="arrow-18-result" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto">
-                <path d="M 0 0 L 10 5 L 0 10 z" style="fill: var(--resultant)"></path>
-              </marker>
-            </defs>
+          <div class="force-locus__canvas">
+            <svg viewBox="0 0 730 470" role="img" aria-labelledby="force-locus-svg-title force-locus-svg-desc">
+              <title id="force-locus-svg-title">Transferência de B e composição das forças sobre A</title>
+              <desc id="force-locus-svg-desc">A está no centro, C fica fixa à direita e B percorre um semicírculo mantendo a distância AB. O vetor de B gira, o vetor de C permanece fixo e ambos são compostos ponta a cauda. As extremidades do trajeto representam a soma e a diferença medidas.</desc>
+              <defs>
+                <marker id="h2118-arrow-b" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+                  <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--force-1)"></path>
+                </marker>
+                <marker id="h2118-arrow-c" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+                  <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--force-2)"></path>
+                </marker>
+                <marker id="h2118-arrow-resultant" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+                  <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--resultant)"></path>
+                </marker>
+              </defs>
 
-            <rect class="diagram-panel" x="28" y="28" width="844" height="228" rx="4"></rect>
-            <text class="diagram-panel-title" x="55" y="60">(a) B e C no mesmo lado</text>
-            <line class="diagram-axis" x1="75" y1="145" x2="825" y2="145"></line>
-            <text class="diagram-axis-label" x="810" y="133">+x</text>
+              <rect class="force-locus__table" x="48" y="42" width="660" height="390" rx="16"></rect>
+              <line class="force-locus__axis" x1="92" y1="225" x2="674" y2="225"></line>
+              <text class="force-locus__annotation" x="650" y="210">+x</text>
+              <path class="force-locus__path" d="M 535 225 A 155 155 0 0 1 225 225"></path>
+              <text class="force-locus__annotation force-locus__annotation--center" x="380" y="402">trajeto de transferência · AB = r constante</text>
 
-            <circle class="diagram-charge diagram-charge--positive" cx="285" cy="145" r="22"></circle>
-            <text class="diagram-sign" x="285" y="153">+</text>
-            <text class="diagram-label" x="285" y="185">A</text>
-            <circle class="diagram-charge diagram-charge--positive" cx="620" cy="145" r="22"></circle>
-            <text class="diagram-sign" x="620" y="153">+</text>
-            <text class="diagram-label" x="620" y="185">B</text>
-            <circle class="diagram-charge diagram-charge--positive" cx="680" cy="145" r="22"></circle>
-            <text class="diagram-sign" x="680" y="153">+</text>
-            <text class="diagram-label" x="680" y="185">C</text>
+              <circle class="force-locus__charge" cx="380" cy="225" r="21"></circle>
+              <text class="force-locus__sign" x="380" y="232">+</text>
+              <text class="force-locus__label" x="380" y="267">A · centro</text>
 
-            <line class="diagram-guide" x1="285" y1="118" x2="285" y2="84"></line>
-            <line class="diagram-force diagram-force--one" x1="275" y1="105" x2="170" y2="105" marker-end="url(#arrow-18-one)"></line>
-            <text class="diagram-force-label" x="218" y="91">F_B</text>
-            <line class="diagram-force diagram-force--two" x1="275" y1="215" x2="135" y2="215" marker-end="url(#arrow-18-two)"></line>
-            <text class="diagram-force-label" x="205" y="238">F_C</text>
-            <text class="diagram-note" x="485" y="221">as duas contribuições apontam para −x</text>
+              <circle class="force-locus__charge" cx="590" cy="225" r="21"></circle>
+              <text class="force-locus__sign" x="590" y="232">+</text>
+              <text class="force-locus__label" x="590" y="267">C · fixa</text>
 
-            <rect class="diagram-panel" x="28" y="280" width="844" height="252" rx="4"></rect>
-            <text class="diagram-panel-title" x="55" y="312">(b) B transferida para o lado oposto</text>
-            <line class="diagram-axis" x1="75" y1="405" x2="825" y2="405"></line>
-            <text class="diagram-axis-label" x="810" y="393">+x</text>
+              <circle class="force-locus__charge force-locus__charge--moving" data-b-charge cx="535" cy="225" r="21"></circle>
+              <text class="force-locus__sign" data-b-sign x="535" y="232">+</text>
+              <text class="force-locus__label" data-b-label x="535" y="195">B</text>
+              <line class="force-locus__radius" data-radius x1="380" y1="225" x2="535" y2="225"></line>
+              <text class="force-locus__annotation" x="457" y="246">r</text>
 
-            <circle class="diagram-charge diagram-charge--positive" cx="160" cy="405" r="22"></circle>
-            <text class="diagram-sign" x="160" y="413">+</text>
-            <text class="diagram-label" x="160" y="445">B</text>
-            <circle class="diagram-charge diagram-charge--positive" cx="430" cy="405" r="22"></circle>
-            <text class="diagram-sign" x="430" y="413">+</text>
-            <text class="diagram-label" x="430" y="445">A</text>
-            <circle class="diagram-charge diagram-charge--positive" cx="700" cy="405" r="22"></circle>
-            <text class="diagram-sign" x="700" y="413">+</text>
-            <text class="diagram-label" x="700" y="445">C</text>
+              <circle cx="535" cy="225" r="7" fill="var(--measure)"></circle>
+              <circle cx="225" cy="225" r="7" fill="var(--measure)"></circle>
+              <text class="force-locus__annotation" x="507" y="150">(a) soma medida</text>
+              <text class="force-locus__annotation" x="147" y="150">(b) diferença medida</text>
 
-            <line class="diagram-force diagram-force--one" x1="440" y1="365" x2="545" y2="365" marker-end="url(#arrow-18-one)"></line>
-            <text class="diagram-force-label" x="493" y="351">F_B (+x)</text>
-            <line class="diagram-force diagram-force--two" x1="420" y1="475" x2="280" y2="475" marker-end="url(#arrow-18-two)"></line>
-            <text class="diagram-force-label" x="350" y="502">F_C (−x)</text>
-            <line class="diagram-force diagram-force--resultant" x1="430" y1="520" x2="386" y2="520" marker-end="url(#arrow-18-result)"></line>
-            <text class="diagram-value" x="565" y="525">resultante pequena para −x</text>
-          </svg>
-          <p class="diagram-caption">
-            O comprimento relativo das setas reforça o dado experimental:
-            F<sub>C</sub> &gt; F<sub>B</sub>. As distâncias B–A e A–C na segunda
-            configuração são iguais.
-          </p>
+              <line class="force-locus__vector force-locus__vector--b" data-force-b x1="380" y1="225" x2="271" y2="225" marker-end="url(#h2118-arrow-b)"></line>
+              <line class="force-locus__vector force-locus__vector--c" data-force-c x1="271" y1="225" x2="126" y2="225" marker-end="url(#h2118-arrow-c)"></line>
+              <line class="force-locus__vector force-locus__vector--resultant" data-resultant x1="380" y1="225" x2="126" y2="225" marker-end="url(#h2118-arrow-resultant)"></line>
+              <text class="force-locus__vector-label force-locus__vector-label--b" data-force-b-label x="325" y="205">F_B</text>
+              <text class="force-locus__vector-label force-locus__vector-label--c" data-force-c-label x="198" y="248">F_C</text>
+              <text class="force-locus__vector-label force-locus__vector-label--resultant" data-resultant-label x="253" y="190">F_resultante</text>
+
+            </svg>
+            <aside class="force-locus__readout" data-force-readout aria-label="Painel numérico das forças">
+              <p class="force-locus__measurement" data-measurement-status>Configuração medida</p>
+              <strong class="force-locus__readout-equation" data-current-equation>F_B + F_C = S</strong>
+              <dl>
+                <div class="force-locus__readout-item force-locus__readout-item--b">
+                  <dt>F_B</dt>
+                  <dd data-value-b>8,632 × 10^-24 N</dd>
+                </div>
+                <div class="force-locus__readout-item force-locus__readout-item--c">
+                  <dt>F_C</dt>
+                  <dd data-value-c>1,151 × 10^-23 N</dd>
+                </div>
+                <div class="force-locus__readout-item force-locus__readout-item--resultant">
+                  <dt>|F_R|</dt>
+                  <dd data-value-resultant>2,014 × 10^-23 N</dd>
+                </div>
+              </dl>
+              <p class="force-locus__readout-note">F_C é fixa; F_B gira.</p>
+            </aside>
+          </div>
+
+          <footer class="force-locus__footer">
+            <div class="force-locus__controls" aria-label="Controles da transferência de B">
+              <button type="button" data-play>Reproduzir</button>
+              <button type="button" data-pause disabled>Pausar</button>
+              <button type="button" data-reset>Reiniciar</button>
+              <button type="button" data-next>Próximo passo</button>
+            </div>
+            <label class="force-locus__speed">
+              Velocidade
+              <select data-speed>
+                <option value="0.5">0,5×</option>
+                <option value="1" selected>1×</option>
+                <option value="2">2×</option>
+              </select>
+            </label>
+            <p class="force-locus__status" data-frame-status aria-live="polite">Passo 1 de 6 · Soma: B e C repelem A para −x</p>
+          </footer>
         </article>
       </section>
     </div>
@@ -284,6 +321,6 @@
 
   <script type="module" src="../../componentes/navegacao-principal.js"></script>
   <script type="module" src="../../componentes/navegacao-exercicios.js"></script>
-  <script type="module" src="../exercicio-estatico.js"></script>
+  <script type="module" src="./app.js"></script>
 </body>
 </html>
