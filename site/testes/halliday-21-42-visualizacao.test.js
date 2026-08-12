@@ -37,6 +37,16 @@ test("21.42 publica separação variável, roteiro completo e SVG acessível", a
   const html = await readFile(htmlUrl, "utf8");
 
   assert.match(html, /data-charged-pendulum/);
+  assert.equal(
+    html.match(/data-didactic-visualization/g)?.length,
+    1,
+    "a página deve expor exatamente uma visualização didática",
+  );
+  assert.match(
+    html,
+    /<article[^>]+data-charged-pendulum[^>]+data-didactic-visualization|<article[^>]+data-didactic-visualization[^>]+data-charged-pendulum/,
+    "o marcador global deve estar no mesmo root do pêndulo",
+  );
   assert.match(
     html,
     /<input[^>]+type="range"[^>]+data-separation[^>]+min="1"[^>]+max="20"[^>]+step="0\.5"[^>]+value="5"/,
