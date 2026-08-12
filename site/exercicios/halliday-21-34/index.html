@@ -5,8 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Resolução ilustrada do exercício 34, capítulo 21, do Halliday: equilíbrio de um elétron por simetria.">
   <title>Halliday 21.34 · Laboratório de Eletromagnetismo</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='28' fill='%237a3ce7'/%3E%3Cpath d='M18 32h28M32 18v28' stroke='white' stroke-width='6'/%3E%3C/svg%3E">
   <link rel="stylesheet" href="../../assets/base.css">
   <link rel="stylesheet" href="../../assets/simulador.css">
+  <link rel="stylesheet" href="./visualizacao.css">
   <script>try{if(localStorage.getItem("tema")==="escuro"){document.documentElement.dataset.theme="escuro"}}catch(erro){}</script>
 </head>
 <body class="lesson-page halliday-page">
@@ -231,7 +233,192 @@
       </section>
 
       <section class="lesson-section" id="diagrama" aria-label="Diagrama">
-        <article class="static-diagram-shell">
+        <article class="quantized-balance" data-quantized-balance data-step="0" data-step-id="distance" data-play-state="paused" data-motion="full" data-selected-ion="1" tabindex="0" aria-labelledby="quantized-balance-title" aria-describedby="quantized-balance-help">
+          <header class="quantized-balance__header">
+            <div>
+              <p class="eyebrow">Balança vetorial quantizada</p>
+              <h3 id="quantized-balance-title">De r = R/cos θ ao valor permitido de q</h3>
+            </div>
+            <div class="quantized-balance__readout" aria-label="Ângulo de equilíbrio selecionado">
+              <span>ângulo de equilíbrio</span>
+              <strong data-angle>37,47°</strong>
+            </div>
+          </header>
+
+          <div class="quantized-balance__selector">
+            <div class="quantized-balance__selector-copy">
+              <strong>n = q/e</strong>
+              <span>Selecione uma carga inteira, sem valores intermediários.</span>
+            </div>
+            <div class="quantized-balance__ion-options" aria-label="Múltiplo inteiro da carga elementar">
+              <button type="button" data-ion-multiple="1" aria-label="1e" aria-pressed="true">1e</button>
+              <button type="button" data-ion-multiple="2" aria-label="2e" aria-pressed="false">2e</button>
+              <button type="button" data-ion-multiple="3" aria-label="3e" aria-pressed="false">3e</button>
+              <button type="button" data-ion-multiple="4" aria-label="4e" aria-pressed="false">4e</button>
+              <button type="button" data-ion-multiple="5" aria-label="5e" aria-pressed="false">5e</button>
+            </div>
+          </div>
+
+          <div class="quantized-balance__body">
+            <div class="quantized-balance__diagram">
+              <svg viewBox="0 0 680 700" role="img" aria-labelledby="balance-34-title balance-34-desc">
+                <title id="balance-34-title">Geometria, forças e componentes do equilíbrio</title>
+                <desc id="balance-34-desc">O elétron 2 recebe uma força horizontal para a direita e duas forças diagonais dos íons. As projeções verticais se cancelam e as horizontais somam uma unidade normalizada.</desc>
+                <defs>
+                  <marker id="balance-arrow-reference" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+                    <path d="M 0 0 L 10 5 L 0 10 z" style="fill: var(--force-1)"></path>
+                  </marker>
+                  <marker id="balance-arrow-ion" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+                    <path d="M 0 0 L 10 5 L 0 10 z" style="fill: var(--force-2)"></path>
+                  </marker>
+                  <marker id="balance-arrow-x" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+                    <path d="M 0 0 L 10 5 L 0 10 z" style="fill: var(--resultant)"></path>
+                  </marker>
+                  <marker id="balance-arrow-y" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+                    <path d="M 0 0 L 10 5 L 0 10 z" style="fill: var(--positive)"></path>
+                  </marker>
+                  <marker id="balance-dimension" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                    <path d="M 10 0 L 0 5 L 10 10 z" style="fill: var(--measure)"></path>
+                  </marker>
+                </defs>
+
+                <rect class="quantized-balance__plane" x="18" y="18" width="644" height="664" rx="14"></rect>
+                <line class="quantized-balance__axis" x1="50" y1="350" x2="630" y2="350"></line>
+                <text class="quantized-balance__axis-label" x="606" y="335">+x</text>
+
+                <circle class="quantized-balance__charge" cx="90" cy="350" r="23"></circle>
+                <text class="quantized-balance__sign" x="90" y="359">−</text>
+                <text class="quantized-balance__label" x="63" y="395">1 · −e</text>
+                <circle class="quantized-balance__charge" cx="310" cy="350" r="25"></circle>
+                <text class="quantized-balance__sign" x="310" y="359">−</text>
+                <text class="quantized-balance__label" x="283" y="395">2 · −e</text>
+
+                <g data-reveal-step="0" data-visible="true">
+                  <circle class="quantized-balance__charge" data-upper-ion cx="490" cy="213" r="23"></circle>
+                  <text class="quantized-balance__sign" data-upper-ion-sign x="490" y="222">−</text>
+                  <text class="quantized-balance__label" data-upper-ion-label x="521" y="218">3 · −1e</text>
+                  <circle class="quantized-balance__charge" data-lower-ion cx="490" cy="487" r="23"></circle>
+                  <text class="quantized-balance__sign" data-lower-ion-sign x="490" y="496">−</text>
+                  <text class="quantized-balance__label" data-lower-ion-label x="521" y="492">4 · −1e</text>
+                  <line class="quantized-balance__guide" data-upper-guide x1="310" y1="350" x2="490" y2="213"></line>
+                  <line class="quantized-balance__guide" data-lower-guide x1="310" y1="350" x2="490" y2="487"></line>
+                  <line class="quantized-balance__dimension" x1="317" y1="415" x2="418" y2="415" marker-start="url(#balance-dimension)" marker-end="url(#balance-dimension)"></line>
+                  <text class="quantized-balance__value" x="360" y="443">R</text>
+                  <text class="quantized-balance__value" x="367" y="269">r</text>
+                  <path class="quantized-balance__angle" data-angle-arc d="M 376 350 A 66 66 0 0 0 362 309"></path>
+                  <text class="quantized-balance__value" data-angle-label x="383" y="320">θ</text>
+                </g>
+
+                <g data-reveal-step="1" data-visible="false">
+                  <line class="quantized-balance__force quantized-balance__force--reference" x1="310" y1="350" x2="450" y2="350" marker-end="url(#balance-arrow-reference)"></line>
+                  <text class="quantized-balance__force-label quantized-balance__force-label--reference" x="374" y="332">F₁₂ = 1</text>
+                  <line class="quantized-balance__force" data-force-upper x1="310" y1="350" x2="235" y2="407" marker-end="url(#balance-arrow-ion)"></line>
+                  <line class="quantized-balance__force" data-force-lower x1="310" y1="350" x2="235" y2="293" marker-end="url(#balance-arrow-ion)"></line>
+                  <text class="quantized-balance__force-label" data-force-upper-label x="179" y="430">F₃</text>
+                  <text class="quantized-balance__force-label" data-force-lower-label x="179" y="281">F₄</text>
+                </g>
+
+                <g data-reveal-step="2" data-visible="false">
+                  <line class="quantized-balance__projection-x" x1="310" y1="350" x2="235" y2="350" marker-end="url(#balance-arrow-x)"></line>
+                  <line class="quantized-balance__projection-y" data-projection-upper x1="235" y1="350" x2="235" y2="407" marker-end="url(#balance-arrow-y)"></line>
+                  <line class="quantized-balance__projection-y" data-projection-lower x1="235" y1="350" x2="235" y2="293" marker-end="url(#balance-arrow-y)"></line>
+                  <text class="quantized-balance__value" x="136" y="337">Fₓ = 0,500</text>
+                </g>
+
+                <g data-reveal-step="3" data-visible="false">
+                  <line class="quantized-balance__projection-y" x1="586" y1="281" x2="586" y2="337" marker-end="url(#balance-arrow-y)"></line>
+                  <line class="quantized-balance__projection-y" x1="586" y1="419" x2="586" y2="363" marker-end="url(#balance-arrow-y)"></line>
+                  <text class="quantized-balance__force-label" x="542" y="266">−Fᵧ</text>
+                  <text class="quantized-balance__force-label" x="542" y="449">+Fᵧ</text>
+                  <text class="quantized-balance__value" x="547" y="356">ΣFᵧ = 0</text>
+                </g>
+
+                <g data-reveal-step="4" data-visible="false">
+                  <text class="quantized-balance__label" x="76" y="592">BALANÇA HORIZONTAL NORMALIZADA</text>
+                  <line class="quantized-balance__force quantized-balance__force--reference" x1="110" y1="630" x2="285" y2="630" marker-end="url(#balance-arrow-reference)"></line>
+                  <line class="quantized-balance__projection-x" x1="570" y1="630" x2="390" y2="630" marker-end="url(#balance-arrow-x)"></line>
+                  <text class="quantized-balance__force-label quantized-balance__force-label--reference" x="116" y="617">F₁₂ = 1,000</text>
+                  <text class="quantized-balance__value" x="408" y="617">2Fₓ = 1,000</text>
+                  <circle cx="337" cy="630" r="8" style="fill: var(--ink)"></circle>
+                </g>
+              </svg>
+            </div>
+
+            <aside class="quantized-balance__workbench" aria-label="Dedução em seis passos">
+              <div class="quantized-balance__step-copy">
+                <span>passo atual</span>
+                <h4 data-step-title>A geometria alonga a separação</h4>
+                <p data-step-description>A projeção horizontal vale R. No triângulo retângulo, a distância real é r = R/cos θ.</p>
+              </div>
+
+              <div class="quantized-balance__derivation">
+                <div class="quantized-balance__equation" data-reveal-step="0" data-visible="true">
+                  <small>1 · distância</small>
+                  <strong>r/R = 1/cos θ = <span data-distance-ratio>1,260</span></strong>
+                </div>
+                <div class="quantized-balance__equation" data-reveal-step="1" data-visible="false">
+                  <small>2 · Coulomb</small>
+                  <strong>F<sub>íon</sub> = n cos<sup>2</sup> θ = <span data-force-magnitude>0,630</span></strong>
+                </div>
+                <div class="quantized-balance__equation" data-reveal-step="2" data-visible="false">
+                  <small>3 · projeção x</small>
+                  <strong>n cos<sup>2</sup> θ × cos θ = n cos<sup>3</sup> θ = <span data-horizontal-one>0,500</span></strong>
+                </div>
+                <div class="quantized-balance__equation" data-reveal-step="3" data-visible="false">
+                  <small>4 · cancelamento y</small>
+                  <div class="quantized-balance__component-balance">
+                    <span class="quantized-balance__component"><span>íon 3</span><strong>+<span data-vertical-one>0,383</span></strong></span>
+                    <strong>+</strong>
+                    <span class="quantized-balance__component"><span>íon 4</span><strong>−<span data-vertical-one>0,383</span> = 0</strong></span>
+                  </div>
+                </div>
+                <div class="quantized-balance__equation" data-reveal-step="4" data-visible="false">
+                  <small>5 · balanço x · escala ke²/R²</small>
+                  <div class="quantized-balance__horizontal-scale">
+                    <div class="quantized-balance__horizontal-track" aria-hidden="true"><span></span><span></span></div>
+                    <p><span>0,500 + 0,500</span><strong data-horizontal-pair>1,000</strong></p>
+                  </div>
+                </div>
+                <div class="quantized-balance__equation quantized-balance__equation--result" data-reveal-step="5" data-visible="false">
+                  <small>6 · carga quantizada</small>
+                  <strong>q/e = 1/(2cos<sup>3</sup> θ) = n → carga do íon = <span data-ion-charge>−1e</span></strong>
+                </div>
+              </div>
+            </aside>
+          </div>
+
+          <ol class="quantized-balance__steps" aria-label="Etapas da dedução">
+            <li><button type="button" data-step-button data-state="active" aria-current="step">1 · Distância</button></li>
+            <li><button type="button" data-step-button data-state="pending" aria-current="false">2 · cos²</button></li>
+            <li><button type="button" data-step-button data-state="pending" aria-current="false">3 · Projeção</button></li>
+            <li><button type="button" data-step-button data-state="pending" aria-current="false">4 · Vertical</button></li>
+            <li><button type="button" data-step-button data-state="pending" aria-current="false">5 · Horizontal</button></li>
+            <li><button type="button" data-step-button data-state="pending" aria-current="false">6 · Quantização</button></li>
+          </ol>
+
+          <footer class="quantized-balance__footer">
+            <div class="quantized-balance__controls" aria-label="Controles da dedução">
+              <button type="button" data-play>Reproduzir</button>
+              <button type="button" data-pause disabled>Pausar</button>
+              <button type="button" data-reset>Reiniciar</button>
+              <button type="button" data-next>Próximo passo</button>
+            </div>
+            <label class="quantized-balance__speed">
+              Velocidade
+              <select data-speed>
+                <option value="0.5">0,5×</option>
+                <option value="1" selected>1×</option>
+                <option value="2">2×</option>
+              </select>
+            </label>
+          </footer>
+          <p class="quantized-balance__help" id="quantized-balance-help">
+            Use ← e → para percorrer os passos, espaço para reproduzir ou pausar e Home para reiniciar. As forças são normalizadas por ke²/R².
+          </p>
+          <p class="visually-hidden" data-step-status aria-live="polite">Passo 1 de 6. A geometria alonga a separação. Para n = 1, θ = 37,47 graus.</p>
+        </article>
+
+        <article class="static-diagram-shell quantized-balance__fallback">
           <header class="static-diagram-heading">
             <div>
               <p class="eyebrow">Geometria vetorial</p>
@@ -320,6 +507,6 @@
 
   <script type="module" src="../../componentes/navegacao-principal.js"></script>
   <script type="module" src="../../componentes/navegacao-exercicios.js"></script>
-  <script type="module" src="../exercicio-estatico.js"></script>
+  <script type="module" src="./app.js"></script>
 </body>
 </html>
