@@ -5,8 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Resolução e simulação do exercício 13, capítulo 21, do Halliday.">
   <title>Halliday 21.13 · Laboratório de Eletromagnetismo</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='28' fill='%237a3ce7'/%3E%3Cpath d='M18 32h28M32 18v28' stroke='white' stroke-width='6'/%3E%3C/svg%3E">
   <link rel="stylesheet" href="../../assets/base.css">
   <link rel="stylesheet" href="../../assets/simulador.css">
+  <link rel="stylesheet" href="./visualizacao.css">
   <script>try{if(localStorage.getItem("tema")==="escuro"){document.documentElement.dataset.theme="escuro"}}catch(erro){}</script>
 </head>
 <body class="lesson-page halliday-page">
@@ -289,6 +291,100 @@
             volta a zero em x ≈ −13,66 cm e y = 0.
           </p>
         </div>
+        <article class="equilibrium-geometry" data-didactic-visualization data-play-state="paused" data-step="0" data-motion="full" aria-labelledby="equilibrium-geometry-title">
+          <header class="equilibrium-geometry__header">
+            <div>
+              <p class="eyebrow">Radar de nulidade do campo</p>
+              <h3 id="equilibrium-geometry-title" data-frame-title>Fora do eixo, os campos não são colineares</h3>
+            </div>
+            <p data-frame-explanation>Com y ≠ 0, E₁ e E₂ não têm a mesma direção. Mesmo com módulos próximos, suas componentes transversais não se cancelam.</p>
+          </header>
+
+          <div class="equilibrium-geometry__canvas">
+            <svg viewBox="0 0 900 460" role="img" aria-labelledby="equilibrium-svg-title equilibrium-svg-desc">
+              <title id="equilibrium-svg-title">Varredura geométrica do ponto de campo elétrico nulo</title>
+              <desc id="equilibrium-svg-desc">Duas cargas fixas sobre o eixo x, um ponto candidato, os vetores E1, E2 e resultante, além de barras que comparam seus módulos.</desc>
+              <defs>
+                <marker id="h2113-arrow-q1" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+                  <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--force-1)"></path>
+                </marker>
+                <marker id="h2113-arrow-q2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+                  <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--force-2)"></path>
+                </marker>
+                <marker id="h2113-arrow-resultant" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+                  <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--resultant)"></path>
+                </marker>
+              </defs>
+
+              <rect class="equilibrium-geometry__plot" x="80" y="55" width="740" height="240" rx="12"></rect>
+              <rect class="equilibrium-geometry__region-left" x="80" y="55" width="444" height="240"></rect>
+              <rect class="equilibrium-geometry__region-between" x="524" y="55" width="185" height="240"></rect>
+              <rect class="equilibrium-geometry__region-right" x="709" y="55" width="111" height="240"></rect>
+              <text class="equilibrium-geometry__region-label" x="98" y="78">x &lt; 0 · oposição possível</text>
+              <text class="equilibrium-geometry__region-label" x="544" y="78">mesmo sentido</text>
+              <text class="equilibrium-geometry__region-label" x="726" y="78">q₂ domina</text>
+              <line class="equilibrium-geometry__axis" x1="80" y1="175" x2="820" y2="175"></line>
+              <line class="equilibrium-geometry__axis" x1="524" y1="55" x2="524" y2="295"></line>
+              <text class="equilibrium-geometry__axis-label" x="806" y="166">x</text>
+              <text class="equilibrium-geometry__axis-label" x="535" y="70">y</text>
+              <line class="equilibrium-geometry__tick" x1="524" y1="169" x2="524" y2="181"></line>
+              <line class="equilibrium-geometry__tick" x1="709" y1="169" x2="709" y2="181"></line>
+              <text class="equilibrium-geometry__axis-label" x="514" y="201">0</text>
+              <text class="equilibrium-geometry__axis-label" x="698" y="201">10 cm</text>
+
+              <circle class="equilibrium-geometry__charge equilibrium-geometry__charge--positive" cx="524" cy="175" r="19"></circle>
+              <text class="equilibrium-geometry__charge-sign" x="524" y="182">+</text>
+              <text class="equilibrium-geometry__label" x="492" y="224">q₁ = +1 µC</text>
+              <circle class="equilibrium-geometry__charge equilibrium-geometry__charge--negative" cx="709" cy="175" r="19"></circle>
+              <text class="equilibrium-geometry__charge-sign" x="709" y="182">−</text>
+              <text class="equilibrium-geometry__label" x="676" y="224">q₂ = −3 µC</text>
+
+              <line class="equilibrium-geometry__guide" data-guide-x x1="271.29" y1="100" x2="271.29" y2="175"></line>
+              <line class="equilibrium-geometry__guide" data-guide-y x1="524" y1="100" x2="271.29" y2="100"></line>
+              <circle class="equilibrium-geometry__candidate" data-candidate cx="271.29" cy="100" r="10"></circle>
+              <text class="equilibrium-geometry__label" data-candidate-label x="285.29" y="84">P (−13,66; 5,00) cm</text>
+
+              <line class="equilibrium-geometry__vector equilibrium-geometry__vector--q1" data-field-q1 x1="271.29" y1="100" x2="187" y2="69" marker-end="url(#h2113-arrow-q1)"></line>
+              <line class="equilibrium-geometry__vector equilibrium-geometry__vector--q2" data-field-q2 x1="271.29" y1="100" x2="367" y2="120" marker-end="url(#h2113-arrow-q2)"></line>
+              <line class="equilibrium-geometry__vector equilibrium-geometry__vector--resultant" data-field-resultant x1="271.29" y1="100" x2="283" y2="89" marker-end="url(#h2113-arrow-resultant)"></line>
+              <text class="equilibrium-geometry__vector-label equilibrium-geometry__vector-label--q1" data-field-q1-label x="229" y="77">E₁</text>
+              <text class="equilibrium-geometry__vector-label equilibrium-geometry__vector-label--q2" data-field-q2-label x="319" y="102">E₂</text>
+              <text class="equilibrium-geometry__vector-label equilibrium-geometry__vector-label--resultant" data-field-resultant-label x="277" y="84">E</text>
+
+              <text class="equilibrium-geometry__region-status" data-current-region x="450" y="323">Região atual: Fora do eixo x</text>
+              <text class="equilibrium-geometry__bar-label" x="142" y="358">|E₁|</text>
+              <rect class="equilibrium-geometry__bar-track" x="160" y="344" width="245" height="18" rx="5"></rect>
+              <rect class="equilibrium-geometry__bar equilibrium-geometry__bar--q1" data-bar-q1 x="160" y="344" width="225" height="18" rx="5"></rect>
+              <text class="equilibrium-geometry__bar-value" data-bar-q1-value x="420" y="358">4,25 × 10⁵ N/C</text>
+              <text class="equilibrium-geometry__bar-label" x="142" y="393">|E₂|</text>
+              <rect class="equilibrium-geometry__bar-track" x="160" y="379" width="245" height="18" rx="5"></rect>
+              <rect class="equilibrium-geometry__bar equilibrium-geometry__bar--q2" data-bar-q2 x="160" y="379" width="245" height="18" rx="5"></rect>
+              <text class="equilibrium-geometry__bar-value" data-bar-q2-value x="420" y="393">4,61 × 10⁵ N/C</text>
+              <text class="equilibrium-geometry__bar-label" x="142" y="428">|E|</text>
+              <rect class="equilibrium-geometry__bar-track" x="160" y="414" width="245" height="18" rx="5"></rect>
+              <rect class="equilibrium-geometry__bar equilibrium-geometry__bar--resultant" data-bar-resultant x="160" y="414" width="40" height="18" rx="5"></rect>
+              <text class="equilibrium-geometry__bar-value" data-bar-resultant-value x="420" y="428">7,28 × 10⁴ N/C</text>
+            </svg>
+          </div>
+
+          <footer class="equilibrium-geometry__footer">
+            <div class="equilibrium-geometry__controls" aria-label="Controles da varredura">
+              <button type="button" data-play>Reproduzir</button>
+              <button type="button" data-pause disabled>Pausar</button>
+              <button type="button" data-reset>Reiniciar</button>
+              <button type="button" data-next>Próximo passo</button>
+            </div>
+            <label class="equilibrium-geometry__speed">
+              Velocidade
+              <select data-speed>
+                <option value="0.5">0,5×</option>
+                <option value="1" selected>1×</option>
+                <option value="2">2×</option>
+              </select>
+            </label>
+            <p class="equilibrium-geometry__status" data-frame-status aria-live="polite">Passo 1 de 6 · Fora do eixo, os campos não são colineares</p>
+          </footer>
+        </article>
         <div data-halliday-simulator></div>
       </section>
     </div>

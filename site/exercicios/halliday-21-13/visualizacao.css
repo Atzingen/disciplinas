@@ -1,0 +1,331 @@
+.equilibrium-geometry {
+  overflow: hidden;
+  margin: 1.5rem 0 2rem;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  box-shadow: var(--shadow);
+}
+
+.equilibrium-geometry__header {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(220px, 0.36fr);
+  gap: 1.5rem;
+  align-items: end;
+  padding: clamp(1rem, 3vw, 1.8rem);
+  border-bottom: 1px solid var(--line);
+}
+
+.equilibrium-geometry__header h3,
+.equilibrium-geometry__header p {
+  margin: 0;
+}
+
+.equilibrium-geometry__header h3 {
+  max-width: 24ch;
+  font: 700 clamp(1.35rem, 3vw, 2.15rem)/1.15 var(--font-display);
+}
+
+.equilibrium-geometry__header p {
+  color: var(--ink-soft);
+}
+
+.equilibrium-geometry__canvas {
+  padding: 0.5rem;
+  background:
+    linear-gradient(var(--grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px),
+    var(--paper-deep);
+  background-size: 24px 24px;
+}
+
+.equilibrium-geometry__canvas svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 560px;
+  margin-inline: auto;
+}
+
+.equilibrium-geometry__plot {
+  fill: var(--surface);
+  stroke: var(--line-strong);
+}
+
+.equilibrium-geometry__region-left {
+  fill: rgb(0 139 149 / 8%);
+}
+
+.equilibrium-geometry__region-between {
+  fill: rgb(200 136 12 / 10%);
+}
+
+.equilibrium-geometry__region-right {
+  fill: rgb(209 112 26 / 8%);
+}
+
+.equilibrium-geometry__axis,
+.equilibrium-geometry__tick {
+  stroke: var(--ink-soft);
+  stroke-width: 1.5;
+}
+
+.equilibrium-geometry__guide {
+  stroke: var(--line-strong);
+  stroke-dasharray: 6 6;
+  stroke-width: 1.5;
+}
+
+.equilibrium-geometry__charge {
+  stroke: var(--surface);
+  stroke-width: 4;
+}
+
+.equilibrium-geometry__charge--positive {
+  fill: var(--positive);
+}
+
+.equilibrium-geometry__charge--negative {
+  fill: var(--negative);
+}
+
+.equilibrium-geometry__candidate {
+  fill: var(--surface);
+  stroke: var(--resultant);
+  stroke-width: 4;
+}
+
+.equilibrium-geometry__charge-sign,
+.equilibrium-geometry__label,
+.equilibrium-geometry__vector-label,
+.equilibrium-geometry__bar-label,
+.equilibrium-geometry__bar-value {
+  font-family: var(--font-mono);
+}
+
+.equilibrium-geometry__charge-sign {
+  fill: #fff;
+  font-size: 22px;
+  font-weight: 700;
+  text-anchor: middle;
+}
+
+.equilibrium-geometry__label {
+  fill: var(--ink);
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.equilibrium-geometry__region-label,
+.equilibrium-geometry__axis-label {
+  fill: var(--ink-soft);
+  font: 13px var(--font-mono);
+}
+
+.equilibrium-geometry__region-status {
+  fill: var(--ink);
+  font: 700 16px var(--font-display);
+  text-anchor: middle;
+}
+
+.equilibrium-geometry__vector {
+  stroke-width: 4;
+  transition: x1 240ms ease, x2 240ms ease, y1 240ms ease, y2 240ms ease;
+}
+
+.equilibrium-geometry__vector--q1 {
+  stroke: var(--force-1);
+}
+
+.equilibrium-geometry__vector--q2 {
+  stroke: var(--force-2);
+}
+
+.equilibrium-geometry__vector--resultant {
+  stroke: var(--resultant);
+  stroke-width: 5;
+}
+
+.equilibrium-geometry__vector-label {
+  paint-order: stroke;
+  stroke: var(--surface);
+  stroke-width: 5px;
+  font-size: 15px;
+  font-weight: 700;
+  text-anchor: middle;
+}
+
+.equilibrium-geometry__vector-label--q1 {
+  fill: var(--force-1);
+}
+
+.equilibrium-geometry__vector-label--q2 {
+  fill: var(--force-2);
+}
+
+.equilibrium-geometry__vector-label--resultant {
+  fill: var(--resultant);
+}
+
+.equilibrium-geometry__bar-track {
+  fill: var(--line-soft);
+}
+
+.equilibrium-geometry__bar {
+  transition: width 240ms ease;
+}
+
+.equilibrium-geometry__bar--q1 {
+  fill: var(--force-1);
+}
+
+.equilibrium-geometry__bar--q2 {
+  fill: var(--force-2);
+}
+
+.equilibrium-geometry__bar--resultant {
+  fill: var(--resultant);
+}
+
+.equilibrium-geometry__bar-label {
+  fill: var(--ink);
+  font-size: 14px;
+  font-weight: 700;
+  text-anchor: end;
+}
+
+.equilibrium-geometry__bar-value {
+  fill: var(--ink-soft);
+  font-size: 12px;
+}
+
+.equilibrium-geometry__footer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: center;
+  padding: 1rem clamp(1rem, 3vw, 1.8rem) 1.35rem;
+  border-top: 1px solid var(--line);
+}
+
+.equilibrium-geometry__controls {
+  display: flex;
+  flex: 1 1 480px;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+.equilibrium-geometry__controls button,
+.equilibrium-geometry__speed select {
+  min-height: 44px;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  color: var(--ink);
+  cursor: pointer;
+  font: 700 0.82rem/1 var(--font-mono);
+}
+
+.equilibrium-geometry__controls button {
+  padding: 0.65rem 0.85rem;
+}
+
+.equilibrium-geometry__controls button:first-child {
+  border-color: var(--resultant);
+  background: var(--resultant);
+  color: var(--on-accent);
+}
+
+.equilibrium-geometry__controls button:disabled {
+  cursor: not-allowed;
+  opacity: 0.45;
+}
+
+.equilibrium-geometry__speed {
+  display: flex;
+  gap: 0.55rem;
+  align-items: center;
+  color: var(--ink-soft);
+  font: 700 0.78rem/1 var(--font-mono);
+}
+
+.equilibrium-geometry__speed select {
+  padding: 0.55rem 2rem 0.55rem 0.7rem;
+}
+
+.equilibrium-geometry__status {
+  flex: 1 0 100%;
+  margin: 0;
+  color: var(--ink-soft);
+  font: 0.78rem/1.5 var(--font-mono);
+}
+
+@media (max-width: 680px) {
+  .equilibrium-geometry__header {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+
+  .equilibrium-geometry__canvas {
+    overflow-x: hidden;
+    padding: 0;
+  }
+
+  .equilibrium-geometry__canvas svg {
+    min-height: 330px;
+  }
+
+  .equilibrium-geometry__axis,
+  .equilibrium-geometry__tick,
+  .equilibrium-geometry__guide {
+    stroke-width: 3;
+  }
+
+  .equilibrium-geometry__region-label,
+  .equilibrium-geometry__axis-label {
+    font-size: 21px;
+  }
+
+  .equilibrium-geometry__region-status {
+    font-size: 25px;
+  }
+
+  .equilibrium-geometry__label,
+  .equilibrium-geometry__bar-label,
+  .equilibrium-geometry__bar-value {
+    font-size: 22px;
+  }
+
+  .equilibrium-geometry__vector-label {
+    font-size: 27px;
+    stroke-width: 8px;
+  }
+
+  .equilibrium-geometry__vector {
+    stroke-width: 6;
+  }
+
+  .equilibrium-geometry__vector--resultant {
+    stroke-width: 7;
+  }
+
+  .equilibrium-geometry__controls button {
+    flex: 1 1 calc(50% - 0.6rem);
+  }
+
+  .equilibrium-geometry__speed {
+    width: 100%;
+    justify-content: space-between;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .equilibrium-geometry *,
+  .equilibrium-geometry *::before,
+  .equilibrium-geometry *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
