@@ -203,6 +203,71 @@ test("21.18 mantém a resultante intermediária visível e afastada dos componen
   );
 });
 
+test("21.18 mantém o rótulo B associado à carga e fora da resultante", (t) => {
+  const visualization = createControllableVisualization(t);
+  const bCharge = visualization.element("[data-b-charge]");
+  const bLabel = visualization.element("[data-b-label]");
+  const resultant = visualization.element("[data-resultant]");
+
+  function distanceToSegment(point, start, end) {
+    const segment = { x: end.x - start.x, y: end.y - start.y };
+    const lengthSquared = (segment.x ** 2) + (segment.y ** 2);
+    const projection = Math.max(0, Math.min(1,
+      (((point.x - start.x) * segment.x) + ((point.y - start.y) * segment.y))
+      / lengthSquared,
+    ));
+    return Math.hypot(
+      point.x - (start.x + (projection * segment.x)),
+      point.y - (start.y + (projection * segment.y)),
+    );
+  }
+
+  function assertLabelClearance() {
+    const progress = Number(visualization.root.dataset.progress);
+    const charge = {
+      x: Number(bCharge.getAttribute("cx")),
+      y: Number(bCharge.getAttribute("cy")),
+    };
+    // Bounding conservador para a fonte mobile de 28 px, ancorada pela baseline.
+    const labelCenter = {
+      x: Number(bLabel.getAttribute("x")),
+      y: Number(bLabel.getAttribute("y")) - 14,
+    };
+    const labelRadius = Math.hypot(10, 14);
+    const resultStart = {
+      x: Number(resultant.getAttribute("x1")),
+      y: Number(resultant.getAttribute("y1")),
+    };
+    const resultEnd = {
+      x: Number(resultant.getAttribute("x2")),
+      y: Number(resultant.getAttribute("y2")),
+    };
+    const associationDistance = Math.hypot(
+      labelCenter.x - charge.x,
+      labelCenter.y - charge.y,
+    );
+    const resultClearance = distanceToSegment(labelCenter, resultStart, resultEnd)
+      - labelRadius
+      - 3.5;
+
+    assert.ok(
+      resultClearance >= 16,
+      `rótulo B invade a resultante em progress=${progress}: clearance=${resultClearance}`,
+    );
+    assert.ok(
+      associationDistance >= 48 && associationDistance <= 80,
+      `rótulo B sem associação clara em progress=${progress}: distância=${associationDistance}`,
+    );
+  }
+
+  assertLabelClearance();
+  for (let step = 0; step < 3; step += 1) {
+    visualization.controller.step();
+    visualization.runNextFrame(1000);
+    assertLabelClearance();
+  }
+});
+
 test("21.18 pausa cancela o RAF e congela B imediatamente", (t) => {
   const visualization = createControllableVisualization(t);
 

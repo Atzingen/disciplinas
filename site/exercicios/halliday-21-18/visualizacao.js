@@ -144,9 +144,17 @@ export function mountForceLocus(root) {
       y: bPosition.y - center.y,
     };
     const radiusLength = Math.hypot(radiusVector.x, radiusVector.y);
+    const radiusUnit = {
+      x: radiusVector.x / radiusLength,
+      y: radiusVector.y / radiusLength,
+    };
     const radiusMidpoint = {
       x: (center.x + bPosition.x) / 2,
       y: (center.y + bPosition.y) / 2,
+    };
+    const bLabelPosition = {
+      x: bPosition.x - (radiusUnit.x * 20) - (radiusUnit.y * 60),
+      y: bPosition.y - (radiusUnit.y * 20) + (radiusUnit.x * 60),
     };
 
     visualProgress = progress;
@@ -160,17 +168,17 @@ export function mountForceLocus(root) {
     elements.bCharge.setAttribute("cy", bPosition.y.toFixed(2));
     elements.bSign.setAttribute("x", bPosition.x.toFixed(2));
     elements.bSign.setAttribute("y", (bPosition.y + 7).toFixed(2));
-    elements.bLabel.setAttribute("x", bPosition.x.toFixed(2));
-    elements.bLabel.setAttribute("y", (bPosition.y - 52).toFixed(2));
+    elements.bLabel.setAttribute("x", bLabelPosition.x.toFixed(2));
+    elements.bLabel.setAttribute("y", bLabelPosition.y.toFixed(2));
     elements.radius.setAttribute("x2", bPosition.x.toFixed(2));
     elements.radius.setAttribute("y2", bPosition.y.toFixed(2));
     elements.radiusLabel.setAttribute(
       "x",
-      (radiusMidpoint.x - ((radiusVector.y / radiusLength) * 18)).toFixed(2),
+      (radiusMidpoint.x - (radiusUnit.y * 18)).toFixed(2),
     );
     elements.radiusLabel.setAttribute(
       "y",
-      (radiusMidpoint.y + ((radiusVector.x / radiusLength) * 18)).toFixed(2),
+      (radiusMidpoint.y + (radiusUnit.x * 18)).toFixed(2),
     );
     setLine(elements.forceB, center, { x: forceB.x, y: -forceB.y });
     setLine(elements.forceC, tailToHead, { x: forceC.x, y: -forceC.y });
