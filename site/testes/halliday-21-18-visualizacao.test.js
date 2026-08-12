@@ -87,6 +87,19 @@ function createControllableVisualization(t) {
   };
 }
 
+function svgPoint(markup, marker) {
+  const element = markup.match(new RegExp(`<circle[^>]*${marker}[^>]*>`))?.[0];
+  assert.ok(element, `elemento ${marker} ausente`);
+  const x = Number(element.match(/\bcx="([^"]+)"/)?.[1]);
+  const y = Number(element.match(/\bcy="([^"]+)"/)?.[1]);
+  assert.ok(Number.isFinite(x) && Number.isFinite(y), `coordenadas de ${marker} inválidas`);
+  return { x, y };
+}
+
+function distance(first, second) {
+  return Math.hypot(first.x - second.x, first.y - second.y);
+}
+
 test("21.18 recupera as forças e os extremos medidos", () => {
   const solved = solveMeasuredForces(2.014e-23, 2.877e-24);
   assert.equal(solved.forceB, 8.6315e-24);
@@ -105,6 +118,15 @@ test("21.18 recupera as forças e os extremos medidos", () => {
   assert.equal(transferConfiguration.equation, null);
   assert.equal(differenceConfiguration.measured, true);
   assert.equal(differenceConfiguration.equation, "F_C - F_B = D");
+
+  for (const scene of [sumConfiguration, differenceConfiguration]) {
+    assert.ok(scene.cPosition, "o modelo deve explicitar a posição fixa de C");
+    assert.ok(
+      Math.abs(Math.hypot(scene.bPosition.x, scene.bPosition.y)
+        - Math.hypot(scene.cPosition.x, scene.cPosition.y)) < 1e-12,
+      "AB e AC devem ter o mesmo raio nos dois extremos medidos",
+    );
+  }
 });
 
 test("21.18 publica a mesa de forças e os cinco controles acessíveis", async () => {
@@ -144,7 +166,55 @@ test("21.18 mantém duas configurações completas no fallback sem JavaScript", 
     assert.match(markup, /data-fallback-force-b/);
     assert.match(markup, /data-fallback-force-c/);
     assert.match(markup, /data-fallback-resultant/);
+
+    const a = svgPoint(markup, "data-fallback-a");
+    const b = svgPoint(markup, "data-fallback-b");
+    const c = svgPoint(markup, "data-fallback-c");
+    assert.ok(
+      Math.abs(distance(a, b) - distance(a, c)) < 1e-9,
+      `fallback deve preservar AB = AC: AB=${distance(a, b)}, AC=${distance(a, c)}`,
+    );
   }
+
+  assert.match(
+    configurations[0][2],
+    /deslocamento gráfico[\s\S]*?esquemático/i,
+    "a coincidência física de B e C deve rotular qualquer separação apenas visual",
+  );
+});
+
+test("21.18 posiciona C no extremo +r do locus interativo", async () => {
+  const [html, css] = await Promise.all([
+    readFile(new URL("../exercicios/halliday-21-18/index.html", import.meta.url), "utf8"),
+    readFile(new URL("../exercicios/halliday-21-18/visualizacao.css", import.meta.url), "utf8"),
+  ]);
+  const a = svgPoint(html, "data-a-charge");
+  const b = svgPoint(html, "data-b-charge");
+  const c = svgPoint(html, "data-c-charge");
+
+  assert.ok(Math.abs(distance(a, b) - distance(a, c)) < 1e-9);
+  assert.deepEqual(c, b, "B e C ocupam fisicamente o mesmo extremo na configuração de soma");
+  assert.match(
+    html,
+    /\\frac\{q_C\}\{q_B\}[\s\S]*?&=\\frac\{F_C\}\{F_B\}[\s\S]*?\\approx1,33/,
+  );
+
+  const bLabel = html.match(/<text class="force-locus__label" data-b-label[^>]+>/)?.[0];
+  const cLabel = html.match(
+    /<g class="force-locus__schematic-offset"[\s\S]*?<text class="force-locus__label"[^>]+>/,
+  )?.[0].match(/<text class="force-locus__label"[^>]+>/)?.[0];
+  const cOffsetY = Number(
+    css.match(
+      /\.force-locus__schematic-offset\s*\{[^}]*transform:\s*translate\([^,]+,\s*(-?[\d.]+)px\)/,
+    )?.[1],
+  );
+  assert.ok(bLabel && cLabel && Number.isFinite(cOffsetY));
+  const bLabelY = Number(bLabel.match(/\by="([^"]+)"/)?.[1]);
+  const cLabelY = Number(cLabel.match(/\by="([^"]+)"/)?.[1]) + cOffsetY;
+  assert.ok(
+    bLabelY - cLabelY >= 48,
+    `rótulos B/C sem folga mobile: separação=${bLabelY - cLabelY}`,
+  );
 });
 
 test("21.18 separa a resultante e faz o rótulo r acompanhar AB", (t) => {

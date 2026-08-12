@@ -134,6 +134,20 @@
   transition: x 260ms ease, y 260ms ease;
 }
 
+.force-locus__radius--c {
+  stroke-dasharray: 2 6;
+}
+
+.force-locus__schematic-offset {
+  transform: translate(16px, -18px);
+}
+
+.force-locus__schematic-note {
+  fill: var(--ink-soft);
+  font: 700 11px/1.25 var(--font-mono);
+  text-anchor: middle;
+}
+
 .force-locus__resultant-guide {
   stroke: var(--resultant);
   stroke-dasharray: 4 5;

@@ -16,6 +16,14 @@ const canonicalAnswers = {
   42: [/2,38/, /24\\,\\mathrm\{nC\}/],
 };
 
+const commonTouchTargetSelectors = {
+  13: ".equilibrium-geometry__controls button",
+  18: ".force-locus__controls button",
+  33: ".charge-counting__controls button",
+  34: ".quantized-balance__controls button",
+  42: ".charged-pendulum__controls button",
+};
+
 const evidenceDimensions = {
   "21-13-desktop.png": [1440, 1000],
   "21-13-mobile-390x844.png": [390, 844],
@@ -34,6 +42,24 @@ function readPngDimensions(buffer) {
   assert.ok(buffer.length >= 24, "o PNG deve conter cabeçalho e dimensões");
   assert.deepEqual(buffer.subarray(0, 8), pngSignature, "a evidência deve ser um PNG válido");
   return [buffer.readUInt32BE(16), buffer.readUInt32BE(20)];
+}
+
+function cssDeclarationsFor(css, selector) {
+  for (const match of css.matchAll(/([^{}]+)\{([^{}]*)\}/g)) {
+    const selectors = match[1].split(",").map((entry) => entry.trim());
+    if (selectors.includes(selector)) {
+      return match[2];
+    }
+  }
+  assert.fail(`regra CSS ausente para ${selector}`);
+}
+
+function assertMinimumTouchHeight(css, selector) {
+  assert.match(
+    cssDeclarationsFor(css, selector),
+    /(?:^|;)\s*min-height:\s*44px\s*;/,
+    `${selector} deve ter altura mínima de toque de 44 px`,
+  );
 }
 
 for (const number of exercises) {
@@ -56,7 +82,10 @@ for (const number of exercises) {
     assert.match(html, /<title[^>]*>[^<]+<\/title>/);
     assert.match(html, /<desc[^>]*>[^<]+<\/desc>/);
     assert.match(css, /@media\s*\(prefers-reduced-motion:\s*reduce\)/);
-    assert.match(css, /min-height:\s*44px/);
+    assertMinimumTouchHeight(css, commonTouchTargetSelectors[number]);
+    if (number === "42") {
+      assertMinimumTouchHeight(css, ".charged-pendulum__slider input");
+    }
 
     for (const answer of canonicalAnswers[number]) {
       assert.match(html, answer, `21.${number} deve preservar a resposta canônica`);

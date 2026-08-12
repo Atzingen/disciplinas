@@ -110,6 +110,7 @@
 
 .charged-pendulum__slider input {
   width: 100%;
+  min-height: 44px;
   accent-color: var(--resultant);
   cursor: pointer;
 }

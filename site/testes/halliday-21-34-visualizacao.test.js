@@ -8,6 +8,35 @@ import {
 } from "../exercicios/halliday-21-34/modelo.js";
 import { handleQuantizedBalanceShortcut } from "../exercicios/halliday-21-34/visualizacao.js";
 
+function numericAttribute(element, name) {
+  const value = Number(element.match(new RegExp(`\\b${name}="([^"]+)"`))?.[1]);
+  assert.ok(Number.isFinite(value), `${name} ausente ou inválido em ${element}`);
+  return value;
+}
+
+function fallbackIon(html, label) {
+  const escapedLabel = label.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  const circle = html.match(
+    new RegExp(`<circle[^>]+></circle>\\s*<text[^>]*>−</text>\\s*<text[^>]*>${escapedLabel}</text>`),
+  )?.[0].match(/<circle[^>]+>/)?.[0];
+  assert.ok(circle, `íon ${label} ausente no fallback`);
+  return {
+    x: numericAttribute(circle, "cx"),
+    y: numericAttribute(circle, "cy"),
+  };
+}
+
+function fallbackForce(html, label) {
+  const line = html.match(
+    new RegExp(`<line[^>]+></line>\\s*<text[^>]*>${label}</text>`),
+  )?.[0].match(/<line[^>]+>/)?.[0];
+  assert.ok(line, `${label} ausente no fallback`);
+  return {
+    dx: numericAttribute(line, "x2") - numericAttribute(line, "x1"),
+    dy: numericAttribute(line, "y2") - numericAttribute(line, "y1"),
+  };
+}
+
 test("21.34 converte cargas inteiras nos ângulos físicos", () => {
   const angles = [1, 2, 3, 4, 5].map(equilibriumAngleDegrees);
 
@@ -83,6 +112,22 @@ test("21.34 associa o sinal vertical ao íon correspondente", async () => {
     html,
     /<span>íon 4<\/span><strong>\+<span data-vertical-one>/,
   );
+});
+
+test("21.34 fallback aponta cada força para longe do íon que a repele", async () => {
+  const html = await readFile(
+    new URL("../exercicios/halliday-21-34/index.html", import.meta.url),
+    "utf8",
+  );
+  const electron = fallbackIon(html, "2 · −e");
+  const ion3 = fallbackIon(html, "3 · −q");
+  const ion4 = fallbackIon(html, "4 · −q");
+  const force3 = fallbackForce(html, "F_3");
+  const force4 = fallbackForce(html, "F_4");
+
+  assert.ok(ion3.y < electron.y && ion4.y > electron.y);
+  assert.ok(force3.dx < 0 && force3.dy > 0, "F_3 deve apontar para baixo e à esquerda");
+  assert.ok(force4.dx < 0 && force4.dy < 0, "F_4 deve apontar para cima e à esquerda");
 });
 
 test("21.34 preserva Space nativo em botões descendentes", () => {

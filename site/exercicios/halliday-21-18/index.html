@@ -232,15 +232,19 @@
                   <marker id="fallback-sum-result-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" fill="var(--resultant)"></path></marker>
                 </defs>
                 <line class="force-locus__axis" x1="28" y1="126" x2="392" y2="126"></line>
-                <circle class="force-locus__charge" cx="168" cy="126" r="17"></circle>
+                <circle class="force-locus__charge" data-fallback-a cx="168" cy="126" r="17"></circle>
                 <text class="force-locus__sign" x="168" y="133">+</text>
                 <text class="force-locus__label" x="168" y="158">A</text>
                 <circle class="force-locus__charge" data-fallback-b cx="292" cy="126" r="17"></circle>
                 <text class="force-locus__sign" x="292" y="133">+</text>
-                <text class="force-locus__label" x="292" y="158">B</text>
-                <circle class="force-locus__charge" cx="354" cy="126" r="17"></circle>
-                <text class="force-locus__sign" x="354" y="133">+</text>
-                <text class="force-locus__label" x="354" y="158">C fixa</text>
+                <text class="force-locus__label" x="272" y="164">B</text>
+                <circle class="force-locus__charge" data-fallback-c cx="292" cy="126" r="17" transform="translate(14 -12)"></circle>
+                <text class="force-locus__sign" x="292" y="133" transform="translate(14 -12)">+</text>
+                <text class="force-locus__label" x="326" y="106">C</text>
+                <text class="force-locus__schematic-note" x="306" y="45">
+                  <tspan x="306">deslocamento gráfico</tspan>
+                  <tspan x="306" dy="15">esquemático: B = C em +r</tspan>
+                </text>
                 <line class="force-locus__radius" x1="168" y1="126" x2="292" y2="126"></line>
                 <text class="force-locus__annotation" x="226" y="148">r</text>
                 <line class="force-locus__vector force-locus__vector--b" data-fallback-force-b x1="168" y1="88" x2="110" y2="88" marker-end="url(#fallback-sum-b-arrow)"></line>
@@ -266,12 +270,12 @@
                 <circle class="force-locus__charge" data-fallback-b cx="44" cy="126" r="17"></circle>
                 <text class="force-locus__sign" x="44" y="133">+</text>
                 <text class="force-locus__label" x="44" y="158">B</text>
-                <circle class="force-locus__charge" cx="168" cy="126" r="17"></circle>
+                <circle class="force-locus__charge" data-fallback-a cx="168" cy="126" r="17"></circle>
                 <text class="force-locus__sign" x="168" y="133">+</text>
                 <text class="force-locus__label" x="168" y="158">A</text>
-                <circle class="force-locus__charge" cx="354" cy="126" r="17"></circle>
-                <text class="force-locus__sign" x="354" y="133">+</text>
-                <text class="force-locus__label" x="354" y="158">C fixa</text>
+                <circle class="force-locus__charge" data-fallback-c cx="292" cy="126" r="17"></circle>
+                <text class="force-locus__sign" x="292" y="133">+</text>
+                <text class="force-locus__label" x="292" y="158">C fixa</text>
                 <line class="force-locus__radius" x1="168" y1="126" x2="44" y2="126"></line>
                 <text class="force-locus__annotation" x="102" y="148">r</text>
                 <line class="force-locus__vector force-locus__vector--b" data-fallback-force-b x1="168" y1="88" x2="226" y2="88" marker-end="url(#fallback-difference-b-arrow)"></line>
@@ -306,19 +310,23 @@
               <path class="force-locus__path" d="M 535 225 A 155 155 0 0 1 225 225"></path>
               <text class="force-locus__annotation force-locus__annotation--center" x="380" y="402">trajeto de transferência · AB = r constante</text>
 
-              <circle class="force-locus__charge" cx="380" cy="225" r="21"></circle>
+              <circle class="force-locus__charge" data-a-charge cx="380" cy="225" r="21"></circle>
               <text class="force-locus__sign" x="380" y="232">+</text>
               <text class="force-locus__label" x="380" y="267">A · centro</text>
 
-              <circle class="force-locus__charge" cx="590" cy="225" r="21"></circle>
-              <text class="force-locus__sign" x="590" y="232">+</text>
-              <text class="force-locus__label" x="590" y="267">C · fixa</text>
+              <g class="force-locus__schematic-offset" aria-label="C deslocada apenas graficamente; sua posição física é o extremo mais r">
+                <circle class="force-locus__charge" data-c-charge cx="535" cy="225" r="21"></circle>
+                <text class="force-locus__sign" x="535" y="232">+</text>
+                <text class="force-locus__label" x="535" y="267">C · fixa</text>
+              </g>
 
               <circle class="force-locus__charge force-locus__charge--moving" data-b-charge cx="535" cy="225" r="21"></circle>
               <text class="force-locus__sign" data-b-sign x="535" y="232">+</text>
-              <text class="force-locus__label" data-b-label x="515" y="285">B</text>
+              <text class="force-locus__label" data-b-label x="515" y="297">B</text>
               <line class="force-locus__radius" data-radius x1="380" y1="225" x2="535" y2="225"></line>
-              <text class="force-locus__annotation force-locus__radius-label" data-radius-label x="457.5" y="243">r</text>
+              <text class="force-locus__annotation force-locus__radius-label" data-radius-label x="457.5" y="243">AB = r</text>
+              <line class="force-locus__radius force-locus__radius--c" x1="380" y1="225" x2="535" y2="225"></line>
+              <text class="force-locus__annotation" x="457.5" y="207" text-anchor="middle">AC = r</text>
 
               <circle cx="535" cy="225" r="7" fill="var(--measure)"></circle>
               <circle cx="225" cy="225" r="7" fill="var(--measure)"></circle>
@@ -327,7 +335,7 @@
 
               <line class="force-locus__vector force-locus__vector--b" data-force-b x1="380" y1="225" x2="271" y2="225" marker-end="url(#h2118-arrow-b)"></line>
               <line class="force-locus__vector force-locus__vector--c" data-force-c x1="271" y1="225" x2="126" y2="225" marker-end="url(#h2118-arrow-c)"></line>
-              <line class="force-locus__resultant-guide" x1="590" y1="205" x2="560" y2="175"></line>
+              <line class="force-locus__resultant-guide" x1="551" y1="207" x2="560" y2="175"></line>
               <text class="force-locus__annotation force-locus__resultant-lane-label" x="602" y="95" text-anchor="middle">faixa separada</text>
               <line class="force-locus__vector force-locus__vector--resultant" data-resultant x1="560" y1="175" x2="306" y2="175" marker-end="url(#h2118-arrow-resultant)"></line>
               <text class="force-locus__vector-label force-locus__vector-label--b" data-force-b-label x="325" y="205">F_B</text>
@@ -352,7 +360,7 @@
                   <dd data-value-resultant>2,014 × 10^-23 N</dd>
                 </div>
               </dl>
-              <p class="force-locus__readout-note">F_C é fixa; F_B gira.</p>
+              <p class="force-locus__readout-note">F_C é fixa em AC = r; F_B gira com AB = r. Em (a), B e C coincidem fisicamente: o pequeno deslocamento gráfico de C é apenas esquemático.</p>
             </aside>
           </div>
 

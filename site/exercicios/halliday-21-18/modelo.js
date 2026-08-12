@@ -12,6 +12,7 @@ export function forceSceneAt(progress, forceB, forceC) {
   const clampedProgress = Math.min(1, Math.max(0, progress));
   const angle = Math.PI * clampedProgress;
   const bPosition = { x: Math.cos(angle), y: -Math.sin(angle) };
+  const cPosition = { x: 1, y: 0 };
   const bForce = {
     x: -forceB * bPosition.x,
     y: -forceB * bPosition.y,
@@ -22,6 +23,7 @@ export function forceSceneAt(progress, forceB, forceC) {
 
   return {
     bPosition,
+    cPosition,
     bForce,
     cForce,
     resultant: { x: bForce.x + cForce.x, y: bForce.y },

@@ -152,9 +152,10 @@ export function mountForceLocus(root) {
       x: (center.x + bPosition.x) / 2,
       y: (center.y + bPosition.y) / 2,
     };
+    const bLabelTangentialOffset = 60 + (Math.max(0, radiusUnit.x) * 12);
     const bLabelPosition = {
-      x: bPosition.x - (radiusUnit.x * 20) - (radiusUnit.y * 60),
-      y: bPosition.y - (radiusUnit.y * 20) + (radiusUnit.x * 60),
+      x: bPosition.x - (radiusUnit.x * 20) - (radiusUnit.y * bLabelTangentialOffset),
+      y: bPosition.y - (radiusUnit.y * 20) + (radiusUnit.x * bLabelTangentialOffset),
     };
 
     visualProgress = progress;
