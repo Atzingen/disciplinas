@@ -68,13 +68,12 @@ test("21.42 publica separação variável, roteiro completo e SVG acessível", a
     "T cos θ = mg",
     "tan θ = F<sub>e</sub> / mg",
     "F<sub>e</sub> = kq<sup>2</sup> / x<sup>2</sup>",
-    "x<sup>3</sup>",
-    "2,38 × 10<sup>−8</sup> C",
+    "x\\^3",
+    "2\\{,\\}38 \\\\times 10\\^\\{-8\\}",
     "24 nC",
   ]) {
     assert.match(html, new RegExp(relation));
   }
-  assert.match(html, /sen θ ≈ tan θ/);
   assert.equal(
     html.match(/<svg[^>]+role="img"[^>]+aria-labelledby=/g)?.length,
     2,
@@ -85,7 +84,20 @@ test("21.42 publica separação variável, roteiro completo e SVG acessível", a
     /<span>T sen θ = F<sub>e<\/sub>;<\/span>\s*<span>T cos θ = mg<\/span>/,
   );
   assert.doesNotMatch(html, /F<sub>e<\/sub> · T cos θ = mg/);
-  assert.match(html, /q = √\(mgx<sup>3<\/sup> \/ \(2Lk\)\)/);
+  assert.doesNotMatch(
+    html,
+    /x<sup>3<\/sup>\s*=/,
+    "a dedução cúbica deve ser composta em LaTeX, não em HTML",
+  );
+  assert.doesNotMatch(html, /q = √\(mgx<sup>3<\/sup>/);
+  assert.match(
+    html,
+    /\\sin\\theta\s*\\approx\s*\\tan\\theta\s*\\Rightarrow\s*x\^3\s*=\s*\\frac\{2Lkq\^2\}\{mg\}/,
+  );
+  assert.match(
+    html,
+    /q\s*=\s*\\sqrt\{\\frac\{mgx\^3\}\{2Lk\}\}/,
+  );
   assert.match(html, /<link rel="icon" href="data:image\/svg\+xml,/);
   assert.match(html, /<script type="module" src="\.\/app\.js"><\/script>/);
 });
