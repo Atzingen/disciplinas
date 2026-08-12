@@ -2,6 +2,90 @@ import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import test from "node:test";
 import { forceSceneAt, solveMeasuredForces } from "../exercicios/halliday-21-18/modelo.js";
+import { mountForceLocus } from "../exercicios/halliday-21-18/visualizacao.js";
+
+function createFakeElement() {
+  const attributes = new Map();
+  const listeners = new Map();
+  return {
+    dataset: {},
+    disabled: false,
+    textContent: "",
+    value: "1",
+    addEventListener(type, listener) {
+      listeners.set(type, listener);
+    },
+    getAttribute(name) {
+      return attributes.get(name) ?? null;
+    },
+    setAttribute(name, value) {
+      attributes.set(name, String(value));
+    },
+  };
+}
+
+function createControllableVisualization(t) {
+  const originalGlobals = new Map(
+    ["document", "matchMedia", "requestAnimationFrame", "cancelAnimationFrame"]
+      .map((key) => [key, Object.getOwnPropertyDescriptor(globalThis, key)]),
+  );
+  const elements = new Map();
+  const root = createFakeElement();
+  const frames = new Map();
+  let frameId = 0;
+
+  root.querySelector = (selector) => {
+    if (!elements.has(selector)) {
+      elements.set(selector, createFakeElement());
+    }
+    return elements.get(selector);
+  };
+
+  globalThis.document = {
+    hidden: false,
+    addEventListener() {},
+  };
+  globalThis.matchMedia = () => ({
+    matches: false,
+    addEventListener() {},
+  });
+  globalThis.requestAnimationFrame = (callback) => {
+    frameId += 1;
+    frames.set(frameId, callback);
+    return frameId;
+  };
+  globalThis.cancelAnimationFrame = (id) => {
+    frames.delete(id);
+  };
+
+  t.after(() => {
+    for (const [key, descriptor] of originalGlobals) {
+      if (descriptor) {
+        Object.defineProperty(globalThis, key, descriptor);
+      } else {
+        delete globalThis[key];
+      }
+    }
+  });
+
+  function runNextFrame(elapsedMs) {
+    const entry = frames.entries().next().value;
+    if (!entry) {
+      return;
+    }
+    const [id, callback] = entry;
+    frames.delete(id);
+    callback(globalThis.performance.now() + elapsedMs);
+  }
+
+  return {
+    controller: mountForceLocus(root),
+    element: (selector) => root.querySelector(selector),
+    pendingFrames: () => frames.size,
+    root,
+    runNextFrame,
+  };
+}
 
 test("21.18 recupera as forças e os extremos medidos", () => {
   const solved = solveMeasuredForces(2.014e-23, 2.877e-24);
@@ -43,4 +127,59 @@ test("21.18 publica a mesa de forças e os cinco controles acessíveis", async (
   assert.match(html, /2,877/);
   assert.match(html, /src="\.\/app\.js"/);
   assert.match(html, /<link rel="icon" href="data:image\/svg\+xml,/);
+});
+
+test("21.18 mantém duas configurações completas no fallback sem JavaScript", async () => {
+  const html = await readFile(
+    new URL("../exercicios/halliday-21-18/index.html", import.meta.url),
+    "utf8",
+  );
+  const configurations = [...html.matchAll(
+    /<figure[^>]+data-fallback-configuration="([^"]+)"[^>]*>([\s\S]*?)<\/figure>/g,
+  )];
+
+  assert.deepEqual(configurations.map((match) => match[1]), ["sum", "difference"]);
+  for (const [, , markup] of configurations) {
+    assert.match(markup, /data-fallback-b/);
+    assert.match(markup, /data-fallback-force-b/);
+    assert.match(markup, /data-fallback-force-c/);
+    assert.match(markup, /data-fallback-resultant/);
+  }
+});
+
+test("21.18 separa a resultante e faz o rótulo r acompanhar AB", (t) => {
+  const visualization = createControllableVisualization(t);
+  const forceB = visualization.element("[data-force-b]");
+  const resultant = visualization.element("[data-resultant]");
+  const radiusLabel = visualization.element("[data-radius-label]");
+
+  assert.notEqual(resultant.getAttribute("y1"), forceB.getAttribute("y1"));
+  const initialLabel = {
+    x: Number(radiusLabel.getAttribute("x")),
+    y: Number(radiusLabel.getAttribute("y")),
+  };
+  assert.ok(Number.isFinite(initialLabel.x) && Number.isFinite(initialLabel.y));
+
+  visualization.controller.step();
+  visualization.runNextFrame(1000);
+  assert.notDeepEqual({
+    x: Number(radiusLabel.getAttribute("x")),
+    y: Number(radiusLabel.getAttribute("y")),
+  }, initialLabel);
+});
+
+test("21.18 pausa cancela o RAF e congela B imediatamente", (t) => {
+  const visualization = createControllableVisualization(t);
+
+  visualization.controller.step();
+  visualization.runNextFrame(100);
+  assert.equal(visualization.pendingFrames(), 1);
+  const progressAtPause = visualization.root.dataset.progress;
+
+  visualization.controller.pause();
+  visualization.runNextFrame(1000);
+
+  assert.equal(visualization.pendingFrames(), 0);
+  assert.equal(visualization.root.dataset.progress, progressAtPause);
+  assert.equal(visualization.root.dataset.playState, "paused");
 });

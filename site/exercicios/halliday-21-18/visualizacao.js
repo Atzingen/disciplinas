@@ -81,6 +81,7 @@ export function mountForceLocus(root) {
     bSign: root.querySelector("[data-b-sign]"),
     bLabel: root.querySelector("[data-b-label]"),
     radius: root.querySelector("[data-radius]"),
+    radiusLabel: root.querySelector("[data-radius-label]"),
     forceB: root.querySelector("[data-force-b]"),
     forceC: root.querySelector("[data-force-c]"),
     resultant: root.querySelector("[data-resultant]"),
@@ -137,6 +138,16 @@ export function mountForceLocus(root) {
       x: center.x + forceB.x,
       y: center.y - forceB.y,
     };
+    const resultantOrigin = { x: center.x, y: center.y - 110 };
+    const radiusVector = {
+      x: bPosition.x - center.x,
+      y: bPosition.y - center.y,
+    };
+    const radiusLength = Math.hypot(radiusVector.x, radiusVector.y);
+    const radiusMidpoint = {
+      x: (center.x + bPosition.x) / 2,
+      y: (center.y + bPosition.y) / 2,
+    };
 
     visualProgress = progress;
     root.dataset.progress = String(progress);
@@ -153,9 +164,17 @@ export function mountForceLocus(root) {
     elements.bLabel.setAttribute("y", (bPosition.y - 52).toFixed(2));
     elements.radius.setAttribute("x2", bPosition.x.toFixed(2));
     elements.radius.setAttribute("y2", bPosition.y.toFixed(2));
+    elements.radiusLabel.setAttribute(
+      "x",
+      (radiusMidpoint.x - ((radiusVector.y / radiusLength) * 18)).toFixed(2),
+    );
+    elements.radiusLabel.setAttribute(
+      "y",
+      (radiusMidpoint.y + ((radiusVector.x / radiusLength) * 18)).toFixed(2),
+    );
     setLine(elements.forceB, center, { x: forceB.x, y: -forceB.y });
     setLine(elements.forceC, tailToHead, { x: forceC.x, y: -forceC.y });
-    setLine(elements.resultant, center, { x: resultant.x, y: -resultant.y });
+    setLine(elements.resultant, resultantOrigin, { x: resultant.x, y: -resultant.y });
     placeLabel(elements.forceBLabel, elements.forceB, -15);
     placeLabel(elements.forceCLabel, elements.forceC, 70);
     placeLabel(elements.resultantLabel, elements.resultant, -44);
@@ -212,6 +231,7 @@ export function mountForceLocus(root) {
 
   function pause() {
     stopTimer();
+    cancelAnimation();
     playState = "paused";
     render(false);
   }
@@ -235,7 +255,7 @@ export function mountForceLocus(root) {
     stopTimer();
     playState = "playing";
     timer = globalThis.setInterval(step, 1800 / speed);
-    render(false);
+    render(true);
   }
 
   function reset() {
@@ -266,7 +286,7 @@ export function mountForceLocus(root) {
       step: index,
       speed,
       motion: motionPreference(),
-      progress: STORY_FRAMES[index].progress,
+      progress: visualProgress,
     });
   }
 
@@ -289,6 +309,7 @@ export function mountForceLocus(root) {
       render(false);
     }
   });
+  root.dataset.enhanced = "true";
   render(false);
 
   return Object.freeze({ play, pause, reset, step, setSpeed, getState });

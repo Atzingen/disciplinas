@@ -32,8 +32,52 @@
   color: var(--ink-soft);
 }
 
-.force-locus__canvas {
+.force-locus__fallback {
   display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+  padding: 0.75rem;
+  background:
+    linear-gradient(var(--grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px),
+    var(--paper-deep);
+  background-size: 24px 24px;
+}
+
+.force-locus__fallback figure {
+  overflow: hidden;
+  margin: 0;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-md);
+  background: var(--surface);
+}
+
+.force-locus__fallback figcaption {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.35rem 1rem;
+  padding: 0.8rem 1rem;
+  border-bottom: 1px solid var(--line);
+  font-family: var(--font-mono);
+}
+
+.force-locus__fallback figcaption span {
+  color: var(--resultant);
+}
+
+.force-locus__fallback svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.force-locus[data-enhanced="true"] .force-locus__fallback {
+  display: none;
+}
+
+.force-locus__canvas {
+  display: none;
   grid-template-columns: minmax(0, 1fr) 240px;
   gap: 0.75rem;
   padding: 0.75rem;
@@ -42,6 +86,14 @@
     linear-gradient(90deg, var(--grid) 1px, transparent 1px),
     var(--paper-deep);
   background-size: 24px 24px;
+}
+
+.force-locus[data-enhanced="true"] .force-locus__canvas {
+  display: grid;
+}
+
+.force-locus:not([data-enhanced="true"]) .force-locus__footer {
+  display: none;
 }
 
 .force-locus__canvas svg {
@@ -76,6 +128,20 @@
   stroke-dasharray: 6 5;
   stroke-width: 2;
   transition: x2 260ms ease, y2 260ms ease;
+}
+
+.force-locus__radius-label {
+  transition: x 260ms ease, y 260ms ease;
+}
+
+.force-locus__resultant-guide {
+  stroke: var(--resultant);
+  stroke-dasharray: 4 5;
+  stroke-width: 1.5;
+}
+
+.force-locus__resultant-lane-label {
+  fill: var(--resultant);
 }
 
 .force-locus__charge {
@@ -319,6 +385,10 @@
 }
 
 @media (max-width: 680px) {
+  .force-locus__fallback {
+    grid-template-columns: 1fr;
+  }
+
   .force-locus__header {
     grid-template-columns: 1fr;
     gap: 0.75rem;

@@ -220,6 +220,70 @@
             <p data-frame-explanation>Configuração medida (a): B e C estão à direita de A; as duas forças têm o mesmo sentido e F_B + F_C = S = 2,014 × 10⁻²³ N.</p>
           </header>
 
+          <div class="force-locus__fallback" data-force-fallback aria-label="Duas configurações medidas da mesa de forças">
+            <figure data-fallback-configuration="sum">
+              <figcaption><strong>(a) Soma medida</strong><span>F_B + F_C = S</span></figcaption>
+              <svg viewBox="0 0 420 230" role="img" aria-labelledby="fallback-sum-title fallback-sum-desc">
+                <title id="fallback-sum-title">B e C à direita de A</title>
+                <desc id="fallback-sum-desc">B e C estão à direita de A. As forças de B e C apontam para a esquerda, são somadas ponta a cauda e produzem a resultante S em uma faixa separada.</desc>
+                <defs>
+                  <marker id="fallback-sum-b-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" fill="var(--force-1)"></path></marker>
+                  <marker id="fallback-sum-c-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" fill="var(--force-2)"></path></marker>
+                  <marker id="fallback-sum-result-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" fill="var(--resultant)"></path></marker>
+                </defs>
+                <line class="force-locus__axis" x1="28" y1="126" x2="392" y2="126"></line>
+                <circle class="force-locus__charge" cx="168" cy="126" r="17"></circle>
+                <text class="force-locus__sign" x="168" y="133">+</text>
+                <text class="force-locus__label" x="168" y="158">A</text>
+                <circle class="force-locus__charge" data-fallback-b cx="292" cy="126" r="17"></circle>
+                <text class="force-locus__sign" x="292" y="133">+</text>
+                <text class="force-locus__label" x="292" y="158">B</text>
+                <circle class="force-locus__charge" cx="354" cy="126" r="17"></circle>
+                <text class="force-locus__sign" x="354" y="133">+</text>
+                <text class="force-locus__label" x="354" y="158">C fixa</text>
+                <line class="force-locus__radius" x1="168" y1="126" x2="292" y2="126"></line>
+                <text class="force-locus__annotation" x="226" y="148">r</text>
+                <line class="force-locus__vector force-locus__vector--b" data-fallback-force-b x1="168" y1="88" x2="110" y2="88" marker-end="url(#fallback-sum-b-arrow)"></line>
+                <line class="force-locus__vector force-locus__vector--c" data-fallback-force-c x1="110" y1="88" x2="38" y2="88" marker-end="url(#fallback-sum-c-arrow)"></line>
+                <text class="force-locus__vector-label force-locus__vector-label--b" x="139" y="76">F_B</text>
+                <text class="force-locus__vector-label force-locus__vector-label--c" x="74" y="76">F_C</text>
+                <line class="force-locus__vector force-locus__vector--resultant" data-fallback-resultant x1="168" y1="196" x2="38" y2="196" marker-end="url(#fallback-sum-result-arrow)"></line>
+                <text class="force-locus__vector-label force-locus__vector-label--resultant" x="103" y="184">F_R = S</text>
+              </svg>
+            </figure>
+
+            <figure data-fallback-configuration="difference">
+              <figcaption><strong>(b) Diferença medida</strong><span>F_C − F_B = D</span></figcaption>
+              <svg viewBox="0 0 420 230" role="img" aria-labelledby="fallback-difference-title fallback-difference-desc">
+                <title id="fallback-difference-title">B à esquerda e C à direita de A</title>
+                <desc id="fallback-difference-desc">B está à esquerda e C permanece à direita de A. A força de B aponta para a direita, a força maior de C aponta para a esquerda e a pequena resultante D é mostrada em uma faixa separada.</desc>
+                <defs>
+                  <marker id="fallback-difference-b-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" fill="var(--force-1)"></path></marker>
+                  <marker id="fallback-difference-c-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" fill="var(--force-2)"></path></marker>
+                  <marker id="fallback-difference-result-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M 0 0 L 10 5 L 0 10 z" fill="var(--resultant)"></path></marker>
+                </defs>
+                <line class="force-locus__axis" x1="28" y1="126" x2="392" y2="126"></line>
+                <circle class="force-locus__charge" data-fallback-b cx="44" cy="126" r="17"></circle>
+                <text class="force-locus__sign" x="44" y="133">+</text>
+                <text class="force-locus__label" x="44" y="158">B</text>
+                <circle class="force-locus__charge" cx="168" cy="126" r="17"></circle>
+                <text class="force-locus__sign" x="168" y="133">+</text>
+                <text class="force-locus__label" x="168" y="158">A</text>
+                <circle class="force-locus__charge" cx="354" cy="126" r="17"></circle>
+                <text class="force-locus__sign" x="354" y="133">+</text>
+                <text class="force-locus__label" x="354" y="158">C fixa</text>
+                <line class="force-locus__radius" x1="168" y1="126" x2="44" y2="126"></line>
+                <text class="force-locus__annotation" x="102" y="148">r</text>
+                <line class="force-locus__vector force-locus__vector--b" data-fallback-force-b x1="168" y1="88" x2="226" y2="88" marker-end="url(#fallback-difference-b-arrow)"></line>
+                <line class="force-locus__vector force-locus__vector--c" data-fallback-force-c x1="226" y1="88" x2="154" y2="88" marker-end="url(#fallback-difference-c-arrow)"></line>
+                <text class="force-locus__vector-label force-locus__vector-label--b" x="197" y="76">F_B</text>
+                <text class="force-locus__vector-label force-locus__vector-label--c" x="190" y="112">F_C</text>
+                <line class="force-locus__vector force-locus__vector--resultant" data-fallback-resultant x1="168" y1="196" x2="154" y2="196" marker-end="url(#fallback-difference-result-arrow)"></line>
+                <text class="force-locus__vector-label force-locus__vector-label--resultant" x="139" y="184">F_R = D</text>
+              </svg>
+            </figure>
+          </div>
+
           <div class="force-locus__canvas">
             <svg viewBox="0 0 730 470" role="img" aria-labelledby="force-locus-svg-title force-locus-svg-desc">
               <title id="force-locus-svg-title">Transferência de B e composição das forças sobre A</title>
@@ -254,7 +318,7 @@
               <text class="force-locus__sign" data-b-sign x="535" y="232">+</text>
               <text class="force-locus__label" data-b-label x="535" y="195">B</text>
               <line class="force-locus__radius" data-radius x1="380" y1="225" x2="535" y2="225"></line>
-              <text class="force-locus__annotation" x="457" y="246">r</text>
+              <text class="force-locus__annotation force-locus__radius-label" data-radius-label x="457.5" y="243">r</text>
 
               <circle cx="535" cy="225" r="7" fill="var(--measure)"></circle>
               <circle cx="225" cy="225" r="7" fill="var(--measure)"></circle>
@@ -263,10 +327,12 @@
 
               <line class="force-locus__vector force-locus__vector--b" data-force-b x1="380" y1="225" x2="271" y2="225" marker-end="url(#h2118-arrow-b)"></line>
               <line class="force-locus__vector force-locus__vector--c" data-force-c x1="271" y1="225" x2="126" y2="225" marker-end="url(#h2118-arrow-c)"></line>
-              <line class="force-locus__vector force-locus__vector--resultant" data-resultant x1="380" y1="225" x2="126" y2="225" marker-end="url(#h2118-arrow-resultant)"></line>
+              <line class="force-locus__resultant-guide" x1="380" y1="205" x2="380" y2="115"></line>
+              <text class="force-locus__annotation force-locus__resultant-lane-label" x="500" y="76">resultante em faixa separada</text>
+              <line class="force-locus__vector force-locus__vector--resultant" data-resultant x1="380" y1="115" x2="126" y2="115" marker-end="url(#h2118-arrow-resultant)"></line>
               <text class="force-locus__vector-label force-locus__vector-label--b" data-force-b-label x="325" y="205">F_B</text>
               <text class="force-locus__vector-label force-locus__vector-label--c" data-force-c-label x="198" y="248">F_C</text>
-              <text class="force-locus__vector-label force-locus__vector-label--resultant" data-resultant-label x="253" y="190">F_resultante</text>
+              <text class="force-locus__vector-label force-locus__vector-label--resultant" data-resultant-label x="253" y="96">F_resultante</text>
 
             </svg>
             <aside class="force-locus__readout" data-force-readout aria-label="Painel numérico das forças">
