@@ -168,6 +168,41 @@ test("21.18 separa a resultante e faz o rótulo r acompanhar AB", (t) => {
   }, initialLabel);
 });
 
+test("21.18 mantém a resultante intermediária visível e afastada dos componentes", (t) => {
+  const visualization = createControllableVisualization(t);
+
+  visualization.controller.step();
+  visualization.runNextFrame(1000);
+  visualization.controller.step();
+  visualization.runNextFrame(1000);
+
+  const forceB = visualization.element("[data-force-b]");
+  const forceC = visualization.element("[data-force-c]");
+  const resultant = visualization.element("[data-resultant]");
+  const resultantLabel = visualization.element("[data-resultant-label]");
+  const resultTipY = Number(resultant.getAttribute("y2"));
+  const resultLabelY = Number(resultantLabel.getAttribute("y"));
+  const componentMaxX = Math.max(
+    Number(forceB.getAttribute("x1")),
+    Number(forceB.getAttribute("x2")),
+    Number(forceC.getAttribute("x1")),
+    Number(forceC.getAttribute("x2")),
+  );
+  const resultMinX = Math.min(
+    Number(resultant.getAttribute("x1")),
+    Number(resultant.getAttribute("x2")),
+  );
+
+  // A fonte mobile mede 28 px e o marker da resultante chega a cerca de 25 px
+  // acima da ponta. A margem adicional preserva ambos dentro do viewBox.
+  assert.ok(resultTipY - 25 >= 24, `marker sem margem superior: y=${resultTipY}`);
+  assert.ok(resultLabelY - 28 >= 24, `rótulo sem margem superior: y=${resultLabelY}`);
+  assert.ok(
+    resultMinX - componentMaxX >= 24,
+    `resultante invade a composição: gap=${resultMinX - componentMaxX}`,
+  );
+});
+
 test("21.18 pausa cancela o RAF e congela B imediatamente", (t) => {
   const visualization = createControllableVisualization(t);
 

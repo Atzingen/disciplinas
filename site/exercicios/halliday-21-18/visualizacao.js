@@ -138,7 +138,7 @@ export function mountForceLocus(root) {
       x: center.x + forceB.x,
       y: center.y - forceB.y,
     };
-    const resultantOrigin = { x: center.x, y: center.y - 110 };
+    const resultantOrigin = { x: center.x + 180, y: center.y - 50 };
     const radiusVector = {
       x: bPosition.x - center.x,
       y: bPosition.y - center.y,
