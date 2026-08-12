@@ -33,6 +33,16 @@ test("21.34 publica seletor quantizado, roteiro e SVG acessível", async () => {
   const html = await readFile(htmlUrl, "utf8");
 
   assert.match(html, /data-quantized-balance/);
+  const didacticMarkers = html.match(/data-didactic-visualization/g) ?? [];
+  const sharedRoots =
+    html.match(
+      /<article(?=[^>]*data-quantized-balance)(?=[^>]*data-didactic-visualization)[^>]*>/g,
+    ) ?? [];
+  assert.deepEqual(
+    [didacticMarkers.length, sharedRoots.length],
+    [1, 1],
+    "o único marcador didático deve estar no root da balança",
+  );
   assert.match(html, /n\s*=\s*q\/e/);
   for (let n = 1; n <= 5; n += 1) {
     assert.match(html, new RegExp(`data-ion-multiple="${n}"`));
