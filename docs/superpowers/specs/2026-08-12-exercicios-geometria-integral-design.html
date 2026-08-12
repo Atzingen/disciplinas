@@ -1,0 +1,887 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="pt-BR" xml:lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Design — geometria e progressão matemática nos exercícios
+Halliday 21</title>
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    html {
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    svg {
+      height: auto;
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      white-space: pre-wrap;
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      border: none;
+      border-top: 1px solid #1a1a1a;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+  </style>
+  <style>
+  :root {
+    color-scheme: light dark;
+    --bg: #eef3f7;
+    --surface: rgba(255, 255, 255, 0.92);
+    --surface-strong: #ffffff;
+    --ink: #13212b;
+    --ink-soft: #536874;
+    --line: #c8d5dc;
+    --line-strong: #8299a5;
+    --electric: #007f8b;
+    --electric-soft: #d6f1f2;
+    --charge: #d4681c;
+    --charge-soft: #fde8d8;
+    --code: #10232c;
+    --code-ink: #dceef2;
+    --shadow: 0 18px 48px rgba(25, 51, 64, 0.12);
+    --sidebar: 19rem;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #09151b;
+      --surface: rgba(15, 31, 39, 0.94);
+      --surface-strong: #122630;
+      --ink: #e5f0f3;
+      --ink-soft: #a7bbc4;
+      --line: #29434f;
+      --line-strong: #53717f;
+      --electric: #4bc8cf;
+      --electric-soft: #123c42;
+      --charge: #f2a15e;
+      --charge-soft: #402719;
+      --code: #061014;
+      --code-ink: #dceef2;
+      --shadow: 0 20px 50px rgba(0, 0, 0, 0.34);
+    }
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 2rem;
+  }
+
+  body {
+    margin: 0;
+    max-width: none;
+    min-width: 320px;
+    padding: 0;
+    background:
+      linear-gradient(rgba(0, 127, 139, 0.045) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 127, 139, 0.045) 1px, transparent 1px),
+      radial-gradient(circle at 86% 8%, rgba(212, 104, 28, 0.12), transparent 28rem),
+      var(--bg);
+    background-size: 28px 28px, 28px 28px, auto, auto;
+    color: var(--ink);
+    font: 17px/1.7 system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  }
+
+  a {
+    color: var(--electric);
+    text-decoration-thickness: 0.09em;
+    text-underline-offset: 0.16em;
+  }
+
+  a:hover {
+    color: var(--charge);
+  }
+
+  .companion-meta {
+    max-width: 900px;
+    margin: 2rem max(2rem, calc((100vw - var(--sidebar) - 900px) / 2)) 1rem calc(var(--sidebar) + 3rem);
+    padding: 0.8rem 1rem;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.5rem 1rem;
+    border: 1px solid var(--line);
+    border-radius: 0.75rem;
+    background: var(--surface);
+    color: var(--ink-soft);
+    font-size: 0.78rem;
+    box-shadow: var(--shadow);
+  }
+
+  .companion-meta strong {
+    color: var(--electric);
+    font-size: 0.7rem;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+  }
+
+  .companion-meta code {
+    max-width: 100%;
+    overflow-wrap: anywhere;
+  }
+
+  .companion-meta time {
+    margin-left: auto;
+  }
+
+  #TOC {
+    position: fixed;
+    inset: 0 auto 0 0;
+    z-index: 10;
+    width: var(--sidebar);
+    overflow-y: auto;
+    padding: 2rem 1.25rem 3rem;
+    border-right: 1px solid var(--line);
+    background: color-mix(in srgb, var(--surface-strong) 94%, transparent);
+    backdrop-filter: blur(14px);
+  }
+
+  #TOC::before {
+    content: "MAPA DO DOCUMENTO";
+    display: block;
+    margin: 0 0 1rem;
+    color: var(--charge);
+    font: 750 0.7rem/1.2 ui-monospace, "Cascadia Code", monospace;
+    letter-spacing: 0.12em;
+  }
+
+  #TOC > ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  #TOC ul {
+    padding-left: 0.85rem;
+  }
+
+  #TOC li {
+    margin: 0.28rem 0;
+  }
+
+  #TOC a {
+    display: block;
+    padding: 0.35rem 0.55rem;
+    border-left: 2px solid transparent;
+    border-radius: 0 0.45rem 0.45rem 0;
+    color: var(--ink-soft);
+    font-size: 0.82rem;
+    line-height: 1.35;
+    text-decoration: none;
+  }
+
+  #TOC > ul > li > a,
+  #TOC > ul > li > ul > li > a {
+    color: var(--ink);
+    font-weight: 700;
+  }
+
+  #TOC a:hover,
+  #TOC a.is-active {
+    border-left-color: var(--electric);
+    background: var(--electric-soft);
+    color: var(--electric);
+  }
+
+  body > section.level1 {
+    max-width: 900px;
+    margin: 0 max(2rem, calc((100vw - var(--sidebar) - 900px) / 2)) 4rem calc(var(--sidebar) + 3rem);
+    padding: clamp(1.4rem, 3vw, 3rem);
+    border: 1px solid var(--line);
+    border-radius: 1rem;
+    background: var(--surface);
+    box-shadow: var(--shadow);
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    color: var(--ink);
+    line-height: 1.18;
+    text-wrap: balance;
+    scroll-margin-top: 2rem;
+  }
+
+  h1 {
+    margin: 0 0 0.75rem;
+    max-width: 18ch;
+    font-size: clamp(2.15rem, 5vw, 4.35rem);
+    letter-spacing: -0.055em;
+  }
+
+  h1::after {
+    content: "";
+    display: block;
+    width: 5.5rem;
+    height: 0.3rem;
+    margin-top: 1.15rem;
+    border-radius: 99px;
+    background: linear-gradient(90deg, var(--electric), var(--charge));
+  }
+
+  h2 {
+    margin: 3.5rem 0 1rem;
+    padding: 0.85rem 0 0.55rem;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    color: var(--electric);
+    font-size: clamp(1.55rem, 3vw, 2.15rem);
+  }
+
+  h3 {
+    margin: 2.4rem 0 0.75rem;
+    color: var(--charge);
+    font-size: clamp(1.22rem, 2vw, 1.55rem);
+  }
+
+  h4 {
+    margin: 1.8rem 0 0.55rem;
+    font-size: 1.05rem;
+  }
+
+  p,
+  li {
+    max-width: 78ch;
+  }
+
+  strong {
+    color: var(--ink);
+  }
+
+  code,
+  kbd {
+    font-family: ui-monospace, "Cascadia Code", "SFMono-Regular", Consolas, monospace;
+  }
+
+  p code,
+  li code,
+  td code {
+    padding: 0.12rem 0.32rem;
+    border: 1px solid var(--line);
+    border-radius: 0.32rem;
+    background: var(--electric-soft);
+    color: var(--ink);
+    overflow-wrap: anywhere;
+  }
+
+  pre {
+    max-width: 100%;
+    overflow: auto;
+    padding: 1.1rem 1.25rem;
+    border: 1px solid var(--line-strong);
+    border-radius: 0.75rem;
+    background: var(--code);
+    color: var(--code-ink);
+    font-size: 0.83rem;
+    line-height: 1.55;
+    box-shadow: inset 4px 0 0 var(--electric);
+  }
+
+  pre code {
+    font-family: inherit;
+  }
+
+  aside.notice {
+    margin: 1.25rem 0;
+    padding: 1rem 1.2rem;
+    border: 1px solid color-mix(in srgb, var(--charge) 45%, var(--line));
+    border-left: 0.32rem solid var(--charge);
+    border-radius: 0.65rem;
+    background: var(--charge-soft);
+  }
+
+  aside.notice > :first-child {
+    margin-top: 0;
+  }
+
+  aside.notice > :last-child {
+    margin-bottom: 0;
+  }
+
+  table {
+    display: table;
+    width: 100%;
+    margin: 1.35rem 0;
+    border-collapse: collapse;
+    border: 1px solid var(--line);
+    border-radius: 0.7rem;
+    overflow: hidden;
+    font-size: 0.88rem;
+  }
+
+  thead {
+    background: var(--electric-soft);
+  }
+
+  th,
+  td {
+    padding: 0.72rem 0.82rem;
+    border: 1px solid var(--line);
+    text-align: left;
+    vertical-align: top;
+  }
+
+  tbody tr:nth-child(even) {
+    background: color-mix(in srgb, var(--electric-soft) 42%, transparent);
+  }
+
+  ol,
+  ul {
+    padding-left: 1.35rem;
+  }
+
+  li + li {
+    margin-top: 0.35rem;
+  }
+
+  .task-list-item {
+    list-style: none;
+  }
+
+  .task-list-item input {
+    width: 1rem;
+    height: 1rem;
+    margin: 0 0.5rem 0 -1.25rem;
+    accent-color: var(--electric);
+  }
+
+  math {
+    overflow-x: auto;
+    overflow-y: hidden;
+    max-width: 100%;
+  }
+
+  @media (max-width: 980px) {
+    .companion-meta,
+    body > section.level1 {
+      margin-right: 1rem;
+      margin-left: calc(var(--sidebar) + 1rem);
+    }
+  }
+
+  @media (max-width: 760px) {
+    html {
+      scroll-padding-top: 1rem;
+    }
+
+    body {
+      font-size: 16px;
+    }
+
+    #TOC {
+      position: relative;
+      width: auto;
+      max-height: 45vh;
+      margin: 1rem;
+      padding: 1rem;
+      border: 1px solid var(--line);
+      border-radius: 0.8rem;
+    }
+
+    .companion-meta,
+    body > section.level1 {
+      margin: 1rem;
+    }
+
+    .companion-meta time {
+      width: 100%;
+      margin-left: 0;
+    }
+
+    body > section.level1 {
+      padding: 1.15rem;
+    }
+
+    h1 {
+      font-size: 2.35rem;
+    }
+
+    table {
+      display: block;
+      overflow-x: auto;
+      white-space: nowrap;
+    }
+  }
+
+  @media print {
+    body {
+      background: #ffffff;
+      color: #111111;
+    }
+
+    #TOC {
+      display: none;
+    }
+
+    .companion-meta,
+    body > section.level1 {
+      max-width: none;
+      margin: 0;
+      border: 0;
+      box-shadow: none;
+    }
+
+    pre,
+    table,
+    aside {
+      break-inside: avoid;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+  </style>
+</head>
+<body>
+<header class="companion-meta" aria-label="Origem desta visualização">
+  <strong>Visualização derivada</strong>
+  <span>Fonte:</span>
+  <code>docs/superpowers/specs/2026-08-12-exercicios-geometria-integral-design.md</code>
+  <time datetime="2026-08-12">Gerado em 12/08/2026</time>
+</header>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a
+href="#design-geometria-e-progressão-matemática-nos-exercícios-halliday-21"
+id="toc-design-geometria-e-progressão-matemática-nos-exercícios-halliday-21">Design
+— geometria e progressão matemática nos exercícios Halliday 21</a>
+<ul>
+<li><a href="#objetivo" id="toc-objetivo">Objetivo</a></li>
+<li><a href="#decisão-de-arquitetura"
+id="toc-decisão-de-arquitetura">Decisão de arquitetura</a></li>
+<li><a href="#contrato-comum-das-experiências"
+id="toc-contrato-comum-das-experiências">Contrato comum das
+experiências</a></li>
+<li><a href="#conteúdo-e-interação-por-exercício"
+id="toc-conteúdo-e-interação-por-exercício">Conteúdo e interação por
+exercício</a>
+<ul>
+<li><a href="#radar-de-nulidade-do-campo"
+id="toc-radar-de-nulidade-do-campo">21.13 — radar de nulidade do
+campo</a></li>
+<li><a href="#mesa-de-forças-sobre-um-locus-circular"
+id="toc-mesa-de-forças-sobre-um-locus-circular">21.18 — mesa de forças
+sobre um locus circular</a></li>
+<li><a href="#câmara-de-contagem-por-ordens-de-grandeza"
+id="toc-câmara-de-contagem-por-ordens-de-grandeza">21.33 — câmara de
+contagem por ordens de grandeza</a></li>
+<li><a href="#balança-vetorial-quantizada"
+id="toc-balança-vetorial-quantizada">21.34 — balança vetorial
+quantizada</a></li>
+<li><a href="#pêndulo-calibrado-e-calibre-da-aproximação"
+id="toc-pêndulo-calibrado-e-calibre-da-aproximação">21.42 — pêndulo
+calibrado e calibre da aproximação</a></li>
+</ul></li>
+<li><a href="#preservação-e-limites"
+id="toc-preservação-e-limites">Preservação e limites</a></li>
+<li><a href="#testes-e-evidência-visual"
+id="toc-testes-e-evidência-visual">Testes e evidência visual</a></li>
+</ul></li>
+</ul>
+</nav>
+<section
+id="design-geometria-e-progressão-matemática-nos-exercícios-halliday-21"
+class="level1">
+<h1>Design — geometria e progressão matemática nos exercícios Halliday
+21</h1>
+<p>Data: 2026-08-12</p>
+<section id="objetivo" class="level2">
+<h2>Objetivo</h2>
+<p>Transformar os exercícios Halliday 21.13, 21.18, 21.33, 21.34 e 21.42
+em experiências de estudo que conectem, sem saltos, a geometria, os
+vetores e cada transformação algébrica já publicada. As respostas e o
+conteúdo científico atuais são a referência e não serão alterados.</p>
+</section>
+<section id="decisão-de-arquitetura" class="level2">
+<h2>Decisão de arquitetura</h2>
+<p>A solução escolhida é acrescentar a cada pasta um pequeno modelo
+matemático puro, uma visualização SVG e um controlador de reprodução
+próprios. O HTML continuará contendo a resolução completa e uma figura
+inicial útil mesmo se o JavaScript falhar. Cada exercício poderá ser
+implementado e testado por um subagente diferente sem editar arquivos de
+outro exercício.</p>
+<p>Foram descartadas duas alternativas:</p>
+<ol type="1">
+<li>Estender o simulador genérico de cargas: ele serve ao 21.13, mas
+força abstrações inadequadas para contagem de partículas, quantização e
+pêndulos.</li>
+<li>Criar um motor Canvas único: reduziria a acessibilidade sem trazer
+ganho para figuras com poucos objetos vetoriais e rótulos
+semânticos.</li>
+</ol>
+<p>Os cinco problemas são discretos; nenhum contém uma integral física
+natural. Portanto, não será inventada uma integral. A progressão
+elemento a elemento será representada pelo equivalente didático correto
+de cada caso: varredura de posição, composição vetorial, cadeia de
+conversões, decomposição em componentes ou aproximação de pequeno
+ângulo.</p>
+</section>
+<section id="contrato-comum-das-experiências" class="level2">
+<h2>Contrato comum das experiências</h2>
+<p>Cada página terá um painel local
+<code>[data-didactic-visualization]</code> com:</p>
+<ul>
+<li>SVG responsivo com <code>role="img"</code>, <code>title</code>,
+<code>desc</code>, rótulos textuais e padrões que não dependem apenas de
+cor;</li>
+<li>controles nativos e visíveis <code>Reproduzir</code>,
+<code>Pausar</code>, <code>Reiniciar</code>, <code>Próximo passo</code>
+e <code>Velocidade</code> (<code>0,5×</code>, <code>1×</code>,
+<code>2×</code>);</li>
+<li>estado inicial pausado, avanço determinístico por passos e leitura
+textual do passo atual em <code>aria-live="polite"</code>;</li>
+<li>API local <code>play()</code>, <code>pause()</code>,
+<code>reset()</code>, <code>step()</code>, <code>setSpeed()</code> e
+<code>getState()</code> para teste;</li>
+<li>interrupção segura ao ocultar a página e ausência de temporizadores
+duplicados;</li>
+<li><code>prefers-reduced-motion: reduce</code> detectado no JavaScript
+e no CSS: sem interpolação ou autoplay, mas com todos os passos
+disponíveis manualmente;</li>
+<li>alvos de toque de pelo menos 44 px, foco visível, controles que
+quebram linha e ausência de rolagem horizontal em 390 × 844;</li>
+<li>CSS limitado à pasta do exercício e integrado aos temas claro/escuro
+por variáveis já existentes.</li>
+</ul>
+<p>A linguagem visual será uma bancada de eletrostática: grade de
+medição, eixos, réguas, setas com origem aplicada, marcas de projeção e
+leituras monoespaçadas. Cada exercício terá uma metáfora visual própria,
+evitando um painel genérico de dashboard.</p>
+</section>
+<section id="conteúdo-e-interação-por-exercício" class="level2">
+<h2>Conteúdo e interação por exercício</h2>
+<section id="radar-de-nulidade-do-campo" class="level3">
+<h3>21.13 — radar de nulidade do campo</h3>
+<p><strong>Verdade matemática preservada:</strong>
+<code>q₁ = +1,0 µC</code> em <code>(0,0)</code>,
+<code>q₂ = −3,0 µC</code> em <code>(10 cm,0)</code> e equilíbrio em
+<code>(−13,66 cm,0)</code>. O cancelamento exige vetores colineares,
+logo <code>y = 0</code>; entre as cargas os campos apontam para
+<code>+x</code>; à direita <code>q₂</code> domina; à esquerda existe a
+única raiz de módulos iguais.</p>
+<p><strong>Visualização:</strong> plano cartesiano com as duas fontes, o
+ponto candidato, os campos <code>E₁</code>, <code>E₂</code> e a
+resultante desenhados na mesma escala. Um roteiro visita: ponto fora do
+eixo, região entre as cargas, região à direita, dois pontos à esquerda e
+a raiz. Na etapa à esquerda, o candidato varre posições discretas sem
+cruzar uma carga; barras de módulo mostram a troca de dominância até
+<code>E₁/E₂ = 1</code>.</p>
+<p><strong>Interação específica:</strong> os controles percorrem o
+roteiro geométrico, e a simulação arrastável existente permanece
+disponível abaixo para exploração livre. A nova experiência explica por
+que procurar; o simulador existente permite testar.</p>
+</section>
+<section id="mesa-de-forças-sobre-um-locus-circular" class="level3">
+<h3>21.18 — mesa de forças sobre um locus circular</h3>
+<p><strong>Verdade matemática preservada:</strong>
+<code>F_B + F_C = 2,014 × 10⁻²³ N</code>,
+<code>F_C − F_B = 2,877 × 10⁻²⁴ N</code>,
+<code>F_B = 8,6315 × 10⁻²⁴ N</code>,
+<code>F_C = 1,15085 × 10⁻²³ N</code> e <code>q_C/q_B ≈ 1,33</code>
+porque os demais fatores de Coulomb são comuns.</p>
+<p><strong>Visualização:</strong> A ocupa o centro de uma circunferência
+de raio <code>r</code>; C fica à direita e B percorre o semicírculo de
+<code>+r</code> a <code>−r</code>, tornando visível que a distância de B
+até A não muda. A seta <code>F_B</code> gira com B, <code>F_C</code>
+permanece em <code>−x</code> e a resultante é recomposta ponta a cauda.
+Os pontos intermediários são rotulados como transição não medida; apenas
+as extremidades correspondem às configurações do enunciado.</p>
+<p><strong>Interação específica:</strong> os passos separam configuração
+(a), conservação do módulo de <code>F_B</code>, deslocamento de B,
+configuração (b), solução do sistema soma/diferença e cancelamento de
+<code>kq_A/r²</code> na razão final.</p>
+</section>
+<section id="câmara-de-contagem-por-ordens-de-grandeza" class="level3">
+<h3>21.33 — câmara de contagem por ordens de grandeza</h3>
+<p><strong>Verdade matemática preservada:</strong>
+<code>250 cm³ → 250 g → 13,87 mol → 8,35 × 10²⁴ moléculas → 8,35 × 10²⁵ prótons → 1,34 × 10⁷ C</code>;
+cada molécula de água tem dez prótons. A carga positiva é enorme, mas a
+carga líquida da água neutra continua zero.</p>
+<p><strong>Visualização:</strong> uma cadeia de seis estações liga
+recipiente, massa, mol, molécula, prótons e carga. A unidade que cancela
+fica riscada em cada passagem, enquanto uma régua logarítmica desloca o
+marcador de escala; ícones de partículas são explicitamente simbólicos,
+nunca apresentados como contagem literal. Na última etapa, duas barras
+iguais <code>+1,34 × 10⁷ C</code> e <code>−1,34 × 10⁷ C</code> mostram
+por que o saldo é zero.</p>
+<p><strong>Interação específica:</strong> cada passo revela um único
+fator (<code>ρ</code>, <code>1/M</code>, <code>N_A</code>,
+<code>Z</code>, <code>e</code>) e sua unidade. O explorador de
+substâncias atual permanece intacto e continua a aplicar a cadeia a
+outros materiais.</p>
+</section>
+<section id="balança-vetorial-quantizada" class="level3">
+<h3>21.34 — balança vetorial quantizada</h3>
+<p><strong>Verdade matemática preservada:</strong>
+<code>r = R/cos θ</code>, cada força iônica fornece
+<code>keq cos²θ/R²</code>, a projeção horizontal acrescenta outro
+<code>cos θ</code>, e o equilíbrio dá <code>q/e = 1/(2cos³θ)</code>.
+Para <code>q = ne</code>, <code>n = 1…5</code>, os três menores ângulos
+são <code>37,47°</code>, <code>50,95°</code> e <code>56,61°</code>.</p>
+<p><strong>Visualização:</strong> diagrama simétrico com forças iônicas
+diagonais, projeções tracejadas e duas balanças: componentes verticais
+que fecham em zero e componentes horizontais que igualam
+<code>F₁₂</code>. Um seletor discreto <code>n = q/e</code> reposiciona
+os íons no ângulo de equilíbrio e atualiza <code>r/R</code>,
+<code>cos²θ</code>, o fator de projeção e <code>cos³θ</code>.</p>
+<p><strong>Interação específica:</strong> os passos revelam distância
+inclinada, módulo de Coulomb, projeção horizontal, cancelamento
+vertical, equilíbrio horizontal e quantização. A escolha de
+<code>n</code> é restrita aos cinco valores físicos do enunciado.</p>
+</section>
+<section id="pêndulo-calibrado-e-calibre-da-aproximação" class="level3">
+<h3>21.42 — pêndulo calibrado e calibre da aproximação</h3>
+<p><strong>Verdade matemática preservada:</strong> para uma esfera,
+<code>Tsinθ = Fₑ</code>, <code>Tcosθ = mg</code>,
+<code>sinθ = x/(2L)</code> e <code>tanθ ≈ sinθ</code>. Assim,
+<code>x = (q²L/(2πε₀mg))^(1/3)</code> e, para <code>L = 1,20 m</code>,
+<code>m = 0,010 kg</code>, <code>x = 0,050 m</code>,
+<code>|q| = 2,38 × 10⁻⁸ C ≈ 24 nC</code>; <code>θ ≈ 1,19°</code>
+confirma a hipótese.</p>
+<p><strong>Visualização:</strong> montagem simétrica ligada ao diagrama
+de corpo livre da esfera direita. A tensão é decomposta em
+<code>Tsinθ</code> e <code>Tcosθ</code>, a régua destaca
+<code>x/2</code> e um calibre compara <code>sinθ</code> com
+<code>tanθ</code>. Como o ângulo real é visualmente pequeno, a figura
+pode ampliá-lo, desde que exiba permanentemente “geometria ampliada;
+valores numéricos exatos”.</p>
+<p><strong>Interação específica:</strong> um controle de separação, com
+reset em <code>5,0 cm</code>, mostra como <code>θ</code>, a carga
+inferida e o erro da aproximação variam; o roteiro retorna ao caso
+pedido. Os passos percorrem geometria, corpo livre, eliminação de T,
+Coulomb, aproximação e resposta.</p>
+</section>
+</section>
+<section id="preservação-e-limites" class="level2">
+<h2>Preservação e limites</h2>
+<ul>
+<li>O texto científico existente continua visível; mudanças editoriais
+limitam-se a conectar a visualização aos passos já publicados.</li>
+<li>Nenhum framework, dependência npm, imagem do livro ou serviço
+externo será adicionado.</li>
+<li>SVG, CSS e JavaScript serão autorais e locais; os componentes
+compartilhados atuais apenas serão consumidos.</li>
+<li>O exercício 21.13 não perderá seu simulador de cargas; o 21.33 não
+perderá o explorador de substâncias.</li>
+<li>Não haverá áudio, gamificação, armazenamento de progresso, pontuação
+ou alteração do catálogo.</li>
+</ul>
+</section>
+<section id="testes-e-evidência-visual" class="level2">
+<h2>Testes e evidência visual</h2>
+<p>Cada exercício começa com um teste Node em arquivo exclusivo que
+cobre o modelo matemático, a estrutura acessível, os controles e a
+resposta canônica. O primeiro ciclo deve falhar por módulo/contrato
+ausente (RED); após a implementação, o teste direcionado e a suíte
+completa devem passar (GREEN).</p>
+<p>Cada implementador valida sua própria página em servidor HTTP real
+com <code>playwright-cli</code>, em 1440 × 1000 e 390 × 844. A evidência
+mínima por exercício é um screenshot desktop no passo mais explicativo e
+outro mobile, além de verificações de reprodução, pausa, reinício,
+passo, velocidade, <code>prefers-reduced-motion</code>, foco por
+teclado, <code>scrollWidth &lt;= clientWidth</code> e ausência de erros
+no console.</p>
+<p>A integração final roda todos os testes, verifica HTTP 200 nas cinco
+rotas, repete um smoke test Playwright cruzado e registra as dez
+capturas em um manifesto. Nenhuma página será declarada pronta sem essas
+evidências.</p>
+</section>
+</section>
+<script>
+(() => {
+  const tocLinks = [...document.querySelectorAll('#TOC a[href^="#"]')];
+  const observed = tocLinks
+    .map((link) => document.getElementById(decodeURIComponent(link.hash.slice(1))))
+    .filter(Boolean);
+
+  if (!("IntersectionObserver" in window) || observed.length === 0) {
+    return;
+  }
+
+  const linkById = new Map(
+    tocLinks.map((link) => [decodeURIComponent(link.hash.slice(1)), link]),
+  );
+
+  const activate = (id) => {
+    for (const link of tocLinks) {
+      link.classList.toggle("is-active", link === linkById.get(id));
+    }
+  };
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      const visible = entries
+        .filter((entry) => entry.isIntersecting)
+        .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
+      if (visible[0]) {
+        activate(visible[0].target.id);
+      }
+    },
+    { rootMargin: "-12% 0px -72% 0px", threshold: [0, 1] },
+  );
+
+  for (const section of observed) {
+    observer.observe(section);
+  }
+
+  const current = location.hash ? decodeURIComponent(location.hash.slice(1)) : observed[0].id;
+  activate(current);
+})();
+</script>
+</body>
+</html>

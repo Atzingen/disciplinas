@@ -1,0 +1,1798 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="pt-BR" xml:lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Visualizações geométricas dos exercícios Halliday 21 — plano de
+implementação</title>
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    html {
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    svg {
+      height: auto;
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      white-space: pre-wrap;
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      border: none;
+      border-top: 1px solid #1a1a1a;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { color: #008000; } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { color: #008000; font-weight: bold; } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <style>
+  :root {
+    color-scheme: light dark;
+    --bg: #eef3f7;
+    --surface: rgba(255, 255, 255, 0.92);
+    --surface-strong: #ffffff;
+    --ink: #13212b;
+    --ink-soft: #536874;
+    --line: #c8d5dc;
+    --line-strong: #8299a5;
+    --electric: #007f8b;
+    --electric-soft: #d6f1f2;
+    --charge: #d4681c;
+    --charge-soft: #fde8d8;
+    --code: #10232c;
+    --code-ink: #dceef2;
+    --shadow: 0 18px 48px rgba(25, 51, 64, 0.12);
+    --sidebar: 19rem;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #09151b;
+      --surface: rgba(15, 31, 39, 0.94);
+      --surface-strong: #122630;
+      --ink: #e5f0f3;
+      --ink-soft: #a7bbc4;
+      --line: #29434f;
+      --line-strong: #53717f;
+      --electric: #4bc8cf;
+      --electric-soft: #123c42;
+      --charge: #f2a15e;
+      --charge-soft: #402719;
+      --code: #061014;
+      --code-ink: #dceef2;
+      --shadow: 0 20px 50px rgba(0, 0, 0, 0.34);
+    }
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 2rem;
+  }
+
+  body {
+    margin: 0;
+    max-width: none;
+    min-width: 320px;
+    padding: 0;
+    background:
+      linear-gradient(rgba(0, 127, 139, 0.045) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 127, 139, 0.045) 1px, transparent 1px),
+      radial-gradient(circle at 86% 8%, rgba(212, 104, 28, 0.12), transparent 28rem),
+      var(--bg);
+    background-size: 28px 28px, 28px 28px, auto, auto;
+    color: var(--ink);
+    font: 17px/1.7 system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  }
+
+  a {
+    color: var(--electric);
+    text-decoration-thickness: 0.09em;
+    text-underline-offset: 0.16em;
+  }
+
+  a:hover {
+    color: var(--charge);
+  }
+
+  .companion-meta {
+    max-width: 900px;
+    margin: 2rem max(2rem, calc((100vw - var(--sidebar) - 900px) / 2)) 1rem calc(var(--sidebar) + 3rem);
+    padding: 0.8rem 1rem;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.5rem 1rem;
+    border: 1px solid var(--line);
+    border-radius: 0.75rem;
+    background: var(--surface);
+    color: var(--ink-soft);
+    font-size: 0.78rem;
+    box-shadow: var(--shadow);
+  }
+
+  .companion-meta strong {
+    color: var(--electric);
+    font-size: 0.7rem;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+  }
+
+  .companion-meta code {
+    max-width: 100%;
+    overflow-wrap: anywhere;
+  }
+
+  .companion-meta time {
+    margin-left: auto;
+  }
+
+  #TOC {
+    position: fixed;
+    inset: 0 auto 0 0;
+    z-index: 10;
+    width: var(--sidebar);
+    overflow-y: auto;
+    padding: 2rem 1.25rem 3rem;
+    border-right: 1px solid var(--line);
+    background: color-mix(in srgb, var(--surface-strong) 94%, transparent);
+    backdrop-filter: blur(14px);
+  }
+
+  #TOC::before {
+    content: "MAPA DO DOCUMENTO";
+    display: block;
+    margin: 0 0 1rem;
+    color: var(--charge);
+    font: 750 0.7rem/1.2 ui-monospace, "Cascadia Code", monospace;
+    letter-spacing: 0.12em;
+  }
+
+  #TOC > ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  #TOC ul {
+    padding-left: 0.85rem;
+  }
+
+  #TOC li {
+    margin: 0.28rem 0;
+  }
+
+  #TOC a {
+    display: block;
+    padding: 0.35rem 0.55rem;
+    border-left: 2px solid transparent;
+    border-radius: 0 0.45rem 0.45rem 0;
+    color: var(--ink-soft);
+    font-size: 0.82rem;
+    line-height: 1.35;
+    text-decoration: none;
+  }
+
+  #TOC > ul > li > a,
+  #TOC > ul > li > ul > li > a {
+    color: var(--ink);
+    font-weight: 700;
+  }
+
+  #TOC a:hover,
+  #TOC a.is-active {
+    border-left-color: var(--electric);
+    background: var(--electric-soft);
+    color: var(--electric);
+  }
+
+  body > section.level1 {
+    max-width: 900px;
+    margin: 0 max(2rem, calc((100vw - var(--sidebar) - 900px) / 2)) 4rem calc(var(--sidebar) + 3rem);
+    padding: clamp(1.4rem, 3vw, 3rem);
+    border: 1px solid var(--line);
+    border-radius: 1rem;
+    background: var(--surface);
+    box-shadow: var(--shadow);
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    color: var(--ink);
+    line-height: 1.18;
+    text-wrap: balance;
+    scroll-margin-top: 2rem;
+  }
+
+  h1 {
+    margin: 0 0 0.75rem;
+    max-width: 18ch;
+    font-size: clamp(2.15rem, 5vw, 4.35rem);
+    letter-spacing: -0.055em;
+  }
+
+  h1::after {
+    content: "";
+    display: block;
+    width: 5.5rem;
+    height: 0.3rem;
+    margin-top: 1.15rem;
+    border-radius: 99px;
+    background: linear-gradient(90deg, var(--electric), var(--charge));
+  }
+
+  h2 {
+    margin: 3.5rem 0 1rem;
+    padding: 0.85rem 0 0.55rem;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    color: var(--electric);
+    font-size: clamp(1.55rem, 3vw, 2.15rem);
+  }
+
+  h3 {
+    margin: 2.4rem 0 0.75rem;
+    color: var(--charge);
+    font-size: clamp(1.22rem, 2vw, 1.55rem);
+  }
+
+  h4 {
+    margin: 1.8rem 0 0.55rem;
+    font-size: 1.05rem;
+  }
+
+  p,
+  li {
+    max-width: 78ch;
+  }
+
+  strong {
+    color: var(--ink);
+  }
+
+  code,
+  kbd {
+    font-family: ui-monospace, "Cascadia Code", "SFMono-Regular", Consolas, monospace;
+  }
+
+  p code,
+  li code,
+  td code {
+    padding: 0.12rem 0.32rem;
+    border: 1px solid var(--line);
+    border-radius: 0.32rem;
+    background: var(--electric-soft);
+    color: var(--ink);
+    overflow-wrap: anywhere;
+  }
+
+  pre {
+    max-width: 100%;
+    overflow: auto;
+    padding: 1.1rem 1.25rem;
+    border: 1px solid var(--line-strong);
+    border-radius: 0.75rem;
+    background: var(--code);
+    color: var(--code-ink);
+    font-size: 0.83rem;
+    line-height: 1.55;
+    box-shadow: inset 4px 0 0 var(--electric);
+  }
+
+  pre code {
+    font-family: inherit;
+  }
+
+  aside.notice {
+    margin: 1.25rem 0;
+    padding: 1rem 1.2rem;
+    border: 1px solid color-mix(in srgb, var(--charge) 45%, var(--line));
+    border-left: 0.32rem solid var(--charge);
+    border-radius: 0.65rem;
+    background: var(--charge-soft);
+  }
+
+  aside.notice > :first-child {
+    margin-top: 0;
+  }
+
+  aside.notice > :last-child {
+    margin-bottom: 0;
+  }
+
+  table {
+    display: table;
+    width: 100%;
+    margin: 1.35rem 0;
+    border-collapse: collapse;
+    border: 1px solid var(--line);
+    border-radius: 0.7rem;
+    overflow: hidden;
+    font-size: 0.88rem;
+  }
+
+  thead {
+    background: var(--electric-soft);
+  }
+
+  th,
+  td {
+    padding: 0.72rem 0.82rem;
+    border: 1px solid var(--line);
+    text-align: left;
+    vertical-align: top;
+  }
+
+  tbody tr:nth-child(even) {
+    background: color-mix(in srgb, var(--electric-soft) 42%, transparent);
+  }
+
+  ol,
+  ul {
+    padding-left: 1.35rem;
+  }
+
+  li + li {
+    margin-top: 0.35rem;
+  }
+
+  .task-list-item {
+    list-style: none;
+  }
+
+  .task-list-item input {
+    width: 1rem;
+    height: 1rem;
+    margin: 0 0.5rem 0 -1.25rem;
+    accent-color: var(--electric);
+  }
+
+  math {
+    overflow-x: auto;
+    overflow-y: hidden;
+    max-width: 100%;
+  }
+
+  @media (max-width: 980px) {
+    .companion-meta,
+    body > section.level1 {
+      margin-right: 1rem;
+      margin-left: calc(var(--sidebar) + 1rem);
+    }
+  }
+
+  @media (max-width: 760px) {
+    html {
+      scroll-padding-top: 1rem;
+    }
+
+    body {
+      font-size: 16px;
+    }
+
+    #TOC {
+      position: relative;
+      width: auto;
+      max-height: 45vh;
+      margin: 1rem;
+      padding: 1rem;
+      border: 1px solid var(--line);
+      border-radius: 0.8rem;
+    }
+
+    .companion-meta,
+    body > section.level1 {
+      margin: 1rem;
+    }
+
+    .companion-meta time {
+      width: 100%;
+      margin-left: 0;
+    }
+
+    body > section.level1 {
+      padding: 1.15rem;
+    }
+
+    h1 {
+      font-size: 2.35rem;
+    }
+
+    table {
+      display: block;
+      overflow-x: auto;
+      white-space: nowrap;
+    }
+  }
+
+  @media print {
+    body {
+      background: #ffffff;
+      color: #111111;
+    }
+
+    #TOC {
+      display: none;
+    }
+
+    .companion-meta,
+    body > section.level1 {
+      max-width: none;
+      margin: 0;
+      border: 0;
+      box-shadow: none;
+    }
+
+    pre,
+    table,
+    aside {
+      break-inside: avoid;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+  </style>
+</head>
+<body>
+<header class="companion-meta" aria-label="Origem desta visualização">
+  <strong>Visualização derivada</strong>
+  <span>Fonte:</span>
+  <code>docs/superpowers/plans/2026-08-12-exercicios-geometria-integral.md</code>
+  <time datetime="2026-08-12">Gerado em 12/08/2026</time>
+</header>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a
+href="#visualizações-geométricas-dos-exercícios-halliday-21-implementation-plan"
+id="toc-visualizações-geométricas-dos-exercícios-halliday-21-implementation-plan">Visualizações
+geométricas dos exercícios Halliday 21 Implementation Plan</a>
+<ul>
+<li><a href="#global-constraints" id="toc-global-constraints">Global
+Constraints</a></li>
+<li><a href="#protocolo-de-execução-e-ownership"
+id="toc-protocolo-de-execução-e-ownership">Protocolo de execução e
+ownership</a>
+<ul>
+<li><a href="#task-1-halliday-21.13-radar-de-nulidade-do-campo"
+id="toc-task-1-halliday-21.13-radar-de-nulidade-do-campo">Task 1:
+Halliday 21.13 — radar de nulidade do campo</a></li>
+<li><a href="#task-2-halliday-21.18-mesa-de-forças-e-transferência-de-b"
+id="toc-task-2-halliday-21.18-mesa-de-forças-e-transferência-de-b">Task
+2: Halliday 21.18 — mesa de forças e transferência de B</a></li>
+<li><a href="#task-3-halliday-21.33-cadeia-discreta-de-contagem"
+id="toc-task-3-halliday-21.33-cadeia-discreta-de-contagem">Task 3:
+Halliday 21.33 — cadeia discreta de contagem</a></li>
+<li><a href="#task-4-halliday-21.34-decomposição-e-quantização"
+id="toc-task-4-halliday-21.34-decomposição-e-quantização">Task 4:
+Halliday 21.34 — decomposição e quantização</a></li>
+<li><a
+href="#task-5-halliday-21.42-pêndulo-e-aproximação-de-pequeno-ângulo"
+id="toc-task-5-halliday-21.42-pêndulo-e-aproximação-de-pequeno-ângulo">Task
+5: Halliday 21.42 — pêndulo e aproximação de pequeno ângulo</a></li>
+<li><a href="#task-6-integração-regressão-e-evidência-cruzada"
+id="toc-task-6-integração-regressão-e-evidência-cruzada">Task 6:
+Integração, regressão e evidência cruzada</a></li>
+</ul></li>
+</ul></li>
+</ul>
+</nav>
+<section
+id="visualizações-geométricas-dos-exercícios-halliday-21-implementation-plan"
+class="level1">
+<h1>Visualizações geométricas dos exercícios Halliday 21 Implementation
+Plan</h1>
+<aside class="notice"><p><strong>For agentic workers:</strong> REQUIRED SUB-SKILL: Use
+superpowers:subagent-driven-development (recommended) or
+superpowers:executing-plans to implement this plan task-by-task. Steps
+use checkbox (<code>- [ ]</code>) syntax for tracking.</p></aside>
+<p><strong>Goal:</strong> Acrescentar aos cinco exercícios uma
+explicação matemática animada e acessível, específica para sua
+geometria, sem alterar as respostas científicas já publicadas.</p>
+<p><strong>Architecture:</strong> Cada exercício recebe modelo
+matemático puro, SVG, estilos e controlador locais; o HTML mantém uma
+figura inicial funcional sem JavaScript. Os cinco conjuntos não
+compartilham arquivos de implementação e podem ser produzidos por
+implementadores distintos. Uma sexta tarefa, executada depois, toca
+somente testes e evidências de integração.</p>
+<p><strong>Tech Stack:</strong> HTML5 semântico, CSS responsivo, SVG
+inline, JavaScript ES modules, Node.js test runner, Python HTTP server e
+<code>playwright-cli</code>; nenhuma nova dependência npm ou framework
+de runtime.</p>
+<section id="global-constraints" class="level2">
+<h2>Global Constraints</h2>
+<ul>
+<li>Preservar integralmente as respostas atuais: 21.13
+<code>(-13,66 cm, 0)</code>; 21.18 <code>q_C/q_B ≈ 1,33</code>; 21.33
+<code>1,34 × 10⁷ C</code>; 21.34 <code>37,47°</code>,
+<code>50,95°</code>, <code>56,61°</code>; 21.42
+<code>2,38 × 10⁻⁸ C ≈ 24 nC</code> e a expressão cúbica publicada.</li>
+<li>Não introduzir integral: nenhum dos cinco enunciados usa
+distribuição contínua. Usar varredura, locus, cadeia discreta,
+decomposição vetorial ou aproximação, conforme a especificação.</li>
+<li>Não alterar <code>site/assets/*.css</code>,
+<code>site/componentes/*.js</code>, <code>site/nucleo/*.js</code>,
+<code>site/simuladores.json</code> ou outro arquivo compartilhado nas
+tarefas 1–5.</li>
+<li>Cada painel usa <code>[data-didactic-visualization]</code>, começa
+pausado e oferece botões <code>Reproduzir</code>, <code>Pausar</code>,
+<code>Reiniciar</code>, <code>Próximo passo</code>, seletor
+<code>Velocidade</code> com <code>0,5×</code>, <code>1×</code>,
+<code>2×</code> e status <code>aria-live="polite"</code>.</li>
+<li>Cada controlador local produz <code>play()</code>,
+<code>pause()</code>, <code>reset()</code>, <code>step()</code>,
+<code>setSpeed(multiplier)</code> e <code>getState()</code>; o root
+expõe <code>data-play-state</code>, <code>data-step</code> e
+<code>data-motion</code> para testes sem acoplamento à
+apresentação.</li>
+<li>Todo SVG interativo tem <code>role="img"</code>,
+<code>aria-labelledby</code>, <code>title</code>, <code>desc</code>,
+texto que não depende de cor e uma figura inicial cientificamente útil
+sem JavaScript.</li>
+<li><code>prefers-reduced-motion: reduce</code> desativa interpolação e
+autoplay; avanço manual continua funcional. A página pausa ao ficar
+oculta e nunca mantém mais de um temporizador.</li>
+<li>Em 390 × 844 não pode haver overflow horizontal; controles quebram
+linha, texto permanece legível e alvos interativos têm pelo menos 44 ×
+44 px.</li>
+<li>Cada tarefa inicia em RED, termina em GREEN, faz validação
+Playwright real em 1440 × 1000 e 390 × 844 e salva os dois screenshots
+indicados no ownership.</li>
+<li>Não declarar funcionamento sem verificar teste, HTTP 200, interação,
+console e screenshots.</li>
+</ul>
+<hr />
+</section>
+<section id="protocolo-de-execução-e-ownership" class="level2">
+<h2>Protocolo de execução e ownership</h2>
+<p>Use cinco subagentes implementadores frescos e distintos, um para
+cada uma das tarefas 1–5: <code>implementador-21-13</code>,
+<code>implementador-21-18</code>, <code>implementador-21-33</code>,
+<code>implementador-21-34</code> e <code>implementador-21-42</code>. No
+worktree compartilhado, execute-os sequencialmente para que commits e
+índice Git não concorram; o código é independente, não a operação de
+commit. Cada implementador deve receber a advertência de que não está
+sozinho no repositório e não pode reverter trabalho alheio. A tarefa 6
+pertence a um integrador novo, depois dos cinco GREEN.</p>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>Tarefa</th>
+<th>Ownership exclusivo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1 · 21.13</td>
+<td><code>site/exercicios/halliday-21-13/{index.html,app.js,modelo.js,visualizacao.js,visualizacao.css}</code>,
+<code>site/testes/halliday-21-13-visualizacao.test.js</code>,
+screenshots <code>21-13-*</code></td>
+</tr>
+<tr>
+<td>2 · 21.18</td>
+<td><code>site/exercicios/halliday-21-18/{index.html,app.js,modelo.js,visualizacao.js,visualizacao.css}</code>,
+<code>site/testes/halliday-21-18-visualizacao.test.js</code>,
+screenshots <code>21-18-*</code></td>
+</tr>
+<tr>
+<td>3 · 21.33</td>
+<td><code>site/exercicios/halliday-21-33/{index.html,app.js,modelo.js,visualizacao.js,visualizacao.css}</code>,
+<code>site/testes/halliday-21-33-visualizacao.test.js</code>,
+screenshots <code>21-33-*</code>; não tocar em
+<code>substancias.js</code></td>
+</tr>
+<tr>
+<td>4 · 21.34</td>
+<td><code>site/exercicios/halliday-21-34/{index.html,app.js,modelo.js,visualizacao.js,visualizacao.css}</code>,
+<code>site/testes/halliday-21-34-visualizacao.test.js</code>,
+screenshots <code>21-34-*</code></td>
+</tr>
+<tr>
+<td>5 · 21.42</td>
+<td><code>site/exercicios/halliday-21-42/{index.html,app.js,modelo.js,visualizacao.js,visualizacao.css}</code>,
+<code>site/testes/halliday-21-42-visualizacao.test.js</code>,
+screenshots <code>21-42-*</code></td>
+</tr>
+<tr>
+<td>6 · integração</td>
+<td><code>site/testes/exercicios-halliday.test.js</code>,
+<code>site/testes/exercicios-geometria-integral-integracao.test.js</code>,
+<code>docs/superpowers/evidence/2026-08-12-exercicios-geometria-integral/README.md</code></td>
+</tr>
+</tbody>
+</table>
+<p>Todos os screenshots ficam em
+<code>docs/superpowers/evidence/2026-08-12-exercicios-geometria-integral/</code>.
+Nenhuma tarefa pode editar arquivo pertencente a outra; o integrador não
+refatora os módulos locais.</p>
+<hr />
+<section id="task-1-halliday-21.13-radar-de-nulidade-do-campo"
+class="level3">
+<h3>Task 1: Halliday 21.13 — radar de nulidade do campo</h3>
+<p><strong>Implementador obrigatório:</strong> subagente fresco
+<code>implementador-21-13</code>.</p>
+<p><strong>Files:</strong></p>
+<ul>
+<li>Modify: <code>site/exercicios/halliday-21-13/index.html</code></li>
+<li>Modify: <code>site/exercicios/halliday-21-13/app.js</code></li>
+<li>Create: <code>site/exercicios/halliday-21-13/modelo.js</code></li>
+<li>Create:
+<code>site/exercicios/halliday-21-13/visualizacao.js</code></li>
+<li>Create:
+<code>site/exercicios/halliday-21-13/visualizacao.css</code></li>
+<li>Create:
+<code>site/testes/halliday-21-13-visualizacao.test.js</code></li>
+<li>Create:
+<code>docs/superpowers/evidence/2026-08-12-exercicios-geometria-integral/21-13-desktop.png</code></li>
+<li>Create:
+<code>docs/superpowers/evidence/2026-08-12-exercicios-geometria-integral/21-13-mobile-390x844.png</code></li>
+</ul>
+<p><strong>Interfaces:</strong></p>
+<ul>
+<li><p>Consumes: <code>calculateForceSystem(sources, testCharge)</code>
+de <code>site/nucleo/eletrostatica.js</code>,
+<code>magnitude(vector)</code>/<code>scale(vector, factor)</code> de
+<code>site/nucleo/vetores.js</code> e
+<code>HALLIDAY_PRESET</code>/<code>HALLIDAY_EQUILIBRIUM_X_CM</code> de
+<code>preset.js</code>.</p></li>
+<li><p>Produces: <code>fieldVectorsAt(xCm, yCm)</code>,
+<code>equilibriumStoryFrames()</code> e
+<code>mountEquilibriumGeometry(root)</code>; o último retorna o contrato
+comum de controle.</p></li>
+<li><p><label><input type="checkbox" /><strong>Step 1: Escrever o teste
+RED do modelo e do contrato HTML</strong></label></p></li>
+</ul>
+<p>Criar o teste com import direto do módulo ainda ausente, leitura do
+HTML e estas expectativas centrais:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode js"><code class="sourceCode javascript"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> assert <span class="im">from</span> <span class="st">&quot;node:assert/strict&quot;</span><span class="op">;</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> { readFile } <span class="im">from</span> <span class="st">&quot;node:fs/promises&quot;</span><span class="op">;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> test <span class="im">from</span> <span class="st">&quot;node:test&quot;</span><span class="op">;</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> { magnitude } <span class="im">from</span> <span class="st">&quot;../nucleo/vetores.js&quot;</span><span class="op">;</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> {</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  equilibriumStoryFrames<span class="op">,</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  fieldVectorsAt<span class="op">,</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>} <span class="im">from</span> <span class="st">&quot;../exercicios/halliday-21-13/modelo.js&quot;</span><span class="op">;</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="fu">test</span>(<span class="st">&quot;21.13 termina na única raiz de campo nulo&quot;</span><span class="op">,</span> () <span class="kw">=&gt;</span> {</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> frames <span class="op">=</span> <span class="fu">equilibriumStoryFrames</span>()<span class="op">;</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  assert<span class="op">.</span><span class="fu">deepEqual</span>(frames<span class="op">.</span><span class="fu">map</span>((frame) <span class="kw">=&gt;</span> frame<span class="op">.</span><span class="at">id</span>)<span class="op">,</span> [</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;off-axis&quot;</span><span class="op">,</span> <span class="st">&quot;between&quot;</span><span class="op">,</span> <span class="st">&quot;right&quot;</span><span class="op">,</span> <span class="st">&quot;left-far&quot;</span><span class="op">,</span> <span class="st">&quot;left-near&quot;</span><span class="op">,</span> <span class="st">&quot;equilibrium&quot;</span><span class="op">,</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>  ])<span class="op">;</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>  assert<span class="op">.</span><span class="fu">ok</span>(<span class="fu">magnitude</span>(<span class="fu">fieldVectorsAt</span>(<span class="op">-</span><span class="fl">13.660254037844389</span><span class="op">,</span> <span class="dv">0</span>)<span class="op">.</span><span class="at">resultant</span>) <span class="op">&lt;</span> <span class="fl">1e-10</span>)<span class="op">;</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="fu">test</span>(<span class="st">&quot;21.13 publica controles acessíveis e preserva o simulador&quot;</span><span class="op">,</span> <span class="kw">async</span> () <span class="kw">=&gt;</span> {</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> html <span class="op">=</span> <span class="cf">await</span> <span class="fu">readFile</span>(<span class="kw">new</span> <span class="fu">URL</span>(<span class="st">&quot;../exercicios/halliday-21-13/index.html&quot;</span><span class="op">,</span> <span class="im">import</span><span class="op">.</span><span class="at">meta</span><span class="op">.</span><span class="at">url</span>)<span class="op">,</span> <span class="st">&quot;utf8&quot;</span>)<span class="op">;</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (<span class="kw">const</span> label <span class="kw">of</span> [<span class="st">&quot;Reproduzir&quot;</span><span class="op">,</span> <span class="st">&quot;Pausar&quot;</span><span class="op">,</span> <span class="st">&quot;Reiniciar&quot;</span><span class="op">,</span> <span class="st">&quot;Próximo passo&quot;</span><span class="op">,</span> <span class="st">&quot;Velocidade&quot;</span>]) {</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>    assert<span class="op">.</span><span class="fu">match</span>(html<span class="op">,</span> <span class="kw">new</span> <span class="bu">RegExp</span>(label))<span class="op">;</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>  assert<span class="op">.</span><span class="fu">match</span>(html<span class="op">,</span> <span class="ss">/data-didactic-visualization/</span>)<span class="op">;</span></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>  assert<span class="op">.</span><span class="fu">match</span>(html<span class="op">,</span> <span class="ss">/data-halliday-simulator/</span>)<span class="op">;</span></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>  assert<span class="op">.</span><span class="fu">match</span>(html<span class="op">,</span> <span class="ss">/-13,66/</span>)<span class="op">;</span></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span></code></pre></div>
+<ul class="task-list">
+<li><label><input type="checkbox" /><strong>Step 2: Executar o teste e
+confirmar RED</strong></label></li>
+</ul>
+<p>Run:
+<code>node --test site/testes/halliday-21-13-visualizacao.test.js</code></p>
+<p>Expected: FAIL com <code>ERR_MODULE_NOT_FOUND</code> para
+<code>modelo.js</code>.</p>
+<ul class="task-list">
+<li><label><input type="checkbox" /><strong>Step 3: Implementar o modelo
+mínimo da varredura</strong></label></li>
+</ul>
+<p>Usar a física existente, sem duplicar a lei de Coulomb:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode js"><code class="sourceCode javascript"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> { calculateForceSystem } <span class="im">from</span> <span class="st">&quot;../../nucleo/eletrostatica.js&quot;</span><span class="op">;</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> { scale } <span class="im">from</span> <span class="st">&quot;../../nucleo/vetores.js&quot;</span><span class="op">;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> { HALLIDAY_EQUILIBRIUM_X_CM<span class="op">,</span> HALLIDAY_PRESET } <span class="im">from</span> <span class="st">&quot;./preset.js&quot;</span><span class="op">;</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="im">export</span> <span class="kw">function</span> <span class="fu">fieldVectorsAt</span>(xCm<span class="op">,</span> yCm) {</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> testCharge <span class="op">=</span> {</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    <span class="op">...</span>HALLIDAY_PRESET<span class="op">.</span><span class="at">testCharge</span><span class="op">,</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    xCm<span class="op">,</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    yCm<span class="op">,</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  }<span class="op">;</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> system <span class="op">=</span> <span class="fu">calculateForceSystem</span>(HALLIDAY_PRESET<span class="op">.</span><span class="at">sources</span><span class="op">,</span> testCharge)<span class="op">;</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> testChargeC <span class="op">=</span> testCharge<span class="op">.</span><span class="at">sign</span> <span class="op">*</span> testCharge<span class="op">.</span><span class="at">magnitudeMicroC</span> <span class="op">*</span> <span class="fl">1e-6</span><span class="op">;</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> {</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>    <span class="dt">individual</span><span class="op">:</span> system<span class="op">.</span><span class="at">individual</span><span class="op">.</span><span class="fu">map</span>((entry) <span class="kw">=&gt;</span> ({</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>      <span class="dt">sourceId</span><span class="op">:</span> entry<span class="op">.</span><span class="at">sourceId</span><span class="op">,</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>      <span class="dt">field</span><span class="op">:</span> <span class="fu">scale</span>(entry<span class="op">.</span><span class="at">force</span><span class="op">,</span> <span class="dv">1</span> <span class="op">/</span> testChargeC)<span class="op">,</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>    }))<span class="op">,</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>    <span class="dt">resultant</span><span class="op">:</span> <span class="fu">scale</span>(system<span class="op">.</span><span class="at">resultant</span><span class="op">,</span> <span class="dv">1</span> <span class="op">/</span> testChargeC)<span class="op">,</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>  }<span class="op">;</span></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a><span class="im">export</span> <span class="kw">function</span> <span class="fu">equilibriumStoryFrames</span>() {</span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> <span class="bu">Object</span><span class="op">.</span><span class="fu">freeze</span>([</span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>    { <span class="dt">id</span><span class="op">:</span> <span class="st">&quot;off-axis&quot;</span><span class="op">,</span> <span class="dt">xCm</span><span class="op">:</span> <span class="op">-</span><span class="fl">13.66</span><span class="op">,</span> <span class="dt">yCm</span><span class="op">:</span> <span class="dv">5</span> }<span class="op">,</span></span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>    { <span class="dt">id</span><span class="op">:</span> <span class="st">&quot;between&quot;</span><span class="op">,</span> <span class="dt">xCm</span><span class="op">:</span> <span class="dv">5</span><span class="op">,</span> <span class="dt">yCm</span><span class="op">:</span> <span class="dv">0</span> }<span class="op">,</span></span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>    { <span class="dt">id</span><span class="op">:</span> <span class="st">&quot;right&quot;</span><span class="op">,</span> <span class="dt">xCm</span><span class="op">:</span> <span class="dv">15</span><span class="op">,</span> <span class="dt">yCm</span><span class="op">:</span> <span class="dv">0</span> }<span class="op">,</span></span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>    { <span class="dt">id</span><span class="op">:</span> <span class="st">&quot;left-far&quot;</span><span class="op">,</span> <span class="dt">xCm</span><span class="op">:</span> <span class="op">-</span><span class="dv">20</span><span class="op">,</span> <span class="dt">yCm</span><span class="op">:</span> <span class="dv">0</span> }<span class="op">,</span></span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>    { <span class="dt">id</span><span class="op">:</span> <span class="st">&quot;left-near&quot;</span><span class="op">,</span> <span class="dt">xCm</span><span class="op">:</span> <span class="op">-</span><span class="dv">5</span><span class="op">,</span> <span class="dt">yCm</span><span class="op">:</span> <span class="dv">0</span> }<span class="op">,</span></span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>    { <span class="dt">id</span><span class="op">:</span> <span class="st">&quot;equilibrium&quot;</span><span class="op">,</span> <span class="dt">xCm</span><span class="op">:</span> HALLIDAY_EQUILIBRIUM_X_CM<span class="op">,</span> <span class="dt">yCm</span><span class="op">:</span> <span class="dv">0</span> }<span class="op">,</span></span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>  ])<span class="op">;</span></span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>Completar cada frame com título e explicação cientificamente
+específica; nunca amostrar <code>(0,0)</code> ou
+<code>(10,0)</code>.</p>
+<ul class="task-list">
+<li><label><input type="checkbox" /><strong>Step 4: Montar o SVG, os
+controles e a integração local</strong></label></li>
+</ul>
+<p>Adicionar <code>visualizacao.css</code> no <code>&lt;head&gt;</code>
+e, antes do simulador livre, um painel cujo SVG mostre eixos, cargas,
+ponto candidato, <code>E₁</code>, <code>E₂</code>, resultante, barras de
+módulo e região atual. A escala de setas deve ser comum dentro de cada
+frame. <code>visualizacao.js</code> atualiza somente atributos/texto
+existentes e mantém o frame inicial no HTML como fallback.</p>
+<p>Em <code>app.js</code>, montar sem remover os controladores
+atuais:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode js"><code class="sourceCode javascript"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> equilibriumGeometry <span class="op">=</span> <span class="fu">mountEquilibriumGeometry</span>(</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="bu">document</span><span class="op">.</span><span class="fu">querySelector</span>(<span class="st">&quot;[data-didactic-visualization]&quot;</span>)<span class="op">,</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>)<span class="op">;</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>globalThis<span class="op">.</span><span class="at">lessonControllers</span> <span class="op">=</span> {</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  sectionNav<span class="op">,</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  chargeSimulator<span class="op">,</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  equilibriumGeometry<span class="op">,</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>}<span class="op">;</span></span></code></pre></div>
+<p>O passo final deve anunciar <code>x = −13,66 cm</code>,
+<code>y = 0</code>, <code>|E₁|/|E₂| = 1</code> e resultante nula. O CSS
+local inclui o media query de reduced motion e breakpoint móvel.</p>
+<ul class="task-list">
+<li><label><input type="checkbox" /><strong>Step 5: Executar GREEN
+direcionado e regressão do 21.13</strong></label></li>
+</ul>
+<p>Run:</p>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">node</span> <span class="at">--test</span> site/testes/halliday-21-13-visualizacao.test.js</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="ex">node</span> <span class="at">--test</span> <span class="at">--test-name-pattern</span><span class="op">=</span><span class="st">&quot;Halliday&quot;</span> site/testes/presets.test.js</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="ex">node</span> <span class="at">--check</span> site/exercicios/halliday-21-13/modelo.js</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="ex">node</span> <span class="at">--check</span> site/exercicios/halliday-21-13/visualizacao.js</span></code></pre></div>
+<p>Expected: PASS e checks com exit code 0.</p>
+<ul class="task-list">
+<li><label><input type="checkbox" /><strong>Step 6: Validar de verdade
+com Playwright e salvar evidência</strong></label></li>
+</ul>
+<p>Com <code>npm run serve</code> ativo em outro terminal, confirmar
+primeiro HTTP 200 com
+<code>curl -s -o /dev/null -w '%{http_code}' http://127.0.0.1:8000/exercicios/halliday-21-13/</code>.
+Depois:</p>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">playwright-cli</span> <span class="at">-s</span><span class="op">=</span>h2113 open http://127.0.0.1:8000/exercicios/halliday-21-13/</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="ex">playwright-cli</span> <span class="at">-s</span><span class="op">=</span>h2113 resize 1440 1000</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="ex">playwright-cli</span> <span class="at">-s</span><span class="op">=</span>h2113 run-code <span class="st">&quot;async page =&gt; { for (let i = 0; i &lt; 5; i += 1) await page.getByRole(&#39;button&#39;, {name: &#39;Próximo passo&#39;}).click(); }&quot;</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="ex">playwright-cli</span> <span class="at">-s</span><span class="op">=</span>h2113 screenshot <span class="at">--filename</span><span class="op">=</span>docs/superpowers/evidence/2026-08-12-exercicios-geometria-integral/21-13-desktop.png</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="ex">playwright-cli</span> <span class="at">-s</span><span class="op">=</span>h2113 eval <span class="st">&quot;document.documentElement.scrollWidth &lt;= document.documentElement.clientWidth&quot;</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="ex">playwright-cli</span> <span class="at">-s</span><span class="op">=</span>h2113 resize 390 844</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="ex">playwright-cli</span> <span class="at">-s</span><span class="op">=</span>h2113 screenshot <span class="at">--filename</span><span class="op">=</span>docs/superpowers/evidence/2026-08-12-exercicios-geometria-integral/21-13-mobile-390x844.png</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="ex">playwright-cli</span> <span class="at">-s</span><span class="op">=</span>h2113 run-code <span class="st">&quot;async page =&gt; { await page.emulateMedia({reducedMotion: &#39;reduce&#39;}); await page.reload(); if ((await page.locator(&#39;[data-didactic-visualization]&#39;).getAttribute(&#39;data-motion&#39;)) !== &#39;reduced&#39;) throw new Error(&#39;reduced motion ausente&#39;); }&quot;</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="ex">playwright-cli</span> <span class="at">-s</span><span class="op">=</span>h2113 console error</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="ex">playwright-cli</span> <span class="at">-s</span><span class="op">=</span>h2113 close</span></code></pre></div>
+<p>Também clicar <code>Reproduzir</code>, <code>Pausar</code>, alterar
+<code>Velocidade</code>, <code>Reiniciar</code> e confirmar via snapshot
+que o status e o passo mudam e retornam a zero. Expected:
+<code>true</code> no overflow, nenhum erro no console e dois PNGs não
+vazios.</p>
+<ul class="task-list">
+<li><label><input type="checkbox" /><strong>Step 7: Commit
+atômico</strong></label></li>
+</ul>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> add site/exercicios/halliday-21-13 site/testes/halliday-21-13-visualizacao.test.js docs/superpowers/evidence/2026-08-12-exercicios-geometria-integral/21-13-<span class="pp">*</span>.png</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">&quot;feat: explain Halliday 21.13 field equilibrium&quot;</span></span></code></pre></div>
+<hr />
+</section>
+<section id="task-2-halliday-21.18-mesa-de-forças-e-transferência-de-b"
+class="level3">
+<h3>Task 2: Halliday 21.18 — mesa de forças e transferência de B</h3>
+<p><strong>Implementador obrigatório:</strong> subagente fresco
+<code>implementador-21-18</code>.</p>
+<p><strong>Files:</strong></p>
+<ul>
+<li>Modify: <code>site/exercicios/halliday-21-18/index.html</code></li>
+<li>Create: <code>site/exercicios/halliday-21-18/app.js</code></li>
+<li>Create: <code>site/exercicios/halliday-21-18/modelo.js</code></li>
+<li>Create:
+<code>site/exercicios/halliday-21-18/visualizacao.js</code></li>
+<li>Create:
+<code>site/exercicios/halliday-21-18/visualizacao.css</code></li>
+<li>Create:
+<code>site/testes/halliday-21-18-visualizacao.test.js</code></li>
+<li>Create:
+<code>docs/superpowers/evidence/2026-08-12-exercicios-geometria-integral/21-18-desktop.png</code></li>
+<li>Create:
+<code>docs/superpowers/evidence/2026-08-12-exercicios-geometria-integral/21-18-mobile-390x844.png</code></li>
+</ul>
+<p><strong>Interfaces:</strong></p>
+<ul>
+<li><p>Consumes: somente APIs padrão do navegador e
+<code>../exercicio-estatico.js</code> por import de efeito
+colateral.</p></li>
+<li><p>Produces: <code>solveMeasuredForces(sumN, differenceN)</code>,
+<code>forceSceneAt(progress, forceB, forceC)</code> e
+<code>mountForceLocus(root)</code>.</p></li>
+<li><p><label><input type="checkbox" /><strong>Step 1: Escrever o teste
+RED das duas configurações</strong></label></p></li>
+</ul>
+<div class="sourceCode" id="cb7"><pre class="sourceCode js"><code class="sourceCode javascript"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> assert <span class="im">from</span> <span class="st">&quot;node:assert/strict&quot;</span><span class="op">;</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> test <span class="im">from</span> <span class="st">&quot;node:test&quot;</span><span class="op">;</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> { forceSceneAt<span class="op">,</span> solveMeasuredForces } <span class="im">from</span> <span class="st">&quot;../exercicios/halliday-21-18/modelo.js&quot;</span><span class="op">;</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="fu">test</span>(<span class="st">&quot;21.18 recupera as forças e os extremos medidos&quot;</span><span class="op">,</span> () <span class="kw">=&gt;</span> {</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> solved <span class="op">=</span> <span class="fu">solveMeasuredForces</span>(<span class="fl">2.014e-23</span><span class="op">,</span> <span class="fl">2.877e-24</span>)<span class="op">;</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>  assert<span class="op">.</span><span class="fu">equal</span>(solved<span class="op">.</span><span class="at">forceB</span><span class="op">,</span> <span class="fl">8.6315e-24</span>)<span class="op">;</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>  assert<span class="op">.</span><span class="fu">equal</span>(solved<span class="op">.</span><span class="at">forceC</span><span class="op">,</span> <span class="fl">1.15085e-23</span>)<span class="op">;</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>  assert<span class="op">.</span><span class="fu">ok</span>(<span class="bu">Math</span><span class="op">.</span><span class="fu">abs</span>(solved<span class="op">.</span><span class="at">chargeRatio</span> <span class="op">-</span> <span class="fl">1.3333140242</span>) <span class="op">&lt;</span> <span class="fl">1e-10</span>)<span class="op">;</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>  assert<span class="op">.</span><span class="fu">ok</span>(<span class="bu">Math</span><span class="op">.</span><span class="fu">abs</span>(<span class="fu">forceSceneAt</span>(<span class="dv">0</span><span class="op">,</span> solved<span class="op">.</span><span class="at">forceB</span><span class="op">,</span> solved<span class="op">.</span><span class="at">forceC</span>)<span class="op">.</span><span class="at">resultant</span><span class="op">.</span><span class="at">x</span> <span class="op">+</span> <span class="fl">2.014e-23</span>) <span class="op">&lt;</span> <span class="fl">1e-35</span>)<span class="op">;</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>  assert<span class="op">.</span><span class="fu">ok</span>(<span class="bu">Math</span><span class="op">.</span><span class="fu">abs</span>(<span class="fu">forceSceneAt</span>(<span class="dv">1</span><span class="op">,</span> solved<span class="op">.</span><span class="at">forceB</span><span class="op">,</span> solved<span class="op">.</span><span class="at">forceC</span>)<span class="op">.</span><span class="at">resultant</span><span class="op">.</span><span class="at">x</span> <span class="op">+</span> <span class="fl">2.877e-24</span>) <span class="op">&lt;</span> <span class="fl">1e-35</span>)<span class="op">;</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span></code></pre></div>
+<p>Acrescentar leitura do HTML exigindo os cinco controles,
+<code>data-force-locus</code>, <code>role="img"</code>,
+<code>title</code>, <code>desc</code>, <code>1,33</code>,
+<code>2,014</code> e <code>2,877</code>.</p>
+<ul class="task-list">
+<li><label><input type="checkbox" /><strong>Step 2: Rodar e confirmar
+RED</strong></label></li>
+</ul>
+<p>Run:
+<code>node --test site/testes/halliday-21-18-visualizacao.test.js</code></p>
+<p>Expected: FAIL por ausência de <code>modelo.js</code>.</p>
+<ul class="task-list">
+<li><label><input type="checkbox" /><strong>Step 3: Implementar o modelo
+de soma/diferença e do locus</strong></label></li>
+</ul>
+<div class="sourceCode" id="cb8"><pre class="sourceCode js"><code class="sourceCode javascript"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="im">export</span> <span class="kw">function</span> <span class="fu">solveMeasuredForces</span>(sumN<span class="op">,</span> differenceN) {</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="op">!</span>(sumN <span class="op">&gt;</span> differenceN <span class="op">&amp;&amp;</span> differenceN <span class="op">&gt;</span> <span class="dv">0</span>)) <span class="cf">throw</span> <span class="kw">new</span> <span class="bu">RangeError</span>(<span class="st">&quot;As medidas devem satisfazer S &gt; D &gt; 0.&quot;</span>)<span class="op">;</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> forceB <span class="op">=</span> (sumN <span class="op">-</span> differenceN) <span class="op">/</span> <span class="dv">2</span><span class="op">;</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> forceC <span class="op">=</span> (sumN <span class="op">+</span> differenceN) <span class="op">/</span> <span class="dv">2</span><span class="op">;</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> { forceB<span class="op">,</span> forceC<span class="op">,</span> <span class="dt">chargeRatio</span><span class="op">:</span> forceC <span class="op">/</span> forceB }<span class="op">;</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="im">export</span> <span class="kw">function</span> <span class="fu">forceSceneAt</span>(progress<span class="op">,</span> forceB<span class="op">,</span> forceC) {</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> angle <span class="op">=</span> <span class="bu">Math</span><span class="op">.</span><span class="cn">PI</span> <span class="op">*</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">min</span>(<span class="dv">1</span><span class="op">,</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">max</span>(<span class="dv">0</span><span class="op">,</span> progress))<span class="op">;</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> bPosition <span class="op">=</span> { <span class="dt">x</span><span class="op">:</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">cos</span>(angle)<span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="op">-</span><span class="bu">Math</span><span class="op">.</span><span class="fu">sin</span>(angle) }<span class="op">;</span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> bForce <span class="op">=</span> { <span class="dt">x</span><span class="op">:</span> <span class="op">-</span>forceB <span class="op">*</span> bPosition<span class="op">.</span><span class="at">x</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="op">-</span>forceB <span class="op">*</span> bPosition<span class="op">.</span><span class="at">y</span> }<span class="op">;</span></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> cForce <span class="op">=</span> { <span class="dt">x</span><span class="op">:</span> <span class="op">-</span>forceC<span class="op">,</span> <span class="dt">y</span><span class="op">:</span> <span class="dv">0</span> }<span class="op">;</span></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> {</span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>    bPosition<span class="op">,</span></span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>    bForce<span class="op">,</span></span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>    cForce<span class="op">,</span></span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>    <span class="dt">resultant</span><span class="op">:</span> { <span class="dt">x</span><span class="op">:</span> bForce<span class="op">.</span><span class="at">x</span> <span class="op">+</span> cForce<span class="op">.</span><span class="at">x</span><span class="op">,</span> <span class="dt">y</span><span class="op">:</span> bForce<span class="op">.</span><span class="at">y</span> }<span class="op">,</span></span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>  }<span class="op">;</span></span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>Os estados intermediários devem carregar
+<code>measured: false</code>; apenas progressos 0 e 1 recebem as
+equações do enunciado.</p>
+<ul class="task-list">
+<li><label><input type="checkbox" /><strong>Step 4: Substituir o
+diagrama estático por uma mesa de forças progressivamente
+aprimorada</strong></label></li>
+</ul>
+<p>Preservar as duas configurações visíveis no HTML inicial. Envolver o
+SVG com <code>data-didactic-visualization data-force-locus</code>,
+acrescentar circunferência tracejada centrada em A, dimensão
+<code>r</code>, vetores ponta a cauda e painel numérico de
+<code>F_B</code>, <code>F_C</code> e resultante. O movimento de B é uma
+interpolação no semicírculo e deve exibir “trajeto de transferência;
+configuração não medida” fora dos extremos.</p>
+<p>Criar <code>app.js</code>:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode js"><code class="sourceCode javascript"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> <span class="st">&quot;../exercicio-estatico.js&quot;</span><span class="op">;</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> { mountForceLocus } <span class="im">from</span> <span class="st">&quot;./visualizacao.js&quot;</span><span class="op">;</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>globalThis<span class="op">.</span><span class="at">lessonControllers</span> <span class="op">=</span> {</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  <span class="dt">forceLocus</span><span class="op">:</span> <span class="fu">mountForceLocus</span>(<span class="bu">document</span><span class="op">.</span><span class="fu">querySelector</span>(<span class="st">&quot;[data-force-locus]&quot;</span>))<span class="op">,</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>}<span class="op">;</span></span></code></pre></div>
+<p>No fim de <code>index.html</code>, substituir o carregamento direto
+de <code>../exercicio-estatico.js</code> por <code>./app.js</code>; o
+novo módulo já importa o inicializador compartilhado.</p>
+<p>Manter todo texto da dedução e o valor <code>q_C/q_B ≈ 1,33</code>.
+Incluir CSS local, controles comuns e passos: soma, módulo fixo,
+transferência, diferença, isolamento e razão.</p>
+<ul class="task-list">
+<li><label><input type="checkbox" /><strong>Step 5: Rodar GREEN
+direcionado</strong></label></li>
+</ul>
+<p>Run:</p>
+<div class="sourceCode" id="cb10"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="ex">node</span> <span class="at">--test</span> site/testes/halliday-21-18-visualizacao.test.js</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="ex">node</span> <span class="at">--test</span> <span class="at">--test-name-pattern</span><span class="op">=</span><span class="st">&quot;21.18&quot;</span> site/testes/exercicios-halliday.test.js</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="ex">node</span> <span class="at">--check</span> site/exercicios/halliday-21-18/modelo.js</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="ex">node</span> <span class="at">--check</span> site/exercicios/halliday-21-18/visualizacao.js</span></code></pre></div>
+<p>Expected: PASS.</p>
+<ul class="task-list">
+<li><label><input type="checkbox" /><strong>Step 6: Validar locus,
+controles e responsividade com Playwright</strong></label></li>
+</ul>
+<p>Confirmar HTTP 200 e executar:</p>
+<div class="sourceCode" id="cb11"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="ex">playwright-cli</span> <span class="at">-s</span><span class="op">=</span>h2118 open http://127.0.0.1:8000/exercicios/halliday-21-18/</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="ex">playwright-cli</span> <span class="at">-s</span><span class="op">=</span>h2118 resize 1440 1000</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="ex">playwright-cli</span> <span class="at">-s</span><span class="op">=</span>h2118 run-code <span class="st">&quot;async page =&gt; { for (let i = 0; i &lt; 4; i += 1) await page.getByRole(&#39;button&#39;, {name: &#39;Próximo passo&#39;}).click(); }&quot;</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="ex">playwright-cli</span> <span class="at">-s</span><span class="op">=</span>h2118 screenshot <span class="at">--filename</span><span class="op">=</span>docs/superpowers/evidence/2026-08-12-exercicios-geometria-integral/21-18-desktop.png</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="ex">playwright-cli</span> <span class="at">-s</span><span class="op">=</span>h2118 resize 390 844</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="ex">playwright-cli</span> <span class="at">-s</span><span class="op">=</span>h2118 eval <span class="st">&quot;document.documentElement.scrollWidth &lt;= document.documentElement.clientWidth&quot;</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="ex">playwright-cli</span> <span class="at">-s</span><span class="op">=</span>h2118 screenshot <span class="at">--filename</span><span class="op">=</span>docs/superpowers/evidence/2026-08-12-exercicios-geometria-integral/21-18-mobile-390x844.png</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="ex">playwright-cli</span> <span class="at">-s</span><span class="op">=</span>h2118 run-code <span class="st">&quot;async page =&gt; { await page.emulateMedia({reducedMotion: &#39;reduce&#39;}); await page.reload(); if ((await page.locator(&#39;[data-force-locus]&#39;).getAttribute(&#39;data-motion&#39;)) !== &#39;reduced&#39;) throw new Error(&#39;reduced motion ausente&#39;); }&quot;</span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="ex">playwright-cli</span> <span class="at">-s</span><span class="op">=</span>h2118 console error</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a><span class="ex">playwright-cli</span> <span class="at">-s</span><span class="op">=</span>h2118 close</span></code></pre></div>
+<p>Exercitar também play/pause/reset/velocidade e conferir que a
+distância visual de B a A permanece constante durante a transição.
+Expected: sem overflow, sem erro e screenshots legíveis.</p>
+<ul class="task-list">
+<li><label><input type="checkbox" /><strong>Step 7: Commit
+atômico</strong></label></li>
+</ul>
+<div class="sourceCode" id="cb12"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> add site/exercicios/halliday-21-18 site/testes/halliday-21-18-visualizacao.test.js docs/superpowers/evidence/2026-08-12-exercicios-geometria-integral/21-18-<span class="pp">*</span>.png</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">&quot;feat: animate Halliday 21.18 force composition&quot;</span></span></code></pre></div>
+<hr />
+</section>
+<section id="task-3-halliday-21.33-cadeia-discreta-de-contagem"
+class="level3">
+<h3>Task 3: Halliday 21.33 — cadeia discreta de contagem</h3>
+<p><strong>Implementador obrigatório:</strong> subagente fresco
+<code>implementador-21-33</code>.</p>
+<p><strong>Files:</strong></p>
+<ul>
+<li>Modify: <code>site/exercicios/halliday-21-33/index.html</code></li>
+<li>Modify: <code>site/exercicios/halliday-21-33/app.js</code></li>
+<li>Create: <code>site/exercicios/halliday-21-33/modelo.js</code></li>
+<li>Create:
+<code>site/exercicios/halliday-21-33/visualizacao.js</code></li>
+<li>Create:
+<code>site/exercicios/halliday-21-33/visualizacao.css</code></li>
+<li>Create:
+<code>site/testes/halliday-21-33-visualizacao.test.js</code></li>
+<li>Create:
+<code>docs/superpowers/evidence/2026-08-12-exercicios-geometria-integral/21-33-desktop.png</code></li>
+<li>Create:
+<code>docs/superpowers/evidence/2026-08-12-exercicios-geometria-integral/21-33-mobile-390x844.png</code></li>
+</ul>
+<p><strong>Interfaces:</strong></p>
+<ul>
+<li><p>Consumes: <code>positiveChargeChain(sample)</code> de
+<code>site/nucleo/contagem-particulas.js</code>; o explorador existente
+e <code>substancias.js</code> permanecem sem alterações.</p></li>
+<li><p>Produces: <code>waterChargeSteps()</code> e
+<code>mountChargeCounting(root)</code>.</p></li>
+<li><p><label><input type="checkbox" /><strong>Step 1: Escrever o teste
+RED da cadeia e da neutralidade</strong></label></p></li>
+</ul>
+<div class="sourceCode" id="cb13"><pre
+class="sourceCode js"><code class="sourceCode javascript"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> assert <span class="im">from</span> <span class="st">&quot;node:assert/strict&quot;</span><span class="op">;</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> test <span class="im">from</span> <span class="st">&quot;node:test&quot;</span><span class="op">;</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> { waterChargeSteps } <span class="im">from</span> <span class="st">&quot;../exercicios/halliday-21-33/modelo.js&quot;</span><span class="op">;</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="fu">test</span>(<span class="st">&quot;21.33 percorre volume, partículas e carga sem perder a escala&quot;</span><span class="op">,</span> () <span class="kw">=&gt;</span> {</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> steps <span class="op">=</span> <span class="fu">waterChargeSteps</span>()<span class="op">;</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>  assert<span class="op">.</span><span class="fu">deepEqual</span>(steps<span class="op">.</span><span class="fu">map</span>((step) <span class="kw">=&gt;</span> step<span class="op">.</span><span class="at">id</span>)<span class="op">,</span> [<span class="st">&quot;volume&quot;</span><span class="op">,</span> <span class="st">&quot;mass&quot;</span><span class="op">,</span> <span class="st">&quot;moles&quot;</span><span class="op">,</span> <span class="st">&quot;molecules&quot;</span><span class="op">,</span> <span class="st">&quot;protons&quot;</span><span class="op">,</span> <span class="st">&quot;charge&quot;</span>])<span class="op">;</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>  assert<span class="op">.</span><span class="fu">equal</span>(steps[<span class="dv">1</span>]<span class="op">.</span><span class="at">value</span><span class="op">,</span> <span class="dv">250</span>)<span class="op">;</span></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>  assert<span class="op">.</span><span class="fu">ok</span>(<span class="bu">Math</span><span class="op">.</span><span class="fu">abs</span>(steps[<span class="dv">2</span>]<span class="op">.</span><span class="at">value</span> <span class="op">-</span> <span class="fl">13.8734739</span>) <span class="op">&lt;</span> <span class="fl">1e-6</span>)<span class="op">;</span></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>  assert<span class="op">.</span><span class="fu">ok</span>(<span class="bu">Math</span><span class="op">.</span><span class="fu">abs</span>(steps[<span class="dv">4</span>]<span class="op">.</span><span class="at">value</span> <span class="op">-</span> <span class="fl">8.35e25</span>) <span class="op">/</span> <span class="fl">8.35e25</span> <span class="op">&lt;</span> <span class="fl">0.001</span>)<span class="op">;</span></span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>  assert<span class="op">.</span><span class="fu">ok</span>(<span class="bu">Math</span><span class="op">.</span><span class="fu">abs</span>(steps[<span class="dv">5</span>]<span class="op">.</span><span class="at">value</span> <span class="op">-</span> <span class="fl">1.34e7</span>) <span class="op">/</span> <span class="fl">1.34e7</span> <span class="op">&lt;</span> <span class="fl">0.002</span>)<span class="op">;</span></span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>  assert<span class="op">.</span><span class="fu">equal</span>(steps[<span class="dv">5</span>]<span class="op">.</span><span class="at">netChargeCoulombs</span><span class="op">,</span> <span class="dv">0</span>)<span class="op">;</span></span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span></code></pre></div>
+<p>O mesmo teste lê HTML/CSS e exige controles, régua explicitamente
+<code>logarítmica</code>, texto <code>ícones simbólicos</code>,
+<code>+1,34 × 10⁷ C</code>, <code>−1,34 × 10⁷ C</code>,
+<code>data-substance-explorer</code> e media query reduced motion.</p>
+<ul class="task-list">
+<li><label><input type="checkbox" /><strong>Step 2: Rodar e confirmar
+RED</strong></label></li>
+</ul>
+<p>Run:
+<code>node --test site/testes/halliday-21-33-visualizacao.test.js</code></p>
+<p>Expected: FAIL por ausência de <code>modelo.js</code>.</p>
+<ul class="task-list">
+<li><label><input type="checkbox" /><strong>Step 3: Construir as seis
+estações com o núcleo existente</strong></label></li>
+</ul>
+<div class="sourceCode" id="cb14"><pre
+class="sourceCode js"><code class="sourceCode javascript"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> { positiveChargeChain } <span class="im">from</span> <span class="st">&quot;../../nucleo/contagem-particulas.js&quot;</span><span class="op">;</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="im">export</span> <span class="kw">function</span> <span class="fu">waterChargeSteps</span>() {</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> chain <span class="op">=</span> <span class="fu">positiveChargeChain</span>({</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>    <span class="dt">volumeCm3</span><span class="op">:</span> <span class="dv">250</span><span class="op">,</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>    <span class="dt">densityGramsPerCm3</span><span class="op">:</span> <span class="dv">1</span><span class="op">,</span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>    <span class="dt">molarMassGramsPerMol</span><span class="op">:</span> <span class="fl">18.02</span><span class="op">,</span></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>    <span class="dt">protonsPerUnit</span><span class="op">:</span> <span class="dv">10</span><span class="op">,</span></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>  })<span class="op">;</span></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> <span class="bu">Object</span><span class="op">.</span><span class="fu">freeze</span>([</span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>    { <span class="dt">id</span><span class="op">:</span> <span class="st">&quot;volume&quot;</span><span class="op">,</span> <span class="dt">value</span><span class="op">:</span> <span class="dv">250</span><span class="op">,</span> <span class="dt">unit</span><span class="op">:</span> <span class="st">&quot;cm³&quot;</span> }<span class="op">,</span></span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>    { <span class="dt">id</span><span class="op">:</span> <span class="st">&quot;mass&quot;</span><span class="op">,</span> <span class="dt">value</span><span class="op">:</span> chain<span class="op">.</span><span class="at">massGrams</span><span class="op">,</span> <span class="dt">unit</span><span class="op">:</span> <span class="st">&quot;g&quot;</span> }<span class="op">,</span></span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>    { <span class="dt">id</span><span class="op">:</span> <span class="st">&quot;moles&quot;</span><span class="op">,</span> <span class="dt">value</span><span class="op">:</span> chain<span class="op">.</span><span class="at">moles</span><span class="op">,</span> <span class="dt">unit</span><span class="op">:</span> <span class="st">&quot;mol&quot;</span> }<span class="op">,</span></span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>    { <span class="dt">id</span><span class="op">:</span> <span class="st">&quot;molecules&quot;</span><span class="op">,</span> <span class="dt">value</span><span class="op">:</span> chain<span class="op">.</span><span class="at">units</span><span class="op">,</span> <span class="dt">unit</span><span class="op">:</span> <span class="st">&quot;moléculas&quot;</span> }<span class="op">,</span></span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>    { <span class="dt">id</span><span class="op">:</span> <span class="st">&quot;protons&quot;</span><span class="op">,</span> <span class="dt">value</span><span class="op">:</span> chain<span class="op">.</span><span class="at">protonCount</span><span class="op">,</span> <span class="dt">unit</span><span class="op">:</span> <span class="st">&quot;prótons&quot;</span> }<span class="op">,</span></span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a>    { <span class="dt">id</span><span class="op">:</span> <span class="st">&quot;charge&quot;</span><span class="op">,</span> <span class="dt">value</span><span class="op">:</span> chain<span class="op">.</span><span class="at">chargeCoulombs</span><span class="op">,</span> <span class="dt">unit</span><span class="op">:</span> <span class="st">&quot;C&quot;</span><span class="op">,</span> <span class="dt">netChargeCoulombs</span><span class="op">:</span> <span class="dv">0</span> }<span class="op">,</span></span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a>  ])<span class="op">;</span></span>
+<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>Adicionar a cada passo fator, unidade que entra, unidade cancelada,
+texto acessível e expoente para a régua; formatar apenas na camada
+visual.</p>
+<ul class="task-list">
+<li><label><input type="checkbox" /><strong>Step 4: Aprimorar a cadeia
+existente sem afetar o explorador</strong></label></li>
+</ul>
+<p>Trocar o SVG estático da cadeia por um painel HTML/SVG inicial que
+contenha as seis estações. O controlador ativa uma estação por passo,
+risca a unidade cancelada, desloca o marcador da régua logarítmica e
+finaliza com barras positiva/negativa iguais. O painel deve dizer que os
+pontos são ícones simbólicos, não <code>8,35 × 10²⁵</code> partículas
+desenhadas.</p>
+<p>Em <code>app.js</code>, conservar <code>sectionNav</code> e
+<code>substanceExplorer</code> e acrescentar:</p>
+<div class="sourceCode" id="cb15"><pre
+class="sourceCode js"><code class="sourceCode javascript"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> chargeCounting <span class="op">=</span> <span class="fu">mountChargeCounting</span>(</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="bu">document</span><span class="op">.</span><span class="fu">querySelector</span>(<span class="st">&quot;[data-didactic-visualization]&quot;</span>)<span class="op">,</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>)<span class="op">;</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>globalThis<span class="op">.</span><span class="at">lessonControllers</span> <span class="op">=</span> {</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>  sectionNav<span class="op">,</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>  substanceExplorer<span class="op">,</span></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>  chargeCounting<span class="op">,</span></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>}<span class="op">;</span></span></code></pre></div>
+<p>Não editar <code>substancias.js</code>,
+<code>explorador-substancias.js</code>,
+<code>contagem-particulas.js</code> ou os resultados textuais
+atuais.</p>
+<ul class="task-list">
+<li><label><input type="checkbox" /><strong>Step 5: Rodar GREEN
+direcionado e a regressão de contagem</strong></label></li>
+</ul>
+<p>Run:</p>
+<div class="sourceCode" id="cb16"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="ex">node</span> <span class="at">--test</span> site/testes/halliday-21-33-visualizacao.test.js</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="ex">node</span> <span class="at">--test</span> site/testes/contagem-particulas.test.js</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="ex">node</span> <span class="at">--test</span> <span class="at">--test-name-pattern</span><span class="op">=</span><span class="st">&quot;21.33&quot;</span> site/testes/exercicios-halliday.test.js</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="ex">node</span> <span class="at">--check</span> site/exercicios/halliday-21-33/modelo.js</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="ex">node</span> <span class="at">--check</span> site/exercicios/halliday-21-33/visualizacao.js</span></code></pre></div>
+<p>Expected: PASS.</p>
+<ul class="task-list">
+<li><label><input type="checkbox" /><strong>Step 6: Validar escala,
+neutralidade e mobile com Playwright</strong></label></li>
+</ul>
+<p>Confirmar HTTP 200 e executar:</p>
+<div class="sourceCode" id="cb17"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="ex">playwright-cli</span> <span class="at">-s</span><span class="op">=</span>h2133 open http://127.0.0.1:8000/exercicios/halliday-21-33/</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="ex">playwright-cli</span> <span class="at">-s</span><span class="op">=</span>h2133 resize 1440 1000</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="ex">playwright-cli</span> <span class="at">-s</span><span class="op">=</span>h2133 run-code <span class="st">&quot;async page =&gt; { for (let i = 0; i &lt; 5; i += 1) await page.getByRole(&#39;button&#39;, {name: &#39;Próximo passo&#39;}).click(); }&quot;</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="ex">playwright-cli</span> <span class="at">-s</span><span class="op">=</span>h2133 screenshot <span class="at">--filename</span><span class="op">=</span>docs/superpowers/evidence/2026-08-12-exercicios-geometria-integral/21-33-desktop.png</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="ex">playwright-cli</span> <span class="at">-s</span><span class="op">=</span>h2133 resize 390 844</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="ex">playwright-cli</span> <span class="at">-s</span><span class="op">=</span>h2133 eval <span class="st">&quot;document.documentElement.scrollWidth &lt;= document.documentElement.clientWidth&quot;</span></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="ex">playwright-cli</span> <span class="at">-s</span><span class="op">=</span>h2133 screenshot <span class="at">--filename</span><span class="op">=</span>docs/superpowers/evidence/2026-08-12-exercicios-geometria-integral/21-33-mobile-390x844.png</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a><span class="ex">playwright-cli</span> <span class="at">-s</span><span class="op">=</span>h2133 run-code <span class="st">&quot;async page =&gt; { await page.emulateMedia({reducedMotion: &#39;reduce&#39;}); await page.reload(); if ((await page.locator(&#39;[data-didactic-visualization]&#39;).getAttribute(&#39;data-motion&#39;)) !== &#39;reduced&#39;) throw new Error(&#39;reduced motion ausente&#39;); }&quot;</span></span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a><span class="ex">playwright-cli</span> <span class="at">-s</span><span class="op">=</span>h2133 console error</span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a><span class="ex">playwright-cli</span> <span class="at">-s</span><span class="op">=</span>h2133 close</span></code></pre></div>
+<p>Depois do reset, selecionar também “Nitrogênio” no explorador
+existente e confirmar que ele ainda recalcula. Expected: resultado da
+água, saldo zero e explorador preservados.</p>
+<ul class="task-list">
+<li><label><input type="checkbox" /><strong>Step 7: Commit
+atômico</strong></label></li>
+</ul>
+<div class="sourceCode" id="cb18"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> add site/exercicios/halliday-21-33/index.html site/exercicios/halliday-21-33/app.js site/exercicios/halliday-21-33/modelo.js site/exercicios/halliday-21-33/visualizacao.js site/exercicios/halliday-21-33/visualizacao.css site/testes/halliday-21-33-visualizacao.test.js docs/superpowers/evidence/2026-08-12-exercicios-geometria-integral/21-33-<span class="pp">*</span>.png</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">&quot;feat: animate Halliday 21.33 charge counting&quot;</span></span></code></pre></div>
+<hr />
+</section>
+<section id="task-4-halliday-21.34-decomposição-e-quantização"
+class="level3">
+<h3>Task 4: Halliday 21.34 — decomposição e quantização</h3>
+<p><strong>Implementador obrigatório:</strong> subagente fresco
+<code>implementador-21-34</code>.</p>
+<p><strong>Files:</strong></p>
+<ul>
+<li>Modify: <code>site/exercicios/halliday-21-34/index.html</code></li>
+<li>Create: <code>site/exercicios/halliday-21-34/app.js</code></li>
+<li>Create: <code>site/exercicios/halliday-21-34/modelo.js</code></li>
+<li>Create:
+<code>site/exercicios/halliday-21-34/visualizacao.js</code></li>
+<li>Create:
+<code>site/exercicios/halliday-21-34/visualizacao.css</code></li>
+<li>Create:
+<code>site/testes/halliday-21-34-visualizacao.test.js</code></li>
+<li>Create:
+<code>docs/superpowers/evidence/2026-08-12-exercicios-geometria-integral/21-34-desktop.png</code></li>
+<li>Create:
+<code>docs/superpowers/evidence/2026-08-12-exercicios-geometria-integral/21-34-mobile-390x844.png</code></li>
+</ul>
+<p><strong>Interfaces:</strong></p>
+<ul>
+<li><p>Consumes: somente APIs padrão e
+<code>../exercicio-estatico.js</code>.</p></li>
+<li><p>Produces: <code>equilibriumAngleDegrees(n)</code>,
+<code>normalizedForceComponents(n)</code> e
+<code>mountQuantizedBalance(root)</code>.</p></li>
+<li><p><label><input type="checkbox" /><strong>Step 1: Escrever o teste
+RED dos cinco ângulos e do balanço</strong></label></p></li>
+</ul>
+<div class="sourceCode" id="cb19"><pre
+class="sourceCode js"><code class="sourceCode javascript"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> assert <span class="im">from</span> <span class="st">&quot;node:assert/strict&quot;</span><span class="op">;</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> test <span class="im">from</span> <span class="st">&quot;node:test&quot;</span><span class="op">;</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> {</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>  equilibriumAngleDegrees<span class="op">,</span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>  normalizedForceComponents<span class="op">,</span></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>} <span class="im">from</span> <span class="st">&quot;../exercicios/halliday-21-34/modelo.js&quot;</span><span class="op">;</span></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a><span class="fu">test</span>(<span class="st">&quot;21.34 converte cargas inteiras nos ângulos físicos&quot;</span><span class="op">,</span> () <span class="kw">=&gt;</span> {</span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> angles <span class="op">=</span> [<span class="dv">1</span><span class="op">,</span> <span class="dv">2</span><span class="op">,</span> <span class="dv">3</span><span class="op">,</span> <span class="dv">4</span><span class="op">,</span> <span class="dv">5</span>]<span class="op">.</span><span class="fu">map</span>(equilibriumAngleDegrees)<span class="op">;</span></span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>  assert<span class="op">.</span><span class="fu">deepEqual</span>(angles<span class="op">.</span><span class="fu">map</span>((value) <span class="kw">=&gt;</span> <span class="bu">Number</span>(value<span class="op">.</span><span class="fu">toFixed</span>(<span class="dv">2</span>)))<span class="op">,</span> [<span class="fl">37.47</span><span class="op">,</span> <span class="fl">50.95</span><span class="op">,</span> <span class="fl">56.61</span><span class="op">,</span> <span class="fl">60.00</span><span class="op">,</span> <span class="fl">62.34</span>])<span class="op">;</span></span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (<span class="kw">let</span> n <span class="op">=</span> <span class="dv">1</span><span class="op">;</span> n <span class="op">&lt;=</span> <span class="dv">5</span><span class="op">;</span> n <span class="op">+=</span> <span class="dv">1</span>) {</span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> forces <span class="op">=</span> <span class="fu">normalizedForceComponents</span>(n)<span class="op">;</span></span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a>    assert<span class="op">.</span><span class="fu">ok</span>(<span class="bu">Math</span><span class="op">.</span><span class="fu">abs</span>(forces<span class="op">.</span><span class="at">verticalPair</span>) <span class="op">&lt;</span> <span class="fl">1e-12</span>)<span class="op">;</span></span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a>    assert<span class="op">.</span><span class="fu">ok</span>(<span class="bu">Math</span><span class="op">.</span><span class="fu">abs</span>(forces<span class="op">.</span><span class="at">horizontalResidual</span>) <span class="op">&lt;</span> <span class="fl">1e-12</span>)<span class="op">;</span></span>
+<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span></code></pre></div>
+<p>Ler HTML e exigir seletor discreto <code>n = q/e</code>, cinco
+opções, controles comuns, <code>cos²</code>, <code>cos³</code>, as três
+respostas e SVG acessível.</p>
+<ul class="task-list">
+<li><label><input type="checkbox" /><strong>Step 2: Rodar e confirmar
+RED</strong></label></li>
+</ul>
+<p>Run:
+<code>node --test site/testes/halliday-21-34-visualizacao.test.js</code></p>
+<p>Expected: FAIL por ausência de <code>modelo.js</code>.</p>
+<ul class="task-list">
+<li><label><input type="checkbox" /><strong>Step 3: Implementar a
+geometria normalizada</strong></label></li>
+</ul>
+<div class="sourceCode" id="cb20"><pre
+class="sourceCode js"><code class="sourceCode javascript"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">assertIonMultiple</span>(n) {</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="op">!</span><span class="bu">Number</span><span class="op">.</span><span class="fu">isInteger</span>(n) <span class="op">||</span> n <span class="op">&lt;</span> <span class="dv">1</span> <span class="op">||</span> n <span class="op">&gt;</span> <span class="dv">5</span>) <span class="cf">throw</span> <span class="kw">new</span> <span class="bu">RangeError</span>(<span class="st">&quot;n deve ser inteiro entre 1 e 5.&quot;</span>)<span class="op">;</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a><span class="im">export</span> <span class="kw">function</span> <span class="fu">equilibriumAngleDegrees</span>(n) {</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">assertIonMultiple</span>(n)<span class="op">;</span></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">acos</span>((<span class="dv">1</span> <span class="op">/</span> (<span class="dv">2</span> <span class="op">*</span> n)) <span class="op">**</span> (<span class="dv">1</span> <span class="op">/</span> <span class="dv">3</span>)) <span class="op">*</span> <span class="dv">180</span> <span class="op">/</span> <span class="bu">Math</span><span class="op">.</span><span class="cn">PI</span><span class="op">;</span></span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a><span class="im">export</span> <span class="kw">function</span> <span class="fu">normalizedForceComponents</span>(n) {</span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> theta <span class="op">=</span> <span class="fu">equilibriumAngleDegrees</span>(n) <span class="op">*</span> <span class="bu">Math</span><span class="op">.</span><span class="cn">PI</span> <span class="op">/</span> <span class="dv">180</span><span class="op">;</span></span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> horizontalOne <span class="op">=</span> n <span class="op">*</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">cos</span>(theta) <span class="op">**</span> <span class="dv">3</span><span class="op">;</span></span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> verticalOne <span class="op">=</span> n <span class="op">*</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">cos</span>(theta) <span class="op">**</span> <span class="dv">2</span> <span class="op">*</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">sin</span>(theta)<span class="op">;</span></span>
+<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> {</span>
+<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a>    theta<span class="op">,</span></span>
+<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a>    <span class="dt">distanceRatio</span><span class="op">:</span> <span class="dv">1</span> <span class="op">/</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">cos</span>(theta)<span class="op">,</span></span>
+<span id="cb20-17"><a href="#cb20-17" aria-hidden="true" tabindex="-1"></a>    horizontalOne<span class="op">,</span></span>
+<span id="cb20-18"><a href="#cb20-18" aria-hidden="true" tabindex="-1"></a>    <span class="dt">verticalPair</span><span class="op">:</span> verticalOne <span class="op">-</span> verticalOne<span class="op">,</span></span>
+<span id="cb20-19"><a href="#cb20-19" aria-hidden="true" tabindex="-1"></a>    <span class="dt">horizontalResidual</span><span class="op">:</span> <span class="dv">1</span> <span class="op">-</span> <span class="dv">2</span> <span class="op">*</span> horizontalOne<span class="op">,</span></span>
+<span id="cb20-20"><a href="#cb20-20" aria-hidden="true" tabindex="-1"></a>  }<span class="op">;</span></span>
+<span id="cb20-21"><a href="#cb20-21" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>Normalizar forças por <code>ke²/R²</code> e documentar essa escala na
+visualização.</p>
+<ul class="task-list">
+<li><label><input type="checkbox" /><strong>Step 4: Montar a balança
+vetorial com seletor quantizado</strong></label></li>
+</ul>
+<p>Preservar o diagrama como fallback e acrescentar camadas para
+triângulo <code>R-r</code>, força diagonal, projeções <code>x/y</code>,
+barras de cancelamento e leitura <code>cos² × cos = cos³</code>. O
+seletor de <code>n</code> usa cinco botões com
+<code>aria-pressed</code>, default <code>n=1</code>; não aceitar valor
+contínuo.</p>
+<p>Criar <code>app.js</code>:</p>
+<div class="sourceCode" id="cb21"><pre
+class="sourceCode js"><code class="sourceCode javascript"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> <span class="st">&quot;../exercicio-estatico.js&quot;</span><span class="op">;</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> { mountQuantizedBalance } <span class="im">from</span> <span class="st">&quot;./visualizacao.js&quot;</span><span class="op">;</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>globalThis<span class="op">.</span><span class="at">lessonControllers</span> <span class="op">=</span> {</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>  <span class="dt">quantizedBalance</span><span class="op">:</span> <span class="fu">mountQuantizedBalance</span>(<span class="bu">document</span><span class="op">.</span><span class="fu">querySelector</span>(<span class="st">&quot;[data-quantized-balance]&quot;</span>))<span class="op">,</span></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>}<span class="op">;</span></span></code></pre></div>
+<p>No fim de <code>index.html</code>, substituir o carregamento direto
+de <code>../exercicio-estatico.js</code> por <code>./app.js</code>; o
+import de efeito colateral preserva navegação e matemática.</p>
+<p>Os seis passos são distância, <code>cos²</code>, projeção,
+cancelamento vertical, balanço horizontal e quantização. Ao mudar
+<code>n</code>, resetar o roteiro no mesmo estado pausado e atualizar
+todos os números.</p>
+<ul class="task-list">
+<li><label><input type="checkbox" /><strong>Step 5: Rodar GREEN
+direcionado</strong></label></li>
+</ul>
+<p>Run:</p>
+<div class="sourceCode" id="cb22"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="ex">node</span> <span class="at">--test</span> site/testes/halliday-21-34-visualizacao.test.js</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="ex">node</span> <span class="at">--test</span> <span class="at">--test-name-pattern</span><span class="op">=</span><span class="st">&quot;21.34&quot;</span> site/testes/exercicios-halliday.test.js</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="ex">node</span> <span class="at">--check</span> site/exercicios/halliday-21-34/modelo.js</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="ex">node</span> <span class="at">--check</span> site/exercicios/halliday-21-34/visualizacao.js</span></code></pre></div>
+<p>Expected: PASS.</p>
+<ul class="task-list">
+<li><label><input type="checkbox" /><strong>Step 6: Validar
+<code>n=3</code>, projeções e mobile com
+Playwright</strong></label></li>
+</ul>
+<p>Confirmar HTTP 200 e executar:</p>
+<div class="sourceCode" id="cb23"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="ex">playwright-cli</span> <span class="at">-s</span><span class="op">=</span>h2134 open http://127.0.0.1:8000/exercicios/halliday-21-34/</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="ex">playwright-cli</span> <span class="at">-s</span><span class="op">=</span>h2134 resize 1440 1000</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="ex">playwright-cli</span> <span class="at">-s</span><span class="op">=</span>h2134 run-code <span class="st">&quot;async page =&gt; { await page.getByRole(&#39;button&#39;, {name: &#39;3e&#39;}).click(); for (let i = 0; i &lt; 4; i += 1) await page.getByRole(&#39;button&#39;, {name: &#39;Próximo passo&#39;}).click(); }&quot;</span></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="ex">playwright-cli</span> <span class="at">-s</span><span class="op">=</span>h2134 screenshot <span class="at">--filename</span><span class="op">=</span>docs/superpowers/evidence/2026-08-12-exercicios-geometria-integral/21-34-desktop.png</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a><span class="ex">playwright-cli</span> <span class="at">-s</span><span class="op">=</span>h2134 resize 390 844</span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a><span class="ex">playwright-cli</span> <span class="at">-s</span><span class="op">=</span>h2134 eval <span class="st">&quot;document.documentElement.scrollWidth &lt;= document.documentElement.clientWidth&quot;</span></span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a><span class="ex">playwright-cli</span> <span class="at">-s</span><span class="op">=</span>h2134 screenshot <span class="at">--filename</span><span class="op">=</span>docs/superpowers/evidence/2026-08-12-exercicios-geometria-integral/21-34-mobile-390x844.png</span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a><span class="ex">playwright-cli</span> <span class="at">-s</span><span class="op">=</span>h2134 run-code <span class="st">&quot;async page =&gt; { await page.emulateMedia({reducedMotion: &#39;reduce&#39;}); await page.reload(); if ((await page.locator(&#39;[data-quantized-balance]&#39;).getAttribute(&#39;data-motion&#39;)) !== &#39;reduced&#39;) throw new Error(&#39;reduced motion ausente&#39;); }&quot;</span></span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a><span class="ex">playwright-cli</span> <span class="at">-s</span><span class="op">=</span>h2134 console error</span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a><span class="ex">playwright-cli</span> <span class="at">-s</span><span class="op">=</span>h2134 close</span></code></pre></div>
+<p>Conferir por snapshot que <code>n=3</code> mostra
+<code>56,61°</code>, componentes verticais iguais/opostas e componentes
+horizontais somando 1 na escala normalizada. Exercitar
+play/pause/reset/speed.</p>
+<ul class="task-list">
+<li><label><input type="checkbox" /><strong>Step 7: Commit
+atômico</strong></label></li>
+</ul>
+<div class="sourceCode" id="cb24"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> add site/exercicios/halliday-21-34 site/testes/halliday-21-34-visualizacao.test.js docs/superpowers/evidence/2026-08-12-exercicios-geometria-integral/21-34-<span class="pp">*</span>.png</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">&quot;feat: animate Halliday 21.34 vector balance&quot;</span></span></code></pre></div>
+<hr />
+</section>
+<section
+id="task-5-halliday-21.42-pêndulo-e-aproximação-de-pequeno-ângulo"
+class="level3">
+<h3>Task 5: Halliday 21.42 — pêndulo e aproximação de pequeno
+ângulo</h3>
+<p><strong>Implementador obrigatório:</strong> subagente fresco
+<code>implementador-21-42</code>.</p>
+<p><strong>Files:</strong></p>
+<ul>
+<li>Modify: <code>site/exercicios/halliday-21-42/index.html</code></li>
+<li>Create: <code>site/exercicios/halliday-21-42/app.js</code></li>
+<li>Create: <code>site/exercicios/halliday-21-42/modelo.js</code></li>
+<li>Create:
+<code>site/exercicios/halliday-21-42/visualizacao.js</code></li>
+<li>Create:
+<code>site/exercicios/halliday-21-42/visualizacao.css</code></li>
+<li>Create:
+<code>site/testes/halliday-21-42-visualizacao.test.js</code></li>
+<li>Create:
+<code>docs/superpowers/evidence/2026-08-12-exercicios-geometria-integral/21-42-desktop.png</code></li>
+<li>Create:
+<code>docs/superpowers/evidence/2026-08-12-exercicios-geometria-integral/21-42-mobile-390x844.png</code></li>
+</ul>
+<p><strong>Interfaces:</strong></p>
+<ul>
+<li><p>Consumes: <code>COULOMB_CONSTANT</code> de
+<code>site/nucleo/eletrostatica.js</code> e
+<code>../exercicio-estatico.js</code>.</p></li>
+<li><p>Produces: <code>pendulumState(options)</code> e
+<code>mountChargedPendulum(root)</code>.</p></li>
+<li><p><label><input type="checkbox" /><strong>Step 1: Escrever o teste
+RED do caso canônico e da aproximação</strong></label></p></li>
+</ul>
+<div class="sourceCode" id="cb25"><pre
+class="sourceCode js"><code class="sourceCode javascript"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> assert <span class="im">from</span> <span class="st">&quot;node:assert/strict&quot;</span><span class="op">;</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> test <span class="im">from</span> <span class="st">&quot;node:test&quot;</span><span class="op">;</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> { pendulumState } <span class="im">from</span> <span class="st">&quot;../exercicios/halliday-21-42/modelo.js&quot;</span><span class="op">;</span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a><span class="fu">test</span>(<span class="st">&quot;21.42 preserva carga, ângulo e hipótese de pequeno ângulo&quot;</span><span class="op">,</span> () <span class="kw">=&gt;</span> {</span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> state <span class="op">=</span> <span class="fu">pendulumState</span>({ <span class="dt">lengthM</span><span class="op">:</span> <span class="fl">1.2</span><span class="op">,</span> <span class="dt">massKg</span><span class="op">:</span> <span class="fl">0.01</span><span class="op">,</span> <span class="dt">separationM</span><span class="op">:</span> <span class="fl">0.05</span><span class="op">,</span> <span class="dt">gravity</span><span class="op">:</span> <span class="fl">9.81</span> })<span class="op">;</span></span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>  assert<span class="op">.</span><span class="fu">ok</span>(<span class="bu">Math</span><span class="op">.</span><span class="fu">abs</span>(state<span class="op">.</span><span class="at">thetaDegrees</span> <span class="op">-</span> <span class="fl">1.1937484</span>) <span class="op">&lt;</span> <span class="fl">1e-6</span>)<span class="op">;</span></span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>  assert<span class="op">.</span><span class="fu">ok</span>(<span class="bu">Math</span><span class="op">.</span><span class="fu">abs</span>(state<span class="op">.</span><span class="at">approximateChargeC</span> <span class="op">-</span> <span class="fl">2.3843e-8</span>) <span class="op">&lt;</span> <span class="fl">1e-12</span>)<span class="op">;</span></span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>  assert<span class="op">.</span><span class="fu">ok</span>(state<span class="op">.</span><span class="at">relativeChargeError</span> <span class="op">&lt;</span> <span class="fl">0.0002</span>)<span class="op">;</span></span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>  assert<span class="op">.</span><span class="fu">equal</span>(state<span class="op">.</span><span class="at">halfSeparationM</span><span class="op">,</span> <span class="fl">0.025</span>)<span class="op">;</span></span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span></code></pre></div>
+<p>Ler HTML e exigir range de separação com default <code>5,0 cm</code>,
+aviso “geometria ampliada”, controles comuns, fórmula cúbica,
+<code>24 nC</code> e SVG acessível.</p>
+<ul class="task-list">
+<li><label><input type="checkbox" /><strong>Step 2: Rodar e confirmar
+RED</strong></label></li>
+</ul>
+<p>Run:
+<code>node --test site/testes/halliday-21-42-visualizacao.test.js</code></p>
+<p>Expected: FAIL por ausência de <code>modelo.js</code>.</p>
+<ul class="task-list">
+<li><label><input type="checkbox" /><strong>Step 3: Implementar cálculo
+aproximado e comparação exata</strong></label></li>
+</ul>
+<div class="sourceCode" id="cb26"><pre
+class="sourceCode js"><code class="sourceCode javascript"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> { COULOMB_CONSTANT } <span class="im">from</span> <span class="st">&quot;../../nucleo/eletrostatica.js&quot;</span><span class="op">;</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="im">export</span> <span class="kw">function</span> <span class="fu">pendulumState</span>({ lengthM<span class="op">,</span> massKg<span class="op">,</span> separationM<span class="op">,</span> gravity <span class="op">=</span> <span class="fl">9.81</span> }) {</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="op">!</span>(lengthM <span class="op">&gt;</span> <span class="dv">0</span> <span class="op">&amp;&amp;</span> massKg <span class="op">&gt;</span> <span class="dv">0</span> <span class="op">&amp;&amp;</span> separationM <span class="op">&gt;</span> <span class="dv">0</span> <span class="op">&amp;&amp;</span> separationM <span class="op">&lt;</span> <span class="dv">2</span> <span class="op">*</span> lengthM <span class="op">&amp;&amp;</span> gravity <span class="op">&gt;</span> <span class="dv">0</span>)) {</span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">throw</span> <span class="kw">new</span> <span class="bu">RangeError</span>(<span class="st">&quot;Dimensões e massa devem ser positivas, com x &lt; 2L.&quot;</span>)<span class="op">;</span></span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> halfSeparationM <span class="op">=</span> separationM <span class="op">/</span> <span class="dv">2</span><span class="op">;</span></span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> theta <span class="op">=</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">asin</span>(halfSeparationM <span class="op">/</span> lengthM)<span class="op">;</span></span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> approximateChargeC <span class="op">=</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">sqrt</span>(</span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a>    massKg <span class="op">*</span> gravity <span class="op">*</span> separationM <span class="op">**</span> <span class="dv">3</span> <span class="op">/</span> (<span class="dv">2</span> <span class="op">*</span> lengthM <span class="op">*</span> COULOMB_CONSTANT)<span class="op">,</span></span>
+<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a>  )<span class="op">;</span></span>
+<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a>  <span class="kw">const</span> exactChargeC <span class="op">=</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">sqrt</span>(</span>
+<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a>    <span class="bu">Math</span><span class="op">.</span><span class="fu">tan</span>(theta) <span class="op">*</span> massKg <span class="op">*</span> gravity <span class="op">*</span> separationM <span class="op">**</span> <span class="dv">2</span> <span class="op">/</span> COULOMB_CONSTANT<span class="op">,</span></span>
+<span id="cb26-14"><a href="#cb26-14" aria-hidden="true" tabindex="-1"></a>  )<span class="op">;</span></span>
+<span id="cb26-15"><a href="#cb26-15" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> {</span>
+<span id="cb26-16"><a href="#cb26-16" aria-hidden="true" tabindex="-1"></a>    halfSeparationM<span class="op">,</span></span>
+<span id="cb26-17"><a href="#cb26-17" aria-hidden="true" tabindex="-1"></a>    theta<span class="op">,</span></span>
+<span id="cb26-18"><a href="#cb26-18" aria-hidden="true" tabindex="-1"></a>    <span class="dt">thetaDegrees</span><span class="op">:</span> theta <span class="op">*</span> <span class="dv">180</span> <span class="op">/</span> <span class="bu">Math</span><span class="op">.</span><span class="cn">PI</span><span class="op">,</span></span>
+<span id="cb26-19"><a href="#cb26-19" aria-hidden="true" tabindex="-1"></a>    approximateChargeC<span class="op">,</span></span>
+<span id="cb26-20"><a href="#cb26-20" aria-hidden="true" tabindex="-1"></a>    exactChargeC<span class="op">,</span></span>
+<span id="cb26-21"><a href="#cb26-21" aria-hidden="true" tabindex="-1"></a>    <span class="dt">relativeChargeError</span><span class="op">:</span> <span class="bu">Math</span><span class="op">.</span><span class="fu">abs</span>(exactChargeC <span class="op">-</span> approximateChargeC) <span class="op">/</span> exactChargeC<span class="op">,</span></span>
+<span id="cb26-22"><a href="#cb26-22" aria-hidden="true" tabindex="-1"></a>  }<span class="op">;</span></span>
+<span id="cb26-23"><a href="#cb26-23" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>O resultado exibido no caso padrão continua
+<code>2,38 × 10⁻⁸ C ≈ 24 nC</code>; a comparação exata é apenas um
+calibre da hipótese.</p>
+<ul class="task-list">
+<li><label><input type="checkbox" /><strong>Step 4: Montar pêndulo,
+corpo livre e controle de separação</strong></label></li>
+</ul>
+<p>Preservar um SVG inicial com o caso de <code>5,0 cm</code>. Adicionar
+range acessível de <code>1,0</code> a <code>20,0 cm</code>, passo
+<code>0,5 cm</code>, default <code>5,0 cm</code>; qualquer mudança pausa
+a animação e atualiza <code>θ</code>, <code>q</code> e erro. O desenho
+pode ampliar o ângulo para leitura, mas o rótulo “geometria ampliada;
+valores numéricos exatos” deve permanecer junto ao SVG.</p>
+<p>Criar <code>app.js</code>:</p>
+<div class="sourceCode" id="cb27"><pre
+class="sourceCode js"><code class="sourceCode javascript"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> <span class="st">&quot;../exercicio-estatico.js&quot;</span><span class="op">;</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> { mountChargedPendulum } <span class="im">from</span> <span class="st">&quot;./visualizacao.js&quot;</span><span class="op">;</span></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>globalThis<span class="op">.</span><span class="at">lessonControllers</span> <span class="op">=</span> {</span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>  <span class="dt">chargedPendulum</span><span class="op">:</span> <span class="fu">mountChargedPendulum</span>(<span class="bu">document</span><span class="op">.</span><span class="fu">querySelector</span>(<span class="st">&quot;[data-charged-pendulum]&quot;</span>))<span class="op">,</span></span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>}<span class="op">;</span></span></code></pre></div>
+<p>No fim de <code>index.html</code>, substituir o carregamento direto
+de <code>../exercicio-estatico.js</code> por <code>./app.js</code>; o
+novo módulo mantém a inicialização estática e acrescenta a
+experiência.</p>
+<p>Os passos revelam <code>x/2</code>, três forças, componentes de T,
+eliminação de T, lei de Coulomb, aproximação e resposta.
+<code>Reiniciar</code> deve restaurar simultaneamente o passo 0 e
+<code>x=5,0 cm</code>.</p>
+<ul class="task-list">
+<li><label><input type="checkbox" /><strong>Step 5: Rodar GREEN
+direcionado</strong></label></li>
+</ul>
+<p>Run:</p>
+<div class="sourceCode" id="cb28"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="ex">node</span> <span class="at">--test</span> site/testes/halliday-21-42-visualizacao.test.js</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="ex">node</span> <span class="at">--test</span> <span class="at">--test-name-pattern</span><span class="op">=</span><span class="st">&quot;21.42&quot;</span> site/testes/exercicios-halliday.test.js</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="ex">node</span> <span class="at">--check</span> site/exercicios/halliday-21-42/modelo.js</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a><span class="ex">node</span> <span class="at">--check</span> site/exercicios/halliday-21-42/visualizacao.js</span></code></pre></div>
+<p>Expected: PASS.</p>
+<ul class="task-list">
+<li><label><input type="checkbox" /><strong>Step 6: Validar o caso de 5
+cm e a leitura móvel com Playwright</strong></label></li>
+</ul>
+<p>Confirmar HTTP 200 e executar:</p>
+<div class="sourceCode" id="cb29"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="ex">playwright-cli</span> <span class="at">-s</span><span class="op">=</span>h2142 open http://127.0.0.1:8000/exercicios/halliday-21-42/</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="ex">playwright-cli</span> <span class="at">-s</span><span class="op">=</span>h2142 resize 1440 1000</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="ex">playwright-cli</span> <span class="at">-s</span><span class="op">=</span>h2142 run-code <span class="st">&quot;async page =&gt; { await page.locator(&#39;[data-separation]&#39;).fill(&#39;5&#39;); for (let i = 0; i &lt; 6; i += 1) await page.getByRole(&#39;button&#39;, {name: &#39;Próximo passo&#39;}).click(); }&quot;</span></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a><span class="ex">playwright-cli</span> <span class="at">-s</span><span class="op">=</span>h2142 screenshot <span class="at">--filename</span><span class="op">=</span>docs/superpowers/evidence/2026-08-12-exercicios-geometria-integral/21-42-desktop.png</span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a><span class="ex">playwright-cli</span> <span class="at">-s</span><span class="op">=</span>h2142 resize 390 844</span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a><span class="ex">playwright-cli</span> <span class="at">-s</span><span class="op">=</span>h2142 eval <span class="st">&quot;document.documentElement.scrollWidth &lt;= document.documentElement.clientWidth&quot;</span></span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a><span class="ex">playwright-cli</span> <span class="at">-s</span><span class="op">=</span>h2142 screenshot <span class="at">--filename</span><span class="op">=</span>docs/superpowers/evidence/2026-08-12-exercicios-geometria-integral/21-42-mobile-390x844.png</span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a><span class="ex">playwright-cli</span> <span class="at">-s</span><span class="op">=</span>h2142 run-code <span class="st">&quot;async page =&gt; { await page.emulateMedia({reducedMotion: &#39;reduce&#39;}); await page.reload(); if ((await page.locator(&#39;[data-charged-pendulum]&#39;).getAttribute(&#39;data-motion&#39;)) !== &#39;reduced&#39;) throw new Error(&#39;reduced motion ausente&#39;); }&quot;</span></span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a><span class="ex">playwright-cli</span> <span class="at">-s</span><span class="op">=</span>h2142 console error</span>
+<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a><span class="ex">playwright-cli</span> <span class="at">-s</span><span class="op">=</span>h2142 close</span></code></pre></div>
+<p>Conferir no snapshot <code>x=5,0 cm</code>, <code>θ≈1,19°</code>,
+<code>q≈24 nC</code>, erro abaixo de <code>0,02%</code>, aviso de escala
+e vetores legíveis. Exercitar slider, play/pause/reset/speed e confirmar
+que reset volta a 5 cm.</p>
+<ul class="task-list">
+<li><label><input type="checkbox" /><strong>Step 7: Commit
+atômico</strong></label></li>
+</ul>
+<div class="sourceCode" id="cb30"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> add site/exercicios/halliday-21-42 site/testes/halliday-21-42-visualizacao.test.js docs/superpowers/evidence/2026-08-12-exercicios-geometria-integral/21-42-<span class="pp">*</span>.png</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">&quot;feat: animate Halliday 21.42 charged pendulum&quot;</span></span></code></pre></div>
+<hr />
+</section>
+<section id="task-6-integração-regressão-e-evidência-cruzada"
+class="level3">
+<h3>Task 6: Integração, regressão e evidência cruzada</h3>
+<p><strong>Implementador obrigatório:</strong> integrador novo, após os
+cinco commits GREEN.</p>
+<p><strong>Files:</strong></p>
+<ul>
+<li>Modify: <code>site/testes/exercicios-halliday.test.js</code></li>
+<li>Create:
+<code>site/testes/exercicios-geometria-integral-integracao.test.js</code></li>
+<li>Create:
+<code>docs/superpowers/evidence/2026-08-12-exercicios-geometria-integral/README.md</code></li>
+</ul>
+<p><strong>Interfaces:</strong></p>
+<ul>
+<li><p>Consumes: os cinco painéis locais e os dez screenshots; não
+altera nenhum arquivo dentro das pastas dos exercícios.</p></li>
+<li><p>Produces: contrato cruzado da experiência, manifesto de
+evidências e resultado de regressão completo.</p></li>
+<li><p><label><input type="checkbox" /><strong>Step 1: Escrever o teste
+RED de integração antes de tocar o contrato
+existente</strong></label></p></li>
+</ul>
+<p>Criar <code>exercicios-geometria-integral-integracao.test.js</code>
+para ler as cinco páginas e cinco folhas de estilo:</p>
+<div class="sourceCode" id="cb31"><pre
+class="sourceCode js"><code class="sourceCode javascript"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> exercises <span class="op">=</span> [<span class="st">&quot;13&quot;</span><span class="op">,</span> <span class="st">&quot;18&quot;</span><span class="op">,</span> <span class="st">&quot;33&quot;</span><span class="op">,</span> <span class="st">&quot;34&quot;</span><span class="op">,</span> <span class="st">&quot;42&quot;</span>]<span class="op">;</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (<span class="kw">const</span> number <span class="kw">of</span> exercises) {</span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">test</span>(<span class="vs">`21.</span><span class="sc">${</span>number<span class="sc">}</span><span class="vs"> cumpre o contrato comum de progressão`</span><span class="op">,</span> <span class="kw">async</span> () <span class="kw">=&gt;</span> {</span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">const</span> html <span class="op">=</span> <span class="cf">await</span> <span class="fu">readFile</span>(<span class="kw">new</span> <span class="fu">URL</span>(<span class="vs">`../exercicios/halliday-21-</span><span class="sc">${</span>number<span class="sc">}</span><span class="vs">/index.html`</span><span class="op">,</span> <span class="im">import</span><span class="op">.</span><span class="at">meta</span><span class="op">.</span><span class="at">url</span>)<span class="op">,</span> <span class="st">&quot;utf8&quot;</span>)<span class="op">;</span></span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>    assert<span class="op">.</span><span class="fu">equal</span>((html<span class="op">.</span><span class="fu">match</span>(<span class="ss">/data-didactic-visualization/g</span>) <span class="op">??</span> [])<span class="op">.</span><span class="at">length</span><span class="op">,</span> <span class="dv">1</span>)<span class="op">;</span></span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> (<span class="kw">const</span> label <span class="kw">of</span> [<span class="st">&quot;Reproduzir&quot;</span><span class="op">,</span> <span class="st">&quot;Pausar&quot;</span><span class="op">,</span> <span class="st">&quot;Reiniciar&quot;</span><span class="op">,</span> <span class="st">&quot;Próximo passo&quot;</span><span class="op">,</span> <span class="st">&quot;Velocidade&quot;</span>]) {</span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a>      assert<span class="op">.</span><span class="fu">match</span>(html<span class="op">,</span> <span class="kw">new</span> <span class="bu">RegExp</span>(label))<span class="op">;</span></span>
+<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a>    assert<span class="op">.</span><span class="fu">match</span>(html<span class="op">,</span> <span class="ss">/aria-live=&quot;polite&quot;/</span>)<span class="op">;</span></span>
+<span id="cb31-11"><a href="#cb31-11" aria-hidden="true" tabindex="-1"></a>    assert<span class="op">.</span><span class="fu">match</span>(html<span class="op">,</span> <span class="ss">/&lt;svg</span><span class="sc">[^&gt;]+</span><span class="ss">role=&quot;img&quot;</span><span class="sc">[^&gt;]+</span><span class="ss">aria-labelledby=/</span>)<span class="op">;</span></span>
+<span id="cb31-12"><a href="#cb31-12" aria-hidden="true" tabindex="-1"></a>    assert<span class="op">.</span><span class="fu">match</span>(html<span class="op">,</span> <span class="ss">/&lt;title</span><span class="sc">[^&gt;]*</span><span class="ss">&gt;</span><span class="sc">[^&lt;]+</span><span class="ss">&lt;</span><span class="sc">\/</span><span class="ss">title&gt;/</span>)<span class="op">;</span></span>
+<span id="cb31-13"><a href="#cb31-13" aria-hidden="true" tabindex="-1"></a>    assert<span class="op">.</span><span class="fu">match</span>(html<span class="op">,</span> <span class="ss">/&lt;desc</span><span class="sc">[^&gt;]*</span><span class="ss">&gt;</span><span class="sc">[^&lt;]+</span><span class="ss">&lt;</span><span class="sc">\/</span><span class="ss">desc&gt;/</span>)<span class="op">;</span></span>
+<span id="cb31-14"><a href="#cb31-14" aria-hidden="true" tabindex="-1"></a>  })<span class="op">;</span></span>
+<span id="cb31-15"><a href="#cb31-15" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>Adicionar verificações das cinco respostas canônicas e das cinco
+folhas com <code>@media (prefers-reduced-motion: reduce)</code> e
+<code>min-height: 44px</code>. O teste deve ainda confirmar que os dez
+caminhos PNG existem e têm tamanho maior que zero.</p>
+<p>Por fim, ler
+<code>docs/superpowers/evidence/2026-08-12-exercicios-geometria-integral/README.md</code>
+e exigir que ele liste os dez nomes de screenshot. Esse manifesto ainda
+não existe e fornece o RED real da integração.</p>
+<ul class="task-list">
+<li><label><input type="checkbox" /><strong>Step 2: Executar RED e
+identificar apenas lacunas de integração</strong></label></li>
+</ul>
+<p>Run:
+<code>node --test site/testes/exercicios-geometria-integral-integracao.test.js</code></p>
+<p>Expected: FAIL porque o manifesto <code>README.md</code> ainda não
+existe. Se uma página ou captura também falhar, devolver ao
+implementador dono; o integrador não edita aquela pasta.</p>
+<ul class="task-list">
+<li><label><input type="checkbox" /><strong>Step 3: Atualizar o teste
+Halliday compartilhado e criar o manifesto</strong></label></li>
+</ul>
+<p>Em <code>exercicios-halliday.test.js</code>, manter todas as
+asserções científicas atuais e acrescentar somente a chamada de uma
+função <code>assertDidacticProgression(html)</code> para os cinco casos.
+Não mudar números nem relaxar regex existentes.</p>
+<p>Criar <code>README.md</code> com tabela de dez arquivos, viewport,
+passo capturado e resultado observado:</p>
+<div class="sourceCode" id="cb32"><pre
+class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Exercício <span class="pp">|</span> Desktop 1440 × 1000 <span class="pp">|</span> Mobile 390 × 844 <span class="pp">|</span> Estado capturado <span class="pp">|</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="pp">|---|---|---|---|</span></span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 21.13 <span class="pp">|</span> <span class="in">`21-13-desktop.png`</span> <span class="pp">|</span> <span class="in">`21-13-mobile-390x844.png`</span> <span class="pp">|</span> raiz de campo nulo <span class="pp">|</span></span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 21.18 <span class="pp">|</span> <span class="in">`21-18-desktop.png`</span> <span class="pp">|</span> <span class="in">`21-18-mobile-390x844.png`</span> <span class="pp">|</span> configuração (b) e diferença <span class="pp">|</span></span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 21.33 <span class="pp">|</span> <span class="in">`21-33-desktop.png`</span> <span class="pp">|</span> <span class="in">`21-33-mobile-390x844.png`</span> <span class="pp">|</span> prótons, carga e neutralidade <span class="pp">|</span></span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 21.34 <span class="pp">|</span> <span class="in">`21-34-desktop.png`</span> <span class="pp">|</span> <span class="in">`21-34-mobile-390x844.png`</span> <span class="pp">|</span> n = 3 e balanço vetorial <span class="pp">|</span></span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> 21.42 <span class="pp">|</span> <span class="in">`21-42-desktop.png`</span> <span class="pp">|</span> <span class="in">`21-42-mobile-390x844.png`</span> <span class="pp">|</span> x = 5 cm e aproximação <span class="pp">|</span></span></code></pre></div>
+<p>Registrar também data, comando de servidor, HTTP 200, reduced motion,
+teclado, overflow e console; escrever apenas resultados realmente
+observados.</p>
+<ul class="task-list">
+<li><label><input type="checkbox" /><strong>Step 4: Rodar toda a suíte e
+validação sintática</strong></label></li>
+</ul>
+<p>Run:</p>
+<div class="sourceCode" id="cb33"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="ex">npm</span> test</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="ex">node</span> <span class="at">--check</span> site/exercicios/halliday-21-13/modelo.js</span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a><span class="ex">node</span> <span class="at">--check</span> site/exercicios/halliday-21-13/visualizacao.js</span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a><span class="ex">node</span> <span class="at">--check</span> site/exercicios/halliday-21-18/modelo.js</span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a><span class="ex">node</span> <span class="at">--check</span> site/exercicios/halliday-21-18/visualizacao.js</span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a><span class="ex">node</span> <span class="at">--check</span> site/exercicios/halliday-21-33/modelo.js</span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a><span class="ex">node</span> <span class="at">--check</span> site/exercicios/halliday-21-33/visualizacao.js</span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a><span class="ex">node</span> <span class="at">--check</span> site/exercicios/halliday-21-34/modelo.js</span>
+<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a><span class="ex">node</span> <span class="at">--check</span> site/exercicios/halliday-21-34/visualizacao.js</span>
+<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a><span class="ex">node</span> <span class="at">--check</span> site/exercicios/halliday-21-42/modelo.js</span>
+<span id="cb33-11"><a href="#cb33-11" aria-hidden="true" tabindex="-1"></a><span class="ex">node</span> <span class="at">--check</span> site/exercicios/halliday-21-42/visualizacao.js</span></code></pre></div>
+<p>Expected: todos os testes PASS, zero skip novo e todos os checks com
+exit code 0.</p>
+<ul class="task-list">
+<li><label><input type="checkbox" /><strong>Step 5: Confirmar as cinco
+rotas por HTTP</strong></label></li>
+</ul>
+<p>Com <code>npm run serve</code> ativo, executar:</p>
+<div class="sourceCode" id="cb34"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> exercise <span class="kw">in</span> 13 18 33 34 42<span class="kw">;</span> <span class="cf">do</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>  <span class="va">code</span><span class="op">=</span><span class="va">$(</span><span class="ex">curl</span> <span class="at">-s</span> <span class="at">-o</span> /dev/null <span class="at">-w</span> <span class="st">&#39;%{http_code}&#39;</span> <span class="st">&quot;http://127.0.0.1:8000/exercicios/halliday-21-</span><span class="va">${exercise}</span><span class="st">/&quot;</span><span class="va">)</span></span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>  <span class="bu">test</span> <span class="st">&quot;</span><span class="va">$code</span><span class="st">&quot;</span> = <span class="st">&quot;200&quot;</span> <span class="kw">||</span> <span class="bu">exit</span> 1</span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a><span class="cf">done</span></span></code></pre></div>
+<p>Expected: exit code 0 e cinco respostas 200.</p>
+<ul class="task-list">
+<li><label><input type="checkbox" /><strong>Step 6: Rodar smoke
+Playwright cruzado em desktop, mobile e reduced
+motion</strong></label></li>
+</ul>
+<div class="sourceCode" id="cb35"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="ex">playwright-cli</span> <span class="at">-s</span><span class="op">=</span>halliday-final open http://127.0.0.1:8000/exercicios/halliday-21-13/</span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="ex">playwright-cli</span> <span class="at">-s</span><span class="op">=</span>halliday-final run-code <span class="st">&quot;async page =&gt; { const numbers = [&#39;13&#39;,&#39;18&#39;,&#39;33&#39;,&#39;34&#39;,&#39;42&#39;]; for (const number of numbers) { await page.setViewportSize({width: 1440, height: 1000}); await page.goto(&#39;http://127.0.0.1:8000/exercicios/halliday-21-&#39; + number + &#39;/&#39;); await page.getByRole(&#39;button&#39;, {name: &#39;Próximo passo&#39;}).click(); await page.getByRole(&#39;button&#39;, {name: &#39;Reproduzir&#39;}).click(); await page.getByRole(&#39;button&#39;, {name: &#39;Pausar&#39;}).click(); await page.getByRole(&#39;button&#39;, {name: &#39;Reiniciar&#39;}).click(); if (!(await page.locator(&#39;[data-didactic-visualization]&#39;).isVisible())) throw new Error(&#39;painel invisível em &#39; + number); if ((await page.evaluate(() =&gt; document.documentElement.scrollWidth &gt; document.documentElement.clientWidth))) throw new Error(&#39;overflow desktop em &#39; + number); await page.setViewportSize({width: 390, height: 844}); if ((await page.evaluate(() =&gt; document.documentElement.scrollWidth &gt; document.documentElement.clientWidth))) throw new Error(&#39;overflow mobile em &#39; + number); } }&quot;</span></span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a><span class="ex">playwright-cli</span> <span class="at">-s</span><span class="op">=</span>halliday-final run-code <span class="st">&quot;async page =&gt; { await page.emulateMedia({reducedMotion: &#39;reduce&#39;}); for (const number of [&#39;13&#39;,&#39;18&#39;,&#39;33&#39;,&#39;34&#39;,&#39;42&#39;]) { await page.goto(&#39;http://127.0.0.1:8000/exercicios/halliday-21-&#39; + number + &#39;/&#39;); if ((await page.locator(&#39;[data-didactic-visualization]&#39;).getAttribute(&#39;data-motion&#39;)) !== &#39;reduced&#39;) throw new Error(&#39;reduced motion ausente em &#39; + number); } }&quot;</span></span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a><span class="ex">playwright-cli</span> <span class="at">-s</span><span class="op">=</span>halliday-final console error</span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a><span class="ex">playwright-cli</span> <span class="at">-s</span><span class="op">=</span>halliday-final close</span></code></pre></div>
+<p>Expected: comandos sem exceção, nenhum erro no console e controles
+alcançáveis em ambas as larguras. Atualizar o manifesto com o resultado
+observado.</p>
+<ul class="task-list">
+<li><label><input type="checkbox" /><strong>Step 7: Self-review de
+escopo e qualidade</strong></label></li>
+</ul>
+<p>Run:</p>
+<div class="sourceCode" id="cb36"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="ex">rg</span> <span class="at">-n</span> <span class="st">&quot;TBD|TODO|FIXME|placeholder|lorem ipsum&quot;</span> site/exercicios/halliday-21-<span class="dt">{13</span><span class="op">,</span><span class="dt">18</span><span class="op">,</span><span class="dt">33</span><span class="op">,</span><span class="dt">34</span><span class="op">,</span><span class="dt">42}</span> site/testes docs/superpowers/evidence/2026-08-12-exercicios-geometria-integral</span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> diff <span class="at">--check</span></span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> status <span class="at">--short</span></span></code></pre></div>
+<p>Expected: nenhuma ocorrência de placeholder introduzido,
+<code>git diff --check</code> limpo e status contendo somente arquivos
+do plano. Confirmar manualmente: respostas inalteradas; nenhuma integral
+artificial; 21.13 ainda tem simulador; 21.33 ainda tem explorador;
+nenhum <code>package.json</code>, asset, núcleo, componente ou catálogo
+mudou.</p>
+<ul class="task-list">
+<li><label><input type="checkbox" /><strong>Step 8: Commit final de
+integração</strong></label></li>
+</ul>
+<div class="sourceCode" id="cb37"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> add site/testes/exercicios-halliday.test.js site/testes/exercicios-geometria-integral-integracao.test.js docs/superpowers/evidence/2026-08-12-exercicios-geometria-integral/README.md</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">&quot;test: verify geometric exercise visualizations&quot;</span></span></code></pre></div>
+<p>Não fazer push sem autorização explícita.</p>
+</section>
+</section>
+</section>
+<script>
+(() => {
+  const tocLinks = [...document.querySelectorAll('#TOC a[href^="#"]')];
+  const observed = tocLinks
+    .map((link) => document.getElementById(decodeURIComponent(link.hash.slice(1))))
+    .filter(Boolean);
+
+  if (!("IntersectionObserver" in window) || observed.length === 0) {
+    return;
+  }
+
+  const linkById = new Map(
+    tocLinks.map((link) => [decodeURIComponent(link.hash.slice(1)), link]),
+  );
+
+  const activate = (id) => {
+    for (const link of tocLinks) {
+      link.classList.toggle("is-active", link === linkById.get(id));
+    }
+  };
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      const visible = entries
+        .filter((entry) => entry.isIntersecting)
+        .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
+      if (visible[0]) {
+        activate(visible[0].target.id);
+      }
+    },
+    { rootMargin: "-12% 0px -72% 0px", threshold: [0, 1] },
+  );
+
+  for (const section of observed) {
+    observer.observe(section);
+  }
+
+  const current = location.hash ? decodeURIComponent(location.hash.slice(1)) : observed[0].id;
+  activate(current);
+})();
+</script>
+</body>
+</html>
