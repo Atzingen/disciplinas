@@ -150,50 +150,16 @@
               </header>
 
               <div class="charge-counting__body">
-                <ol class="charge-counting__stations" aria-label="Cadeia dimensional">
-                  <li class="charge-counting__station" data-station="volume" data-state="active" aria-current="step">
-                    <button type="button">
-                      <span class="charge-counting__station-index">01 · Volume</span>
-                      <strong class="charge-counting__station-symbol">V</strong>
-                      <span class="charge-counting__station-value">250 cm³</span>
-                    </button>
-                  </li>
-                  <li class="charge-counting__station" data-station="mass" data-state="pending" aria-current="false">
-                    <button type="button">
-                      <span class="charge-counting__station-index">02 · Massa</span>
-                      <strong class="charge-counting__station-symbol">m</strong>
-                      <span class="charge-counting__station-value">250 g</span>
-                    </button>
-                  </li>
-                  <li class="charge-counting__station" data-station="moles" data-state="pending" aria-current="false">
-                    <button type="button">
-                      <span class="charge-counting__station-index">03 · Mols</span>
-                      <strong class="charge-counting__station-symbol">n</strong>
-                      <span class="charge-counting__station-value">13,87 mol</span>
-                    </button>
-                  </li>
-                  <li class="charge-counting__station" data-station="molecules" data-state="pending" aria-current="false">
-                    <button type="button">
-                      <span class="charge-counting__station-index">04 · Moléculas</span>
-                      <strong class="charge-counting__station-symbol">N</strong>
-                      <span class="charge-counting__station-value">8,35 × 10²⁴ moléculas</span>
-                    </button>
-                  </li>
-                  <li class="charge-counting__station" data-station="protons" data-state="pending" aria-current="false">
-                    <button type="button">
-                      <span class="charge-counting__station-index">05 · Prótons</span>
-                      <strong class="charge-counting__station-symbol">Nₚ</strong>
-                      <span class="charge-counting__station-value">8,35 × 10²⁵ prótons</span>
-                    </button>
-                  </li>
-                  <li class="charge-counting__station" data-station="charge" data-state="pending" aria-current="false">
-                    <button type="button">
-                      <span class="charge-counting__station-index">06 · Carga</span>
-                      <strong class="charge-counting__station-symbol">q⁺</strong>
-                      <span class="charge-counting__station-value">+1,34 × 10⁷ C</span>
-                    </button>
-                  </li>
-                </ol>
+                <div data-stations>
+                  <ol class="charge-counting__fallback" aria-label="Resumo estático da cadeia dimensional">
+                    <li><strong>Volume</strong><span>V = 250 cm³</span></li>
+                    <li><strong>Massa</strong><span>m = ρV</span></li>
+                    <li><strong>Quantidade de matéria</strong><span>n = m/M</span></li>
+                    <li><strong>Moléculas</strong><span>N = nN<sub>A</sub></span></li>
+                    <li><strong>Prótons</strong><span>N<sub>p</sub> = 10N</span></li>
+                    <li><strong>Carga positiva</strong><span>q<sup>+</sup> = N<sub>p</sub>e</span></li>
+                  </ol>
+                </div>
 
                 <div class="charge-counting__workbench">
                   <section class="charge-counting__factor" aria-live="polite">
@@ -222,13 +188,13 @@
                   <section class="charge-counting__neutrality" data-neutrality aria-hidden="true" aria-label="Neutralidade final">
                     <span class="charge-counting__kicker">Fechamento: cargas iguais, sinais opostos</span>
                     <div class="charge-counting__neutrality-grid">
-                      <strong>Prótons · +1,34 × 10<sup>7</sup> C</strong>
+                      <strong data-positive-charge>Prótons · +1,34 × 10<sup>7</sup> C</strong>
                       <span class="charge-counting__bar-track" aria-hidden="true"><i class="charge-counting__bar charge-counting__bar--positive"></i></span>
                       <span>+</span>
-                      <strong>Elétrons · −1,34 × 10<sup>7</sup> C</strong>
+                      <strong data-negative-charge>Elétrons · −1,34 × 10<sup>7</sup> C</strong>
                       <span class="charge-counting__bar-track" aria-hidden="true"><i class="charge-counting__bar charge-counting__bar--negative"></i></span>
                       <span>−</span>
-                      <p class="charge-counting__net">Carga líquida: <strong>0 C</strong></p>
+                      <p class="charge-counting__net" data-net-charge>Carga líquida: <strong>0 C</strong></p>
                     </div>
                   </section>
                 </div>

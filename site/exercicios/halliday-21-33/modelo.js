@@ -1,4 +1,29 @@
-import { positiveChargeChain } from "../../nucleo/contagem-particulas.js";
+import {
+  AVOGADRO_CONSTANT,
+  ELEMENTARY_CHARGE,
+  positiveChargeChain,
+} from "../../nucleo/contagem-particulas.js";
+
+const CUBIC_CENTIMETER = dimension("cm", 3);
+const GRAM = dimension("g");
+const MOLE = dimension("mol");
+const MOLECULES = dimension("moléculas");
+const PROTONS = dimension("prótons");
+const COULOMB = dimension("C");
+
+function dimension(symbol, power = 1) {
+  return Object.freeze({ symbol, power });
+}
+
+function factor(numeratorValue, numeratorUnit, denominatorValue, denominatorUnit) {
+  return Object.freeze({
+    numerator: Object.freeze({ value: numeratorValue, unit: numeratorUnit }),
+    denominator: Object.freeze({
+      value: denominatorValue,
+      unit: denominatorUnit,
+    }),
+  });
+}
 
 function step(details) {
   return Object.freeze({
@@ -18,86 +43,51 @@ export function waterChargeSteps() {
   return Object.freeze([
     step({
       id: "volume",
-      title: "Volume",
       symbol: "V",
       value: 250,
-      unit: "cm³",
-      displayValue: "250 cm³",
-      factorLabel: "Amostra fornecida",
-      factorHtml: "250 cm<sup>3</sup>",
-      cancellationHtml: "Ponto de partida: ainda não há unidade a cancelar.",
-      accessibleText: "O cálculo começa com 250 centímetros cúbicos de água.",
+      unit: CUBIC_CENTIMETER,
+      factor: null,
+      cancelledUnit: null,
     }),
     step({
       id: "mass",
-      title: "Massa",
       symbol: "m",
       value: chain.massGrams,
-      unit: "g",
-      displayValue: "250 g",
-      factorLabel: "Multiplique pela densidade",
-      factorHtml:
-        "(250 <s>cm<sup>3</sup></s>) × (1,00 g/<s>cm<sup>3</sup></s>)",
-      cancellationHtml: "cm³ cancela com cm³; resta grama.",
-      accessibleText:
-        "Multiplique o volume pela densidade. Centímetros cúbicos são cancelados e o resultado é 250 gramas.",
+      unit: GRAM,
+      factor: factor(1, GRAM, 1, CUBIC_CENTIMETER),
+      cancelledUnit: CUBIC_CENTIMETER,
     }),
     step({
       id: "moles",
-      title: "Quantidade de matéria",
       symbol: "n",
       value: chain.moles,
-      unit: "mol",
-      displayValue: "13,87 mol",
-      factorLabel: "Divida pela massa molar",
-      factorHtml: "(250 <s>g</s>) × (1 mol / 18,02 <s>g</s>)",
-      cancellationHtml: "g cancela com g; resta mol.",
-      accessibleText:
-        "Divida a massa pela massa molar. Gramas são cancelados e o resultado é 13,87 mol.",
+      unit: MOLE,
+      factor: factor(1, MOLE, 18.02, GRAM),
+      cancelledUnit: GRAM,
     }),
     step({
       id: "molecules",
-      title: "Moléculas",
       symbol: "N",
       value: chain.units,
-      unit: "moléculas",
-      displayValue: "8,35 × 10²⁴ moléculas",
-      factorLabel: "Multiplique pelo número de Avogadro",
-      factorHtml:
-        "(13,87 <s>mol</s>) × (6,022 × 10<sup>23</sup> moléculas/<s>mol</s>)",
-      cancellationHtml: "mol cancela com mol; resta a contagem de moléculas.",
-      accessibleText:
-        "Multiplique pelo número de Avogadro. Mols são cancelados e obtemos 8,35 vezes dez elevado a 24 moléculas.",
+      unit: MOLECULES,
+      factor: factor(AVOGADRO_CONSTANT, MOLECULES, 1, MOLE),
+      cancelledUnit: MOLE,
     }),
     step({
       id: "protons",
-      title: "Prótons",
       symbol: "Nₚ",
       value: chain.protonCount,
-      unit: "prótons",
-      displayValue: "8,35 × 10²⁵ prótons",
-      factorLabel: "Conte dez prótons por molécula",
-      factorHtml:
-        "(8,35 × 10<sup>24</sup> <s>moléculas</s>) × (10 prótons/<s>molécula</s>)",
-      cancellationHtml:
-        "molécula cancela com molécula; resta a contagem de prótons.",
-      accessibleText:
-        "Cada molécula de água reúne dez prótons. A contagem chega a 8,35 vezes dez elevado a 25 prótons.",
+      unit: PROTONS,
+      factor: factor(10, PROTONS, 1, MOLECULES),
+      cancelledUnit: MOLECULES,
     }),
     step({
       id: "charge",
-      title: "Carga positiva",
       symbol: "q⁺",
       value: chain.chargeCoulombs,
-      unit: "C",
-      displayValue: "+1,34 × 10⁷ C",
-      factorLabel: "Multiplique pela carga elementar",
-      factorHtml:
-        "(8,35 × 10<sup>25</sup> <s>prótons</s>) × (1,602 × 10<sup>−19</sup> C/<s>próton</s>)",
-      cancellationHtml:
-        "próton cancela com próton; resta coulomb. Os elétrons fornecem a carga oposta.",
-      accessibleText:
-        "Multiplique pela carga elementar. A carga positiva é 1,34 vezes dez elevado a 7 coulombs e a carga negativa igual deixa saldo zero.",
+      unit: COULOMB,
+      factor: factor(ELEMENTARY_CHARGE, COULOMB, 1, PROTONS),
+      cancelledUnit: PROTONS,
       netChargeCoulombs: 0,
     }),
   ]);
