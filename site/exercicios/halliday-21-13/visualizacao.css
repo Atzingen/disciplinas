@@ -116,6 +116,10 @@
   font-weight: 600;
 }
 
+.equilibrium-geometry__source-label {
+  text-anchor: middle;
+}
+
 .equilibrium-geometry__region-label,
 .equilibrium-geometry__axis-label {
   fill: var(--ink-soft);
@@ -272,7 +276,14 @@
   }
 
   .equilibrium-geometry__canvas svg {
-    min-height: 330px;
+    width: 100%;
+    max-width: 100%;
+    min-height: 0;
+    margin-inline: 0;
+  }
+
+  .equilibrium-geometry__region-label {
+    display: none;
   }
 
   .equilibrium-geometry__axis,
@@ -281,24 +292,39 @@
     stroke-width: 3;
   }
 
-  .equilibrium-geometry__region-label,
   .equilibrium-geometry__axis-label {
-    font-size: 21px;
+    font-size: 34px;
   }
 
   .equilibrium-geometry__region-status {
-    font-size: 25px;
+    font-size: 34px;
   }
 
   .equilibrium-geometry__label,
   .equilibrium-geometry__bar-label,
   .equilibrium-geometry__bar-value {
-    font-size: 22px;
+    font-size: 34px;
+  }
+
+  .equilibrium-geometry__source-label {
+    font-size: 28px;
   }
 
   .equilibrium-geometry__vector-label {
-    font-size: 27px;
-    stroke-width: 8px;
+    font-size: 38px;
+    stroke-width: 10px;
+  }
+
+  .equilibrium-geometry__charge-sign {
+    font-size: 36px;
+  }
+
+  .equilibrium-geometry__charge {
+    r: 26px;
+  }
+
+  .equilibrium-geometry__candidate {
+    r: 16px;
   }
 
   .equilibrium-geometry__vector {
