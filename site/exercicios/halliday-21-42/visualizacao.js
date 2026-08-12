@@ -53,7 +53,7 @@ const STEPS = Object.freeze([
     label: "resposta",
     title: "Isole a carga",
     description:
-      "A relação cúbica leva a q = √(mgx³/2Lk). Para x = 5,0 cm, q ≈ 24 nC.",
+      "A relação cúbica leva a q = √(mgx³/(2Lk)). Para x = 5,0 cm, q ≈ 24 nC.",
   },
 ]);
 
@@ -73,10 +73,46 @@ function isNativeInteractiveTarget(target, root) {
   );
 }
 
+export function formatRelativeError(relativeError) {
+  if (!Number.isFinite(relativeError) || relativeError < 0) {
+    throw new RangeError("O erro relativo deve ser finito e não negativo.");
+  }
+
+  const percent = relativeError * 100;
+  if (percent > 0 && percent < 0.001) {
+    return "< 0,001%";
+  }
+  return `${decimal(percent, 3)}%`;
+}
+
+export function handleChargedPendulumShortcut(event, root, actions) {
+  if (isNativeInteractiveTarget(event.target, root)) {
+    return false;
+  }
+
+  const actionByKey = {
+    ArrowLeft: actions.previous,
+    ArrowRight: actions.next,
+    Home: actions.reset,
+    " ": actions.togglePlay,
+    Spacebar: actions.togglePlay,
+  };
+  const action = actionByKey[event.key];
+  if (!action) {
+    return false;
+  }
+
+  event.preventDefault();
+  action();
+  return true;
+}
+
 export function mountChargedPendulum(root) {
   if (!root) {
     return null;
   }
+
+  root.dataset.enhanced = "true";
 
   const elements = {
     separation: root.querySelector("[data-separation]"),
@@ -172,7 +208,7 @@ export function mountChargedPendulum(root) {
     const angleLabel = `${decimal(state.thetaDegrees, 2)}°`;
     const chargeNanoC = state.approximateChargeC * 1e9;
     const chargeLabel = `${decimal(chargeNanoC, 0)} nC`;
-    const errorLabel = `${decimal(state.relativeChargeError * 100, 3)}%`;
+    const errorLabel = formatRelativeError(state.relativeChargeError);
     const step = STEPS[stepIndex];
 
     root.dataset.step = String(stepIndex);
@@ -312,21 +348,12 @@ export function mountChargedPendulum(root) {
     });
   }
   root.addEventListener("keydown", (event) => {
-    if (isNativeInteractiveTarget(event.target, root)) {
-      return;
-    }
-    const actions = {
-      ArrowLeft: stepBack,
-      ArrowRight: stepForward,
-      Home: reset,
-      " ": () => (playState === "playing" ? pause() : play()),
-      Spacebar: () => (playState === "playing" ? pause() : play()),
-    };
-    const action = actions[event.key];
-    if (action) {
-      event.preventDefault();
-      action();
-    }
+    handleChargedPendulumShortcut(event, root, {
+      next: stepForward,
+      previous: stepBack,
+      reset,
+      togglePlay: () => (playState === "playing" ? pause() : play()),
+    });
   });
   document.addEventListener("visibilitychange", () => {
     if (document.hidden) {

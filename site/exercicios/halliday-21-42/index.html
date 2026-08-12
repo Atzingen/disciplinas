@@ -291,19 +291,10 @@
 
           <div class="charged-pendulum__body">
             <div class="charged-pendulum__diagram">
-              <svg viewBox="0 0 920 570" role="img" aria-labelledby="diagram-42-title diagram-42-desc">
-                <title id="diagram-42-title">Pêndulos carregados e corpo livre da esfera direita</title>
-                <desc id="diagram-42-desc">Duas esferas iguais pendem simetricamente, separadas por x. O corpo livre da esfera direita mostra tensão, peso e força elétrica, além das componentes da tensão.</desc>
+              <svg class="charged-pendulum__canvas" viewBox="0 0 570 570" role="img" aria-labelledby="geometry-42-title geometry-42-desc">
+                <title id="geometry-42-title">Geometria simétrica dos pêndulos carregados</title>
+                <desc id="geometry-42-desc">Duas esferas iguais pendem simetricamente, separadas por x. Cada esfera se desloca horizontalmente por x sobre dois.</desc>
                 <defs>
-                  <marker id="arrow-42-tension" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto">
-                    <path d="M 0 0 L 10 5 L 0 10 z"></path>
-                  </marker>
-                  <marker id="arrow-42-electric" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto">
-                    <path d="M 0 0 L 10 5 L 0 10 z"></path>
-                  </marker>
-                  <marker id="arrow-42-weight" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto">
-                    <path d="M 0 0 L 10 5 L 0 10 z"></path>
-                  </marker>
                   <marker id="dimension-42" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
                     <path d="M 10 0 L 0 5 L 10 10 z"></path>
                   </marker>
@@ -333,28 +324,43 @@
                   <text class="charged-pendulum__value charged-pendulum__value--half" data-half-label x="324" y="407">x/2 = 2,5 cm</text>
                   <text class="charged-pendulum__angle-value" data-svg-angle x="48" y="512">θ real ≈ 1,19°</text>
                 </g>
+              </svg>
 
-                <rect class="charged-pendulum__panel" x="570" y="24" width="328" height="516" rx="8"></rect>
-                <text class="charged-pendulum__panel-title" x="594" y="59">CORPO LIVRE · ESFERA DIREITA</text>
+              <svg class="charged-pendulum__canvas" viewBox="0 0 360 570" role="img" aria-labelledby="free-body-42-title free-body-42-desc">
+                <title id="free-body-42-title">Corpo livre da esfera direita</title>
+                <desc id="free-body-42-desc">A esfera direita isolada recebe tensão para cima e para a esquerda, força elétrica para a direita e peso para baixo. A tensão aparece decomposta horizontal e verticalmente.</desc>
+                <defs>
+                  <marker id="arrow-42-tension" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+                    <path d="M 0 0 L 10 5 L 0 10 z"></path>
+                  </marker>
+                  <marker id="arrow-42-electric" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+                    <path d="M 0 0 L 10 5 L 0 10 z"></path>
+                  </marker>
+                  <marker id="arrow-42-weight" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+                    <path d="M 0 0 L 10 5 L 0 10 z"></path>
+                  </marker>
+                </defs>
+                <rect class="charged-pendulum__panel" x="8" y="24" width="328" height="516" rx="8"></rect>
+                <text class="charged-pendulum__panel-title" x="32" y="59">CORPO LIVRE · ESFERA DIREITA</text>
                 <g data-free-body data-reveal-step="1">
-                  <line class="charged-pendulum__axis" x1="610" y1="292" x2="866" y2="292"></line>
-                  <line class="charged-pendulum__axis" x1="734" y1="112" x2="734" y2="486"></line>
-                  <circle class="charged-pendulum__mass" cx="734" cy="292" r="31"></circle>
-                  <text class="charged-pendulum__sign" x="734" y="301">q</text>
-                  <line class="charged-pendulum__force charged-pendulum__force--tension" x1="714" y1="268" x2="635" y2="162" marker-end="url(#arrow-42-tension)"></line>
-                  <text class="charged-pendulum__force-label charged-pendulum__force-label--tension" x="627" y="143">T</text>
-                  <line class="charged-pendulum__force charged-pendulum__force--electric" x1="768" y1="292" x2="858" y2="292" marker-end="url(#arrow-42-electric)"></line>
-                  <text class="charged-pendulum__force-label charged-pendulum__force-label--electric" x="816" y="274">F<tspan baseline-shift="sub">e</tspan></text>
-                  <line class="charged-pendulum__force charged-pendulum__force--weight" x1="734" y1="328" x2="734" y2="452" marker-end="url(#arrow-42-weight)"></line>
-                  <text class="charged-pendulum__force-label charged-pendulum__force-label--weight" x="753" y="420">mg</text>
-                  <path class="charged-pendulum__angle" d="M 734 220 A 72 72 0 0 0 693 234"></path>
-                  <text class="charged-pendulum__value" x="679" y="220">θ</text>
+                  <line class="charged-pendulum__axis" x1="48" y1="292" x2="304" y2="292"></line>
+                  <line class="charged-pendulum__axis" x1="172" y1="112" x2="172" y2="486"></line>
+                  <circle class="charged-pendulum__mass" cx="172" cy="292" r="31"></circle>
+                  <text class="charged-pendulum__sign" x="172" y="301">q</text>
+                  <line class="charged-pendulum__force charged-pendulum__force--tension" x1="152" y1="268" x2="73" y2="162" marker-end="url(#arrow-42-tension)"></line>
+                  <text class="charged-pendulum__force-label charged-pendulum__force-label--tension" x="65" y="143">T</text>
+                  <line class="charged-pendulum__force charged-pendulum__force--electric" x1="206" y1="292" x2="296" y2="292" marker-end="url(#arrow-42-electric)"></line>
+                  <text class="charged-pendulum__force-label charged-pendulum__force-label--electric" x="254" y="274">F<tspan baseline-shift="sub">e</tspan></text>
+                  <line class="charged-pendulum__force charged-pendulum__force--weight" x1="172" y1="328" x2="172" y2="452" marker-end="url(#arrow-42-weight)"></line>
+                  <text class="charged-pendulum__force-label charged-pendulum__force-label--weight" x="191" y="420">mg</text>
+                  <path class="charged-pendulum__angle" d="M 172 220 A 72 72 0 0 0 131 234"></path>
+                  <text class="charged-pendulum__value" x="117" y="220">θ</text>
                 </g>
                 <g data-components data-reveal-step="2">
-                  <line class="charged-pendulum__component charged-pendulum__component--horizontal" x1="714" y1="268" x2="635" y2="268"></line>
-                  <line class="charged-pendulum__component charged-pendulum__component--vertical" x1="635" y1="268" x2="635" y2="162"></line>
-                  <text class="charged-pendulum__component-label" x="645" y="258">T sen θ</text>
-                  <text class="charged-pendulum__component-label" x="645" y="190">T cos θ</text>
+                  <line class="charged-pendulum__component charged-pendulum__component--horizontal" x1="152" y1="268" x2="73" y2="268"></line>
+                  <line class="charged-pendulum__component charged-pendulum__component--vertical" x1="73" y1="268" x2="73" y2="162"></line>
+                  <text class="charged-pendulum__component-label" x="83" y="258">T sen θ</text>
+                  <text class="charged-pendulum__component-label" x="83" y="190">T cos θ</text>
                 </g>
               </svg>
             </div>
@@ -377,7 +383,7 @@
                 </div>
                 <div class="charged-pendulum__equation" data-reveal-step="2">
                   <small>componentes da tensão</small>
-                  <strong>T sen θ = F<sub>e</sub> · T cos θ = mg</strong>
+                  <strong class="charged-pendulum__equation-lines"><span>T sen θ = F<sub>e</sub>;</span><span>T cos θ = mg</span></strong>
                 </div>
                 <div class="charged-pendulum__equation" data-reveal-step="3">
                   <small>elimine T por divisão</small>
@@ -393,7 +399,7 @@
                 </div>
                 <div class="charged-pendulum__equation charged-pendulum__equation--result" data-reveal-step="6">
                   <small>caso do enunciado</small>
-                  <strong>q = 2,38 × 10<sup>−8</sup> C ≈ 24 nC</strong>
+                  <strong class="charged-pendulum__equation-lines"><span>q = √(mgx<sup>3</sup> / (2Lk))</span><span>q = 2,38 × 10<sup>−8</sup> C ≈ 24 nC</span></strong>
                 </div>
               </div>
 
