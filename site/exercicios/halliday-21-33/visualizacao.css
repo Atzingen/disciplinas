@@ -1,0 +1,434 @@
+.charge-counting {
+  overflow: hidden;
+  margin: 1.5rem 0 2rem;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  box-shadow: var(--shadow);
+}
+
+.charge-counting__header {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(16rem, 0.42fr);
+  gap: 1.5rem;
+  align-items: end;
+  padding: clamp(1.1rem, 3vw, 1.9rem);
+  border-bottom: 1px solid var(--line);
+}
+
+.charge-counting__header h3,
+.charge-counting__header p {
+  margin: 0;
+}
+
+.charge-counting__header h3 {
+  max-width: 25ch;
+  font: 700 clamp(1.35rem, 3vw, 2.15rem)/1.12 var(--font-display);
+}
+
+.charge-counting__header > p {
+  color: var(--ink-soft);
+}
+
+.charge-counting__body {
+  padding: clamp(1rem, 3vw, 1.8rem);
+  background:
+    linear-gradient(var(--grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px),
+    var(--paper-deep);
+  background-size: 24px 24px;
+}
+
+.charge-counting__stations {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 0.65rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.charge-counting__station {
+  position: relative;
+  min-width: 0;
+}
+
+.charge-counting__station:not(:last-child)::after {
+  position: absolute;
+  z-index: 2;
+  top: 50%;
+  right: -0.6rem;
+  width: 0.55rem;
+  height: 2px;
+  background: var(--line-strong);
+  content: "";
+}
+
+.charge-counting__station button {
+  display: grid;
+  width: 100%;
+  min-height: 9.5rem;
+  padding: 0.85rem 0.65rem;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-md);
+  background: color-mix(in srgb, var(--surface) 94%, transparent);
+  color: var(--ink);
+  cursor: pointer;
+  text-align: left;
+  transition: border-color 180ms ease, box-shadow 180ms ease, transform 180ms ease;
+}
+
+.charge-counting__station button:hover,
+.charge-counting__station button:focus-visible {
+  border-color: var(--resultant);
+}
+
+.charge-counting__station[data-state="active"] button {
+  border-color: var(--resultant);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--resultant) 22%, transparent);
+  transform: translateY(-0.2rem);
+}
+
+.charge-counting__station[data-state="pending"] button {
+  color: var(--ink-soft);
+  opacity: 0.62;
+}
+
+.charge-counting__station-index,
+.charge-counting__station-symbol,
+.charge-counting__station-value {
+  display: block;
+}
+
+.charge-counting__station-index {
+  color: var(--ink-soft);
+  font: 700 0.7rem/1 var(--font-mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.charge-counting__station-symbol {
+  align-self: end;
+  margin-top: 0.7rem;
+  color: var(--resultant);
+  font: 700 1.55rem/1 var(--font-display);
+}
+
+.charge-counting__station-value {
+  align-self: end;
+  margin-top: 0.5rem;
+  overflow-wrap: anywhere;
+  font: 700 clamp(0.68rem, 1vw, 0.82rem)/1.35 var(--font-mono);
+}
+
+.charge-counting__workbench {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(16rem, 0.65fr);
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.charge-counting__factor,
+.charge-counting__scale,
+.charge-counting__neutrality {
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  background: var(--surface);
+}
+
+.charge-counting__factor {
+  padding: 1rem 1.15rem;
+}
+
+.charge-counting__kicker {
+  display: block;
+  margin-bottom: 0.55rem;
+  color: var(--negative);
+  font: 700 0.72rem/1.2 var(--font-mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.charge-counting__equation {
+  margin: 0;
+  color: var(--ink);
+  font: 700 clamp(1rem, 2vw, 1.35rem)/1.55 var(--font-mono);
+}
+
+.charge-counting__equation s {
+  color: var(--ink-soft);
+  text-decoration-color: var(--positive);
+  text-decoration-thickness: 0.14em;
+}
+
+.charge-counting__cancellation {
+  margin: 0.65rem 0 0;
+  color: var(--ink-soft);
+  font-size: 0.9rem;
+}
+
+.charge-counting__scale {
+  padding: 1rem 1.15rem 1.1rem;
+}
+
+.charge-counting__scale-title {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin: 0 0 0.85rem;
+  color: var(--ink-soft);
+  font: 0.74rem/1.4 var(--font-mono);
+}
+
+.charge-counting__scale-title strong {
+  color: var(--ink);
+}
+
+.charge-counting__scale-track {
+  position: relative;
+  height: 1.25rem;
+  margin: 0.3rem 0 0.45rem;
+  border-radius: 999px;
+  background:
+    repeating-linear-gradient(
+      90deg,
+      transparent 0,
+      transparent calc(25% - 1px),
+      color-mix(in srgb, var(--surface) 72%, transparent) calc(25% - 1px),
+      color-mix(in srgb, var(--surface) 72%, transparent) 25%
+    ),
+    linear-gradient(90deg, var(--negative), var(--resultant), var(--positive));
+}
+
+.charge-counting__scale-marker {
+  position: absolute;
+  top: 50%;
+  left: var(--scale-position, 0%);
+  width: 1rem;
+  height: 1rem;
+  border: 3px solid var(--surface);
+  border-radius: 50%;
+  background: var(--ink);
+  box-shadow: 0 0 0 2px var(--ink);
+  transform: translate(-50%, -50%);
+  transition: left 320ms ease;
+}
+
+.charge-counting__scale-labels {
+  display: flex;
+  justify-content: space-between;
+  color: var(--ink-soft);
+  font: 0.68rem/1 var(--font-mono);
+}
+
+.charge-counting__icons {
+  display: flex;
+  gap: 0.25rem;
+  align-items: center;
+  margin-top: 0.9rem;
+  color: var(--ink-soft);
+  font-size: 0.78rem;
+}
+
+.charge-counting__icons i {
+  width: 0.42rem;
+  height: 0.42rem;
+  flex: 0 0 auto;
+  border-radius: 50%;
+  background: var(--positive);
+}
+
+.charge-counting__icons span {
+  margin-left: 0.3rem;
+}
+
+.charge-counting__neutrality {
+  grid-column: 1 / -1;
+  padding: 1rem 1.15rem;
+  opacity: 0.42;
+  transition: opacity 220ms ease;
+}
+
+.charge-counting[data-complete="true"] .charge-counting__neutrality {
+  opacity: 1;
+}
+
+.charge-counting__neutrality-grid {
+  display: grid;
+  grid-template-columns: minmax(7rem, 0.28fr) minmax(0, 1fr) auto;
+  gap: 0.65rem 1rem;
+  align-items: center;
+}
+
+.charge-counting__neutrality-grid strong {
+  font: 700 0.82rem/1.35 var(--font-mono);
+}
+
+.charge-counting__bar-track {
+  height: 0.85rem;
+  overflow: hidden;
+  border-radius: 999px;
+  background: var(--line-soft);
+}
+
+.charge-counting__bar {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.charge-counting__bar--positive {
+  background: var(--positive);
+}
+
+.charge-counting__bar--negative {
+  background: var(--negative);
+}
+
+.charge-counting__net {
+  grid-column: 1 / -1;
+  margin: 0.35rem 0 0;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--line);
+  color: var(--ink);
+  text-align: center;
+}
+
+.charge-counting__net strong {
+  color: var(--resultant);
+}
+
+.charge-counting__footer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: center;
+  padding: 1rem clamp(1rem, 3vw, 1.8rem) 1.35rem;
+  border-top: 1px solid var(--line);
+}
+
+.charge-counting__controls {
+  display: flex;
+  flex: 1 1 30rem;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+.charge-counting__controls button,
+.charge-counting__speed select {
+  min-height: 44px;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  color: var(--ink);
+  cursor: pointer;
+  font: 700 0.82rem/1 var(--font-mono);
+}
+
+.charge-counting__controls button {
+  padding: 0.65rem 0.85rem;
+}
+
+.charge-counting__controls button:first-child {
+  border-color: var(--resultant);
+  background: var(--resultant);
+  color: var(--on-accent);
+}
+
+.charge-counting__controls button:disabled {
+  cursor: not-allowed;
+  opacity: 0.45;
+}
+
+.charge-counting__speed {
+  display: flex;
+  gap: 0.55rem;
+  align-items: center;
+  color: var(--ink-soft);
+  font: 700 0.78rem/1 var(--font-mono);
+}
+
+.charge-counting__speed select {
+  padding: 0.55rem 2rem 0.55rem 0.7rem;
+}
+
+.charge-counting__status {
+  flex: 1 0 100%;
+  margin: 0;
+  color: var(--ink-soft);
+  font: 0.78rem/1.5 var(--font-mono);
+}
+
+@media (max-width: 900px) {
+  .charge-counting__stations {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .charge-counting__station:nth-child(3)::after {
+    display: none;
+  }
+
+  .charge-counting__workbench {
+    grid-template-columns: 1fr;
+  }
+
+  .charge-counting__neutrality {
+    grid-column: auto;
+  }
+}
+
+@media (max-width: 600px) {
+  .charge-counting__header {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+
+  .charge-counting__body {
+    padding: 0.8rem;
+  }
+
+  .charge-counting__stations {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.5rem;
+  }
+
+  .charge-counting__station:nth-child(3)::after {
+    display: block;
+  }
+
+  .charge-counting__station:nth-child(even)::after {
+    display: none;
+  }
+
+  .charge-counting__station button {
+    min-height: 8.25rem;
+  }
+
+  .charge-counting__station-value {
+    font-size: 0.7rem;
+  }
+
+  .charge-counting__neutrality-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .charge-counting__controls button {
+    flex: 1 1 calc(50% - 0.6rem);
+  }
+
+  .charge-counting__speed {
+    width: 100%;
+    justify-content: space-between;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .charge-counting *,
+  .charge-counting *::before,
+  .charge-counting *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}

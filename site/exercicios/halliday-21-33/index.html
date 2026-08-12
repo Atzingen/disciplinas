@@ -5,9 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Resolução ilustrada do exercício 33, capítulo 21, do Halliday: a carga positiva contida em 250 cm³ de água neutra.">
   <title>Halliday 21.33 · Laboratório de Eletromagnetismo</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='28' fill='%237a3ce7'/%3E%3Cpath d='M18 32h28M32 18v28' stroke='white' stroke-width='6'/%3E%3C/svg%3E">
   <link rel="stylesheet" href="../../assets/base.css">
   <link rel="stylesheet" href="../../assets/simulador.css">
   <link rel="stylesheet" href="../../assets/substancias.css">
+  <link rel="stylesheet" href="./visualizacao.css">
   <script>try{if(localStorage.getItem("tema")==="escuro"){document.documentElement.dataset.theme="escuro"}}catch(erro){}</script>
 </head>
 <body class="lesson-page halliday-page">
@@ -135,54 +137,121 @@
               N<sub>p</sub> = (número de moléculas) × (prótons por molécula).
             </div>
 
-            <svg class="teaching-diagram" viewBox="0 0 940 260" role="img" aria-labelledby="cadeia-33-title cadeia-33-desc">
-              <title id="cadeia-33-title">Cadeia de conversão do volume até a carga</title>
-              <desc id="cadeia-33-desc">Seis caixas ligadas por setas: volume de 250 centímetros cúbicos, massa de 250 gramas, 13,87 mols, 8,35 vezes dez elevado a 24 moléculas, 8,35 vezes dez elevado a 25 prótons e carga de 1,34 vezes dez elevado a 7 coulombs. As setas indicam multiplicar pela densidade, dividir pela massa molar, multiplicar pelo número de Avogadro, multiplicar por Z e multiplicar pela carga elementar.</desc>
-              <defs>
-                <marker id="cadeia-seta-33" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto">
-                  <path d="M 0 0 L 10 5 L 0 10 z" style="fill: var(--force-1)"></path>
-                </marker>
-              </defs>
+            <article class="charge-counting" data-didactic-visualization data-play-state="paused" data-step="0" data-step-id="volume" data-motion="full" data-complete="false" tabindex="0" aria-labelledby="charge-counting-title" aria-describedby="charge-counting-help">
+              <header class="charge-counting__header">
+                <div>
+                  <p class="eyebrow">Do volume à carga</p>
+                  <h3 id="charge-counting-title">Uma unidade cancela, a próxima grandeza aparece</h3>
+                </div>
+                <p id="charge-counting-help">
+                  Avance pelos fatores ou escolha uma estação. No teclado, use
+                  ← e → para navegar e Home para reiniciar.
+                </p>
+              </header>
 
-              <text class="diagram-panel-title" x="20" y="46">DO VOLUME ATÉ A CARGA</text>
+              <div class="charge-counting__body">
+                <ol class="charge-counting__stations" aria-label="Cadeia dimensional">
+                  <li class="charge-counting__station" data-station="volume" data-state="active" aria-current="step">
+                    <button type="button">
+                      <span class="charge-counting__station-index">01 · Volume</span>
+                      <strong class="charge-counting__station-symbol">V</strong>
+                      <span class="charge-counting__station-value">250 cm³</span>
+                    </button>
+                  </li>
+                  <li class="charge-counting__station" data-station="mass" data-state="pending" aria-current="false">
+                    <button type="button">
+                      <span class="charge-counting__station-index">02 · Massa</span>
+                      <strong class="charge-counting__station-symbol">m</strong>
+                      <span class="charge-counting__station-value">250 g</span>
+                    </button>
+                  </li>
+                  <li class="charge-counting__station" data-station="moles" data-state="pending" aria-current="false">
+                    <button type="button">
+                      <span class="charge-counting__station-index">03 · Mols</span>
+                      <strong class="charge-counting__station-symbol">n</strong>
+                      <span class="charge-counting__station-value">13,87 mol</span>
+                    </button>
+                  </li>
+                  <li class="charge-counting__station" data-station="molecules" data-state="pending" aria-current="false">
+                    <button type="button">
+                      <span class="charge-counting__station-index">04 · Moléculas</span>
+                      <strong class="charge-counting__station-symbol">N</strong>
+                      <span class="charge-counting__station-value">8,35 × 10²⁴ moléculas</span>
+                    </button>
+                  </li>
+                  <li class="charge-counting__station" data-station="protons" data-state="pending" aria-current="false">
+                    <button type="button">
+                      <span class="charge-counting__station-index">05 · Prótons</span>
+                      <strong class="charge-counting__station-symbol">Nₚ</strong>
+                      <span class="charge-counting__station-value">8,35 × 10²⁵ prótons</span>
+                    </button>
+                  </li>
+                  <li class="charge-counting__station" data-station="charge" data-state="pending" aria-current="false">
+                    <button type="button">
+                      <span class="charge-counting__station-index">06 · Carga</span>
+                      <strong class="charge-counting__station-symbol">q⁺</strong>
+                      <span class="charge-counting__station-value">+1,34 × 10⁷ C</span>
+                    </button>
+                  </li>
+                </ol>
 
-              <rect class="diagram-panel" x="20" y="90" width="120" height="80" rx="2"></rect>
-              <text class="diagram-force-label" x="80" y="122" text-anchor="middle">V</text>
-              <text class="diagram-note" x="80" y="146" text-anchor="middle">250 cm³</text>
+                <div class="charge-counting__workbench">
+                  <section class="charge-counting__factor" aria-live="polite">
+                    <span class="charge-counting__kicker" data-factor-label>Amostra fornecida</span>
+                    <p class="charge-counting__equation" data-factor>250 cm<sup>3</sup></p>
+                    <p class="charge-counting__cancellation" data-cancellation>Ponto de partida: ainda não há unidade a cancelar.</p>
+                  </section>
 
-              <rect class="diagram-panel" x="176" y="90" width="120" height="80" rx="2"></rect>
-              <text class="diagram-force-label" x="236" y="122" text-anchor="middle">m</text>
-              <text class="diagram-note" x="236" y="146" text-anchor="middle">250 g</text>
+                  <section class="charge-counting__scale" aria-label="Régua logarítmica das ordens de grandeza">
+                    <p class="charge-counting__scale-title">
+                      <strong>Escala logarítmica</strong>
+                      <span data-scale-value>ordem de grandeza: 10^2</span>
+                    </p>
+                    <div class="charge-counting__scale-track" aria-hidden="true">
+                      <span class="charge-counting__scale-marker" data-scale-marker style="--scale-position: 9.2%"></span>
+                    </div>
+                    <div class="charge-counting__scale-labels" aria-hidden="true">
+                      <span>10⁰</span><span>10⁷</span><span>10¹³</span><span>10¹⁹</span><span>10²⁶</span>
+                    </div>
+                    <div class="charge-counting__icons" aria-label="Os pontos são ícones simbólicos, não uma representação literal da quantidade de partículas.">
+                      <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+                      <span>ícones simbólicos — nunca 10²⁵ partículas desenhadas</span>
+                    </div>
+                  </section>
 
-              <rect class="diagram-panel" x="332" y="90" width="120" height="80" rx="2"></rect>
-              <text class="diagram-force-label" x="392" y="122" text-anchor="middle">n</text>
-              <text class="diagram-note" x="392" y="146" text-anchor="middle">13,87 mol</text>
+                  <section class="charge-counting__neutrality" data-neutrality aria-hidden="true" aria-label="Neutralidade final">
+                    <span class="charge-counting__kicker">Fechamento: cargas iguais, sinais opostos</span>
+                    <div class="charge-counting__neutrality-grid">
+                      <strong>Prótons · +1,34 × 10<sup>7</sup> C</strong>
+                      <span class="charge-counting__bar-track" aria-hidden="true"><i class="charge-counting__bar charge-counting__bar--positive"></i></span>
+                      <span>+</span>
+                      <strong>Elétrons · −1,34 × 10<sup>7</sup> C</strong>
+                      <span class="charge-counting__bar-track" aria-hidden="true"><i class="charge-counting__bar charge-counting__bar--negative"></i></span>
+                      <span>−</span>
+                      <p class="charge-counting__net">Carga líquida: <strong>0 C</strong></p>
+                    </div>
+                  </section>
+                </div>
+              </div>
 
-              <rect class="diagram-panel" x="488" y="90" width="120" height="80" rx="2"></rect>
-              <text class="diagram-force-label" x="548" y="122" text-anchor="middle">N</text>
-              <text class="diagram-note" x="548" y="146" text-anchor="middle">8,35 × 10²⁴</text>
-
-              <rect class="diagram-panel" x="644" y="90" width="120" height="80" rx="2"></rect>
-              <text class="diagram-force-label" x="704" y="122" text-anchor="middle">Nₚ</text>
-              <text class="diagram-note" x="704" y="146" text-anchor="middle">8,35 × 10²⁵</text>
-
-              <rect class="diagram-panel" x="800" y="90" width="120" height="80" rx="2"></rect>
-              <text class="diagram-force-label" x="860" y="122" text-anchor="middle">q</text>
-              <text class="diagram-value" x="860" y="148" text-anchor="middle">1,34 × 10⁷ C</text>
-
-              <line class="diagram-force diagram-force--one" x1="146" y1="130" x2="168" y2="130" marker-end="url(#cadeia-seta-33)"></line>
-              <text class="diagram-note" x="157" y="80" text-anchor="middle">× ρ</text>
-              <line class="diagram-force diagram-force--one" x1="302" y1="130" x2="324" y2="130" marker-end="url(#cadeia-seta-33)"></line>
-              <text class="diagram-note" x="313" y="80" text-anchor="middle">÷ M</text>
-              <line class="diagram-force diagram-force--one" x1="458" y1="130" x2="480" y2="130" marker-end="url(#cadeia-seta-33)"></line>
-              <text class="diagram-note" x="469" y="80" text-anchor="middle">× N_A</text>
-              <line class="diagram-force diagram-force--one" x1="614" y1="130" x2="636" y2="130" marker-end="url(#cadeia-seta-33)"></line>
-              <text class="diagram-note" x="625" y="80" text-anchor="middle">× Z</text>
-              <line class="diagram-force diagram-force--one" x1="770" y1="130" x2="792" y2="130" marker-end="url(#cadeia-seta-33)"></line>
-              <text class="diagram-note" x="781" y="80" text-anchor="middle">× e</text>
-
-              <text class="diagram-note" x="20" y="220">Constantes: N_A = 6,022 × 10²³ mol⁻¹ · e = 1,602 × 10⁻¹⁹ C · M(H₂O) = 18,02 g/mol · Z = 10</text>
-            </svg>
+              <footer class="charge-counting__footer">
+                <div class="charge-counting__controls" aria-label="Controles da cadeia de contagem">
+                  <button type="button" data-play>Reproduzir</button>
+                  <button type="button" data-pause disabled>Pausar</button>
+                  <button type="button" data-reset>Reiniciar</button>
+                  <button type="button" data-next>Próximo passo</button>
+                </div>
+                <label class="charge-counting__speed">
+                  Velocidade
+                  <select data-speed>
+                    <option value="0.5">0,5×</option>
+                    <option value="1" selected>1×</option>
+                    <option value="2">2×</option>
+                  </select>
+                </label>
+                <p class="charge-counting__status" data-step-status aria-live="polite">Passo 1 de 6. O cálculo começa com 250 centímetros cúbicos de água.</p>
+              </footer>
+            </article>
           </section>
 
           <section>
