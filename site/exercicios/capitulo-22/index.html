@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Resoluções temáticas e exercícios do capítulo 22 do Halliday sobre campo elétrico produzido por distribuições contínuas de carga.">
+  <title>Campo elétrico · Capítulo 22 · Laboratório de Eletromagnetismo</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='28' fill='%237a3ce7'/%3E%3Cpath d='M18 32h28M32 18v28' stroke='white' stroke-width='6'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="../../assets/base.css">
+  <script>try{if(localStorage.getItem("tema")==="escuro"){document.documentElement.dataset.theme="escuro"}}catch(erro){}</script>
+</head>
+<body class="area-page">
+  <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+  <header class="site-header">
+    <a class="brand" href="../../" aria-label="Laboratório de Eletromagnetismo — início">
+      <span class="brand__mark" aria-hidden="true">Σ</span>
+      <span><strong>Laboratório de Eletromagnetismo</strong><small>IFSP · materiais de aula</small></span>
+    </a>
+    <div data-site-navigation data-root-path="../../" data-active-section="exercicios"></div>
+  </header>
+
+  <main class="area-page-main" id="conteudo">
+    <nav class="breadcrumb area-breadcrumb" aria-label="Navegação estrutural">
+      <a href="../">Exercícios</a><span aria-hidden="true">/</span><strong>Capítulo 22</strong>
+    </nav>
+    <header class="area-hero area-hero--compact">
+      <p class="eyebrow">Campo elétrico · capítulo 22</p>
+      <h1>Da carga elementar à distribuição contínua.</h1>
+      <p>
+        Oito resoluções com geometria explícita, decomposição vetorial,
+        integração em LaTeX e verificações físicas do resultado.
+      </p>
+    </header>
+
+    <section class="catalog-section catalog-section--area" aria-labelledby="thematic-title" data-thematic-catalog>
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">Sequência conceitual · 1 a 5</p>
+          <h2 id="thematic-title">Exercícios temáticos</h2>
+        </div>
+        <p class="catalog-count" data-catalog-count aria-live="polite">Carregando materiais…</p>
+      </div>
+      <div class="catalog-controls" data-catalog-controls aria-busy="true">
+        <label class="search-field"><span>Buscar nos temáticos</span><input type="search" placeholder="Ex.: anel, barra, disco" autocomplete="off" data-catalog-search></label>
+        <div class="filter-group" aria-label="Filtrar tipo de material">
+          <button type="button" data-catalog-filter="todos" aria-pressed="true">Todos</button>
+          <button type="button" data-catalog-filter="resolucao" aria-pressed="false">Resoluções</button>
+        </div>
+      </div>
+      <div class="catalog-grid" data-catalog-results aria-live="polite"></div>
+    </section>
+
+    <section class="catalog-section catalog-section--area" aria-labelledby="halliday-title" data-halliday-catalog>
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">Halliday · capítulo 22</p>
+          <h2 id="halliday-title">Exercícios do livro</h2>
+        </div>
+        <p class="catalog-count" data-catalog-count aria-live="polite">Carregando materiais…</p>
+      </div>
+      <div class="catalog-controls" data-catalog-controls aria-busy="true">
+        <label class="search-field"><span>Buscar no Halliday</span><input type="search" placeholder="Ex.: exercício 26, máximo" autocomplete="off" data-catalog-search></label>
+        <div class="filter-group" aria-label="Filtrar tipo de material">
+          <button type="button" data-catalog-filter="todos" aria-pressed="true">Todos</button>
+          <button type="button" data-catalog-filter="resolucao" aria-pressed="false">Resoluções</button>
+        </div>
+      </div>
+      <div class="catalog-grid" data-catalog-results aria-live="polite"></div>
+    </section>
+  </main>
+
+  <footer class="site-footer"><p>Campo elétrico · capítulo 22</p><a href="../">Ver todos os capítulos</a></footer>
+  <script type="module" src="../../componentes/navegacao-principal.js"></script>
+  <script type="module">
+    import { mountCatalog } from "../../componentes/catalogo.js";
+
+    const options = {
+      registryUrl: "../../simuladores.json",
+      pathPrefix: "../../",
+    };
+
+    mountCatalog(document.querySelector("[data-thematic-catalog]"), {
+      ...options,
+      scope: { section: "exercicios", chapter: 22, reference: "Temático" },
+    });
+    mountCatalog(document.querySelector("[data-halliday-catalog]"), {
+      ...options,
+      scope: { section: "exercicios", chapter: 22, reference: "Halliday" },
+    });
+  </script>
+</body>
+</html>

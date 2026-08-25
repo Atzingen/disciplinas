@@ -1,0 +1,504 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Resolução do exercício Halliday 22.26: campo elétrico no centro de uma semicircunferência com cargas opostas em suas metades.">
+  <title>Halliday 22.26 — Semicircunferência com cargas opostas · Laboratório de Eletromagnetismo</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='28' fill='%237a3ce7'/%3E%3Cpath d='M18 32h28M32 18v28' stroke='white' stroke-width='6'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="../../assets/base.css">
+  <link rel="stylesheet" href="../../assets/simulador.css">
+  <link rel="stylesheet" href="../../assets/campo-eletrico.css">
+  <script>try{if(localStorage.getItem("tema")==="escuro"){document.documentElement.dataset.theme="escuro"}}catch(erro){}</script>
+</head>
+<body class="lesson-page field-page">
+  <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+
+  <div class="site-topbar" data-topbar>
+    <div class="site-topbar__inner">
+      <nav class="breadcrumb" aria-label="Navegação estrutural">
+        <a href="../../">Laboratório</a>
+        <span aria-hidden="true">/</span>
+        <a href="../">Exercícios</a>
+        <span aria-hidden="true">/</span>
+        <a href="../capitulo-22/">Campo elétrico · Capítulo 22</a>
+        <span aria-hidden="true">/</span>
+        <strong aria-current="page">Halliday 22.26</strong>
+      </nav>
+      <div class="lesson-area-navigation" data-site-navigation data-root-path="../../" data-active-section="exercicios"></div>
+    </div>
+    <nav class="section-nav" aria-label="Seções do exercício" data-section-nav>
+      <a href="#enunciado">Enunciado</a>
+      <a href="#resolucao">Resolução</a>
+      <a href="#diagrama">Diagrama</a>
+    </nav>
+  </div>
+
+  <header class="lesson-header">
+    <div class="lesson-title-row">
+      <div>
+        <p class="eyebrow">Distribuição contínua de carga</p>
+        <h1>Arco com cargas opostas</h1>
+      </div>
+      <p class="lesson-intro">
+        As componentes horizontais das duas metades se cancelam, enquanto as
+        componentes verticais apontam juntas para baixo.
+      </p>
+    </div>
+  </header>
+
+  <main class="lesson-main" id="conteudo">
+    <div class="lesson-sections">
+
+      <section class="lesson-section" id="enunciado" aria-label="Enunciado">
+        <article class="problem-sheet">
+          <div class="problem-number">
+            <span>Halliday</span>
+            <strong>22.26</strong>
+          </div>
+          <div class="problem-copy">
+            <p>
+              Uma barra fina de vidro é curvada como uma semicircunferência de
+              raio \(r=5{,}00\,\mathrm{cm}\). A carga é uniforme em cada
+              metade: o quarto de círculo superior contém
+              \(+q=+4{,}50\,\mathrm{pC}\), e o quarto inferior contém
+              \(-q=-4{,}50\,\mathrm{pC}\).
+            </p>
+            <p>
+              Determine o módulo do campo elétrico no centro \(P\) e sua
+              orientação, medida em relação ao eixo \(+x\).
+            </p>
+          </div>
+          <div class="answer-strip">
+            <span>Resposta</span>
+            <strong>\(\displaystyle |\vec{E}|=20{,}6\,\mathrm{N/C},\qquad \phi=270^\circ\)</strong>
+          </div>
+        </article>
+      </section>
+
+      <section class="lesson-section" id="resolucao" aria-label="Resolução">
+        <article class="solution-article">
+          <header class="solution-heading">
+            <p class="eyebrow">Resolução passo a passo</p>
+            <h2>Conserve o sinal da densidade</h2>
+            <p>
+              As duas partes têm o mesmo comprimento e cargas de mesmo módulo,
+              mas sinais opostos. Integrar cada quarto de círculo separadamente
+              deixa claro quais componentes se anulam e quais se reforçam.
+            </p>
+          </header>
+
+          <section>
+            <span class="solution-step">geometria e dados</span>
+            <h3>Escolha os eixos e converta para o SI</h3>
+            <p>
+              Coloque \(P\) na origem e a semicircunferência no semiplano
+              \(x\geq0\). O ângulo \(\theta\) é medido a partir de \(+x\): a
+              parte inferior ocupa \(-\frac{\pi}{2}\leq\theta\leq0\), e a
+              parte superior ocupa \(0\leq\theta\leq\frac{\pi}{2}\).
+            </p>
+            <div class="math-block math-display">
+              \[
+              \begin{aligned}
+              q&=4{,}50\,\mathrm{pC}=4{,}50\times10^{-12}\,\mathrm{C},\\
+              r&=5{,}00\,\mathrm{cm}=5{,}00\times10^{-2}\,\mathrm{m},\\
+              \vec{r}_{P\to dq}
+              &=r\left(\cos\theta\,\hat{x}+\sin\theta\,\hat{y}\right).
+              \end{aligned}
+              \]
+            </div>
+            <p>
+              Aqui \(q\) representa o módulo positivo \(4{,}50\,\mathrm{pC}\).
+              O sinal da carga de cada metade será colocado na densidade linear.
+            </p>
+          </section>
+
+          <section>
+            <span class="solution-step">densidades lineares</span>
+            <h3>Cada metade do arco é um quarto de círculo</h3>
+            <p>
+              O comprimento de uma semicircunferência é \(\pi r\); portanto,
+              cada metade indicada no enunciado tem comprimento
+              \(\ell=\frac{\pi r}{2}\). Defina \(\lambda_0&gt;0\) como o
+              módulo da densidade linear.
+            </p>
+            <div class="math-block math-display">
+              \[
+              \begin{aligned}
+              \ell_{\mathrm{sup}}=\ell_{\mathrm{inf}}
+              &=\frac{\pi r}{2},\\
+              \lambda_0
+              &=\frac{q}{\pi r/2}=\frac{2q}{\pi r},\\
+              \lambda(\theta)
+              &=
+              \begin{cases}
+              +\lambda_0, & 0\leq\theta\leq\frac{\pi}{2},\\
+              -\lambda_0, & -\frac{\pi}{2}\leq\theta&lt;0.
+              \end{cases}
+              \end{aligned}
+              \]
+            </div>
+            <div class="assumption-note">
+              <strong>Por que usar uma densidade com sinal?</strong>
+              <p>
+                Assim, \(dq=\lambda r\,d\theta\) já é positivo no arco
+                superior e negativo no inferior. A lei de Coulomb inverterá
+                automaticamente o campo produzido pela carga negativa.
+              </p>
+            </div>
+          </section>
+
+          <section>
+            <span class="solution-step">elemento de campo</span>
+            <h3>Escreva \(d\vec{E}\) no centro</h3>
+            <p>
+              Um elemento de arco tem comprimento \(ds=r\,d\theta\), logo
+              \(dq=\lambda r\,d\theta\). A distância de qualquer elemento até
+              \(P\) é \(r\). O versor do elemento para o centro é o oposto de
+              \(\hat{r}_{P\to dq}\). Com
+              \(k=\frac{1}{4\pi\varepsilon_0}\), obtemos
+            </p>
+            <div class="math-block math-display">
+              \[
+              \begin{aligned}
+              ds&=r\,d\theta,\\
+              dq&=\lambda r\,d\theta,\\
+              d\vec{E}
+              &=k\frac{dq}{r^2}\left(-\hat{r}_{P\to dq}\right)\\
+              &=-k\frac{\lambda}{r}
+              \left(\cos\theta\,\hat{x}+\sin\theta\,\hat{y}\right)d\theta.
+              \end{aligned}
+              \]
+            </div>
+            <p>
+              Embora o versor tenha sido escrito no sentido que uma carga
+              positiva produz campo em \(P\), a expressão continua válida
+              para a parte negativa: ali \(\lambda=-\lambda_0\) troca o
+              sentido de todo o vetor.
+            </p>
+          </section>
+
+          <section>
+            <span class="solution-step">metade superior</span>
+            <h3>Integre a carga positiva de \(0\) a \(\pi/2\)</h3>
+            <p>
+              No quarto superior, \(\lambda=+\lambda_0\). As integrais de
+              \(\cos\theta\) e \(\sin\theta\) nesse intervalo valem \(1\).
+              Assim, as componentes superior horizontal e vertical são ambas
+              negativas.
+            </p>
+            <div class="math-block math-display">
+              \[
+              \begin{aligned}
+              \vec{E}_{\mathrm{sup}}
+              &=-k\frac{\lambda_0}{r}
+              \int_0^{\pi/2}
+              \left(\cos\theta\,\hat{x}+\sin\theta\,\hat{y}\right)d\theta\\
+              &=-k\frac{\lambda_0}{r}
+              \left(
+              \left[\sin\theta\right]_0^{\pi/2}\hat{x}
+              +\left[-\cos\theta\right]_0^{\pi/2}\hat{y}
+              \right)\\
+              &=-\frac{k\lambda_0}{r}\left(\hat{x}+\hat{y}\right).
+              \end{aligned}
+              \]
+            </div>
+            <p>
+              Isso também faz sentido geometricamente: a carga positiva
+              superior repele uma carga de prova colocada em \(P\), produzindo
+              componentes para a esquerda e para baixo.
+            </p>
+          </section>
+
+          <section>
+            <span class="solution-step">metade inferior</span>
+            <h3>Integre a carga negativa de \(-\pi/2\) a \(0\)</h3>
+            <p>
+              No quarto inferior, \(\lambda=-\lambda_0\). Esse sinal elimina
+              o sinal negativo que aparece na expressão geral de
+              \(d\vec{E}\). Agora a integral de \(\cos\theta\) vale \(1\),
+              mas a de \(\sin\theta\) vale \(-1\).
+            </p>
+            <div class="math-block math-display">
+              \[
+              \begin{aligned}
+              \vec{E}_{\mathrm{inf}}
+              &=+k\frac{\lambda_0}{r}
+              \int_{-\pi/2}^{0}
+              \left(\cos\theta\,\hat{x}+\sin\theta\,\hat{y}\right)d\theta\\
+              &=+k\frac{\lambda_0}{r}
+              \left(
+              \left[\sin\theta\right]_{-\pi/2}^{0}\hat{x}
+              +\left[-\cos\theta\right]_{-\pi/2}^{0}\hat{y}
+              \right)\\
+              &=+\frac{k\lambda_0}{r}\left(\hat{x}-\hat{y}\right).
+              \end{aligned}
+              \]
+            </div>
+            <p>
+              A carga negativa atrai a carga de prova em \(P\): sua componente
+              horizontal aponta para a direita, e sua componente vertical
+              também aponta para baixo.
+            </p>
+          </section>
+
+          <section>
+            <span class="solution-step">soma vetorial</span>
+            <h3>As componentes em \(x\) cancelam</h3>
+            <p>
+              As duas contribuições têm componentes horizontais de mesmo
+              módulo e sinais opostos. Já as componentes verticais têm o mesmo
+              módulo e apontam ambas para \(-y\).
+            </p>
+            <div class="math-block math-block--result math-display">
+              \[
+              \begin{aligned}
+              \vec{E}
+              &=\vec{E}_{\mathrm{sup}}+\vec{E}_{\mathrm{inf}}\\
+              &=-\frac{k\lambda_0}{r}(\hat{x}+\hat{y})
+              +\frac{k\lambda_0}{r}(\hat{x}-\hat{y})\\
+              &=-\frac{2k\lambda_0}{r}\,\hat{y}\\
+              &=-\frac{4kq}{\pi r^2}\,\hat{y}\\
+              &=-\frac{q}{\pi^2\varepsilon_0r^2}\,\hat{y}.
+              \end{aligned}
+              \]
+            </div>
+            <p>
+              Na última passagem foram usados
+              \(\lambda_0=\frac{2q}{\pi r}\) e
+              \(k=\frac{1}{4\pi\varepsilon_0}\).
+            </p>
+          </section>
+
+          <section>
+            <span class="solution-step">valor numérico</span>
+            <h3>Substitua os valores em unidades SI</h3>
+            <p>
+              O sinal vetorial será tratado na orientação. Para o módulo,
+              substitua \(q\), \(r\) e
+              \(\varepsilon_0=8{,}854\times10^{-12}\,
+              \mathrm{C^2/(N\,m^2)}\).
+            </p>
+            <div class="math-block math-display">
+              \[
+              \begin{aligned}
+              |\vec{E}|
+              &=\frac{q}{\pi^2\varepsilon_0r^2}\\
+              &=\frac{4{,}50\times10^{-12}}
+              {\pi^2(8{,}854\times10^{-12})(5{,}00\times10^{-2})^2}
+              \,\mathrm{N/C}\\
+              &=20{,}6\,\mathrm{N/C}.
+              \end{aligned}
+              \]
+            </div>
+            <div class="result-callout">
+              <span>Campo no centro</span>
+              <strong>\(\displaystyle \vec{E}=-(20{,}6\,\mathrm{N/C})\,\hat{y}\)</strong>
+            </div>
+          </section>
+
+          <section>
+            <span class="solution-step">orientação</span>
+            <h3>Converta o sentido \(-y\) em um ângulo</h3>
+            <p>
+              O vetor resultante aponta verticalmente para baixo. Se o ângulo
+              for medido no sentido anti-horário a partir de \(+x\), esse
+              sentido corresponde a \(270^\circ\). A forma equivalente
+              \(-90^\circ\) descreve uma rotação horária.
+            </p>
+            <div class="math-block math-block--result math-display">
+              \[
+              \begin{aligned}
+              E_x&=0,\\
+              E_y&=-20{,}6\,\mathrm{N/C},\\
+              \phi&=270^\circ\quad\text{(anti-horário desde }+x\text{)}\\
+              &\equiv-90^\circ.
+              \end{aligned}
+              \]
+            </div>
+          </section>
+
+          <section>
+            <span class="solution-step">verificações</span>
+            <h3>Confira unidades, sinais e interpretação física</h3>
+            <p>
+              A expressão final deve ter unidade de campo elétrico. Como o
+              fator \(\pi^2\) é adimensional,
+            </p>
+            <div class="math-block math-display">
+              \[
+              \begin{aligned}
+              \left[\frac{q}{\varepsilon_0r^2}\right]
+              &=\frac{\mathrm{C}}
+              {\left(\mathrm{C^2/(N\,m^2)}\right)\mathrm{m^2}}\\
+              &=\frac{\mathrm{N}}{\mathrm{C}}.
+              \end{aligned}
+              \]
+            </div>
+            <div class="limit-grid">
+              <article>
+                <h4>Sinal vertical</h4>
+                <p>
+                  A parte positiva superior repele para baixo; a parte negativa
+                  inferior atrai para baixo. Portanto, \(E_y&lt;0\), como na
+                  expressão encontrada.
+                </p>
+              </article>
+              <article>
+                <h4>Cancelamento horizontal</h4>
+                <p>
+                  Os dois quartos têm comprimentos e módulos de carga iguais.
+                  Suas componentes em \(x\) são opostas e se anulam exatamente.
+                </p>
+              </article>
+              <article>
+                <h4>Dependência com o raio</h4>
+                <p>
+                  Mantendo \(q\) fixo, o resultado varia como \(1/r^2\), a
+                  dependência esperada para elementos sempre à distância \(r\)
+                  do ponto de observação.
+                </p>
+              </article>
+            </div>
+          </section>
+        </article>
+      </section>
+
+      <section class="lesson-section" id="diagrama" aria-label="Diagrama">
+        <article class="static-diagram-shell field-figure">
+          <header class="static-diagram-heading">
+            <div>
+              <p class="eyebrow">Geometria vetorial</p>
+              <h2>Os dois campos apontam para baixo</h2>
+            </div>
+            <p>
+              A parte positiva repele \(P\), e a negativa o atrai. As projeções
+              horizontais são opostas; as verticais se somam em \(-y\).
+            </p>
+          </header>
+
+          <svg class="teaching-diagram field-diagram" viewBox="0 0 1040 800" role="img" aria-labelledby="halliday-22-26-title halliday-22-26-desc">
+            <title id="halliday-22-26-title">Campo no centro de uma semicircunferência com cargas opostas</title>
+            <desc id="halliday-22-26-desc">A semicircunferência está à direita do centro P. O quarto superior é positivo e o inferior é negativo. O campo da parte superior aponta para baixo e para a esquerda; o da parte inferior aponta para baixo e para a direita. As componentes horizontais se cancelam e o campo resultante aponta para menos y, a 270 graus de mais x.</desc>
+            <defs>
+              <marker id="halliday-22-26-axis-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+                <path d="M 0 0 L 10 5 L 0 10 z" style="fill: var(--ink-soft)"></path>
+              </marker>
+              <marker id="halliday-22-26-field-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+                <path d="M 0 0 L 10 5 L 0 10 z" style="fill: var(--force-1)"></path>
+              </marker>
+              <marker id="halliday-22-26-component-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+                <path d="M 0 0 L 10 5 L 0 10 z" style="fill: var(--force-2)"></path>
+              </marker>
+              <marker id="halliday-22-26-result-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+                <path d="M 0 0 L 10 5 L 0 10 z" style="fill: var(--resultant)"></path>
+              </marker>
+              <marker id="halliday-22-26-measure-arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                <path d="M 10 0 L 0 5 L 10 10 z" style="fill: var(--measure)"></path>
+              </marker>
+            </defs>
+
+            <rect class="field-panel" x="24" y="24" width="992" height="680" rx="8"></rect>
+            <text class="field-title" x="52" y="58">SEMICIRCUNFERÊNCIA NO SEMIPLANO x ≥ 0</text>
+
+            <line class="field-axis field-axis--light" x1="76" y1="340" x2="972" y2="340" marker-end="url(#halliday-22-26-axis-arrow)"></line>
+            <line class="field-axis field-axis--light" x1="520" y1="660" x2="520" y2="76" marker-end="url(#halliday-22-26-axis-arrow)"></line>
+            <text class="field-label" x="978" y="327">+x</text>
+            <text class="field-label" x="535" y="87">+y</text>
+            <text class="field-note" x="82" y="327">−x</text>
+            <text class="field-note" x="535" y="650">−y</text>
+
+            <path class="field-object" d="M 520 110 A 230 230 0 0 1 750 340"></path>
+            <path class="field-object field-object--negative" d="M 750 340 A 230 230 0 0 1 520 570"></path>
+            <text class="field-label" x="785" y="190">metade superior: +q</text>
+            <text class="field-note" x="785" y="214">λ = +λ₀</text>
+            <text class="field-label" x="785" y="596">metade inferior: −q</text>
+            <text class="field-note" x="785" y="620">λ = −λ₀</text>
+            <text class="field-note" x="542" y="106">θ = +π/2</text>
+            <text class="field-note" x="765" y="327">θ = 0</text>
+            <text class="field-note" x="542" y="590">θ = −π/2</text>
+
+            <circle class="field-charge-positive" cx="579" cy="118" r="11"></circle>
+            <text class="field-sign" x="579" y="125">+</text>
+            <circle class="field-charge-positive" cx="668" cy="164" r="11"></circle>
+            <text class="field-sign" x="668" y="171">+</text>
+            <circle class="field-charge-positive" cx="728" cy="243" r="11"></circle>
+            <text class="field-sign" x="728" y="250">+</text>
+            <circle class="field-charge-negative" cx="728" cy="437" r="11"></circle>
+            <text class="field-sign" x="728" y="444">−</text>
+            <circle class="field-charge-negative" cx="668" cy="516" r="11"></circle>
+            <text class="field-sign" x="668" y="523">−</text>
+            <circle class="field-charge-negative" cx="579" cy="562" r="11"></circle>
+            <text class="field-sign" x="579" y="569">−</text>
+
+            <line class="field-distance" x1="520" y1="340" x2="683" y2="177" marker-start="url(#halliday-22-26-measure-arrow)" marker-end="url(#halliday-22-26-measure-arrow)"></line>
+            <text class="field-value field-value--warm" x="612" y="239">r = 5,00 cm</text>
+            <circle class="field-charge-positive" cx="683" cy="177" r="15"></circle>
+            <text class="field-sign" x="683" y="184">+</text>
+            <text class="field-label" x="704" y="157">dq₊</text>
+
+            <line class="field-guide" x1="520" y1="340" x2="683" y2="503"></line>
+            <circle class="field-charge-negative" cx="683" cy="503" r="15"></circle>
+            <text class="field-sign" x="683" y="510">−</text>
+            <text class="field-label" x="704" y="536">dq₋</text>
+
+            <circle class="field-point" cx="520" cy="340" r="10"></circle>
+            <text class="field-label" x="535" y="325">P</text>
+
+            <line class="field-vector" x1="512" y1="348" x2="370" y2="490" marker-end="url(#halliday-22-26-field-arrow)"></line>
+            <text class="field-label" x="254" y="510">E_sup</text>
+            <text class="field-note" x="254" y="531">repulsão por +q</text>
+            <line class="field-vector" x1="528" y1="348" x2="670" y2="490" marker-end="url(#halliday-22-26-field-arrow)"></line>
+            <text class="field-label" x="690" y="472">E_inf</text>
+            <text class="field-note" x="690" y="493">atração por −q</text>
+
+            <line class="field-vector field-vector--component" x1="505" y1="304" x2="365" y2="304" marker-end="url(#halliday-22-26-component-arrow)"></line>
+            <text class="field-note" x="373" y="287">E_sup,x</text>
+            <line class="field-vector field-vector--component" x1="535" y1="304" x2="675" y2="304" marker-end="url(#halliday-22-26-component-arrow)"></line>
+            <text class="field-note" x="583" y="287">E_inf,x</text>
+            <text class="field-value" x="435" y="268">componentes x opostas: Eₓ = 0</text>
+
+            <line class="field-vector field-vector--component" x1="470" y1="355" x2="470" y2="475" marker-end="url(#halliday-22-26-component-arrow)"></line>
+            <text class="field-note" x="382" y="455">E_sup,y</text>
+            <line class="field-vector field-vector--component" x1="570" y1="355" x2="570" y2="475" marker-end="url(#halliday-22-26-component-arrow)"></line>
+            <text class="field-note" x="585" y="455">E_inf,y</text>
+
+            <path class="field-angle" d="M 600 340 A 80 80 0 1 0 520 420" marker-end="url(#halliday-22-26-measure-arrow)"></path>
+            <text class="field-value field-value--warm" x="391" y="220">φ = 270° desde +x</text>
+
+            <line class="field-vector field-vector--resultant" x1="520" y1="360" x2="520" y2="615" marker-end="url(#halliday-22-26-result-arrow)"></line>
+            <text class="field-value" x="540" y="610">E = −(20,6 N/C) ŷ</text>
+
+            <rect class="field-panel" x="52" y="724" width="936" height="54" rx="4"></rect>
+            <text class="field-label" x="76" y="757">EM x:</text>
+            <text class="field-note" x="136" y="757">E_sup,x + E_inf,x = 0</text>
+            <text class="field-label" x="515" y="757">EM y:</text>
+            <text class="field-value" x="575" y="757">E_sup,y + E_inf,y &lt; 0</text>
+          </svg>
+
+          <p class="diagram-caption field-diagram-caption">
+            <strong>Leitura vetorial</strong>
+            <span>
+              A carga positiva superior repele uma carga de prova em \(P\), e
+              a carga negativa inferior a atrai. Por isso, os dois campos têm
+              componentes para baixo; somente suas componentes horizontais se
+              cancelam.
+            </span>
+          </p>
+        </article>
+      </section>
+    </div>
+  </main>
+
+  <div class="exercise-navigation-shell" data-exercise-navigation data-current-id="halliday-22-26" data-registry-url="../../simuladores.json" data-chapter-url="../capitulo-22/" data-root-path="../../" data-reference="Halliday" data-chapter="22"></div>
+
+  <footer class="lesson-footer site-footer">
+    <p>Halliday 22.26 · capítulo 22 · semicircunferência com cargas opostas</p>
+    <a href="../../">Voltar ao catálogo</a>
+  </footer>
+
+  <script type="module" src="../../componentes/navegacao-principal.js"></script>
+  <script type="module" src="../../componentes/navegacao-exercicios.js"></script>
+  <script type="module" src="../exercicio-estatico.js"></script>
+</body>
+</html>

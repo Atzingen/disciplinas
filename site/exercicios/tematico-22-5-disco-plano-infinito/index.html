@@ -1,0 +1,451 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Resolução do Temático 5 do capítulo 22: campo elétrico no eixo de um disco uniformemente carregado e limite do plano infinito.">
+  <title>Temático 5 — Disco e plano infinito · Laboratório de Eletromagnetismo</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='28' fill='%237a3ce7'/%3E%3Cpath d='M18 32h28M32 18v28' stroke='white' stroke-width='6'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="../../assets/base.css">
+  <link rel="stylesheet" href="../../assets/simulador.css">
+  <link rel="stylesheet" href="../../assets/campo-eletrico.css">
+  <script>try{if(localStorage.getItem("tema")==="escuro"){document.documentElement.dataset.theme="escuro"}}catch(erro){}</script>
+</head>
+<body class="lesson-page field-page">
+  <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+
+  <div class="site-topbar" data-topbar>
+    <div class="site-topbar__inner">
+      <nav class="breadcrumb" aria-label="Navegação estrutural">
+        <a href="../../">Laboratório</a>
+        <span aria-hidden="true">/</span>
+        <a href="../">Exercícios</a>
+        <span aria-hidden="true">/</span>
+        <a href="../capitulo-22/">Campo elétrico · Capítulo 22</a>
+        <span aria-hidden="true">/</span>
+        <strong aria-current="page">Temático 5</strong>
+      </nav>
+      <div class="lesson-area-navigation" data-site-navigation data-root-path="../../" data-active-section="exercicios"></div>
+    </div>
+    <nav class="section-nav" aria-label="Seções do exercício" data-section-nav>
+      <a href="#enunciado">Enunciado</a>
+      <a href="#resolucao">Resolução</a>
+      <a href="#diagrama">Diagrama</a>
+    </nav>
+  </div>
+
+  <header class="lesson-header">
+    <div class="lesson-title-row">
+      <div>
+        <p class="eyebrow">Distribuição superficial de carga</p>
+        <h1>Disco e plano infinito</h1>
+      </div>
+      <p class="lesson-intro">
+        Anéis concêntricos transformam uma superfície bidimensional em uma
+        integral radial. O mesmo resultado mostra quando um disco finito pode
+        ser aproximado por um plano infinito.
+      </p>
+    </div>
+  </header>
+
+  <main class="lesson-main" id="conteudo">
+    <div class="lesson-sections">
+
+      <section class="lesson-section" id="enunciado" aria-label="Enunciado">
+        <article class="problem-sheet">
+          <div class="problem-number">
+            <span>Temático</span>
+            <strong>22.5</strong>
+          </div>
+          <div class="problem-copy">
+            <p>
+              Um disco fino, de raio \(R\), ocupa o plano \(xy\), tem centro
+              na origem e densidade superficial uniforme de carga
+              \(\sigma&gt;0\). O ponto de observação \(P\) está no eixo do
+              disco, em \((0,0,z)\), com \(z&gt;0\).
+            </p>
+            <p>
+              Decomponha o disco em anéis concêntricos de raio \(r\) e
+              espessura \(dr\), determine o campo elétrico \(\vec{E}(z)\) em
+              \(P\) e calcule o limite \(R\to\infty\). Verifique também os
+              limites de longa distância e de aproximação à superfície.
+            </p>
+          </div>
+          <div class="answer-strip">
+            <span>Campo acima do disco</span>
+            <strong>\(\displaystyle \vec{E}(z)=\frac{\sigma}{2\varepsilon_0}\left(1-\frac{z}{\sqrt{z^2+R^2}}\right)\hat{z}\)</strong>
+          </div>
+        </article>
+      </section>
+
+      <section class="lesson-section" id="resolucao" aria-label="Resolução">
+        <article class="solution-article">
+          <header class="solution-heading">
+            <p class="eyebrow">Resolução passo a passo</p>
+            <h2>Some o campo de anéis concêntricos</h2>
+            <p>
+              Cada anel já incorpora o cancelamento das componentes
+              transversais. Resta integrar somente sua contribuição axial,
+              desde o centro até a borda do disco.
+            </p>
+          </header>
+
+          <section>
+            <span class="solution-step">geometria e simetria</span>
+            <h3>A simetria seleciona o eixo \(z\)</h3>
+            <p>
+              Para qualquer elemento \(dq\) existe, no mesmo anel, um
+              elemento diametralmente oposto. As componentes paralelas ao
+              plano \(xy\) desses dois campos se cancelam, enquanto as
+              componentes em \(z\) se somam. Portanto, o campo resultante em
+              um ponto do eixo não pode ter componentes em \(x\) ou \(y\).
+            </p>
+            <div class="math-block math-display">
+              \[
+              \begin{aligned}
+              E_x&=E_y=0,\\
+              \vec{E}(z)&=E_z(z)\,\hat{z}.
+              \end{aligned}
+              \]
+            </div>
+            <p>
+              Como \(\sigma&gt;0\) e \(z&gt;0\), cada componente axial aponta
+              para \(+z\). Se o sinal da carga ou o lado do disco mudar, o
+              sentido será invertido de acordo com essa geometria.
+            </p>
+          </section>
+
+          <section>
+            <span class="solution-step">elemento de carga</span>
+            <h3>Troque o disco por anéis de raio \(r\)</h3>
+            <p>
+              Um anel diferencial tem circunferência \(2\pi r\) e espessura
+              radial \(dr\). Desprezando termos de ordem \((dr)^2\), sua área
+              e sua carga são
+            </p>
+            <div class="math-block math-display">
+              \[
+              \begin{aligned}
+              dA&=2\pi r\,dr,\\
+              dq&=\sigma\,dA=\sigma\,2\pi r\,dr,\\
+              0&\leq r\leq R.
+              \end{aligned}
+              \]
+            </div>
+            <div class="assumption-note">
+              <strong>Por que anéis?</strong>
+              <p>
+                Fatiar em anéis preserva a simetria circular em cada
+                elemento da integração. Assim, o cancelamento lateral já
+                acontece antes de somarmos as diferentes posições radiais.
+              </p>
+            </div>
+          </section>
+
+          <section>
+            <span class="solution-step">campo de um anel</span>
+            <h3>Projete a lei de Coulomb sobre o eixo</h3>
+            <p>
+              Todos os pontos do anel estão à distância
+              \(s=\sqrt{z^2+r^2}\) de \(P\). Se \(\alpha\) é o ângulo entre
+              a linha que une \(dq\) a \(P\) e o eixo \(z\), então
+              \(\cos\alpha=z/s\). A componente axial pode ser obtida pela lei
+              de Coulomb ou diretamente pelo resultado do campo axial de um
+              anel:
+            </p>
+            <div class="math-block math-display">
+              \[
+              \begin{aligned}
+              dE_z
+              &=\frac{1}{4\pi\varepsilon_0}\frac{dq}{s^2}\cos\alpha\\
+              &=\frac{1}{4\pi\varepsilon_0}
+                \frac{z\,dq}{\left(z^2+r^2\right)^{3/2}}\\
+              &=\frac{\sigma z}{2\varepsilon_0}
+                \frac{r\,dr}{\left(z^2+r^2\right)^{3/2}}.
+              \end{aligned}
+              \]
+            </div>
+            <p>
+              A última igualdade resulta da substituição
+              \(dq=\sigma 2\pi r\,dr\): o fator \(2\pi\) do anel cancela
+              metade do \(4\pi\) da constante de Coulomb.
+            </p>
+          </section>
+
+          <section>
+            <span class="solution-step">integração radial</span>
+            <h3>Integre do centro até a borda</h3>
+            <p>
+              O parâmetro \(z\) é fixo, pois identifica o ponto de
+              observação. Para calcular a primitiva, tome
+              \(u=z^2+r^2\), de modo que \(du=2r\,dr\). Isso fornece
+              diretamente uma potência de \(u\).
+            </p>
+            <div class="math-block math-display">
+              \[
+              \begin{aligned}
+              E_z(z)
+              &=\frac{\sigma z}{2\varepsilon_0}
+                \int_0^R\frac{r\,dr}{\left(z^2+r^2\right)^{3/2}},\\
+              u&=z^2+r^2,\qquad du=2r\,dr,\\
+              \int\frac{r\,dr}{\left(z^2+r^2\right)^{3/2}}
+              &=\frac{1}{2}\int u^{-3/2}\,du\\
+              &=-u^{-1/2}+C\\
+              &=-\frac{1}{\sqrt{z^2+r^2}}+C.
+              \end{aligned}
+              \]
+            </div>
+            <p>
+              Aplicando os limites, usamos \(z&gt;0\), portanto
+              \(\sqrt{z^2}=z\). O termo do limite inferior é o responsável
+              pelo \(1/z\) que cancela o fator \(z\) externo.
+            </p>
+            <div class="math-block math-block--result math-display">
+              \[
+              \begin{aligned}
+              E_z(z)
+              &=\frac{\sigma z}{2\varepsilon_0}
+                \left[-\frac{1}{\sqrt{z^2+r^2}}\right]_{0}^{R}\\
+              &=\frac{\sigma z}{2\varepsilon_0}
+                \left(\frac{1}{z}-\frac{1}{\sqrt{z^2+R^2}}\right)\\
+              &=\frac{\sigma}{2\varepsilon_0}
+                \left(1-\frac{z}{\sqrt{z^2+R^2}}\right).
+              \end{aligned}
+              \]
+            </div>
+            <div class="result-callout">
+              <span>Resultado vetorial</span>
+              <strong>\(\displaystyle \vec{E}(z)=\frac{\sigma}{2\varepsilon_0}\left(1-\frac{z}{\sqrt{z^2+R^2}}\right)\hat{z},\quad \sigma&gt;0,\ z&gt;0\)</strong>
+            </div>
+          </section>
+
+          <section>
+            <span class="solution-step">plano infinito</span>
+            <h3>Faça \(R\to\infty\) mantendo \(z\) fixo</h3>
+            <p>
+              Quando o raio cresce sem limite, o segundo termo entre
+              parênteses tende a zero. Acima de uma superfície positiva, o
+              campo aponta para \(+z\); abaixo, aponta para \(-z\), afastando-se
+              do plano nos dois lados.
+            </p>
+            <div class="math-block math-block--result math-display">
+              \[
+              \begin{aligned}
+              \lim_{R\to\infty}\frac{z}{\sqrt{z^2+R^2}}&=0,\\
+              \vec{E}_{\text{acima}}&=\frac{\sigma}{2\varepsilon_0}\,\hat{z},\\
+              \vec{E}_{\text{abaixo}}&=-\frac{\sigma}{2\varepsilon_0}\,\hat{z}.
+              \end{aligned}
+              \]
+            </div>
+            <p>
+              Uma forma geral, válida fora do plano \(z=0\) e que também
+              conserva o sinal de \(\sigma\), é
+            </p>
+            <div class="math-block math-display">
+              \[
+              \begin{aligned}
+              \vec{E}_{\mathrm{plano}}(z)
+              &=\frac{\sigma}{2\varepsilon_0}
+                \operatorname{sgn}(z)\,\hat{z},\qquad z\neq0.
+              \end{aligned}
+              \]
+            </div>
+            <div class="assumption-note">
+              <strong>Disco grande não é plano ideal</strong>
+              <p>
+                Um disco finito apenas se comporta aproximadamente como um
+                plano quando o ponto está longe da borda, isto é, quando
+                \(z/R\ll1\). O plano ideal não tem borda, possui carga total
+                infinita e produz um campo exatamente uniforme, independente
+                da distância. Já o campo do disco enfraquece quando
+                \(z\) se torna comparável a \(R\).
+              </p>
+            </div>
+          </section>
+
+          <section>
+            <span class="solution-step">verificações físicas</span>
+            <h3>Recupere os limites conhecidos e confira as unidades</h3>
+            <p>
+              Para \(z\gg R\), escreva o fator geométrico em potências de
+              \(R/z\). A expansão binomial mostra que, de longe, o disco é
+              indistinguível de uma carga puntiforme com carga total
+              \(Q=\sigma\pi R^2\).
+            </p>
+            <div class="math-block math-display">
+              \[
+              \begin{aligned}
+              \frac{z}{\sqrt{z^2+R^2}}
+              &=\frac{1}{\sqrt{1+R^2/z^2}}
+                \simeq1-\frac{R^2}{2z^2},\\
+              \vec{E}(z)
+              &\simeq\frac{\sigma R^2}{4\varepsilon_0z^2}\,\hat{z}\\
+              &=\frac{1}{4\pi\varepsilon_0}\frac{Q}{z^2}\,\hat{z},
+                \qquad Q=\sigma\pi R^2.
+              \end{aligned}
+              \]
+            </div>
+            <div class="limit-grid">
+              <article>
+                <h4>Na superfície: \(z\to0^+\)</h4>
+                <p>
+                  O termo \(z/\sqrt{z^2+R^2}\) se anula e
+                  \(\vec{E}\to\frac{\sigma}{2\varepsilon_0}\hat{z}\).
+                  No centro e logo acima do disco, a borda ainda não altera o
+                  limite local do plano.
+                </p>
+              </article>
+              <article>
+                <h4>Dimensão física</h4>
+                <p>
+                  O fator entre parênteses é adimensional. Assim,
+                  \([\sigma/\varepsilon_0]=
+                  (\mathrm{C}/\mathrm{m}^2)
+                  (\mathrm{N}\,\mathrm{m}^2/\mathrm{C}^2)
+                  =\mathrm{N}/\mathrm{C}\), a unidade de campo elétrico.
+                </p>
+              </article>
+            </div>
+          </section>
+        </article>
+      </section>
+
+      <section class="lesson-section" id="diagrama" aria-label="Diagrama">
+        <article class="static-diagram-shell field-figure">
+          <header class="static-diagram-heading">
+            <div>
+              <p class="eyebrow">Geometria da integração</p>
+              <h2>Do anel diferencial ao plano</h2>
+            </div>
+            <p>
+              À esquerda, um anel destacado representa \(dA=2\pi r\,dr\).
+              À direita, o crescimento de \(R\) remove a influência da borda
+              e produz setas uniformes nos dois lados do plano.
+            </p>
+          </header>
+
+          <svg class="teaching-diagram field-diagram" viewBox="0 0 1080 760" role="img" aria-labelledby="disco-plano-title disco-plano-desc">
+            <title id="disco-plano-title">Disco carregado decomposto em anéis e limite de um plano infinito</title>
+            <desc id="disco-plano-desc">Painel esquerdo com um disco positivo em perspectiva no plano xy, um anel diferencial destacado, as medidas r, dr e R, e o ponto P acima do centro no eixo z. Uma linha inclinada marca a distância até o anel e uma seta vertical indica dE z. Painel direito mostra o raio R crescendo até um plano infinito, com setas de campo uniformes para cima acima do plano e para baixo abaixo dele.</desc>
+            <defs>
+              <marker id="disco-axis-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+                <path d="M 0 0 L 10 5 L 0 10 z" style="fill: var(--ink-soft)"></path>
+              </marker>
+              <marker id="disco-field-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+                <path d="M 0 0 L 10 5 L 0 10 z" style="fill: var(--force-1)"></path>
+              </marker>
+              <marker id="disco-result-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+                <path d="M 0 0 L 10 5 L 0 10 z" style="fill: var(--resultant)"></path>
+              </marker>
+              <marker id="disco-dimension" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                <path d="M 10 0 L 0 5 L 10 10 z" style="fill: var(--measure)"></path>
+              </marker>
+              <linearGradient id="disco-surface-gradient" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" style="stop-color: var(--accent); stop-opacity: 0.3"></stop>
+                <stop offset="1" style="stop-color: var(--accent); stop-opacity: 0.08"></stop>
+              </linearGradient>
+              <pattern id="plano-charge-pattern" width="42" height="28" patternUnits="userSpaceOnUse">
+                <circle cx="12" cy="12" r="7" style="fill: var(--positive); stroke: var(--surface); stroke-width: 2"></circle>
+                <path d="M 8 12 H 16 M 12 8 V 16" style="stroke: var(--on-accent); stroke-width: 2"></path>
+              </pattern>
+            </defs>
+
+            <rect class="field-panel" x="24" y="24" width="652" height="664" rx="8"></rect>
+            <rect class="field-panel" x="696" y="24" width="360" height="664" rx="8"></rect>
+            <text class="field-title" x="52" y="58">DISCO FINITO · INTEGRAÇÃO EM r</text>
+            <text class="field-title" x="724" y="58">LIMITE R → ∞</text>
+
+            <!-- Disco elíptico em perspectiva e seus eixos no plano xy. -->
+            <line class="field-axis field-axis--light" x1="88" y1="470" x2="610" y2="470" marker-end="url(#disco-axis-arrow)"></line>
+            <line class="field-axis field-axis--light" x1="140" y1="595" x2="566" y2="360" marker-end="url(#disco-axis-arrow)"></line>
+            <text class="field-label" x="616" y="463">+x</text>
+            <text class="field-label" x="568" y="350">+y</text>
+            <ellipse cx="350" cy="470" rx="238" ry="108" style="fill: url(#disco-surface-gradient); stroke: var(--accent); stroke-width: 4"></ellipse>
+            <text class="field-label" x="128" y="552">σ &gt; 0</text>
+            <text class="field-note" x="128" y="573">disco no plano xy</text>
+
+            <!-- Anel diferencial destacado e largura radial dr. -->
+            <ellipse class="field-object" cx="350" cy="470" rx="132" ry="60" style="stroke: var(--measure); stroke-width: 9"></ellipse>
+            <ellipse cx="350" cy="470" rx="143" ry="65" style="fill: none; stroke: var(--measure); stroke-width: 2; stroke-dasharray: 5 5"></ellipse>
+            <line class="field-distance" x1="350" y1="470" x2="479" y2="442" marker-start="url(#disco-dimension)" marker-end="url(#disco-dimension)"></line>
+            <text class="field-value field-value--warm" x="415" y="445">r</text>
+            <line class="field-distance" x1="482" y1="428" x2="493" y2="425" marker-start="url(#disco-dimension)" marker-end="url(#disco-dimension)"></line>
+            <text class="field-value field-value--warm" x="499" y="420">dr</text>
+            <line class="field-distance" x1="350" y1="470" x2="566" y2="514" marker-start="url(#disco-dimension)" marker-end="url(#disco-dimension)"></line>
+            <text class="field-value field-value--warm" x="482" y="507">R</text>
+            <text class="field-label" x="455" y="560">dq = σ 2πr dr</text>
+            <text class="field-note" x="455" y="580">anel concêntrico</text>
+
+            <!-- Eixo z, ponto P, distância inclinada e contribuição axial. -->
+            <line class="field-axis" x1="350" y1="560" x2="350" y2="106" marker-end="url(#disco-axis-arrow)"></line>
+            <text class="field-label" x="365" y="116">+z</text>
+            <circle class="field-point" cx="350" cy="205" r="9"></circle>
+            <text class="field-label" x="368" y="202">P(0, 0, z)</text>
+            <line class="field-distance" x1="350" y1="470" x2="350" y2="205" marker-start="url(#disco-dimension)" marker-end="url(#disco-dimension)"></line>
+            <text class="field-value field-value--warm" x="329" y="342">z</text>
+            <circle class="field-element" cx="479" cy="442" r="8"></circle>
+            <line class="field-guide" x1="479" y1="442" x2="350" y2="205"></line>
+            <text class="field-note" x="433" y="314">√(z² + r²)</text>
+            <line class="field-vector field-vector--resultant" x1="350" y1="198" x2="350" y2="126" marker-end="url(#disco-result-arrow)"></line>
+            <text class="field-value" x="370" y="150">dE<tspan baseline-shift="sub" font-size="11">z</tspan></text>
+
+            <rect class="field-panel" x="52" y="614" width="596" height="50" rx="4"></rect>
+            <text class="field-note" x="76" y="644">Anéis completos cancelam as componentes no plano; só dE<tspan baseline-shift="sub" font-size="10">z</tspan> permanece.</text>
+
+            <!-- Painel do limite: disco crescendo e plano ideal carregado. -->
+            <ellipse cx="876" cy="188" rx="62" ry="24" style="fill: none; stroke: var(--accent); stroke-width: 3"></ellipse>
+            <ellipse cx="876" cy="188" rx="103" ry="40" style="fill: none; stroke: var(--accent); stroke-width: 2; stroke-dasharray: 6 5; opacity: 0.75"></ellipse>
+            <ellipse cx="876" cy="188" rx="145" ry="56" style="fill: none; stroke: var(--accent); stroke-width: 2; stroke-dasharray: 6 5; opacity: 0.45"></ellipse>
+            <text class="field-value field-value--warm" x="799" y="116">R cresce</text>
+            <line class="field-distance" x1="822" y1="125" x2="849" y2="165" marker-end="url(#disco-dimension)"></line>
+            <text class="field-note" x="738" y="267">a borda se afasta de P</text>
+
+            <polygon points="724,414 930,350 1030,410 824,475" style="fill: url(#plano-charge-pattern); stroke: var(--accent); stroke-width: 3"></polygon>
+            <text class="field-label" x="738" y="453">plano infinito</text>
+            <text class="field-note" x="738" y="474">campo uniforme</text>
+
+            <!-- Setas uniformes acima do plano. -->
+            <line class="field-vector" x1="774" y1="370" x2="774" y2="304" marker-end="url(#disco-field-arrow)"></line>
+            <line class="field-vector" x1="856" y1="346" x2="856" y2="280" marker-end="url(#disco-field-arrow)"></line>
+            <line class="field-vector" x1="938" y1="361" x2="938" y2="295" marker-end="url(#disco-field-arrow)"></line>
+            <line class="field-vector" x1="1004" y1="390" x2="1004" y2="324" marker-end="url(#disco-field-arrow)"></line>
+            <text class="field-value" x="750" y="290">+σ/(2ε₀) ẑ</text>
+
+            <!-- Setas uniformes abaixo do plano. -->
+            <line class="field-vector" x1="782" y1="451" x2="782" y2="523" marker-end="url(#disco-field-arrow)"></line>
+            <line class="field-vector" x1="862" y1="466" x2="862" y2="538" marker-end="url(#disco-field-arrow)"></line>
+            <line class="field-vector" x1="942" y1="442" x2="942" y2="514" marker-end="url(#disco-field-arrow)"></line>
+            <line class="field-vector" x1="1012" y1="420" x2="1012" y2="492" marker-end="url(#disco-field-arrow)"></line>
+            <text class="field-value" x="750" y="572">−σ/(2ε₀) ẑ</text>
+
+            <rect class="field-panel" x="724" y="614" width="304" height="50" rx="4"></rect>
+            <text class="field-label" x="746" y="637">|E| = σ/(2ε₀)</text>
+            <text class="field-note" x="746" y="654">mesmo módulo nos dois lados</text>
+          </svg>
+
+          <p class="diagram-caption field-diagram-caption">
+            <strong>Leitura geométrica</strong>
+            <span>
+              No disco, anéis de raios diferentes chegam a \(P\) sob ângulos
+              diferentes, por isso a integral ainda depende de \(r\). Quando
+              \(R\to\infty\), a borda desaparece da vizinhança do ponto e o
+              campo assume o módulo constante do plano ideal.
+            </span>
+          </p>
+        </article>
+      </section>
+    </div>
+  </main>
+
+  <div class="exercise-navigation-shell" data-exercise-navigation data-current-id="tematico-22-5-disco-plano-infinito" data-registry-url="../../simuladores.json" data-chapter-url="../capitulo-22/" data-root-path="../../" data-reference="Temático" data-chapter="22"></div>
+
+  <footer class="lesson-footer site-footer">
+    <p>Temático 5 · capítulo 22 · disco e plano infinito</p>
+    <a href="../../">Voltar ao catálogo</a>
+  </footer>
+
+  <script type="module" src="../../componentes/navegacao-principal.js"></script>
+  <script type="module" src="../../componentes/navegacao-exercicios.js"></script>
+  <script type="module" src="../exercicio-estatico.js"></script>
+</body>
+</html>

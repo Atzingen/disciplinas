@@ -1,0 +1,452 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Resolução do Temático 4 do capítulo 22: campo elétrico de uma barra infinita uniformemente carregada.">
+  <title>Temático 4 — Barra infinita · Laboratório de Eletromagnetismo</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='28' fill='%237a3ce7'/%3E%3Cpath d='M18 32h28M32 18v28' stroke='white' stroke-width='6'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="../../assets/base.css">
+  <link rel="stylesheet" href="../../assets/simulador.css">
+  <link rel="stylesheet" href="../../assets/campo-eletrico.css">
+  <script>try{if(localStorage.getItem("tema")==="escuro"){document.documentElement.dataset.theme="escuro"}}catch(erro){}</script>
+</head>
+<body class="lesson-page field-page">
+  <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+
+  <div class="site-topbar" data-topbar>
+    <div class="site-topbar__inner">
+      <nav class="breadcrumb" aria-label="Navegação estrutural">
+        <a href="../../">Laboratório</a>
+        <span aria-hidden="true">/</span>
+        <a href="../">Exercícios</a>
+        <span aria-hidden="true">/</span>
+        <a href="../capitulo-22/">Campo elétrico · Capítulo 22</a>
+        <span aria-hidden="true">/</span>
+        <strong aria-current="page">Temático 4</strong>
+      </nav>
+      <div class="lesson-area-navigation" data-site-navigation data-root-path="../../" data-active-section="exercicios"></div>
+    </div>
+    <nav class="section-nav" aria-label="Seções do exercício" data-section-nav>
+      <a href="#enunciado">Enunciado</a>
+      <a href="#resolucao">Resolução</a>
+      <a href="#diagrama">Diagrama</a>
+    </nav>
+  </div>
+
+  <header class="lesson-header">
+    <div class="lesson-title-row">
+      <div>
+        <p class="eyebrow">Distribuição contínua de carga</p>
+        <h1>Barra infinita</h1>
+      </div>
+      <p class="lesson-intro">
+        A simetria de uma linha uniforme elimina toda componente paralela à
+        barra. Resta um campo perpendicular, radial e inversamente
+        proporcional à distância.
+      </p>
+    </div>
+  </header>
+
+  <main class="lesson-main" id="conteudo">
+    <div class="lesson-sections">
+
+      <section class="lesson-section" id="enunciado" aria-label="Enunciado">
+        <article class="problem-sheet">
+          <div class="problem-number">
+            <span>Temático</span>
+            <strong>22.4</strong>
+          </div>
+          <div class="problem-copy">
+            <p>
+              Uma linha de carga uniforme e infinita coincide com o eixo
+              \(x\) e possui densidade linear \(\lambda\). Determine o campo
+              elétrico no ponto \(P=(0,0,z)\), com \(z&gt;0\).
+            </p>
+            <p>
+              Use como elemento fonte o ponto \((x,0,0)\), escreva
+              \(dq=\lambda\,dx\), analise as componentes de
+              \(d\vec{E}\) e integre ao longo de toda a linha. Em seguida,
+              generalize o resultado para qualquer ponto a uma distância
+              perpendicular \(\rho\) da linha.
+            </p>
+          </div>
+          <div class="answer-strip">
+            <span>Resultado para \(\lambda&gt;0\) e \(z&gt;0\)</span>
+            <strong>\(\displaystyle \vec{E}(P)=\frac{\lambda}{2\pi\varepsilon_0 z}\,\hat{z}\)</strong>
+          </div>
+        </article>
+      </section>
+
+      <section class="lesson-section" id="resolucao" aria-label="Resolução">
+        <article class="solution-article">
+          <header class="solution-heading">
+            <p class="eyebrow">Resolução passo a passo</p>
+            <h2>Faça a simetria trabalhar antes da integral</h2>
+            <p>
+              Cada trecho da linha tem um parceiro à mesma distância do outro
+              lado da origem. Esse pareamento decide quais componentes
+              desaparecem e qual componente deve ser integrada.
+            </p>
+          </header>
+
+          <section>
+            <span class="solution-step">geometria</span>
+            <h3>Localize a fonte, o ponto de observação e a distância</h3>
+            <p>
+              O elemento de carga está em
+              \(\vec{r}\,'=(x,0,0)\), enquanto o campo é calculado em
+              \(\vec{r}_P=(0,0,z)\). O vetor que parte da fonte e chega a
+              \(P\) é, portanto,
+            </p>
+            <div class="math-block math-display">
+              \[
+              \begin{aligned}
+              d q&=\lambda\,d x,\\
+              \vec{R}
+              &=\vec{r}_P-\vec{r}\,'\\
+              &=-x\,\hat{x}+z\,\hat{z},\\
+              \rho&=\lVert\vec{R}\rVert
+              =\sqrt{x^2+z^2}.
+              \end{aligned}
+              \]
+            </div>
+            <p>
+              Aqui, \(\rho\) representa a distância entre este elemento
+              específico e \(P\); ela varia com \(x\). A distância
+              perpendicular entre \(P\) e a linha é o valor fixo \(z\).
+            </p>
+          </section>
+
+          <section>
+            <span class="solution-step">lei de Coulomb</span>
+            <h3>Escreva o campo vetorial do elemento</h3>
+            <p>
+              Defina \(k=\frac{1}{4\pi\varepsilon_0}\). A forma vetorial da
+              lei de Coulomb usa \(\vec{R}/\rho^3\), o que preserva de uma vez
+              o módulo, a direção e o sinal de cada componente:
+            </p>
+            <div class="math-block math-display">
+              \[
+              \begin{aligned}
+              d\vec{E}
+              &=k\,\frac{d q}{\rho^2}\,\frac{\vec{R}}{\rho}\\
+              &=k\,\frac{\lambda\left(-x\,\hat{x}+z\,\hat{z}\right)d x}
+                {\left(x^2+z^2\right)^{3/2}}.
+              \end{aligned}
+              \]
+            </div>
+            <p>
+              Para \(\lambda&gt;0\), a contribuição aponta da barra para
+              \(P\). Um elemento com \(x&gt;0\) produz componente em
+              \(-\hat{x}\); seu parceiro em \(-x\) produz componente em
+              \(+\hat{x}\). Ambos produzem componente em \(+\hat{z}\).
+            </p>
+          </section>
+
+          <section>
+            <span class="solution-step">simetria</span>
+            <h3>A componente paralela cancela e a perpendicular soma</h3>
+            <p>
+              Considere dois elementos de mesmo comprimento \(d x\), um em
+              \(+x\) e outro em \(-x\), com \(x&gt;0\). Eles têm a mesma
+              carga e a mesma distância \(\sqrt{x^2+z^2}\) até \(P\).
+              Separando as componentes do campo do par,
+            </p>
+            <div class="math-block math-display">
+              \[
+              \begin{aligned}
+              dE_x^{(+x)}
+              &=-k\lambda\frac{x\,d x}{\left(x^2+z^2\right)^{3/2}},&
+              dE_x^{(-x)}
+              &=+k\lambda\frac{x\,d x}{\left(x^2+z^2\right)^{3/2}},\\
+              dE_z^{(+x)}
+              &=k\lambda\frac{z\,d x}{\left(x^2+z^2\right)^{3/2}},&
+              dE_z^{(-x)}
+              &=k\lambda\frac{z\,d x}{\left(x^2+z^2\right)^{3/2}}.
+              \end{aligned}
+              \]
+            </div>
+            <div class="math-block math-block--result math-display">
+              \[
+              \begin{aligned}
+              dE_x^{(+x)}+dE_x^{(-x)}&=0,\\
+              dE_z^{(+x)}+dE_z^{(-x)}
+              &=2k\lambda\frac{z\,d x}
+                {\left(x^2+z^2\right)^{3/2}}.
+              \end{aligned}
+              \]
+            </div>
+            <div class="assumption-note">
+              <strong>Leitura por paridade</strong>
+              <p>
+                A função que multiplica \(\hat{x}\) é ímpar em \(x\), então
+                sua integral entre limites simétricos é nula. A função que
+                multiplica \(\hat{z}\) é par e suas duas metades se reforçam.
+              </p>
+            </div>
+          </section>
+
+          <section>
+            <span class="solution-step">integração</span>
+            <h3>Integre a componente que sobrevive</h3>
+            <p>
+              Como \(E_x=0\), basta integrar a componente perpendicular de
+              \(x=-\infty\) a \(x=+\infty\):
+            </p>
+            <div class="math-block math-display">
+              \[
+              \begin{aligned}
+              E_z
+              &=k\lambda z\int_{-\infty}^{+\infty}
+                \frac{d x}{\left(x^2+z^2\right)^{3/2}}.
+              \end{aligned}
+              \]
+            </div>
+            <p>
+              Uma primitiva conveniente pode ser conferida por derivação
+              direta:
+            </p>
+            <div class="math-block math-display">
+              \[
+              \begin{aligned}
+              \int\frac{d x}{\left(x^2+z^2\right)^{3/2}}
+              &=\frac{x}{z^2\sqrt{x^2+z^2}}+C,\\
+              \int_{-\infty}^{+\infty}
+                \frac{d x}{\left(x^2+z^2\right)^{3/2}}
+              &=\left[
+                \frac{x}{z^2\sqrt{x^2+z^2}}
+                \right]_{-\infty}^{+\infty}\\
+              &=\frac{1}{z^2}-\left(-\frac{1}{z^2}\right)\\
+              &=\frac{2}{z^2},
+              \qquad z&gt;0.
+              \end{aligned}
+              \]
+            </div>
+            <p>
+              Substituindo a integral e
+              \(k=\frac{1}{4\pi\varepsilon_0}\), obtemos
+            </p>
+            <div class="math-block math-block--result math-display">
+              \[
+              \begin{aligned}
+              E_z
+              &=k\lambda z\frac{2}{z^2}\\
+              &=\frac{2k\lambda}{z}\\
+              &=\frac{\lambda}{2\pi\varepsilon_0 z}.
+              \end{aligned}
+              \]
+            </div>
+            <div class="result-callout">
+              <span>Campo em \(P\)</span>
+              <strong>\(\displaystyle \vec{E}(0,0,z)=\frac{\lambda}{2\pi\varepsilon_0 z}\,\hat{z}\), para \(\lambda&gt;0\) e \(z&gt;0\)</strong>
+            </div>
+          </section>
+
+          <section>
+            <span class="solution-step">forma geral</span>
+            <h3>O campo é radial no plano perpendicular à linha</h3>
+            <p>
+              A escolha do eixo \(z\) foi apenas uma conveniência. Uma linha
+              infinita não privilegia nenhuma direção no plano perpendicular
+              a ela. Se \(\rho\) agora denota a distância perpendicular do
+              ponto até a linha e \(\hat{\rho}\) aponta da linha para o ponto,
+              a forma vetorial geral é
+            </p>
+            <div class="math-block math-block--result math-display">
+              \[
+              \begin{aligned}
+              \vec{E}
+              &=\frac{\lambda}{2\pi\varepsilon_0\rho}\,\hat{\rho}.
+              \end{aligned}
+              \]
+            </div>
+            <div class="limit-grid">
+              <article>
+                <h4>Se \(\lambda&gt;0\)</h4>
+                <p>
+                  O campo aponta radialmente para fora da linha. No ponto
+                  \(P=(0,0,z)\), com \(z&gt;0\), vale
+                  \(\hat{\rho}=\hat{z}\).
+                </p>
+              </article>
+              <article>
+                <h4>Se \(\lambda&lt;0\)</h4>
+                <p>
+                  O sinal de \(\lambda\) inverte o vetor: o campo aponta para
+                  a linha, embora o versor \(\hat{\rho}\) continue definido
+                  para fora.
+                </p>
+              </article>
+            </div>
+          </section>
+
+          <section>
+            <span class="solution-step">verificações</span>
+            <h3>Confira unidades, distância e o limite infinito</h3>
+            <p>
+              A combinação de unidades do resultado é a esperada para campo
+              elétrico:
+            </p>
+            <div class="math-block math-display">
+              \[
+              \begin{aligned}
+              [\lambda]&=\frac{\mathrm{C}}{\mathrm{m}},&
+              [\varepsilon_0]
+              &=\frac{\mathrm{C}^2}{\mathrm{N}\,\mathrm{m}^2},\\
+              \left[\frac{\lambda}{\varepsilon_0 z}\right]
+              &=\frac{\mathrm{C}}{\mathrm{m}}\,
+                \frac{\mathrm{N}\,\mathrm{m}^2}{\mathrm{C}^2}\,
+                \frac{1}{\mathrm{m}}\\
+              &=\frac{\mathrm{N}}{\mathrm{C}}.
+              \end{aligned}
+              \]
+            </div>
+            <div class="concept-grid">
+              <article>
+                <h4>Dependência espacial</h4>
+                <p>
+                  O módulo decai como
+                  \(E\propto\frac{1}{z}\), mais lentamente que o campo
+                  \(1/z^2\) de uma carga pontual. Ao aumentar a distância,
+                  trechos cada vez maiores da linha ainda contribuem.
+                </p>
+              </article>
+              <article>
+                <h4>Grandeza mantida fixa</h4>
+                <p>
+                  Não é permitido obter uma linha infinita aumentando seu
+                  comprimento enquanto se mantém uma carga total \(Q\) fixa.
+                  Nesse procedimento, \(\lambda=Q/L\to0\) e a distribuição
+                  desaparece. Para a linha infinita, é \(\lambda\) que
+                  permanece fixa; a carga total é ilimitada.
+                </p>
+              </article>
+            </div>
+          </section>
+        </article>
+      </section>
+
+      <section class="lesson-section" id="diagrama" aria-label="Diagrama">
+        <article class="static-diagram-shell field-figure">
+          <header class="static-diagram-heading">
+            <div>
+              <p class="eyebrow">Geometria vetorial</p>
+              <h2>Os pares deixam apenas a direção perpendicular</h2>
+            </div>
+            <p>
+              Elementos em \(+x\) e \(-x\) produzem componentes paralelas
+              opostas e componentes perpendiculares no mesmo sentido.
+            </p>
+          </header>
+
+          <svg class="teaching-diagram field-diagram" viewBox="0 0 1040 720" role="img" aria-labelledby="barra-infinita-title barra-infinita-desc">
+            <title id="barra-infinita-title">Campo elétrico acima de uma linha de carga infinita</title>
+            <desc id="barra-infinita-desc">Uma linha positiva e infinita ocupa o eixo x. Dois elementos simétricos, em menos x e mais x, ligam-se ao ponto P acima da origem por distâncias iguais. Seus campos em P são diagonais: as componentes horizontais se cancelam, as verticais se somam e a resultante aponta para mais z.</desc>
+            <defs>
+              <marker id="barra-axis-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+                <path d="M 0 0 L 10 5 L 0 10 z" style="fill: var(--ink-soft)"></path>
+              </marker>
+              <marker id="barra-field-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+                <path d="M 0 0 L 10 5 L 0 10 z" style="fill: var(--force-1)"></path>
+              </marker>
+              <marker id="barra-component-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+                <path d="M 0 0 L 10 5 L 0 10 z" style="fill: var(--force-2)"></path>
+              </marker>
+              <marker id="barra-cancelled-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+                <path d="M 0 0 L 10 5 L 0 10 z" style="fill: var(--ink-soft)"></path>
+              </marker>
+              <marker id="barra-result-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+                <path d="M 0 0 L 10 5 L 0 10 z" style="fill: var(--resultant)"></path>
+              </marker>
+              <marker id="barra-dimension" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                <path d="M 10 0 L 0 5 L 10 10 z" style="fill: var(--measure)"></path>
+              </marker>
+            </defs>
+
+            <rect class="field-panel" x="24" y="24" width="992" height="620" rx="8"></rect>
+            <text class="field-title" x="52" y="58">LINHA UNIFORME E INFINITA NO EIXO x</text>
+
+            <line class="field-axis field-axis--light" x1="82" y1="486" x2="970" y2="486" marker-end="url(#barra-axis-arrow)"></line>
+            <line class="field-axis field-axis--light" x1="520" y1="606" x2="520" y2="82" marker-end="url(#barra-axis-arrow)"></line>
+            <text class="field-label" x="976" y="473">+x</text>
+            <text class="field-label" x="535" y="92">+z</text>
+            <text class="field-note" x="84" y="473">−x</text>
+
+            <line class="field-object" x1="112" y1="486" x2="928" y2="486"></line>
+            <text class="field-value" x="68" y="493">⋯</text>
+            <text class="field-value" x="949" y="493">⋯</text>
+            <text class="field-label" x="765" y="522">densidade λ &gt; 0</text>
+
+            <circle class="field-element" cx="326" cy="486" r="14"></circle>
+            <text class="field-sign" x="326" y="493">+</text>
+            <text class="field-label" x="250" y="548">dq em −x</text>
+            <circle class="field-element" cx="714" cy="486" r="14"></circle>
+            <text class="field-sign" x="714" y="493">+</text>
+            <text class="field-label" x="677" y="548">dq em +x</text>
+
+            <circle class="field-point" cx="520" cy="244" r="10"></circle>
+            <text class="field-label" x="539" y="237">P=(0,0,z)</text>
+
+            <line class="field-distance" x1="326" y1="475" x2="513" y2="251" marker-start="url(#barra-dimension)" marker-end="url(#barra-dimension)"></line>
+            <line class="field-distance" x1="527" y1="251" x2="714" y2="475" marker-start="url(#barra-dimension)" marker-end="url(#barra-dimension)"></line>
+            <text class="field-value field-value--warm" x="386" y="342">ρ</text>
+            <text class="field-value field-value--warm" x="646" y="342">ρ</text>
+
+            <line class="field-guide" x1="326" y1="486" x2="714" y2="486"></line>
+            <line class="field-guide" x1="520" y1="486" x2="520" y2="244"></line>
+            <line class="field-distance" x1="502" y1="476" x2="502" y2="254" marker-start="url(#barra-dimension)" marker-end="url(#barra-dimension)"></line>
+            <text class="field-value field-value--warm" x="475" y="372">z</text>
+            <text class="field-note" x="531" y="507">origem</text>
+
+            <line class="field-vector" x1="514" y1="239" x2="401" y2="98" marker-end="url(#barra-field-arrow)"></line>
+            <line class="field-vector" x1="526" y1="239" x2="639" y2="98" marker-end="url(#barra-field-arrow)"></line>
+            <text class="field-label" x="315" y="111">dE(+x)</text>
+            <text class="field-label" x="653" y="111">dE(−x)</text>
+
+            <line class="field-vector field-vector--cancelled" x1="505" y1="211" x2="403" y2="211" marker-end="url(#barra-cancelled-arrow)"></line>
+            <line class="field-vector field-vector--cancelled" x1="535" y1="211" x2="637" y2="211" marker-end="url(#barra-cancelled-arrow)"></line>
+            <text class="field-note" x="388" y="198">−dEₓ</text>
+            <text class="field-note" x="640" y="198">+dEₓ</text>
+
+            <line class="field-vector field-vector--component" x1="492" y1="239" x2="492" y2="116" marker-end="url(#barra-component-arrow)"></line>
+            <line class="field-vector field-vector--component" x1="548" y1="239" x2="548" y2="116" marker-end="url(#barra-component-arrow)"></line>
+            <text class="field-note" x="430" y="151">+dE_z</text>
+            <text class="field-note" x="560" y="151">+dE_z</text>
+
+            <line class="field-vector field-vector--resultant" x1="520" y1="232" x2="520" y2="72" marker-end="url(#barra-result-arrow)"></line>
+            <text class="field-value" x="555" y="76">E = E_z ẑ</text>
+
+            <rect class="field-panel" x="52" y="660" width="936" height="42" rx="4"></rect>
+            <text class="field-label" x="76" y="687">PAR EM x:</text>
+            <text class="field-note" x="179" y="687">−dEₓ + dEₓ = 0</text>
+            <text class="field-label" x="510" y="687">SOMA EM z:</text>
+            <text class="field-value" x="630" y="687">dE_z + dE_z &gt; 0</text>
+          </svg>
+
+          <p class="diagram-caption field-diagram-caption">
+            <strong>Leitura vetorial</strong>
+            <span>
+              O campo do elemento em \(+x\) aponta para cima e para a
+              esquerda; o do elemento em \(-x\), para cima e para a direita.
+              As projeções paralelas à barra se anulam e as projeções
+              perpendiculares se somam na resultante \(+\hat{z}\).
+            </span>
+          </p>
+        </article>
+      </section>
+    </div>
+  </main>
+
+  <div class="exercise-navigation-shell" data-exercise-navigation data-current-id="tematico-22-4-barra-infinita" data-registry-url="../../simuladores.json" data-chapter-url="../capitulo-22/" data-root-path="../../" data-reference="Temático" data-chapter="22"></div>
+
+  <footer class="lesson-footer site-footer">
+    <p>Temático 4 · capítulo 22 · barra infinita</p>
+    <a href="../../">Voltar ao catálogo</a>
+  </footer>
+
+  <script type="module" src="../../componentes/navegacao-principal.js"></script>
+  <script type="module" src="../../componentes/navegacao-exercicios.js"></script>
+  <script type="module" src="../exercicio-estatico.js"></script>
+</body>
+</html>

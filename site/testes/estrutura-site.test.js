@@ -25,13 +25,25 @@ test("página inicial oferece as três áreas e o filtro de experimentos", async
   assert.match(html, /data-site-navigation/);
 });
 
-test("índice de exercícios encaminha ao capítulo 21", async () => {
+test("índice de exercícios encaminha aos capítulos 21 e 22", async () => {
   const html = await readSitePage("exercicios/index.html");
 
   assert.equal(count(html, /<h1\b/g), 1);
   assert.match(html, /href="\.\/capitulo-21\/"/);
+  assert.match(html, /href="\.\/capitulo-22\/"/);
   assert.match(html, /5 exercícios/);
+  assert.match(html, /8 resoluções/);
   assert.match(html, /data-active-section="exercicios"/);
+});
+
+test("capítulo 22 separa o catálogo temático do catálogo Halliday", async () => {
+  const html = await readSitePage("exercicios/capitulo-22/index.html");
+
+  assert.equal(count(html, /<h1\b/g), 1);
+  assert.match(html, /chapter:\s*22/);
+  assert.match(html, /reference:\s*"Temático"/);
+  assert.match(html, /reference:\s*"Halliday"/);
+  assert.match(html, /pathPrefix:\s*"\.\.\/\.\.\/"/);
 });
 
 test("capítulo 21 monta catálogo no escopo correto", async () => {
@@ -65,6 +77,27 @@ test("cada exercício expõe navegação global e sequência do capítulo", asyn
   }
 });
 
+test("os oito materiais de campo elétrico apontam para o capítulo 22", async () => {
+  const slugs = [
+    "tematico-22-1-anel-eixo-z",
+    "tematico-22-2-segmento-anel",
+    "tematico-22-3-barra-finita",
+    "tematico-22-4-barra-infinita",
+    "tematico-22-5-disco-plano-infinito",
+    "halliday-22-24",
+    "halliday-22-26",
+    "halliday-22-28",
+  ];
+
+  for (const slug of slugs) {
+    const html = await readSitePage(`exercicios/${slug}/index.html`);
+    assert.match(html, /data-active-section="exercicios"/, slug);
+    assert.match(html, new RegExp(`data-current-id="${slug}"`), slug);
+    assert.match(html, /data-chapter-url="\.\.\/capitulo-22\/"/, slug);
+    assert.match(html, /data-chapter="22"/, slug);
+  }
+});
+
 test("simulador individual mantém acesso às quatro áreas", async () => {
   const html = await readSitePage("simuladores/cargas-e-vetores/index.html");
   assert.match(html, /data-active-section="simulacoes"/);
@@ -76,6 +109,7 @@ test("cada página restaura o tema escolhido antes de pintar a tela", async () =
     "index.html",
     "exercicios/index.html",
     "exercicios/capitulo-21/index.html",
+    "exercicios/capitulo-22/index.html",
     "exercicios/halliday-21-33/index.html",
     "experimentos/index.html",
     "experimentos/01-campo-corrente/index.html",

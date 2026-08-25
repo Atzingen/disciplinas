@@ -30,6 +30,12 @@ moléculas → prótons → carga) é recalculada para seis substâncias, o que
 evidencia o salto de mil vezes entre líquidos/sólidos e gases em CNTP. O cálculo
 puro fica em [site/nucleo/contagem-particulas.js](site/nucleo/contagem-particulas.js).
 
+Em **Campo elétrico → Capítulo 22**, cinco exercícios temáticos desenvolvem
+integrais de distribuições contínuas (anel, arco, barras e disco) e três
+exercícios do Halliday — 22.24, 22.26 e 22.28 — aplicam os mesmos argumentos de
+simetria e geometria. As duas sequências são identificadas e navegadas
+separadamente.
+
 ## Experimentos e relatórios
 
 Os quatro roteiros baseados no conjunto de eletromagnetismo AZEHEB foram
@@ -91,6 +97,7 @@ O exercício que iniciou o projeto permanece em:
 
 - [Índice de exercícios](site/exercicios/)
 - [Halliday — Capítulo 21](site/exercicios/capitulo-21/)
+- [Campo elétrico — Capítulo 22](site/exercicios/capitulo-22/)
 - [Índice de experimentos](site/experimentos/)
 - [Índice de simulações](site/simuladores/)
 - [Simulador de cargas e vetores](site/simuladores/cargas-e-vetores/)

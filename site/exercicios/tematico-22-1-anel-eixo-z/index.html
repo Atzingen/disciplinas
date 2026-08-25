@@ -1,0 +1,519 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Resolução ilustrada do campo elétrico produzido por um anel uniformemente carregado em um ponto de seu eixo de simetria.">
+  <title>Temático 1 · Campo de um anel no eixo z · Laboratório de Eletromagnetismo</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='28' fill='%237a3ce7'/%3E%3Cpath d='M18 32h28M32 18v28' stroke='white' stroke-width='6'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="../../assets/base.css">
+  <link rel="stylesheet" href="../../assets/simulador.css">
+  <link rel="stylesheet" href="../../assets/campo-eletrico.css">
+  <script>try{if(localStorage.getItem("tema")==="escuro"){document.documentElement.dataset.theme="escuro"}}catch(erro){}</script>
+</head>
+<body class="lesson-page field-page">
+  <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+
+  <div class="site-topbar" data-topbar>
+    <div class="site-topbar__inner">
+      <nav class="breadcrumb" aria-label="Navegação estrutural">
+        <a href="../../">Laboratório</a>
+        <span aria-hidden="true">/</span>
+        <a href="../">Exercícios</a>
+        <span aria-hidden="true">/</span>
+        <a href="../capitulo-22/">Campo elétrico · Capítulo 22</a>
+        <span aria-hidden="true">/</span>
+        <strong aria-current="page">Temático 1</strong>
+      </nav>
+      <div class="lesson-area-navigation" data-site-navigation data-root-path="../../" data-active-section="exercicios"></div>
+    </div>
+    <nav class="section-nav" aria-label="Seções do exercício" data-section-nav>
+      <a href="#enunciado">Enunciado</a>
+      <a href="#resolucao">Resolução</a>
+      <a href="#diagrama">Diagrama</a>
+    </nav>
+  </div>
+
+  <header class="lesson-header">
+    <div class="lesson-title-row">
+      <div>
+        <p class="eyebrow">Distribuição contínua · simetria axial</p>
+        <h1>Campo de um anel no eixo z</h1>
+      </div>
+      <p class="lesson-intro">
+        A simetria elimina todas as componentes transversais; a geometria e a
+        projeção sobre o eixo determinam a componente que sobrevive.
+      </p>
+    </div>
+  </header>
+
+  <main class="lesson-main" id="conteudo">
+    <div class="lesson-sections">
+
+      <section class="lesson-section" id="enunciado" aria-label="Enunciado">
+        <article class="problem-sheet">
+          <div class="problem-number">
+            <span>Temático</span>
+            <strong>22.1</strong>
+          </div>
+          <div class="problem-copy">
+            <p>
+              Um anel fino de raio \(R\), centrado na origem e contido no plano
+              \(xy\), possui carga total \(Q\) uniformemente distribuída.
+              Determine o campo elétrico no ponto \(P=(0,0,z)\), situado sobre
+              o eixo de simetria do anel.
+            </p>
+            <p>
+              Construa a resposta a partir da lei de Coulomb para um elemento
+              \(dq\), explicando por que as componentes nos eixos \(x\) e \(y\)
+              se anulam e verificando os limites no centro e longe do anel.
+            </p>
+          </div>
+          <div class="answer-strip">
+            <span>Resultado no eixo</span>
+            <strong>\(\displaystyle \vec{E}(0,0,z)=\frac{Qz}{4\pi\varepsilon_0(z^2+R^2)^{3/2}}\,\hat{\mathbf z}\)</strong>
+          </div>
+        </article>
+      </section>
+
+      <section class="lesson-section" id="resolucao" aria-label="Resolução">
+        <article class="solution-article">
+          <header class="solution-heading">
+            <p class="eyebrow">Resolução passo a passo</p>
+            <h2>Da carga distribuída ao campo resultante</h2>
+            <p>
+              O ponto de observação está à mesma distância de todos os
+              elementos do anel. A única diferença entre as contribuições é a
+              direção de suas componentes transversais.
+            </p>
+          </header>
+
+          <section>
+            <span class="solution-step">densidade linear</span>
+            <h3>Transforme a carga total em um elemento \(dq\)</h3>
+            <p>
+              Como o anel é fino e a distribuição é uniforme, sua densidade
+              linear é constante. Um arco que subtende o ângulo \(d\phi\) tem
+              comprimento \(d\ell=R\,d\phi\). Portanto,
+            </p>
+            <div class="math-block math-display">
+              \[
+              \begin{aligned}
+              \lambda&=\frac{Q}{2\pi R},\\
+              d\ell&=R\,d\phi,\\
+              dq&=\lambda\,d\ell
+                 =\lambda R\,d\phi
+                 =\frac{Q}{2\pi}\,d\phi.
+              \end{aligned}
+              \]
+            </div>
+            <p>
+              O sinal de \(dq\) acompanha o sinal de \(Q\); assim, a mesma
+              dedução vale para um anel positivo ou negativo.
+            </p>
+          </section>
+
+          <section>
+            <span class="solution-step">geometria</span>
+            <h3>Escreva o vetor que liga \(dq\) ao ponto \(P\)</h3>
+            <p>
+              O elemento situado no ângulo \(\phi\) ocupa a posição
+              \(\vec r\,'(\phi)\). Subtraindo a posição da fonte da posição do
+              ponto de observação, obtemos o vetor dirigido de \(dq\) para
+              \(P\):
+            </p>
+            <div class="math-block math-display">
+              \[
+              \begin{aligned}
+              \vec r\,'(\phi)
+                &=R\cos\phi\,\hat{\mathbf x}
+                  +R\sin\phi\,\hat{\mathbf y},\\
+              \vec r_P&=z\,\hat{\mathbf z},\\
+              \vec\rho
+                &=\vec r_P-\vec r\,'(\phi)\\
+                &=-R\cos\phi\,\hat{\mathbf x}
+                  -R\sin\phi\,\hat{\mathbf y}
+                  +z\,\hat{\mathbf z}.
+              \end{aligned}
+              \]
+            </div>
+            <p>
+              Pelo triângulo retângulo formado pelo raio do anel e pela altura
+              do ponto, a distância é independente de \(\phi\):
+            </p>
+            <div class="math-block math-block--result math-display">
+              \[
+              \rho=\lVert\vec\rho\rVert=\sqrt{R^2+z^2}.
+              \]
+            </div>
+          </section>
+
+          <section>
+            <span class="solution-step">lei de Coulomb</span>
+            <h3>Construa o campo vetorial diferencial</h3>
+            <p>
+              Usamos a forma vetorial da lei de Coulomb, com
+              \(k=(4\pi\varepsilon_0)^{-1}\). Como
+              \(\hat{\boldsymbol\rho}=\vec\rho/\rho\), segue que
+            </p>
+            <div class="math-block math-display">
+              \[
+              \begin{aligned}
+              d\vec{E}
+                &=\frac{1}{4\pi\varepsilon_0}
+                  \frac{dq}{\rho^2}\,\hat{\boldsymbol\rho}\\
+                &=\frac{1}{4\pi\varepsilon_0}
+                  \frac{dq}{\rho^3}\,\vec\rho\\
+                &=\frac{1}{4\pi\varepsilon_0}
+                  \frac{dq}{(R^2+z^2)^{3/2}}
+                  \left(
+                    -R\cos\phi\,\hat{\mathbf x}
+                    -R\sin\phi\,\hat{\mathbf y}
+                    +z\,\hat{\mathbf z}
+                  \right).
+              \end{aligned}
+              \]
+            </div>
+            <p>
+              Essa expressão já contém as três componentes e preserva o sinal
+              da carga em \(dq\).
+            </p>
+          </section>
+
+          <section>
+            <span class="solution-step">projeção axial</span>
+            <h3>Projete \(d\vec{E}\) sobre o eixo \(z\)</h3>
+            <p>
+              Se \(\alpha\) é o ângulo entre \(\vec\rho\) e o sentido
+              \(+\hat{\mathbf z}\), o triângulo geométrico mostra que o fator
+              de projeção é exatamente
+              \(\cos\alpha=z/\rho=z/\sqrt{R^2+z^2}\). Portanto,
+            </p>
+            <div class="math-block math-block--result math-display">
+              \[
+              \begin{aligned}
+              dE_z
+                &=\left(
+                  \frac{1}{4\pi\varepsilon_0}\frac{dq}{\rho^2}
+                  \right)\frac{z}{\rho}\\
+                &=\frac{1}{4\pi\varepsilon_0}
+                  \frac{z\,dq}{(R^2+z^2)^{3/2}}.
+              \end{aligned}
+              \]
+            </div>
+            <aside class="assumption-note">
+              <strong>Fator geométrico decisivo</strong>
+              <p>
+                A projeção axial fornece
+                \(\displaystyle z/\sqrt{R^2+z^2}\). Esse fator multiplica o
+                módulo proporcional a \(dq/(R^2+z^2)\) e produz a potência
+                \((R^2+z^2)^{3/2}\) no denominador.
+              </p>
+            </aside>
+          </section>
+
+          <section>
+            <span class="solution-step">simetria por pares</span>
+            <h3>Elementos diametralmente opostos cancelam \(x\) e \(y\)</h3>
+            <p>
+              Compare o elemento em \(\phi\) com outro elemento idêntico em
+              \(\phi+\pi\). As identidades trigonométricas trocam o sinal das
+              componentes transversais, mas não alteram a componente axial:
+            </p>
+            <div class="math-block math-display">
+              \[
+              \begin{aligned}
+              \cos(\phi+\pi)&=-\cos\phi,
+              &\sin(\phi+\pi)&=-\sin\phi,\\
+              dE_x(\phi+\pi)&=-dE_x(\phi),
+              &dE_y(\phi+\pi)&=-dE_y(\phi),\\
+              dE_z(\phi+\pi)&=dE_z(\phi).
+              \end{aligned}
+              \]
+            </div>
+            <p>
+              Assim, cada par produz cancelamento transversal e reforço ao
+              longo do eixo:
+            </p>
+            <div class="math-block math-block--result math-display">
+              \[
+              \begin{aligned}
+              d\vec{E}(\phi)+d\vec{E}(\phi+\pi)
+              &=2\,dE_z\,\hat{\mathbf z}\\
+              &=\frac{1}{4\pi\varepsilon_0}
+                \frac{2z\,dq}{(R^2+z^2)^{3/2}}\,\hat{\mathbf z}.
+              \end{aligned}
+              \]
+            </div>
+          </section>
+
+          <section>
+            <span class="solution-step">integração</span>
+            <h3>Some todos os elementos do anel</h3>
+            <p>
+              Podemos integrar a expressão vetorial completa. Os termos
+              transversais desaparecem sobre uma volta, enquanto o termo axial
+              recebe o fator \(2\pi\):
+            </p>
+            <div class="math-block math-display">
+              \[
+              \begin{aligned}
+              \vec{E}(0,0,z)
+                &=\int_0^{2\pi}d\vec{E}\\
+                &=\frac{1}{4\pi\varepsilon_0}
+                  \frac{Q}{2\pi(R^2+z^2)^{3/2}}
+                  \left[
+                    -R\!\int_0^{2\pi}\!\cos\phi\,d\phi\,\hat{\mathbf x}
+                    -R\!\int_0^{2\pi}\!\sin\phi\,d\phi\,\hat{\mathbf y}
+                    +z\!\int_0^{2\pi}\!d\phi\,\hat{\mathbf z}
+                  \right],\\
+              \int_0^{2\pi}\cos\phi\,d\phi&=0,
+              &\int_0^{2\pi}\sin\phi\,d\phi&=0,
+              &\int_0^{2\pi}d\phi&=2\pi.
+              \end{aligned}
+              \]
+            </div>
+            <div class="result-callout">
+              <span>Campo resultante</span>
+              <strong>\(\displaystyle \boxed{\vec{E}(0,0,z)=\frac{Qz}{4\pi\varepsilon_0(z^2+R^2)^{3/2}}\,\hat{\mathbf z}}\)</strong>
+            </div>
+          </section>
+
+          <section>
+            <span class="solution-step">verificações</span>
+            <h3>Teste o sinal, os limites e as dimensões</h3>
+            <p>
+              As verificações abaixo confirmam a direção e a escala física do
+              resultado.
+            </p>
+            <div class="limit-grid">
+              <article>
+                <h4>Sinal e direção</h4>
+                <p>
+                  Se \(Qz>0\), \(\vec{E}\) aponta no sentido
+                  \(+\hat{\mathbf z}\); se \(Qz<0\), aponta no sentido
+                  \(-\hat{\mathbf z}\). Trocar o sinal de \(Q\) ou de \(z\)
+                  inverte o campo.
+                </p>
+              </article>
+              <article>
+                <h4>Centro do anel</h4>
+                <p>
+                  Em \(z=0\), cada elemento possui um oposto que cancela sua
+                  contribuição completa, de modo que
+                  \(\vec{E}(0,0,0)=\vec{0}\).
+                </p>
+              </article>
+              <article>
+                <h4>Campo distante</h4>
+                <p>
+                  Para \(z\gg R\) e \(z>0\),
+                  \((z^2+R^2)^{3/2}\simeq z^3\), logo
+                  \(\vec{E}\simeq Q(4\pi\varepsilon_0z^2)^{-1}
+                  \hat{\mathbf z}\): o campo de uma carga puntiforme \(Q\).
+                </p>
+              </article>
+              <article>
+                <h4>Análise dimensional</h4>
+                <p>
+                  Como \(z/(z^2+R^2)^{3/2}\) tem dimensão
+                  \(\mathrm{m}^{-2}\), resulta
+                  \(\left[\vec{E}\right]=
+                  (4\pi\varepsilon_0)^{-1}\mathrm{C\,m^{-2}}
+                  =\mathrm{N/C}\), como deve ser.
+                </p>
+              </article>
+            </div>
+          </section>
+        </article>
+      </section>
+
+      <section class="lesson-section" id="diagrama" aria-label="Diagrama">
+        <article class="static-diagram-shell field-figure">
+          <header class="static-diagram-heading">
+            <div>
+              <p class="eyebrow">Geometria vetorial</p>
+              <h2>O que a simetria preserva</h2>
+            </div>
+            <p>
+              À esquerda, um elemento do anel e sua geometria. À direita, as
+              contribuições de um par diametral mostram o cancelamento
+              transversal e a soma axial.
+            </p>
+          </header>
+
+          <svg class="field-diagram" viewBox="0 0 1080 720" preserveAspectRatio="xMidYMid meet" role="img" aria-labelledby="anel-eixo-title anel-eixo-desc">
+            <title id="anel-eixo-title">Campo elétrico de um anel no eixo de simetria</title>
+            <desc id="anel-eixo-desc">O desenho representa um anel com carga Q positiva e um ponto P com z positivo. O anel aparece em perspectiva no plano horizontal. Um elemento de carga liga-se ao ponto P no eixo vertical pela distância rho. O campo diferencial e sua componente axial são indicados. Ao lado, um par de elementos diametralmente opostos produz componentes transversais iguais e contrárias e componentes axiais que se somam.</desc>
+            <defs>
+              <marker id="anel-arrow-axis" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+                <path d="M 0 0 L 10 5 L 0 10 z" style="fill: var(--ink-soft)"></path>
+              </marker>
+              <marker id="anel-arrow-field" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+                <path d="M 0 0 L 10 5 L 0 10 z" style="fill: var(--force-1)"></path>
+              </marker>
+              <marker id="anel-arrow-component" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+                <path d="M 0 0 L 10 5 L 0 10 z" style="fill: var(--force-2)"></path>
+              </marker>
+              <marker id="anel-arrow-result" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+                <path d="M 0 0 L 10 5 L 0 10 z" style="fill: var(--resultant)"></path>
+              </marker>
+              <marker id="anel-arrow-cancel" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+                <path d="M 0 0 L 10 5 L 0 10 z" style="fill: var(--ink-soft)"></path>
+              </marker>
+              <marker id="anel-dimension" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                <path d="M 10 0 L 0 5 L 10 10 z" style="fill: var(--measure)"></path>
+              </marker>
+            </defs>
+
+            <rect class="field-panel" x="24" y="24" width="650" height="620" rx="10"></rect>
+            <rect class="field-panel" x="692" y="24" width="364" height="620" rx="10"></rect>
+            <text class="field-title" x="52" y="62">ANEL NO PLANO E PONTO NO EIXO</text>
+            <text class="field-title" x="720" y="62">PAR DIAMETRAL</text>
+
+            <g aria-label="Geometria do anel e de um elemento de carga">
+              <line class="field-axis field-axis--light" x1="88" y1="430" x2="605" y2="430" marker-end="url(#anel-arrow-axis)"></line>
+              <line class="field-axis field-axis--light" x1="198" y1="518" x2="490" y2="348" marker-end="url(#anel-arrow-axis)"></line>
+              <line class="field-axis" x1="340" y1="535" x2="340" y2="86" marker-end="url(#anel-arrow-axis)"></line>
+
+              <ellipse class="field-surface" cx="340" cy="430" rx="220" ry="86"></ellipse>
+              <ellipse class="field-object" cx="340" cy="430" rx="220" ry="86"></ellipse>
+              <circle class="field-point" cx="340" cy="430" r="7"></circle>
+
+              <line class="field-distance" x1="340" y1="430" x2="500" y2="489" marker-start="url(#anel-dimension)" marker-end="url(#anel-dimension)"></line>
+              <line class="field-distance" x1="500" y1="489" x2="340" y2="155" marker-start="url(#anel-dimension)" marker-end="url(#anel-dimension)"></line>
+              <line class="field-guide" x1="180" y1="371" x2="340" y2="155"></line>
+              <line class="field-distance" x1="320" y1="430" x2="320" y2="155" marker-start="url(#anel-dimension)" marker-end="url(#anel-dimension)"></line>
+
+              <circle class="field-element" cx="500" cy="489" r="11"></circle>
+              <circle class="field-element" cx="180" cy="371" r="9"></circle>
+              <circle class="field-point" cx="340" cy="155" r="9"></circle>
+
+              <line class="field-vector" x1="340" y1="155" x2="289" y2="48" marker-end="url(#anel-arrow-field)"></line>
+              <line class="field-vector field-vector--component" x1="360" y1="155" x2="360" y2="48" marker-end="url(#anel-arrow-component)"></line>
+              <line class="field-vector field-vector--cancelled" x1="340" y1="155" x2="289" y2="155" marker-end="url(#anel-arrow-cancel)"></line>
+
+              <foreignObject x="570" y="413" width="70" height="34">
+                <div xmlns="http://www.w3.org/1999/xhtml" style="color:var(--ink);font:700 15px var(--font-mono);white-space:nowrap">\(x\)</div>
+              </foreignObject>
+              <foreignObject x="488" y="323" width="70" height="34">
+                <div xmlns="http://www.w3.org/1999/xhtml" style="color:var(--ink);font:700 15px var(--font-mono);white-space:nowrap">\(y\)</div>
+              </foreignObject>
+              <foreignObject x="352" y="82" width="70" height="34">
+                <div xmlns="http://www.w3.org/1999/xhtml" style="color:var(--ink);font:700 15px var(--font-mono);white-space:nowrap">\(z\)</div>
+              </foreignObject>
+              <foreignObject x="362" y="132" width="150" height="36">
+                <div xmlns="http://www.w3.org/1999/xhtml" style="color:var(--ink);font:700 15px var(--font-mono);white-space:nowrap">\(P=(0,0,z)\)</div>
+              </foreignObject>
+              <foreignObject x="505" y="491" width="100" height="36">
+                <div xmlns="http://www.w3.org/1999/xhtml" style="color:var(--measure);font:700 15px var(--font-mono);white-space:nowrap">\(dq\)</div>
+              </foreignObject>
+              <foreignObject x="119" y="334" width="120" height="36">
+                <div xmlns="http://www.w3.org/1999/xhtml" style="color:var(--measure);font:700 14px var(--font-mono);white-space:nowrap">\(dq_{\mathrm{op}}\)</div>
+              </foreignObject>
+              <foreignObject x="420" y="436" width="70" height="36">
+                <div xmlns="http://www.w3.org/1999/xhtml" style="color:var(--measure);font:700 15px var(--font-mono);white-space:nowrap">\(R\)</div>
+              </foreignObject>
+              <foreignObject x="430" y="286" width="80" height="36">
+                <div xmlns="http://www.w3.org/1999/xhtml" style="color:var(--measure);font:700 15px var(--font-mono);white-space:nowrap">\(\rho\)</div>
+              </foreignObject>
+              <foreignObject x="280" y="275" width="70" height="36">
+                <div xmlns="http://www.w3.org/1999/xhtml" style="color:var(--measure);font:700 15px var(--font-mono);white-space:nowrap">\(z\)</div>
+              </foreignObject>
+              <foreignObject x="220" y="46" width="100" height="36">
+                <div xmlns="http://www.w3.org/1999/xhtml" style="color:var(--force-1);font:700 15px var(--font-mono);white-space:nowrap">\(d\vec{E}\)</div>
+              </foreignObject>
+              <foreignObject x="367" y="78" width="100" height="36">
+                <div xmlns="http://www.w3.org/1999/xhtml" style="color:var(--force-2);font:700 15px var(--font-mono);white-space:nowrap">\(dE_z\)</div>
+              </foreignObject>
+              <foreignObject x="245" y="156" width="110" height="36">
+                <div xmlns="http://www.w3.org/1999/xhtml" style="color:var(--ink-soft);font:700 14px var(--font-mono);white-space:nowrap">\(d\vec{E}_{\perp}\)</div>
+              </foreignObject>
+              <foreignObject x="253" y="540" width="180" height="38">
+                <div xmlns="http://www.w3.org/1999/xhtml" style="color:var(--ink);font:700 15px var(--font-mono);white-space:nowrap">\(\rho=\sqrt{R^2+z^2}\)</div>
+              </foreignObject>
+              <foreignObject x="278" y="586" width="130" height="36">
+                <div xmlns="http://www.w3.org/1999/xhtml" style="color:var(--resultant);font:700 15px var(--font-mono);white-space:nowrap">\(\text{anel: }Q&gt;0\)</div>
+              </foreignObject>
+            </g>
+
+            <g aria-label="Cancelamento das componentes transversais de um par diametral">
+              <circle class="field-element" cx="770" cy="525" r="10"></circle>
+              <circle class="field-element" cx="978" cy="525" r="10"></circle>
+              <line class="field-guide" x1="770" y1="525" x2="874" y2="395"></line>
+              <line class="field-guide" x1="978" y1="525" x2="874" y2="395"></line>
+              <circle class="field-point" cx="874" cy="395" r="8"></circle>
+
+              <line class="field-vector" x1="874" y1="395" x2="770" y2="265" marker-end="url(#anel-arrow-field)"></line>
+              <line class="field-vector" x1="874" y1="395" x2="978" y2="265" marker-end="url(#anel-arrow-field)"></line>
+              <line class="field-vector field-vector--cancelled" x1="874" y1="395" x2="770" y2="395" marker-end="url(#anel-arrow-cancel)"></line>
+              <line class="field-vector field-vector--cancelled" x1="874" y1="395" x2="978" y2="395" marker-end="url(#anel-arrow-cancel)"></line>
+              <line class="field-vector field-vector--component" x1="770" y1="395" x2="770" y2="265" marker-end="url(#anel-arrow-component)"></line>
+              <line class="field-vector field-vector--component" x1="978" y1="395" x2="978" y2="265" marker-end="url(#anel-arrow-component)"></line>
+              <line class="field-vector field-vector--resultant" x1="874" y1="395" x2="874" y2="124" marker-end="url(#anel-arrow-result)"></line>
+
+              <foreignObject x="713" y="226" width="130" height="36">
+                <div xmlns="http://www.w3.org/1999/xhtml" style="color:var(--force-1);font:700 14px var(--font-mono);white-space:nowrap">\(d\vec{E}(\phi)\)</div>
+              </foreignObject>
+              <foreignObject x="921" y="226" width="125" height="36">
+                <div xmlns="http://www.w3.org/1999/xhtml" style="color:var(--force-1);font:700 14px var(--font-mono);white-space:nowrap">\(d\vec{E}(\phi+\pi)\)</div>
+              </foreignObject>
+              <foreignObject x="778" y="307" width="70" height="36">
+                <div xmlns="http://www.w3.org/1999/xhtml" style="color:var(--force-2);font:700 14px var(--font-mono);white-space:nowrap">\(dE_z\)</div>
+              </foreignObject>
+              <foreignObject x="920" y="307" width="70" height="36">
+                <div xmlns="http://www.w3.org/1999/xhtml" style="color:var(--force-2);font:700 14px var(--font-mono);white-space:nowrap">\(dE_z\)</div>
+              </foreignObject>
+              <foreignObject x="887" y="106" width="100" height="36">
+                <div xmlns="http://www.w3.org/1999/xhtml" style="color:var(--resultant);font:700 15px var(--font-mono);white-space:nowrap">\(2dE_z\)</div>
+              </foreignObject>
+              <foreignObject x="717" y="400" width="145" height="36">
+                <div xmlns="http://www.w3.org/1999/xhtml" style="color:var(--ink-soft);font:700 13px var(--font-mono);white-space:nowrap">\(-d\vec{E}_{\perp}\)</div>
+              </foreignObject>
+              <foreignObject x="958" y="400" width="90" height="36">
+                <div xmlns="http://www.w3.org/1999/xhtml" style="color:var(--ink-soft);font:700 13px var(--font-mono);white-space:nowrap">\(+d\vec{E}_{\perp}\)</div>
+              </foreignObject>
+              <foreignObject x="849" y="399" width="70" height="36">
+                <div xmlns="http://www.w3.org/1999/xhtml" style="color:var(--ink);font:700 14px var(--font-mono);white-space:nowrap">\(P\)</div>
+              </foreignObject>
+              <foreignObject x="704" y="535" width="135" height="36">
+                <div xmlns="http://www.w3.org/1999/xhtml" style="color:var(--measure);font:700 14px var(--font-mono);white-space:nowrap">\(dq(\phi+\pi)\)</div>
+              </foreignObject>
+              <foreignObject x="946" y="535" width="95" height="36">
+                <div xmlns="http://www.w3.org/1999/xhtml" style="color:var(--measure);font:700 14px var(--font-mono);white-space:nowrap">\(dq(\phi)\)</div>
+              </foreignObject>
+              <foreignObject x="758" y="582" width="255" height="38">
+                <div xmlns="http://www.w3.org/1999/xhtml" style="color:var(--resultant);font:700 14px var(--font-mono);white-space:nowrap">\(d\vec{E}_{\perp,1}+d\vec{E}_{\perp,2}=\vec{0}\)</div>
+              </foreignObject>
+            </g>
+
+            <text class="field-note" x="48" y="681">Perspectiva esquemática; comprimentos e vetores não estão em escala.</text>
+          </svg>
+          <p class="diagram-caption field-diagram-caption">
+            <strong>Leitura do desenho</strong>
+            <span>
+              O desenho representa \(Q&gt;0\) e \(z&gt;0\). Nesse caso, para
+              cada elemento \(dq\), o campo diferencial aponta ao longo de
+              \(\vec\rho\); para \(Q&lt;0\), todas as setas de campo se
+              invertem. O elemento oposto elimina \(d\vec{E}_{\perp}\),
+              enquanto as duas contribuições \(dE_z\) têm o mesmo sentido e
+              se somam.
+            </span>
+          </p>
+        </article>
+      </section>
+    </div>
+  </main>
+
+  <div class="exercise-navigation-shell" data-exercise-navigation data-current-id="tematico-22-1-anel-eixo-z" data-registry-url="../../simuladores.json" data-chapter-url="../capitulo-22/" data-root-path="../../" data-reference="Temático" data-chapter="22"></div>
+
+  <footer class="lesson-footer site-footer">
+    <p>Temático 1 · campo elétrico · capítulo 22</p>
+    <a href="../../">Voltar ao catálogo</a>
+  </footer>
+
+  <script type="module" src="../../componentes/navegacao-principal.js"></script>
+  <script type="module" src="../../componentes/navegacao-exercicios.js"></script>
+  <script type="module" src="../exercicio-estatico.js"></script>
+</body>
+</html>

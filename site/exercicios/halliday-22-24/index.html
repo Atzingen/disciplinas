@@ -1,0 +1,501 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Resolução do exercício Halliday 22.24 sobre o valor máximo do campo elétrico no eixo de um anel uniformemente carregado.">
+  <title>Halliday 22.24 — Campo máximo no eixo de um anel · Laboratório de Eletromagnetismo</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='28' fill='%237a3ce7'/%3E%3Cpath d='M18 32h28M32 18v28' stroke='white' stroke-width='6'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="../../assets/base.css">
+  <link rel="stylesheet" href="../../assets/simulador.css">
+  <link rel="stylesheet" href="../../assets/campo-eletrico.css">
+  <script>try{if(localStorage.getItem("tema")==="escuro"){document.documentElement.dataset.theme="escuro"}}catch(erro){}</script>
+</head>
+<body class="lesson-page field-page">
+  <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+
+  <div class="site-topbar" data-topbar>
+    <div class="site-topbar__inner">
+      <nav class="breadcrumb" aria-label="Navegação estrutural">
+        <a href="../../">Laboratório</a>
+        <span aria-hidden="true">/</span>
+        <a href="../">Exercícios</a>
+        <span aria-hidden="true">/</span>
+        <a href="../capitulo-22/">Campo elétrico · Capítulo 22</a>
+        <span aria-hidden="true">/</span>
+        <strong aria-current="page">Exercício 24</strong>
+      </nav>
+      <div class="lesson-area-navigation" data-site-navigation data-root-path="../../" data-active-section="exercicios"></div>
+    </div>
+    <nav class="section-nav" aria-label="Seções do exercício" data-section-nav>
+      <a href="#enunciado">Enunciado</a>
+      <a href="#resolucao">Resolução</a>
+      <a href="#diagrama">Diagrama</a>
+    </nav>
+  </div>
+
+  <header class="lesson-header">
+    <div class="lesson-title-row">
+      <div>
+        <p class="eyebrow">Halliday · Capítulo 22</p>
+        <h1>Máximo no eixo de um anel</h1>
+      </div>
+      <p class="lesson-intro">
+        O campo se anula no centro por simetria e muito longe por diluição.
+        Entre esses extremos, existe uma posição em que seu módulo é máximo.
+      </p>
+    </div>
+  </header>
+
+  <main class="lesson-main" id="conteudo">
+    <div class="lesson-sections">
+
+      <section class="lesson-section" id="enunciado" aria-label="Enunciado">
+        <article class="problem-sheet">
+          <div class="problem-number">
+            <span>Halliday</span>
+            <strong>22.24</strong>
+          </div>
+          <div class="problem-copy">
+            <p>
+              Considere um anel fino e não condutor, de raio \(R\), com carga
+              total positiva \(Q\) distribuída uniformemente. O centro está na
+              origem e o eixo do anel coincide com o eixo \(z\).
+            </p>
+            <p>
+              Determine o campo em \(z=0\) e seu limite quando
+              \(z\to\infty\); encontre, no semieixo \(z&gt;0\), a posição em
+              que o módulo do campo é máximo. Por fim, calcule esse máximo para
+              \(R=2{,}00\,\mathrm{cm}\) e \(Q=4{,}00\,\mu\mathrm{C}\).
+            </p>
+          </div>
+          <div class="answer-strip">
+            <span>Resultados</span>
+            <strong>
+              \(\displaystyle \vec{E}(0)=\vec{0},\quad
+              z_{\max}=\frac{R}{\sqrt{2}},\quad
+              E_{\max}=3{,}46\times10^{7}\,\mathrm{N/C}\)
+            </strong>
+          </div>
+        </article>
+      </section>
+
+      <section class="lesson-section" id="resolucao" aria-label="Resolução">
+        <article class="solution-article">
+          <header class="solution-heading">
+            <p class="eyebrow">Resolução passo a passo</p>
+            <h2>Localize o máximo antes de substituir os números</h2>
+            <p>
+              A simetria reduz o problema a uma função escalar de \(z\).
+              Depois, a regra do produto e a regra da cadeia revelam onde essa
+              função deixa de crescer e passa a diminuir.
+            </p>
+          </header>
+
+          <section>
+            <span class="solution-step">campo do anel</span>
+            <h3>Comece pela expressão no eixo</h3>
+            <p>
+              Todos os elementos \(dq\) do anel estão à mesma distância
+              \(\sqrt{R^2+z^2}\) do ponto de observação. Para cada elemento,
+              existe outro diametralmente oposto: suas componentes
+              perpendiculares ao eixo se cancelam, enquanto as componentes em
+              \(z\) se somam. Integrar essas componentes, usando
+              \(\int dq=Q\), fornece
+            </p>
+            <div class="math-block math-block--result math-display">
+              \[
+              \begin{aligned}
+              dE_z
+              &=k\frac{dq}{R^2+z^2}
+                \frac{z}{\sqrt{R^2+z^2}},\\
+              \vec{E}(z)
+              &=\frac{kQz}{\left(R^2+z^2\right)^{3/2}}\,\hat{z},
+              \qquad
+              k=\frac{1}{4\pi\varepsilon_0}.
+              \end{aligned}
+              \]
+            </div>
+            <p>
+              Como \(Q&gt;0\), no semieixo positivo o vetor aponta para
+              \(+\hat{z}\). Podemos então trabalhar com a componente assinada
+              \(E(z)=\vec{E}(z)\cdot\hat{z}\), que também é o módulo quando
+              \(z&gt;0\).
+            </p>
+            <div class="assumption-note">
+              <strong>Por que o anel é não condutor?</strong>
+              <p>
+                Essa hipótese mantém a carga uniformemente distribuída no
+                anel; ela não se rearranja quando escolhemos o ponto de
+                observação no eixo.
+              </p>
+            </div>
+          </section>
+
+          <section>
+            <span class="solution-step">parte a</span>
+            <h3>Os dois zeros têm causas físicas diferentes</h3>
+            <p>
+              No centro, cada elemento de carga possui um parceiro oposto que
+              produz um campo de mesmo módulo e sentido contrário. A própria
+              fórmula registra esse cancelamento pelo fator \(z\) no
+              numerador.
+            </p>
+            <div class="math-block math-display">
+              \[
+              \begin{aligned}
+              \vec{E}(0)
+              &=\frac{kQ(0)}
+                {\left(R^2+0^2\right)^{3/2}}\,\hat{z}\\
+              &=\vec{0}.
+              \end{aligned}
+              \]
+            </div>
+            <p>
+              Muito longe, as componentes transversais de elementos opostos
+              continuam se cancelando, enquanto as componentes axiais se
+              somam. Na aproximação dominante, o anel se comporta como uma
+              carga puntiforme \(Q\). Para \(z&gt;0\), podemos fatorar \(z^3\)
+              do denominador:
+            </p>
+            <div class="math-block math-display">
+              \[
+              \begin{aligned}
+              \lim_{z\to\infty}\vec{E}(z)
+              &=\lim_{z\to\infty}
+                \frac{kQz}
+                {z^3\left(1+\frac{R^2}{z^2}\right)^{3/2}}\,\hat{z}\\
+              &=\lim_{z\to\infty}
+                \frac{kQ}
+                {z^2\left(1+\frac{R^2}{z^2}\right)^{3/2}}\,\hat{z}\\
+              &=\vec{0}.
+              \end{aligned}
+              \]
+            </div>
+            <div class="limit-grid">
+              <article>
+                <h4>Em \(z=0\)</h4>
+                <p>
+                  O campo é nulo por cancelamento vetorial exato entre
+                  elementos opostos do anel.
+                </p>
+              </article>
+              <article>
+                <h4>Quando \(z\to\infty\)</h4>
+                <p>
+                  O campo é nulo no limite porque sua intensidade decai como
+                  \(\frac{kQ}{z^2}\).
+                </p>
+              </article>
+            </div>
+          </section>
+
+          <section>
+            <span class="solution-step">derivação</span>
+            <h3>Aplique produto e cadeia sem omitir fatores</h3>
+            <p>
+              Retire a constante \(kQ\) e escreva a potência do denominador
+              com expoente negativo. Se
+              \(f(z)=z\) e
+              \(g(z)=\left(R^2+z^2\right)^{-3/2}\), então
+              \(E(z)=kQf(z)g(z)\).
+            </p>
+            <div class="math-block math-display">
+              \[
+              \begin{aligned}
+              f'(z)&=1,\\
+              g'(z)
+              &=-\frac{3}{2}\left(R^2+z^2\right)^{-5/2}
+                \frac{d}{dz}\left(R^2+z^2\right)\\
+              &=-\frac{3}{2}\left(R^2+z^2\right)^{-5/2}(2z)\\
+              &=-3z\left(R^2+z^2\right)^{-5/2}.
+              \end{aligned}
+              \]
+            </div>
+            <p>
+              Pela regra do produto, \(E'=kQ(f'g+fg')\). Colocando o fator
+              comum \(\left(R^2+z^2\right)^{-5/2}\) em evidência, obtemos
+            </p>
+            <div class="math-block math-block--result math-display">
+              \[
+              \begin{aligned}
+              \frac{dE}{dz}
+              &=kQ\left[
+                \left(R^2+z^2\right)^{-3/2}
+                -3z^2\left(R^2+z^2\right)^{-5/2}
+                \right]\\
+              &=kQ\left(R^2+z^2\right)^{-5/2}
+                \left[\left(R^2+z^2\right)-3z^2\right]\\
+              &=kQ\left(R^2+z^2\right)^{-5/2}
+                \left(R^2-2z^2\right)\\
+              &=\frac{kQ\left(R^2-2z^2\right)}
+                {\left(R^2+z^2\right)^{5/2}}.
+              \end{aligned}
+              \]
+            </div>
+          </section>
+
+          <section>
+            <span class="solution-step">parte b</span>
+            <h3>Resolva a condição de ponto crítico</h3>
+            <p>
+              Como \(R&gt;0\), o denominador da derivada é sempre positivo e
+              \(kQ&gt;0\). Portanto, a derivada só se anula quando seu
+              numerador se anula.
+            </p>
+            <div class="math-block math-display">
+              \[
+              \begin{aligned}
+              \frac{dE}{dz}=0
+              &\Longleftrightarrow R^2-2z^2=0\\
+              &\Longleftrightarrow z^2=\frac{R^2}{2}\\
+              &\Longleftrightarrow z=\pm\frac{R}{\sqrt{2}}.
+              \end{aligned}
+              \]
+            </div>
+            <p>
+              No semieixo pedido, a derivada é positiva para
+              \(0&lt;z&lt;\frac{R}{\sqrt{2}}\) e negativa para
+              \(z&gt;\frac{R}{\sqrt{2}}\). Assim, o campo cresce antes do
+              ponto crítico e decresce depois dele: há uma troca de sinal de
+              positivo para negativo, confirmando um máximo.
+            </p>
+            <div class="result-callout">
+              <span>Posição do máximo</span>
+              <strong>
+                \(\displaystyle z_{\max}=\frac{R}{\sqrt{2}}\quad(z&gt;0)\)
+              </strong>
+            </div>
+            <p>
+              No semieixo negativo, \(z=-\frac{R}{\sqrt{2}}\) é um mínimo da
+              componente assinada \(E(z)\). O módulo do campo tem o mesmo
+              máximo em ambos os lados do anel.
+            </p>
+          </section>
+
+          <section>
+            <span class="solution-step">máximo simbólico</span>
+            <h3>Substitua a posição e simplifique</h3>
+            <p>
+              Avaliamos o campo em
+              \(z_{\max}=\frac{R}{\sqrt{2}}\). A soma no denominador passa a
+              ser \(\frac{3R^2}{2}\); mantendo cada etapa, resulta
+            </p>
+            <div class="math-block math-block--result math-display">
+              \[
+              \begin{aligned}
+              E_{\max}
+              &=\frac{kQ\left(\frac{R}{\sqrt{2}}\right)}
+                {\left[R^2+\left(\frac{R}{\sqrt{2}}\right)^2\right]^{3/2}}\\
+              &=\frac{kQ\frac{R}{\sqrt{2}}}
+                {\left(\frac{3R^2}{2}\right)^{3/2}}\\
+              &=\frac{kQ\frac{R}{\sqrt{2}}}
+                {\frac{3\sqrt{3}\,R^3}{2\sqrt{2}}}\\
+              &=\frac{2kQ}{3\sqrt{3}\,R^2}.
+              \end{aligned}
+              \]
+            </div>
+          </section>
+
+          <section>
+            <span class="solution-step">parte c</span>
+            <h3>Converta para o SI antes do cálculo</h3>
+            <p>
+              Os dados possuem três algarismos significativos. Em unidades do
+              SI, o raio é \(2{,}00\times10^{-2}\,\mathrm{m}\) e a carga é
+              \(4{,}00\times10^{-6}\,\mathrm{C}\). Usaremos
+              \(k=8{,}99\times10^9\,\mathrm{N\,m^2/C^2}\).
+            </p>
+            <div class="math-block math-display">
+              \[
+              \begin{aligned}
+              z_{\max}
+              &=\frac{2{,}00\,\mathrm{cm}}{\sqrt{2}}
+                =1{,}41\,\mathrm{cm},\\[4pt]
+              E_{\max}
+              &=\frac{
+                2\left(8{,}99\times10^9\,\mathrm{N\,m^2/C^2}\right)
+                \left(4{,}00\times10^{-6}\,\mathrm{C}\right)}
+                {3\sqrt{3}
+                \left(2{,}00\times10^{-2}\,\mathrm{m}\right)^2}\\
+              &=3{,}46025\ldots\times10^7\,\mathrm{N/C}.
+              \end{aligned}
+              \]
+            </div>
+            <p>
+              Arredondando para três algarismos significativos,
+            </p>
+            <div class="result-callout">
+              <span>Valor máximo</span>
+              <strong>
+                \(\displaystyle E_{\max}=3{,}46\times10^{7}\,\mathrm{N/C}\)
+              </strong>
+            </div>
+          </section>
+
+          <section>
+            <span class="solution-step">verificações</span>
+            <h3>Confira dimensões, sentido e comportamento</h3>
+            <p>
+              O fator \(\frac{2}{3\sqrt{3}}\) é adimensional. Assim, as
+              dimensões do resultado são as mesmas de
+              \(\frac{kQ}{R^2}\), como deve ocorrer para um campo elétrico.
+            </p>
+            <div class="math-block math-display">
+              \[
+              \begin{aligned}
+              \left[\frac{kQ}{R^2}\right]
+              &=\frac{\mathrm{N\,m^2}}{\mathrm{C^2}}
+                \frac{\mathrm{C}}{\mathrm{m^2}}\\
+              &=\frac{\mathrm{N}}{\mathrm{C}}.
+              \end{aligned}
+              \]
+            </div>
+            <div class="concept-grid">
+              <article>
+                <h4>Extremos coerentes</h4>
+                <p>
+                  A curva começa em \(E(0)=0\), atinge um único máximo para
+                  \(z&gt;0\) e retorna assintoticamente a zero.
+                </p>
+              </article>
+              <article>
+                <h4>Escala física</h4>
+                <p>
+                  A forma \(E_{\max}\propto\frac{Q}{R^2}\) prevê corretamente
+                  mais campo para mais carga e menos campo para um anel maior.
+                </p>
+              </article>
+            </div>
+          </section>
+        </article>
+      </section>
+
+      <section class="lesson-section" id="diagrama" aria-label="Diagrama">
+        <article class="static-diagram-shell field-figure">
+          <header class="static-diagram-heading">
+            <div>
+              <p class="eyebrow">Geometria e gráfico</p>
+              <h2>Do anel à curva \(E(z)\)</h2>
+            </div>
+            <p>
+              As linhas tracejadas relacionam a origem e o ponto móvel no eixo
+              às posições correspondentes no gráfico do semieixo positivo.
+            </p>
+          </header>
+
+          <svg class="teaching-diagram field-diagram" viewBox="0 0 1160 760" role="img" aria-labelledby="halliday-22-24-title halliday-22-24-desc">
+            <title id="halliday-22-24-title">Campo elétrico no eixo de um anel e seu valor máximo</title>
+            <desc id="halliday-22-24-desc">À esquerda, um anel positivo aparece em perspectiva, com um ponto de observação móvel sobre o eixo z. À direita, o gráfico do campo começa em zero, cresce até o máximo em z igual a R sobre raiz de dois e depois tende a zero. Linhas tracejadas ligam a geometria às posições correspondentes no gráfico. A base informa os dados R igual a 2,00 centímetros e Q igual a 4,00 microcoulombs, além do campo máximo de 3,46 vezes dez elevado a sete newtons por coulomb.</desc>
+            <defs>
+              <marker id="halliday-22-24-axis-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+                <path d="M 0 0 L 10 5 L 0 10 z" style="fill: var(--ink-soft)"></path>
+              </marker>
+              <marker id="halliday-22-24-field-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+                <path d="M 0 0 L 10 5 L 0 10 z" style="fill: var(--resultant)"></path>
+              </marker>
+              <marker id="halliday-22-24-dimension" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                <path d="M 10 0 L 0 5 L 10 10 z" style="fill: var(--measure)"></path>
+              </marker>
+            </defs>
+
+            <rect class="field-panel" x="24" y="24" width="520" height="640" rx="8"></rect>
+            <rect class="field-panel" x="568" y="24" width="568" height="640" rx="8"></rect>
+
+            <text class="field-title" x="52" y="62">ANEL E PONTO MÓVEL NO EIXO</text>
+            <text class="field-title" x="596" y="62">CAMPO NO SEMIEIXO z ≥ 0</text>
+
+            <line class="field-axis" x1="74" y1="350" x2="515" y2="350" marker-end="url(#halliday-22-24-axis-arrow)"></line>
+            <text class="field-label" x="500" y="330">+z</text>
+
+            <ellipse class="field-object" cx="238" cy="350" rx="70" ry="184"></ellipse>
+            <path class="field-guide" d="M 238 166 A 70 184 0 0 0 238 534"></path>
+            <text class="field-label" x="88" y="116">anel fino</text>
+            <text class="field-value" x="88" y="142">Q &gt; 0</text>
+
+            <circle class="field-charge-positive" cx="238" cy="166" r="13"></circle>
+            <text class="field-sign" x="238" y="173">+</text>
+            <circle class="field-charge-positive" cx="308" cy="350" r="13"></circle>
+            <text class="field-sign" x="308" y="357">+</text>
+            <circle class="field-charge-positive" cx="238" cy="534" r="13"></circle>
+            <text class="field-sign" x="238" y="541">+</text>
+            <circle class="field-charge-positive" cx="168" cy="350" r="13"></circle>
+            <text class="field-sign" x="168" y="357">+</text>
+
+            <circle class="field-point" cx="238" cy="350" r="8"></circle>
+            <text class="field-note" x="211" y="378">O</text>
+
+            <line class="field-distance" x1="244" y1="340" x2="286.55" y2="217.45" marker-start="url(#halliday-22-24-dimension)" marker-end="url(#halliday-22-24-dimension)"></line>
+            <text class="field-value field-value--warm" x="286" y="274">R</text>
+
+            <circle class="field-guide" cx="342" cy="350" r="8"></circle>
+            <circle class="field-guide" cx="378" cy="350" r="8"></circle>
+            <circle class="field-point" cx="414" cy="350" r="10"></circle>
+            <text class="field-label" x="392" y="391">P(z)</text>
+            <text class="field-note" x="336" y="417">ponto variável</text>
+
+            <line class="field-distance" x1="247" y1="382" x2="405" y2="382" marker-start="url(#halliday-22-24-dimension)" marker-end="url(#halliday-22-24-dimension)"></line>
+            <text class="field-value field-value--warm" x="315" y="374">z</text>
+
+            <line class="field-vector field-vector--resultant" x1="424" y1="350" x2="498" y2="350" marker-end="url(#halliday-22-24-field-arrow)"></line>
+            <text class="field-value" x="432" y="324">E(z)</text>
+
+            <text class="field-note" x="78" y="595">pares opostos cancelam as componentes</text>
+            <text class="field-note" x="78" y="617">transversais e reforçam a componente axial</text>
+
+            <line class="field-axis" x1="640" y1="585" x2="1097" y2="585" marker-end="url(#halliday-22-24-axis-arrow)"></line>
+            <line class="field-axis" x1="640" y1="585" x2="640" y2="104" marker-end="url(#halliday-22-24-axis-arrow)"></line>
+            <text class="field-label" x="1090" y="615">z</text>
+            <text class="field-label" x="604" y="115">E(z)</text>
+            <text class="field-note" x="620" y="610">0</text>
+
+            <path class="field-vector field-vector--resultant" d="M 640 585 C 672 444 712 214 776 214 C 842 214 914 365 1080 520" marker-end="url(#halliday-22-24-field-arrow)"></path>
+
+            <line class="field-guide" x1="776" y1="214" x2="776" y2="585"></line>
+            <line class="field-guide" x1="640" y1="214" x2="776" y2="214"></line>
+            <circle class="field-point" cx="776" cy="214" r="10"></circle>
+            <text class="field-value" x="797" y="197">Eₘₐₓ</text>
+            <text class="field-label" x="738" y="616">R/√2</text>
+            <text class="field-note" x="1000" y="549">tende a 0</text>
+
+            <path class="field-guide" d="M 238 350 C 426 520 538 585 640 585"></path>
+            <path class="field-guide" d="M 414 350 C 526 330 590 214 776 214"></path>
+            <text class="field-note" x="468" y="532">z = 0</text>
+            <text class="field-note" x="508" y="292">posição do máximo</text>
+
+            <rect class="field-panel" x="48" y="686" width="1088" height="50" rx="4"></rect>
+            <text class="field-label" x="74" y="717">DADOS:</text>
+            <text class="field-note" x="146" y="717">R = 2,00 cm</text>
+            <text class="field-note" x="292" y="717">Q = 4,00 µC</text>
+            <text class="field-label" x="482" y="717">POSIÇÃO:</text>
+            <text class="field-value" x="575" y="717">zₘₐₓ = 1,41 cm</text>
+            <text class="field-label" x="770" y="717">MÁXIMO:</text>
+            <text class="field-value" x="858" y="717">3,46 × 10⁷ N/C</text>
+          </svg>
+
+          <p class="diagram-caption field-diagram-caption">
+            <strong>Leitura da curva · esquema sem escala</strong>
+            <span>
+              O ponto mostrado no eixo corresponde a
+              \(z_{\max}=\frac{R}{\sqrt{2}}\). A curva sai de zero, alcança
+              \(E_{\max}=\frac{2kQ}{3\sqrt{3}R^2}\) e se aproxima novamente
+              de zero para grandes distâncias.
+            </span>
+          </p>
+        </article>
+      </section>
+    </div>
+  </main>
+
+  <div class="exercise-navigation-shell" data-exercise-navigation data-current-id="halliday-22-24" data-registry-url="../../simuladores.json" data-chapter-url="../capitulo-22/" data-root-path="../../" data-reference="Halliday" data-chapter="22"></div>
+
+  <footer class="lesson-footer site-footer">
+    <p>Halliday 22.24 · capítulo 22 · campo máximo no eixo de um anel</p>
+    <a href="../../">Voltar ao catálogo</a>
+  </footer>
+
+  <script type="module" src="../../componentes/navegacao-principal.js"></script>
+  <script type="module" src="../../componentes/navegacao-exercicios.js"></script>
+  <script type="module" src="../exercicio-estatico.js"></script>
+</body>
+</html>

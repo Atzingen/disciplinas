@@ -29,6 +29,13 @@ function exerciseHref(item, rootPath) {
   return item ? `${rootPath}${item.path}` : null;
 }
 
+export function exerciseLabel(item) {
+  if (!item) {
+    return "";
+  }
+  return `${item.seriesLabel ?? "Exercício"} ${item.exerciseNumber}`;
+}
+
 function labeledLink(label, item, rootPath, className) {
   if (!item) {
     const spacer = document.createElement("span");
@@ -43,7 +50,7 @@ function labeledLink(label, item, rootPath, className) {
   const caption = document.createElement("span");
   caption.textContent = label;
   const title = document.createElement("strong");
-  title.textContent = `Exercício ${item.exerciseNumber}`;
+  title.textContent = exerciseLabel(item);
   link.append(caption, title);
   return link;
 }
@@ -85,7 +92,7 @@ export async function mountExerciseNavigation(root) {
       const link = document.createElement("a");
       link.href = exerciseHref(item, rootPath);
       link.textContent = String(item.exerciseNumber);
-      link.setAttribute("aria-label", `Exercício ${item.exerciseNumber}`);
+      link.setAttribute("aria-label", exerciseLabel(item));
       if (item.id === adjacent.current.id) {
         link.setAttribute("aria-current", "page");
       }

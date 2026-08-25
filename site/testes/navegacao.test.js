@@ -95,6 +95,18 @@ test("adjacência respeita as duas fronteiras do capítulo", () => {
   assert.equal(last.next, null);
 });
 
+test("rótulo da sequência distingue temáticos de exercícios do livro", () => {
+  assert.equal(typeof exerciseNavigation.exerciseLabel, "function");
+  assert.equal(
+    exerciseNavigation.exerciseLabel({ exerciseNumber: 3, seriesLabel: "Temático" }),
+    "Temático 3",
+  );
+  assert.equal(
+    exerciseNavigation.exerciseLabel({ exerciseNumber: 24 }),
+    "Exercício 24",
+  );
+});
+
 test("alternância de tema parte do claro e volta ao claro", () => {
   assert.equal(typeof navigation.nextTheme, "function");
   assert.equal(navigation.nextTheme("claro"), "escuro");

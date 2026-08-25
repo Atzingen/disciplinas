@@ -1,0 +1,507 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Dedução vetorial do campo elétrico produzido por uma barra finita positiva em um ponto acima de sua extremidade.">
+  <title>Temático 3 — Barra finita · Laboratório de Eletromagnetismo</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='28' fill='%237a3ce7'/%3E%3Cpath d='M18 32h28M32 18v28' stroke='white' stroke-width='6'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="../../assets/base.css">
+  <link rel="stylesheet" href="../../assets/simulador.css">
+  <link rel="stylesheet" href="../../assets/campo-eletrico.css">
+  <script>try{if(localStorage.getItem("tema")==="escuro"){document.documentElement.dataset.theme="escuro"}}catch(erro){}</script>
+</head>
+<body class="lesson-page field-page">
+  <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+
+  <div class="site-topbar" data-topbar>
+    <div class="site-topbar__inner">
+      <nav class="breadcrumb" aria-label="Navegação estrutural">
+        <a href="../../">Laboratório</a>
+        <span aria-hidden="true">/</span>
+        <a href="../">Exercícios</a>
+        <span aria-hidden="true">/</span>
+        <a href="../capitulo-22/">Campo elétrico · Capítulo 22</a>
+        <span aria-hidden="true">/</span>
+        <strong aria-current="page">Temático 3</strong>
+      </nav>
+      <div class="lesson-area-navigation" data-site-navigation data-root-path="../../" data-active-section="exercicios"></div>
+    </div>
+    <nav class="section-nav" aria-label="Seções do exercício" data-section-nav>
+      <a href="#enunciado">Enunciado</a>
+      <a href="#resolucao">Resolução</a>
+      <a href="#diagrama">Diagrama</a>
+    </nav>
+  </div>
+
+  <header class="lesson-header">
+    <div class="lesson-title-row">
+      <div>
+        <p class="eyebrow">Temático 3 · campo elétrico</p>
+        <h1>Barra finita</h1>
+      </div>
+      <p class="lesson-intro">
+        A escolha de uma coordenada positiva ao longo da barra torna explícitos
+        os dois sentidos do campo e evita sinais artificiais na integração.
+      </p>
+    </div>
+  </header>
+
+  <main class="lesson-main" id="conteudo">
+    <div class="lesson-sections">
+
+      <section class="lesson-section" id="enunciado" aria-label="Enunciado">
+        <article class="problem-sheet">
+          <div class="problem-number">
+            <span>Temático</span>
+            <strong>22.3</strong>
+          </div>
+          <div class="problem-copy">
+            <p>
+              Uma barra retilínea, uniforme e positivamente carregada ocupa o
+              trecho do eixo \(x\) entre \(x=-L\) e \(x=0\). Sua densidade
+              linear é \(\lambda&gt;0\). O ponto de observação é
+              \(P=(0,0,z)\), com \(z&gt;0\), diretamente acima da extremidade
+              direita da barra.
+            </p>
+            <p>
+              Determine o campo elétrico \(\vec{E}(P)\), integrando
+              separadamente suas componentes nos sentidos positivos de
+              \(x\) e \(z\). Verifique as unidades e os limites de uma barra
+              que encolhe e de uma barra que se torna semi-infinita.
+            </p>
+          </div>
+          <div class="answer-strip">
+            <span>Resultado vetorial</span>
+            <strong>
+              \(\displaystyle
+              \vec{E}(P)=k\lambda\left[
+              \left(\frac{1}{z}-\frac{1}{\sqrt{L^2+z^2}}\right)\hat{\mathbf{x}}
+              +\frac{L}{z\sqrt{L^2+z^2}}\hat{\mathbf{z}}
+              \right]\)
+            </strong>
+          </div>
+        </article>
+      </section>
+
+      <section class="lesson-section" id="resolucao" aria-label="Resolução">
+        <article class="solution-article">
+          <header class="solution-heading">
+            <p class="eyebrow">Resolução passo a passo</p>
+            <h2>Uma coordenada sem ambiguidade</h2>
+            <p>
+              A variável de integração será a distância positiva medida da
+              extremidade direita para a esquerda. Assim, a posição negativa
+              da fonte não transforma a carga positiva em uma carga negativa.
+            </p>
+          </header>
+
+          <section>
+            <span class="solution-step">convenção</span>
+            <h3>Parametrize a fonte pela distância até a extremidade</h3>
+            <p>
+              Para um elemento situado em \(x\leq0\), defina \(s=-x\).
+              Percorrer a barra da extremidade próxima até a extremidade
+              distante corresponde a \(s\in[0,L]\). Embora \(dx=-ds\), o
+              comprimento físico do elemento é positivo: \(d\ell=|dx|=ds\).
+            </p>
+            <div class="math-block math-display">
+              \[
+              \begin{aligned}
+              s&=-x, & 0&\leq s\leq L,\\
+              \vec{r}\,'(s)&=-s\,\hat{\mathbf{x}},
+              & d\ell&=ds,\\
+              dq&=\lambda\,d\ell=\lambda\,ds,
+              & \lambda&>0.
+              \end{aligned}
+              \]
+            </div>
+            <aside class="assumption-note">
+              <strong>O sinal que importa</strong>
+              <p>
+                O sinal negativo pertence à posição \(x=-s\). A carga
+                \(dq=\lambda ds\) continua positiva porque \(ds\) representa
+                um comprimento, não um deslocamento orientado no eixo.
+              </p>
+            </aside>
+          </section>
+
+          <section>
+            <span class="solution-step">geometria</span>
+            <h3>Construa o vetor da fonte até o ponto</h3>
+            <p>
+              O ponto tem vetor posição \(\vec{r}=z\,\hat{\mathbf{z}}\).
+              Subtrair a posição da fonte fornece o vetor que aponta de
+              \(dq\), em \(-s\), até \(P\). Suas duas componentes são
+              positivas.
+            </p>
+            <div class="math-block math-display">
+              \[
+              \begin{aligned}
+              \vec{\rho}
+              &=\vec{r}-\vec{r}\,'
+              =s\,\hat{\mathbf{x}}+z\,\hat{\mathbf{z}},\\
+              \rho&=\lvert\vec{\rho}\rvert
+              =\sqrt{s^2+z^2},\\
+              \hat{\boldsymbol{\rho}}
+              &=\frac{\vec{\rho}}{\rho}
+              =\frac{s\,\hat{\mathbf{x}}+z\,\hat{\mathbf{z}}}
+              {\sqrt{s^2+z^2}}.
+              \end{aligned}
+              \]
+            </div>
+            <p>
+              Como a fonte é positiva, o campo em \(P\) aponta para longe de
+              \(dq\), exatamente no sentido de \(\vec{\rho}\): para a direita
+              e para cima no plano \(xz\).
+            </p>
+          </section>
+
+          <section>
+            <span class="solution-step">lei de Coulomb</span>
+            <h3>Escreva primeiro o elemento vetorial</h3>
+            <p>
+              A lei de Coulomb fornece o módulo \(k\,dq/\rho^2\). Multiplicar
+              esse módulo pelo versor anterior preserva simultaneamente os
+              sentidos e a dependência geométrica correta.
+            </p>
+            <div class="math-block math-block--result math-display">
+              \[
+              \begin{aligned}
+              d\vec{E}
+              &=k\frac{dq}{\rho^2}\,\hat{\boldsymbol{\rho}}\\
+              &=k\lambda\frac{
+              s\,\hat{\mathbf{x}}+z\,\hat{\mathbf{z}}
+              }{(s^2+z^2)^{3/2}}\,ds,\\
+              k&=\frac{1}{4\pi\varepsilon_0}.
+              \end{aligned}
+              \]
+            </div>
+            <div class="concept-grid">
+              <article>
+                <h4>Componente horizontal</h4>
+                <p>
+                  \(dE_x=k\lambda\frac{s\,ds}{(s^2+z^2)^{3/2}}\) é não
+                  negativa e aponta no sentido de \(+x\).
+                </p>
+              </article>
+              <article>
+                <h4>Componente vertical</h4>
+                <p>
+                  \(dE_z=k\lambda\frac{z\,ds}{(s^2+z^2)^{3/2}}\) é positiva e
+                  aponta no sentido de \(+z\).
+                </p>
+              </article>
+            </div>
+          </section>
+
+          <section>
+            <span class="solution-step">integração em x</span>
+            <h3>Integre a componente horizontal</h3>
+            <p>
+              A derivada de \((s^2+z^2)^{-1/2}\) produz o numerador \(s\) e
+              um sinal negativo. Aplicando os limites, o termo inferior vale
+              \(1/z\), pois a hipótese \(z&gt;0\) permite escrever
+              \(\sqrt{z^2}=z\).
+            </p>
+            <div class="math-block math-display">
+              \[
+              \begin{aligned}
+              E_x
+              &=k\lambda\int_0^L
+              \frac{s\,ds}{(s^2+z^2)^{3/2}},\\
+              \int\frac{s\,ds}{(s^2+z^2)^{3/2}}
+              &=-\frac{1}{\sqrt{s^2+z^2}},\\
+              E_x
+              &=k\lambda\left[
+              -\frac{1}{\sqrt{s^2+z^2}}
+              \right]_0^L\\
+              &=k\lambda\left(
+              \frac{1}{z}-\frac{1}{\sqrt{L^2+z^2}}
+              \right).
+              \end{aligned}
+              \]
+            </div>
+            <p>
+              Como \(\sqrt{L^2+z^2}>z\), o parêntese é positivo, de acordo
+              com o sentido previsto antes da integração.
+            </p>
+          </section>
+
+          <section>
+            <span class="solution-step">integração em z</span>
+            <h3>Integre a componente vertical sem perder o fator z</h3>
+            <p>
+              Aqui \(z\) é constante, mas ele participa da primitiva. Uma
+              verificação por derivação mostra que o fator \(1/z\) precisa
+              permanecer no denominador.
+            </p>
+            <div class="math-block math-display">
+              \[
+              \begin{aligned}
+              E_z
+              &=k\lambda\int_0^L
+              \frac{z\,ds}{(s^2+z^2)^{3/2}},\\
+              \int\frac{z\,ds}{(s^2+z^2)^{3/2}}
+              &=\frac{s}{z\sqrt{s^2+z^2}},\\
+              \frac{d}{ds}\left(
+              \frac{s}{z\sqrt{s^2+z^2}}
+              \right)
+              &=\frac{z}{(s^2+z^2)^{3/2}},\\
+              E_z
+              &=k\lambda\left[
+              \frac{s}{z\sqrt{s^2+z^2}}
+              \right]_0^L\\
+              &=k\lambda\frac{L}{z\sqrt{L^2+z^2}}.
+              \end{aligned}
+              \]
+            </div>
+            <p>
+              Essa expressão também é positiva. Portanto, nenhuma das duas
+              componentes deve receber um sinal negativo ao montar o vetor.
+            </p>
+          </section>
+
+          <section>
+            <span class="solution-step">resultado</span>
+            <h3>Reúna as componentes e confira as unidades</h3>
+            <p>
+              Com os sentidos já fixados, basta associar cada módulo ao seu
+              versor. A segunda linha substitui a constante de Coulomb por sua
+              definição.
+            </p>
+            <div class="math-block math-block--result math-display">
+              \[
+              \begin{aligned}
+              \vec{E}(P)
+              &=k\lambda\left[
+              \left(
+              \frac{1}{z}-\frac{1}{\sqrt{L^2+z^2}}
+              \right)\hat{\mathbf{x}}
+              +\frac{L}{z\sqrt{L^2+z^2}}\hat{\mathbf{z}}
+              \right],\\
+              k&=\frac{1}{4\pi\varepsilon_0},\\
+              \vec{E}(P)
+              &=\frac{\lambda}{4\pi\varepsilon_0}\left[
+              \left(
+              \frac{1}{z}-\frac{1}{\sqrt{L^2+z^2}}
+              \right)\hat{\mathbf{x}}
+              +\frac{L}{z\sqrt{L^2+z^2}}\hat{\mathbf{z}}
+              \right].
+              \end{aligned}
+              \]
+            </div>
+            <p>
+              Os dois coeficientes entre colchetes têm dimensão de inverso de
+              comprimento. Logo, qualquer componente tem a unidade esperada
+              para campo elétrico.
+            </p>
+            <div class="math-block math-display">
+              \[
+              \begin{aligned}
+              [k\lambda]\frac{1}{\mathrm{m}}
+              &=\left(\frac{\mathrm{N\,m^2}}{\mathrm{C^2}}\right)
+              \left(\frac{\mathrm{C}}{\mathrm{m}}\right)
+              \frac{1}{\mathrm{m}}\\
+              &=\frac{\mathrm{N}}{\mathrm{C}}
+              =\frac{\mathrm{V}}{\mathrm{m}}.
+              \end{aligned}
+              \]
+            </div>
+          </section>
+
+          <section>
+            <span class="solution-step">forma angular</span>
+            <h3>Relacione o resultado ao ângulo da extremidade</h3>
+            <p>
+              Seja \(\alpha\) o ângulo, visto de \(P\), entre a vertical para
+              baixo e o segmento que liga \(P\) à extremidade em \(-L\).
+              Esse ângulo descreve a abertura geométrica da barra; ele não é,
+              em geral, o ângulo da resultante.
+            </p>
+            <div class="math-block math-display">
+              \[
+              \begin{aligned}
+              \tan\alpha&=\frac{L}{z},\\
+              \sin\alpha&=\frac{L}{\sqrt{L^2+z^2}},
+              &\cos\alpha&=\frac{z}{\sqrt{L^2+z^2}},\\
+              E_x&=\frac{k\lambda}{z}(1-\cos\alpha),
+              &E_z&=\frac{k\lambda}{z}\sin\alpha.
+              \end{aligned}
+              \]
+            </div>
+            <p>
+              A forma angular evidencia que aumentar \(L\) aumenta a abertura
+              subtendida pela barra e leva as duas componentes aos seus valores
+              de barra semi-infinita.
+            </p>
+          </section>
+
+          <section>
+            <span class="solution-step">testes de limite</span>
+            <h3>Faça o resultado passar por dois controles físicos</h3>
+            <div class="limit-grid">
+              <article>
+                <h4>Barra que encolhe</h4>
+                <p>
+                  Mantendo \(\lambda\) fixa e tomando \(L\to0\), a carga total
+                  \(Q=\lambda L\) desaparece. As duas componentes devem tender
+                  a zero.
+                </p>
+                <div class="math-block math-display">
+                  \[
+                  \begin{aligned}
+                  \lim_{L\to0}E_x
+                  &=k\lambda\left(\frac{1}{z}-\frac{1}{z}\right)=0,\\
+                  \lim_{L\to0}E_z
+                  &=k\lambda\frac{0}{z^2}=0,\\
+                  \lim_{L\to0}\vec{E}(P)&=\vec{0}.
+                  \end{aligned}
+                  \]
+                </div>
+              </article>
+              <article>
+                <h4>Barra semi-infinita</h4>
+                <p>
+                  Quando \(L\to\infty\), a barra ocupa todo o semieixo
+                  negativo. As componentes ficam iguais, ambas nos sentidos
+                  positivos dos eixos.
+                </p>
+                <div class="math-block math-display">
+                  \[
+                  \begin{aligned}
+                  \lim_{L\to\infty}E_x&=\frac{k\lambda}{z},\\
+                  \lim_{L\to\infty}E_z&=\frac{k\lambda}{z},\\
+                  \lim_{L\to\infty}\vec{E}(P)
+                  &=\frac{k\lambda}{z}
+                  (\hat{\mathbf{x}}+\hat{\mathbf{z}}),\\
+                  \theta_E&=\tan^{-1}\!\left(\frac{E_z}{E_x}\right)
+                  =\frac{\pi}{4}=45^\circ.
+                  \end{aligned}
+                  \]
+                </div>
+              </article>
+            </div>
+            <div class="result-callout">
+              <span>Leitura física</span>
+              <strong>
+                No limite semi-infinito, \(E_x=E_z=k\lambda/z\) e o campo
+                aponta a \(45^\circ\) no primeiro quadrante do plano \(xz\).
+              </strong>
+            </div>
+          </section>
+        </article>
+      </section>
+
+      <section class="lesson-section" id="diagrama" aria-label="Diagrama">
+        <article class="static-diagram-shell field-figure">
+          <header class="static-diagram-heading">
+            <div>
+              <p class="eyebrow">Geometria vetorial</p>
+              <h2>Da barra ao elemento de campo</h2>
+            </div>
+            <p>
+              O elemento em \(-s\) vê \(P\) pela diagonal \(\rho\). Para carga
+              positiva, \(d\vec{E}\) tem projeções nos sentidos de \(+x\) e
+              \(+z\).
+            </p>
+          </header>
+
+          <svg class="field-diagram" viewBox="0 0 1000 620" role="img" aria-labelledby="barra-finita-title barra-finita-desc">
+            <title id="barra-finita-title">Barra finita positiva, geometria do elemento de carga e decomposição do campo</title>
+            <desc id="barra-finita-desc">Uma barra uniforme positiva ocupa o eixo horizontal de menos L até zero. O ponto P está acima da extremidade em zero. Um elemento de carga está em menos s; o vetor rho liga esse elemento a P. Em P, o vetor diferencial de campo aponta para a direita e para cima, acompanhado de suas projeções horizontal e vertical. O ângulo alfa é medido entre a vertical e a linha que vai de P à extremidade esquerda.</desc>
+            <defs>
+              <marker id="rod-axis-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+                <path d="M 0 0 L 10 5 L 0 10 z" style="fill: var(--ink-soft)"></path>
+              </marker>
+              <marker id="rod-field-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+                <path d="M 0 0 L 10 5 L 0 10 z" style="fill: var(--force-1)"></path>
+              </marker>
+              <marker id="rod-component-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+                <path d="M 0 0 L 10 5 L 0 10 z" style="fill: var(--force-2)"></path>
+              </marker>
+              <marker id="rod-measure-arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                <path d="M 10 0 L 0 5 L 10 10 z" style="fill: var(--measure)"></path>
+              </marker>
+            </defs>
+
+            <rect class="field-panel" x="28" y="28" width="944" height="540" rx="8"></rect>
+            <text class="field-title" x="56" y="66">BARRA POSITIVA E PLANO xz</text>
+
+            <line class="field-axis" x1="78" y1="430" x2="915" y2="430" marker-end="url(#rod-axis-arrow)"></line>
+            <line class="field-axis" x1="600" y1="535" x2="600" y2="82" marker-end="url(#rod-axis-arrow)"></line>
+            <text class="field-label" x="913" y="412">+x</text>
+            <text class="field-label" x="618" y="90">+z</text>
+
+            <rect class="field-surface" x="145" y="414" width="455" height="32" rx="16"></rect>
+            <text class="field-label" x="208" y="436" text-anchor="middle">+</text>
+            <text class="field-label" x="290" y="436" text-anchor="middle">+</text>
+            <text class="field-label" x="372" y="436" text-anchor="middle">+</text>
+            <text class="field-label" x="454" y="436" text-anchor="middle">+</text>
+            <text class="field-label" x="536" y="436" text-anchor="middle">+</text>
+            <text class="field-note" x="145" y="394">λ uniforme e positiva</text>
+            <text class="field-label" x="137" y="474">−L</text>
+            <text class="field-label" x="594" y="474">0</text>
+
+            <circle class="field-element" cx="390" cy="430" r="10"></circle>
+            <text class="field-value field-value--warm" x="350" y="397">dq em −s</text>
+
+            <circle class="field-point" cx="600" cy="190" r="9"></circle>
+            <text class="field-label" x="618" y="178">P</text>
+
+            <line class="field-distance" x1="390" y1="430" x2="600" y2="190" marker-end="url(#rod-measure-arrow)"></line>
+            <text class="field-value field-value--warm" x="472" y="288">ρ</text>
+
+            <line class="field-guide" x1="145" y1="430" x2="600" y2="190"></line>
+            <path class="field-angle" d="M 600 253 A 63 63 0 0 1 546 223"></path>
+            <text class="field-value field-value--warm" x="551" y="259">α</text>
+
+            <line class="field-distance" x1="390" y1="505" x2="600" y2="505" marker-start="url(#rod-measure-arrow)" marker-end="url(#rod-measure-arrow)"></line>
+            <line class="field-guide" x1="390" y1="452" x2="390" y2="518"></line>
+            <line class="field-guide" x1="600" y1="452" x2="600" y2="518"></line>
+            <text class="field-value field-value--warm" x="490" y="532">s</text>
+
+            <line class="field-distance" x1="645" y1="430" x2="645" y2="190" marker-start="url(#rod-measure-arrow)" marker-end="url(#rod-measure-arrow)"></line>
+            <line class="field-guide" x1="612" y1="430" x2="658" y2="430"></line>
+            <line class="field-guide" x1="612" y1="190" x2="658" y2="190"></line>
+            <text class="field-value field-value--warm" x="662" y="316">z</text>
+
+            <line class="field-vector" x1="600" y1="190" x2="705" y2="70" marker-end="url(#rod-field-arrow)"></line>
+            <text class="field-value" x="686" y="104">dE</text>
+            <line class="field-vector field-vector--component" x1="600" y1="190" x2="705" y2="190" marker-end="url(#rod-component-arrow)"></line>
+            <text class="field-label" x="640" y="219">dEₓ</text>
+            <line class="field-vector field-vector--component" x1="600" y1="190" x2="600" y2="70" marker-end="url(#rod-component-arrow)"></line>
+            <text class="field-label" x="548" y="125">dE_z</text>
+            <line class="field-guide" x1="705" y1="190" x2="705" y2="70"></line>
+            <line class="field-guide" x1="600" y1="70" x2="705" y2="70"></line>
+
+            <text class="field-note" x="720" y="154">projeção em +x</text>
+            <text class="field-note" x="718" y="54">projeção em +z</text>
+            <text class="field-note" x="56" y="552">A linha tracejada até −L define α; a diagonal ρ parte do elemento genérico em −s.</text>
+          </svg>
+          <p class="diagram-caption field-diagram-caption">
+            <strong>Leitura do desenho</strong>
+            <span>
+              As medidas \(s\) e \(z\) formam os catetos associados ao elemento
+              genérico, enquanto \(\rho=\sqrt{s^2+z^2}\) é a separação até
+              \(P\). O ângulo \(\alpha\) usa a barra inteira, por isso
+              \(\tan\alpha=L/z\).
+            </span>
+          </p>
+        </article>
+      </section>
+    </div>
+  </main>
+
+  <div class="exercise-navigation-shell" data-exercise-navigation data-current-id="tematico-22-3-barra-finita" data-registry-url="../../simuladores.json" data-chapter-url="../capitulo-22/" data-root-path="../../" data-reference="Temático" data-chapter="22"></div>
+
+  <footer class="lesson-footer site-footer">
+    <p>Temático 3 · capítulo 22 · barra finita</p>
+    <a href="../capitulo-22/">Voltar ao capítulo 22</a>
+  </footer>
+
+  <script type="module" src="../../componentes/navegacao-principal.js"></script>
+  <script type="module" src="../../componentes/navegacao-exercicios.js"></script>
+  <script type="module" src="../exercicio-estatico.js"></script>
+</body>
+</html>

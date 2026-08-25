@@ -1,0 +1,317 @@
+.field-page .lesson-header {
+  position: relative;
+}
+
+.field-page .lesson-header::after {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: min(34vw, 25rem);
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--resultant));
+  content: "";
+}
+
+.field-page .problem-number strong {
+  font-size: clamp(1.75rem, 4vw, 2.7rem);
+}
+
+.field-page .lesson-title-row h1 {
+  overflow-wrap: anywhere;
+  hyphens: auto;
+}
+
+.field-page .problem-sheet,
+.field-page .answer-strip,
+.field-page .answer-strip strong {
+  min-width: 0;
+}
+
+.field-page .answer-strip strong {
+  max-width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding-bottom: 0.2rem;
+}
+
+.field-page .result-callout,
+.field-page .result-callout strong {
+  min-width: 0;
+}
+
+.field-page .result-callout strong {
+  display: block;
+  max-width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+:root:not([data-theme="escuro"]) .field-page {
+  --measure: #8f6000;
+  --force-1: #007780;
+  --force-2: #a65300;
+}
+
+.field-page .math-block mjx-container[display="true"] {
+  margin-block: 0.35rem;
+}
+
+.field-page .solution-article strong {
+  color: var(--ink);
+}
+
+.field-page .solution-article .result-callout strong,
+.field-page .answer-strip strong {
+  color: var(--resultant);
+}
+
+.field-figure {
+  max-width: 1080px;
+}
+
+.field-diagram {
+  display: block;
+  width: 100%;
+  height: auto;
+  background: var(--surface);
+}
+
+.field-panel {
+  fill: var(--veil);
+  stroke: var(--line);
+  stroke-width: 1.5;
+}
+
+.field-surface {
+  fill: color-mix(in srgb, var(--accent) 12%, transparent);
+  stroke: var(--accent);
+  stroke-width: 4;
+}
+
+.field-surface--negative {
+  fill: color-mix(in srgb, var(--negative) 12%, transparent);
+  stroke: var(--negative);
+}
+
+.field-object {
+  fill: none;
+  stroke: var(--accent);
+  stroke-linecap: round;
+  stroke-width: 7;
+}
+
+.field-object--negative {
+  stroke: var(--negative);
+}
+
+.field-axis {
+  fill: none;
+  stroke: var(--ink-soft);
+  stroke-linecap: round;
+  stroke-width: 2;
+}
+
+.field-axis--light {
+  stroke: var(--line-strong);
+  stroke-width: 1.5;
+}
+
+.field-guide {
+  fill: none;
+  stroke: var(--line-strong);
+  stroke-dasharray: 8 7;
+  stroke-width: 2;
+}
+
+.field-distance {
+  fill: none;
+  stroke: var(--measure);
+  stroke-width: 2.5;
+}
+
+.field-angle {
+  fill: none;
+  stroke: var(--measure);
+  stroke-width: 3;
+}
+
+.field-vector {
+  fill: none;
+  stroke: var(--force-1);
+  stroke-linecap: round;
+  stroke-width: 6;
+}
+
+.field-vector--component {
+  stroke: var(--force-2);
+  stroke-width: 4;
+}
+
+.field-vector--resultant {
+  stroke: var(--resultant);
+  stroke-width: 8;
+}
+
+.field-vector--cancelled {
+  stroke: var(--ink-soft);
+  stroke-dasharray: 7 6;
+  stroke-width: 3;
+}
+
+.field-point {
+  fill: var(--ink);
+  stroke: var(--surface);
+  stroke-width: 4;
+}
+
+.field-element {
+  fill: var(--measure);
+  stroke: var(--surface);
+  stroke-width: 3;
+}
+
+.field-charge-positive {
+  fill: var(--positive);
+  stroke: var(--surface);
+  stroke-width: 3;
+}
+
+.field-charge-negative {
+  fill: var(--negative);
+  stroke: var(--surface);
+  stroke-width: 3;
+}
+
+.field-label,
+.field-note,
+.field-title,
+.field-value {
+  fill: var(--ink);
+  font-family: var(--font-mono);
+}
+
+.field-title {
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+.field-label {
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.field-note {
+  fill: var(--ink-soft);
+  font-size: 13px;
+}
+
+.field-value {
+  fill: var(--resultant);
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.field-value--warm {
+  fill: var(--measure);
+}
+
+.field-sign {
+  fill: var(--on-accent);
+  font: 700 20px/1 var(--font-mono);
+  text-anchor: middle;
+}
+
+.field-diagram-caption {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 1rem;
+  align-items: start;
+}
+
+.field-diagram-caption strong {
+  color: var(--resultant);
+  font: 700 0.72rem/1.4 var(--font-mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.field-diagram-caption span {
+  color: var(--ink-soft);
+}
+
+.concept-grid,
+.limit-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1px;
+  margin: 1.5rem 0;
+  border: 1px solid var(--line);
+  background: var(--line);
+}
+
+.concept-grid article,
+.limit-grid article {
+  min-width: 0;
+  padding: 1.1rem 1.2rem;
+  background: var(--surface);
+}
+
+.concept-grid h4,
+.limit-grid h4 {
+  margin: 0 0 0.45rem;
+  font: 700 0.78rem/1.3 var(--font-mono);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.concept-grid p,
+.limit-grid p {
+  margin: 0;
+  font-size: 0.92rem;
+}
+
+.limit-grid article:last-child:nth-child(odd) {
+  grid-column: 1 / -1;
+}
+
+.assumption-note {
+  margin: 1.25rem 0;
+  border-left: 3px solid var(--measure);
+  background: var(--tint-warm);
+  padding: 1rem 1.2rem;
+}
+
+.assumption-note strong {
+  display: block;
+  margin-bottom: 0.25rem;
+  color: var(--measure);
+  font: 700 0.75rem/1.2 var(--font-mono);
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+.assumption-note p {
+  margin: 0;
+}
+
+@media (max-width: 720px) {
+  .field-figure {
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+  }
+
+  .field-diagram {
+    min-width: 760px;
+  }
+
+  .concept-grid,
+  .limit-grid,
+  .field-diagram-caption {
+    grid-template-columns: 1fr;
+  }
+
+  .limit-grid article:last-child:nth-child(odd) {
+    grid-column: auto;
+  }
+}

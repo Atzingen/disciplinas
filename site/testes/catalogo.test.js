@@ -22,10 +22,10 @@ const apiAvailable =
   typeof catalog.normalizeSearchText === "function" &&
   typeof catalog.filterCatalog === "function";
 
-test("catálogo expõe busca e registra os onze materiais", () => {
+test("catálogo expõe busca e registra os dezenove materiais", () => {
   assert.equal(typeof catalog.normalizeSearchText, "function");
   assert.equal(typeof catalog.filterCatalog, "function");
-  assert.equal(items.length, 11);
+  assert.equal(items.length, 19);
 });
 
 test("busca ignora acentos e caixa", { skip: !apiAvailable }, () => {
@@ -50,15 +50,20 @@ test("busca encontra livro e capítulo nas etiquetas", { skip: !apiAvailable }, 
   const byBook = catalog.filterCatalog(items, "Halliday", "todos");
   const byChapter = catalog.filterCatalog(items, "capitulo 21", "todos");
 
-  const expected = [
+  const expectedChapter21 = [
     "halliday-21-13",
     "halliday-21-18",
     "halliday-21-33",
     "halliday-21-34",
     "halliday-21-42",
   ];
-  assert.deepEqual(byBook.map((item) => item.id), expected);
-  assert.deepEqual(byChapter.map((item) => item.id), expected);
+  assert.deepEqual(byBook.map((item) => item.id), [
+    ...expectedChapter21,
+    "halliday-22-24",
+    "halliday-22-26",
+    "halliday-22-28",
+  ]);
+  assert.deepEqual(byChapter.map((item) => item.id), expectedChapter21);
 });
 
 test("escopo combina área e capítulo sem alterar a busca", { skip: !apiAvailable }, () => {
@@ -79,6 +84,22 @@ test("escopo combina área e capítulo sem alterar a busca", { skip: !apiAvailab
     "halliday-21-42",
   ]);
   assert.deepEqual(exercise18.map((item) => item.id), ["halliday-21-18"]);
+});
+
+test("capítulo 22 mantém sequências temáticas e Halliday separadas", { skip: !apiAvailable }, () => {
+  const thematic = catalog.filterCatalog(items, "", "todos", {
+    section: "exercicios",
+    chapter: 22,
+    reference: "Temático",
+  });
+  const halliday = catalog.filterCatalog(items, "", "todos", {
+    section: "exercicios",
+    chapter: 22,
+    reference: "Halliday",
+  });
+
+  assert.deepEqual(thematic.map((item) => item.exerciseNumber), [1, 2, 3, 4, 5]);
+  assert.deepEqual(halliday.map((item) => item.exerciseNumber), [24, 26, 28]);
 });
 
 test("escopo por referência exclui exercícios de outros livros", { skip: !apiAvailable }, () => {
@@ -128,6 +149,14 @@ test("filtro separa simuladores, resoluções e experimentos", { skip: !apiAvail
     "halliday-21-33",
     "halliday-21-34",
     "halliday-21-42",
+    "tematico-22-1-anel-eixo-z",
+    "tematico-22-2-segmento-anel",
+    "tematico-22-3-barra-finita",
+    "tematico-22-4-barra-infinita",
+    "tematico-22-5-disco-plano-infinito",
+    "halliday-22-24",
+    "halliday-22-26",
+    "halliday-22-28",
   ]);
   assert.deepEqual(experiments.map((item) => item.id), [
     "experimento-01-campo-corrente",
@@ -164,8 +193,8 @@ test("registro fornece os metadados que orientam cada área", () => {
     assert.ok(!item.path.includes(".."));
 
     if (item.section === "exercicios") {
-      assert.equal(item.reference, "Halliday");
-      assert.equal(item.chapter, 21);
+      assert.ok(["Halliday", "Temático"].includes(item.reference));
+      assert.ok([21, 22].includes(item.chapter));
       assert.equal(typeof item.exerciseNumber, "number");
     }
   }

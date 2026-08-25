@@ -1,0 +1,415 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Resolução do Temático 2 do capítulo 22: campo elétrico no centro de uma semicircunferência uniformemente carregada.">
+  <title>Temático 2 — Segmento de anel · Laboratório de Eletromagnetismo</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='28' fill='%237a3ce7'/%3E%3Cpath d='M18 32h28M32 18v28' stroke='white' stroke-width='6'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="../../assets/base.css">
+  <link rel="stylesheet" href="../../assets/simulador.css">
+  <link rel="stylesheet" href="../../assets/campo-eletrico.css">
+  <script>try{if(localStorage.getItem("tema")==="escuro"){document.documentElement.dataset.theme="escuro"}}catch(erro){}</script>
+</head>
+<body class="lesson-page field-page">
+  <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+
+  <div class="site-topbar" data-topbar>
+    <div class="site-topbar__inner">
+      <nav class="breadcrumb" aria-label="Navegação estrutural">
+        <a href="../../">Laboratório</a>
+        <span aria-hidden="true">/</span>
+        <a href="../">Exercícios</a>
+        <span aria-hidden="true">/</span>
+        <a href="../capitulo-22/">Campo elétrico · Capítulo 22</a>
+        <span aria-hidden="true">/</span>
+        <strong aria-current="page">Temático 2</strong>
+      </nav>
+      <div class="lesson-area-navigation" data-site-navigation data-root-path="../../" data-active-section="exercicios"></div>
+    </div>
+    <nav class="section-nav" aria-label="Seções do exercício" data-section-nav>
+      <a href="#enunciado">Enunciado</a>
+      <a href="#resolucao">Resolução</a>
+      <a href="#diagrama">Diagrama</a>
+    </nav>
+  </div>
+
+  <header class="lesson-header">
+    <div class="lesson-title-row">
+      <div>
+        <p class="eyebrow">Distribuição contínua de carga</p>
+        <h1>Segmento de anel</h1>
+      </div>
+      <p class="lesson-intro">
+        No centro da semicircunferência, a simetria elimina as componentes
+        verticais, mas faz todas as componentes horizontais apontarem para o
+        mesmo lado.
+      </p>
+    </div>
+  </header>
+
+  <main class="lesson-main" id="conteudo">
+    <div class="lesson-sections">
+
+      <section class="lesson-section" id="enunciado" aria-label="Enunciado">
+        <article class="problem-sheet">
+          <div class="problem-number">
+            <span>Temático</span>
+            <strong>22.2</strong>
+          </div>
+          <div class="problem-copy">
+            <p>
+              Uma semicircunferência fina de raio \(R\), centrada no ponto
+              \(P=(0,0)\), ocupa o semiplano \(x\geq0\). Ela possui densidade
+              linear uniforme \(\lambda&gt;0\).
+            </p>
+            <p>
+              Parametrize o arco pelo ângulo \(\theta\), medido a partir de
+              \(+x\), com
+              \(-\frac{\pi}{2}\leq\theta\leq+\frac{\pi}{2}\), e determine o
+              campo elétrico \(\vec{E}\) no centro \(P\). Escreva também o
+              resultado em função da carga total \(Q\) do arco.
+            </p>
+          </div>
+          <div class="answer-strip">
+            <span>Resultado no centro</span>
+            <strong>\(\displaystyle \vec{E}=-\frac{\lambda}{2\pi\varepsilon_0R}\,\hat{x}\)</strong>
+          </div>
+        </article>
+      </section>
+
+      <section class="lesson-section" id="resolucao" aria-label="Resolução">
+        <article class="solution-article">
+          <header class="solution-heading">
+            <p class="eyebrow">Resolução passo a passo</p>
+            <h2>Integre depois de usar a simetria</h2>
+            <p>
+              A geometria já determina o sentido do campo: para cada elemento
+              acima do eixo existe outro abaixo, enquanto todo o arco está à
+              direita de \(P\).
+            </p>
+          </header>
+
+          <section>
+            <span class="solution-step">parametrização</span>
+            <h3>Descreva o arco e o elemento de carga</h3>
+            <p>
+              Um ponto do arco tem vetor posição medido desde o centro dado por
+              \(\vec{r}_{dq}=R(\cos\theta\,\hat{x}+\sin\theta\,\hat{y})\).
+              Como o comprimento infinitesimal do arco é \(ds=R\,d\theta\), a
+              carga nele contida é proporcional a esse comprimento.
+            </p>
+            <div class="math-block math-display">
+              \[
+              \begin{aligned}
+              -\frac{\pi}{2}&\leq\theta\leq+\frac{\pi}{2},\\
+              ds&=R\,d\theta,\\
+              dq&=\lambda\,ds=\lambda R\,d\theta.
+              \end{aligned}
+              \]
+            </div>
+            <p>
+              A distância de todo \(dq\) ao ponto \(P\) é a mesma e vale
+              \(R\). Essa constância retirará o fator radial da integral.
+            </p>
+          </section>
+
+          <section>
+            <span class="solution-step">direção e sinal</span>
+            <h3>O campo aponta do elemento positivo para o centro</h3>
+            <p>
+              Para \(\lambda&gt;0\), cada \(dq\) é positivo. O campo de uma
+              carga positiva aponta para fora da carga; avaliado em \(P\), ele
+              segue de \(dq\) para \(P\). Portanto, seu versor é o oposto do
+              versor que vai do centro ao arco. É daí, antes de qualquer
+              integração, que surge o sinal negativo.
+            </p>
+            <div class="math-block math-display">
+              \[
+              \begin{aligned}
+              \hat{r}_{P\to dq}
+              &=\cos\theta\,\hat{x}+\sin\theta\,\hat{y},\\
+              \hat{r}_{dq\to P}
+              &=-\left(\cos\theta\,\hat{x}+\sin\theta\,\hat{y}\right),\\
+              d\vec{E}
+              &=\frac{1}{4\pi\varepsilon_0}\frac{dq}{R^2}\,
+                \hat{r}_{dq\to P}\\
+              &=-\frac{1}{4\pi\varepsilon_0}\frac{\lambda}{R}
+                \left(\cos\theta\,\hat{x}+\sin\theta\,\hat{y}\right)
+                d\theta.
+              \end{aligned}
+              \]
+            </div>
+            <div class="assumption-note">
+              <strong>Leitura do sinal</strong>
+              <p>
+                Como \(\cos\theta\geq0\) em todo o intervalo, cada
+                \(dE_x\) é negativo: todas as contribuições horizontais
+                apontam para \(-x\).
+              </p>
+            </div>
+          </section>
+
+          <section>
+            <span class="solution-step">simetria</span>
+            <h3>As componentes em \(y\) se cancelam por pares</h3>
+            <p>
+              Os elementos localizados em \(+\theta\) e \(-\theta\) têm a
+              mesma carga e a mesma distância até \(P\). Seus campos têm
+              módulos iguais. As componentes em \(x\) são ambas negativas,
+              enquanto as componentes em \(y\) são iguais e opostas.
+            </p>
+            <div class="math-block math-display">
+              \[
+              \begin{aligned}
+              dE_y(+\theta)
+              &=-\frac{1}{4\pi\varepsilon_0}\frac{\lambda}{R}
+                \sin\theta\,d\theta,\\
+              dE_y(-\theta)
+              &=+\frac{1}{4\pi\varepsilon_0}\frac{\lambda}{R}
+                \sin\theta\,d\theta,\\
+              dE_y(+\theta)+dE_y(-\theta)&=0.
+              \end{aligned}
+              \]
+            </div>
+            <p>
+              Equivalentemente, \(\sin\theta\) é uma função ímpar integrada
+              em limites simétricos. Logo,
+            </p>
+            <div class="math-block math-block--result math-display">
+              \[
+              \begin{aligned}
+              E_y
+              &=-\frac{1}{4\pi\varepsilon_0}\frac{\lambda}{R}
+                \int_{-\pi/2}^{+\pi/2}\sin\theta\,d\theta\\
+              &=0.
+              \end{aligned}
+              \]
+            </div>
+          </section>
+
+          <section>
+            <span class="solution-step">integração</span>
+            <h3>As componentes em \(x\) se reforçam</h3>
+            <p>
+              Defina \(k=\frac{1}{4\pi\varepsilon_0}\). A função
+              \(\cos\theta\) é par e não negativa no arco; por isso, as duas
+              metades fornecem contribuições de mesmo sinal para \(E_x\).
+            </p>
+            <div class="math-block math-display">
+              \[
+              \begin{aligned}
+              E_x
+              &=-k\frac{\lambda}{R}
+                \int_{-\pi/2}^{+\pi/2}\cos\theta\,d\theta\\
+              &=-k\frac{\lambda}{R}
+                \left[\sin\theta\right]_{-\pi/2}^{+\pi/2}\\
+              &=-2k\frac{\lambda}{R}\\
+              &=-\frac{\lambda}{2\pi\varepsilon_0R}.
+              \end{aligned}
+              \]
+            </div>
+            <p>
+              O módulo é positivo; o sinal de \(E_x\) apenas registra que o
+              sentido é para a esquerda. Com \(E_y=0\), o resultado vetorial é
+            </p>
+            <div class="result-callout">
+              <span>Campo resultante</span>
+              <strong>\(\displaystyle \vec{E}=-\frac{\lambda}{2\pi\varepsilon_0R}\,\hat{x}\)</strong>
+            </div>
+          </section>
+
+          <section>
+            <span class="solution-step">carga total</span>
+            <h3>Reescreva o resultado em função de \(Q\)</h3>
+            <p>
+              O comprimento da semicircunferência é \(\pi R\). Assim, sua
+              carga total e a densidade linear se relacionam por
+              \(Q=\lambda\pi R\), ou
+              \(\lambda=\frac{Q}{\pi R}\).
+            </p>
+            <div class="math-block math-block--result math-display">
+              \[
+              \begin{aligned}
+              Q&=\lambda\pi R,\\
+              \vec{E}
+              &=-\frac{1}{2\pi\varepsilon_0R}
+                \left(\frac{Q}{\pi R}\right)\hat{x}\\
+              &=-\frac{Q}{2\pi^2\varepsilon_0R^2}\,\hat{x}.
+              \end{aligned}
+              \]
+            </div>
+          </section>
+
+          <section>
+            <span class="solution-step">verificações</span>
+            <h3>Unidades e inversões físicas</h3>
+            <p>
+              A expressão em \(\lambda\) deve ter unidade de campo elétrico.
+              Usando as unidades SI de \(\lambda\) e \(\varepsilon_0\),
+            </p>
+            <div class="math-block math-display">
+              \[
+              \begin{aligned}
+              [\lambda]&=\frac{\mathrm{C}}{\mathrm{m}},\\
+              [\varepsilon_0]&=\frac{\mathrm{C}^2}
+                {\mathrm{N}\,\mathrm{m}^2},\\
+              \left[\frac{\lambda}{\varepsilon_0R}\right]
+              &=\frac{\mathrm{C}}{\mathrm{m}}
+                \frac{\mathrm{N}\,\mathrm{m}^2}{\mathrm{C}^2}
+                \frac{1}{\mathrm{m}}
+                =\frac{\mathrm{N}}{\mathrm{C}}.
+              \end{aligned}
+              \]
+            </div>
+            <div class="limit-grid">
+              <article>
+                <h4>Se \(\lambda&lt;0\)</h4>
+                <p>
+                  Os elementos são negativos e cada \(d\vec{E}\) se inverte.
+                  No mesmo semiplano \(x\geq0\), o campo passa a apontar para
+                  \(+x\). A fórmula mantém essa informação porque o próprio
+                  \(\lambda\) troca de sinal.
+                </p>
+              </article>
+              <article>
+                <h4>Se o arco estiver em \(x\leq0\)</h4>
+                <p>
+                  Para \(\lambda&gt;0\), todas as componentes horizontais
+                  passam a apontar para \(+x\). A componente vertical ainda se
+                  anula pela mesma simetria entre \(+\theta\) e
+                  \(-\theta\).
+                </p>
+              </article>
+            </div>
+          </section>
+        </article>
+      </section>
+
+      <section class="lesson-section" id="diagrama" aria-label="Diagrama">
+        <article class="static-diagram-shell field-figure">
+          <header class="static-diagram-heading">
+            <div>
+              <p class="eyebrow">Geometria vetorial</p>
+              <h2>O par simétrico revela o resultado</h2>
+            </div>
+            <p>
+              Compare os elementos em \(+\theta\) e \(-\theta\): suas
+              componentes verticais se anulam, e as horizontais se somam para
+              a esquerda.
+            </p>
+          </header>
+
+          <svg class="teaching-diagram field-diagram" viewBox="0 0 1040 720" role="img" aria-labelledby="segmento-anel-title segmento-anel-desc">
+            <title id="segmento-anel-title">Campo elétrico no centro de uma semicircunferência carregada</title>
+            <desc id="segmento-anel-desc">Uma semicircunferência positiva ocupa o lado direito dos eixos. Dois elementos de carga simétricos, um acima e outro abaixo do eixo x, produzem no centro campos diagonais para a esquerda. As componentes verticais são opostas e se cancelam; as componentes horizontais se somam em um campo resultante para menos x.</desc>
+            <defs>
+              <marker id="segmento-axis-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+                <path d="M 0 0 L 10 5 L 0 10 z" style="fill: var(--ink-soft)"></path>
+              </marker>
+              <marker id="segmento-field-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+                <path d="M 0 0 L 10 5 L 0 10 z" style="fill: var(--force-1)"></path>
+              </marker>
+              <marker id="segmento-component-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+                <path d="M 0 0 L 10 5 L 0 10 z" style="fill: var(--force-2)"></path>
+              </marker>
+              <marker id="segmento-cancelled-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+                <path d="M 0 0 L 10 5 L 0 10 z" style="fill: var(--ink-soft)"></path>
+              </marker>
+              <marker id="segmento-result-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+                <path d="M 0 0 L 10 5 L 0 10 z" style="fill: var(--resultant)"></path>
+              </marker>
+              <marker id="segmento-dimension" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                <path d="M 10 0 L 0 5 L 10 10 z" style="fill: var(--measure)"></path>
+              </marker>
+            </defs>
+
+            <rect class="field-panel" x="24" y="24" width="992" height="620" rx="8"></rect>
+            <text class="field-title" x="52" y="58">SEMICIRCUNFERÊNCIA NO SEMIPLANO x ≥ 0</text>
+
+            <line class="field-axis field-axis--light" x1="78" y1="350" x2="968" y2="350" marker-end="url(#segmento-axis-arrow)"></line>
+            <line class="field-axis field-axis--light" x1="560" y1="628" x2="560" y2="78" marker-end="url(#segmento-axis-arrow)"></line>
+            <text class="field-label" x="974" y="337">+x</text>
+            <text class="field-label" x="575" y="88">+y</text>
+            <text class="field-note" x="82" y="337">−x</text>
+            <text class="field-note" x="575" y="619">−y</text>
+
+            <path class="field-object" d="M 560 120 A 230 230 0 0 1 560 580"></path>
+            <text class="field-label" x="820" y="186">λ &gt; 0</text>
+            <text class="field-note" x="578" y="112">θ = +π/2</text>
+            <text class="field-note" x="803" y="340">θ = 0</text>
+            <text class="field-note" x="578" y="600">θ = −π/2</text>
+
+            <line class="field-distance" x1="560" y1="350" x2="748" y2="218" marker-start="url(#segmento-dimension)" marker-end="url(#segmento-dimension)"></line>
+            <line class="field-guide" x1="560" y1="350" x2="748" y2="482"></line>
+            <text class="field-value field-value--warm" x="665" y="264">R</text>
+
+            <path class="field-angle" d="M 630 350 A 70 70 0 0 0 617 310"></path>
+            <path class="field-angle" d="M 630 350 A 70 70 0 0 1 617 390"></path>
+            <text class="field-value field-value--warm" x="638" y="313">+θ</text>
+            <text class="field-value field-value--warm" x="638" y="402">−θ</text>
+
+            <circle class="field-charge-positive" cx="748" cy="218" r="16"></circle>
+            <text class="field-sign" x="748" y="225">+</text>
+            <text class="field-label" x="778" y="214">dq(+θ)</text>
+            <text class="field-note" x="778" y="234">elemento superior</text>
+            <circle class="field-charge-positive" cx="748" cy="482" r="16"></circle>
+            <text class="field-sign" x="748" y="489">+</text>
+            <text class="field-label" x="778" y="478">dq(−θ)</text>
+            <text class="field-note" x="778" y="498">par inferior</text>
+
+            <circle class="field-point" cx="560" cy="350" r="9"></circle>
+            <text class="field-label" x="575" y="377">P</text>
+
+            <line class="field-vector" x1="555" y1="346" x2="402" y2="239" marker-end="url(#segmento-field-arrow)"></line>
+            <line class="field-vector" x1="555" y1="354" x2="402" y2="461" marker-end="url(#segmento-field-arrow)"></line>
+            <text class="field-label" x="302" y="230">dE(−θ)</text>
+            <text class="field-label" x="302" y="482">dE(+θ)</text>
+
+            <line class="field-vector field-vector--component" x1="550" y1="332" x2="404" y2="332" marker-end="url(#segmento-component-arrow)"></line>
+            <line class="field-vector field-vector--component" x1="550" y1="368" x2="404" y2="368" marker-end="url(#segmento-component-arrow)"></line>
+            <text class="field-note" x="448" y="316">dEₓ(−θ)</text>
+            <text class="field-note" x="448" y="392">dEₓ(+θ)</text>
+
+            <line class="field-vector field-vector--cancelled" x1="402" y1="332" x2="402" y2="239" marker-end="url(#segmento-cancelled-arrow)"></line>
+            <line class="field-vector field-vector--cancelled" x1="402" y1="368" x2="402" y2="461" marker-end="url(#segmento-cancelled-arrow)"></line>
+            <text class="field-note" x="416" y="278">+dEᵧ(−θ)</text>
+            <text class="field-note" x="416" y="438">−dEᵧ(+θ)</text>
+
+            <line class="field-vector field-vector--resultant" x1="548" y1="350" x2="190" y2="350" marker-end="url(#segmento-result-arrow)"></line>
+            <text class="field-value" x="182" y="326">E = Eₓ x̂</text>
+            <text class="field-note" x="184" y="374">componentes em x somam para a esquerda</text>
+
+            <rect class="field-panel" x="52" y="660" width="936" height="42" rx="4"></rect>
+            <text class="field-label" x="76" y="687">PAR EM y:</text>
+            <text class="field-note" x="170" y="687">dEᵧ(+θ) + dEᵧ(−θ) = 0</text>
+            <text class="field-label" x="535" y="687">SOMA EM x:</text>
+            <text class="field-value" x="655" y="687">Eₓ &lt; 0</text>
+          </svg>
+
+          <p class="diagram-caption field-diagram-caption">
+            <strong>Leitura vetorial</strong>
+            <span>
+              O elemento superior produz componente vertical para baixo; seu
+              par inferior produz componente vertical para cima. As duas
+              componentes horizontais apontam para \(-x\), portanto não se
+              cancelam.
+            </span>
+          </p>
+        </article>
+      </section>
+    </div>
+  </main>
+
+  <div class="exercise-navigation-shell" data-exercise-navigation data-current-id="tematico-22-2-segmento-anel" data-registry-url="../../simuladores.json" data-chapter-url="../capitulo-22/" data-root-path="../../" data-reference="Temático" data-chapter="22"></div>
+
+  <footer class="lesson-footer site-footer">
+    <p>Temático 2 · capítulo 22 · segmento de anel</p>
+    <a href="../../">Voltar ao catálogo</a>
+  </footer>
+
+  <script type="module" src="../../componentes/navegacao-principal.js"></script>
+  <script type="module" src="../../componentes/navegacao-exercicios.js"></script>
+  <script type="module" src="../exercicio-estatico.js"></script>
+</body>
+</html>

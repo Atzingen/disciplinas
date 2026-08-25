@@ -7,6 +7,10 @@ const experimentCss = await readFile(
   new URL("../assets/experimentos.css", import.meta.url),
   "utf8",
 );
+const electricFieldCss = await readFile(
+  new URL("../assets/campo-eletrico.css", import.meta.url),
+  "utf8",
+);
 
 test("títulos das áreas permanecem dentro da largura móvel", () => {
   assert.match(
@@ -19,6 +23,21 @@ test("títulos longos dos experimentos permanecem dentro da largura móvel", () 
   assert.match(
     experimentCss,
     /@media\s*\(max-width:\s*520px\)[\s\S]*?\.experiment-hero h1\s*\{[\s\S]*?font-size:\s*clamp\(2\.6rem,\s*14vw,\s*4\.7rem\)/,
+  );
+});
+
+test("lições de campo elétrico contêm títulos e respostas largas no mobile", () => {
+  assert.match(
+    electricFieldCss,
+    /\.field-page \.lesson-title-row h1\s*\{[\s\S]*?overflow-wrap:\s*anywhere/,
+  );
+  assert.match(
+    electricFieldCss,
+    /\.field-page \.answer-strip strong\s*\{[\s\S]*?overflow-x:\s*auto/,
+  );
+  assert.match(
+    electricFieldCss,
+    /\.field-page \.result-callout strong\s*\{[\s\S]*?overflow-x:\s*auto/,
   );
 });
 
