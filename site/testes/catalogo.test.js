@@ -22,10 +22,10 @@ const apiAvailable =
   typeof catalog.normalizeSearchText === "function" &&
   typeof catalog.filterCatalog === "function";
 
-test("catálogo expõe busca e registra os dezenove materiais", () => {
+test("catálogo expõe busca e registra os vinte materiais", () => {
   assert.equal(typeof catalog.normalizeSearchText, "function");
   assert.equal(typeof catalog.filterCatalog, "function");
-  assert.equal(items.length, 19);
+  assert.equal(items.length, 20);
 });
 
 test("busca ignora acentos e caixa", { skip: !apiAvailable }, () => {
@@ -164,18 +164,23 @@ test("filtro separa simuladores, resoluções e experimentos", { skip: !apiAvail
     "experimento-03-forca-magnetica-motor",
     "experimento-04-inducao-eletromagnetica",
     "experimento-05-escada-resistores",
+    "experimento-06-cuba-eletrolitica",
   ]);
 });
 
 test("busca encontra conceitos dos novos experimentos", { skip: !apiAvailable }, () => {
   const induction = catalog.filterCatalog(items, "inducao", "todos");
   const solenoid = catalog.filterCatalog(items, "solenoide", "todos");
+  const equipotential = catalog.filterCatalog(items, "equipotenciais", "todos");
 
   assert.deepEqual(induction.map((item) => item.id), [
     "experimento-04-inducao-eletromagnetica",
   ]);
   assert.deepEqual(solenoid.map((item) => item.id), [
     "experimento-02-campo-solenoide",
+  ]);
+  assert.deepEqual(equipotential.map((item) => item.id), [
+    "experimento-06-cuba-eletrolitica",
   ]);
 });
 

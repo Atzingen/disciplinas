@@ -167,6 +167,7 @@ test("experimentos e simuladores usam a mesma barra fixa dos exercícios", async
     "experimentos/03-forca-magnetica-motor/index.html",
     "experimentos/04-inducao-eletromagnetica/index.html",
     "experimentos/05-escada-resistores/index.html",
+    "experimentos/06-cuba-eletrolitica/index.html",
     "simuladores/cargas-e-vetores/index.html",
   ];
 

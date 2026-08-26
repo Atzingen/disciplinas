@@ -46,6 +46,10 @@ test("relatório Markdown mantém hierarquia contínua na tela e na impressão",
   assert.match(experimentCss, /\.report-document--markdown\s+\.data-table-wrapper/);
   assert.match(
     experimentCss,
+    /\.report-document--markdown mjx-container\[display="true"\]\s*\{[\s\S]*?overflow-x:\s*auto/,
+  );
+  assert.match(
+    experimentCss,
     /@media\s+print[\s\S]*?\.report-document--markdown\s*>\s*h2/,
   );
   assert.match(

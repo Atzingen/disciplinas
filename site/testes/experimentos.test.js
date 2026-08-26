@@ -52,6 +52,17 @@ const experiments = [
       /\\left\(1\+\\sqrt\{3\}\\right\)R/,
     ],
   },
+  {
+    slug: "06-cuba-eletrolitica",
+    image: "exp-06-cuba-montagem.jpg",
+    imageSource: /Fotografia: acervo da disciplina/,
+    tabs: 4,
+    equations: [
+      /\\nabla\^2V\s*&=\s*0/,
+      /E_x\(i,j\)&\\approx-/,
+      /\\frac\{V_\{i\+1,j\}\+V_\{i-1,j\}\+V_\{i,j\+1\}\+V_\{i,j-1\}\}\{4\}/,
+    ],
+  },
 ];
 
 async function readExperiment(slug, filename) {
@@ -213,7 +224,7 @@ for (const experiment of experiments) {
     if (experiment.image) {
       assert.match(html, new RegExp(experiment.image.replace(".", "\\.")));
       assert.match(html, /<img\b[^>]*alt="[^"]+"/);
-      assert.match(text, /Fonte: manual AZEHEB/);
+      assert.match(text, experiment.imageSource ?? /Fonte: manual AZEHEB/);
     } else {
       assert.match(html, /<svg[^>]+role="img"[^>]+aria-labelledby=|data-escada-resistores-app/);
     }

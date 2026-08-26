@@ -54,6 +54,15 @@ O quinto roteiro é uma montagem própria em protoboard:
    [site/nucleo/escada-resistores.js](site/nucleo/escada-resistores.js) e a
    página traz um explorador interativo de degraus.
 
+O sexto roteiro retorna ao campo elétrico com outra montagem própria:
+
+6. cuba eletrolítica com três eletrodos cilíndricos em 0 V, 5 V e 10 V. Os
+   estudantes medem todos os cruzamentos de uma região quadrada da malha,
+   constroem equipotenciais, estimam \(\vec E=-\nabla V\) por diferenças
+   finitas e testam discretamente a equação de Laplace. As fotografias da
+   bancada estão em
+   [site/assets/experimentos/cuba-eletrolitica/](site/assets/experimentos/cuba-eletrolitica/).
+
 Na página de cada experimento, a aba **Relatório** contém uma folha preparada
 para impressão. O botão de impressão ativa essa aba e remove da cópia os
 controles de navegação. A mesma estrutura também está disponível em
