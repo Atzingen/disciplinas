@@ -278,6 +278,37 @@
   color: var(--resultant);
 }
 
+.cuba-simulation-link {
+  display: flex;
+  gap: 1.2rem;
+  align-items: center;
+  justify-content: space-between;
+  margin: 1rem 0;
+  padding: 1rem 1.2rem;
+  border: 1px solid var(--negative);
+  background: color-mix(in srgb, var(--negative) 7%, var(--surface));
+  border-radius: var(--radius-md);
+}
+
+.cuba-simulation-link strong {
+  color: var(--negative);
+  font-family: var(--font-display);
+}
+
+.cuba-simulation-link p {
+  max-width: 70ch;
+  margin: 0.25rem 0 0;
+  color: var(--ink-soft);
+}
+
+.cuba-simulation-link a {
+  flex: 0 0 auto;
+  border-bottom: 2px solid currentColor;
+  color: var(--negative);
+  font-weight: 700;
+  text-decoration: none;
+}
+
 .equation-flow {
   display: grid;
   gap: 0.8rem;
@@ -538,6 +569,11 @@
 
   .report-template__fields {
     grid-template-columns: 1fr;
+  }
+
+  .cuba-simulation-link {
+    align-items: flex-start;
+    flex-direction: column;
   }
 }
 

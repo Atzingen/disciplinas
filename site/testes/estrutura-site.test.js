@@ -98,10 +98,15 @@ test("os oito materiais de campo elétrico apontam para o capítulo 22", async (
   }
 });
 
-test("simulador individual mantém acesso às quatro áreas", async () => {
-  const html = await readSitePage("simuladores/cargas-e-vetores/index.html");
-  assert.match(html, /data-active-section="simulacoes"/);
-  assert.match(html, /navegacao-principal\.js/);
+test("simuladores individuais mantêm acesso às quatro áreas", async () => {
+  for (const path of [
+    "simuladores/cargas-e-vetores/index.html",
+    "simuladores/cuba-eletrolitica/index.html",
+  ]) {
+    const html = await readSitePage(path);
+    assert.match(html, /data-active-section="simulacoes"/, path);
+    assert.match(html, /navegacao-principal\.js/, path);
+  }
 });
 
 test("cada página restaura o tema escolhido antes de pintar a tela", async () => {
@@ -115,6 +120,7 @@ test("cada página restaura o tema escolhido antes de pintar a tela", async () =
     "experimentos/01-campo-corrente/index.html",
     "simuladores/index.html",
     "simuladores/cargas-e-vetores/index.html",
+    "simuladores/cuba-eletrolitica/index.html",
   ];
 
   for (const pagina of paginas) {
@@ -169,6 +175,7 @@ test("experimentos e simuladores usam a mesma barra fixa dos exercícios", async
     "experimentos/05-escada-resistores/index.html",
     "experimentos/06-cuba-eletrolitica/index.html",
     "simuladores/cargas-e-vetores/index.html",
+    "simuladores/cuba-eletrolitica/index.html",
   ];
 
   for (const pagina of paginas) {

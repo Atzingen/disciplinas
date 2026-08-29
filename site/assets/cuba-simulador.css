@@ -1,0 +1,705 @@
+.potential-page {
+  --topbar-width: 1520px;
+}
+
+.potential-hero,
+.potential-main,
+.potential-footer {
+  width: min(calc(100% - 2rem), 1520px);
+  margin-inline: auto;
+}
+
+.potential-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(310px, 0.45fr);
+  gap: clamp(2rem, 6vw, 6rem);
+  align-items: end;
+  padding: clamp(2.6rem, 7vw, 6rem) 0 3rem;
+  border-bottom: 1px solid var(--line-strong);
+}
+
+.potential-hero h1 {
+  max-width: 10ch;
+  font-size: clamp(3.2rem, 8vw, 7.2rem);
+  line-height: 0.88;
+}
+
+.potential-hero__copy p {
+  margin: 0 0 1.4rem;
+  color: var(--ink-soft);
+  font-size: 1.08rem;
+}
+
+.potential-main {
+  padding: 1.5rem 0 6rem;
+}
+
+.potential-instruction-strip {
+  margin-bottom: 1rem;
+  padding: 0.9rem 1rem;
+  border: 1px dashed var(--resultant);
+  background: var(--tint-cool);
+  border-radius: var(--radius-md);
+}
+
+.potential-instruction-strip strong {
+  color: var(--resultant);
+}
+
+.potential-lab {
+  overflow: hidden;
+  border: 1px solid var(--line-strong);
+  background: var(--surface);
+  box-shadow: var(--shadow);
+  border-radius: var(--radius-lg);
+}
+
+.potential-toolbar {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.8rem;
+  border-bottom: 1px solid var(--line-strong);
+  background: var(--paper-deep);
+}
+
+.potential-toolbar__group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.potential-button,
+.potential-text-button,
+.potential-icon-button {
+  border: 1px solid var(--line-strong);
+  background: var(--surface);
+  color: var(--ink);
+  cursor: pointer;
+  font-family: var(--font-display);
+  font-weight: 700;
+}
+
+.potential-button {
+  min-height: 43px;
+  padding: 0.58rem 0.8rem;
+  border-radius: var(--radius-sm);
+}
+
+.potential-button:hover,
+.potential-text-button:hover,
+.potential-icon-button:hover {
+  border-color: var(--resultant);
+}
+
+.potential-button:disabled,
+.potential-icon-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.45;
+}
+
+.potential-button--primary {
+  border-color: var(--resultant);
+  background: var(--resultant);
+  color: var(--on-accent);
+}
+
+.potential-button--primary:hover {
+  filter: brightness(1.08);
+}
+
+.potential-text-button {
+  border: 0;
+  background: transparent;
+  color: var(--negative);
+  padding: 0;
+  font: 700 0.72rem/1.4 var(--font-mono);
+  text-align: right;
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+.potential-icon-button {
+  display: grid;
+  width: 36px;
+  height: 36px;
+  flex: 0 0 auto;
+  place-items: center;
+  padding: 0;
+  color: var(--positive);
+  font-size: 1.45rem;
+  line-height: 1;
+  border-radius: var(--radius-pill);
+}
+
+.potential-workspace {
+  display: grid;
+  grid-template-columns: minmax(310px, 0.42fr) minmax(0, 1.58fr);
+  min-height: 720px;
+}
+
+.potential-sidebar {
+  min-width: 0;
+  border-right: 1px solid var(--line-strong);
+  background: var(--paper);
+}
+
+.potential-control-section {
+  padding: 1.15rem;
+  border-bottom: 1px solid var(--line);
+}
+
+.potential-control-section:last-child {
+  border-bottom: 0;
+}
+
+.potential-control-section h2,
+.potential-stage h2 {
+  margin: 0;
+  font-size: 1.35rem;
+  line-height: 1.15;
+}
+
+.potential-kicker {
+  margin: 0 0 0.2rem;
+  color: var(--negative);
+  font: 700 0.66rem/1.3 var(--font-mono);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.potential-control-heading {
+  display: flex;
+  gap: 0.75rem;
+  align-items: start;
+  justify-content: space-between;
+  margin-bottom: 0.9rem;
+}
+
+.potential-muted {
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: 0.9rem;
+}
+
+.electrode-list {
+  display: grid;
+  gap: 0.45rem;
+}
+
+.electrode-list__item {
+  display: grid;
+  grid-template-columns: 16px minmax(0, 1fr) auto;
+  gap: 0.65rem;
+  align-items: center;
+  width: 100%;
+  min-height: 50px;
+  padding: 0.55rem 0.65rem;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  color: var(--ink);
+  cursor: pointer;
+  text-align: left;
+  border-radius: var(--radius-sm);
+}
+
+.electrode-list__item:hover {
+  border-color: var(--line-strong);
+}
+
+.electrode-list__item[aria-pressed="true"] {
+  border-color: var(--measure);
+  box-shadow: inset 3px 0 0 var(--measure);
+}
+
+.electrode-list__swatch {
+  width: 14px;
+  height: 28px;
+  border: 1px solid var(--ink);
+  background: var(--electrode-color);
+  border-radius: var(--radius-pill);
+}
+
+.electrode-list__item strong,
+.electrode-list__item small {
+  display: block;
+}
+
+.electrode-list__item strong {
+  font: 700 0.84rem/1.2 var(--font-display);
+}
+
+.electrode-list__item small {
+  margin-top: 0.16rem;
+  color: var(--ink-soft);
+  font: 0.68rem/1.2 var(--font-mono);
+}
+
+.electrode-list__item b {
+  font: 700 0.76rem/1.2 var(--font-mono);
+}
+
+.potential-field {
+  display: grid;
+  min-width: 0;
+  gap: 0.35rem;
+  margin-top: 0.8rem;
+  color: var(--ink-soft);
+  font: 0.74rem/1.3 var(--font-mono);
+}
+
+.potential-field > span:first-child {
+  display: flex;
+  gap: 0.4rem;
+  justify-content: space-between;
+}
+
+.potential-field output {
+  color: var(--ink);
+}
+
+.potential-field input[type="number"],
+.potential-field select {
+  width: 100%;
+  min-height: 39px;
+  border: 1px solid var(--line-strong);
+  background: var(--surface);
+  color: var(--ink);
+  padding: 0.45rem 0.55rem;
+  border-radius: var(--radius-sm);
+}
+
+.potential-field input[type="range"] {
+  width: 100%;
+  accent-color: var(--resultant);
+}
+
+.potential-paired-input {
+  display: grid;
+  grid-template-columns: minmax(80px, 1fr) 72px auto;
+  gap: 0.45rem;
+  align-items: center;
+}
+
+.potential-number-unit {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 0.35rem;
+  align-items: center;
+}
+
+.potential-field-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.65rem;
+}
+
+.potential-toggle-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.4rem;
+  margin-top: 0.9rem;
+}
+
+.potential-toggle-grid label {
+  display: flex;
+  gap: 0.45rem;
+  align-items: center;
+  color: var(--ink-soft);
+  font: 0.72rem/1.3 var(--font-mono);
+}
+
+.potential-toggle-grid input {
+  accent-color: var(--resultant);
+}
+
+.potential-stage {
+  min-width: 0;
+  padding: clamp(1rem, 2.5vw, 1.6rem);
+  background: var(--surface);
+}
+
+.potential-stage__header {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.potential-status {
+  max-width: 52ch;
+  padding: 0.52rem 0.72rem;
+  border: 1px solid var(--line);
+  background: var(--paper-deep);
+  color: var(--ink-soft);
+  font: 0.72rem/1.35 var(--font-mono);
+  text-align: right;
+  border-radius: var(--radius-pill);
+}
+
+.potential-status[data-tone="running"] {
+  border-color: var(--resultant);
+  color: var(--resultant);
+}
+
+.potential-status[data-tone="success"] {
+  border-color: var(--force-3);
+  color: var(--force-3);
+}
+
+.potential-status[data-tone="error"] {
+  border-color: var(--positive);
+  color: var(--positive);
+}
+
+.potential-status[data-tone="warning"],
+.potential-status[data-tone="dirty"] {
+  border-color: var(--measure);
+  color: var(--measure);
+}
+
+.potential-canvas-shell {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 3 / 2;
+  min-height: 360px;
+  border: 1px solid var(--line-strong);
+  background: var(--surface);
+  border-radius: var(--radius-md);
+}
+
+.potential-canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  cursor: crosshair;
+  touch-action: none;
+}
+
+.potential-canvas:active {
+  cursor: grabbing;
+}
+
+.potential-probe,
+.potential-canvas-help {
+  position: absolute;
+  z-index: 2;
+  max-width: calc(100% - 1.5rem);
+  border: 1px solid var(--line-strong);
+  background: var(--veil);
+  color: var(--ink);
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(8px);
+  border-radius: var(--radius-sm);
+  pointer-events: none;
+}
+
+.potential-probe {
+  top: 0.75rem;
+  right: 0.75rem;
+  display: grid;
+  gap: 0.1rem;
+  padding: 0.55rem 0.7rem;
+  font: 0.7rem/1.35 var(--font-mono);
+}
+
+.potential-probe[hidden] {
+  display: none;
+}
+
+.potential-probe strong {
+  color: var(--resultant);
+}
+
+.potential-canvas-help {
+  right: 0.75rem;
+  bottom: 0.75rem;
+  padding: 0.36rem 0.55rem;
+  color: var(--ink-soft);
+  font: 0.62rem/1.3 var(--font-mono);
+}
+
+.potential-legend {
+  display: grid;
+  grid-template-columns: auto minmax(100px, 1fr) auto;
+  gap: 0.7rem;
+  align-items: center;
+  margin-top: 0.8rem;
+  color: var(--ink-soft);
+  font: 0.68rem/1.3 var(--font-mono);
+}
+
+.potential-legend__gradient {
+  height: 10px;
+  border: 1px solid var(--line-strong);
+  background: linear-gradient(90deg, #144170, #3687af, #eef3f7, #f1ab47, #cd432f);
+  border-radius: var(--radius-pill);
+}
+
+.potential-metrics {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.55rem;
+  margin-top: 0.9rem;
+}
+
+.potential-metrics > div {
+  min-width: 0;
+  padding: 0.6rem 0.7rem;
+  border: 1px solid var(--line);
+  background: var(--paper-deep);
+  border-radius: var(--radius-sm);
+}
+
+.potential-metrics span,
+.potential-metrics strong {
+  display: block;
+}
+
+.potential-metrics span {
+  color: var(--ink-soft);
+  font: 0.62rem/1.3 var(--font-mono);
+  text-transform: uppercase;
+}
+
+.potential-metrics strong {
+  overflow: hidden;
+  margin-top: 0.2rem;
+  font: 700 0.76rem/1.3 var(--font-mono);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.potential-progress {
+  display: block;
+  width: 100%;
+  height: 7px;
+  margin-top: 0.55rem;
+  border: 0;
+  accent-color: var(--resultant);
+}
+
+.potential-progress::-webkit-progress-bar {
+  background: var(--paper-deep);
+  border-radius: var(--radius-pill);
+}
+
+.potential-progress::-webkit-progress-value {
+  background: var(--resultant);
+  border-radius: var(--radius-pill);
+}
+
+.potential-method-intro {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(300px, 0.55fr);
+  gap: clamp(2rem, 6vw, 5rem);
+  align-items: end;
+  margin: 1rem 0 2rem;
+}
+
+.potential-method-intro h2 {
+  max-width: 14ch;
+  margin: 0;
+  font-size: clamp(2.5rem, 6vw, 5rem);
+  line-height: 0.95;
+}
+
+.potential-method-intro > p {
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: 1.08rem;
+}
+
+.potential-method-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.potential-method-card {
+  position: relative;
+  overflow: hidden;
+  min-width: 0;
+  padding: clamp(1.3rem, 3vw, 2rem);
+  border: 1px solid var(--line);
+  background: var(--surface);
+  border-radius: var(--radius-lg);
+}
+
+.potential-method-card__number {
+  color: var(--negative);
+  font: 700 0.72rem/1 var(--font-mono);
+}
+
+.potential-method-card h3 {
+  margin: 0.6rem 0 0.7rem;
+  font-size: 1.55rem;
+}
+
+.potential-method-card p {
+  color: var(--ink-soft);
+}
+
+.potential-equation {
+  overflow-x: auto;
+  padding: 0.85rem 0.95rem;
+  border-left: 4px solid var(--resultant);
+  background: var(--paper-deep);
+  font: 700 clamp(0.78rem, 1.6vw, 0.96rem)/1.7 var(--font-mono);
+  white-space: nowrap;
+}
+
+.potential-model-note {
+  margin-top: 1rem;
+  padding: 1.1rem 1.25rem;
+  border: 1px solid var(--measure);
+  background: var(--tint-warm);
+  border-radius: var(--radius-md);
+}
+
+.potential-model-note strong {
+  color: var(--measure);
+  font: 700 0.78rem/1.3 var(--font-mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.potential-model-note p {
+  margin: 0.35rem 0 0;
+}
+
+.potential-footer {
+  border-top: 1px solid var(--line-strong);
+}
+
+@media (max-width: 1180px) {
+  .potential-workspace {
+    grid-template-columns: 1fr;
+  }
+
+  .potential-stage {
+    order: -1;
+    border-bottom: 1px solid var(--line-strong);
+  }
+
+  .potential-sidebar {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    border-right: 0;
+  }
+
+  .potential-control-section {
+    border-right: 1px solid var(--line);
+    border-bottom: 0;
+  }
+
+  .potential-control-section:last-child {
+    border-right: 0;
+  }
+}
+
+@media (max-width: 860px) {
+  .potential-hero,
+  .potential-method-intro {
+    grid-template-columns: 1fr;
+  }
+
+  .potential-hero h1 {
+    max-width: 100%;
+  }
+
+  .potential-toolbar,
+  .potential-stage__header {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .potential-status {
+    max-width: none;
+    text-align: left;
+    border-radius: var(--radius-sm);
+  }
+
+  .potential-sidebar {
+    grid-template-columns: 1fr;
+  }
+
+  .potential-control-section {
+    border-right: 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .potential-method-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .potential-hero,
+  .potential-main,
+  .potential-footer {
+    width: min(calc(100% - 1rem), 1520px);
+  }
+
+  .potential-hero {
+    padding-top: 2.4rem;
+  }
+
+  .potential-hero h1 {
+    overflow-wrap: anywhere;
+    font-size: clamp(2.8rem, 16vw, 4.8rem);
+  }
+
+  .potential-toolbar__group,
+  .potential-button {
+    width: 100%;
+  }
+
+  .potential-toolbar__group--calculation {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .potential-toolbar__group--calculation .potential-button--primary {
+    grid-column: 1 / -1;
+  }
+
+  .potential-stage {
+    padding: 0.65rem;
+  }
+
+  .potential-canvas-shell {
+    min-height: 0;
+  }
+
+  .potential-canvas-help {
+    display: none;
+  }
+
+  .potential-metrics {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .potential-field-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .potential-paired-input {
+    grid-template-columns: 1fr 68px auto;
+  }
+
+  .potential-probe {
+    right: 0.4rem;
+    top: 0.4rem;
+    font-size: 0.58rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .potential-button,
+  .electrode-list__item {
+    transition: none;
+  }
+}

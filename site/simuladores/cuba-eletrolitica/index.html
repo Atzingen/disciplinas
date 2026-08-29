@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta
+    name="description"
+    content="Simulador bidimensional da cuba eletrolítica com eletrodos cilíndricos e retangulares, potenciais ajustáveis e relaxação de Gauss–Seidel executada em JavaScript."
+  >
+  <title>Potencial na cuba · Simulação de Gauss–Seidel</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect x='6' y='6' width='52' height='52' rx='10' fill='%23246bce'/%3E%3Cpath d='M16 20h32M16 32h32M16 44h32M20 16v32M32 16v32M44 16v32' stroke='white' stroke-width='2' opacity='.8'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="../../assets/base.css">
+  <link rel="stylesheet" href="../../assets/simulador.css">
+  <link rel="stylesheet" href="../../assets/cuba-simulador.css">
+  <script>try{if(localStorage.getItem("tema")==="escuro"){document.documentElement.dataset.theme="escuro"}}catch(erro){}</script>
+</head>
+<body class="lesson-page potential-page">
+  <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+
+  <div class="page-shell" data-tabs>
+    <div class="site-topbar" data-topbar>
+      <div class="site-topbar__inner">
+        <nav class="breadcrumb" aria-label="Navegação estrutural">
+          <a href="../../">Laboratório</a>
+          <span aria-hidden="true">/</span>
+          <a href="../">Simulações</a>
+          <span aria-hidden="true">/</span>
+          <strong>Potencial na cuba</strong>
+        </nav>
+        <div class="lesson-area-navigation" data-site-navigation data-root-path="../../" data-active-section="simulacoes"></div>
+      </div>
+      <div class="tab-list" role="tablist" aria-label="Conteúdo da simulação">
+        <button
+          class="tab-button"
+          id="tab-simulacao"
+          type="button"
+          role="tab"
+          aria-selected="true"
+          aria-controls="painel-simulacao"
+        >Simulação</button>
+        <button
+          class="tab-button"
+          id="tab-metodo"
+          type="button"
+          role="tab"
+          aria-selected="false"
+          aria-controls="painel-metodo"
+          tabindex="-1"
+        >Método numérico</button>
+      </div>
+    </div>
+
+    <header class="potential-hero">
+      <div>
+        <p class="eyebrow">Laboratório virtual · Experimento 06</p>
+        <h1>Potencial na cuba</h1>
+      </div>
+      <div class="potential-hero__copy">
+        <p>
+          Construa eletrodos, imponha seus potenciais e acompanhe o método de
+          Gauss–Seidel propagar as condições de contorno pela solução até que
+          o mapa satisfaça a equação de Laplace.
+        </p>
+        <a class="text-link" href="../../experimentos/06-cuba-eletrolitica/">
+          Abrir o roteiro da cuba <span aria-hidden="true">→</span>
+        </a>
+      </div>
+    </header>
+
+    <main class="potential-main" id="conteudo">
+      <section
+        class="tab-panel"
+        id="painel-simulacao"
+        role="tabpanel"
+        aria-labelledby="tab-simulacao"
+      >
+        <div class="potential-instruction-strip">
+          <strong>Experimente:</strong>
+          arraste os três cilindros do preset, altere 0 V, 5 V e 10 V ou
+          adicione novas formas. Cada alteração invalida o mapa anterior;
+          pressione <em>Calcular potencial</em> para iniciar outra relaxação.
+        </div>
+        <div data-cuba-potential-simulator></div>
+      </section>
+
+      <section
+        class="tab-panel"
+        id="painel-metodo"
+        role="tabpanel"
+        aria-labelledby="tab-metodo"
+        hidden
+      >
+        <div class="potential-method-intro">
+          <div>
+            <p class="eyebrow">Do experimento para a malha</p>
+            <h2>Poisson sem fontes livres vira Laplace.</h2>
+          </div>
+          <p>
+            No volume condutor, em regime estacionário e longe da interface
+            dos eletrodos, não colocamos uma densidade volumétrica de carga.
+            Assim, a equação de Poisson reduz-se a <strong>∇²V = 0</strong>.
+            Os metais entram como pontos de potencial conhecido, isto é,
+            condições de Dirichlet.
+          </p>
+        </div>
+
+        <div class="potential-method-grid">
+          <article class="potential-method-card">
+            <span class="potential-method-card__number">01</span>
+            <h3>Discretização</h3>
+            <p>
+              A cuba é dividida em uma malha retangular. Em cada nó que não
+              pertence a um eletrodo, o potencial deve ser igual à média dos
+              quatro vizinhos.
+            </p>
+            <div class="potential-equation" aria-label="Potencial no nó igual à média dos quatro vizinhos">
+              V<sub>i,j</sub> = ¼(V<sub>i−1,j</sub> + V<sub>i+1,j</sub> + V<sub>i,j−1</sub> + V<sub>i,j+1</sub>)
+            </div>
+          </article>
+
+          <article class="potential-method-card">
+            <span class="potential-method-card__number">02</span>
+            <h3>Gauss–Seidel e SOR</h3>
+            <p>
+              A varredura usa imediatamente cada valor recém-calculado. Com
+              ω = 1 temos Gauss–Seidel puro. Valores 1 &lt; ω &lt; 2 aplicam
+              sobrerrelaxação sucessiva, acelerando a mesma convergência.
+            </p>
+            <div class="potential-equation" aria-label="Atualização com fator de relaxação">
+              V<sup>novo</sup> = V<sup>antigo</sup> + ω(V<sup>GS</sup> − V<sup>antigo</sup>)
+            </div>
+          </article>
+
+          <article class="potential-method-card">
+            <span class="potential-method-card__number">03</span>
+            <h3>Fronteiras físicas</h3>
+            <p>
+              Os eletrodos permanecem fixos durante todas as varreduras. As
+              paredes acrílicas são tratadas como isolantes: a derivada normal
+              do potencial é nula, equivalente a não haver corrente atravessando
+              a borda.
+            </p>
+            <div class="potential-equation" aria-label="Derivada normal do potencial igual a zero">
+              ∂V/∂n = 0 na parede da cuba
+            </div>
+          </article>
+
+          <article class="potential-method-card">
+            <span class="potential-method-card__number">04</span>
+            <h3>Critério de parada</h3>
+            <p>
+              O botão continua iterando enquanto a maior alteração de um nó
+              superar a tolerância escolhida. O mapa, as equipotenciais, a
+              iteração e Δmáx são atualizados a cada quadro do navegador.
+            </p>
+            <div class="potential-equation" aria-label="Critério de convergência">
+              max |V<sup>novo</sup> − V<sup>antigo</sup>| ≤ tolerância
+            </div>
+          </article>
+        </div>
+
+        <aside class="potential-model-note">
+          <strong>O que o modelo não inclui</strong>
+          <p>
+            A simulação é bidimensional, homogênea e quase-estática. Ela não
+            representa profundidade variável, polarização, bolhas, reações nos
+            eletrodos, resistência dos contatos ou deriva das fontes. Essas
+            diferenças são justamente parte da comparação entre o mapa
+            numérico e a varredura real.
+          </p>
+        </aside>
+      </section>
+    </main>
+
+    <footer class="potential-footer site-footer">
+      <p>Simulação da cuba eletrolítica · cálculo executado localmente em JavaScript</p>
+      <a href="../">Voltar às simulações</a>
+    </footer>
+
+    <script type="module" src="../../componentes/navegacao-principal.js"></script>
+    <script type="module" src="./app.js"></script>
+  </div>
+</body>
+</html>

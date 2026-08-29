@@ -63,6 +63,12 @@ O sexto roteiro retorna ao campo elétrico com outra montagem própria:
    bancada estão em
    [site/assets/experimentos/cuba-eletrolitica/](site/assets/experimentos/cuba-eletrolitica/).
 
+O roteiro possui um laboratório virtual complementar em
+[site/simuladores/cuba-eletrolitica/](site/simuladores/cuba-eletrolitica/).
+Nele, cilindros e retângulos móveis funcionam como condições de potencial
+fixo, enquanto uma malha resolvida por Gauss–Seidel/SOR mostra a convergência
+do mapa e das equipotenciais inteiramente no navegador.
+
 Na página de cada experimento, a aba **Relatório** contém uma folha preparada
 para impressão. O botão de impressão ativa essa aba e remove da cópia os
 controles de navegação. A mesma estrutura também está disponível em
@@ -110,3 +116,4 @@ O exercício que iniciou o projeto permanece em:
 - [Índice de experimentos](site/experimentos/)
 - [Índice de simulações](site/simuladores/)
 - [Simulador de cargas e vetores](site/simuladores/cargas-e-vetores/)
+- [Simulador do potencial na cuba](site/simuladores/cuba-eletrolitica/)

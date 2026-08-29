@@ -22,10 +22,10 @@ const apiAvailable =
   typeof catalog.normalizeSearchText === "function" &&
   typeof catalog.filterCatalog === "function";
 
-test("catálogo expõe busca e registra os vinte materiais", () => {
+test("catálogo expõe busca e registra os vinte e um materiais", () => {
   assert.equal(typeof catalog.normalizeSearchText, "function");
   assert.equal(typeof catalog.filterCatalog, "function");
-  assert.equal(items.length, 20);
+  assert.equal(items.length, 21);
 });
 
 test("busca ignora acentos e caixa", { skip: !apiAvailable }, () => {
@@ -142,7 +142,10 @@ test("filtro separa simuladores, resoluções e experimentos", { skip: !apiAvail
     section: "experimentos",
   });
 
-  assert.deepEqual(simulations.map((item) => item.id), ["cargas-e-vetores"]);
+  assert.deepEqual(simulations.map((item) => item.id), [
+    "cargas-e-vetores",
+    "cuba-eletrolitica-potencial",
+  ]);
   assert.deepEqual(solutions.map((item) => item.id), [
     "halliday-21-13",
     "halliday-21-18",
@@ -180,6 +183,7 @@ test("busca encontra conceitos dos novos experimentos", { skip: !apiAvailable },
     "experimento-02-campo-solenoide",
   ]);
   assert.deepEqual(equipotential.map((item) => item.id), [
+    "cuba-eletrolitica-potencial",
     "experimento-06-cuba-eletrolitica",
   ]);
 });

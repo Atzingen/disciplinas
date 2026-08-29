@@ -10,6 +10,16 @@
     "tags": ["força", "Coulomb", "vetores", "produto escalar", "simulação"]
   },
   {
+    "id": "cuba-eletrolitica-potencial",
+    "title": "Potencial na cuba eletrolítica",
+    "kind": "simulador",
+    "section": "simulacoes",
+    "theme": "Equação de Laplace e relaxação numérica",
+    "description": "Adicione cilindros e retângulos com potenciais fixos, mova os eletrodos e acompanhe Gauss–Seidel construir o mapa e as equipotenciais.",
+    "path": "simuladores/cuba-eletrolitica/",
+    "tags": ["cuba eletrolítica", "potencial", "Laplace", "Poisson", "Gauss-Seidel", "SOR", "equipotenciais", "método numérico"]
+  },
+  {
     "id": "halliday-21-13",
     "title": "Halliday — capítulo 21 — exercício 13",
     "kind": "resolucao",
