@@ -1,0 +1,570 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta
+    name="description"
+    content="Template didático de relatório acadêmico preenchido, com dados experimentais fictícios e estrutura de exemplo para os alunos."
+  >
+  <title>Template de relatório preenchido · Experimentos</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect x='8' y='26' width='48' height='12' rx='5' fill='%23b6412e'/%3E%3Cpath d='M4 32h12M48 32h12' stroke='%231a1a1a' stroke-width='4'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="../../assets/base.css">
+  <link rel="stylesheet" href="../../assets/relatorio-exemplo.css">
+</head>
+<body class="report-preview">
+  <a class="skip-link" href="#relatorio">Pular para o relatório</a>
+
+  <header class="report-toolbar" aria-label="Controles da prévia">
+    <div class="report-toolbar__inner">
+      <a class="report-toolbar__back" href="../">
+        <span aria-hidden="true">←</span> Experimentos
+      </a>
+      <div class="report-toolbar__title">
+        <strong>Template de relatório preenchido</strong>
+        <span>8 páginas A4 · todos os dados experimentais são fictícios</span>
+      </div>
+      <button class="report-toolbar__print" type="button" data-print-example>
+        Imprimir ou salvar em PDF
+      </button>
+    </div>
+    <p class="report-toolbar__standards">
+      Estrutura NBR 10719:2015; apresentação NBR 14724:2024; citações
+      NBR 10520:2023; referências NBR 6023:2025.
+    </p>
+  </header>
+
+  <main class="report-stack" id="relatorio" aria-label="Template didático de relatório em oito páginas">
+    <section class="report-page report-cover" aria-label="Página 1 — Capa">
+      <div class="report-cover__institution">
+        <strong>INSTITUTO FEDERAL DE EDUCAÇÃO, CIÊNCIA E TECNOLOGIA DE SÃO PAULO</strong>
+        <span>CÂMPUS PIRACICABA</span>
+        <span>DISCIPLINA DE FÍSICA III</span>
+      </div>
+
+      <div class="report-cover__authors">
+        <span>ALUNO 1</span>
+        <span>ALUNO 2</span>
+        <span>ALUNO 3</span>
+      </div>
+
+      <div class="report-cover__title">
+        <h1>ANÁLISE DA CONVERGÊNCIA EM UMA ESCADA DE RESISTORES</h1>
+        <p>montagem experimental do “varal” com três degraus</p>
+      </div>
+
+      <p class="report-cover__warning">
+        RELATÓRIO-MODELO · DADOS EXPERIMENTAIS SIMULADOS
+      </p>
+
+      <div class="report-cover__place">
+        <span>PIRACICABA</span>
+        <span>2026</span>
+      </div>
+    </section>
+
+    <section class="report-page report-front-matter" aria-label="Página 2 — Resumo e sumário">
+      <h2 class="report-heading report-heading--unnumbered">RESUMO</h2>
+      <p class="report-abstract">
+        As associações de resistores em série e em paralelo permitem construir
+        redes cuja resistência equivalente depende não apenas dos componentes,
+        mas também da forma como eles são conectados. Neste trabalho, estudou-se
+        uma rede em escada, conhecida como “varal” de resistores, com o propósito
+        de relacionar sua montagem física ao modelo de circuitos de corrente
+        contínua e investigar a convergência de sua resistência de entrada. O
+        procedimento envolveu o reconhecimento dos instrumentos, a medição dos
+        componentes, a montagem progressiva dos degraus e a comparação entre as
+        previsões teóricas e as leituras obtidas. Os resultados acompanharam a
+        tendência prevista e mostraram rápida aproximação ao limite da escada
+        infinita. A discussão indicou que as pequenas diferenças observadas são
+        compatíveis com a incerteza instrumental, a tolerância dos resistores e
+        as resistências parasitas das conexões. Concluiu-se que a quantidade de
+        degraus montada é suficiente para observar a convergência na resolução
+        disponível, sem que isso signifique igualdade exata entre uma rede finita
+        e seu limite matemático.
+      </p>
+      <p class="report-keywords no-indent">
+        <strong>Palavras-chave:</strong> resistência equivalente; associação de
+        resistores; rede em escada; autossemelhança; incerteza de medição.
+      </p>
+
+      <h2 class="report-heading report-heading--unnumbered report-summary-title">SUMÁRIO</h2>
+      <nav class="report-toc" aria-label="Sumário do relatório">
+        <ol>
+          <li><a href="#introducao"><span>1 INTRODUÇÃO</span><span class="report-toc__dots"></span><span>3</span></a></li>
+          <li><a href="#objetivos"><span>2 OBJETIVOS</span><span class="report-toc__dots"></span><span>4</span></a></li>
+          <li><a href="#referencial-teorico"><span>3 REFERENCIAL TEÓRICO</span><span class="report-toc__dots"></span><span>4</span></a></li>
+          <li><a href="#materiais-metodos"><span>4 MATERIAIS E MÉTODOS</span><span class="report-toc__dots"></span><span>6</span></a></li>
+          <li><a href="#resultados"><span>5 RESULTADOS</span><span class="report-toc__dots"></span><span>7</span></a></li>
+          <li><a href="#discussao"><span>6 DISCUSSÃO</span><span class="report-toc__dots"></span><span>8</span></a></li>
+          <li><a href="#conclusao"><span>7 CONCLUSÃO</span><span class="report-toc__dots"></span><span>8</span></a></li>
+          <li><a href="#referencias"><span>REFERÊNCIAS</span><span class="report-toc__dots"></span><span>8</span></a></li>
+        </ol>
+      </nav>
+
+      <aside class="report-model-note" aria-label="Nota didática">
+        <strong>Nota didática.</strong> Este documento mostra aos alunos a
+        estrutura, a organização visual e o nível de detalhamento esperados. O
+        varal é apenas o tema do exemplo; todos os dados experimentais são
+        fictícios e devem ser substituídos pelas observações reais do grupo.
+      </aside>
+      <div class="report-fictitious-mark">Exemplo didático · dados fictícios</div>
+    </section>
+
+    <section class="report-page report-page--introduction" id="introducao" aria-label="Página 3 — Introdução">
+      <span class="report-page-number" aria-label="Página 3">3</span>
+      <h2 class="report-heading">1 INTRODUÇÃO</h2>
+
+      <h3 class="report-subheading report-subheading--continued">1.1 Resistência elétrica e associações</h3>
+      <p>
+        A corrente elétrica corresponde ao movimento orientado de cargas. Quando
+        se estabelece uma diferença de potencial entre dois pontos de um
+        condutor, o campo elétrico transfere energia às cargas, enquanto as
+        interações com o material dificultam seu movimento e dissipam energia,
+        principalmente na forma de calor. A resistência elétrica quantifica essa
+        oposição: para um elemento ôhmico, \(R=V/I\), em ohms (Ω). Ela depende do
+        material e da geometria, \(R=\rho L/A\), e a potência dissipada pode ser
+        escrita como \(P=VI=I^2R=V^2/R\) (Halliday; Resnick; Walker, 2023).
+      </p>
+
+      <p>
+        Em uma associação em série há somente um caminho para a corrente. A mesma
+        corrente atravessa todos os elementos e as quedas de potencial se somam;
+        pela lei das malhas, \(V=I(R_1+R_2+\cdots)\). Portanto,
+        \(R_\mathrm{eq}=R_1+R_2+\cdots\): acrescentar um resistor em série aumenta
+        a resistência equivalente e reduz a corrente para uma tensão fixa.
+      </p>
+
+      <p>
+        Em paralelo, os terminais de cada ramo compartilham a mesma tensão, mas a
+        corrente se divide. Pela lei dos nós, as correntes dos ramos se somam e
+        \(1/R_\mathrm{eq}=1/R_1+1/R_2+\cdots\). Um novo ramo oferece outro caminho,
+        aumenta a condutância total e diminui a resistência equivalente, que é
+        sempre menor que a menor resistência individual (Ling; Moebs; Sanny, 2016).
+      </p>
+
+      <h3 class="report-subheading">1.2 Resistores como componentes</h3>
+      <p>
+        O resistor é o componente fabricado para fornecer uma resistência
+        especificada. Modelos axiais de filme de carbono ou de metal possuem dois
+        terminais e são adequados à protoboard: cada terminal deve entrar em um
+        grupo elétrico diferente, sem encostar em outro terminal. As faixas de
+        cores informam valor nominal e tolerância; a folha de dados também informa
+        potência máxima e coeficiente de temperatura. Antes da montagem, convém
+        conferir o código e medir cada unidade com o circuito desenergizado.
+      </p>
+
+      <p>
+        A construção define a aplicação. Resistores de filme metálico oferecem
+        tolerâncias estreitas e boa estabilidade; os de fio enrolado e os
+        encapsulados em alumínio suportam potências maiores; os SMD ocupam pouca
+        área e são soldados diretamente à placa. A escolha deve considerar
+        resistência, tolerância, potência, temperatura e encapsulamento — não
+        apenas o número impresso ou as cores (Vishay, [s. d.]a; Vishay, [s. d.]b;
+        Vishay, [s. d.]c).
+      </p>
+
+      <div class="report-fictitious-mark">Exemplo didático · dados fictícios</div>
+    </section>
+
+    <section class="report-page report-page--theory-diagram" aria-label="Página 4 — Objetivos e referencial teórico">
+      <span class="report-page-number" aria-label="Página 4">4</span>
+      <figure class="report-figure report-component-figure report-component-figure--continued">
+        <figcaption><strong>Figura 1 —</strong> Exemplos de resistores comerciais</figcaption>
+        <div class="report-component-gallery">
+          <div>
+            <img src="../../assets/img/relatorio-exemplo/resistores-axiais-evan-amos.jpg" alt="Resistores axiais com faixas de cores sobre fundo branco">
+            <span>(a) Axiais para montagem através de furos.</span>
+          </div>
+          <div>
+            <img src="../../assets/img/relatorio-exemplo/resistores-potencia-harke.jpg" alt="Resistores de potência com encapsulamento de alumínio">
+            <span>(b) Resistores de potência em alumínio.</span>
+          </div>
+          <div>
+            <img src="../../assets/img/relatorio-exemplo/resistor-smd-oomlout.jpg" alt="Resistor SMD 1206 ampliado sobre uma régua milimetrada">
+            <span>(c) Resistor SMD no encapsulamento 1206.</span>
+          </div>
+        </div>
+        <p class="report-source no-indent">
+          Fontes: (a) <a href="https://commons.wikimedia.org/wiki/File:Electronic-Axial-Lead-Resistors-Array.jpg">Evan-Amos</a>, domínio público;
+          (b) <a href="https://commons.wikimedia.org/wiki/File:Arcol_High_Power_Resistor.jpg">Harke</a>, CC BY-SA 3.0;
+          (c) <a href="https://commons.wikimedia.org/wiki/File:100_ohm_SMD_1206_resistor.jpg">oomlout</a>, CC BY-SA 2.0 — via Wikimedia Commons. Acesso em: 1 set. 2026.
+        </p>
+      </figure>
+
+      <h2 class="report-heading report-heading--compact" id="objetivos">2 OBJETIVOS</h2>
+      <p>
+        Este trabalho teve como objetivos investigar a convergência da resistência
+        de entrada do varal para o limite teórico da escada infinita e familiarizar
+        os estudantes com os componentes e
+        instrumentos de circuitos de corrente contínua — fonte, multímetro,
+        resistores, jumpers e protoboard. Buscou-se ainda reconhecer conexões e
+        funções de medição, montar a rede progressivamente, comparar teoria e
+        experimento e avaliar quantos degraus permitem observar a convergência.
+      </p>
+
+      <h2 class="report-heading report-heading--compact" id="referencial-teorico">3 REFERENCIAL TEÓRICO</h2>
+
+      <h3 class="report-subheading report-subheading--continued">3.1 Montagem e leitura do “varal”</h3>
+      <p>
+        O varal é uma rede em escada com dois ramos horizontais unidos por
+        resistores verticais. Na Figura 2, cada degrau contém dois resistores
+        horizontais e o resistor vertical seguinte, todos de resistência \(R\).
+        A e B são os terminais de entrada, entre os quais se mede \(R_{AB}\).
+      </p>
+
+      <p>
+        Na protoboard, a montagem avança da esquerda para a direita sobre duas
+        sequências de grupos de contatos separados. Os resistores horizontais
+        ligam grupos consecutivos, e cada resistor vertical une os nós superior e
+        inferior do mesmo degrau. Cada nó físico deve ser conferido com o esquema;
+        durante a medição de resistência, a fonte fica desligada e desconectada.
+      </p>
+
+      <figure class="report-figure report-circuit-figure report-circuit-figure--theory">
+        <figcaption><strong>Figura 2 —</strong> Organização do varal e separação do primeiro degrau</figcaption>
+        <svg viewBox="0 0 720 285" role="img" aria-labelledby="ladder-title ladder-desc">
+          <title id="ladder-title">Varal de quatro degraus entre os terminais A e B</title>
+          <desc id="ladder-desc">O primeiro degrau está destacado e contém dois resistores de entrada e um vertical. Uma caixa tracejada identifica os três degraus restantes como uma escada equivalente a R subscrito N menos 1.</desc>
+          <rect class="circuit-remainder" x="174" y="26" width="410" height="218" rx="10"></rect>
+          <text class="circuit-remainder-label" x="379" y="18">escada restante ≡ R<tspan baseline-shift="sub" font-size="12">N−1</tspan></text>
+          <g class="circuit-wires">
+            <line x1="38" y1="62" x2="60" y2="62"></line><line x1="140" y1="62" x2="190" y2="62"></line>
+            <line x1="270" y1="62" x2="320" y2="62"></line><line x1="400" y1="62" x2="450" y2="62"></line><line x1="530" y1="62" x2="555" y2="62"></line>
+            <line x1="38" y1="192" x2="60" y2="192"></line><line x1="140" y1="192" x2="190" y2="192"></line>
+            <line x1="270" y1="192" x2="320" y2="192"></line><line x1="400" y1="192" x2="450" y2="192"></line><line x1="530" y1="192" x2="555" y2="192"></line>
+            <line x1="165" y1="62" x2="165" y2="100"></line><line x1="165" y1="150" x2="165" y2="192"></line>
+            <line x1="295" y1="62" x2="295" y2="100"></line><line x1="295" y1="150" x2="295" y2="192"></line>
+            <line x1="425" y1="62" x2="425" y2="100"></line><line x1="425" y1="150" x2="425" y2="192"></line>
+            <line x1="555" y1="62" x2="555" y2="100"></line><line x1="555" y1="150" x2="555" y2="192"></line>
+          </g>
+          <g class="circuit-resistors">
+            <rect class="circuit-resistor--highlight" x="60" y="47" width="80" height="30" rx="4"></rect>
+            <rect x="190" y="47" width="80" height="30" rx="4"></rect><rect x="320" y="47" width="80" height="30" rx="4"></rect><rect x="450" y="47" width="80" height="30" rx="4"></rect>
+            <rect class="circuit-resistor--highlight" x="60" y="177" width="80" height="30" rx="4"></rect>
+            <rect x="190" y="177" width="80" height="30" rx="4"></rect><rect x="320" y="177" width="80" height="30" rx="4"></rect><rect x="450" y="177" width="80" height="30" rx="4"></rect>
+            <rect class="circuit-resistor--highlight" x="147" y="100" width="36" height="50" rx="4"></rect>
+            <rect x="277" y="100" width="36" height="50" rx="4"></rect><rect x="407" y="100" width="36" height="50" rx="4"></rect><rect x="537" y="100" width="36" height="50" rx="4"></rect>
+          </g>
+          <g class="circuit-labels circuit-labels--theory">
+            <text x="22" y="68">A</text><text x="22" y="198">B</text>
+            <text x="100" y="69">R</text><text x="230" y="69">R</text><text x="360" y="69">R</text><text x="490" y="69">R</text>
+            <text x="100" y="199">R</text><text x="230" y="199">R</text><text x="360" y="199">R</text><text x="490" y="199">R</text>
+            <text x="165" y="131">R</text><text x="295" y="131">R</text><text x="425" y="131">R</text><text x="555" y="131">R</text>
+            <text class="circuit-step-label" x="112" y="267">1º degrau: 2R em série com R ∥ R<tspan baseline-shift="sub" font-size="11">N−1</tspan></text>
+          </g>
+          <g class="circuit-nodes">
+            <circle cx="165" cy="62" r="4"></circle><circle cx="165" cy="192" r="4"></circle>
+            <circle cx="295" cy="62" r="4"></circle><circle cx="295" cy="192" r="4"></circle>
+            <circle cx="425" cy="62" r="4"></circle><circle cx="425" cy="192" r="4"></circle>
+            <circle cx="555" cy="62" r="4"></circle><circle cx="555" cy="192" r="4"></circle>
+          </g>
+        </svg>
+        <p class="report-source no-indent">Fonte: elaboração própria (2026).</p>
+      </figure>
+
+      <div class="report-fictitious-mark">Exemplo didático · dados fictícios</div>
+    </section>
+
+    <section class="report-page report-page--theory" aria-label="Página 5 — Cálculo do varal">
+      <span class="report-page-number" aria-label="Página 5">5</span>
+      <h3 class="report-subheading report-subheading--continued">3.2 Construção para um a quatro degraus</h3>
+      <p>
+        Como indica a Figura 2, os dois resistores de entrada contribuem com
+        \(2R\), enquanto o vertical \(R\) fica em paralelo com a escada restante.
+        Com um degrau, porém, há um único percurso de A a B: resistor superior,
+        resistor vertical e resistor inferior, todos em série. Ao acrescentar o
+        segundo degrau, a escada anterior ocupa um dos caminhos em paralelo.
+        Repetindo essa redução, obtêm-se os quatro primeiros casos:
+      </p>
+
+      <div class="report-equation report-equation--steps" aria-label="Resistências equivalentes de um a quatro degraus">
+        <span class="report-equation__number">(1)</span>
+        <div class="report-equation__tex report-step-list">
+          <span>\(\displaystyle R_1 = 2R+R=3R\)</span>
+          <span>\(\displaystyle R_2 = 2R+\frac{R(3R)}{R+3R}=\frac{11}{4}R\)</span>
+          <span>\(\displaystyle R_3 = 2R+\frac{R(11R/4)}{R+11R/4}=\frac{41}{15}R\)</span>
+          <span>\(\displaystyle R_4 = 2R+\frac{R(41R/15)}{R+41R/15}=\frac{153}{56}R\)</span>
+        </div>
+      </div>
+
+      <h3 class="report-subheading">3.3 Recorrência e limite infinito</h3>
+      <p>
+        O padrão anterior pode ser generalizado. Para \(N\geq2\), a escada de
+        \(N-1\) degraus está em paralelo com o resistor vertical do primeiro
+        degrau; o resultado fica em série com os dois resistores de entrada:
+      </p>
+
+      <div class="report-equation" aria-label="Recorrência da resistência equivalente">
+        <span class="report-equation__number">(2)</span>
+        <div class="report-equation__tex">
+          \[
+          R_N=2R+\frac{R\,R_{N-1}}{R+R_{N-1}},
+          \qquad N\geq2,\qquad R_1=3R.
+          \]
+        </div>
+      </div>
+
+      <p>
+        Feynman, Leighton e Sands (2011, cap. 22, seção 22–6) deduzem o resultado
+        geral de uma escada infinita com impedância série \(z_1\) e impedância
+        transversal \(z_2\). A obra fornece a equação de autossemelhança e sua
+        solução; ela não apresenta pronto o valor específico deste varal. Aqui,
+        faz-se a especialização didática \(z_1=2R\) e \(z_2=R\):
+      </p>
+
+      <div class="report-equation report-equation--result" aria-label="Especialização da escada infinita de Feynman para o varal">
+        <span class="report-equation__number">(3)</span>
+        <div class="report-equation__tex">
+          \[
+          \begin{aligned}
+          Z_\infty &= z_1+\frac{z_2Z_\infty}{z_2+Z_\infty},\\
+          Z_\infty &= \frac{z_1}{2}+\sqrt{\frac{z_1^2}{4}+z_1z_2},\\
+          z_1=2R,\ z_2=R
+          &\Longrightarrow R_\infty=(1+\sqrt{3})R
+          \approx 2{,}732R.
+          \end{aligned}
+          \]
+        </div>
+      </div>
+
+      <p>
+        Descarta-se a raiz negativa, incompatível com uma rede passiva. Embora
+        \(R_N\) se aproxime do limite por cima, nenhuma escada finita é
+        literalmente infinita.
+      </p>
+
+      <div class="report-fictitious-mark">Exemplo didático · dados fictícios</div>
+    </section>
+
+    <section class="report-page report-page--methods" id="materiais-metodos" aria-label="Página 6 — Materiais e métodos">
+      <span class="report-page-number" aria-label="Página 6">6</span>
+      <h2 class="report-heading">4 MATERIAIS E MÉTODOS</h2>
+
+      <h3 class="report-subheading report-subheading--continued">4.1 Materiais</h3>
+      <ul class="report-materials">
+        <li><mark class="fictitious-value">nove resistores de filme de carbono, 10 kΩ, 1/4 W e tolerância nominal de 5%</mark>;</li>
+        <li><mark class="fictitious-value">uma protoboard, doze jumpers</mark> e etiquetas para numerar os componentes;</li>
+        <li><mark class="fictitious-value">uma fonte CC ajustável</mark>, utilizada apenas na etapa inicial de familiarização;</li>
+        <li>um multímetro digital <mark class="fictitious-value">Fluke 17B+, faixa de 40,00 kΩ, resolução de 0,01 kΩ e exatidão declarada de ±(0,5% da leitura + 2 dígitos)</mark> (Fluke, [s. d.]).</li>
+      </ul>
+
+      <h3 class="report-subheading">4.2 Procedimento experimental</h3>
+      <p>
+        Identificaram-se as conexões da protoboard, os terminais dos resistores e
+        as funções da fonte e do multímetro. Antes do ohmímetro, a fonte foi
+        desligada e desconectada; toda resistência foi medida com a rede
+        desenergizada. Os componentes foram numerados e medidos individualmente.
+        Em seguida, montaram-se um, dois e três degraus, conferindo os nós com a
+        Figura 2. Em cada etapa, realizaram-se
+        <mark class="fictitious-value">três leituras</mark> entre A e B, sem tocar
+        nas partes metálicas.
+      </p>
+
+      <figure class="report-figure report-placeholder-figure">
+        <figcaption><strong>Figura 3 —</strong> Exemplo do registro fotográfico da montagem</figcaption>
+        <div class="report-placeholder-media">
+          <img src="../../assets/img/relatorio-exemplo/montagem-varal-placeholder.webp" alt="Imagem ilustrativa de uma protoboard com nove resistores formando três degraus e pontas de multímetro nos terminais de entrada">
+          <strong class="report-placeholder-badge">PLACEHOLDER — SUBSTITUIR PELA FOTO DO GRUPO</strong>
+        </div>
+        <p class="report-source no-indent">
+          Fonte: imagem ilustrativa gerada para este relatório-modelo (2026). Não
+          representa uma montagem ou observação experimental real.
+        </p>
+      </figure>
+
+      <p class="report-placeholder-instruction no-indent">
+        <strong>Orientação ao aluno:</strong> no relatório real, substitua esta
+        imagem por uma fotografia própria, nítida e legendada, na qual seja
+        possível identificar a protoboard, os três degraus, os terminais A e B e
+        a posição das pontas de prova.
+      </p>
+
+      <h3 class="report-subheading">4.3 Tratamento dos dados</h3>
+      <p>
+        Calcularam-se média, desvio-padrão amostral, incerteza da média
+        \(u(\overline{R})=s/\sqrt{n}\) e diferença relativa
+        \(100(R_\mathrm{med}-R_\mathrm{teo})/R_\mathrm{teo}\). Na avaliação tipo
+        B, dividiu-se o limite do fabricante por \(\sqrt{3}\), admitindo
+        distribuição retangular (Inmetro, 2012). O amarelo identifica valores
+        simulados a substituir; resultados teóricos não são realçados.
+      </p>
+      <div class="report-fictitious-mark">Exemplo didático · dados fictícios</div>
+    </section>
+
+    <section class="report-page report-page--results" id="resultados" aria-label="Página 7 — Resultados">
+      <span class="report-page-number" aria-label="Página 7">7</span>
+      <h2 class="report-heading">5 RESULTADOS</h2>
+
+      <p>
+        Os nove resistores ficaram dentro da tolerância: média
+        <mark class="fictitious-value">10,000 kΩ</mark>, desvio-padrão
+        <mark class="fictitious-value">0,037 kΩ</mark> e incerteza da média
+        <mark class="fictitious-value">0,012 kΩ</mark>.
+      </p>
+
+      <p class="report-data-legend no-indent">
+        <mark class="fictitious-value">Realce amarelo</mark> = dado experimental
+        simulado, a ser substituído pelos valores medidos pelo grupo.
+      </p>
+
+      <div class="report-results-stack">
+        <table class="report-table report-table--components">
+          <caption><strong>Tabela 1 —</strong> Resistências individuais antes da montagem</caption>
+          <thead><tr><th>Resistor</th><th>Posição</th><th><em>R</em> (kΩ)</th><th>Desvio do nominal</th></tr></thead>
+          <tbody>
+            <tr><td>R1</td><td>D1 topo</td><td><mark class="fictitious-value">9,94</mark></td><td><mark class="fictitious-value">−0,60%</mark></td></tr>
+            <tr><td>R2</td><td>D1 base</td><td><mark class="fictitious-value">10,06</mark></td><td><mark class="fictitious-value">+0,60%</mark></td></tr>
+            <tr><td>R3</td><td>D1 vertical</td><td><mark class="fictitious-value">10,00</mark></td><td><mark class="fictitious-value">0,00%</mark></td></tr>
+            <tr><td>R4</td><td>D2 topo</td><td><mark class="fictitious-value">10,04</mark></td><td><mark class="fictitious-value">+0,40%</mark></td></tr>
+            <tr><td>R5</td><td>D2 base</td><td><mark class="fictitious-value">9,96</mark></td><td><mark class="fictitious-value">−0,40%</mark></td></tr>
+            <tr><td>R6</td><td>D2 vertical</td><td><mark class="fictitious-value">10,00</mark></td><td><mark class="fictitious-value">0,00%</mark></td></tr>
+            <tr><td>R7</td><td>D3 topo</td><td><mark class="fictitious-value">9,98</mark></td><td><mark class="fictitious-value">−0,20%</mark></td></tr>
+            <tr><td>R8</td><td>D3 base</td><td><mark class="fictitious-value">10,02</mark></td><td><mark class="fictitious-value">+0,20%</mark></td></tr>
+            <tr><td>R9</td><td>D3 vertical</td><td><mark class="fictitious-value">10,00</mark></td><td><mark class="fictitious-value">0,00%</mark></td></tr>
+          </tbody>
+        </table>
+        <p class="report-source no-indent">Fonte: elaboração própria, com dados experimentais simulados (2026).</p>
+
+        <table class="report-table report-table--theory">
+          <caption><strong>Tabela 2 —</strong> Projeção teórica obtida pela Equação 2</caption>
+          <thead><tr><th>Degraus (N)</th><th><em>R</em><sub>N</sub>/<em>R</em></th><th><em>R</em><sub>N</sub> para <em>R</em> = 10 kΩ</th><th>Distância do limite</th></tr></thead>
+          <tbody>
+            <tr><td>1</td><td>3,000000</td><td>30,0000 kΩ</td><td>9,8076%</td></tr>
+            <tr><td>2</td><td>2,750000</td><td>27,5000 kΩ</td><td>0,6570%</td></tr>
+            <tr><td>3</td><td>2,733333</td><td>27,3333 kΩ</td><td>0,0469%</td></tr>
+            <tr><td>4</td><td>2,732143</td><td>27,3214 kΩ</td><td>0,0034%</td></tr>
+            <tr><td>5</td><td>2,732057</td><td>27,3206 kΩ</td><td>0,0002%</td></tr>
+            <tr><td>6</td><td>2,732051</td><td>27,3205 kΩ</td><td>&lt; 0,0001%</td></tr>
+            <tr class="report-table__limit"><td>∞</td><td>1 + √3</td><td>27,3205 kΩ</td><td>0%</td></tr>
+          </tbody>
+        </table>
+        <p class="report-source no-indent">Fonte: elaboração própria, a partir da Equação 2 (2026).</p>
+
+        <table class="report-table report-table--comparison">
+          <caption><strong>Tabela 3 —</strong> Comparação entre teoria e experimento</caption>
+          <thead><tr><th>Degraus</th><th>Teoria (kΩ)</th><th>Média experimental ± <em>s</em> (kΩ)</th><th>Diferença relativa</th></tr></thead>
+          <tbody>
+            <tr><td>1</td><td>30,000</td><td><mark class="fictitious-value">30,013 ± 0,006</mark></td><td><mark class="fictitious-value">+0,044%</mark></td></tr>
+            <tr><td>2</td><td>27,500</td><td><mark class="fictitious-value">27,503 ± 0,006</mark></td><td><mark class="fictitious-value">+0,012%</mark></td></tr>
+            <tr><td>3</td><td>27,333</td><td><mark class="fictitious-value">27,337 ± 0,006</mark></td><td><mark class="fictitious-value">+0,012%</mark></td></tr>
+          </tbody>
+        </table>
+        <p class="report-source no-indent">Nota: “±” representa o desvio-padrão das três repetições, e não a incerteza total. Fonte: elaboração própria, com dados experimentais simulados (2026).</p>
+
+        <figure class="report-figure report-chart">
+          <figcaption><strong>Figura 4 —</strong> Projeção da convergência para dez degraus</figcaption>
+          <svg viewBox="0 0 720 235" role="img" aria-labelledby="chart-title chart-desc">
+            <title id="chart-title">Resistência equivalente projetada por número de degraus</title>
+            <desc id="chart-desc">A curva teórica de um a dez degraus se aproxima do limite de 27,3205 quilo-ohms. Os três pontos experimentais simulados acompanham a curva. A partir do terceiro degrau, a diferença teórica para o limite está dentro da faixa de incerteza instrumental do exemplo.</desc>
+            <g class="chart-grid">
+              <line x1="70" y1="32" x2="680" y2="32"></line>
+              <line x1="70" y1="83" x2="680" y2="83"></line>
+              <line x1="70" y1="134" x2="680" y2="134"></line>
+              <line x1="70" y1="170" x2="680" y2="170"></line>
+            </g>
+            <rect class="chart-uncertainty-band" x="70" y="159.3" width="610" height="9.2"></rect>
+            <g class="chart-axes">
+              <line x1="70" y1="20" x2="70" y2="174"></line>
+              <line x1="70" y1="174" x2="680" y2="174"></line>
+            </g>
+            <g class="chart-ticks">
+              <text x="30" y="36">30,0</text><text x="30" y="87">29,0</text><text x="30" y="138">28,0</text><text x="30" y="174">27,2</text>
+              <text x="82" y="192">1</text><text x="145" y="192">2</text><text x="208" y="192">3</text><text x="271" y="192">4</text><text x="334" y="192">5</text>
+              <text x="397" y="192">6</text><text x="460" y="192">7</text><text x="523" y="192">8</text><text x="586" y="192">9</text><text x="646" y="192">10</text>
+              <text x="312" y="208">número de degraus</text>
+              <text x="14" y="126" transform="rotate(-90 14 126)">R_AB (kΩ)</text>
+            </g>
+            <line class="chart-limit" x1="70" y1="163.9" x2="680" y2="163.9"></line>
+            <text class="chart-limit-label" x="490" y="156">limite: 27,3205 kΩ</text>
+            <polyline class="chart-theory" points="85,27.1 148,154.7 211,163.2 274,163.8 337,163.9 400,163.9 463,163.9 526,163.9 589,163.9 652,163.9"></polyline>
+            <polyline class="chart-measured" points="85,26.4 148,154.5 211,163.0"></polyline>
+            <g class="chart-theory-points">
+              <circle cx="85" cy="27.1" r="4"></circle><circle cx="148" cy="154.7" r="4"></circle><circle cx="211" cy="163.2" r="4"></circle><circle cx="274" cy="163.8" r="4"></circle><circle cx="337" cy="163.9" r="4"></circle><circle cx="400" cy="163.9" r="4"></circle><circle cx="463" cy="163.9" r="4"></circle><circle cx="526" cy="163.9" r="4"></circle><circle cx="589" cy="163.9" r="4"></circle><circle cx="652" cy="163.9" r="4"></circle>
+            </g>
+            <g class="chart-measured-points"><rect x="81" y="22.4" width="8" height="8"></rect><rect x="144" y="150.5" width="8" height="8"></rect><rect x="207" y="159" width="8" height="8"></rect></g>
+            <g class="chart-legend">
+              <line class="chart-theory" x1="85" y1="222" x2="113" y2="222"></line><text x="118" y="226">teoria</text>
+              <rect class="chart-legend-measured" x="233" y="217" width="9" height="9"></rect><text x="248" y="226">experimento simulado</text>
+              <rect class="chart-legend-band" x="445" y="217" width="22" height="9"></rect><text x="474" y="226">faixa de uB (±0,090 kΩ)</text>
+            </g>
+          </svg>
+          <p class="report-source no-indent">Fonte: elaboração própria, com projeção teórica e dados experimentais simulados (2026).</p>
+        </figure>
+      </div>
+
+      <p class="report-results-observation">
+        A projeção mostra que o terceiro ponto teórico já está dentro da faixa
+        de incerteza-padrão tipo B do exemplo. A mudança prevista do terceiro
+        para o quarto degrau é de apenas 0,0119 kΩ, menor que
+        <mark class="fictitious-value">u<sub>B</sub> = 0,090 kΩ</mark>. Assim,
+        três degraus bastam para observar a aproximação com esse instrumento;
+        adicionar outros degraus não produziria uma variação experimentalmente
+        distinguível nas condições adotadas.
+      </p>
+      <div class="report-fictitious-mark">Exemplo didático · dados fictícios</div>
+    </section>
+
+    <section class="report-page report-last-page" aria-label="Página 8 — Discussão, conclusão e referências">
+      <span class="report-page-number" aria-label="Página 8">8</span>
+      <h2 class="report-heading" id="discussao">6 DISCUSSÃO</h2>
+      <p>
+        A redução de \(R_{AB}\) ao acrescentar resistores não contradiz a regra
+        da série: cada degrau adiciona dois resistores, mas abre um novo caminho
+        em paralelo. O aumento de condutância domina e leva a sequência ao limite.
+        As médias acompanharam a previsão; a maior diferença foi
+        <mark class="fictitious-value">0,044%</mark>. Trata-se de compatibilidade
+        dentro da incerteza, não de prova de igualdade.
+      </p>
+
+      <p>
+        A tolerância dos resistores é uma fonte central de erro. Os componentes
+        adotados têm tolerância nominal de <mark class="fictitious-value">5%</mark>;
+        também existem classes comerciais de 1% e de precisão ainda maior. Como
+        cada desvio altera as associações, calcular a rede com valores medidos é
+        mais fiel que usar só o nominal. Pares semelhantes reduziram esse efeito
+        no exemplo. Resolução e exatidão do multímetro acrescentam parcelas
+        sistemáticas não eliminadas pela repetição (Inmetro, 2012).
+      </p>
+
+      <p>
+        Fios, trilhas internas da protoboard e contatos entre terminais também
+        introduzem resistências parasitas. Um acréscimo total de
+        <mark class="fictitious-value">1 Ω</mark>, usado apenas como exemplo de
+        ordem de grandeza, corresponderia a
+        <mark class="fictitious-value">0,0037%</mark> em dezenas de quilo-ohms e
+        seria pequeno neste ensaio. Já contato frouxo, terminal oxidado ou jumper
+        mal inserido pode causar variação instável maior. Convém controlar
+        contatos, temperatura e pontas. Distinguir o terceiro degrau do limite
+        exigiria componentes mais precisos, conexões caracterizadas e instrumento
+        calibrado de menor incerteza.
+      </p>
+
+      <h2 class="report-heading" id="conclusao">7 CONCLUSÃO</h2>
+      <p>
+        A montagem relacionou série, paralelo e autossemelhança e familiarizou os
+        estudantes com a bancada. Teoria e resultados simulados foram compatíveis
+        dentro da incerteza. Três degraus bastaram para observar a aproximação com
+        o instrumento adotado, sem tornar a rede finita igual à infinita. A
+        conclusão permanece condicionada à tolerância, ao multímetro, aos fios e
+        aos contatos.
+      </p>
+
+      <h2 class="report-heading report-heading--unnumbered report-references-title" id="referencias">REFERÊNCIAS</h2>
+      <div class="report-references">
+        <p class="no-indent">FEYNMAN, Richard P.; LEIGHTON, Robert B.; SANDS, Matthew. <strong>The Feynman lectures on physics</strong>. New Millennium ed. New York: Basic Books, 2011. v. 2, cap. 22, seção 22–6. Disponível em: <a href="https://www.feynmanlectures.caltech.edu/II_22.html">feynmanlectures.caltech.edu/II_22.html</a>. Acesso em: 1 set. 2026.</p>
+        <p class="no-indent">FLUKE. <strong>Multímetro digital Fluke 17B+</strong>: especificações. Everett: Fluke Corporation, [s. d.]. Disponível em: <a href="https://www.fluke.com/pt-br/produto/teste-eletrico/multimetros-digitais/fluke-17b-plus">fluke.com/pt-br</a>. Acesso em: 1 set. 2026.</p>
+        <p class="no-indent">HALLIDAY, David; RESNICK, Robert; WALKER, Jearl. <strong>Fundamentos de física 3</strong>: eletromagnetismo. 12. ed. Rio de Janeiro: LTC, 2023.</p>
+        <p class="no-indent">INMETRO. <strong>Avaliação de dados de medição</strong>: guia para a expressão de incerteza de medição. Duque de Caxias, RJ: Inmetro, 2012. (JCGM 100:2008). Disponível em: <a href="https://www.gov.br/inmetro/pt-br/centrais-de-conteudo/publicacoes/documentos-tecnicos-em-metrologia/gum_final.pdf">gov.br/inmetro</a>. Acesso em: 1 set. 2026.</p>
+        <p class="no-indent">LING, Samuel J.; MOEBS, William; SANNY, Jeff. <strong>University physics</strong>. Houston: OpenStax, 2016. v. 2. Disponível em: <a href="https://openstax.org/books/university-physics-volume-2/pages/10-2-resistors-in-series-and-parallel">openstax.org/books/university-physics-volume-2</a>. Acesso em: 1 set. 2026.</p>
+        <p class="no-indent">VISHAY. <strong>MRS16, MRS25: professional thin film leaded resistors</strong>. [S. l.], [s. d.]a. Disponível em: <a href="https://www.vishay.com/en/product/28724/">vishay.com/en/product/28724</a>. Acesso em: 1 set. 2026.</p>
+        <p class="no-indent">VISHAY. <strong>Thick film chip resistors: CRCW series</strong>. [S. l.], [s. d.]b. Disponível em: <a href="https://www.vishay.com/en/product/20056/">vishay.com/en/product/20056</a>. Acesso em: 1 set. 2026.</p>
+        <p class="no-indent">VISHAY. <strong>Wirewound resistors</strong>. [S. l.], [s. d.]c. Disponível em: <a href="https://www.vishay.com/en/resistors-fixed/wirewound/">vishay.com/en/resistors-fixed/wirewound</a>. Acesso em: 1 set. 2026.</p>
+      </div>
+      <div class="report-fictitious-mark">Exemplo didático · dados fictícios</div>
+    </section>
+  </main>
+
+  <script type="module" src="../../componentes/relatorio-exemplo.js"></script>
+</body>
+</html>

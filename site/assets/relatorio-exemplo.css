@@ -1,0 +1,864 @@
+:root {
+  --report-paper: #fff;
+  --report-ink: #111;
+  --report-muted: #5d6269;
+  --report-rule: #747b83;
+  --report-accent: #b6412e;
+  --report-highlight: #fff1a8;
+  --report-highlight-border: #e1bd35;
+}
+
+.report-preview {
+  min-width: 320px;
+  background: #e7ebef;
+  color: var(--report-ink);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.report-toolbar {
+  position: sticky;
+  z-index: 20;
+  top: 0;
+  border-bottom: 1px solid #ccd2d8;
+  background: rgb(255 255 255 / 96%);
+  box-shadow: 0 8px 24px rgb(16 22 32 / 10%);
+  backdrop-filter: blur(12px);
+}
+
+.report-toolbar__inner {
+  display: grid;
+  width: min(calc(100% - 2rem), 1120px);
+  min-height: 68px;
+  margin-inline: auto;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 1.25rem;
+  align-items: center;
+}
+
+.report-toolbar__back {
+  justify-self: start;
+  color: #252b33;
+  font: 700 0.92rem/1.2 var(--font-display);
+  text-decoration: none;
+}
+
+.report-toolbar__title {
+  display: grid;
+  color: #141920;
+  text-align: center;
+}
+
+.report-toolbar__title strong {
+  font: 700 0.95rem/1.2 var(--font-display);
+}
+
+.report-toolbar__title span {
+  margin-top: 0.2rem;
+  color: #636d79;
+  font: 500 0.75rem/1.2 var(--font-mono);
+}
+
+.report-toolbar__print {
+  justify-self: end;
+  padding: 0.68rem 0.9rem;
+  border: 1px solid #252b33;
+  border-radius: 0.5rem;
+  background: #252b33;
+  color: #fff;
+  cursor: pointer;
+  font: 700 0.82rem/1 var(--font-display);
+}
+
+.report-toolbar__print:hover {
+  background: #414953;
+}
+
+.report-toolbar__standards {
+  width: min(calc(100% - 2rem), 1120px);
+  margin: -0.25rem auto 0.55rem;
+  color: #6e7782;
+  font: 500 0.7rem/1.35 var(--font-mono);
+  text-align: center;
+}
+
+.report-stack {
+  display: grid;
+  width: max-content;
+  margin: 2rem auto 4rem;
+  gap: 2rem;
+}
+
+.report-page {
+  position: relative;
+  width: 210mm;
+  min-height: 297mm;
+  padding: 30mm 20mm 20mm 30mm;
+  background: var(--report-paper);
+  box-shadow: 0 18px 55px rgb(20 28 38 / 18%);
+  color: var(--report-ink);
+  font: 12pt/1.5 Arial, Helvetica, sans-serif;
+  hyphens: auto;
+  overflow-wrap: break-word;
+  scroll-margin-top: 7rem;
+}
+
+.report-page p {
+  margin: 0 0 2.4mm;
+  text-align: justify;
+  text-indent: 12.5mm;
+}
+
+.report-page h1,
+.report-page h2,
+.report-page h3 {
+  max-width: none;
+  font-family: Arial, Helvetica, sans-serif;
+  letter-spacing: normal;
+  text-wrap: wrap;
+}
+
+.report-page .no-indent,
+.report-page p:first-child,
+.report-heading + p,
+.report-subheading + p,
+.report-figure p,
+.report-references p,
+.report-model-note p {
+  text-indent: 0;
+}
+
+.report-heading {
+  margin: 0 0 5mm;
+  font-size: 12pt;
+  font-weight: 700;
+  line-height: 1.25;
+  text-align: left;
+}
+
+.report-heading--unnumbered {
+  text-align: center;
+}
+
+.report-subheading {
+  margin: 4mm 0 2.5mm;
+  font-size: 12pt;
+  line-height: 1.25;
+}
+
+.report-subheading--continued {
+  margin-top: 0;
+}
+
+.report-heading--section-break {
+  margin-top: 2mm;
+}
+
+.report-heading--compact {
+  margin-top: 2mm;
+  margin-bottom: 2.5mm;
+}
+
+.report-heading--discussion {
+  margin-top: 2mm;
+  margin-bottom: 2mm;
+}
+
+.report-page-number {
+  position: absolute;
+  top: 15mm;
+  right: 20mm;
+  font-size: 10pt;
+  line-height: 1;
+}
+
+.report-fictitious-mark {
+  position: absolute;
+  right: 20mm;
+  bottom: 8mm;
+  left: 30mm;
+  color: #777;
+  font-size: 8pt;
+  letter-spacing: 0.04em;
+  line-height: 1;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.fictitious-value {
+  padding: 0 0.12em;
+  border-radius: 0.12em;
+  background: var(--report-highlight);
+  box-decoration-break: clone;
+  color: inherit;
+  -webkit-box-decoration-break: clone;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+.report-cover {
+  display: flex;
+  padding-top: 25mm;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.report-cover__institution,
+.report-cover__authors,
+.report-cover__place {
+  display: grid;
+  gap: 1.5mm;
+  width: 100%;
+  font-size: 12pt;
+  line-height: 1.35;
+}
+
+.report-cover__authors {
+  margin-top: 42mm;
+}
+
+.report-cover__title {
+  width: 88%;
+  margin-top: 45mm;
+}
+
+.report-cover__title h1 {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  font-size: 14pt;
+  line-height: 1.5;
+  letter-spacing: normal;
+}
+
+.report-cover__title p {
+  margin-top: 3mm;
+  font-size: 12pt;
+  text-align: center;
+  text-indent: 0;
+}
+
+.report-cover__warning {
+  margin-top: 15mm !important;
+  padding: 2.5mm 4mm;
+  border: 0.4mm solid var(--report-rule);
+  font-size: 9pt;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-align: center !important;
+  text-indent: 0 !important;
+}
+
+.report-cover__place {
+  margin-top: auto;
+}
+
+.report-front-matter {
+  padding-top: 30mm;
+}
+
+.report-abstract {
+  text-align: justify;
+  text-indent: 0 !important;
+}
+
+.report-keywords {
+  margin-top: 3mm !important;
+}
+
+.report-summary-title {
+  margin-top: 16mm;
+}
+
+.report-toc ol {
+  display: grid;
+  margin: 0;
+  padding: 0;
+  gap: 4mm;
+  list-style: none;
+}
+
+.report-toc a {
+  display: flex;
+  gap: 2mm;
+  align-items: baseline;
+  font-size: 11pt;
+  line-height: 1.25;
+  text-decoration: none;
+}
+
+.report-toc__dots {
+  min-width: 2rem;
+  border-bottom: 1px dotted #777;
+  flex: 1;
+}
+
+.report-model-note {
+  margin-top: 15mm;
+  padding: 4mm 5mm;
+  border-left: 1mm solid var(--report-accent);
+  background: #f6f6f6;
+  font-size: 10pt;
+  line-height: 1.4;
+  text-align: justify;
+}
+
+.report-equation {
+  position: relative;
+  display: grid;
+  min-height: 14mm;
+  margin: 2mm 0;
+  padding: 0 0 0 10mm;
+  grid-template-columns: minmax(0, 1fr) 10mm;
+  align-items: center;
+  font-size: 12pt;
+  line-height: 1.3;
+  text-align: center;
+}
+
+.report-equation--result {
+  padding-block: 1mm;
+  border-block: 0.3mm solid #aaa;
+}
+
+.report-equation__number {
+  grid-column: 2;
+  grid-row: 1;
+  justify-self: end;
+}
+
+.report-equation__tex {
+  min-width: 0;
+  grid-column: 1;
+  grid-row: 1;
+}
+
+.report-equation mjx-container[display="true"] {
+  margin: 0 !important;
+  overflow: visible;
+}
+
+.report-equation--steps {
+  min-height: 0;
+  padding-block: 1mm;
+}
+
+.report-step-list {
+  display: grid;
+  gap: 0;
+  line-height: 1.05;
+}
+
+.report-step-list > span {
+  display: block;
+}
+
+.report-page--theory .report-equation {
+  margin-block: 1.5mm;
+}
+
+.report-page--theory > p:last-of-type {
+  margin-bottom: 0;
+}
+
+.overline {
+  text-decoration: overline;
+}
+
+.report-materials {
+  margin: 0 0 3mm;
+  padding-left: 8mm;
+  font-size: 10.5pt;
+  line-height: 1.35;
+}
+
+.report-materials li + li {
+  margin-top: 1.2mm;
+}
+
+.report-figure {
+  margin: 3mm 0 4mm;
+  break-inside: avoid;
+}
+
+.report-figure figcaption,
+.report-table caption {
+  margin-bottom: 1.5mm;
+  font-size: 10pt;
+  line-height: 1.25;
+  text-align: left;
+}
+
+.report-component-figure {
+  margin-top: 2.5mm;
+}
+
+.report-component-figure--continued {
+  margin-top: 0;
+  margin-bottom: 2mm;
+}
+
+.report-component-gallery {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 2.5mm;
+}
+
+.report-component-gallery div {
+  min-width: 0;
+}
+
+.report-component-gallery img {
+  display: block;
+  width: 100%;
+  height: 24mm;
+  border: 0.25mm solid #aaa;
+  background: #eee;
+  object-fit: cover;
+}
+
+.report-component-gallery span {
+  display: block;
+  margin-top: 0.8mm;
+  font-size: 8pt;
+  line-height: 1.15;
+  text-align: left;
+}
+
+.report-circuit-figure svg {
+  display: block;
+  width: 100%;
+  height: 44mm;
+  border: 0.25mm solid #bbb;
+  background: #fcfcfc;
+}
+
+.report-circuit-figure--theory svg {
+  height: 48mm;
+}
+
+.circuit-remainder {
+  fill: #f5f5f5;
+  stroke: #737980;
+  stroke-dasharray: 8 6;
+  stroke-width: 2;
+}
+
+.circuit-remainder-label {
+  fill: #4f555c;
+  font: 15px Arial, sans-serif;
+  text-anchor: middle;
+}
+
+.circuit-wires line {
+  stroke: #222;
+  stroke-width: 3;
+}
+
+.circuit-resistors rect {
+  fill: #fff;
+  stroke: #222;
+  stroke-width: 2.5;
+}
+
+.circuit-resistors .circuit-resistor--highlight {
+  fill: var(--report-highlight);
+  stroke: var(--report-accent);
+  stroke-width: 3;
+}
+
+.circuit-labels {
+  fill: #111;
+  font: 18px Arial, sans-serif;
+  text-anchor: middle;
+}
+
+.circuit-labels--theory .circuit-step-label {
+  fill: var(--report-accent);
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.circuit-nodes circle {
+  fill: #222;
+}
+
+.report-source {
+  margin-top: 1mm !important;
+  color: #333;
+  font-size: 8.5pt;
+  line-height: 1.25;
+  text-align: left !important;
+}
+
+.report-source a {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-thickness: 0.2mm;
+  text-underline-offset: 0.4mm;
+}
+
+.report-placeholder-media {
+  position: relative;
+  overflow: hidden;
+  border: 0.3mm solid #777;
+  background: #eee;
+}
+
+.report-placeholder-media img {
+  display: block;
+  width: 100%;
+  height: 61mm;
+  object-fit: cover;
+}
+
+.report-placeholder-badge {
+  position: absolute;
+  top: 3mm;
+  right: 3mm;
+  left: 3mm;
+  padding: 2.2mm 3mm;
+  border: 0.35mm solid #8a6900;
+  background: rgb(255 241 168 / 94%);
+  box-shadow: 0 1mm 3mm rgb(0 0 0 / 18%);
+  color: #302500;
+  font-size: 8.5pt;
+  line-height: 1.2;
+  text-align: center;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+.report-placeholder-instruction {
+  margin: 2mm 0 2.5mm !important;
+  padding: 2.5mm 3.5mm;
+  border-left: 0.9mm solid var(--report-accent);
+  background: #f4f4f4;
+  font-size: 9pt;
+  line-height: 1.3;
+  text-align: left !important;
+}
+
+.report-results-stack {
+  display: grid;
+  margin: 2mm 0 2mm;
+  gap: 1.2mm;
+}
+
+.report-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 8.6pt;
+  line-height: 1.16;
+}
+
+.report-table caption {
+  caption-side: top;
+}
+
+.report-table th,
+.report-table td {
+  padding: 0.75mm 1.1mm;
+  border: 0.25mm solid #777;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.report-table th {
+  background: #eee;
+  font-weight: 700;
+}
+
+.report-table__limit td {
+  border-top-width: 0.5mm;
+  background: #f7f7f7;
+  font-weight: 700;
+}
+
+.report-page--results .report-table {
+  font-size: 7.8pt;
+  line-height: 1.08;
+}
+
+.report-page--results .report-table caption {
+  margin-bottom: 0.8mm;
+  font-size: 9pt;
+}
+
+.report-table--components td:nth-child(2) {
+  text-align: left;
+}
+
+.report-data-legend {
+  margin: -0.5mm 0 1.5mm !important;
+  font-size: 8.5pt;
+  line-height: 1.25;
+  text-align: left !important;
+}
+
+.report-results-stack > .report-source {
+  margin: 0 !important;
+  font-size: 7.5pt;
+  line-height: 1.08;
+}
+
+.report-results-observation {
+  margin-top: 2mm !important;
+  font-size: 9pt;
+  line-height: 1.28;
+}
+
+.report-chart {
+  margin: 1.5mm 0 0;
+}
+
+.report-chart svg {
+  display: block;
+  width: 100%;
+  height: 41mm;
+  border: 0.25mm solid #bbb;
+  background: #fff;
+}
+
+.chart-grid line {
+  stroke: #d8d8d8;
+  stroke-width: 1;
+}
+
+.chart-axes line {
+  stroke: #222;
+  stroke-width: 1.5;
+}
+
+.chart-ticks,
+.chart-limit-label,
+.chart-legend {
+  fill: #333;
+  font: 12px Arial, sans-serif;
+}
+
+.chart-limit {
+  stroke: #777;
+  stroke-dasharray: 6 5;
+  stroke-width: 1.5;
+}
+
+.chart-limit-label {
+  font-size: 11px;
+}
+
+.chart-uncertainty-band,
+.chart-legend-band {
+  fill: var(--report-highlight);
+  stroke: var(--report-highlight-border);
+  stroke-width: 0.8;
+}
+
+.chart-theory {
+  fill: none;
+  stroke: #222;
+  stroke-width: 2.5;
+}
+
+.chart-measured {
+  fill: none;
+  stroke: var(--report-accent);
+  stroke-width: 2;
+  stroke-dasharray: 4 3;
+}
+
+.chart-theory-points circle {
+  fill: #fff;
+  stroke: #222;
+  stroke-width: 2;
+}
+
+.chart-measured-points rect {
+  fill: var(--report-accent);
+}
+
+.chart-legend-measured {
+  fill: var(--report-accent);
+}
+
+.report-references-title {
+  margin-top: 5mm;
+  margin-bottom: 3mm;
+}
+
+.report-references {
+  display: grid;
+  gap: 0.7mm;
+  font-size: 8pt;
+  line-height: 1.1;
+}
+
+.report-references p {
+  margin: 0;
+  text-align: left;
+}
+
+.report-references a {
+  overflow-wrap: anywhere;
+  text-decoration: none;
+}
+
+@media screen and (max-width: 900px) {
+  .report-toolbar__inner {
+    grid-template-columns: 1fr auto;
+  }
+
+  .report-toolbar__title {
+    display: none;
+  }
+
+  .report-toolbar__standards {
+    display: none;
+  }
+
+  .report-stack {
+    width: auto;
+    margin: 0.75rem auto 2rem;
+    gap: 0.75rem;
+  }
+
+  .report-page {
+    width: calc(100vw - 1rem);
+    min-height: 0;
+    padding: 3.5rem 1.25rem 3.25rem;
+    font-size: 1rem;
+  }
+
+  .report-cover {
+    min-height: calc(100vh - 6rem);
+    padding-top: 3rem;
+  }
+
+  .report-cover__authors,
+  .report-cover__title {
+    margin-top: 4rem;
+  }
+
+  .report-page-number {
+    top: 1.25rem;
+    right: 1.25rem;
+  }
+
+  .report-fictitious-mark {
+    right: 1.25rem;
+    bottom: 1.25rem;
+    left: 1.25rem;
+  }
+
+  .report-circuit-figure svg,
+  .report-chart svg {
+    height: auto;
+  }
+
+  .report-placeholder-media img {
+    height: auto;
+  }
+
+  .report-table {
+    font-size: 0.75rem;
+  }
+
+  .report-equation {
+    padding-inline: 0;
+    grid-template-columns: minmax(0, 1fr) 2rem;
+    font-size: 0.92rem;
+    overflow-x: auto;
+  }
+
+  .report-equation__tex {
+    font-size: 0.8rem;
+  }
+}
+
+@media screen and (max-width: 560px) {
+  .report-toolbar__inner {
+    width: calc(100% - 1rem);
+    gap: 0.5rem;
+  }
+
+  .report-toolbar__back {
+    font-size: 0.78rem;
+  }
+
+  .report-toolbar__print {
+    padding: 0.62rem 0.7rem;
+    font-size: 0.7rem;
+  }
+
+  .report-page {
+    padding-inline: 1rem;
+  }
+
+  .report-page p {
+    text-align: left;
+    text-indent: 0;
+  }
+
+  .report-component-gallery {
+    grid-template-columns: 1fr;
+  }
+
+  .report-component-gallery img {
+    height: auto;
+    max-height: 16rem;
+  }
+
+  .report-toc a {
+    font-size: 0.82rem;
+  }
+
+  .report-table th,
+  .report-table td {
+    padding: 0.3rem 0.2rem;
+  }
+}
+
+@media print {
+  @page {
+    size: A4;
+    margin: 0;
+  }
+
+  html,
+  body.report-preview {
+    width: 210mm;
+    margin: 0;
+    background: #fff;
+  }
+
+  .report-toolbar,
+  .skip-link {
+    display: none !important;
+  }
+
+  .report-stack {
+    display: block;
+    width: 210mm;
+    margin: 0;
+  }
+
+  .report-page {
+    width: 210mm;
+    height: 297mm;
+    min-height: 297mm;
+    margin: 0;
+    box-shadow: none;
+    break-after: page;
+    overflow: hidden;
+    page-break-after: always;
+  }
+
+  .report-last-page {
+    break-after: auto;
+    page-break-after: auto;
+  }
+
+  .report-references a {
+    color: #111;
+  }
+}
