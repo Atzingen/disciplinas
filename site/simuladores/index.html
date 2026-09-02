@@ -4,25 +4,25 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Simulações interativas para visualizar forças, campos e vetores.">
-  <title>Simulações · Laboratório de Eletromagnetismo</title>
+  <title>Simulações · PRCFEMG</title>
   <link rel="stylesheet" href="../assets/base.css">
   <script>try{if(localStorage.getItem("tema")==="escuro"){document.documentElement.dataset.theme="escuro"}}catch(erro){}</script>
 </head>
 <body class="area-page">
   <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
   <header class="site-header">
-    <a class="brand" href="../" aria-label="Laboratório de Eletromagnetismo — início">
-      <span class="brand__mark" aria-hidden="true">Σ</span>
-      <span><strong>Laboratório de Eletromagnetismo</strong><small>IFSP · materiais de aula</small></span>
+    <a class="brand" href="../" aria-label="Portal docente — início">
+      <span class="brand__mark" aria-hidden="true">G</span>
+      <span><strong>Gustavo von Atzingen</strong><small>IFSP · materiais didáticos</small></span>
     </a>
     <div data-site-navigation data-root-path="../" data-active-section="simulacoes"></div>
   </header>
 
   <main class="area-page-main" id="conteudo">
     <header class="area-hero">
-      <p class="eyebrow">Modelos interativos</p>
-      <h1>Experimente no plano.</h1>
-      <p>Altere posições e parâmetros para acompanhar as componentes, os vetores individuais e a resultante em tempo real.</p>
+      <p class="eyebrow">PRCFEMG · Fundamentos do Eletromagnetismo</p>
+      <h1>Simulações interativas</h1>
+      <p>Modelos com parâmetros ajustáveis para visualizar cargas, campos, forças e vetores.</p>
     </header>
     <section class="catalog-section catalog-section--area" aria-labelledby="catalog-title" data-catalog-root>
       <div class="section-heading">
@@ -40,14 +40,14 @@
     </section>
   </main>
 
-  <footer class="site-footer"><p>Simulações · modelos interativos</p><a href="../">Voltar ao início</a></footer>
+  <footer class="site-footer"><p>Simulações · PRCFEMG</p><a href="../disciplinas/prcfemg/">Voltar à disciplina</a></footer>
   <script type="module" src="../componentes/navegacao-principal.js"></script>
   <script type="module">
     import { mountCatalog } from "../componentes/catalogo.js";
     mountCatalog(document.querySelector("[data-catalog-root]"), {
-      registryUrl: "../simuladores.json",
+      registryUrl: "../materiais.json",
       pathPrefix: "../",
-      scope: { section: "simulacoes" },
+      scope: { section: "simulacoes", discipline: "PRCFEMG" },
     });
   </script>
 </body>

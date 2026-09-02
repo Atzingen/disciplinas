@@ -24,36 +24,68 @@ try {
   sectionNavigation = {};
 }
 
-test("navegação principal resolve as quatro áreas a partir da raiz informada", () => {
+test("navegação principal resolve o portal e as disciplinas a partir da raiz", () => {
   assert.equal(typeof navigation.buildMainNavigation, "function");
   assert.deepEqual(navigation.buildMainNavigation("../../", "exercicios"), [
     { id: "inicio", label: "Início", href: "../../", current: false },
     {
-      id: "exercicios",
-      label: "Exercícios",
-      href: "../../exercicios/",
+      id: "disciplinas",
+      label: "Disciplinas",
       current: true,
+      children: [
+        {
+          id: "prcfemg",
+          label: "PRCFEMG — Fundamentos do Eletromagnetismo",
+          href: "../../disciplinas/prcfemg/",
+          current: true,
+        },
+        {
+          id: "prclfbe",
+          label: "PRCLFBE — Laboratório de Física Básica: Eletromagnetismo",
+          href: "../../disciplinas/prclfbe/",
+          current: false,
+        },
+      ],
     },
     {
-      id: "experimentos",
-      label: "Experimentos",
-      href: "../../experimentos/",
-      current: false,
-    },
-    {
-      id: "simulacoes",
-      label: "Simulações",
-      href: "../../simuladores/",
+      id: "sobre",
+      label: "Sobre",
+      href: "../../#sobre",
       current: false,
     },
   ]);
 });
 
-test("somente a área ativa recebe estado atual", () => {
+test("áreas legadas ativam a disciplina correspondente", () => {
   const links = navigation.buildMainNavigation("../", "experimentos");
+  const disciplines = links.find((link) => link.id === "disciplinas");
+  assert.equal(disciplines.current, true);
   assert.deepEqual(
-    links.filter((link) => link.current).map((link) => link.id),
-    ["experimentos"],
+    disciplines.children.filter((link) => link.current).map((link) => link.id),
+    ["prclfbe"],
+  );
+
+  const simulationLinks = navigation.buildMainNavigation("../", "simulacoes");
+  const simulationDisciplines = simulationLinks.find(
+    (link) => link.id === "disciplinas",
+  );
+  assert.deepEqual(
+    simulationDisciplines.children
+      .filter((link) => link.current)
+      .map((link) => link.id),
+    ["prcfemg"],
+  );
+});
+
+test("disciplinas ocupam um único item expansível na navegação principal", () => {
+  const links = navigation.buildMainNavigation("./", "inicio");
+  const disciplines = links.find((link) => link.id === "disciplinas");
+
+  assert.deepEqual(links.map((link) => link.id), ["inicio", "disciplinas", "sobre"]);
+  assert.equal(disciplines.children.length, 2);
+  assert.deepEqual(
+    disciplines.children.map((discipline) => discipline.id),
+    ["prcfemg", "prclfbe"],
   );
 });
 

@@ -12,7 +12,7 @@ try {
 }
 
 try {
-  const registryUrl = new URL("../simuladores.json", import.meta.url);
+  const registryUrl = new URL("../materiais.json", import.meta.url);
   items = JSON.parse(await readFile(registryUrl, "utf8"));
 } catch {
   items = [];
@@ -84,6 +84,21 @@ test("escopo combina área e capítulo sem alterar a busca", { skip: !apiAvailab
     "halliday-21-42",
   ]);
   assert.deepEqual(exercise18.map((item) => item.id), ["halliday-21-18"]);
+});
+
+test("escopo por disciplina mantém teoria e laboratório separados", { skip: !apiAvailable }, () => {
+  const electromagnetism = catalog.filterCatalog(items, "", "todos", {
+    discipline: "PRCFEMG",
+  });
+  const laboratory = catalog.filterCatalog(items, "", "todos", {
+    discipline: "PRCLFBE",
+  });
+
+  assert.equal(electromagnetism.length, 14);
+  assert.equal(laboratory.length, 7);
+  assert.ok(electromagnetism.every((item) => item.kind !== "experimento"));
+  assert.ok(laboratory.some((item) => item.id === "cuba-eletrolitica-potencial"));
+  assert.ok(laboratory.every((item) => item.discipline === "PRCLFBE"));
 });
 
 test("capítulo 22 mantém sequências temáticas e Halliday separadas", { skip: !apiAvailable }, () => {
@@ -195,6 +210,9 @@ test("registro fornece os metadados que orientam cada área", () => {
   for (const item of items) {
     assert.ok(["simulador", "resolucao", "experimento"].includes(item.kind));
     assert.ok(["simulacoes", "exercicios", "experimentos"].includes(item.section));
+    assert.ok(
+      ["PRCFEMG", "PRCLFBE"].includes(item.discipline),
+    );
     assert.ok(item.title.length > 0);
     assert.ok(item.description.length > 0);
     assert.ok(Array.isArray(item.tags) && item.tags.length > 0);

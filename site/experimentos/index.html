@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Roteiros avançados de laboratório de eletromagnetismo para Física III.">
-  <title>Experimentos · Laboratório de Eletromagnetismo</title>
+  <meta name="description" content="Roteiros de PRCLFBE — Laboratório de Física Básica: Eletromagnetismo.">
+  <title>Experimentos · PRCLFBE</title>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='28' fill='%237a3ce7'/%3E%3Cpath d='M18 32h28M32 18v28' stroke='white' stroke-width='6'/%3E%3C/svg%3E">
   <link rel="stylesheet" href="../assets/base.css">
   <script>try{if(localStorage.getItem("tema")==="escuro"){document.documentElement.dataset.theme="escuro"}}catch(erro){}</script>
@@ -12,24 +12,24 @@
 <body class="area-page">
   <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
   <header class="site-header">
-    <a class="brand" href="../" aria-label="Laboratório de Eletromagnetismo — início">
-      <span class="brand__mark" aria-hidden="true">Σ</span>
-      <span><strong>Laboratório de Eletromagnetismo</strong><small>IFSP · materiais de aula</small></span>
+    <a class="brand" href="../" aria-label="Portal docente — início">
+      <span class="brand__mark" aria-hidden="true">G</span>
+      <span><strong>Gustavo von Atzingen</strong><small>IFSP · materiais didáticos</small></span>
     </a>
     <div data-site-navigation data-root-path="../" data-active-section="experimentos"></div>
   </header>
 
   <main class="area-page-main" id="conteudo">
     <header class="area-hero">
-      <p class="eyebrow">Laboratório de Física III</p>
-      <h1>Meça, modele, argumente.</h1>
-      <p>Roteiros do conjunto AZEHEB e montagens próprias, ampliados para estudantes de Engenharia e Física com derivação, incerteza e análise crítica.</p>
+      <p class="eyebrow">PRCLFBE · Laboratório de Física Básica: Eletromagnetismo</p>
+      <h1>Experimentos</h1>
+      <p>Roteiros do conjunto AZEHEB e de montagens próprias disponíveis para o componente curricular.</p>
     </header>
 
     <section class="report-template-promo" aria-labelledby="report-template-title">
       <div class="report-template-promo__copy">
         <p class="eyebrow">Template para os alunos</p>
-        <h2 id="report-template-title">Veja como organizar um relatório completo.</h2>
+        <h2 id="report-template-title">Modelo de relatório</h2>
         <p>
           Este exemplo preenchido reúne capa, resumo, introdução, objetivos,
           referencial teórico, materiais e métodos, resultados, discussão,
@@ -68,14 +68,14 @@
     </section>
   </main>
 
-  <footer class="site-footer"><p>Experimentos · Física III</p><a href="../">Voltar ao início</a></footer>
+  <footer class="site-footer"><p>Experimentos · PRCLFBE</p><a href="../disciplinas/prclfbe/">Voltar à disciplina</a></footer>
   <script type="module" src="../componentes/navegacao-principal.js"></script>
   <script type="module">
     import { mountCatalog } from "../componentes/catalogo.js";
     mountCatalog(document.querySelector("[data-catalog-root]"), {
-      registryUrl: "../simuladores.json",
+      registryUrl: "../materiais.json",
       pathPrefix: "../",
-      scope: { section: "experimentos" },
+      scope: { section: "experimentos", discipline: "PRCLFBE" },
     });
   </script>
 </body>

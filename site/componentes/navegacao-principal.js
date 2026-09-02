@@ -1,4 +1,21 @@
 export function buildMainNavigation(rootPath = "./", activeSection = "inicio") {
+  const disciplines = [
+    {
+      id: "prcfemg",
+      label: "PRCFEMG — Fundamentos do Eletromagnetismo",
+      href: `${rootPath}disciplinas/prcfemg/`,
+      current: ["prcfemg", "exercicios", "simulacoes"].includes(
+        activeSection,
+      ),
+    },
+    {
+      id: "prclfbe",
+      label: "PRCLFBE — Laboratório de Física Básica: Eletromagnetismo",
+      href: `${rootPath}disciplinas/prclfbe/`,
+      current: ["prclfbe", "experimentos"].includes(activeSection),
+    },
+  ];
+
   return [
     {
       id: "inicio",
@@ -7,22 +24,16 @@ export function buildMainNavigation(rootPath = "./", activeSection = "inicio") {
       current: activeSection === "inicio",
     },
     {
-      id: "exercicios",
-      label: "Exercícios",
-      href: `${rootPath}exercicios/`,
-      current: activeSection === "exercicios",
+      id: "disciplinas",
+      label: "Disciplinas",
+      current: disciplines.some((discipline) => discipline.current),
+      children: disciplines,
     },
     {
-      id: "experimentos",
-      label: "Experimentos",
-      href: `${rootPath}experimentos/`,
-      current: activeSection === "experimentos",
-    },
-    {
-      id: "simulacoes",
-      label: "Simulações",
-      href: `${rootPath}simuladores/`,
-      current: activeSection === "simulacoes",
+      id: "sobre",
+      label: "Sobre",
+      href: `${rootPath}#sobre`,
+      current: activeSection === "sobre",
     },
   ];
 }
@@ -95,14 +106,61 @@ export function mountMainNavigation(root) {
 
   const nav = document.createElement("nav");
   nav.className = "site-navigation";
-  nav.setAttribute("aria-label", "Áreas do acervo");
+  nav.setAttribute("aria-label", "Navegação principal");
 
   const list = document.createElement("ul");
+  list.className = "site-navigation__list";
   for (const item of buildMainNavigation(
     root.dataset.rootPath,
     root.dataset.activeSection,
   )) {
     const listItem = document.createElement("li");
+    listItem.className = "site-navigation__item";
+
+    if (item.children) {
+      listItem.classList.add("site-navigation__item--dropdown");
+      const details = document.createElement("details");
+      details.className = "site-navigation__dropdown";
+
+      const summary = document.createElement("summary");
+      summary.className = "site-navigation__summary";
+      summary.textContent = item.label;
+      if (item.current) {
+        summary.setAttribute("aria-current", "page");
+      }
+
+      const submenu = document.createElement("ul");
+      submenu.className = "site-navigation__submenu";
+      for (const child of item.children) {
+        const childItem = document.createElement("li");
+        const childLink = document.createElement("a");
+        childLink.href = child.href;
+        childLink.textContent = child.label;
+        if (child.current) {
+          childLink.setAttribute("aria-current", "page");
+        }
+        childItem.append(childLink);
+        submenu.append(childItem);
+      }
+
+      details.addEventListener("keydown", (event) => {
+        if (event.key === "Escape" && details.open) {
+          details.open = false;
+          summary.focus();
+        }
+      });
+      document.addEventListener("click", (event) => {
+        if (details.open && !details.contains(event.target)) {
+          details.open = false;
+        }
+      });
+
+      details.append(summary, submenu);
+      listItem.append(details);
+      list.append(listItem);
+      continue;
+    }
+
     const link = document.createElement("a");
     link.href = item.href;
     link.textContent = item.label;

@@ -14,15 +14,71 @@ function count(html, pattern) {
   return (html.match(pattern) ?? []).length;
 }
 
-test("página inicial oferece as três áreas e o filtro de experimentos", async () => {
+test("página inicial apresenta as disciplinas e os perfis do professor", async () => {
   const html = await readSitePage("index.html");
 
   assert.equal(count(html, /<h1\b/g), 1);
-  assert.match(html, /href="\.\/exercicios\/"/);
-  assert.match(html, /href="\.\/experimentos\/"/);
-  assert.match(html, /href="\.\/simuladores\/"/);
-  assert.match(html, /data-catalog-filter="experimento"/);
+  assert.match(html, /href="\.\/disciplinas\/prcfemg\/"/);
+  assert.match(html, /href="\.\/disciplinas\/prclfbe\/"/);
+  assert.match(html, /PRCFEMG/);
+  assert.match(html, /PRCLFBE/);
+  assert.match(html, /2023\.03\.07-PPC-LIC-Física-PRC-Reformulação\.pdf/);
+  assert.match(html, /id="sobre"/);
+  assert.match(html, /https:\/\/atzingen\.dev\//);
+  assert.match(html, /lattes\.cnpq\.br\/5173282107514295/);
+  assert.match(html, /scholar\.google\.com\/citations\?user=YPUqX9sAAAAJ/);
   assert.match(html, /data-site-navigation/);
+});
+
+test("cada disciplina possui entrada e catálogo independentes", async () => {
+  const electromagnetism = await readSitePage(
+    "disciplinas/prcfemg/index.html",
+  );
+  const laboratory = await readSitePage(
+    "disciplinas/prclfbe/index.html",
+  );
+
+  assert.equal(count(electromagnetism, /<h1\b/g), 1);
+  assert.equal(count(laboratory, /<h1\b/g), 1);
+  assert.match(electromagnetism, /scope:\s*\{ discipline: "PRCFEMG" \}/);
+  assert.match(laboratory, /scope:\s*\{ discipline: "PRCLFBE" \}/);
+  assert.match(electromagnetism, /href="\.\.\/\.\.\/exercicios\/"/);
+  assert.match(laboratory, /href="\.\.\/\.\.\/experimentos\/"/);
+});
+
+test("páginas das disciplinas reproduzem os dados curriculares do PPC", async () => {
+  const electromagnetism = await readSitePage("disciplinas/prcfemg/index.html");
+  const laboratory = await readSitePage("disciplinas/prclfbe/index.html");
+
+  assert.match(electromagnetism, /Fundamentos do Eletromagnetismo/);
+  assert.match(electromagnetism, /19 tópicos/);
+  assert.match(electromagnetism, /Equações de Maxwell/);
+  assert.match(electromagnetism, /Bibliografia/);
+  assert.match(electromagnetism, /Divergência no documento/);
+  assert.match(electromagnetism, /#page=207/);
+  assert.match(electromagnetism, /#page=50/);
+
+  assert.match(laboratory, /Laboratório de Física Básica: Eletromagnetismo/);
+  assert.match(laboratory, /21 tópicos/);
+  assert.match(laboratory, /Transformadores/);
+  assert.match(laboratory, /Laboratórios de Física/);
+  assert.match(laboratory, /#page=218/);
+});
+
+test("PPC está incluído nas referências publicadas", async () => {
+  const pdf = await readFile(
+    new URL(
+      "../referencias/2023.03.07-PPC-LIC-Física-PRC-Reformulação.pdf",
+      import.meta.url,
+    ),
+  );
+  const documentation = await readSitePage("referencias/README.md");
+
+  assert.equal(pdf.subarray(0, 4).toString(), "%PDF");
+  assert.ok(pdf.length > 2_000_000);
+  assert.match(documentation, /PRCFEMG/);
+  assert.match(documentation, /PRCLFBE/);
+  assert.match(documentation, /e18d8569868752b56d79b604c692a71707ca8a29fab3a1c6192d71c6db5b1fe3/);
 });
 
 test("índice de exercícios encaminha aos capítulos 21 e 22", async () => {
@@ -63,6 +119,7 @@ test("índices de experimentos e simulações limitam seus catálogos", async ()
   assert.equal(count(simulations, /<h1\b/g), 1);
   assert.match(experiments, /section:\s*"experimentos"/);
   assert.match(simulations, /section:\s*"simulacoes"/);
+  assert.match(simulations, /discipline:\s*"PRCFEMG"/);
   assert.match(experiments, /pathPrefix:\s*"\.\.\/"/);
   assert.match(simulations, /pathPrefix:\s*"\.\.\/"/);
 });
@@ -98,20 +155,23 @@ test("os oito materiais de campo elétrico apontam para o capítulo 22", async (
   }
 });
 
-test("simuladores individuais mantêm acesso às quatro áreas", async () => {
-  for (const path of [
-    "simuladores/cargas-e-vetores/index.html",
-    "simuladores/cuba-eletrolitica/index.html",
-  ]) {
-    const html = await readSitePage(path);
-    assert.match(html, /data-active-section="simulacoes"/, path);
-    assert.match(html, /navegacao-principal\.js/, path);
-  }
+test("simuladores indicam a disciplina à qual pertencem", async () => {
+  const charges = await readSitePage("simuladores/cargas-e-vetores/index.html");
+  const tank = await readSitePage("simuladores/cuba-eletrolitica/index.html");
+
+  assert.match(charges, /data-active-section="simulacoes"/);
+  assert.match(charges, /disciplinas\/prcfemg/);
+  assert.match(tank, /data-active-section="prclfbe"/);
+  assert.match(tank, /disciplinas\/prclfbe/);
+  assert.match(charges, /navegacao-principal\.js/);
+  assert.match(tank, /navegacao-principal\.js/);
 });
 
 test("cada página restaura o tema escolhido antes de pintar a tela", async () => {
   const paginas = [
     "index.html",
+    "disciplinas/prcfemg/index.html",
+    "disciplinas/prclfbe/index.html",
     "exercicios/index.html",
     "exercicios/capitulo-21/index.html",
     "exercicios/capitulo-22/index.html",

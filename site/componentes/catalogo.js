@@ -28,6 +28,8 @@ export function filterCatalog(items, query = "", type = "todos", scope = {}) {
   return items.filter((item) => {
     const matchesType = type === "todos" || item.kind === type;
     const matchesSection = !scope.section || item.section === scope.section;
+    const matchesDiscipline =
+      !scope.discipline || item.discipline === scope.discipline;
     const matchesChapter =
       scope.chapter === undefined || item.chapter === scope.chapter;
     const matchesReference =
@@ -37,6 +39,7 @@ export function filterCatalog(items, query = "", type = "todos", scope = {}) {
     return (
       matchesType &&
       matchesSection &&
+      matchesDiscipline &&
       matchesChapter &&
       matchesReference &&
       matchesQuery
@@ -98,7 +101,7 @@ function createCard(item, pathPrefix = "") {
 }
 
 export async function mountCatalog(root, options = {}) {
-  const registryUrl = options.registryUrl ?? "./simuladores.json";
+  const registryUrl = options.registryUrl ?? "./materiais.json";
   const scope = options.scope ?? {};
   const pathPrefix = options.pathPrefix ?? "";
   const controls = root.querySelector("[data-catalog-controls]");

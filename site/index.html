@@ -3,165 +3,135 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Simulações e resoluções interativas para as aulas de eletromagnetismo.">
-  <title>Laboratório de Eletromagnetismo</title>
+  <meta name="description" content="Materiais didáticos do professor Gustavo von Atzingen para componentes curriculares da Licenciatura em Física do IFSP Piracicaba.">
+  <title>Gustavo von Atzingen · Materiais didáticos</title>
+  <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="./assets/base.css">
   <script>try{if(localStorage.getItem("tema")==="escuro"){document.documentElement.dataset.theme="escuro"}}catch(erro){}</script>
 </head>
-<body class="home-page">
+<body class="home-page portal-page">
   <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
 
   <header class="site-header">
-    <a class="brand" href="./" aria-label="Laboratório de Eletromagnetismo — início">
-      <span class="brand__mark" aria-hidden="true">Σ</span>
+    <a class="brand" href="./" aria-label="Materiais didáticos — início">
+      <span class="brand__mark" aria-hidden="true">G</span>
       <span>
-        <strong>Laboratório de Eletromagnetismo</strong>
-        <small>IFSP · materiais de aula</small>
+        <strong>Gustavo von Atzingen</strong>
+        <small>IFSP · materiais didáticos</small>
       </span>
     </a>
     <div data-site-navigation data-root-path="./" data-active-section="inicio"></div>
   </header>
 
   <main id="conteudo">
-    <section class="hero" aria-labelledby="hero-title">
+    <section class="hero portal-hero" aria-labelledby="hero-title">
       <div class="hero__copy">
-        <p class="eyebrow">Forças · campos · vetores</p>
-        <h1 id="hero-title">Veja a soma acontecer.</h1>
+        <p class="eyebrow">Licenciatura em Física · IFSP Piracicaba</p>
+        <h1 id="hero-title">Materiais didáticos</h1>
         <p class="hero__lead">
-          Mova cargas, decomponha vetores e confronte o desenho com a conta.
-          Cada material une explicação, experimento e resultado numérico.
+          Conteúdos disponíveis para dois componentes curriculares do 6º
+          semestre da Licenciatura em Física.
         </p>
-        <a class="text-link" href="#catalogo">
-          Explorar materiais <span aria-hidden="true">↓</span>
-        </a>
+        <div class="hero__actions">
+          <a class="primary-link" href="#disciplinas">Consultar disciplinas <span aria-hidden="true">↓</span></a>
+          <a class="secondary-link" href="#sobre">Sobre o professor</a>
+        </div>
       </div>
 
-      <div class="hero__instrument" aria-label="Diagrama de dois vetores e sua resultante">
-        <div class="instrument__readout">
-          <span>SOMA VETORIAL</span>
-          <strong>
-            <span class="vector-symbol" role="img" aria-label="vetor R">R</span>
-            =
-            <span class="vector-symbol" role="img" aria-label="vetor A">A</span>
-            +
-            <span class="vector-symbol" role="img" aria-label="vetor B">B</span>
-          </strong>
+      <aside class="portal-reference" aria-labelledby="reference-title">
+        <div class="portal-reference__header">
+          <span>DOCUMENTO DE REFERÊNCIA</span>
+          <strong>2023</strong>
         </div>
-        <svg viewBox="0 0 520 330" role="img" aria-labelledby="hero-vector-title hero-vector-desc">
-          <title id="hero-vector-title">Construção do paralelogramo</title>
-          <desc id="hero-vector-desc">Vetores A e B partem da mesma origem e formam a resultante R.</desc>
-          <defs>
-            <pattern id="hero-grid" width="26" height="26" patternUnits="userSpaceOnUse">
-              <path d="M 26 0 L 0 0 0 26" class="hero-grid-line"></path>
-            </pattern>
-            <marker id="hero-arrow-a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-              <path d="M 0 0 L 10 5 L 0 10 z" class="hero-arrow-a-head"></path>
-            </marker>
-            <marker id="hero-arrow-b" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-              <path d="M 0 0 L 10 5 L 0 10 z" class="hero-arrow-b-head"></path>
-            </marker>
-            <marker id="hero-arrow-r" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-              <path d="M 0 0 L 10 5 L 0 10 z" class="hero-arrow-r-head"></path>
-            </marker>
-          </defs>
-          <rect width="520" height="330" fill="url(#hero-grid)"></rect>
-          <polygon points="86,258 326,210 414,82 174,130" class="hero-parallelogram"></polygon>
-          <line x1="86" y1="258" x2="326" y2="210" class="hero-vector hero-vector--a" marker-end="url(#hero-arrow-a)"></line>
-          <line x1="86" y1="258" x2="174" y2="130" class="hero-vector hero-vector--b" marker-end="url(#hero-arrow-b)"></line>
-          <line x1="326" y1="210" x2="414" y2="82" class="hero-helper"></line>
-          <line x1="174" y1="130" x2="414" y2="82" class="hero-helper"></line>
-          <line x1="86" y1="258" x2="414" y2="82" class="hero-vector hero-vector--r" marker-end="url(#hero-arrow-r)"></line>
-          <circle cx="86" cy="258" r="6" class="hero-origin"></circle>
-          <g class="hero-label hero-label--a" aria-hidden="true">
-            <text x="252" y="254">A</text>
-            <line x1="252" y1="234" x2="266" y2="234"></line>
-            <path d="M266 234 L261 230 L261 238 Z"></path>
-          </g>
-          <g class="hero-label hero-label--b" aria-hidden="true">
-            <text x="104" y="174">B</text>
-            <line x1="104" y1="154" x2="118" y2="154"></line>
-            <path d="M118 154 L113 150 L113 158 Z"></path>
-          </g>
-          <g class="hero-label hero-label--r" aria-hidden="true">
-            <text x="272" y="140">R</text>
-            <line x1="272" y1="120" x2="286" y2="120"></line>
-            <path d="M286 120 L281 116 L281 124 Z"></path>
-          </g>
-        </svg>
-        <p class="instrument__caption">
-          A diagonal não é um atalho gráfico: ela é a soma das componentes.
-        </p>
-      </div>
+        <div class="portal-reference__body">
+          <p class="eyebrow">Projeto Pedagógico de Curso</p>
+          <h2 id="reference-title">Licenciatura em Física</h2>
+          <dl>
+            <div><dt>Câmpus</dt><dd>Piracicaba</dd></div>
+            <div><dt>Modalidade</dt><dd>Presencial</dd></div>
+            <div><dt>Vigência</dt><dd>1º semestre de 2023</dd></div>
+            <div><dt>Reformulação</dt><dd>Resolução nº 249/2023</dd></div>
+          </dl>
+        </div>
+        <a class="portal-reference__link" href="./referencias/2023.03.07-PPC-LIC-Física-PRC-Reformulação.pdf" target="_blank" rel="noopener">
+          Abrir PPC completo <span>PDF · 2,0 MB</span>
+        </a>
+      </aside>
     </section>
 
-    <section class="area-overview" aria-labelledby="areas-title">
+    <section class="discipline-section" id="disciplinas" aria-labelledby="disciplines-title">
       <div class="section-heading">
         <div>
-          <p class="eyebrow">Organize seu percurso</p>
-          <h2 id="areas-title">Três formas de estudar</h2>
+          <p class="eyebrow">6º semestre</p>
+          <h2 id="disciplines-title">Componentes curriculares</h2>
         </div>
-        <p class="area-overview__intro">Resolva, investigue no laboratório ou teste o modelo na tela.</p>
+        <p class="section-heading__intro">Nomes, códigos e cargas horárias conforme o PPC vigente desde o primeiro semestre de 2023.</p>
       </div>
-      <div class="area-grid">
-        <a class="area-card area-card--exercises" href="./exercicios/">
-          <span class="area-card__index">01</span>
-          <strong>Exercícios</strong>
-          <small>Resoluções separadas por referência e capítulo.</small>
+
+      <div class="discipline-grid discipline-grid--two">
+        <a class="discipline-card discipline-card--electromagnetism" href="./disciplinas/prcfemg/">
+          <span class="discipline-card__index">01</span>
+          <span class="discipline-card__status">PRCFEMG</span>
+          <div>
+            <p>Obrigatório · 66,7 h</p>
+            <h3>Fundamentos do Eletromagnetismo</h3>
+            <span class="discipline-card__description">Magnetismo, indução eletromagnética, equações de Maxwell, ondas eletromagnéticas e circuitos CA.</span>
+          </div>
+          <span class="discipline-card__action">Consultar componente <span aria-hidden="true">→</span></span>
         </a>
-        <a class="area-card area-card--experiments" href="./experimentos/">
-          <span class="area-card__index">02</span>
-          <strong>Experimentos</strong>
-          <small>Roteiros, fundamentos, dados e relatórios de Física III.</small>
-        </a>
-        <a class="area-card area-card--simulations" href="./simuladores/">
-          <span class="area-card__index">03</span>
-          <strong>Simulações</strong>
-          <small>Modelos interativos de cargas, forças e vetores.</small>
+
+        <a class="discipline-card discipline-card--laboratory" href="./disciplinas/prclfbe/">
+          <span class="discipline-card__index">02</span>
+          <span class="discipline-card__status">PRCLFBE</span>
+          <div>
+            <p>Obrigatório · 33,3 h</p>
+            <h3>Laboratório de Física Básica: Eletromagnetismo</h3>
+            <span class="discipline-card__description">Atividades experimentais de demonstração, verificação e investigação em eletricidade, circuitos e eletromagnetismo.</span>
+          </div>
+          <span class="discipline-card__action">Consultar componente <span aria-hidden="true">→</span></span>
         </a>
       </div>
     </section>
 
-    <section class="catalog-section" id="catalogo" aria-labelledby="catalog-title" data-catalog-root>
-      <div class="section-heading">
-        <div>
-          <p class="eyebrow">Acervo inicial</p>
-          <h2 id="catalog-title">Explore o acervo</h2>
-        </div>
-        <p class="catalog-count" data-catalog-count aria-live="polite">Carregando materiais…</p>
+    <section class="about-section" id="sobre" aria-labelledby="about-title">
+      <div class="about-section__heading">
+        <p class="eyebrow">Professor</p>
+        <h2 id="about-title">Gustavo von Atzingen</h2>
       </div>
-
-      <div class="catalog-controls" data-catalog-controls aria-busy="true">
-        <label class="search-field">
-          <span>Buscar no acervo</span>
-          <input
-            type="search"
-            placeholder="Ex.: Halliday, vetores, capítulo 21"
-            autocomplete="off"
-            data-catalog-search
-          >
-        </label>
-        <div class="filter-group" aria-label="Filtrar tipo de material">
-          <button type="button" data-catalog-filter="todos" aria-pressed="true">Todos</button>
-          <button type="button" data-catalog-filter="simulador" aria-pressed="false">Simuladores</button>
-          <button type="button" data-catalog-filter="resolucao" aria-pressed="false">Resoluções</button>
-          <button type="button" data-catalog-filter="experimento" aria-pressed="false">Experimentos</button>
+      <div class="about-section__content">
+        <div class="about-section__bio">
+          <p>
+            Professor do IFSP Câmpus Piracicaba desde 2014. Bacharel em Física
+            pela USP (2007), mestre e doutor em Engenharia pela USP (2013 e
+            2017).
+          </p>
+          <p>
+            Na docência, atua nas disciplinas de Inteligência Artificial,
+            Visão Computacional e Visão Computacional Embarcada. Esta página
+            reúne os materiais atualmente disponíveis para os dois componentes
+            curriculares de eletromagnetismo.
+          </p>
         </div>
+        <nav class="profile-links" aria-label="Perfis acadêmicos e profissionais">
+          <a href="https://atzingen.dev/" target="_blank" rel="noopener noreferrer">
+            <span><strong>Currículo e projetos</strong><small>atzingen.dev</small></span><span aria-hidden="true">↗</span>
+          </a>
+          <a href="http://lattes.cnpq.br/5173282107514295" target="_blank" rel="noopener noreferrer">
+            <span><strong>Currículo Lattes</strong><small>CNPq</small></span><span aria-hidden="true">↗</span>
+          </a>
+          <a href="https://scholar.google.com/citations?user=YPUqX9sAAAAJ&amp;hl=pt-BR" target="_blank" rel="noopener noreferrer">
+            <span><strong>Google Scholar</strong><small>Publicações e citações</small></span><span aria-hidden="true">↗</span>
+          </a>
+        </nav>
       </div>
-
-      <div class="catalog-grid" data-catalog-results aria-live="polite"></div>
     </section>
   </main>
 
   <footer class="site-footer">
-    <p>Material didático aberto · Gustavo von Atzingen · IFSP</p>
+    <p>Gustavo von Atzingen · IFSP Câmpus Piracicaba</p>
     <a href="https://github.com/Atzingen/Eletromagnetismo-aulas">Código-fonte no GitHub</a>
   </footer>
 
   <script type="module" src="./componentes/navegacao-principal.js"></script>
-  <script type="module">
-    import { mountCatalog } from "./componentes/catalogo.js";
-
-    mountCatalog(document.querySelector("[data-catalog-root]"));
-  </script>
 </body>
 </html>

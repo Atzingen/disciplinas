@@ -1,20 +1,33 @@
-# Eletromagnetismo — aulas
+# Materiais didáticos — Gustavo von Atzingen
 
-Materiais de apoio para as aulas de eletromagnetismo: exercícios resolvidos,
-roteiros de laboratório, relatórios e simulações interativas.
+Site de materiais didáticos do professor Gustavo von Atzingen no IFSP Câmpus
+Piracicaba. Cada componente curricular possui uma página independente.
 
-## Site interativo
+## Portal docente
 
 O acervo está publicado em:
 
 **https://atzingen.github.io/Eletromagnetismo-aulas/**
 
-A navegação possui três áreas independentes:
+A página inicial apresenta o professor e encaminha para os dois componentes
+curriculares atualmente disponíveis:
 
-- **Exercícios:** resoluções organizadas por referência e capítulo;
-- **Experimentos:** roteiros avançados de Física III, com montagem,
-  fundamentos, dados e relatório;
-- **Simulações:** modelos interativos para explorar cargas, forças e vetores.
+- **PRCFEMG — Fundamentos do Eletromagnetismo:** resoluções organizadas por
+  referência e capítulo e simulações de cargas, forças, campos e vetores;
+- **PRCLFBE — Laboratório de Física Básica: Eletromagnetismo:** roteiros
+  experimentais, montagens, dados, relatórios e recursos virtuais de apoio.
+
+Os nomes, códigos, ementas, objetivos, conteúdos programáticos e bibliografias
+seguem o
+[PPC da Licenciatura em Física](site/referencias/2023.03.07-PPC-LIC-Física-PRC-Reformulação.pdf).
+As páginas de referência usadas e a divergência de total de aulas encontrada
+em PRCFEMG estão documentadas em
+[site/referencias/README.md](site/referencias/README.md).
+
+Novas disciplinas devem ganhar uma página em `site/disciplinas/<codigo>/`, com
+o código em letras minúsculas no caminho. Os itens do catálogo devem indicar o
+código oficial, em letras maiúsculas, na propriedade `discipline` de
+`site/materiais.json`.
 
 ## Exercícios
 
@@ -36,7 +49,7 @@ exercícios do Halliday — 22.24, 22.26 e 22.28 — aplicam os mesmos argumento
 simetria e geometria. As duas sequências são identificadas e navegadas
 separadamente.
 
-## Experimentos e relatórios
+## PRCLFBE — Laboratório de Física Básica: Eletromagnetismo
 
 Os quatro roteiros baseados no conjunto de eletromagnetismo AZEHEB foram
 ampliados para turmas de Engenharia e Física:
@@ -87,7 +100,7 @@ npm run serve
 
 Depois, acesse http://127.0.0.1:8000/.
 
-O arquivo [site/simuladores.json](site/simuladores.json) é o registro central do
+O arquivo [site/materiais.json](site/materiais.json) é o registro central do
 acervo. Cada material informa sua área e seu caminho; exercícios também
 informam a referência, o capítulo e o número.
 
@@ -110,6 +123,9 @@ O exercício que iniciou o projeto permanece em:
 
 ## Atalhos para o conteúdo web
 
+- [Portal de disciplinas](site/)
+- [PRCFEMG — Fundamentos do Eletromagnetismo](site/disciplinas/prcfemg/)
+- [PRCLFBE — Laboratório de Física Básica: Eletromagnetismo](site/disciplinas/prclfbe/)
 - [Índice de exercícios](site/exercicios/)
 - [Halliday — Capítulo 21](site/exercicios/capitulo-21/)
 - [Campo elétrico — Capítulo 22](site/exercicios/capitulo-22/)
