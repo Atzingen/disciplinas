@@ -3,15 +3,16 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Simulações interativas para visualizar forças, campos e vetores.">
-  <title>Simulações · PRCFEMG</title>
+  <meta name="description" content="Simulações interativas para visualizar forças, campos, potenciais e vetores, marcadas com as disciplinas em que fazem sentido.">
+  <title>Simulações · Materiais didáticos</title>
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="../assets/base.css">
   <script>try{if(localStorage.getItem("tema")==="escuro"){document.documentElement.dataset.theme="escuro"}}catch(erro){}</script>
 </head>
 <body class="area-page">
   <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
   <header class="site-header">
-    <a class="brand" href="../" aria-label="Portal docente — início">
+    <a class="brand" href="../" aria-label="Materiais didáticos — início">
       <span class="brand__mark" aria-hidden="true">G</span>
       <span><strong>Gustavo von Atzingen</strong><small>IFSP · materiais didáticos</small></span>
     </a>
@@ -20,34 +21,36 @@
 
   <main class="area-page-main" id="conteudo">
     <header class="area-hero">
-      <p class="eyebrow">PRCFEMG · Fundamentos do Eletromagnetismo</p>
+      <p class="eyebrow">Laboratórios virtuais</p>
       <h1>Simulações interativas</h1>
-      <p>Modelos com parâmetros ajustáveis para visualizar cargas, campos, forças e vetores.</p>
+      <p>Modelos com parâmetros ajustáveis para visualizar cargas, campos, potenciais, forças e vetores. Cada simulação indica as disciplinas em que faz sentido; filtre por uma delas para ver só o que se aplica.</p>
     </header>
     <section class="catalog-section catalog-section--area" aria-labelledby="catalog-title" data-catalog-root>
       <div class="section-heading">
-        <div><p class="eyebrow">Simulações disponíveis</p><h2 id="catalog-title">Laboratórios virtuais</h2></div>
+        <div><p class="eyebrow">Simulações disponíveis</p><h2 id="catalog-title">Escolha uma simulação</h2></div>
         <p class="catalog-count" data-catalog-count aria-live="polite">Carregando materiais…</p>
       </div>
       <div class="catalog-controls" data-catalog-controls aria-busy="true">
-        <label class="search-field"><span>Buscar simulação</span><input type="search" placeholder="Ex.: cargas, vetores" autocomplete="off" data-catalog-search></label>
-        <div class="filter-group" aria-label="Filtrar tipo de material">
-          <button type="button" data-catalog-filter="todos" aria-pressed="true">Todos</button>
-          <button type="button" data-catalog-filter="simulador" aria-pressed="false">Simuladores</button>
+        <label class="search-field"><span>Buscar simulação</span><input type="search" placeholder="Ex.: cargas, vetores, potencial" autocomplete="off" data-catalog-search></label>
+        <div class="filter-group" aria-label="Filtrar por disciplina">
+          <button type="button" data-catalog-discipline="todas" aria-pressed="true">Todas as disciplinas</button>
+          <button type="button" data-catalog-discipline="PRCFEMG" aria-pressed="false">PRCFEMG</button>
+          <button type="button" data-catalog-discipline="PRCLFBE" aria-pressed="false">PRCLFBE</button>
         </div>
       </div>
       <div class="catalog-grid" data-catalog-results aria-live="polite"></div>
     </section>
   </main>
 
-  <footer class="site-footer"><p>Simulações · PRCFEMG</p><a href="../disciplinas/prcfemg/">Voltar à disciplina</a></footer>
+  <footer class="site-footer"><p>Simulações · Materiais didáticos</p><a href="../">Voltar ao início</a></footer>
   <script type="module" src="../componentes/navegacao-principal.js"></script>
   <script type="module">
     import { mountCatalog } from "../componentes/catalogo.js";
     mountCatalog(document.querySelector("[data-catalog-root]"), {
       registryUrl: "../materiais.json",
       pathPrefix: "../",
-      scope: { section: "simulacoes", discipline: "PRCFEMG" },
+      scope: { section: "simulacoes" },
+      showDisciplines: true,
     });
   </script>
 </body>

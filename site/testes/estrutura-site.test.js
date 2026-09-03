@@ -20,14 +20,37 @@ test("página inicial apresenta as disciplinas e os perfis do professor", async 
   assert.equal(count(html, /<h1\b/g), 1);
   assert.match(html, /href="\.\/disciplinas\/prcfemg\/"/);
   assert.match(html, /href="\.\/disciplinas\/prclfbe\/"/);
+  assert.match(html, /href="\.\/simuladores\/"/);
   assert.match(html, /PRCFEMG/);
   assert.match(html, /PRCLFBE/);
   assert.match(html, /2023\.03\.07-PPC-LIC-Física-PRC-Reformulação\.pdf/);
+  assert.doesNotMatch(html, /class="portal-reference/);
   assert.match(html, /id="sobre"/);
   assert.match(html, /https:\/\/atzingen\.dev\//);
   assert.match(html, /lattes\.cnpq\.br\/5173282107514295/);
   assert.match(html, /scholar\.google\.com\/citations\?user=YPUqX9sAAAAJ/);
   assert.match(html, /data-site-navigation/);
+});
+
+test("página inicial abre com a apresentação, segue com o professor e fecha com as disciplinas", async () => {
+  const html = await readSitePage("index.html");
+  const intro = html.indexOf('class="hero portal-hero"');
+  const about = html.indexOf('id="sobre"');
+  const disciplines = html.indexOf('id="disciplinas"');
+
+  assert.ok(intro > -1 && about > intro && disciplines > about);
+  assert.match(html, /disciplinas que leciono no IFSP/);
+  assert.match(html, /class="portal-board"/);
+});
+
+test("páginas das disciplinas trazem o PPC como cartão lateral", async () => {
+  for (const code of ["prcfemg", "prclfbe"]) {
+    const html = await readSitePage(`disciplinas/${code}/index.html`);
+    assert.match(html, /class="course-facts-layout"/, code);
+    assert.match(html, /class="portal-reference portal-reference--course"/, code);
+    assert.match(html, /Abrir PPC completo/, code);
+    assert.equal(count(html, /<h1\b/g), 1, code);
+  }
 });
 
 test("cada disciplina possui entrada e catálogo independentes", async () => {
@@ -119,7 +142,12 @@ test("índices de experimentos e simulações limitam seus catálogos", async ()
   assert.equal(count(simulations, /<h1\b/g), 1);
   assert.match(experiments, /section:\s*"experimentos"/);
   assert.match(simulations, /section:\s*"simulacoes"/);
-  assert.match(simulations, /discipline:\s*"PRCFEMG"/);
+  assert.doesNotMatch(simulations, /discipline:\s*"PRC/);
+  assert.match(simulations, /showDisciplines:\s*true/);
+  assert.match(simulations, /data-catalog-discipline="todas"/);
+  assert.match(simulations, /data-catalog-discipline="PRCFEMG"/);
+  assert.match(simulations, /data-catalog-discipline="PRCLFBE"/);
+  assert.match(simulations, /data-active-section="simulacoes"/);
   assert.match(experiments, /pathPrefix:\s*"\.\.\/"/);
   assert.match(simulations, /pathPrefix:\s*"\.\.\/"/);
 });
@@ -161,8 +189,10 @@ test("simuladores indicam a disciplina à qual pertencem", async () => {
 
   assert.match(charges, /data-active-section="simulacoes"/);
   assert.match(charges, /disciplinas\/prcfemg/);
-  assert.match(tank, /data-active-section="prclfbe"/);
+  assert.match(tank, /data-active-section="simulacoes"/);
   assert.match(tank, /disciplinas\/prclfbe/);
+  assert.match(charges, /<a href="\.\.\/">Simulações<\/a>/);
+  assert.match(tank, /<a href="\.\.\/">Simulações<\/a>/);
   assert.match(charges, /navegacao-principal\.js/);
   assert.match(tank, /navegacao-principal\.js/);
 });

@@ -1039,7 +1039,8 @@ h1 {
   padding: clamp(1.4rem, 4vw, 2.2rem);
 }
 
-.portal-reference__body h2 {
+.portal-reference__body h2,
+.portal-reference__title {
   margin: 0;
   font-size: clamp(2rem, 4vw, 3.2rem);
   line-height: 1;
@@ -1090,6 +1091,134 @@ h1 {
   color: var(--ink-soft);
   font-size: 0.68rem;
   font-weight: 400;
+}
+
+.portal-reference--course {
+  position: sticky;
+  top: 100px;
+  box-shadow: none;
+}
+
+.portal-reference--course .portal-reference__title {
+  font-size: clamp(1.7rem, 3vw, 2.3rem);
+}
+
+.portal-reference--course .portal-reference__body {
+  padding: 1.4rem;
+}
+
+.portal-reference--course .portal-reference__body dl {
+  margin-top: 1.4rem;
+}
+
+.portal-board {
+  overflow: hidden;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  box-shadow: var(--shadow);
+}
+
+.portal-board__header {
+  padding: 0.85rem 1.1rem;
+  border-bottom: 1px solid var(--line);
+  background: var(--paper-deep);
+  color: var(--ink-soft);
+  font: 0.7rem/1.3 var(--font-mono);
+  letter-spacing: 0.1em;
+}
+
+.portal-board__list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.portal-board__list li + li {
+  border-top: 1px solid var(--line);
+}
+
+.portal-board__list a {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.05rem 1.1rem;
+  text-decoration: none;
+}
+
+.portal-board__list a:hover {
+  background: var(--paper-deep);
+}
+
+.portal-board__index {
+  color: var(--line-strong);
+  font: 700 1.1rem/1 var(--font-mono);
+}
+
+.portal-board__list strong,
+.portal-board__list small {
+  display: block;
+}
+
+.portal-board__list strong {
+  font: 700 1.05rem/1.2 var(--font-display);
+}
+
+.portal-board__list small {
+  margin-top: 0.3rem;
+  color: var(--ink-soft);
+  font-size: 0.82rem;
+  line-height: 1.4;
+}
+
+.portal-board__list a > span:last-child {
+  color: var(--negative);
+  font-size: 1.3rem;
+}
+
+.section-heading__intro a {
+  color: var(--negative);
+  text-underline-offset: 0.18em;
+}
+
+.course-facts-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.55fr) minmax(280px, 0.65fr);
+  gap: 1.5rem;
+  align-items: start;
+  margin-top: 2.2rem;
+}
+
+.course-facts-layout .course-facts {
+  margin-top: 0;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.catalog-card__header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.catalog-card__disciplines {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.catalog-card__discipline {
+  padding: 0.28rem 0.5rem;
+  border: 1px solid var(--negative);
+  border-radius: var(--radius-pill);
+  color: var(--negative);
+  font: 700 0.66rem/1 var(--font-mono);
+  letter-spacing: 0.08em;
 }
 
 .learning-map {
@@ -1703,7 +1832,16 @@ a.discipline-card:hover {
   .portal-hero,
   .course-hero,
   .about-section,
-  .curriculum-section--split {
+  .curriculum-section--split,
+  .course-facts-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .portal-reference--course {
+    position: static;
+  }
+
+  .course-facts-layout .course-facts {
     grid-template-columns: 1fr;
   }
 

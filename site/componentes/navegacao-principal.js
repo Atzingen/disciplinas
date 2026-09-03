@@ -4,9 +4,7 @@ export function buildMainNavigation(rootPath = "./", activeSection = "inicio") {
       id: "prcfemg",
       label: "PRCFEMG — Fundamentos do Eletromagnetismo",
       href: `${rootPath}disciplinas/prcfemg/`,
-      current: ["prcfemg", "exercicios", "simulacoes"].includes(
-        activeSection,
-      ),
+      current: ["prcfemg", "exercicios"].includes(activeSection),
     },
     {
       id: "prclfbe",
@@ -28,6 +26,12 @@ export function buildMainNavigation(rootPath = "./", activeSection = "inicio") {
       label: "Disciplinas",
       current: disciplines.some((discipline) => discipline.current),
       children: disciplines,
+    },
+    {
+      id: "simulacoes",
+      label: "Simulações",
+      href: `${rootPath}simuladores/`,
+      current: activeSection === "simulacoes",
     },
     {
       id: "sobre",

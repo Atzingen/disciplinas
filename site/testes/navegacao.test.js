@@ -48,12 +48,29 @@ test("navegação principal resolve o portal e as disciplinas a partir da raiz",
       ],
     },
     {
+      id: "simulacoes",
+      label: "Simulações",
+      href: "../../simuladores/",
+      current: false,
+    },
+    {
       id: "sobre",
       label: "Sobre",
       href: "../../#sobre",
       current: false,
     },
   ]);
+});
+
+test("simulações formam uma área própria fora das disciplinas", () => {
+  const links = navigation.buildMainNavigation("../", "simulacoes");
+  const simulations = links.find((link) => link.id === "simulacoes");
+  const disciplines = links.find((link) => link.id === "disciplinas");
+
+  assert.equal(simulations.current, true);
+  assert.equal(simulations.href, "../simuladores/");
+  assert.equal(disciplines.current, false);
+  assert.ok(disciplines.children.every((link) => link.current === false));
 });
 
 test("áreas legadas ativam a disciplina correspondente", () => {
@@ -65,12 +82,12 @@ test("áreas legadas ativam a disciplina correspondente", () => {
     ["prclfbe"],
   );
 
-  const simulationLinks = navigation.buildMainNavigation("../", "simulacoes");
-  const simulationDisciplines = simulationLinks.find(
+  const exerciseLinks = navigation.buildMainNavigation("../", "exercicios");
+  const exerciseDisciplines = exerciseLinks.find(
     (link) => link.id === "disciplinas",
   );
   assert.deepEqual(
-    simulationDisciplines.children
+    exerciseDisciplines.children
       .filter((link) => link.current)
       .map((link) => link.id),
     ["prcfemg"],
@@ -81,7 +98,12 @@ test("disciplinas ocupam um único item expansível na navegação principal", (
   const links = navigation.buildMainNavigation("./", "inicio");
   const disciplines = links.find((link) => link.id === "disciplinas");
 
-  assert.deepEqual(links.map((link) => link.id), ["inicio", "disciplinas", "sobre"]);
+  assert.deepEqual(links.map((link) => link.id), [
+    "inicio",
+    "disciplinas",
+    "simulacoes",
+    "sobre",
+  ]);
   assert.equal(disciplines.children.length, 2);
   assert.deepEqual(
     disciplines.children.map((discipline) => discipline.id),

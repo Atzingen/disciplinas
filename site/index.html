@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Materiais didáticos do professor Gustavo von Atzingen para componentes curriculares da Licenciatura em Física do IFSP Piracicaba.">
+  <meta name="description" content="Materiais didáticos do professor Gustavo von Atzingen para as disciplinas lecionadas no IFSP Câmpus Piracicaba: resoluções de exercícios, experimentos e simulações.">
   <title>Gustavo von Atzingen · Materiais didáticos</title>
   <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="./assets/base.css">
@@ -26,46 +26,101 @@
   <main id="conteudo">
     <section class="hero portal-hero" aria-labelledby="hero-title">
       <div class="hero__copy">
-        <p class="eyebrow">Licenciatura em Física · IFSP Piracicaba</p>
+        <p class="eyebrow">IFSP · Câmpus Piracicaba</p>
         <h1 id="hero-title">Materiais didáticos</h1>
         <p class="hero__lead">
-          Conteúdos disponíveis para dois componentes curriculares do 6º
-          semestre da Licenciatura em Física.
+          Esta página reúne os conteúdos das disciplinas que leciono no IFSP
+          Câmpus Piracicaba e materiais adicionais de apoio ao estudo:
+          resoluções de exercícios, roteiros e relatórios de experimentos e
+          simulações interativas para explorar os modelos na tela.
         </p>
         <div class="hero__actions">
           <a class="primary-link" href="#disciplinas">Consultar disciplinas <span aria-hidden="true">↓</span></a>
-          <a class="secondary-link" href="#sobre">Sobre o professor</a>
+          <a class="secondary-link" href="./simuladores/">Ver simulações</a>
         </div>
       </div>
 
-      <aside class="portal-reference" aria-labelledby="reference-title">
-        <div class="portal-reference__header">
-          <span>DOCUMENTO DE REFERÊNCIA</span>
-          <strong>2023</strong>
+      <nav class="portal-board" aria-labelledby="board-title">
+        <div class="portal-board__header">
+          <span id="board-title">O QUE VOCÊ ENCONTRA AQUI</span>
         </div>
-        <div class="portal-reference__body">
-          <p class="eyebrow">Projeto Pedagógico de Curso</p>
-          <h2 id="reference-title">Licenciatura em Física</h2>
-          <dl>
-            <div><dt>Câmpus</dt><dd>Piracicaba</dd></div>
-            <div><dt>Modalidade</dt><dd>Presencial</dd></div>
-            <div><dt>Vigência</dt><dd>1º semestre de 2023</dd></div>
-            <div><dt>Reformulação</dt><dd>Resolução nº 249/2023</dd></div>
-          </dl>
+        <ul class="portal-board__list">
+          <li>
+            <a href="#disciplinas">
+              <span class="portal-board__index">01</span>
+              <span><strong>Disciplinas</strong><small>Ementa, objetivos, conteúdo programático e bibliografia de cada componente curricular.</small></span>
+              <span aria-hidden="true">→</span>
+            </a>
+          </li>
+          <li>
+            <a href="./exercicios/">
+              <span class="portal-board__index">02</span>
+              <span><strong>Exercícios resolvidos</strong><small>Resoluções passo a passo organizadas por referência e capítulo.</small></span>
+              <span aria-hidden="true">→</span>
+            </a>
+          </li>
+          <li>
+            <a href="./experimentos/">
+              <span class="portal-board__index">03</span>
+              <span><strong>Experimentos</strong><small>Roteiros de laboratório com montagem, fundamentos, dados e modelo de relatório.</small></span>
+              <span aria-hidden="true">→</span>
+            </a>
+          </li>
+          <li>
+            <a href="./simuladores/">
+              <span class="portal-board__index">04</span>
+              <span><strong>Simulações</strong><small>Laboratórios virtuais marcados com as disciplinas em que fazem sentido.</small></span>
+              <span aria-hidden="true">→</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </section>
+
+    <section class="about-section" id="sobre" aria-labelledby="about-title">
+      <div class="about-section__heading">
+        <p class="eyebrow">Professor</p>
+        <h2 id="about-title">Gustavo von Atzingen</h2>
+      </div>
+      <div class="about-section__content">
+        <div class="about-section__bio">
+          <p>
+            Professor do IFSP Câmpus Piracicaba desde 2014. Bacharel em Física
+            pela USP (2007), mestre e doutor em Engenharia pela USP (2013 e
+            2017).
+          </p>
+          <p>
+            Na docência, atua nas disciplinas de Inteligência Artificial,
+            Visão Computacional e Visão Computacional Embarcada. Esta página
+            reúne os materiais atualmente disponíveis para os componentes
+            curriculares de eletromagnetismo.
+          </p>
         </div>
-        <a class="portal-reference__link" href="./referencias/2023.03.07-PPC-LIC-Física-PRC-Reformulação.pdf" target="_blank" rel="noopener">
-          Abrir PPC completo <span>PDF · 2,0 MB</span>
-        </a>
-      </aside>
+        <nav class="profile-links" aria-label="Perfis acadêmicos e profissionais">
+          <a href="https://atzingen.dev/" target="_blank" rel="noopener noreferrer">
+            <span><strong>Currículo e projetos</strong><small>atzingen.dev</small></span><span aria-hidden="true">↗</span>
+          </a>
+          <a href="http://lattes.cnpq.br/5173282107514295" target="_blank" rel="noopener noreferrer">
+            <span><strong>Currículo Lattes</strong><small>CNPq</small></span><span aria-hidden="true">↗</span>
+          </a>
+          <a href="https://scholar.google.com/citations?user=YPUqX9sAAAAJ&amp;hl=pt-BR" target="_blank" rel="noopener noreferrer">
+            <span><strong>Google Scholar</strong><small>Publicações e citações</small></span><span aria-hidden="true">↗</span>
+          </a>
+        </nav>
+      </div>
     </section>
 
     <section class="discipline-section" id="disciplinas" aria-labelledby="disciplines-title">
       <div class="section-heading">
         <div>
-          <p class="eyebrow">6º semestre</p>
+          <p class="eyebrow">Licenciatura em Física · 6º semestre</p>
           <h2 id="disciplines-title">Componentes curriculares</h2>
         </div>
-        <p class="section-heading__intro">Nomes, códigos e cargas horárias conforme o PPC vigente desde o primeiro semestre de 2023.</p>
+        <p class="section-heading__intro">
+          Nomes, códigos e cargas horárias conforme o
+          <a href="./referencias/2023.03.07-PPC-LIC-Física-PRC-Reformulação.pdf" target="_blank" rel="noopener">Projeto Pedagógico do Curso (PDF)</a>
+          vigente desde o primeiro semestre de 2023.
+        </p>
       </div>
 
       <div class="discipline-grid discipline-grid--two">
@@ -92,44 +147,11 @@
         </a>
       </div>
     </section>
-
-    <section class="about-section" id="sobre" aria-labelledby="about-title">
-      <div class="about-section__heading">
-        <p class="eyebrow">Professor</p>
-        <h2 id="about-title">Gustavo von Atzingen</h2>
-      </div>
-      <div class="about-section__content">
-        <div class="about-section__bio">
-          <p>
-            Professor do IFSP Câmpus Piracicaba desde 2014. Bacharel em Física
-            pela USP (2007), mestre e doutor em Engenharia pela USP (2013 e
-            2017).
-          </p>
-          <p>
-            Na docência, atua nas disciplinas de Inteligência Artificial,
-            Visão Computacional e Visão Computacional Embarcada. Esta página
-            reúne os materiais atualmente disponíveis para os dois componentes
-            curriculares de eletromagnetismo.
-          </p>
-        </div>
-        <nav class="profile-links" aria-label="Perfis acadêmicos e profissionais">
-          <a href="https://atzingen.dev/" target="_blank" rel="noopener noreferrer">
-            <span><strong>Currículo e projetos</strong><small>atzingen.dev</small></span><span aria-hidden="true">↗</span>
-          </a>
-          <a href="http://lattes.cnpq.br/5173282107514295" target="_blank" rel="noopener noreferrer">
-            <span><strong>Currículo Lattes</strong><small>CNPq</small></span><span aria-hidden="true">↗</span>
-          </a>
-          <a href="https://scholar.google.com/citations?user=YPUqX9sAAAAJ&amp;hl=pt-BR" target="_blank" rel="noopener noreferrer">
-            <span><strong>Google Scholar</strong><small>Publicações e citações</small></span><span aria-hidden="true">↗</span>
-          </a>
-        </nav>
-      </div>
-    </section>
   </main>
 
   <footer class="site-footer">
     <p>Gustavo von Atzingen · IFSP Câmpus Piracicaba</p>
-    <a href="https://github.com/Atzingen/Eletromagnetismo-aulas">Código-fonte no GitHub</a>
+    <a href="https://github.com/Atzingen/disciplinas">Código-fonte no GitHub</a>
   </footer>
 
   <script type="module" src="./componentes/navegacao-principal.js"></script>

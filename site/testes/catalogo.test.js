@@ -98,7 +98,20 @@ test("escopo por disciplina mantém teoria e laboratório separados", { skip: !a
   assert.equal(laboratory.length, 7);
   assert.ok(electromagnetism.every((item) => item.kind !== "experimento"));
   assert.ok(laboratory.some((item) => item.id === "cuba-eletrolitica-potencial"));
-  assert.ok(laboratory.every((item) => item.discipline === "PRCLFBE"));
+  assert.ok(laboratory.every((item) => item.disciplines.includes("PRCLFBE")));
+});
+
+test("uma simulação marcada com várias disciplinas aparece em cada uma delas", { skip: !apiAvailable }, () => {
+  const shared = [
+    { id: "a", kind: "simulador", section: "simulacoes", disciplines: ["PRCFEMG", "PRCLFBE"], title: "a", theme: "", description: "", tags: [] },
+    { id: "b", kind: "simulador", section: "simulacoes", disciplines: ["PRCLFBE"], title: "b", theme: "", description: "", tags: [] },
+  ];
+  const ids = (scope) => catalog.filterCatalog(shared, "", "todos", scope).map((item) => item.id);
+
+  assert.deepEqual(ids({ discipline: "PRCFEMG" }), ["a"]);
+  assert.deepEqual(ids({ discipline: "PRCLFBE" }), ["a", "b"]);
+  assert.deepEqual(ids({}), ["a", "b"]);
+  assert.deepEqual(catalog.itemDisciplines({ discipline: "PRCFEMG" }), ["PRCFEMG"]);
 });
 
 test("capítulo 22 mantém sequências temáticas e Halliday separadas", { skip: !apiAvailable }, () => {
@@ -210,8 +223,9 @@ test("registro fornece os metadados que orientam cada área", () => {
   for (const item of items) {
     assert.ok(["simulador", "resolucao", "experimento"].includes(item.kind));
     assert.ok(["simulacoes", "exercicios", "experimentos"].includes(item.section));
+    assert.ok(Array.isArray(item.disciplines) && item.disciplines.length > 0);
     assert.ok(
-      ["PRCFEMG", "PRCLFBE"].includes(item.discipline),
+      item.disciplines.every((code) => ["PRCFEMG", "PRCLFBE"].includes(code)),
     );
     assert.ok(item.title.length > 0);
     assert.ok(item.description.length > 0);

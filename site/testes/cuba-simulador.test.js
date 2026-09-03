@@ -28,7 +28,7 @@ test("simulador é publicado no catálogo e ligado ao experimento", () => {
   assert.ok(item);
   assert.equal(item.kind, "simulador");
   assert.equal(item.section, "simulacoes");
-  assert.equal(item.discipline, "PRCLFBE");
+  assert.deepEqual(item.disciplines, ["PRCLFBE"]);
   assert.equal(item.path, "simuladores/cuba-eletrolitica/");
   assert.match(experiment, /href="\.\.\/\.\.\/simuladores\/cuba-eletrolitica\/"/);
   assert.match(experiment, /Gauss–Seidel/);
@@ -41,7 +41,7 @@ test("página separa a interação da explicação do método", () => {
   assert.match(html, /Poisson sem fontes livres vira Laplace/);
   assert.match(html, /∇²V = 0/);
   assert.match(html, /∂V\/∂n = 0/);
-  assert.match(html, /data-active-section="prclfbe"/);
+  assert.match(html, /data-active-section="simulacoes"/);
   assert.match(html, /src="\.\/app\.js"/);
 });
 

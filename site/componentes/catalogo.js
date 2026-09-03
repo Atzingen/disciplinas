@@ -19,6 +19,13 @@ function searchableText(item) {
   );
 }
 
+export function itemDisciplines(item) {
+  if (Array.isArray(item.disciplines)) {
+    return item.disciplines;
+  }
+  return item.discipline ? [item.discipline] : [];
+}
+
 export function filterCatalog(items, query = "", type = "todos", scope = {}) {
   if (!Array.isArray(items)) {
     throw new TypeError("O catálogo deve ser uma lista.");
@@ -29,7 +36,7 @@ export function filterCatalog(items, query = "", type = "todos", scope = {}) {
     const matchesType = type === "todos" || item.kind === type;
     const matchesSection = !scope.section || item.section === scope.section;
     const matchesDiscipline =
-      !scope.discipline || item.discipline === scope.discipline;
+      !scope.discipline || itemDisciplines(item).includes(scope.discipline);
     const matchesChapter =
       scope.chapter === undefined || item.chapter === scope.chapter;
     const matchesReference =
@@ -70,7 +77,7 @@ export function resolveCatalogPath(path, pathPrefix = "") {
   return `${pathPrefix}${path}`;
 }
 
-function createCard(item, pathPrefix = "") {
+function createCard(item, pathPrefix = "", showDisciplines = false) {
   const card = element("article", "catalog-card");
   const link = element("a", "catalog-card__link");
   const kindLabels = {
@@ -90,7 +97,17 @@ function createCard(item, pathPrefix = "") {
   const tags = element("ul", "tag-list");
 
   link.href = resolveCatalogPath(item.path, pathPrefix);
-  link.append(eyebrow, title, theme, description);
+  const header = element("div", "catalog-card__header");
+  header.append(eyebrow);
+  if (showDisciplines) {
+    const disciplines = element("ul", "catalog-card__disciplines");
+    disciplines.setAttribute("aria-label", "Disciplinas relacionadas");
+    for (const code of itemDisciplines(item)) {
+      disciplines.append(element("li", "catalog-card__discipline", code));
+    }
+    header.append(disciplines);
+  }
+  link.append(header, title, theme, description);
   for (const tag of item.tags) {
     const tagItem = element("li", "tag-list__item", tag);
     tags.append(tagItem);
@@ -104,21 +121,38 @@ export async function mountCatalog(root, options = {}) {
   const registryUrl = options.registryUrl ?? "./materiais.json";
   const scope = options.scope ?? {};
   const pathPrefix = options.pathPrefix ?? "";
+  const showDisciplines = options.showDisciplines ?? false;
   const controls = root.querySelector("[data-catalog-controls]");
   const results = root.querySelector("[data-catalog-results]");
   const count = root.querySelector("[data-catalog-count]");
   const search = root.querySelector("[data-catalog-search]");
   const buttons = [...root.querySelectorAll("[data-catalog-filter]")];
+  const disciplineButtons = [
+    ...root.querySelectorAll("[data-catalog-discipline]"),
+  ];
 
   let items = [];
   let activeType = "todos";
+  let activeDiscipline = "todas";
+
+  function activeScope() {
+    if (activeDiscipline === "todas") {
+      return scope;
+    }
+    return { ...scope, discipline: activeDiscipline };
+  }
 
   function render() {
-    const visibleItems = filterCatalog(items, search.value, activeType, scope);
+    const visibleItems = filterCatalog(
+      items,
+      search.value,
+      activeType,
+      activeScope(),
+    );
     results.replaceChildren();
 
     for (const item of visibleItems) {
-      results.append(createCard(item, pathPrefix));
+      results.append(createCard(item, pathPrefix, showDisciplines));
     }
 
     if (visibleItems.length === 0) {
@@ -140,6 +174,18 @@ export async function mountCatalog(root, options = {}) {
     button.addEventListener("click", () => {
       activeType = button.dataset.catalogFilter;
       for (const candidate of buttons) {
+        candidate.setAttribute(
+          "aria-pressed",
+          String(candidate === button),
+        );
+      }
+      render();
+    });
+  }
+  for (const button of disciplineButtons) {
+    button.addEventListener("click", () => {
+      activeDiscipline = button.dataset.catalogDiscipline;
+      for (const candidate of disciplineButtons) {
         candidate.setAttribute(
           "aria-pressed",
           String(candidate === button),

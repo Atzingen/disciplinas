@@ -7,10 +7,10 @@ Piracicaba. Cada componente curricular possui uma página independente.
 
 O acervo está publicado em:
 
-**https://atzingen.github.io/Eletromagnetismo-aulas/**
+**https://atzingen.github.io/disciplinas/**
 
-A página inicial apresenta o professor e encaminha para os dois componentes
-curriculares atualmente disponíveis:
+A página inicial abre com um texto de apresentação, segue com o professor e
+encaminha para os dois componentes curriculares atualmente disponíveis:
 
 - **PRCFEMG — Fundamentos do Eletromagnetismo:** resoluções organizadas por
   referência e capítulo e simulações de cargas, forças, campos e vetores;
@@ -24,10 +24,21 @@ As páginas de referência usadas e a divergência de total de aulas encontrada
 em PRCFEMG estão documentadas em
 [site/referencias/README.md](site/referencias/README.md).
 
+O PPC aparece como um cartão lateral na página de cada disciplina e como um
+link discreto na página inicial.
+
+As **simulações** formam uma área própria (`site/simuladores/`), com entrada
+na navegação principal e independente das disciplinas. Cada simulação é
+marcada com as disciplinas em que faz sentido; a página de simulações filtra
+por disciplina e a página de cada disciplina lista as simulações marcadas com
+o seu código.
+
 Novas disciplinas devem ganhar uma página em `site/disciplinas/<codigo>/`, com
-o código em letras minúsculas no caminho. Os itens do catálogo devem indicar o
-código oficial, em letras maiúsculas, na propriedade `discipline` de
-`site/materiais.json`.
+o código em letras minúsculas no caminho, e uma entrada na lista de
+`buildMainNavigation` em `site/componentes/navegacao-principal.js`. Os itens
+do catálogo indicam os códigos oficiais, em letras maiúsculas, na lista
+`disciplines` de `site/materiais.json`; uma simulação pode listar mais de uma
+disciplina.
 
 ## Exercícios
 
