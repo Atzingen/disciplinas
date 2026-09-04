@@ -43,6 +43,22 @@ test("página inicial abre com a apresentação, segue com o professor e fecha c
   assert.match(html, /class="portal-board"/);
 });
 
+test("páginas das disciplinas mostram os materiais primeiro e recolhem o PPC", async () => {
+  for (const code of ["prcfemg", "prclfbe"]) {
+    const html = await readSitePage(`disciplinas/${code}/index.html`);
+    const resources = html.indexOf('class="course-resources"');
+    const catalog = html.indexOf("data-catalog-root");
+    const details = html.indexOf('<details class="course-details"');
+    const data = html.indexOf('id="dados-title"');
+    const closing = html.indexOf("</details>");
+
+    assert.ok(resources > -1 && catalog > resources, code);
+    assert.ok(details > catalog && data > details && closing > data, code);
+    assert.doesNotMatch(html, /<details class="course-details"[^>]*\sopen/, code);
+    assert.match(html, /Informações do componente no PPC/, code);
+  }
+});
+
 test("páginas das disciplinas trazem o PPC como cartão lateral", async () => {
   for (const code of ["prcfemg", "prclfbe"]) {
     const html = await readSitePage(`disciplinas/${code}/index.html`);
