@@ -1,0 +1,1640 @@
+{
+  "description": "Classificação editorial por leitura dos cadernos. Os temas podem se sobrepor; a numeração e os gabaritos são os dos PDFs fornecidos.",
+  "reviewedAt": "2026-09-05",
+  "topics": [
+    {
+      "id": "mecanica",
+      "label": "Mecânica"
+    },
+    {
+      "id": "fluidos",
+      "label": "Fluidos"
+    },
+    {
+      "id": "termodinamica",
+      "label": "Termologia e termodinâmica"
+    },
+    {
+      "id": "ondas",
+      "label": "Ondas e acústica"
+    },
+    {
+      "id": "optica",
+      "label": "Óptica"
+    },
+    {
+      "id": "eletromagnetismo",
+      "label": "Eletricidade e magnetismo"
+    },
+    {
+      "id": "moderna",
+      "label": "Física moderna e nuclear"
+    },
+    {
+      "id": "astronomia",
+      "label": "Astronomia e gravitação"
+    },
+    {
+      "id": "ensino",
+      "label": "Ensino de Física"
+    },
+    {
+      "id": "historia",
+      "label": "História e filosofia da ciência"
+    }
+  ],
+  "questions": {
+    "2024-q28": {
+      "title": "Espelhos esféricos e modelos táteis",
+      "topics": [
+        "optica",
+        "ensino"
+      ],
+      "keywords": [
+        "Reflexão",
+        "Formação de imagens",
+        "Inclusão"
+      ]
+    },
+    "2024-q29": {
+      "title": "Conversões de energia na alimentação",
+      "topics": [
+        "termodinamica",
+        "ensino"
+      ],
+      "keywords": [
+        "Energia",
+        "Calor e trabalho",
+        "Recursos audiovisuais"
+      ]
+    },
+    "2024-q30": {
+      "title": "Instrução por pares no estudo de cargas",
+      "topics": [
+        "ensino",
+        "eletromagnetismo"
+      ],
+      "keywords": [
+        "Peer instruction",
+        "Eletrostática",
+        "Avaliação"
+      ]
+    },
+    "2024-q31": {
+      "title": "Currículo de Física e autonomia discente",
+      "topics": [
+        "ensino"
+      ],
+      "keywords": [
+        "Currículo",
+        "Interdisciplinaridade"
+      ]
+    },
+    "2024-q32": {
+      "title": "Leis de Newton e teorias de aprendizagem",
+      "topics": [
+        "ensino",
+        "mecanica"
+      ],
+      "keywords": [
+        "Dinâmica",
+        "Comportamentalismo"
+      ]
+    },
+    "2024-q33": {
+      "title": "Carros híbridos, baterias e impactos ambientais",
+      "topics": [
+        "eletromagnetismo"
+      ],
+      "keywords": [
+        "Indução eletromagnética",
+        "Energia",
+        "CTS"
+      ]
+    },
+    "2024-q34": {
+      "title": "Pêndulo, conservação da energia e reforço positivo",
+      "topics": [
+        "ensino",
+        "mecanica"
+      ],
+      "keywords": [
+        "Energia mecânica",
+        "Skinner",
+        "Experimentação"
+      ]
+    },
+    "2024-q35": {
+      "title": "Potência elétrica e abastecimento de cisternas",
+      "topics": [
+        "eletromagnetismo",
+        "fluidos"
+      ],
+      "keywords": [
+        "Potência",
+        "Vazão",
+        "Conversão de unidades"
+      ]
+    },
+    "2024-q36": {
+      "title": "Lâmpadas e resistência interna de uma pilha",
+      "topics": [
+        "eletromagnetismo"
+      ],
+      "keywords": [
+        "Circuitos",
+        "Associação em paralelo",
+        "Geradores"
+      ]
+    },
+    "2024-q37": {
+      "title": "Resistência equivalente em um desfibrilador",
+      "topics": [
+        "eletromagnetismo"
+      ],
+      "keywords": [
+        "Resistores",
+        "Circuitos",
+        "Corrente elétrica"
+      ]
+    },
+    "2024-q38": {
+      "title": "Potência máxima em um circuito residencial",
+      "topics": [
+        "eletromagnetismo"
+      ],
+      "keywords": [
+        "Potência",
+        "Disjuntor",
+        "Associação em paralelo"
+      ]
+    },
+    "2024-q39": {
+      "title": "Usina termelétrica e aprendizagem baseada em casos",
+      "topics": [
+        "ensino",
+        "termodinamica"
+      ],
+      "keywords": [
+        "Fontes de energia",
+        "Argumentação",
+        "CTS"
+      ]
+    },
+    "2024-q40": {
+      "title": "Potência e três momentos pedagógicos",
+      "topics": [
+        "ensino",
+        "mecanica"
+      ],
+      "keywords": [
+        "Trabalho e potência",
+        "Problematização"
+      ]
+    },
+    "2024-q41": {
+      "title": "Interferência no modulador de Mach–Zehnder",
+      "topics": [
+        "optica",
+        "ondas"
+      ],
+      "keywords": [
+        "Interferometria",
+        "Diferença de fase",
+        "Comunicação óptica"
+      ]
+    },
+    "2024-q42": {
+      "title": "Investigação da indução eletromagnética",
+      "topics": [
+        "eletromagnetismo",
+        "ensino"
+      ],
+      "keywords": [
+        "Solenoide",
+        "Lei de Faraday",
+        "Ensino por investigação"
+      ]
+    },
+    "2024-q43": {
+      "title": "Autonomia e construção do conhecimento científico",
+      "topics": [
+        "historia",
+        "ensino"
+      ],
+      "keywords": [
+        "Natureza da ciência",
+        "História da Física"
+      ]
+    },
+    "2024-q44": {
+      "title": "Mistura de água e equilíbrio térmico",
+      "topics": [
+        "termodinamica",
+        "ensino"
+      ],
+      "keywords": [
+        "Calorimetria",
+        "Avaliação experimental"
+      ]
+    },
+    "2024-q45": {
+      "title": "Tecnologias assistivas no ensino de Física",
+      "topics": [
+        "ensino"
+      ],
+      "keywords": [
+        "Deficiência visual",
+        "Acessibilidade",
+        "Tecnologias digitais"
+      ]
+    },
+    "2024-q46": {
+      "title": "Difração e passagem da luz por obstáculos",
+      "topics": [
+        "optica",
+        "ondas",
+        "ensino"
+      ],
+      "keywords": [
+        "Difração",
+        "Óptica ondulatória",
+        "Investigação"
+      ]
+    },
+    "2024-q47": {
+      "title": "Reflexão em uma fachada espelhada",
+      "topics": [
+        "optica"
+      ],
+      "keywords": [
+        "Espelhos convexos",
+        "Lei da reflexão"
+      ]
+    },
+    "2024-q48": {
+      "title": "Arte, progresso científico e Projeto Manhattan",
+      "topics": [
+        "historia",
+        "moderna",
+        "ensino"
+      ],
+      "keywords": [
+        "Ciência e sociedade",
+        "Fissão nuclear",
+        "Ética"
+      ]
+    },
+    "2024-q49": {
+      "title": "Imagens de um eclipse sob as árvores",
+      "topics": [
+        "optica",
+        "astronomia"
+      ],
+      "keywords": [
+        "Câmara escura",
+        "Propagação retilínea da luz"
+      ]
+    },
+    "2024-q50": {
+      "title": "Refração em modelos táteis",
+      "topics": [
+        "optica",
+        "ensino"
+      ],
+      "keywords": [
+        "Lei de Snell",
+        "Inclusão",
+        "Refração"
+      ]
+    },
+    "2024-q51": {
+      "title": "Ondas de rádio e acesso à tecnologia 5G",
+      "topics": [
+        "eletromagnetismo",
+        "ondas"
+      ],
+      "keywords": [
+        "Frequência",
+        "Difração",
+        "CTS"
+      ]
+    },
+    "2024-q52": {
+      "title": "História e investigação na construção de teorias",
+      "topics": [
+        "historia",
+        "ensino"
+      ],
+      "keywords": [
+        "Maxwell",
+        "Natureza da ciência",
+        "Modelos científicos"
+      ]
+    },
+    "2024-q53": {
+      "title": "Modelos atômicos e espectros estelares",
+      "topics": [
+        "moderna",
+        "astronomia",
+        "ensino"
+      ],
+      "keywords": [
+        "Modelo de Bohr",
+        "Espectros",
+        "Simulação"
+      ]
+    },
+    "2024-q54": {
+      "title": "Racionalismo, relativismo e experimentação",
+      "topics": [
+        "historia",
+        "ensino"
+      ],
+      "keywords": [
+        "Epistemologia",
+        "Problemas abertos"
+      ]
+    },
+    "2024-q55": {
+      "title": "A recepção histórica do heliocentrismo",
+      "topics": [
+        "astronomia",
+        "historia",
+        "ensino"
+      ],
+      "keywords": [
+        "Copérnico",
+        "Modelos de mundo"
+      ]
+    },
+    "2024-q56": {
+      "title": "Motores elétricos e aprendizagem cognitivista",
+      "topics": [
+        "eletromagnetismo",
+        "ensino"
+      ],
+      "keywords": [
+        "Motores",
+        "Cognição",
+        "Experimentação"
+      ]
+    },
+    "2024-q57": {
+      "title": "Autonomia e tecnologias digitais na aprendizagem",
+      "topics": [
+        "ensino"
+      ],
+      "keywords": [
+        "Cultura digital",
+        "Resolução de problemas"
+      ]
+    },
+    "2024-q58": {
+      "title": "Usinas nucleares e rejeitos radioativos",
+      "topics": [
+        "moderna"
+      ],
+      "keywords": [
+        "Energia nuclear",
+        "Radioatividade",
+        "CTS"
+      ]
+    },
+    "2024-q59": {
+      "title": "Dilatação do tempo em Interestelar",
+      "topics": [
+        "moderna",
+        "astronomia",
+        "ensino"
+      ],
+      "keywords": [
+        "Relatividade",
+        "Buracos negros",
+        "Investigação"
+      ]
+    },
+    "2024-q60": {
+      "title": "Natureza dual da luz e simulações",
+      "topics": [
+        "moderna",
+        "optica",
+        "ensino"
+      ],
+      "keywords": [
+        "Dualidade onda-partícula",
+        "Efeito fotoelétrico"
+      ]
+    },
+    "2024-q61": {
+      "title": "Frequência de corte no efeito fotoelétrico",
+      "topics": [
+        "moderna"
+      ],
+      "keywords": [
+        "Fótons",
+        "Função trabalho",
+        "Energia cinética"
+      ]
+    },
+    "2024-q62": {
+      "title": "Eletroscópio iluminado e emissão de elétrons",
+      "topics": [
+        "moderna",
+        "eletromagnetismo",
+        "ensino"
+      ],
+      "keywords": [
+        "Efeito fotoelétrico",
+        "Eletrostática",
+        "Concepções alternativas"
+      ]
+    },
+    "2024-q63": {
+      "title": "Decaimento radioativo modelado com dados",
+      "topics": [
+        "moderna"
+      ],
+      "keywords": [
+        "Radioatividade",
+        "Decaimento exponencial",
+        "Modelagem"
+      ]
+    },
+    "2024-discursiva": {
+      "title": "Plano de aula sobre som e poluição sonora",
+      "topics": [
+        "ondas",
+        "ensino"
+      ],
+      "keywords": [
+        "Acústica",
+        "Planejamento",
+        "CTS"
+      ]
+    },
+    "2025-regular-q31": {
+      "title": "Ondas estacionárias e autonomia no laboratório",
+      "topics": [
+        "ondas",
+        "ensino"
+      ],
+      "keywords": [
+        "Cordas",
+        "Modos normais",
+        "Investigação"
+      ]
+    },
+    "2025-regular-q32": {
+      "title": "Experimentos com ondas estacionárias",
+      "topics": [
+        "ondas",
+        "eletromagnetismo",
+        "ensino"
+      ],
+      "keywords": [
+        "Micro-ondas",
+        "Comprimento de onda",
+        "Experimentação"
+      ]
+    },
+    "2025-regular-q33": {
+      "title": "Investigação de vibrações em cordas e molas",
+      "topics": [
+        "ondas",
+        "ensino"
+      ],
+      "keywords": [
+        "Frequência",
+        "Modelagem",
+        "Ensino por investigação"
+      ]
+    },
+    "2025-regular-q34": {
+      "title": "Forças em uma rampa de acessibilidade",
+      "topics": [
+        "mecanica"
+      ],
+      "keywords": [
+        "Plano inclinado",
+        "Equilíbrio",
+        "Leis de Newton"
+      ]
+    },
+    "2025-regular-q35": {
+      "title": "Avaliação na sequência sobre planos inclinados",
+      "topics": [
+        "ensino",
+        "mecanica"
+      ],
+      "keywords": [
+        "Avaliação formativa",
+        "Aprendizagem"
+      ]
+    },
+    "2025-regular-q36": {
+      "title": "Força de atrito na perspectiva de Piaget",
+      "topics": [
+        "ensino",
+        "mecanica"
+      ],
+      "keywords": [
+        "Construtivismo",
+        "Atrito",
+        "Equilibração"
+      ]
+    },
+    "2025-regular-q37": {
+      "title": "Livro didático e debate sobre mudanças climáticas",
+      "topics": [
+        "ensino",
+        "historia",
+        "termodinamica"
+      ],
+      "keywords": [
+        "PNLD",
+        "Divulgação científica",
+        "Argumentação"
+      ]
+    },
+    "2025-regular-q38": {
+      "title": "Energia solar e intervenção socioambiental",
+      "topics": [
+        "ensino",
+        "moderna",
+        "eletromagnetismo"
+      ],
+      "keywords": [
+        "CTS",
+        "Placas fotovoltaicas",
+        "Autonomia"
+      ]
+    },
+    "2025-regular-q39": {
+      "title": "Temperatura global, energia e entropia",
+      "topics": [
+        "termodinamica"
+      ],
+      "keywords": [
+        "Mudanças climáticas",
+        "Entropia"
+      ]
+    },
+    "2025-regular-q40": {
+      "title": "Etnoastronomia e diálogo entre saberes",
+      "topics": [
+        "astronomia",
+        "ensino",
+        "historia"
+      ],
+      "keywords": [
+        "Saberes indígenas",
+        "Interculturalidade"
+      ]
+    },
+    "2025-regular-q41": {
+      "title": "Geometria do eclipse lunar",
+      "topics": [
+        "astronomia",
+        "optica"
+      ],
+      "keywords": [
+        "Sol, Terra e Lua",
+        "Eclipses"
+      ]
+    },
+    "2025-regular-q42": {
+      "title": "Saberes indígenas e formação científica",
+      "topics": [
+        "ensino",
+        "historia"
+      ],
+      "keywords": [
+        "Interculturalidade",
+        "Sustentabilidade"
+      ]
+    },
+    "2025-regular-q43": {
+      "title": "Período orbital de um satélite",
+      "topics": [
+        "astronomia",
+        "mecanica"
+      ],
+      "keywords": [
+        "Terceira lei de Kepler",
+        "Satélites"
+      ]
+    },
+    "2025-regular-q44": {
+      "title": "Elétrons relativísticos no Sirius",
+      "topics": [
+        "moderna",
+        "eletromagnetismo"
+      ],
+      "keywords": [
+        "Relatividade",
+        "Força magnética",
+        "Aceleradores"
+      ]
+    },
+    "2025-regular-q45": {
+      "title": "Modelagem da emissão de luz síncrotron",
+      "topics": [
+        "eletromagnetismo",
+        "moderna",
+        "ensino"
+      ],
+      "keywords": [
+        "Partículas aceleradas",
+        "Radiação",
+        "Analogias"
+      ]
+    },
+    "2025-regular-q46": {
+      "title": "Sirius e investimento público em ciência",
+      "topics": [
+        "ensino",
+        "historia",
+        "moderna"
+      ],
+      "keywords": [
+        "Políticas científicas",
+        "Ciência brasileira",
+        "CTS"
+      ]
+    },
+    "2025-regular-q47": {
+      "title": "Investigação da reflexão da luz",
+      "topics": [
+        "optica",
+        "ensino"
+      ],
+      "keywords": [
+        "Óptica geométrica",
+        "Autonomia",
+        "Experimentação"
+      ]
+    },
+    "2025-regular-q48": {
+      "title": "Aprendizagem em grupos com espelhos planos",
+      "topics": [
+        "ensino",
+        "optica"
+      ],
+      "keywords": [
+        "Conteúdos atitudinais",
+        "Formação de imagens"
+      ]
+    },
+    "2025-regular-q49": {
+      "title": "Radiações na medicina e recursos didáticos",
+      "topics": [
+        "moderna",
+        "ensino"
+      ],
+      "keywords": [
+        "Física médica",
+        "Radiações",
+        "Pluralismo metodológico"
+      ]
+    },
+    "2025-regular-q50": {
+      "title": "Empuxo e ilhas de lixo nos oceanos",
+      "topics": [
+        "fluidos",
+        "ensino"
+      ],
+      "keywords": [
+        "Empuxo",
+        "Recursos didáticos",
+        "Meio ambiente"
+      ]
+    },
+    "2025-regular-q51": {
+      "title": "Densidade, empuxo e soluções sustentáveis",
+      "topics": [
+        "fluidos",
+        "ensino"
+      ],
+      "keywords": [
+        "Autonomia",
+        "Poluição marinha",
+        "CTS"
+      ]
+    },
+    "2025-regular-q52": {
+      "title": "Hidrostática e aprendizagem colaborativa",
+      "topics": [
+        "ensino",
+        "fluidos"
+      ],
+      "keywords": [
+        "Vygotsky",
+        "Sociointeracionismo"
+      ]
+    },
+    "2025-regular-q53": {
+      "title": "Transição energética na problematização inicial",
+      "topics": [
+        "ensino",
+        "eletromagnetismo"
+      ],
+      "keywords": [
+        "Três momentos pedagógicos",
+        "Energia eólica"
+      ]
+    },
+    "2025-regular-q54": {
+      "title": "Aplicação do conhecimento sobre energia renovável",
+      "topics": [
+        "ensino",
+        "eletromagnetismo"
+      ],
+      "keywords": [
+        "Três momentos pedagógicos",
+        "Sustentabilidade"
+      ]
+    },
+    "2025-regular-q55": {
+      "title": "Consumo elétrico de uma escola rural",
+      "topics": [
+        "eletromagnetismo"
+      ],
+      "keywords": [
+        "Energia elétrica",
+        "Potência",
+        "kWh"
+      ]
+    },
+    "2025-regular-q56": {
+      "title": "Queda dos corpos e resistência do ar",
+      "topics": [
+        "mecanica",
+        "ensino"
+      ],
+      "keywords": [
+        "Cinemática",
+        "Videoanálise",
+        "Modelos e medidas"
+      ]
+    },
+    "2025-regular-q57": {
+      "title": "Investigação da queda dos corpos na EJA",
+      "topics": [
+        "mecanica",
+        "ensino"
+      ],
+      "keywords": [
+        "Videoanálise",
+        "Autonomia",
+        "EJA"
+      ]
+    },
+    "2025-regular-q58": {
+      "title": "Dimensionamento de fios para ar-condicionado",
+      "topics": [
+        "eletromagnetismo"
+      ],
+      "keywords": [
+        "Corrente elétrica",
+        "Potência",
+        "Segurança elétrica"
+      ]
+    },
+    "2025-regular-q59": {
+      "title": "Disjuntores e fusíveis em circuitos",
+      "topics": [
+        "eletromagnetismo"
+      ],
+      "keywords": [
+        "Proteção",
+        "Corrente nominal"
+      ]
+    },
+    "2025-regular-q60": {
+      "title": "Medição do ruído na escola",
+      "topics": [
+        "ondas"
+      ],
+      "keywords": [
+        "Intensidade sonora",
+        "Decibel",
+        "Acústica"
+      ]
+    },
+    "2025-regular-q61": {
+      "title": "Investigação do ruído e inclusão escolar",
+      "topics": [
+        "ondas",
+        "ensino"
+      ],
+      "keywords": [
+        "Poluição sonora",
+        "Inclusão",
+        "Investigação"
+      ]
+    },
+    "2025-regular-q62": {
+      "title": "Variação anual do nascer e pôr do Sol",
+      "topics": [
+        "astronomia"
+      ],
+      "keywords": [
+        "Translação",
+        "Inclinação do eixo",
+        "Movimento aparente"
+      ]
+    },
+    "2025-regular-q63": {
+      "title": "Duração dos dias ao longo do ano",
+      "topics": [
+        "astronomia"
+      ],
+      "keywords": [
+        "Estações",
+        "Sol e Terra"
+      ]
+    },
+    "2025-regular-q64": {
+      "title": "Modelos do movimento aparente do Sol",
+      "topics": [
+        "astronomia",
+        "ensino"
+      ],
+      "keywords": [
+        "Modelagem",
+        "Rotação e translação"
+      ]
+    },
+    "2025-regular-q65": {
+      "title": "Mulheres na ciência em Estrelas além do tempo",
+      "topics": [
+        "historia",
+        "ensino"
+      ],
+      "keywords": [
+        "Gênero e raça",
+        "NASA",
+        "Investigação"
+      ]
+    },
+    "2025-regular-q66": {
+      "title": "Participação de mulheres na Física e projeto de vida",
+      "topics": [
+        "ensino",
+        "historia"
+      ],
+      "keywords": [
+        "Equidade",
+        "Carreiras científicas"
+      ]
+    },
+    "2025-regular-q67": {
+      "title": "Metodologias ativas e equidade de gênero",
+      "topics": [
+        "ensino",
+        "historia"
+      ],
+      "keywords": [
+        "Ensino sob medida",
+        "Cinema",
+        "Just-in-time teaching"
+      ]
+    },
+    "2025-regular-q68": {
+      "title": "Independência dos movimentos no lançamento oblíquo",
+      "topics": [
+        "mecanica"
+      ],
+      "keywords": [
+        "Cinemática",
+        "Componentes da velocidade",
+        "Tracker"
+      ]
+    },
+    "2025-regular-q69": {
+      "title": "Videoanálise e produção de dados experimentais",
+      "topics": [
+        "mecanica",
+        "ensino"
+      ],
+      "keywords": [
+        "Tracker",
+        "Cinemática",
+        "Tecnologias digitais"
+      ]
+    },
+    "2025-regular-q70": {
+      "title": "Velocidade e tempo de voo de um projétil",
+      "topics": [
+        "mecanica"
+      ],
+      "keywords": [
+        "Lançamento oblíquo",
+        "Gráficos"
+      ]
+    },
+    "2025-regular-q71": {
+      "title": "Ciência aberta e participação dos estudantes",
+      "topics": [
+        "historia",
+        "ensino"
+      ],
+      "keywords": [
+        "Ciência cidadã",
+        "Dados",
+        "Pesquisa"
+      ]
+    },
+    "2025-regular-q72": {
+      "title": "Conservação de grandezas em colisões de partículas",
+      "topics": [
+        "moderna",
+        "mecanica",
+        "eletromagnetismo"
+      ],
+      "keywords": [
+        "Momento linear",
+        "Carga elétrica",
+        "CERN"
+      ]
+    },
+    "2025-regular-q73": {
+      "title": "Projetos de análise de dados em Física de partículas",
+      "topics": [
+        "moderna",
+        "ensino"
+      ],
+      "keywords": [
+        "Ciência aberta",
+        "Aprendizagem por projetos"
+      ]
+    },
+    "2025-regular-q74": {
+      "title": "Potência útil de um forno de micro-ondas",
+      "topics": [
+        "termodinamica"
+      ],
+      "keywords": [
+        "Calorimetria",
+        "Calor específico",
+        "Potência"
+      ]
+    },
+    "2025-regular-q75": {
+      "title": "Aquecimento doméstico e pegada de carbono",
+      "topics": [
+        "termodinamica",
+        "ensino"
+      ],
+      "keywords": [
+        "CTSA",
+        "Dimensão axiológica"
+      ]
+    },
+    "2025-regular-q76": {
+      "title": "Modos normais de vibração em uma corda",
+      "topics": [
+        "ondas"
+      ],
+      "keywords": [
+        "Frequência fundamental",
+        "Densidade linear",
+        "Gráficos"
+      ]
+    },
+    "2025-regular-q77": {
+      "title": "Eletricidade rural na pedagogia freiriana",
+      "topics": [
+        "ensino",
+        "eletromagnetismo"
+      ],
+      "keywords": [
+        "Tema gerador",
+        "Políticas públicas",
+        "Energia sustentável"
+      ]
+    },
+    "2025-regular-q78": {
+      "title": "Custo da energia durante uma interrupção",
+      "topics": [
+        "eletromagnetismo"
+      ],
+      "keywords": [
+        "Potência",
+        "Energia elétrica",
+        "kWh"
+      ]
+    },
+    "2025-regular-q79": {
+      "title": "Avaliação sobre circuitos e consumo residencial",
+      "topics": [
+        "ensino",
+        "eletromagnetismo"
+      ],
+      "keywords": [
+        "Avaliação",
+        "Circuitos",
+        "Etapas da educação"
+      ]
+    },
+    "2025-regular-q80": {
+      "title": "Acesso à eletricidade e pensamento crítico",
+      "topics": [
+        "ensino",
+        "eletromagnetismo"
+      ],
+      "keywords": [
+        "Iluminação pública",
+        "Desigualdade",
+        "CTS"
+      ]
+    },
+    "2025-reaplicacao-q31": {
+      "title": "Pororoca e três momentos pedagógicos",
+      "topics": [
+        "ondas",
+        "ensino"
+      ],
+      "keywords": [
+        "Problematização",
+        "Ondas aquáticas"
+      ]
+    },
+    "2025-reaplicacao-q32": {
+      "title": "Velocidade de propagação de uma onda",
+      "topics": [
+        "ondas"
+      ],
+      "keywords": [
+        "Período",
+        "Comprimento de onda",
+        "Pororoca"
+      ]
+    },
+    "2025-reaplicacao-q33": {
+      "title": "Pororoca, ambiente e autonomia discente",
+      "topics": [
+        "ondas",
+        "ensino"
+      ],
+      "keywords": [
+        "CTS",
+        "Impactos ambientais",
+        "Investigação"
+      ]
+    },
+    "2025-reaplicacao-q34": {
+      "title": "Trabalho de uma força em rampa com atrito",
+      "topics": [
+        "mecanica"
+      ],
+      "keywords": [
+        "Plano inclinado",
+        "Energia",
+        "Acessibilidade"
+      ]
+    },
+    "2025-reaplicacao-q35": {
+      "title": "Atrito no rolamento e aprendizagem significativa",
+      "topics": [
+        "mecanica",
+        "ensino"
+      ],
+      "keywords": [
+        "Atrito estático",
+        "Ausubel",
+        "Subsunçores"
+      ]
+    },
+    "2025-reaplicacao-q36": {
+      "title": "Investigação do rolamento em planos inclinados",
+      "topics": [
+        "mecanica",
+        "ensino"
+      ],
+      "keywords": [
+        "Momento de inércia",
+        "Hipóteses",
+        "Experimentação"
+      ]
+    },
+    "2025-reaplicacao-q37": {
+      "title": "Rosalind Franklin e representatividade na ciência",
+      "topics": [
+        "historia",
+        "ensino"
+      ],
+      "keywords": [
+        "Mulheres na ciência",
+        "Equidade"
+      ]
+    },
+    "2025-reaplicacao-q38": {
+      "title": "Participação e equidade nas aulas de Física",
+      "topics": [
+        "ensino",
+        "historia"
+      ],
+      "keywords": [
+        "Gênero",
+        "Avaliação"
+      ]
+    },
+    "2025-reaplicacao-q39": {
+      "title": "Contribuições de cientistas mulheres",
+      "topics": [
+        "historia",
+        "ensino"
+      ],
+      "keywords": [
+        "História da ciência",
+        "Cinema",
+        "Ensino Fundamental"
+      ]
+    },
+    "2025-reaplicacao-q40": {
+      "title": "Difração por um fio de cabelo",
+      "topics": [
+        "optica",
+        "ondas"
+      ],
+      "keywords": [
+        "Comprimento de onda",
+        "Laser",
+        "Difração"
+      ],
+      "additionalContextIds": [
+        "2025-reaplicacao-contexto-37-39"
+      ]
+    },
+    "2025-reaplicacao-q41": {
+      "title": "Investigação da cafeteira italiana",
+      "topics": [
+        "termodinamica",
+        "ensino"
+      ],
+      "keywords": [
+        "Calor e trabalho",
+        "Gases",
+        "Autonomia"
+      ]
+    },
+    "2025-reaplicacao-q42": {
+      "title": "Pressão e funcionamento de uma cafeteira moca",
+      "topics": [
+        "termodinamica",
+        "fluidos"
+      ],
+      "keywords": [
+        "Vapor",
+        "Pressão",
+        "Transferência de calor"
+      ]
+    },
+    "2025-reaplicacao-q43": {
+      "title": "Consumo de café e desperdício energético",
+      "topics": [
+        "termodinamica",
+        "ensino"
+      ],
+      "keywords": [
+        "Investigação",
+        "Sustentabilidade",
+        "CTS"
+      ]
+    },
+    "2025-reaplicacao-q44": {
+      "title": "Lançamento oblíquo na física de Galileu",
+      "topics": [
+        "historia",
+        "mecanica"
+      ],
+      "keywords": [
+        "Inércia",
+        "História dos modelos",
+        "Gravidade"
+      ]
+    },
+    "2025-reaplicacao-q45": {
+      "title": "Ciência aberta e ciência cidadã",
+      "topics": [
+        "historia",
+        "ensino"
+      ],
+      "keywords": [
+        "Pesquisa participativa",
+        "Democratização"
+      ]
+    },
+    "2025-reaplicacao-q46": {
+      "title": "Termodinâmica e pedagogia freiriana na EJA",
+      "topics": [
+        "termodinamica",
+        "ensino"
+      ],
+      "keywords": [
+        "Consumo de energia",
+        "Educação de jovens e adultos"
+      ]
+    },
+    "2025-reaplicacao-q47": {
+      "title": "Relâmpagos e investigação da eletricidade estática",
+      "topics": [
+        "eletromagnetismo",
+        "ensino"
+      ],
+      "keywords": [
+        "Eletrização",
+        "Rigidez dielétrica",
+        "EJA"
+      ]
+    },
+    "2025-reaplicacao-q48": {
+      "title": "Avaliação contínua no ensino de Física",
+      "topics": [
+        "ensino"
+      ],
+      "keywords": [
+        "Instrumentos avaliativos",
+        "Avaliação qualitativa"
+      ]
+    },
+    "2025-reaplicacao-q49": {
+      "title": "Estimativa da constante de Planck com LEDs",
+      "topics": [
+        "moderna",
+        "eletromagnetismo"
+      ],
+      "keywords": [
+        "Quantização",
+        "Ajuste linear",
+        "Semicondutores"
+      ]
+    },
+    "2025-reaplicacao-q50": {
+      "title": "Origens da mecânica quântica",
+      "topics": [
+        "moderna",
+        "historia"
+      ],
+      "keywords": [
+        "Corpo negro",
+        "Catástrofe do ultravioleta"
+      ]
+    },
+    "2025-reaplicacao-q51": {
+      "title": "Física quântica e pseudociência",
+      "topics": [
+        "moderna",
+        "historia",
+        "ensino"
+      ],
+      "keywords": [
+        "Demarcação científica",
+        "Epistemologia"
+      ]
+    },
+    "2025-reaplicacao-q52": {
+      "title": "Rendimento máximo de uma máquina térmica",
+      "topics": [
+        "termodinamica"
+      ],
+      "keywords": [
+        "Ciclo de Carnot",
+        "Eficiência",
+        "Motores"
+      ]
+    },
+    "2025-reaplicacao-q53": {
+      "title": "Emissões de carbono e ensino contextualizado",
+      "topics": [
+        "termodinamica",
+        "ensino"
+      ],
+      "keywords": [
+        "Efeito estufa",
+        "Paulo Freire",
+        "Transportes"
+      ]
+    },
+    "2025-reaplicacao-q54": {
+      "title": "Combustíveis e mudanças climáticas na escola",
+      "topics": [
+        "termodinamica",
+        "ensino"
+      ],
+      "keywords": [
+        "CO₂",
+        "Ensino Fundamental",
+        "CTSA"
+      ]
+    },
+    "2025-reaplicacao-q55": {
+      "title": "Diagrama de fases do dióxido de carbono",
+      "topics": [
+        "termodinamica"
+      ],
+      "keywords": [
+        "Ponto triplo",
+        "Pressão",
+        "Mudanças de fase"
+      ],
+      "additionalContextIds": [
+        "2025-reaplicacao-contexto-52-54"
+      ]
+    },
+    "2025-reaplicacao-q56": {
+      "title": "Pressão em um relógio submerso",
+      "topics": [
+        "fluidos",
+        "ensino"
+      ],
+      "keywords": [
+        "Lei de Stevin",
+        "Pressão absoluta",
+        "Avaliação"
+      ]
+    },
+    "2025-reaplicacao-q57": {
+      "title": "Avaliação diagnóstica em hidrostática",
+      "topics": [
+        "ensino",
+        "fluidos"
+      ],
+      "keywords": [
+        "Planejamento",
+        "Autonomia"
+      ]
+    },
+    "2025-reaplicacao-q58": {
+      "title": "Laboratório aberto de hidrostática",
+      "topics": [
+        "fluidos",
+        "ensino"
+      ],
+      "keywords": [
+        "Experimentação",
+        "Investigação"
+      ]
+    },
+    "2025-reaplicacao-q59": {
+      "title": "Aprendizagem do som na perspectiva de Vygotsky",
+      "topics": [
+        "ensino",
+        "ondas"
+      ],
+      "keywords": [
+        "Sociointeracionismo",
+        "Acústica"
+      ]
+    },
+    "2025-reaplicacao-q60": {
+      "title": "Intensidade sonora de fones de ouvido",
+      "topics": [
+        "ondas"
+      ],
+      "keywords": [
+        "Potência",
+        "Lei do inverso do quadrado",
+        "Acústica"
+      ]
+    },
+    "2025-reaplicacao-q61": {
+      "title": "Decibelímetro e nível de intensidade sonora",
+      "topics": [
+        "ondas"
+      ],
+      "keywords": [
+        "Medição",
+        "Decibel",
+        "Tecnologias digitais"
+      ]
+    },
+    "2025-reaplicacao-q62": {
+      "title": "Eclipses e saberes indígenas",
+      "topics": [
+        "astronomia",
+        "ensino",
+        "historia"
+      ],
+      "keywords": [
+        "Interculturalidade",
+        "Autonomia"
+      ]
+    },
+    "2025-reaplicacao-q63": {
+      "title": "Origens culturais e projeto de vida",
+      "topics": [
+        "ensino",
+        "historia"
+      ],
+      "keywords": [
+        "Interdisciplinaridade",
+        "Carreiras"
+      ]
+    },
+    "2025-reaplicacao-q64": {
+      "title": "Contribuições africanas para a ciência",
+      "topics": [
+        "historia",
+        "ensino"
+      ],
+      "keywords": [
+        "Interculturalidade",
+        "Divulgação científica"
+      ]
+    },
+    "2025-reaplicacao-q65": {
+      "title": "Investigação da temperatura e raciocínio indutivo",
+      "topics": [
+        "historia",
+        "termodinamica",
+        "ensino"
+      ],
+      "keywords": [
+        "Indução",
+        "Método científico",
+        "Microclima"
+      ]
+    },
+    "2025-reaplicacao-q66": {
+      "title": "Dados climáticos, entropia e autonomia",
+      "topics": [
+        "termodinamica",
+        "ensino"
+      ],
+      "keywords": [
+        "Sistemas termodinâmicos",
+        "Dados reais"
+      ]
+    },
+    "2025-reaplicacao-q67": {
+      "title": "Calorimetria e temperaturas no pomar e na quadra",
+      "topics": [
+        "termodinamica"
+      ],
+      "keywords": [
+        "Calor sensível",
+        "Equilíbrio térmico",
+        "Escalas"
+      ]
+    },
+    "2025-reaplicacao-q68": {
+      "title": "Xilogravura, percepção visual e Física",
+      "topics": [
+        "optica",
+        "ensino",
+        "historia"
+      ],
+      "keywords": [
+        "Fototransdução",
+        "Arte e ciência"
+      ]
+    },
+    "2025-reaplicacao-q69": {
+      "title": "Energia mecânica de uma onda do mar",
+      "topics": [
+        "mecanica",
+        "ondas"
+      ],
+      "keywords": [
+        "Energia cinética",
+        "Energia potencial"
+      ]
+    },
+    "2025-reaplicacao-q70": {
+      "title": "Teorias das cores na Física e nas Artes",
+      "topics": [
+        "optica",
+        "ensino",
+        "historia"
+      ],
+      "keywords": [
+        "Luz e pigmentos",
+        "Interdisciplinaridade"
+      ]
+    },
+    "2025-reaplicacao-q71": {
+      "title": "Hidrostática e interação entre estudantes",
+      "topics": [
+        "ensino",
+        "fluidos"
+      ],
+      "keywords": [
+        "Vygotsky",
+        "Mediação"
+      ]
+    },
+    "2025-reaplicacao-q72": {
+      "title": "Inteligência artificial e linguagens no ensino",
+      "topics": [
+        "ensino"
+      ],
+      "keywords": [
+        "Tecnologias digitais",
+        "Recursos didáticos"
+      ]
+    },
+    "2025-reaplicacao-q73": {
+      "title": "Uso de IA e consumo de água",
+      "topics": [
+        "ensino"
+      ],
+      "keywords": [
+        "Impactos ambientais",
+        "CTSA",
+        "Pensamento crítico"
+      ],
+      "additionalContextIds": [
+        "2025-reaplicacao-contexto-71-72"
+      ]
+    },
+    "2025-reaplicacao-q74": {
+      "title": "Consumo de energia de IA e energia potencial",
+      "topics": [
+        "mecanica",
+        "eletromagnetismo"
+      ],
+      "keywords": [
+        "Conversão de unidades",
+        "Wh",
+        "Energia gravitacional"
+      ],
+      "additionalContextIds": [
+        "2025-reaplicacao-contexto-71-72"
+      ]
+    },
+    "2025-reaplicacao-q75": {
+      "title": "Relatividade, satélites e questões sociais",
+      "topics": [
+        "moderna",
+        "astronomia",
+        "ensino"
+      ],
+      "keywords": [
+        "Relatividade restrita",
+        "CTS",
+        "Lixo espacial"
+      ]
+    },
+    "2025-reaplicacao-q76": {
+      "title": "Princípio da incerteza e recursos didáticos",
+      "topics": [
+        "moderna",
+        "ensino"
+      ],
+      "keywords": [
+        "Heisenberg",
+        "Posição e momento",
+        "Simulação"
+      ]
+    },
+    "2025-reaplicacao-q77": {
+      "title": "Avaliação continuada sobre relatividade",
+      "topics": [
+        "moderna",
+        "ensino"
+      ],
+      "keywords": [
+        "Relatividade restrita",
+        "Laboratório virtual"
+      ]
+    },
+    "2025-reaplicacao-q78": {
+      "title": "Efeito fotoelétrico em um projeto interdisciplinar",
+      "topics": [
+        "moderna",
+        "ensino"
+      ],
+      "keywords": [
+        "Frequência de corte",
+        "Energia",
+        "Interdisciplinaridade"
+      ]
+    },
+    "2025-reaplicacao-q79": {
+      "title": "História da ciência e leitura interdisciplinar",
+      "topics": [
+        "historia",
+        "ensino",
+        "termodinamica"
+      ],
+      "keywords": [
+        "Revolução Industrial",
+        "Recursos didáticos"
+      ]
+    },
+    "2025-reaplicacao-q80": {
+      "title": "Gráfico do efeito fotoelétrico",
+      "topics": [
+        "moderna"
+      ],
+      "keywords": [
+        "Frequência de corte",
+        "Fótons",
+        "Energia cinética"
+      ]
+    }
+  }
+}

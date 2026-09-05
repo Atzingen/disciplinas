@@ -34,6 +34,12 @@ export function buildMainNavigation(rootPath = "./", activeSection = "inicio") {
       current: activeSection === "simulacoes",
     },
     {
+      id: "enade",
+      label: "Enade",
+      href: `${rootPath}enade/`,
+      current: activeSection === "enade",
+    },
+    {
       id: "sobre",
       label: "Sobre",
       href: `${rootPath}#sobre`,

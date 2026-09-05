@@ -382,6 +382,7 @@ h1 {
 
 .site-navigation {
   position: relative;
+  min-width: 0;
   max-width: min(100%, 38rem);
   overflow: visible;
 }
@@ -1984,6 +1985,7 @@ a.discipline-card:hover {
   }
 
   .site-navigation__list {
+    flex-wrap: wrap;
     padding-inline: 0;
   }
 

@@ -42,6 +42,13 @@ disciplina.
 
 ## Exercícios
 
+A aba **Enade** reúne 137 questões específicas de Física: 37 de 2024 e 50
+de cada aplicação de 2025. Permite filtrar por ano, aplicação, tópico, tipo e
+disponibilidade de resolução, além de buscar no texto. Enunciados, figuras,
+textos-base e gabaritos acompanham os PDFs originais. A estrutura para
+resoluções comentadas está preparada; elas ainda não foram adicionadas.
+Veja a [documentação do acervo](site/enade/README.md) para atualizar o catálogo.
+
 Em **Halliday → Capítulo 21**, os exercícios 13, 18, 33, 34 e 42 formam uma
 sequência navegável. Enunciado, resolução e o apoio visual (diagrama ou
 simulação) ficam na mesma página, em leitura contínua: a barra fixa no topo é
@@ -138,6 +145,7 @@ O exercício que iniciou o projeto permanece em:
 - [PRCFEMG — Fundamentos do Eletromagnetismo](site/disciplinas/prcfemg/)
 - [PRCLFBE — Laboratório de Física Básica: Eletromagnetismo](site/disciplinas/prclfbe/)
 - [Índice de exercícios](site/exercicios/)
+- [Enade · Física](site/enade/)
 - [Halliday — Capítulo 21](site/exercicios/capitulo-21/)
 - [Campo elétrico — Capítulo 22](site/exercicios/capitulo-22/)
 - [Índice de experimentos](site/experimentos/)

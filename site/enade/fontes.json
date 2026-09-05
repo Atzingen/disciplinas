@@ -1,0 +1,54 @@
+{
+  "folderUrl": "https://drive.google.com/drive/folders/1ZKgPA12woFtIH7I4VIHq8QhmvMk3LUwP",
+  "retrievedAt": "2026-09-05",
+  "files": [
+    {
+      "name": "3-Enade Física -2025_Fisica_Prova 5 - reaplicação - gabarito.pdf",
+      "driveId": "1jFr_5fEnGtXOKQe2_8Mv01DgSuEM4Jyl",
+      "url": "https://drive.google.com/file/d/1jFr_5fEnGtXOKQe2_8Mv01DgSuEM4Jyl/view?usp=drivesdk",
+      "bytes": 817973,
+      "localPath": "originais/2025-reaplicacao-gabarito.pdf",
+      "sha256": "0a3868ae0acc0cbf59886a6bf4b477e7699db7c8614bbe59788bb9c50c119d5b"
+    },
+    {
+      "name": "3-Enade Física -2025_Fisica_Prova 5 - reaplicação.pdf",
+      "driveId": "1cg2oZzpeRdvwgQuphtPNELGIBFxw15Qm",
+      "url": "https://drive.google.com/file/d/1cg2oZzpeRdvwgQuphtPNELGIBFxw15Qm/view?usp=drivesdk",
+      "bytes": 4728813,
+      "localPath": "originais/2025-reaplicacao-prova.pdf",
+      "sha256": "ff990acd6240896ceadf5a79f675d1a3881f69a75bece353f3c6547e5e4c5e60"
+    },
+    {
+      "name": "2-Enade Física -2025_Fisica_Prova 1-Gabarito.pdf",
+      "driveId": "11ojXP8JLW8ZhKu1K0C0PjDJ4cOBFBV7G",
+      "url": "https://drive.google.com/file/d/11ojXP8JLW8ZhKu1K0C0PjDJ4cOBFBV7G/view?usp=drivesdk",
+      "bytes": 1399942,
+      "localPath": "originais/2025-regular-gabarito.pdf",
+      "sha256": "5df4977847fe0c404ba1920700112fd27c0c85f924a4a6c3b3128a7db371a22b"
+    },
+    {
+      "name": "2-Enade Física -2025_Fisica_Prova 1.pdf",
+      "driveId": "15YusoH8u4o5n2fSm2NwQnsca9qsPi24s",
+      "url": "https://drive.google.com/file/d/15YusoH8u4o5n2fSm2NwQnsca9qsPi24s/view?usp=drivesdk",
+      "bytes": 9018411,
+      "localPath": "originais/2025-regular-prova.pdf",
+      "sha256": "410156fe6b4f68fb68b63b549dbc02603ab7bcdf2cc68ab9094b89d0afb330c3"
+    },
+    {
+      "name": "1-Enade Física - 2024_Fisica_Prova 1 - Gabarito.pdf",
+      "driveId": "16YDDbux2Zs8F-tE1jCO2SNPvQlNT1A6T",
+      "url": "https://drive.google.com/file/d/16YDDbux2Zs8F-tE1jCO2SNPvQlNT1A6T/view?usp=drivesdk",
+      "bytes": 182352,
+      "localPath": "originais/2024-gabarito.pdf",
+      "sha256": "2cd5c662a96b5cb416f2e6cd428a3de069b2c675f51b66d2902d261e0c2c7daa"
+    },
+    {
+      "name": "1-Enade Física - 2024_Fisica_Prova 1.pdf",
+      "driveId": "12g9rJ92eM28vbdJtJmhxAACSsTjTMSbu",
+      "url": "https://drive.google.com/file/d/12g9rJ92eM28vbdJtJmhxAACSsTjTMSbu/view?usp=drivesdk",
+      "bytes": 1651631,
+      "localPath": "originais/2024-prova.pdf",
+      "sha256": "6420b8339689882097d58267c731e7dad4cf1bdb8cd6c62874abd550b3f12cec"
+    }
+  ]
+}

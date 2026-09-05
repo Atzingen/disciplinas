@@ -1,4 +1,5 @@
 .venv/
+.venv-enade/
 __pycache__/
 *.py[cod]
 *.class

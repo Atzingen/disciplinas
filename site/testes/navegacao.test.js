@@ -54,6 +54,12 @@ test("navegação principal resolve o portal e as disciplinas a partir da raiz",
       current: false,
     },
     {
+      id: "enade",
+      label: "Enade",
+      href: "../../enade/",
+      current: false,
+    },
+    {
       id: "sobre",
       label: "Sobre",
       href: "../../#sobre",
@@ -102,6 +108,7 @@ test("disciplinas ocupam um único item expansível na navegação principal", (
     "inicio",
     "disciplinas",
     "simulacoes",
+    "enade",
     "sobre",
   ]);
   assert.equal(disciplines.children.length, 2);

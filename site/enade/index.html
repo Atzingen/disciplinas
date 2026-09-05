@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Questões de Física do Enade 2024 e das duas aplicações de 2025, organizadas por tema, com enunciados originais e gabaritos.">
+  <title>Enade · Física | Gustavo von Atzingen</title>
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../assets/base.css">
+  <link rel="stylesheet" href="../assets/enade.css">
+  <script>try{if(localStorage.getItem('tema')==='escuro')document.documentElement.dataset.theme='escuro'}catch{}</script>
+</head>
+<body class="enade-page">
+  <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+  <header class="site-header">
+    <a class="brand" href="../" aria-label="Materiais didáticos — início"><span class="brand__mark" aria-hidden="true">G</span><span><strong>Gustavo von Atzingen</strong><small>IFSP · materiais didáticos</small></span></a>
+    <div data-site-navigation data-root-path="../" data-active-section="enade"></div>
+  </header>
+  <main id="conteudo" class="enade-main">
+    <section id="catalogue-view" aria-labelledby="catalogue-title">
+      <header class="enade-intro">
+        <div><p class="enade-kicker">Licenciatura em Física</p><h1 id="catalogue-title">Enade <span>Física</span></h1>
+          <p class="enade-lead">Escolha um tema. Explore uma questão.<br> Traga a discussão para a sala de aula.</p>
+        </div>
+        <div class="enade-scope"><strong>Três provas para estudar</strong><p>136 questões objetivas e uma discursiva, com enunciados e figuras dos cadernos originais.</p><a href="#provas">Consultar provas e gabaritos</a></div>
+      </header>
+      <div class="enade-editions" id="edition-links" aria-label="Escolher uma edição"></div>
+      <p class="enade-note"><strong>A numeração muda em 2024:</strong> o componente de Física reúne as questões 28–63 e uma discursiva. Em cada aplicação de 2025, são as questões 31–80. Os temas incluem conteúdos de Física e questões específicas da licenciatura.</p>
+      <form id="filters" class="enade-filters" aria-label="Filtrar questões">
+        <label class="enade-search">Buscar no acervo<input name="query" type="search" placeholder="Tema, conceito ou número da questão" autocomplete="off"></label>
+        <label>Ano<select name="year"><option value="">Todos os anos</option><option value="2024">2024</option><option value="2025">2025</option></select></label>
+        <label>Aplicação<select name="application"><option value="">Todas</option><option value="regular">Regular</option><option value="reaplicacao">Reaplicação</option></select></label>
+        <label>Tópico<select name="topic"><option value="">Todos os tópicos</option></select></label>
+        <label>Tipo<select name="kind"><option value="">Todos os tipos</option><option value="objetiva">Objetiva</option><option value="discursiva">Discursiva</option></select></label>
+        <label>Resolução<select name="status"><option value="">Todas as questões</option><option value="resolvida">Com resolução</option><option value="pendente">Sem resolução</option></select></label>
+      </form>
+      <div class="enade-results-bar"><p id="result-count" role="status" aria-live="polite">Carregando questões…</p><button id="clear-filters" type="button" class="enade-text-button">Limpar filtros</button></div>
+      <div id="question-list" class="enade-list"></div>
+      <div id="empty-state" class="enade-empty" hidden><h2>Nenhuma questão com esses filtros</h2><p>Escolha outro tema ou limpe os filtros para consultar todo o acervo. As resoluções comentadas serão adicionadas aqui conforme forem preparadas.</p><button type="button" class="enade-button" data-clear>Ver todas as questões</button></div>
+      <nav id="pagination" class="enade-pagination" aria-label="Páginas do catálogo"></nav>
+    </section>
+    <section id="reader-view" aria-label="Questão selecionada" hidden></section>
+    <div id="load-error" class="enade-empty" role="alert" hidden><h2>Não foi possível carregar as questões</h2><p>Tente recarregar a página. Os PDFs completos continuam disponíveis abaixo.</p><button class="enade-button" id="retry-load" type="button">Tentar novamente</button></div>
+    <noscript><p>Ative o JavaScript para filtrar e abrir questões. Você pode baixar as provas nos links abaixo.</p></noscript>
+    <section id="provas" class="enade-sources" aria-labelledby="sources-title">
+      <h2 id="sources-title">Provas e gabaritos</h2><p>Arquivos completos fornecidos para estudo. Os PDFs também contêm a parte de Formação Geral, que não entra neste catálogo.</p>
+      <div class="enade-source-grid">
+        <article><h3>2024</h3><p>Enade · Tipo 1<br>36 objetivas + 1 discursiva de Física</p><a href="./originais/2024-prova.pdf" target="_blank" rel="noopener">Prova (PDF)</a><a href="./originais/2024-gabarito.pdf" target="_blank" rel="noopener">Gabarito (PDF)</a></article>
+        <article><h3>2025 · Regular</h3><p>Enade / PND · Tipo 1<br>50 objetivas de Física</p><a href="./originais/2025-regular-prova.pdf" target="_blank" rel="noopener">Prova (PDF)</a><a href="./originais/2025-regular-gabarito.pdf" target="_blank" rel="noopener">Gabarito (PDF)</a></article>
+        <article><h3>2025 · Reaplicação</h3><p>Enade / PND · Tipo 5<br>50 objetivas de Física</p><a href="./originais/2025-reaplicacao-prova.pdf" target="_blank" rel="noopener">Prova (PDF)</a><a href="./originais/2025-reaplicacao-gabarito.pdf" target="_blank" rel="noopener">Gabarito (PDF)</a></article>
+      </div>
+      <p class="enade-source-note">Enunciados e gabaritos: Inep, conforme os arquivos da <a href="https://drive.google.com/drive/folders/1ZKgPA12woFtIH7I4VIHq8QhmvMk3LUwP" target="_blank" rel="noopener">pasta de origem</a>. A classificação por temas é editorial; uma questão pode aparecer em mais de um tópico. Resoluções comentadas ainda não foram adicionadas.</p>
+    </section>
+  </main>
+  <footer class="site-footer"><p>Gustavo von Atzingen · IFSP Câmpus Piracicaba</p><a href="../exercicios/">Outros exercícios do portal</a></footer>
+  <script type="module" src="../componentes/navegacao-principal.js"></script>
+  <script type="module" src="../componentes/enade.js"></script>
+</body>
+</html>
