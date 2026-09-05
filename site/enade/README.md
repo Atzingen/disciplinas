@@ -60,15 +60,19 @@ direita, complementando a revisão visual dos recortes.
 
 ## Adicionar resoluções
 
-As 137 questões começam com `solution: null`. Gabarito e resolução são campos
-distintos. Para publicar uma resolução, crie sua página e acrescente o campo
+Gabarito e resolução são campos distintos. Há 27 soluções de eletromagnetismo
+publicadas após autorização do professor; veja [o processo de redação](solucoes/README.md).
+As demais questões permanecem com `solution: null`. Para adicionar uma resolução,
+crie sua página e acrescente o campo
 abaixo à entrada correspondente de `classificacao.json`:
 
 ```json
 "solution": { "url": "resolucoes/2024-q28.html" }
 ```
 
-O caminho é relativo a `site/enade/`. Regere o catálogo e execute os testes.
+O caminho é relativo a `site/enade/`. Fragmentos HTML, abertos na própria questão,
+usam também `format: "html-fragment"` e `status: "rascunho"` durante a conferência.
+Regere o catálogo e execute os testes.
 A página passa a exibir o link e a questão aparece no filtro **Com resolução**.
 Não edite apenas o JSON gerado: ele é substituído na próxima extração.
 
@@ -78,4 +82,5 @@ Os filtros podem ser combinados e compartilhados pela URL. Por exemplo:
 `?ano=2025&aplicacao=reaplicacao&topico=optica&busca=difracao`.
 Uma questão tem link permanente, como `?questao=2024-q50`.
 O botão de retorno mantém os filtros; o modo aula amplia a leitura e sai com
-Escape. O gabarito começa recolhido e só entra na impressão se estiver aberto.
+Escape. Solução e gabarito começam recolhidos, abrem independentemente e só
+entram na impressão se estiverem abertos.

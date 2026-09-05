@@ -1,0 +1,36 @@
+<article class="enade-worked-solution" data-question-id="2024-q37" data-proposed-answer="B">
+<header class="enade-solution-intro">
+<p>Para a mesma tensão entre A e B, a maior corrente corresponde à menor resistência equivalente. A posição dos fios, e não a aparência de uma fileira de resistores, determina a associação.</p>
+</header>
+<div class="solution-article">
+<p>Chamando cada resistência de \(R\) e mantendo a tensão aplicada \(U\) fixa, a <a href="https://pt.wikipedia.org/wiki/Lei_de_Ohm" target="_blank" rel="noopener">Lei de Ohm</a> fornece:</p>
+<div class="math-block math-display">\[
+I=\frac{U}{R_{\mathrm{eq}}}.
+\]</div>
+<p>Logo, comparamos as resistências equivalentes. Fios ideais unem pontos de mesmo potencial; resistores entre os mesmos dois nós estão em paralelo.</p>
+<p>Para entender o circuito B, numere os cinco resistores da esquerda para a direita. O fio inferior une A ao ponto entre o quarto e o quinto resistores. O fio superior une B ao ponto entre o primeiro e o segundo. Assim há três caminhos entre A e B: o primeiro resistor, o quinto resistor e a sequência dos três resistores centrais.</p>
+<div class="math-block math-display">\[
+R_B=R\parallel R\parallel3R,\qquad \frac1{R_B}=\frac1R+\frac1R+\frac1{3R}=\frac7{3R}.
+\]</div>
+<div class="math-block math-display">\[
+R_B=\frac{3R}{7}\approx0{,}429R.
+\]</div>
+<p>O símbolo \(\parallel\) indica associação em paralelo. Não há curto-circuito direto entre A e B: cada caminho ainda contém resistores.</p>
+<p>Em A, o quinto resistor está em série com três caminhos de valores R, R e 2R. Em C, há três caminhos: 2R pelo contorno superior/direito, 2R pelo esquerdo/inferior e R pela diagonal. Em D, o resistor inferior está em paralelo com o resistor esquerdo seguido de uma associação entre a diagonal e o contorno superior/direito.</p>
+<div class="math-block math-display">\[
+\begin{aligned}R_A&=R+(R\parallel R\parallel2R)=\frac{7R}{5},\\R_C&=2R\parallel2R\parallel R=\frac R2,\\R_D&=R\parallel\bigl[R+(R\parallel2R)\bigr]=\frac{5R}{8}.\end{aligned}
+\]</div>
+<p>A ordem é \(R_B&lt;R_C&lt;R_D&lt;R_A\). A menor resistência é a da alternativa B.</p>
+</div>
+<div class="result-callout"><h3>Conclusão desta resolução</h3><strong>Alternativa proposta: B</strong><p>O circuito B produz a maior corrente sob a mesma tensão aplicada, pois sua resistência equivalente é 3R/7.</p>
+</div>
+<aside class="solution-note"><strong>Precisão do modelo</strong><p>A expressão “maior descarga” é interpretada aqui como maior corrente para tensão fixa. A resistência não determina sozinha a energia total de uma descarga real: por exemplo, a energia inicialmente armazenada em um capacitor é \(E_C=CU^2/2\).</p>
+</aside>
+<section class="enade-explorer" data-enade-explorer="redes" aria-label="O desenho muda; os nós decidem">
+<h3>O desenho muda; os nós decidem</h3>
+<p class="explorer-prompt">Troque a associação e procure os caminhos entre a e b. Qual circuito exige maior corrente de uma fonte que mantém a mesma tensão?</p>
+<p class="explorer-model">Redes ideais com cinco resistores iguais. Os desenhos abaixo reorganizam os circuitos do enunciado preservando suas conexões. Para comparar as correntes, adotamos 10 V: \(I=10/R_{\mathrm{eq}}\). A exploração trata apenas da rede resistiva.</p>
+<p class="explorer-model">Os controles exploram outras condições. A conclusão acima continua referindo-se aos dados da questão.</p>
+</section>
+<footer class="enade-concept-references"><h3>Conceitos e referências</h3><ul><li><a href="https://pt.wikipedia.org/wiki/Lei_de_Ohm" target="_blank" rel="noopener">Lei de Ohm</a></li><li><a href="https://pt.wikipedia.org/wiki/Circuito_paralelo" target="_blank" rel="noopener">Circuito paralelo</a></li><li><a href="https://pt.wikipedia.org/wiki/Circuito_em_s%C3%A9rie" target="_blank" rel="noopener">Circuito em série</a></li></ul></footer>
+</article>

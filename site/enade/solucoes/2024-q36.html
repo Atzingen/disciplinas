@@ -1,0 +1,35 @@
+<article class="enade-worked-solution" data-question-id="2024-q36" data-proposed-answer="A">
+<header class="enade-solution-intro">
+<p>“Mesmo brilho” não basta: todas as lâmpadas precisam funcionar no ponto nominal de 3 V e 0,5 A. A resistência interna da pilha determina quantas podem fazer isso juntas.</p>
+</header>
+<div class="solution-article">
+<p>Na figura, cada lâmpada está entre os mesmos dois nós, A e B. Por isso todas recebem a mesma tensão terminal \(U\); a distância desenhada até a pilha não altera a corrente de cada ramo no modelo de fios ideais. No ponto nominal, a resistência de cada lâmpada é:</p>
+<div class="math-block math-display">\[
+R_L=\frac{U_L}{I_L}=\frac{3}{0{,}5}=6\,\Omega.
+\]</div>
+<p>A pilha tem \(\mathcal E=6\,\mathrm V\) em seu modelo ideal, mas há uma queda de tensão na resistência interna. Para uma corrente total \(I\) entregue ao circuito:</p>
+<div class="math-block math-display">\[
+U=\mathcal E-rI.
+\]</div>
+<p>Queremos \(U=3\,\mathrm V\) nas lâmpadas. Portanto a queda interna também deve ser de 3 V:</p>
+<div class="math-block math-display">\[
+I=\frac{\mathcal E-U}{r}=\frac{6-3}{1}=3\,\mathrm A.
+\]</div>
+<p>Como as lâmpadas formam um <a href="https://pt.wikipedia.org/wiki/Circuito_paralelo" target="_blank" rel="noopener">circuito paralelo</a>, a corrente total é a soma das correntes das lâmpadas. Se cada uma consome 0,5 A no ponto nominal:</p>
+<div class="math-block math-display">\[
+I=nI_L\quad\Longrightarrow\quad n=\frac{3}{0{,}5}=6.
+\]</div>
+<p>Com seis lâmpadas, a resistência externa equivalente no ponto nominal é \(6\,\Omega/6=1\,\Omega\). Somada à resistência interna, temos 2 Ω. Assim, \(I=6/2=3\,\mathrm A\) e cada ramo recebe 0,5 A. A é consistente. C confunde tensões iguais com tensão nominal; B e D ignoram o funcionamento do circuito real da pilha.</p>
+</div>
+<div class="result-callout"><h3>Conclusão desta resolução</h3><strong>Alternativa proposta: A</strong><p>Seis lâmpadas em paralelo atingem simultaneamente o brilho nominal.</p>
+</div>
+<aside class="solution-note"><strong>Por que usar 6 Ω apenas no ponto nominal?</strong><p>O filamento incandescente varia de resistência com a temperatura. A solução usa a razão 3 V/0,5 A exatamente no estado desejado; não pressupõe resistência constante para todas as temperaturas.</p>
+</aside>
+<section class="enade-explorer" data-enade-explorer="lampadas" aria-label="E se acrescentarmos mais lâmpadas?">
+<h3>E se acrescentarmos mais lâmpadas?</h3>
+<p class="explorer-prompt">Antes de mexer: ligar mais uma lâmpada faz as demais ficarem mais fortes ou mais fracas? Compare também uma pilha ideal com uma pilha que tem resistência interna.</p>
+<p class="explorer-model">Neste modelo exploratório, cada lâmpada é um resistor constante de 6 Ω: \(U=6/(1+nr/6)\). Isso permite estudar a queda de tensão, mas só coincide com a resistência real do filamento no ponto nominal. O preenchimento amarelo indica potência relativa, não uma previsão da luminosidade percebida.</p>
+<p class="explorer-model">Os controles exploram outras condições. A conclusão acima continua referindo-se aos dados da questão.</p>
+</section>
+<footer class="enade-concept-references"><h3>Conceitos e referências</h3><ul><li><a href="https://pt.wikipedia.org/wiki/Lei_de_Ohm" target="_blank" rel="noopener">Lei de Ohm</a></li><li><a href="https://pt.wikipedia.org/wiki/Circuito_paralelo" target="_blank" rel="noopener">Circuito paralelo</a></li></ul></footer>
+</article>

@@ -1,0 +1,24 @@
+<article class="enade-worked-solution" data-question-id="2025-reaplicacao-q49" data-proposed-answer="B">
+<header class="enade-solution-intro">
+<p>A pergunta pede um procedimento de análise. O modelo prevê uma relação linear entre tensão de limiar e frequência; a constante de Planck deve ser obtida da inclinação dessa relação.</p>
+</header>
+<div class="solution-article">
+<p>O modelo fornecido iguala energia do fóton e variação de energia elétrica. Usando e como o módulo da carga elementar:</p>
+<div class="math-block math-display">\[
+h\nu=e\Delta V_L\quad\Longrightarrow\quad\Delta V_L=\frac he\nu.
+\]</div>
+<p>No gráfico, a tensão está no eixo vertical e a frequência no horizontal. A equação tem a forma de uma reta.</p>
+<p>Se escrevemos \(\Delta V_L=a\nu+b\), o modelo ideal prevê \(a=h/e\) e \(b=0\). Depois de ajustar a reta aos dados:</p>
+<div class="math-block math-display">\[
+a=\frac{\Delta(\Delta V_L)}{\Delta\nu},\qquad h=ea.
+\]</div>
+<p>A análise dimensional confirma: \(\mathrm{C}\times\mathrm{V/Hz}=\mathrm{J\,s}\), unidade de h. Não se deve confundir o próprio coeficiente angular com h: falta multiplicar por e.</p>
+<p>Um ajuste estatístico reduz a dependência de um único ponto e permite examinar dispersão e resíduos. Se as incertezas diferirem, elas devem orientar os pesos do ajuste. Excluir os pontos extremos sem motivo experimental não é um procedimento justificado; ajustar uma parábola também não segue o modelo linear proposto.</p>
+<p>A tensão em que o brilho se torna perceptível não é uma medição perfeita de uma única energia de fóton. Perdas, temperatura e o critério visual introduzem limitações. Um intercepto livre pode ajudar a diagnosticar desvios do modelo; ele deve ser interpretado, não ignorado. Isso não altera o fato de que o procedimento pertinente entre as opções é ajustar uma reta e usar sua inclinação.</p>
+</div>
+<div class="result-callout"><h3>Conclusão desta resolução</h3><strong>Alternativa proposta: B</strong><p>A alternativa B corresponde ao ajuste linear; a estimativa deve usar h = e × coeficiente angular.</p>
+</div>
+<aside class="solution-note"><strong>Inconsistências do gráfico para conferir</strong><p>O texto menciona quatro LEDs, mas o gráfico mostra cinco pontos. O eixo horizontal apresenta valores entre aproximadamente 4,3 e 6,1 com rótulo Hz, sem fator de escala compatível com luz visível. Isso não muda a escolha do método, mas não permite obter um valor numérico confiável de h sem esclarecer a escala. Se o eixo representar \(x=\nu/(10^{14}\,\mathrm{Hz})\) no sentido de valores escalados, é preciso reconverter a inclinação para V/Hz antes de multiplicar por e.</p>
+</aside>
+<footer class="enade-concept-references"><h3>Conceitos e referências</h3><ul><li><a href="https://pt.wikipedia.org/wiki/Constante_de_Planck" target="_blank" rel="noopener">Constante de Planck</a></li><li><a href="https://pt.wikipedia.org/wiki/Regress%C3%A3o_linear" target="_blank" rel="noopener">Regressão linear</a></li></ul></footer>
+</article>

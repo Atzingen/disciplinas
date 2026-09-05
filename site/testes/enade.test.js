@@ -61,9 +61,13 @@ test('filtros combinam ano, aplicação e conteúdo com busca sem acentos', () =
 test('busca inclui o texto-base e resolução não confunde gabarito com comentário', () => {
   assert.equal(typeof model.filterQuestions, 'function');
   assert.ok(model.filterQuestions(data, {year:'2025',query:'pororoca'}).some(q => q.id === '2025-reaplicacao-q32'));
-  assert.equal(model.filterQuestions(data, {status:'resolvida'}).length, 0);
+  assert.equal(model.filterQuestions(data, {status:'resolvida'}).length, 27);
+  assert.equal(model.filterQuestions(data, {status:'rascunho'}).length, 0);
+  assert.equal(model.filterQuestions(data, {status:'pendente'}).length, 110);
   const future = {...data, questions:[{...data.questions[0], solution:{url:'resolucoes/exemplo.html'}}]};
   assert.equal(model.filterQuestions(future, {status:'resolvida'}).length, 1);
+  const draft = {...data, questions:[{...data.questions[0], solution:{url:'resolucoes/exemplo.html', status:'rascunho'}}]};
+  assert.equal(model.filterQuestions(draft, {status:'rascunho'}).length, 1);
 });
 
 test('links diretos preservam filtros e rejeitam paginação inválida', () => {

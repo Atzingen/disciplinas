@@ -1,0 +1,173 @@
+{
+  "status": "publicada",
+  "createdAt": "2026-09-05",
+  "topic": "eletromagnetismo",
+  "comparedWithOfficialKey": false,
+  "method": "Enunciados e textos-base separados dos campos de gabarito antes da redação. Nenhuma comparação foi feita nesta etapa. Os gabaritos haviam sido processados na etapa anterior da conversa; este registro não afirma ausência de exposição prévia.",
+  "questions": {
+    "2024-q30": {
+      "proposedAlternative": "B",
+      "url": "solucoes/2024-q30.html",
+      "status": "publicada",
+      "format": "html-fragment"
+    },
+    "2024-q33": {
+      "proposedAlternative": "C",
+      "url": "solucoes/2024-q33.html",
+      "status": "publicada",
+      "format": "html-fragment"
+    },
+    "2024-q35": {
+      "proposedAlternative": "B",
+      "url": "solucoes/2024-q35.html",
+      "status": "publicada",
+      "format": "html-fragment"
+    },
+    "2024-q36": {
+      "proposedAlternative": "A",
+      "url": "solucoes/2024-q36.html",
+      "status": "publicada",
+      "format": "html-fragment"
+    },
+    "2024-q37": {
+      "proposedAlternative": "B",
+      "url": "solucoes/2024-q37.html",
+      "status": "publicada",
+      "format": "html-fragment"
+    },
+    "2024-q38": {
+      "proposedAlternative": "B",
+      "url": "solucoes/2024-q38.html",
+      "status": "publicada",
+      "format": "html-fragment"
+    },
+    "2024-q42": {
+      "proposedAlternative": "D",
+      "url": "solucoes/2024-q42.html",
+      "status": "publicada",
+      "format": "html-fragment"
+    },
+    "2024-q51": {
+      "proposedAlternative": "C",
+      "url": "solucoes/2024-q51.html",
+      "status": "publicada",
+      "format": "html-fragment"
+    },
+    "2024-q56": {
+      "proposedAlternative": "D",
+      "url": "solucoes/2024-q56.html",
+      "status": "publicada",
+      "format": "html-fragment"
+    },
+    "2024-q62": {
+      "proposedAlternative": "B",
+      "url": "solucoes/2024-q62.html",
+      "status": "publicada",
+      "format": "html-fragment"
+    },
+    "2025-regular-q32": {
+      "proposedAlternative": "B",
+      "url": "solucoes/2025-regular-q32.html",
+      "status": "publicada",
+      "format": "html-fragment"
+    },
+    "2025-regular-q38": {
+      "proposedAlternative": "B",
+      "url": "solucoes/2025-regular-q38.html",
+      "status": "publicada",
+      "format": "html-fragment"
+    },
+    "2025-regular-q44": {
+      "proposedAlternative": "D",
+      "url": "solucoes/2025-regular-q44.html",
+      "status": "publicada",
+      "format": "html-fragment"
+    },
+    "2025-regular-q45": {
+      "proposedAlternative": "B",
+      "url": "solucoes/2025-regular-q45.html",
+      "status": "publicada",
+      "format": "html-fragment"
+    },
+    "2025-regular-q53": {
+      "proposedAlternative": "B",
+      "url": "solucoes/2025-regular-q53.html",
+      "status": "publicada",
+      "format": "html-fragment"
+    },
+    "2025-regular-q54": {
+      "proposedAlternative": "A",
+      "url": "solucoes/2025-regular-q54.html",
+      "status": "publicada",
+      "format": "html-fragment"
+    },
+    "2025-regular-q55": {
+      "proposedAlternative": "C",
+      "url": "solucoes/2025-regular-q55.html",
+      "status": "publicada",
+      "format": "html-fragment"
+    },
+    "2025-regular-q58": {
+      "proposedAlternative": "C",
+      "url": "solucoes/2025-regular-q58.html",
+      "status": "publicada",
+      "format": "html-fragment"
+    },
+    "2025-regular-q59": {
+      "proposedAlternative": "C",
+      "url": "solucoes/2025-regular-q59.html",
+      "status": "publicada",
+      "format": "html-fragment"
+    },
+    "2025-regular-q72": {
+      "proposedAlternative": "C",
+      "url": "solucoes/2025-regular-q72.html",
+      "status": "publicada",
+      "format": "html-fragment"
+    },
+    "2025-regular-q77": {
+      "proposedAlternative": "D",
+      "url": "solucoes/2025-regular-q77.html",
+      "status": "publicada",
+      "format": "html-fragment"
+    },
+    "2025-regular-q78": {
+      "proposedAlternative": "B",
+      "url": "solucoes/2025-regular-q78.html",
+      "status": "publicada",
+      "format": "html-fragment"
+    },
+    "2025-regular-q79": {
+      "proposedAlternative": "B",
+      "url": "solucoes/2025-regular-q79.html",
+      "status": "publicada",
+      "format": "html-fragment"
+    },
+    "2025-regular-q80": {
+      "proposedAlternative": "A",
+      "url": "solucoes/2025-regular-q80.html",
+      "status": "publicada",
+      "format": "html-fragment"
+    },
+    "2025-reaplicacao-q47": {
+      "proposedAlternative": "D",
+      "url": "solucoes/2025-reaplicacao-q47.html",
+      "status": "publicada",
+      "format": "html-fragment"
+    },
+    "2025-reaplicacao-q49": {
+      "proposedAlternative": "B",
+      "url": "solucoes/2025-reaplicacao-q49.html",
+      "status": "publicada",
+      "format": "html-fragment"
+    },
+    "2025-reaplicacao-q74": {
+      "proposedAlternative": "D",
+      "url": "solucoes/2025-reaplicacao-q74.html",
+      "status": "publicada",
+      "format": "html-fragment"
+    }
+  },
+  "publicationAuthorizedAt": "2026-09-05",
+  "publicationNote": "Publicação autorizada pelo professor após validação da prévia. Esta autorização não registra comparação com o gabarito oficial."
+}

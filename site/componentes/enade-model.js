@@ -16,6 +16,7 @@ export function filterQuestions(data, filters = {}) {
     if (filters.kind && question.kind !== filters.kind) return false;
     if (filters.status === 'resolvida' && !question.solution?.url) return false;
     if (filters.status === 'pendente' && question.solution?.url) return false;
+    if (filters.status === 'rascunho' && question.solution?.status !== 'rascunho') return false;
     const content = normalize([question.title, question.number, question.text, ...question.keywords,
       ...question.contextIds.map(id => contexts.get(id))].join(' '));
     return terms.every(term => content.includes(term));

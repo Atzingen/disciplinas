@@ -78,7 +78,12 @@
         "Peer instruction",
         "Eletrostática",
         "Avaliação"
-      ]
+      ],
+      "solution": {
+        "url": "solucoes/2024-q30.html",
+        "status": "publicada",
+        "format": "html-fragment"
+      }
     },
     "2024-q31": {
       "title": "Currículo de Física e autonomia discente",
@@ -110,7 +115,12 @@
         "Indução eletromagnética",
         "Energia",
         "CTS"
-      ]
+      ],
+      "solution": {
+        "url": "solucoes/2024-q33.html",
+        "status": "publicada",
+        "format": "html-fragment"
+      }
     },
     "2024-q34": {
       "title": "Pêndulo, conservação da energia e reforço positivo",
@@ -134,7 +144,12 @@
         "Potência",
         "Vazão",
         "Conversão de unidades"
-      ]
+      ],
+      "solution": {
+        "url": "solucoes/2024-q35.html",
+        "status": "publicada",
+        "format": "html-fragment"
+      }
     },
     "2024-q36": {
       "title": "Lâmpadas e resistência interna de uma pilha",
@@ -145,7 +160,12 @@
         "Circuitos",
         "Associação em paralelo",
         "Geradores"
-      ]
+      ],
+      "solution": {
+        "url": "solucoes/2024-q36.html",
+        "status": "publicada",
+        "format": "html-fragment"
+      }
     },
     "2024-q37": {
       "title": "Resistência equivalente em um desfibrilador",
@@ -156,7 +176,12 @@
         "Resistores",
         "Circuitos",
         "Corrente elétrica"
-      ]
+      ],
+      "solution": {
+        "url": "solucoes/2024-q37.html",
+        "status": "publicada",
+        "format": "html-fragment"
+      }
     },
     "2024-q38": {
       "title": "Potência máxima em um circuito residencial",
@@ -167,7 +192,12 @@
         "Potência",
         "Disjuntor",
         "Associação em paralelo"
-      ]
+      ],
+      "solution": {
+        "url": "solucoes/2024-q38.html",
+        "status": "publicada",
+        "format": "html-fragment"
+      }
     },
     "2024-q39": {
       "title": "Usina termelétrica e aprendizagem baseada em casos",
@@ -214,7 +244,12 @@
         "Solenoide",
         "Lei de Faraday",
         "Ensino por investigação"
-      ]
+      ],
+      "solution": {
+        "url": "solucoes/2024-q42.html",
+        "status": "publicada",
+        "format": "html-fragment"
+      }
     },
     "2024-q43": {
       "title": "Autonomia e construção do conhecimento científico",
@@ -318,7 +353,12 @@
         "Frequência",
         "Difração",
         "CTS"
-      ]
+      ],
+      "solution": {
+        "url": "solucoes/2024-q51.html",
+        "status": "publicada",
+        "format": "html-fragment"
+      }
     },
     "2024-q52": {
       "title": "História e investigação na construção de teorias",
@@ -378,7 +418,12 @@
         "Motores",
         "Cognição",
         "Experimentação"
-      ]
+      ],
+      "solution": {
+        "url": "solucoes/2024-q56.html",
+        "status": "publicada",
+        "format": "html-fragment"
+      }
     },
     "2024-q57": {
       "title": "Autonomia e tecnologias digitais na aprendizagem",
@@ -448,7 +493,12 @@
         "Efeito fotoelétrico",
         "Eletrostática",
         "Concepções alternativas"
-      ]
+      ],
+      "solution": {
+        "url": "solucoes/2024-q62.html",
+        "status": "publicada",
+        "format": "html-fragment"
+      }
     },
     "2024-q63": {
       "title": "Decaimento radioativo modelado com dados",
@@ -496,7 +546,12 @@
         "Micro-ondas",
         "Comprimento de onda",
         "Experimentação"
-      ]
+      ],
+      "solution": {
+        "url": "solucoes/2025-regular-q32.html",
+        "status": "publicada",
+        "format": "html-fragment"
+      }
     },
     "2025-regular-q33": {
       "title": "Investigação de vibrações em cordas e molas",
@@ -568,7 +623,12 @@
         "CTS",
         "Placas fotovoltaicas",
         "Autonomia"
-      ]
+      ],
+      "solution": {
+        "url": "solucoes/2025-regular-q38.html",
+        "status": "publicada",
+        "format": "html-fragment"
+      }
     },
     "2025-regular-q39": {
       "title": "Temperatura global, energia e entropia",
@@ -635,7 +695,12 @@
         "Relatividade",
         "Força magnética",
         "Aceleradores"
-      ]
+      ],
+      "solution": {
+        "url": "solucoes/2025-regular-q44.html",
+        "status": "publicada",
+        "format": "html-fragment"
+      }
     },
     "2025-regular-q45": {
       "title": "Modelagem da emissão de luz síncrotron",
@@ -648,7 +713,12 @@
         "Partículas aceleradas",
         "Radiação",
         "Analogias"
-      ]
+      ],
+      "solution": {
+        "url": "solucoes/2025-regular-q45.html",
+        "status": "publicada",
+        "format": "html-fragment"
+      }
     },
     "2025-regular-q46": {
       "title": "Sirius e investimento público em ciência",
@@ -742,7 +812,12 @@
       "keywords": [
         "Três momentos pedagógicos",
         "Energia eólica"
-      ]
+      ],
+      "solution": {
+        "url": "solucoes/2025-regular-q53.html",
+        "status": "publicada",
+        "format": "html-fragment"
+      }
     },
     "2025-regular-q54": {
       "title": "Aplicação do conhecimento sobre energia renovável",
@@ -753,7 +828,12 @@
       "keywords": [
         "Três momentos pedagógicos",
         "Sustentabilidade"
-      ]
+      ],
+      "solution": {
+        "url": "solucoes/2025-regular-q54.html",
+        "status": "publicada",
+        "format": "html-fragment"
+      }
     },
     "2025-regular-q55": {
       "title": "Consumo elétrico de uma escola rural",
@@ -764,7 +844,12 @@
         "Energia elétrica",
         "Potência",
         "kWh"
-      ]
+      ],
+      "solution": {
+        "url": "solucoes/2025-regular-q55.html",
+        "status": "publicada",
+        "format": "html-fragment"
+      }
     },
     "2025-regular-q56": {
       "title": "Queda dos corpos e resistência do ar",
@@ -799,7 +884,12 @@
         "Corrente elétrica",
         "Potência",
         "Segurança elétrica"
-      ]
+      ],
+      "solution": {
+        "url": "solucoes/2025-regular-q58.html",
+        "status": "publicada",
+        "format": "html-fragment"
+      }
     },
     "2025-regular-q59": {
       "title": "Disjuntores e fusíveis em circuitos",
@@ -809,7 +899,12 @@
       "keywords": [
         "Proteção",
         "Corrente nominal"
-      ]
+      ],
+      "solution": {
+        "url": "solucoes/2025-regular-q59.html",
+        "status": "publicada",
+        "format": "html-fragment"
+      }
     },
     "2025-regular-q60": {
       "title": "Medição do ruído na escola",
@@ -957,7 +1052,12 @@
         "Momento linear",
         "Carga elétrica",
         "CERN"
-      ]
+      ],
+      "solution": {
+        "url": "solucoes/2025-regular-q72.html",
+        "status": "publicada",
+        "format": "html-fragment"
+      }
     },
     "2025-regular-q73": {
       "title": "Projetos de análise de dados em Física de partículas",
@@ -1013,7 +1113,12 @@
         "Tema gerador",
         "Políticas públicas",
         "Energia sustentável"
-      ]
+      ],
+      "solution": {
+        "url": "solucoes/2025-regular-q77.html",
+        "status": "publicada",
+        "format": "html-fragment"
+      }
     },
     "2025-regular-q78": {
       "title": "Custo da energia durante uma interrupção",
@@ -1024,7 +1129,12 @@
         "Potência",
         "Energia elétrica",
         "kWh"
-      ]
+      ],
+      "solution": {
+        "url": "solucoes/2025-regular-q78.html",
+        "status": "publicada",
+        "format": "html-fragment"
+      }
     },
     "2025-regular-q79": {
       "title": "Avaliação sobre circuitos e consumo residencial",
@@ -1036,7 +1146,12 @@
         "Avaliação",
         "Circuitos",
         "Etapas da educação"
-      ]
+      ],
+      "solution": {
+        "url": "solucoes/2025-regular-q79.html",
+        "status": "publicada",
+        "format": "html-fragment"
+      }
     },
     "2025-regular-q80": {
       "title": "Acesso à eletricidade e pensamento crítico",
@@ -1048,7 +1163,12 @@
         "Iluminação pública",
         "Desigualdade",
         "CTS"
-      ]
+      ],
+      "solution": {
+        "url": "solucoes/2025-regular-q80.html",
+        "status": "publicada",
+        "format": "html-fragment"
+      }
     },
     "2025-reaplicacao-q31": {
       "title": "Pororoca e três momentos pedagógicos",
@@ -1248,7 +1368,12 @@
         "Eletrização",
         "Rigidez dielétrica",
         "EJA"
-      ]
+      ],
+      "solution": {
+        "url": "solucoes/2025-reaplicacao-q47.html",
+        "status": "publicada",
+        "format": "html-fragment"
+      }
     },
     "2025-reaplicacao-q48": {
       "title": "Avaliação contínua no ensino de Física",
@@ -1270,7 +1395,12 @@
         "Quantização",
         "Ajuste linear",
         "Semicondutores"
-      ]
+      ],
+      "solution": {
+        "url": "solucoes/2025-reaplicacao-q49.html",
+        "status": "publicada",
+        "format": "html-fragment"
+      }
     },
     "2025-reaplicacao-q50": {
       "title": "Origens da mecânica quântica",
@@ -1563,7 +1693,12 @@
       ],
       "additionalContextIds": [
         "2025-reaplicacao-contexto-71-72"
-      ]
+      ],
+      "solution": {
+        "url": "solucoes/2025-reaplicacao-q74.html",
+        "status": "publicada",
+        "format": "html-fragment"
+      }
     },
     "2025-reaplicacao-q75": {
       "title": "Relatividade, satélites e questões sociais",

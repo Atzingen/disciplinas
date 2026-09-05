@@ -1,0 +1,38 @@
+<article class="enade-worked-solution" data-question-id="2025-regular-q55" data-proposed-answer="C">
+<header class="enade-solution-intro">
+<p>É preciso contar os quatro LEDs, usar o tempo diário de cada equipamento e distinguir reduzir a energia comprada da rede de reduzir a energia consumida pela bomba.</p>
+</header>
+<div class="solution-article">
+<p>Potência é a taxa de consumo de energia. Para potência constante no período de uso:</p>
+<div class="math-block math-display">\[
+E=P\Delta t.
+\]</div>
+<p>Como a resposta deve estar em kWh, usamos potência em kW e tempo em horas. “30 dias” não significa que todos os aparelhos ficam ligados 24 h/dia: a tabela informa seus tempos médios diários.</p>
+<p>Aplicando essa relação a cada equipamento, a contribuição diária é:</p>
+<div class="math-block math-display">\[
+\begin{aligned}E_{\mathrm{bomba}}&=1{,}5\times1=1{,}50\,\mathrm{kWh},\\E_{\mathrm{geladeira}}&=0{,}400\times10=4{,}00\,\mathrm{kWh},\\E_{\mathrm{LEDs}}&=4\times0{,}015\times6=0{,}36\,\mathrm{kWh}.\end{aligned}
+\]</div>
+<p>As potências dos LEDs se somam porque há quatro lâmpadas de 15 W cada. A geladeira deve ser tratada pelo tempo médio informado, sem acrescentar outro fator de funcionamento.</p>
+<p>Somamos as contribuições e, então, multiplicamos pelos 30 dias:</p>
+<div class="math-block math-display">\[
+E_{\mathrm{dia}}=1{,}50+4{,}00+0{,}36=5{,}86\,\mathrm{kWh}.
+\]</div>
+<div class="math-block math-display">\[
+E_{30\mathrm d}=30\times5{,}86=175{,}8\,\mathrm{kWh}.
+\]</div>
+<p>O valor 167,7 kWh aparece se apenas uma das quatro lâmpadas for contada: é uma verificação útil do erro de multiplicidade.</p>
+<p>Com o consumo calculado, podemos avaliar a proposta de sustentabilidade. Alimentar a bomba com energia solar disponível no horário de uso pode substituir parte da energia retirada da rede. Trocar por uma bomba mais potente não garante menor consumo: é preciso conhecer vazão, altura, rendimento e tempo necessário. Uma potência maior pode simplesmente aumentar o gasto.</p>
+<p>Portanto, o par coerente é 175,8 kWh e uso de energia solar, correspondente a C.</p>
+</div>
+<div class="result-callout"><h3>Conclusão desta resolução</h3><strong>Alternativa proposta: C</strong><p>Consumo mensal de 175,8 kWh; a proposta de alimentação solar da bomba corresponde à alternativa C.</p>
+</div>
+<aside class="solution-note"><strong>Consumo e origem da energia</strong><p>A bomba continua precisando de energia para executar o trabalho. Mudar a fonte pode reduzir o consumo faturado pela rede, sem reduzir a energia total usada pelo equipamento.</p>
+</aside>
+<section class="enade-explorer" data-enade-explorer="escola" aria-label="Qual mudança mais reduz o consumo?">
+<h3>Qual mudança mais reduz o consumo?</h3>
+<p class="explorer-prompt">Antes de ajustar os tempos, preveja qual aparelho mais pesa no consumo. Compare também quatro LEDs com apenas um, mantendo o restante igual.</p>
+<p class="explorer-model">Usamos as potências constantes da tabela e calculamos \(E=\sum_i n_iP_it_iD/1000\), com potência em watts, tempo em horas por dia e D em dias. O tempo da geladeira já representa o funcionamento efetivo médio informado. A exploração calcula a energia usada pelos equipamentos; não inclui geração solar.</p>
+<p class="explorer-model">Os controles exploram outras condições. A conclusão acima continua referindo-se aos dados da questão.</p>
+</section>
+<footer class="enade-concept-references"><h3>Conceitos e referências</h3><ul><li><a href="https://pt.wikipedia.org/wiki/Pot%C3%AAncia_el%C3%A9trica" target="_blank" rel="noopener">Potência elétrica</a></li><li><a href="https://pt.wikipedia.org/wiki/Quilowatt-hora" target="_blank" rel="noopener">Watt-hora e quilowatt-hora</a></li><li><a href="https://pt.wikipedia.org/wiki/Efeito_fotovoltaico" target="_blank" rel="noopener">Efeito fotovoltaico</a></li></ul></footer>
+</article>

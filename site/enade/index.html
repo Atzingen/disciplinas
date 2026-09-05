@@ -8,6 +8,7 @@
   <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="../assets/base.css">
   <link rel="stylesheet" href="../assets/enade.css">
+  <link rel="stylesheet" href="../assets/enade-exploradores.css">
   <script>try{if(localStorage.getItem('tema')==='escuro')document.documentElement.dataset.theme='escuro'}catch{}</script>
 </head>
 <body class="enade-page">
@@ -25,6 +26,7 @@
         <div class="enade-scope"><strong>Três provas para estudar</strong><p>136 questões objetivas e uma discursiva, com enunciados e figuras dos cadernos originais.</p><a href="#provas">Consultar provas e gabaritos</a></div>
       </header>
       <div class="enade-editions" id="edition-links" aria-label="Escolher uma edição"></div>
+      <p id="review-notice" class="enade-review-notice" hidden></p>
       <p class="enade-note"><strong>A numeração muda em 2024:</strong> o componente de Física reúne as questões 28–63 e uma discursiva. Em cada aplicação de 2025, são as questões 31–80. Os temas incluem conteúdos de Física e questões específicas da licenciatura.</p>
       <form id="filters" class="enade-filters" aria-label="Filtrar questões">
         <label class="enade-search">Buscar no acervo<input name="query" type="search" placeholder="Tema, conceito ou número da questão" autocomplete="off"></label>
@@ -32,7 +34,7 @@
         <label>Aplicação<select name="application"><option value="">Todas</option><option value="regular">Regular</option><option value="reaplicacao">Reaplicação</option></select></label>
         <label>Tópico<select name="topic"><option value="">Todos os tópicos</option></select></label>
         <label>Tipo<select name="kind"><option value="">Todos os tipos</option><option value="objetiva">Objetiva</option><option value="discursiva">Discursiva</option></select></label>
-        <label>Resolução<select name="status"><option value="">Todas as questões</option><option value="resolvida">Com resolução</option><option value="pendente">Sem resolução</option></select></label>
+        <label>Resolução<select name="status"><option value="">Todas as questões</option><option value="resolvida">Com resolução</option><option value="rascunho">Rascunhos para conferência</option><option value="pendente">Sem resolução</option></select></label>
       </form>
       <div class="enade-results-bar"><p id="result-count" role="status" aria-live="polite">Carregando questões…</p><button id="clear-filters" type="button" class="enade-text-button">Limpar filtros</button></div>
       <div id="question-list" class="enade-list"></div>
@@ -49,7 +51,7 @@
         <article><h3>2025 · Regular</h3><p>Enade / PND · Tipo 1<br>50 objetivas de Física</p><a href="./originais/2025-regular-prova.pdf" target="_blank" rel="noopener">Prova (PDF)</a><a href="./originais/2025-regular-gabarito.pdf" target="_blank" rel="noopener">Gabarito (PDF)</a></article>
         <article><h3>2025 · Reaplicação</h3><p>Enade / PND · Tipo 5<br>50 objetivas de Física</p><a href="./originais/2025-reaplicacao-prova.pdf" target="_blank" rel="noopener">Prova (PDF)</a><a href="./originais/2025-reaplicacao-gabarito.pdf" target="_blank" rel="noopener">Gabarito (PDF)</a></article>
       </div>
-      <p class="enade-source-note">Enunciados e gabaritos: Inep, conforme os arquivos da <a href="https://drive.google.com/drive/folders/1ZKgPA12woFtIH7I4VIHq8QhmvMk3LUwP" target="_blank" rel="noopener">pasta de origem</a>. A classificação por temas é editorial; uma questão pode aparecer em mais de um tópico. Resoluções comentadas ainda não foram adicionadas.</p>
+      <p class="enade-source-note">Enunciados e gabaritos: Inep, conforme os arquivos da <a href="https://drive.google.com/drive/folders/1ZKgPA12woFtIH7I4VIHq8QhmvMk3LUwP" target="_blank" rel="noopener">pasta de origem</a>. A classificação por temas é editorial; uma questão pode aparecer em mais de um tópico. As resoluções comentadas e o gabarito oficial são apresentados separadamente.</p>
     </section>
   </main>
   <footer class="site-footer"><p>Gustavo von Atzingen · IFSP Câmpus Piracicaba</p><a href="../exercicios/">Outros exercícios do portal</a></footer>

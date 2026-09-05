@@ -890,7 +890,11 @@
       ],
       "contextIds": [],
       "answer": "B",
-      "solution": null,
+      "solution": {
+        "url": "solucoes/2024-q30.html",
+        "status": "publicada",
+        "format": "html-fragment"
+      },
       "text": "QUESTÃO 30\nUm professor montou um plano de aula sobre o assunto cargas elétricas, com base na metodologia de\ninstrução por pares (peer instruction). Segundo esse plano, a primeira parte da aula consistia em uma\nbreve explicação sobre o assunto, seguida da apresentação de um teste conceitual realizado por meio de\num questionário virtual, o qual permite obter o percentual de acertos instantaneamente.\nCom relação à metodologia utilizada pelo professor, é correto afirmar que, caso a porcentagem de\nrespostas corretas ao questionário fique abaixo de 30%, o próximo passo da aula deverá ser\nA discussão em grupo.\nB revisão do conceito estudado.\nC explanação do próximo tópico.\nD realização de novo teste conceitual.",
       "title": "Instrução por pares no estudo de cargas",
       "topics": [
@@ -989,7 +993,11 @@
       ],
       "contextIds": [],
       "answer": "C",
-      "solution": null,
+      "solution": {
+        "url": "solucoes/2024-q33.html",
+        "status": "publicada",
+        "format": "html-fragment"
+      },
       "text": "QUESTÃO 33\nCarros elétricos e carros híbridos têm chegado ao mercado brasileiro. Os modelos híbridos possuem dois\nmotores e aproveitam a energia cinética gerada pelo motor à combustão para transformá-la em energia\nelétrica, o que fará funcionar seu motor elétrico. O funcionamento desses carros depende dos avanços\ntecnológicos de suas baterias de íons de lítio, as quais garantem a potência e desempenho ao carro.\nOs modelos híbridos — e elétricos — têm sido considerados como soluções para a redução de emissão de\ncarbono na atmosfera. Existem, no entanto, outros fatores que precisam ser avaliados quando se pensa nos\nimpactos socioambientais dos usos de tecnologias, que vão além da simples operação de veículos. É preciso\nconsiderar, também, seu processo de produção, que envolve a extração de lítio, um metal pouco abundante.\nA partir das informações apresentadas e de conhecimentos prévios a respeito desse tema, é correto\nafirmar que o carregamento de baterias dos modelos híbridos ocorre\nA por meio de campos magnéticos criados pelo movimento do carro e que a emissão de carbono durante\n   o processo de extração do lítio é um dos principais impactos socioambientais causados pela produção\n   desses modelos.\nB por meio de indução eletromagnética e que os impactos no ambiente e na vida das comunidades\n   próximas às jazidas são mínimos, já que o lítio é um metal pouco abundante e encontrado em regiões\n   próximas à superfície.\nC por meio de indução eletromagnética e que os impactos socioambientais estão ligados, sobretudo,\n   ao processo de extração do lítio, que exige elevado consumo de água, além das reservas desse metal\n   serem limitadas.\nD por meio do processo de indução eletrostática e que os principais problemas ambientais estão\n   relacionados ao descarte das baterias de lítio, já que o lítio é um recurso não renovável.",
       "title": "Carros híbridos, baterias e impactos ambientais",
       "topics": [
@@ -1056,7 +1064,11 @@
       ],
       "contextIds": [],
       "answer": "B",
-      "solution": null,
+      "solution": {
+        "url": "solucoes/2024-q35.html",
+        "status": "publicada",
+        "format": "html-fragment"
+      },
       "text": "QUESTÃO 35\nCerta comunidade do agreste nordestino armazena em cisternas, em períodos de chuva intensa, uma\nparcela das águas que caem nesses períodos. Em tempos de estiagem, o uso da água pelas famílias\nacaba esvaziando essas cisternas. Cansados de esperar pela providência do poder público em relação a\nessa situação, os moradores dessa comunidade uniram esforços para repor água nas cisternas durante o\nperíodo de estiagem, adquirindo uma bomba. Essa bomba retira água de um poço artesiano e disponibiliza,\nem média, 40 litros para cada pessoa, por dia. A bomba opera a 220 V, com 1 A. Para cada 22 W de\npotência da bomba, uma vazão de 1 litro por minuto é obtida.\nA partir desses dados, é possível concluir que o número de famílias compostas por quatro pessoas que\npode usufruir da água nos períodos de estiagem a partir da utilização dessa bomba é\nA 9.\nB 90.\nC 206.\nD 360.",
       "title": "Potência elétrica e abastecimento de cisternas",
       "topics": [
@@ -1090,7 +1102,11 @@
       ],
       "contextIds": [],
       "answer": "A",
-      "solution": null,
+      "solution": {
+        "url": "solucoes/2024-q36.html",
+        "status": "publicada",
+        "format": "html-fragment"
+      },
       "text": "QUESTÃO 36\nEm uma aula de Física experimental, um professor propôs a realização de uma atividade investigativa\nutilizando um circuito que possui uma pilha de força eletromotriz E = 6V e resistência interna r = 1Ω,\nligada a uma associação de lâmpadas incandescentes idênticas de valores nominais 3V e 0,5A, como se\npode ver a seguir.\n\n\n\n\n\nDepois, ele solicitou a seus alunos que investigassem se é possível associar algum número de lâmpadas,\nde tal forma que todas apresentem o mesmo brilho nominal, considerando-se a resistência interna de\ntodos os componentes do circuito.\nNessa situação, os alunos que acertaram o exercício proposto pelo professor explicaram que\nA é possível realizar essa associação, pois, ao conectar, simultaneamente, seis lâmpadas no circuito,\n   elas apresentarão o mesmo brilho nominal.\nB não é possível realizar essa associação, pois a lâmpada mais afastada da fonte será percorrida por\n  uma intensidade de corrente menor.\nC é possível realizar essa associação, pois qualquer número de lâmpadas associadas em paralelo\n   apresentarão o mesmo brilho nominal.\nD não é possível realizar essa associação, pois lâmpadas de tensão nominal 3V só podem ser ligadas em\n    pilhas de força eletromotriz 3V.",
       "title": "Lâmpadas e resistência interna de uma pilha",
       "topics": [
@@ -1123,7 +1139,11 @@
       ],
       "contextIds": [],
       "answer": "A",
-      "solution": null,
+      "solution": {
+        "url": "solucoes/2024-q37.html",
+        "status": "publicada",
+        "format": "html-fragment"
+      },
       "text": "QUESTÃO 37\nO desfibrilador é um aparelho utilizado para restabelecer o ritmo cardíaco do paciente em caso de\numa parada cardiorrespiratória. Esse aparelho libera uma descarga elétrica moderada no coração\nque está sofrendo algum tipo de arritmia. O choque provocado pelo desfibrilador estimula o órgão a\nbombear sangue, fazendo o coração voltar ao seu funcionamento normal.\n               Disponível em: https://cmosdrake.com.br/blog/desfibrilador-cardiaco-entenda-como-esse-aparelho-funciona.\n                                                                            Acesso em: 30 maio 2024 (adaptado).\nA partir dessas informações, considere que cinco resistores, de mesma resistência elétrica, componham o\ncircuito que controla as descargas elétricas geradas por um desfibrilador. Sabe-se que o seletor de carga\ndo aparelho é o dispositivo responsável por escolher o ajuste adequado a cada descarga, ao conectar os\nterminais A e B do circuito. Em uma determinada emergência, esse desfibrilador deve oferecer a maior\ndescarga elétrica possível.\nConsiderando a finalidade desse desfibrilador, assinale a opção que apresenta o circuito no qual o seletor\ndeve ser conectado.\n\n\nA\n\n\n\nB\n\n\n\n\n\nC\n\n\n\n\n\nD",
       "title": "Resistência equivalente em um desfibrilador",
       "topics": [
@@ -1156,7 +1176,11 @@
       ],
       "contextIds": [],
       "answer": "B",
-      "solution": null,
+      "solution": {
+        "url": "solucoes/2024-q38.html",
+        "status": "publicada",
+        "format": "html-fragment"
+      },
       "text": "QUESTÃO 38\nUma professora de Física apresentou o seguinte problema a ser resolvido por seus alunos: uma pessoa\ndeseja ligar um ferro elétrico de passar roupas no circuito elétrico doméstico, cujo esquema está\napresentado a seguir.\n\n\n\n\n\nEntretanto, na entrada desse circuito, há um disjuntor de 15 A bem como uma lâmpada de 100 Watts,\num interruptor e duas tomadas em paralelo. Sabe-se que a tensão da residência dessa pessoa é de 110 V.\n\nDiante desses dados, a professora perguntou: qual deve ser a potência máxima do ferro para que ele\nfuncione juntamente com a lâmpada, sem que o disjuntor interrompa o circuito?\n\nCom base nessas informações, os alunos que responderam o exercício corretamente calcularam que a\npotência máxima, nesse caso, é de\n\nA 1 500 W.\nB 1 550 W.\nC 1 650 W.\nD 1 750 W.",
       "title": "Potência máxima em um circuito residencial",
       "topics": [
@@ -1290,7 +1314,11 @@
       ],
       "contextIds": [],
       "answer": "D",
-      "solution": null,
+      "solution": {
+        "url": "solucoes/2024-q42.html",
+        "status": "publicada",
+        "format": "html-fragment"
+      },
       "text": "QUESTÃO 42\nUma professora de Física decidiu utilizar duas montagens experimentais em uma aula de eletromagnetismo\na ser ministrada a seus alunos. O objetivo dessa aula é introduzir o conceito de indução eletromagnética\nna perspectiva do ensino por investigação.\nNa primeira montagem experimental, representada pela Figura 1, há um ímã em forma de barra, ao\nlado do núcleo de ar de um solenoide de 1.200 espiras, ligado a um galvanômetro, podendo o ímã ser\nmovimentado em relação ao solenoide.\n\n\n\n\n\n                                                   Figura 1\nNa segunda montagem experimental, representada pela Figura 2, há um circuito composto por uma\nbateria de 9 V em série com um interruptor e um fio esmaltado enrolado em um prego, que está parado\ne próximo ao núcleo de ar de um solenoide de 1.200 espiras, ligado a um galvanômetro.\n\n\n\n\n\n                                                   Figura 2\nNessa situação, a fim de iniciar uma investigação que atenda ao objetivo da aula, a professora deve\nperguntar a seus alunos\nA como amplificar a tensão elétrica da bateria.\nB como identificar os polos magnéticos do ímã.\nC sob quais condições é possível produzir um ímã a partir de um circuito elétrico.\nD sob quais condições é possível gerar corrente elétrica a partir de campos magnéticos.",
       "title": "Investigação da indução eletromagnética",
       "topics": [
@@ -1604,7 +1632,11 @@
       ],
       "contextIds": [],
       "answer": "C",
-      "solution": null,
+      "solution": {
+        "url": "solucoes/2024-q51.html",
+        "status": "publicada",
+        "format": "html-fragment"
+      },
       "text": "QUESTÃO 51\nA capacidade de acesso à internet dos celulares evoluiu de 3G para 4G e, recentemente, para 5G. Essa evolução\naumentará acentuadamente as taxas de transmissão e recepção de dados, permitindo que um maior número\nde pessoas possa acessar a rede simultaneamente com estabilidade e segurança. Basicamente, a diferença\nentre essas tecnologias está na faixa de frequência de rádio em que elas operam: o 3G opera na faixa entre\n850 MHz a 2.100 MHz; o 4G, na faixa de 2,5 GHz; e o 5G ultrapassará os 110 GHz.\nAcerca dessa temática, levando-se em consideração as dimensões científicas, sociais e tecnológicas, assinale a\nopção que apresenta os principais desafios para a democratização do acesso e do uso da tecnologia 5G no Brasil.\nA A operação em frequências mais altas realizada pela banda 5G demandará um sistema de transmissão e\n   de recepção mais moderno, o que resultará na atualização das antenas já existentes; a democratização\n   do acesso implicará maior acesso à rede, o que será facilitado pela presença de prédios altos, tendo\n  em vista que ondas milimétricas sofrem difração neles.\nB A emissão de ondas de alta frequência, como as emitidas na banda 5G, necessitam de um sistema de\n   transmissão e de recepção com mais antenas, que sejam menores e mais próximas ao solo, para sanar\n   problemas relacionados à difração de ondas curtas; a democratização do acesso ocorrerá por conta da\n   quantidade maior de antenas, o que aumenta a densidade de acesso ao sinal.\nC O aumento da frequência utilizada pelo 5G demandará investimentos na modernização da infraestrutura\n   de transmissão e de recepção de sinais, como antenas menores e mais próximas do solo para sanar\n   problemas de difração de ondas curtas, o que irá encarecer o seu uso; para haver democratização\n   do acesso, deverá haver políticas públicas que levem em conta as desigualdades sociais presentes na\n   sociedade brasileira.\nD A transmissão de ondas longas em alta frequência ocorre com a banda 5G, o que facilita a sua transmissão e\n   recepção devido ao fenômeno de difração, considerando-se que a ultrapassagem de obstáculos sempre foi\n  um grande problema para que mais pessoas pudessem acessar redes de celulares mais estáveis e seguras;\n   o avanço da tecnologia 5G garantirá, portanto, a necessária democratização de acesso à internet de qualidade.",
       "title": "Ondas de rádio e acesso à tecnologia 5G",
       "topics": [
@@ -1774,7 +1806,11 @@
       ],
       "contextIds": [],
       "answer": "D",
-      "solution": null,
+      "solution": {
+        "url": "solucoes/2024-q56.html",
+        "status": "publicada",
+        "format": "html-fragment"
+      },
       "text": "QUESTÃO 56\nPara uma aula de Física sobre os princípios de funcionamento dos motores elétricos, um professor planejou\ncriar uma atividade que desenvolvesse habilidades relacionadas à autossuficiência de aprendizagem dos\nestudantes. Para isso, resolveu utilizar, como suporte, conceitos da teoria de aprendizagem cognitivista. Sua\nideia é desenvolver uma sequência didática na qual os alunos explorarão os conceitos para, posteriormente,\nrealizarem uma discussão em grupo.\nQual das estratégias a seguir seria mais apropriada para o professor utilizar, no momento anterior à\ndiscussão em grupos, visando incentivar a independência dos estudantes conforme a teoria cognitivista?\nA Preparar uma lista de instruções detalhadas, que apresenta o passo a passo sobre como montar um\n   modelo simplificado de motor elétrico a ser seguida pelos estudantes.\nB Aplicar uma série de reforços positivos sempre que um aluno demonstrar um comportamento correto\n  em relação ao entendimento do funcionamento dos motores elétricos.\nC Organizar uma palestra ministrada por um especialista em motores elétricos, na qual será explicado o\n   conteúdo, para posteriormente, solicitar aos estudantes que reproduzam o que foi aprendido.\nD Distribuir materiais variados para os alunos, seguida do desafio de cada grupo construir sua própria\n   versão de um motor elétrico, incentivando a experimentação e a descoberta guiada.",
       "title": "Motores elétricos e aprendizagem cognitivista",
       "topics": [
@@ -1975,7 +2011,11 @@
       ],
       "contextIds": [],
       "answer": "B",
-      "solution": null,
+      "solution": {
+        "url": "solucoes/2024-q62.html",
+        "status": "publicada",
+        "format": "html-fragment"
+      },
       "text": "QUESTÃO 62\nO eletroscópio da figura a seguir faz parte de uma atividade em uma aula de Física e está negativamente\ncarregado.\n\n\n\n\n\n                                      Disponível em: https://educador.brasilescola.uol.com.br/estrategias-ensino/aula-pratica-\n                                                          construcao-um-eletroscopio-folhas.htm. Acesso em: 19 maio 2024.\nO professor perguntou a uma estudante se é possível descarregar o eletroscópio utilizando apenas luz.\nA resposta dela foi de que não é possível, pois a luz não tem carga, ou seja, ela é incapaz de descarregar\no eletroscópio. Ela também explicou que, durante o experimento, a incidência de luz solar e de luz artificial\nda sala é incapaz de descarregar o eletroscópio, pois precisa haver contato para descarregar qualquer corpo,\nreestabelecendo a igualdade no número de prótons e elétrons do corpo.\n   CARVALHO, B.; GOMES, L. Um estudo dos invariantes operatórios mobilizados por estudantes da terceira série do Ensino Médio\n                     sobre o efeito fotoelétrico. Ensino & Pesquisa. União da Vitória, v. 20, n.1, p. 101-118, jan./abr., 2022.\nCom base na resposta dessa aluna, o professor pode perceber que a estudante\nA entende a necessidade de contato para haver a descarga do eletroscópio, mas desconhece a\n   necessidade de o corpo que entra em contato estar positivamente carregado.\nB compreende que o eletroscópio fica sem carga quando o número de prótons é igual ao número\n   de elétrons, mas desconhece a natureza corpuscular da luz.\nC comete erro ao afirmar que a luz não possui carga elétrica, portanto, falta compreensão sobre a\n   capacidade da luz de arrancar elétrons de um metal.\nD erra ao dizer que a luz não consegue descarregar o eletroscópio, pois ela não compreende o\n   comportamento das ondas luminosas.",
       "title": "Eletroscópio iluminado e emissão de elétrons",
       "topics": [
@@ -2115,7 +2155,11 @@
         "2025-regular-contexto-31-33"
       ],
       "answer": "B",
-      "solution": null,
+      "solution": {
+        "url": "solucoes/2025-regular-q32.html",
+        "status": "publicada",
+        "format": "html-fragment"
+      },
       "text": "QUESTÃO 32\nConsidere que o professor está elaborando uma atividade\nexperimental sobre o tema apresentado na figura e adequada\nà etapa do Ensino Médio. Qual opção atende a essa demanda?\nA Utilizar diferentes LEDs como fotocélulas para recarregar\n   a bateria de um smartphone, demonstrando o caráter\n   ondulatório da absorção da radiação solar nesses diodos.\nB Utilizar um forno de micro-ondas e uma fita métrica para\n    avaliar o fenômeno ondulatório a partir de pontos de\n   derretimento produzidos em uma barra de chocolate.\nC Utilizar a câmera de um smartphone para analisar a\n   radiação infravermelha do LED de um controle remoto,\n   discutindo as faixas visíveis e não visíveis do espectro\n   eletromagnético.\nD Utilizar um forno micro-ondas e um smartphone para\n    verificar indisponibilidade a ligações, avaliando a natureza\n   eletromagnética das ondas que promovem a comunicação\n   de telefonia celular.",
       "title": "Experimentos com ondas estacionárias",
       "topics": [
@@ -2331,7 +2375,11 @@
         "2025-regular-contexto-37-39"
       ],
       "answer": "B",
-      "solution": null,
+      "solution": {
+        "url": "solucoes/2025-regular-q38.html",
+        "status": "publicada",
+        "format": "html-fragment"
+      },
       "text": "QUESTÃO 38\nAs situações climáticas extremas vividas nos últimos anos mobilizaram uma professora de Física a tratar de questões\nsocioambientais em suas aulas. Qual alternativa representa uma ação que promova uma formação crítica numa abordagem\nCiência, Tecnologia e Sociedade (CTS)?\nA Utilizar um simulador on-line sobre efeito fotoelétrico para, no contexto da produção de placas fotovoltaicas como produção\n   de energia limpa, desenvolver o conceito físico de quantização da luz.\nB Identificar uma questão socioambiental que atinge diretamente a comunidade escolar para, considerando conhecimentos\n   desenvolvidos em sala de aula, propor intervenção na comunidade utilizando placas fotovoltaicas.\nC Utilizar placas fotovoltaicas instaladas na escola para, no contexto de uma questão socioambiental que atinge diretamente\n   a comunidade escolar, desenvolver o conceito de quantização da luz.\nD Identificar quais soluções estão sendo postas em movimento para enfrentar uma questão socioambiental que atinge diretamente\n   a comunidade escolar e desenvolver conceitos de Física Moderna que estejam presentes.",
       "title": "Energia solar e intervenção socioambiental",
       "topics": [
@@ -2543,7 +2591,11 @@
         "2025-regular-contexto-44-46"
       ],
       "answer": "D",
-      "solution": null,
+      "solution": {
+        "url": "solucoes/2025-regular-q44.html",
+        "status": "publicada",
+        "format": "html-fragment"
+      },
       "text": "QUESTÃO 44\nApós uma visita com estudantes ao Sirius, uma professora\npropõe uma atividade didática inspirada no funcionamento\ndo acelerador, na qual discutem o movimento dos elétrons\nem seu interior. Os estudantes calculam o raio da trajetória\ndos elétrons com base na equação r = mv/qB, em que r é\no raio da trajetória, m é a massa do elétron, v é módulo de\nsua velocidade, q é sua carga e B é a intensidade do campo\nmagnético ao qual está submetido. O valor obtido por eles,\ncontudo, é significativamente menor do que o raio real da\ntrajetória dos elétrons no acelerador.\nCom base nesse texto, a diferença entre o raio real e o raio\ncalculado ocorre porque\nA os elétrons no Sirius percorrem trajetórias helicoidais mais\n   longas devido à emissão de luz síncrotron.\nB o campo magnético no Sirius é ajustável e pode ser menor\n   do que o valor adotado no cálculo.\nC os elétrons ganham energia continuamente ao emitirem\n    luz síncrotron, o que altera sua trajetória.\nD os elétrons no Sirius são acelerados até atingirem\n   velocidades relativísticas.",
       "title": "Elétrons relativísticos no Sirius",
       "topics": [
@@ -2579,7 +2631,11 @@
         "2025-regular-contexto-44-46"
       ],
       "answer": "B",
-      "solution": null,
+      "solution": {
+        "url": "solucoes/2025-regular-q45.html",
+        "status": "publicada",
+        "format": "html-fragment"
+      },
       "text": "QUESTÃO 45\nEm sala de aula, uma professora propôs que os estudantes\ncriassem uma atividade prática que representasse o movimento\ndas partículas e a emissão de radiação no Sirius. Uma das\nturmas sugeriu girar, no escuro, uma lanterna presa a um\nbarbante, filmando o rastro de luz com o celular em modo de\nlonga exposição.\nConsiderando o texto e na analogia proposta, a atividade é\nA adequada para representar qualitativamente a difração\n   de raios X, pois mostra como os átomos de um material\n    cristalino desviam feixes de radiação eletromagnética.\nB adequada para representar qualitativamente a emissão\n   de luz síncrotron, pois simula o movimento circular dos\n    elétrons e o rastro luminoso gerado durante sua aceleração.\nC inadequada para representar a emissão de luz síncroton,\n   pois trata do fenômeno da interferência luminosa e não\n   envolve partículas aceleradas por campos magnéticos.\nD inadequada para esse contexto, pois representa o efeito da\n   força centrípeta sobre os elétrons e não se relaciona com\n   a geração de radiação eletromagnética.",
       "title": "Modelagem da emissão de luz síncrotron",
       "topics": [
@@ -2867,7 +2923,11 @@
         "2025-regular-contexto-53-55"
       ],
       "answer": "B",
-      "solution": null,
+      "solution": {
+        "url": "solucoes/2025-regular-q53.html",
+        "status": "publicada",
+        "format": "html-fragment"
+      },
       "text": "QUESTÃO 53\n\nCom base na situação apresentada no Primeiro Momento Pedagógico, o texto da reportagem escolhido deve\nA discorrer a respeito do crescimento da geração de eletricidade a partir da matriz eólica no Brasil explicando desde os custos\n   envolvidos na produção até o funcionamento de um aerogerador.\nB contrapor a necessidade de transição energética com o impacto da instalação de uma usina eólica próxima a moradores\n   de uma comunidade rural.\nC discorrer sobre a necessidade da transição energética e os efeitos de parques eólicos construídos próximos uns dos outros\n   de modo que um reduz a capacidade de geração de eletricidade do outro.\nD apresentar o potencial dos ventos como fonte de energia e a equivalente redução da quantidade de gases estufa liberados\n   no meio ambiente e os desafios para sua utilização.",
       "title": "Transição energética na problematização inicial",
       "topics": [
@@ -2902,7 +2962,11 @@
         "2025-regular-contexto-53-55"
       ],
       "answer": "A",
-      "solution": null,
+      "solution": {
+        "url": "solucoes/2025-regular-q54.html",
+        "status": "publicada",
+        "format": "html-fragment"
+      },
       "text": "QUESTÃO 54\n\nQual alternativa apresenta a atividade que deve ser utilizada no Terceiro Momento Pedagógico?\nA Atividades que retomam o que foi discutido na problematização inicial sobre energias renováveis e extrapolar esse\n   conhecimento para outras situações, garantindo a retomada do conhecimento estudado.\nB Atividades que desconsiderem a realidade descrita no Primeiro Momento Pedagógico, uma vez que é necessária a ampliação\n   da visão de mundo do estudante sobre energia renovável.\nC Atividades de resolução de exercícios sobre fontes de energia que permitam ao estudante participar em exames de seleção\n   para melhorar a sua realidade social.\nD Atividades de experimentação que permitam, de forma dinâmica e paulatina, que o estudante perceba que o conhecimento\n   não está disponível para qualquer cidadão, uma vez que nem todos conseguem fazer uso do que deve ser apreendido.",
       "title": "Aplicação do conhecimento sobre energia renovável",
       "topics": [
@@ -2937,7 +3001,11 @@
         "2025-regular-contexto-53-55"
       ],
       "answer": "C",
-      "solution": null,
+      "solution": {
+        "url": "solucoes/2025-regular-q55.html",
+        "status": "publicada",
+        "format": "html-fragment"
+      },
       "text": "QUESTÃO 55\n\nO professor solicitou aos estudantes que identificassem o consumo mensal de energia (em kWh) dos equipamentos elétricos\nda escola rural, considerando 30 dias de uso contínuo, e refletissem sobre formas sustentáveis de reduzir esse consumo.\nQual alternativa apresenta a resposta para a situação?\nA 167,7 kWh; utilizar energia solar para alimentar a bomba-d’água nos horários de sol.\nB 167,7 kWh; substituir a bomba-d’água por uma de maior potência para reduzir o tempo de uso.\nC 175,8 kWh; utilizar energia solar para alimentar a bomba-d’água nos horários de sol.\nD 175,8 kWh; substituir a bomba-d’água por uma de maior potência para reduzir o tempo de uso.\n\nPND2025PND2025PND2025PND2025PND2025PND2025PND2025PND2025PND2025PND2025PND2025PND2025PND2025PND2025PND2025PND2025PND2025PND2025PND2025PND2025PND2025PND2025PND2025PND2025PND2025PND2025PMD2025PND2025PND2025PND2025PND2025PND2025PND2025PND2025PND2025PND2025PND2025PND2025PND2025PND2025PND2025PND2025PND2025PND2025PND2025PND2025PND2025PND2025PND2025PND2025PND2025PND2025PND2025",
       "title": "Consumo elétrico de uma escola rural",
       "topics": [
@@ -3044,7 +3112,11 @@
         "2025-regular-contexto-58-59"
       ],
       "answer": "C",
-      "solution": null,
+      "solution": {
+        "url": "solucoes/2025-regular-q58.html",
+        "status": "publicada",
+        "format": "html-fragment"
+      },
       "text": "QUESTÃO 58\nCom base na situação, qual o tamanho mínimo da secção nominal da bitola do fio condutor, em mm², apropriada para o circuito\nelétrico composto pelos dois condicionadores de ar, considerando que os aparelhos serão alimentados pelo mesmo conjunto\nde condutores?\nA 1,0\nB 1,5\nC 2,5\nD 4,0",
       "title": "Dimensionamento de fios para ar-condicionado",
       "topics": [
@@ -3079,7 +3151,11 @@
         "2025-regular-contexto-58-59"
       ],
       "answer": "C",
-      "solution": null,
+      "solution": {
+        "url": "solucoes/2025-regular-q59.html",
+        "status": "publicada",
+        "format": "html-fragment"
+      },
       "text": "QUESTÃO 59\nNa etapa 2 da atividade descrita, o professor solicita que os estudantes avaliem dispositivos de proteção, como disjuntores\ne fusíveis, para a realização da instalação elétrica dos aparelhos de ar-condicionado. Para compreensão do funcionamento,\nos estudantes devem investigar como os dispositivos\nA aumentam a potência do ar-condicionado.\nB diminuem a corrente elétrica do fio condutor.\nC interrompem o circuito quando atinge o valor nominal da corrente elétrica.\nD controlam a tensão para manter o ar-condicionado funcionando.\n\n\n\n\n\nPND2025PND2025PND2025PND2025PND2025PND2025PND2025PND2025PND2025PND2025PND2025PND2025PND2025PND2025PND2025PND2025PND2025PND2025PND2025PND2025PND2025PND2025PND2025PND2025PND2025PND2025PMD2025PND2025PND2025PND2025PND2025PND2025PND2025PND2025PND2025PND2025PND2025PND2025PND2025PND2025PND2025PND2025PND2025PND2025PND2025PND2025PND2025PND2025PND2025PND2025PND2025PND2025PND2025",
       "title": "Disjuntores e fusíveis em circuitos",
       "topics": [
@@ -3536,7 +3612,11 @@
         "2025-regular-contexto-71-73"
       ],
       "answer": "C",
-      "solution": null,
+      "solution": {
+        "url": "solucoes/2025-regular-q72.html",
+        "status": "publicada",
+        "format": "html-fragment"
+      },
       "text": "QUESTÃO 72\nO CERN (Organização Europeia de Pesquisa Nuclear), do qual\no Brasil é membro, é uma instituição que disponibiliza dados\nde experimentos em Física de Partículas para fins educacionais\ne de pesquisa. Uma atividade proposta para estudantes da\nEducação Básica, utilizando dados coletados no laboratório do\nCERN, avalia características físicas resultantes de colisões entre\npartículas. Na análise da colisão entre feixes, quais quantidades\nfísicas são conservadas?\nA Energia cinética e massa de repouso.\nB Energia cinética e carga elétrica.\nC Momento linear e carga elétrica.\nD Momento linear e massa de repouso.\n\nPND2025PND2025PND2025PND2025PND2025PND2025PND2025PND2025PND2025PND2025PND2025PND2025PND2025PND2025PND2025PND2025PND2025PND2025PND2025PND2025PND2025PND2025PND2025PND2025PND2025PND2025P",
       "title": "Conservação de grandezas em colisões de partículas",
       "topics": [
@@ -3711,7 +3791,11 @@
         "2025-regular-contexto-77-78"
       ],
       "answer": "D",
-      "solution": null,
+      "solution": {
+        "url": "solucoes/2025-regular-q77.html",
+        "status": "publicada",
+        "format": "html-fragment"
+      },
       "text": "QUESTÃO 77\n\nQual situação didática apresenta uma abordagem,\nfundamentada na pedagogia freiriana, que articula o\nensino de conceitos físicos com uma reflexão crítica sobre\na realidade social?\nA Conduzir uma sequência didática com base na resolução\n   de exercícios sobre a Lei de Ohm, visando a compreensão\n   dos fatores que influenciam a resistência elétrica e suas\n   implicações para o desempenho das redes de distribuição.\nB Planejar uma aula expositiva, em que o professor apresenta\n   os princípios da eletrodinâmica, destacando a eficiência das\n   grandes estruturas de distribuição centralizadas e propondo\n    exercícios para fixação dos conceitos.\nC Propor a leitura de reportagens sobre a crise energética e, em\n    seguida, solicitar a elaboração de resumos individuais sobre\n   o funcionamento de uma usina hidrelétrica, com ênfase nas\n   etapas de conversão e transmissão de energia elétrica.\nD Conduzir um projeto interdisciplinar para analisar as\n    políticas públicas de fornecimento de energia elétrica\n  em áreas isoladas, apropriando-se de conceitos físicos,\n   propondo ações que contribuam para a produção de\n   energia elétrica sustentável.",
       "title": "Eletricidade rural na pedagogia freiriana",
       "topics": [
@@ -3747,7 +3831,11 @@
         "2025-regular-contexto-77-78"
       ],
       "answer": "B",
-      "solution": null,
+      "solution": {
+        "url": "solucoes/2025-regular-q78.html",
+        "status": "publicada",
+        "format": "html-fragment"
+      },
       "text": "QUESTÃO 78\n\nUm estudante relata ao professor que ouviu sua família\ncomentando sobre o custo da energia que deixou de ser\n fornecida por dois dias em que ficaram às escuras por causa\nda interrupção no fornecimento de energia elétrica. Com base\n nessa situação, o professor propõe que os estudantes, divididos\nem grupos, consultassem o valor do kWh em uma conta de\n energia elétrica de uma residência em zona rural. A pesquisa\n resultou num valor de R$ 0,60 por kWh. Considerando uma\n tensão na rede de 220 V e uma corrente (média) de 2 A durante\ntodo o período, o valor, em real, da energia que deixou de ser\n utilizada é de\nA 25,34.\nB 12,67.\nC 6,34.\nD 3,17.\n\nPND2025PND2025PND2025PND2025PND2025PND2025PND2025PND2025PND2025PND2025PND2025PND2025PND2025PND2025PND2025PND2025PND2025PND2025PND2025PND2025PND2025PND2025PND2025PND2025PND2025PND2025",
       "title": "Custo da energia durante uma interrupção",
       "topics": [
@@ -3782,7 +3870,11 @@
         "2025-regular-contexto-79-80"
       ],
       "answer": "B",
-      "solution": null,
+      "solution": {
+        "url": "solucoes/2025-regular-q79.html",
+        "status": "publicada",
+        "format": "html-fragment"
+      },
       "text": "QUESTÃO 79\nTendo em vista os diferentes percursos de aprendizagem possíveis e a adequação ao estágio de desenvolvimento de seus\nestudantes, um professor que planeja uma avaliação sobre circuitos elétricos deve\nA construir circuitos elétricos diferentes, utilizando pilhas e lâmpadas associadas em série e em paralelo, e solicitar aos\n   estudantes do primeiro segmento do Ensino Fundamental o cálculo da corrente elétrica em função da tensão das pilhas e\n   da resistência elétrica das lâmpadas, promovendo, então, um rodízio entre os grupos, avaliando a aplicação da primeira lei\n   de Ohm.\nB apresentar diferentes esquemas de instalação residencial com tomadas e eletrodomésticos conectados, fornecer o valor do\n   custo unitário de energia elétrica e solicitar aos estudantes do Ensino Médio a determinação do custo mensal da energia\n    elétrica de cada sistema, avaliando a apropriação da relações entre utilização da energia elétrica residencial e seus custos\n   envolvidos.\nC construir circuitos eletrônicos diferentes, utilizando placas de protótipos e diferentes chips de circuitos integrados digitais,\n   para solicitar aos estudantes do segundo segmento do Ensino Fundamental a determinação da função de cada chip, avaliando\n   a aplicação de conhecimentos sobre semicondutores e suas funções.\nD apresentar um esquema de circuito eletrônico de um aparelho televisor e fornecer os manuais técnicos de cada componente\n   conectado, para solicitar aos estudantes da EJA a identificação de um componente falho a partir de mau funcionamento do\n   aparelho, avaliando a apropriação das informações do manual.",
       "title": "Avaliação sobre circuitos e consumo residencial",
       "topics": [
@@ -3818,7 +3910,11 @@
         "2025-regular-contexto-79-80"
       ],
       "answer": "A",
-      "solution": null,
+      "solution": {
+        "url": "solucoes/2025-regular-q80.html",
+        "status": "publicada",
+        "format": "html-fragment"
+      },
       "text": "QUESTÃO 80\nConsiderando as condicionantes apresentadas, um professor elabora uma aula sobre instalações elétricas e os impactos do\nacesso à energia elétrica na sociedade contemporânea. Qual estratégia considera os diferentes percursos de aprendizagem e\npromove o pensamento crítico de seus estudantes?\nA Sugerir aos estudantes que mapeiem a quantidade de postes elétricos nos arredores de suas moradias e apresentem o\n   resultado para seus pares, discutindo a desigualdade de acesso a iluminação pública e a rede elétrica.\nB Propor aos estudantes uma investigação na internet sobre as usinas hidroelétricas no Brasil, para explicar os prefixos Mega\n   (M) e Giga (G) e apresentar a unidade de potência watt (W).\nC Sugerir que cada estudante assista a um vídeo sobre a guerra das correntes elétricas (corrente contínua e corrente alternada)\n   e preparem um glossário sobre os termos da Física presentes, explicando o significado de cada um deles.\nD Propor aos estudantes que leiam um texto sobre o conceito de corrente elétrica e, então, utilizar um amperímetro para\n   determinação do valor de corrente elétrica em aparelhos disponíveis na escola.",
       "title": "Acesso à eletricidade e pensamento crítico",
       "topics": [
@@ -4423,7 +4519,11 @@
         "2025-reaplicacao-contexto-46-48"
       ],
       "answer": "D",
-      "solution": null,
+      "solution": {
+        "url": "solucoes/2025-reaplicacao-q47.html",
+        "status": "publicada",
+        "format": "html-fragment"
+      },
       "text": "QUESTÃO 47\nUma professora de Física de uma turma do 3º segmento do EJA planejou uma atividade experimental na qual os estudantes\npossam estudar a formação de relâmpagos. Com base nessa proposta, qual alternativa descreve uma estratégia pedagógica\ncentrada no estudante e que contribua para o desenvolvimento de pensamento crítico e de autonomia discente?\nA Apresentar um documentário sobre tempestades elétricas no Brasil, solicitando aos estudantes que elaborem um resumo\n    individual sobre o conteúdo, focando na explicação do porquê o movimento atômico é a causa dos raios.\nB Realizar uma prática experimental, seguindo um roteiro previamente preparado, sobre eletrostática atmosférica e,\n  em seguida, responder a um questionário avaliativo que relacione a formação de raios no interior das nuvens com formas\n   de prevenção de acidentes.\nC Incentivar os estudantes a realizarem um experimento, seguindo dados previamente elaborados pelo professor, sobre rigidez\n    dielétrica; solicitar aos estudantes que calculem o valor da quebra da rigidez dielétrica do ar e corrigir os resultados que não\n   apresentarem valores entre 100 e 400 kN/C.\nD Pedir aos estudantes que produzam um experimento com materiais disponíveis na escola para gerar eletricidade estática e,\n  com base na observação e da compreensão do conceito de corrente elétrica, solicitar-lhes a construção de hipóteses sobre\n   a formação de relâmpagos no interior das nuvens.",
       "title": "Relâmpagos e investigação da eletricidade estática",
       "topics": [
@@ -4493,7 +4593,11 @@
         "2025-reaplicacao-contexto-49-51"
       ],
       "answer": "B",
-      "solution": null,
+      "solution": {
+        "url": "solucoes/2025-reaplicacao-q49.html",
+        "status": "publicada",
+        "format": "html-fragment"
+      },
       "text": "QUESTÃO 49\nEm um experimento em sala de aula para determinar a constante de Planck (h), foram utilizados quatro diodos emissores de\nluz (LEDs) com cores diferentes (frequências conhecidas). Para isso, foi montado um sistema com voltímetro, potenciômetro,\nLEDs, bateria, fios e resistências. Com o uso do potenciômetro, a tensão foi aplicada até que o LED começasse a emitir luz.\nA tensão limite (ou de limiar) para a emissão, ('VL) para cada LED, foi medida no voltímetro. A modelagem foi feita considerando\nque a energia de cada fóton é igual à variação da energia de cada elétron, ou seja,\n                                           hX = e'VL\nsendo e a carga do elétron. O gráfico a seguir representa os valores de Tensão e Frequência obtidos:\n\n\n\n\n\nConsiderando o modelo utilizado e suas suposições simplificadoras, o procedimento adequado para a obtenção do valor da\nconstante de Planck é utilizar\nA um método estatístico para ajustar os dados com uma parábola e obter por meio dos coeficientes da parábola.\nB um método estatístico para ajustar os dados com uma reta e obter por meio do coeficiente angular da reta.\nC alguns dados experimentais do gráfico e obter substituindo-os diretamente na equação do modelo.\nD dados experimentais do gráfico, com o cuidado de descartar o primeiro e o último, e obter substituindo-os diretamente na\n   equação do modelo.",
       "title": "Estimativa da constante de Planck com LEDs",
       "topics": [
@@ -5378,7 +5482,11 @@
         "2025-reaplicacao-contexto-71-72"
       ],
       "answer": "D",
-      "solution": null,
+      "solution": {
+        "url": "solucoes/2025-reaplicacao-q74.html",
+        "status": "publicada",
+        "format": "html-fragment"
+      },
       "text": "QUESTÃO 74\nUma professora de Física, com a intenção de promover pensamento crítico sobre questões sociais decorrentes dos impactos\nambientais da ciência e da tecnologia, propõe a seguinte questão a seus estudantes: “Estima-se que uma simples pesquisa na\ninternet utilizando IA, consuma de 0,3 a 3,0 Watt-hora (Wh). Considerando o valor mínimo de consumo por consulta (0,3 Wh)\ne que 400 milhões de usuários fazem uma consulta por dia, se essa energia consumida em um dia fosse, toda ela, utilizada para\nerguer um corpo de massa “M” a 100 metros de altura, qual seria o valor dessa massa em toneladas (t)? Considere a aceleração\ngravitacional local igual a 10 m/s2”. O valor correto para a massa requisitada é:\nA 720 t\nB 432 t\nC 7 200 t\nD 432 000 t",
       "title": "Consumo de energia de IA e energia potencial",
       "topics": [

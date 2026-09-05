@@ -1,0 +1,36 @@
+<article class="enade-worked-solution" data-question-id="2025-reaplicacao-q74" data-proposed-answer="D">
+<header class="enade-solution-intro">
+<p>A energia diária de todas as consultas será convertida para joules e igualada ao ganho de energia potencial gravitacional de um corpo.</p>
+</header>
+<div class="solution-article">
+<p>O enunciado pede o valor mínimo por consulta e uma consulta diária por usuário. Portanto:</p>
+
+<div class="math-block math-display">\[
+N=400\,000\,000=4\times10^8,\qquad E=N\times0{,}3\,\mathrm{Wh}=1{,}2\times10^8\,\mathrm{Wh}.
+\]</div>
+<p>Não há motivo para usar o limite superior de 3,0 Wh ou multiplicar por mais de uma consulta: isso mudaria as condições dadas.</p>
+<p>Watt-hora é unidade de energia, não de potência. Como \(1\,\mathrm W=1\,\mathrm{J/s}\) e uma hora tem 3 600 s:</p>
+<div class="math-block math-display">\[
+1\,\mathrm{Wh}=3\,600\,\mathrm J,\qquad E=1{,}2\times10^8\times3\,600=4{,}32\times10^{11}\,\mathrm J.
+\]</div>
+<p>Para uma elevação de altura H em um campo gravitacional aproximadamente uniforme, \(\Delta E_p=MgH\). A questão supõe conversão integral da energia, sem perdas:</p>
+<div class="math-block math-display">\[
+M=\frac{E}{gH}=\frac{4{,}32\times10^{11}}{10\times100}=4{,}32\times10^8\,\mathrm{kg}.
+\]</div>
+<p>Uma tonelada corresponde a mil quilogramas. Dividimos por mil apenas nesta última conversão:</p>
+<div class="math-block math-display">\[
+M=\frac{4{,}32\times10^8}{10^3}\,\mathrm t=4{,}32\times10^5\,\mathrm t=432\,000\,\mathrm t.
+\]</div>
+<p>A ordem de grandeza é compatível com centenas de milhões de consultas. O fator 3 600 na conversão de energia e o fator 1 000 na conversão de massa têm origens diferentes e não podem ser omitidos.</p>
+<figure class="enade-concept-figure"><svg viewBox="0 0 560 290" role="img" aria-label="Energia elétrica equivalente à elevação de uma massa"><title>Energia elétrica equivalente à elevação de uma massa</title>
+<path d="M310 241h175M310 64h175"/><rect x="356" y="30" width="88" height="34" rx="4"/><text x="400" y="53" text-anchor="middle">M</text>
+<path d="M400 223V79m-6 9 6-9 6 9"/><text x="428" y="158">100 m</text>
+<text x="40" y="57">Consultas diárias</text><path d="M110 72v35m-6-7 6 7 6-7"/><text x="40" y="136">Energia em Wh</text><path d="M110 150v35m-6-7 6 7 6-7"/><text x="128" y="174" class="diagram-label">× 3 600</text>
+<text x="40" y="214">Energia em J</text><path d="M190 208h103m-8-6 8 6-8 6"/><text x="280" y="279" text-anchor="middle">E = MgH → M = E / (gH)</text></svg><figcaption>Comparação energética ideal, com g = 10 m/s² e conversão integral. A massa é encontrada em quilogramas e só depois convertida em toneladas. Não representa um equipamento real de elevação.</figcaption></figure>
+</div>
+<div class="result-callout"><h3>Conclusão desta resolução</h3><strong>Alternativa proposta: D</strong><p>A massa calculada é 432 000 toneladas: alternativa D.</p>
+</div>
+<aside class="solution-note"><strong>Estimativa condicionada</strong><p>Usamos o consumo por consulta e a quantidade de usuários como hipóteses do enunciado, não como medição atual de um serviço específico. Para rendimento \(\eta&lt;1\), a massa efetivamente erguida seria \(M=\eta E/(gH)\).</p>
+</aside>
+<footer class="enade-concept-references"><h3>Conceitos e referências</h3><ul><li><a href="https://pt.wikipedia.org/wiki/Quilowatt-hora" target="_blank" rel="noopener">Watt-hora e quilowatt-hora</a></li><li><a href="https://pt.wikipedia.org/wiki/Energia_potencial" target="_blank" rel="noopener">Energia potencial</a></li></ul></footer>
+</article>

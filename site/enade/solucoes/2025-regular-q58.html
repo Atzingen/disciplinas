@@ -1,0 +1,30 @@
+<article class="enade-worked-solution" data-question-id="2025-regular-q58" data-proposed-answer="C">
+<header class="enade-solution-intro">
+<p>Os dois aparelhos podem funcionar juntos. Devemos somar suas correntes, acrescentar a margem de 25% pedida e só depois escolher a menor seção que atende à tabela.</p>
+</header>
+<div class="solution-article">
+<p>Os valores em BTU identificam capacidades térmicas no contexto do aparelho; os dados úteis aqui são as potências elétricas de 1 100 W e 1 540 W. No modelo simplificado do problema, \(I=P/U\):</p>
+<div class="math-block math-display">\[
+I_1=\frac{1\,100}{220}=5\,\mathrm A,\qquad I_2=\frac{1\,540}{220}=7\,\mathrm A.
+\]</div>
+<p>Como compartilham os condutores de alimentação e podem operar ao mesmo tempo, a corrente do trecho comum é a soma:</p>
+<div class="math-block math-display">\[
+I_{\mathrm{total}}=5+7=12\,\mathrm A.
+\]</div>
+<p>Acrescentar 25% significa multiplicar por 1,25, e não somar 25 A:</p>
+<div class="math-block math-display">\[
+I_{\mathrm{projeto}}=1{,}25\times12=15\,\mathrm A.
+\]</div>
+<p>A seção de 1,5 mm² suporta 14,5 A no quadro, portanto fica abaixo dos 15 A exigidos. A próxima seção, 2,5 mm², suporta 19,5 A. Ela é a menor que atende ao critério. A de 4,0 mm² também suporta a corrente, mas não é a mínima.</p>
+<p>Para mesmo material e comprimento, aumentar a área da seção reduz a resistência. A potência dissipada no fio, para uma dada corrente, obedece ao <a href="https://pt.wikipedia.org/wiki/Efeito_Joule" target="_blank" rel="noopener">Efeito Joule</a>:</p>
+<div class="math-block math-display">\[
+R=\rho\frac{L}{A},\qquad P_{\mathrm{diss}}=RI^2.
+\]</div>
+<p>Isso dá sentido ao dimensionamento: fios inadequados podem dissipar calor além do que conseguem transferir ao ambiente.</p>
+</div>
+<div class="result-callout"><h3>Conclusão desta resolução</h3><strong>Alternativa proposta: C</strong><p>A menor seção da tabela compatível com a corrente de projeto é 2,5 mm²: alternativa C.</p>
+</div>
+<aside class="solution-note"><strong>Alcance da resposta</strong><p>O resultado usa exclusivamente as condições, a margem e a tabela do enunciado. Uma instalação real exige outros critérios, como método de instalação, temperatura, agrupamento, queda de tensão e características de partida dos equipamentos.</p>
+</aside>
+<footer class="enade-concept-references"><h3>Conceitos e referências</h3><ul><li><a href="https://pt.wikipedia.org/wiki/Pot%C3%AAncia_el%C3%A9trica" target="_blank" rel="noopener">Potência elétrica</a></li><li><a href="https://pt.wikipedia.org/wiki/Efeito_Joule" target="_blank" rel="noopener">Efeito Joule</a></li><li><a href="https://pt.wikipedia.org/wiki/Lei_de_Ohm" target="_blank" rel="noopener">Lei de Ohm</a></li></ul></footer>
+</article>

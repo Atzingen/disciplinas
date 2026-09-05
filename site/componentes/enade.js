@@ -1,4 +1,5 @@
 import { filterQuestions, readState, stateQuery } from './enade-model.js';
+import { createSolutionPanel, createAnswerPanel, clearSolutionMath } from './enade-solucao.js';
 
 const pageSize = 12;
 const form = document.querySelector('#filters');
@@ -85,7 +86,8 @@ function card(question) {
   const action = element('div', 'enade-card-action');
   const open = routeLink('Abrir questão', {question:question.id}, 'enade-open');
   open.setAttribute('aria-label','Abrir '+questionLabel(question).toLowerCase()+' — '+exam.title);
-  action.append(open, element('small','',question.solution?.url ? 'Resolução disponível' : 'Sem resolução comentada'));
+  const solutionLabel = question.solution?.status === 'rascunho' ? 'Solução em conferência' : (question.solution?.url ? 'Resolução disponível' : 'Sem resolução comentada');
+  action.append(open, element('small','',solutionLabel));
   article.append(number,copy,action);
   return article;
 }
@@ -141,6 +143,7 @@ function figures(segments, label) {
 }
 
 function renderReader(results) {
+  clearSolutionMath(reader);
   reader.replaceChildren();
   const question = data.questions.find(q => q.id === state.question);
   if (!question) {
@@ -164,6 +167,8 @@ function renderReader(results) {
   const print = element('button','enade-button','Imprimir questão');
   print.type = 'button';
   print.addEventListener('click',async () => {
+    const solution = reader.querySelector('.enade-solution[open]');
+    if (solution) await solution.loadSolution();
     const images = [...reader.querySelectorAll('img')];
     images.forEach(image => image.loading='eager');
     await Promise.all(images.map(image => image.decode().catch(() => {})));
@@ -185,16 +190,13 @@ function renderReader(results) {
   questionBody.append(element('h2','',questionLabel(question)),...figures(question.segments,questionLabel(question)));
   paper.append(questionBody);
   body.append(paper);
-  if (question.answer) {
-    const answer = element('details','enade-answer');
-    answer.append(element('summary','','Ver gabarito'),element('p','enade-answer-letter','Alternativa '+question.answer),element('p','','Resposta do gabarito fornecido para este caderno.'),sourceLink('Conferir o gabarito em PDF',exam.answerPdf));
-    body.append(answer);
+  if (question.solution?.url) body.append(createSolutionPanel(question));
+  else {
+    const pending = element('section','enade-solution-pending');
+    pending.append(element('h2','','Resolução comentada'), element('p','',question.kind==='discursiva' ? 'Ainda não há uma resolução comentada. O material fornecido não inclui padrão de resposta para esta discursiva.' : 'Ainda não há uma resolução comentada para esta questão.'));
+    body.append(pending);
   }
-  const solution = element('section','enade-solution');
-  solution.append(element('h2','','Resolução comentada'));
-  if (question.solution?.url) solution.append(link('Ler a resolução',question.solution.url,'enade-button'));
-  else solution.append(element('p','',question.kind==='discursiva' ? 'Ainda não há uma resolução comentada. O material fornecido não inclui padrão de resposta para esta discursiva.' : 'Ainda não há uma resolução comentada. Este espaço reunirá a discussão e o desenvolvimento da solução.'));
-  body.append(solution);
+  if (question.answer) body.append(createAnswerPanel(question, exam.answerPdf));
   const transcript = element('details','enade-transcript');
   transcript.append(element('summary','','Consultar texto extraído'),element('p','','Texto auxiliar para leitura e busca. Fórmulas, tabelas e figuras podem perder informação na extração; confira o enunciado original acima.'));
   for (const item of [...references,question]) transcript.append(element('pre','',item.text));
@@ -212,6 +214,10 @@ function renderReader(results) {
   bottom.append(element('p','',index<0 ? 'Esta questão está fora dos filtros atuais.' : (index+1)+' de '+results.length+' nos filtros atuais'));
   if (index>=0 && index<results.length-1) bottom.append(routeLink('Próxima questão →',{question:results[index+1].id},'enade-button'));
   reader.append(nav,header,layout,bottom);
+  if (location.hash === '#solucao') {
+    const solution = reader.querySelector('.enade-solution');
+    if (solution) solution.open = true;
+  }
 }
 
 function render() {
@@ -221,6 +227,8 @@ function render() {
   reader.hidden = !state.question;
   if (state.question) renderReader(results);
   else {
+    clearSolutionMath(reader);
+    reader.replaceChildren();
     document.body.classList.remove('enade-classroom');
     document.title = 'Enade · Física | Gustavo von Atzingen';
     renderCatalogue(results);
@@ -256,6 +264,10 @@ try {
   const response = await fetch(new URL('../enade/catalogo.json',import.meta.url));
   if (!response.ok) throw new Error('HTTP '+response.status);
   data = await response.json();
+  const drafts = data.questions.filter(q => q.solution?.status === 'rascunho').length;
+  const notice = document.querySelector('#review-notice');
+  notice.hidden = drafts === 0;
+  notice.textContent = drafts+' soluções em rascunho, aguardando conferência. A alternativa proposta fica em “Ver solução”; o gabarito oficial tem um controle separado.';
   exams = new Map(data.exams.map(exam => [exam.id,exam]));
   topics = new Map(data.topics.map(topic => [topic.id,topic.label]));
   contexts = new Map(data.contexts.map(context => [context.id,context]));

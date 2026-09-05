@@ -74,9 +74,29 @@
 .enade-answer summary,.enade-transcript summary{font:500 1rem var(--font-display);cursor:pointer;min-height:30px}
 .enade-answer-letter{font:700 2.7rem var(--font-display);color:var(--force-1);margin:20px 0 6px}
 .enade-answer p{margin:12px 0}
-.enade-solution{background:var(--paper-deep);border-radius:var(--radius-sm);padding:22px;margin-top:20px}
-.enade-solution h2{font:500 1.1rem var(--font-display);margin:0 0 8px}
-.enade-solution p{color:var(--ink-soft);margin:0}
+.enade-solution,.enade-solution-pending{background:var(--surface);border:1px solid var(--line-strong);border-radius:var(--radius-sm);padding:18px;margin-top:24px;min-width:0}
+.enade-solution>summary{font:500 1rem/1.5 var(--font-display);cursor:pointer;min-height:30px}
+.enade-draft-label{display:inline-block;margin-left:14px;color:var(--ink-soft);font:400 .76rem/1.5 var(--font-display)}
+.enade-solution-pending h2{font:500 1.1rem var(--font-display);margin:0 0 8px}
+.enade-solution-pending p{color:var(--ink-soft);margin:0}
+.enade-solution-content{min-width:0;padding-top:16px}
+.enade-solution,.enade-answer{scroll-margin-top:110px}
+.enade-review-notice,.enade-math-notice{padding:14px 18px;border-left:3px solid var(--force-1);background:var(--surface);color:var(--ink-soft);font-size:.93rem}
+.enade-worked-solution{font-size:1.05rem;line-height:1.8;min-width:0;overflow-wrap:break-word}
+.enade-worked-solution p{margin:.9rem 0;color:var(--ink-soft)}
+.enade-worked-solution a{color:var(--force-1);text-underline-offset:3px}
+.enade-solution-intro{margin:26px 0 20px;font-size:1.1em}
+.enade-worked-solution .solution-article{margin:20px 0}
+.enade-worked-solution h3{font:500 1.35rem/1.4 var(--font-display);margin:8px 0 14px;letter-spacing:-.015em}
+.enade-worked-solution .math-block{overflow-x:auto;max-width:100%;margin:16px 0;padding:8px 4px;color:var(--ink);font-size:1rem;text-align:center}
+.enade-worked-solution .result-callout{border-left:3px solid var(--resultant);background:var(--paper-deep);padding:18px 22px;margin-top:28px}
+.enade-worked-solution .result-callout>strong{font:500 1.15rem var(--font-display);color:var(--resultant)}
+.enade-worked-solution .solution-note{border-left:3px solid var(--line-strong);padding:12px 18px;margin:22px 0;background:var(--paper)}
+.enade-worked-solution .solution-note>strong{font:500 1rem var(--font-display)}
+.enade-worked-solution .solution-note p:last-child{margin-bottom:0}
+.enade-concept-references{border-top:1px solid var(--line);margin-top:30px;padding-top:20px;font-size:.94rem}
+.enade-concept-references ul{padding-left:22px}
+.enade-concept-references li{margin:7px 0}
 .enade-transcript{margin-top:22px}
 .enade-transcript p{color:var(--ink-soft);font-size:.9rem}
 .enade-transcript pre{font:400 1rem/1.6 var(--font-body);white-space:pre-wrap;overflow-wrap:anywhere;background:var(--surface);padding:20px;border:1px solid var(--line)}
@@ -89,4 +109,6 @@
 .enade-page [hidden]{display:none!important}
 @media(max-width:1000px){.enade-filters{grid-template-columns:repeat(3,minmax(0,1fr))}.enade-reader-layout{grid-template-columns:minmax(0,1fr)}.enade-reader-aside{position:static;display:flex;flex-wrap:wrap;gap:8px 20px;align-items:center}.enade-reader-aside h2,.enade-reader-aside p{margin:0}.enade-card{grid-template-columns:60px 1fr auto;gap:16px}}
 @media(max-width:700px){.enade-main{padding:20px 16px 44px}.enade-intro{display:block;padding-top:12px}.enade-scope{margin:26px 0 0;max-width:none;padding:3px 0 3px 18px}.enade-lead br{display:none}.enade-filters{grid-template-columns:1fr 1fr;padding:16px;gap:16px 10px}.enade-filters label:has([name=topic]){grid-column:1/-1}.enade-card{grid-template-columns:40px 1fr;padding:20px 12px;gap:12px}.enade-number{font-size:1.4rem}.enade-number--discursive{font-size:.8rem}.enade-card-action{grid-column:2;display:flex;justify-content:space-between;align-items:center;gap:8px}.enade-card h2{font-size:1rem}.enade-card-action small{font-size:.7rem}.enade-editions{gap:8px}.enade-edition{padding:10px 12px;font-size:.84rem}.enade-edition small{margin-left:6px}.enade-source-grid{grid-template-columns:1fr}.enade-reader-nav{display:block}.enade-reader-tools{margin-top:20px}.enade-question-paper{padding:12px 8px}.enade-reader-bottom{gap:10px}.enade-results-bar{font-size:.85rem}.enade-empty{padding:25px}.enade-pagination{gap:12px}}
-@media print{.site-header,.site-footer,#catalogue-view,#provas,.enade-reader-nav,.enade-reader-aside,.enade-reader-bottom,.enade-transcript,.enade-solution,.skip-link{display:none!important}.enade-main{padding:0;max-width:none}.enade-reader-layout{display:block}.enade-question-paper{padding:0;border:0}.enade-question-paper figure{break-inside:avoid}.enade-question-paper img{max-height:230mm;object-fit:contain}.enade-answer:not([open]){display:none}.enade-reader-header h1{font-size:18pt}.enade-reader-header .enade-tags{display:none}body{background:#fff!important;color:#000!important}.enade-answer{break-inside:avoid}.enade-answer-letter{color:#000}}
+@media print{.site-header,.site-footer,#catalogue-view,#provas,.enade-reader-nav,.enade-reader-aside,.enade-reader-bottom,.enade-transcript,.enade-solution-pending,.skip-link{display:none!important}.enade-main{padding:0;max-width:none}.enade-reader-layout{display:block}.enade-question-paper{padding:0;border:0}.enade-question-paper figure{break-inside:avoid}.enade-question-paper img{max-height:230mm;object-fit:contain}.enade-answer:not([open]),.enade-solution:not([open]){display:none}.enade-solution[open]{display:block;border:0;padding:0}.enade-solution[open]>summary{display:none}.enade-worked-solution .math-block{overflow:visible;break-inside:avoid}.enade-worked-solution h3{break-after:avoid}.enade-worked-solution .result-callout{break-inside:avoid}.enade-reader-header h1{font-size:18pt}.enade-reader-header .enade-tags{display:none}body{background:#fff!important;color:#000!important}.enade-answer{break-inside:avoid}.enade-answer-letter{color:#000}}
+
+@media(max-width:700px){.enade-solution{padding:14px 12px}.enade-solution,.enade-answer{scroll-margin-top:180px}.enade-worked-solution{font-size:1rem}.enade-worked-solution h3{font-size:1.15rem}.enade-draft-label{display:block;margin:6px 0 0 18px}.enade-worked-solution .math-block{padding:8px 4px;font-size:.86rem}}
