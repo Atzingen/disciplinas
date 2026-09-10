@@ -1,0 +1,503 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Resolução do exercício Halliday 23.24: campo elétrico dentro e fora de um tubo metálico longo de paredes finas com carga por unidade de comprimento, pela lei de Gauss com superfície cilíndrica coaxial, e gráfico de E em função de r.">
+  <title>Halliday 23.24 — Tubo metálico longo · Eletromagnetismo</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='28' fill='%237a3ce7'/%3E%3Cpath d='M18 32h28M32 18v28' stroke='white' stroke-width='6'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="../../assets/base.css">
+  <link rel="stylesheet" href="../../assets/simulador.css">
+  <link rel="stylesheet" href="../../assets/campo-eletrico.css">
+  <script>try{if(localStorage.getItem("tema")==="escuro"){document.documentElement.dataset.theme="escuro"}}catch(erro){}</script>
+</head>
+<body class="lesson-page field-page">
+  <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+
+  <div class="site-topbar" data-topbar>
+    <div class="site-topbar__inner">
+      <nav class="breadcrumb" aria-label="Navegação estrutural">
+        <a href="../../disciplinas/prcfemg/">Fundamentos do Eletromagnetismo</a>
+        <span aria-hidden="true">/</span>
+        <a href="../">Exercícios</a>
+        <span aria-hidden="true">/</span>
+        <a href="../capitulo-23/">Lei de Gauss · Capítulo 23</a>
+        <span aria-hidden="true">/</span>
+        <strong aria-current="page">Exercício 24</strong>
+      </nav>
+      <div class="lesson-area-navigation" data-site-navigation data-root-path="../../" data-active-section="exercicios"></div>
+    </div>
+    <nav class="section-nav" aria-label="Seções do exercício" data-section-nav>
+      <a href="#enunciado">Enunciado</a>
+      <a href="#resolucao">Resolução</a>
+      <a href="#diagrama">Diagrama</a>
+    </nav>
+  </div>
+
+  <header class="lesson-header">
+    <div class="lesson-title-row">
+      <div>
+        <p class="eyebrow">Halliday · Capítulo 23</p>
+        <h1>Tubo metálico longo</h1>
+      </div>
+      <p class="lesson-intro">
+        Toda a carga de um tubo condutor fino fica na parede. Uma superfície
+        gaussiana cilíndrica coaxial mostra que o campo é nulo por dentro e
+        cai como \(1/r\) por fora, com um salto na própria parede.
+      </p>
+    </div>
+  </header>
+
+  <main class="lesson-main" id="conteudo">
+    <div class="lesson-sections">
+
+      <section class="lesson-section" id="enunciado" aria-label="Enunciado">
+        <article class="problem-sheet">
+          <div class="problem-number">
+            <span>Halliday</span>
+            <strong>23.24</strong>
+          </div>
+          <div class="problem-copy">
+            <p>
+              A Fig. 23-36 mostra uma seção de um tubo longo de metal, de
+              paredes finas, com um raio \(R=3{,}00\,\mathrm{cm}\) e uma carga
+              por unidade de comprimento
+              \(\lambda=2{,}00\times10^{-8}\,\mathrm{C/m}\).
+            </p>
+            <p>
+              Determine o módulo \(E\) do campo elétrico a uma distância
+              radial (a) \(r=R/2{,}00\); (b) \(r=2{,}00R\). (c) Faça um
+              gráfico de \(E\) em função de \(r\) para
+              \(0\le r\le2{,}00R\).
+            </p>
+          </div>
+          <div class="answer-strip">
+            <span>Resultados</span>
+            <strong>
+              \(\displaystyle E\!\left(\tfrac{R}{2}\right)=0,\quad
+              E(2R)=5{,}99\times10^{3}\,\mathrm{N/C},\quad
+              E(R^+)=1{,}20\times10^{4}\,\mathrm{N/C}\)
+            </strong>
+          </div>
+        </article>
+      </section>
+
+      <section class="lesson-section" id="resolucao" aria-label="Resolução">
+        <article class="solution-article">
+          <header class="solution-heading">
+            <p class="eyebrow">Resolução passo a passo</p>
+            <h2>Escolha a gaussiana que respeita a simetria cilíndrica</h2>
+            <p>
+              Um tubo muito longo e uniformemente carregado tem campo radial e
+              de módulo dependente apenas da distância ao eixo. Um cilindro
+              coaxial imaginário transforma a integral de fluxo em um produto
+              simples, e o que muda entre dentro e fora é apenas a carga
+              envolvida.
+            </p>
+          </header>
+
+          <section>
+            <span class="solution-step">simetria</span>
+            <h3>Cilindro coaxial de raio \(r\) e comprimento \(h\)</h3>
+            <p>
+              Longe das extremidades, o tubo é invariante por translação ao
+              longo do eixo e por rotação em torno dele. Portanto, o campo
+              \(\vec{E}\) só pode apontar radialmente e seu módulo só pode
+              depender de \(r\). Tomamos como superfície gaussiana um cilindro
+              coaxial de raio \(r\) e comprimento \(h\), fechado por duas
+              tampas.
+            </p>
+            <p>
+              Nas tampas, \(\vec{E}\) é paralelo à superfície
+              (\(\vec{E}\perp d\vec{A}\)) e o fluxo é nulo. Na superfície
+              lateral, \(\vec{E}\) é paralelo a \(d\vec{A}\) e tem módulo
+              constante, de modo que sai da integral:
+            </p>
+            <div class="math-block math-block--result math-display">
+              \[
+              \begin{aligned}
+              \Phi&=\oint\vec{E}\cdot d\vec{A}
+              =\int_{\text{lateral}}E\,dA+\int_{\text{tampas}}0\,dA
+              =E\,(2\pi rh),\\[4pt]
+              \varepsilon_0\Phi&=q_{\text{env}}
+              \;\Longrightarrow\;
+              E=\frac{q_{\text{env}}}{2\pi\varepsilon_0 rh}.
+              \end{aligned}
+              \]
+            </div>
+            <p>
+              Tudo se reduz a saber quanta carga o cilindro gaussiano
+              envolve, o que depende de \(r\) ser menor ou maior que \(R\).
+            </p>
+            <div class="assumption-note">
+              <strong>Por que "paredes finas" e "metal" importam</strong>
+              <p>
+                Em um condutor em equilíbrio eletrostático, toda a carga em
+                excesso fica na superfície. Como a parede é fina, tratamos
+                o tubo como uma casca cilíndrica de raio \(R\) com carga
+                \(\lambda\) por unidade de comprimento, sem carga alguma no
+                interior oco.
+              </p>
+            </div>
+          </section>
+
+          <section>
+            <span class="solution-step">parte a</span>
+            <h3>Dentro do tubo não há carga envolvida</h3>
+            <p>
+              Para \(r=R/2{,}00=1{,}50\,\mathrm{cm}\), o cilindro gaussiano
+              está inteiramente dentro do oco do tubo. A parede carregada fica
+              fora dele, então \(q_{\text{env}}=0\):
+            </p>
+            <div class="math-block math-display">
+              \[
+              \begin{aligned}
+              E\,(2\pi rh)&=\frac{q_{\text{env}}}{\varepsilon_0}=0
+              \;\Longrightarrow\;
+              E=0\qquad(r&lt;R).
+              \end{aligned}
+              \]
+            </div>
+            <div class="result-callout">
+              <span>Campo em \(r=R/2{,}00\)</span>
+              <strong>
+                \(\displaystyle E=0\)
+              </strong>
+            </div>
+            <p>
+              O resultado vale para qualquer \(r&lt;R\): a casca cilíndrica
+              uniforme não produz campo em seu interior, do mesmo modo que a
+              casca esférica.
+            </p>
+          </section>
+
+          <section>
+            <span class="solution-step">parte b</span>
+            <h3>Fora do tubo, a carga envolvida é \(\lambda h\)</h3>
+            <p>
+              Para \(r=2{,}00R=6{,}00\,\mathrm{cm}\), o cilindro gaussiano
+              envolve um trecho de comprimento \(h\) da parede, com carga
+              \(q_{\text{env}}=\lambda h\). O comprimento \(h\) se cancela:
+            </p>
+            <div class="math-block math-block--result math-display">
+              \[
+              \begin{aligned}
+              E\,(2\pi rh)&=\frac{\lambda h}{\varepsilon_0}
+              \;\Longrightarrow\;
+              E=\frac{\lambda}{2\pi\varepsilon_0 r}\qquad(r&gt;R).
+              \end{aligned}
+              \]
+            </div>
+            <p>
+              Substituindo \(\lambda=2{,}00\times10^{-8}\,\mathrm{C/m}\),
+              \(\varepsilon_0=8{,}85\times10^{-12}\,\mathrm{C^2/(N\,m^2)}\) e
+              \(r=0{,}0600\,\mathrm{m}\):
+            </p>
+            <div class="math-block math-display">
+              \[
+              \begin{aligned}
+              E(2R)&=\frac{2{,}00\times10^{-8}\,\mathrm{C/m}}
+                {2\pi\left(8{,}85\times10^{-12}\,\mathrm{\frac{C^2}{N\,m^2}}\right)(0{,}0600\,\mathrm{m})}\\
+              &=\frac{2{,}00\times10^{-8}}{3{,}336\times10^{-12}}\,\mathrm{N/C}\\
+              &=5{,}994\ldots\times10^{3}\,\mathrm{N/C}.
+              \end{aligned}
+              \]
+            </div>
+            <div class="result-callout">
+              <span>Campo em \(r=2{,}00R\)</span>
+              <strong>
+                \(\displaystyle E=5{,}99\times10^{3}\,\mathrm{N/C}\)
+              </strong>
+            </div>
+            <p>
+              O campo aponta radialmente para fora, pois \(\lambda&gt;0\).
+            </p>
+          </section>
+
+          <section>
+            <span class="solution-step">parte c</span>
+            <h3>O gráfico: zero, salto na parede e decaimento \(1/r\)</h3>
+            <p>
+              Juntando os dois regimes, a função \(E(r)\) no intervalo pedido é
+            </p>
+            <div class="math-block math-display">
+              \[
+              \begin{aligned}
+              E(r)&=
+              \begin{cases}
+              0, &amp; 0\le r&lt;R,\\[4pt]
+              \dfrac{\lambda}{2\pi\varepsilon_0 r}, &amp; r&gt;R.
+              \end{cases}
+              \end{aligned}
+              \]
+            </div>
+            <p>
+              O valor máximo ocorre imediatamente fora da parede,
+              \(r\to R^+\), onde a fórmula externa é avaliada em
+              \(r=R=0{,}0300\,\mathrm{m}\):
+            </p>
+            <div class="math-block math-block--result math-display">
+              \[
+              \begin{aligned}
+              E(R^+)&=\frac{\lambda}{2\pi\varepsilon_0R}
+              =\frac{2{,}00\times10^{-8}}
+                {2\pi(8{,}85\times10^{-12})(0{,}0300)}\\
+              &=1{,}20\times10^{4}\,\mathrm{N/C}.
+              \end{aligned}
+              \]
+            </div>
+            <div class="result-callout">
+              <span>Valor logo após a parede</span>
+              <strong>
+                \(\displaystyle E(R^+)=1{,}20\times10^{4}\,\mathrm{N/C}\)
+              </strong>
+            </div>
+            <p>
+              Assim, a curva vale zero de \(r=0\) até \(r=R\), salta para
+              \(1{,}20\times10^{4}\,\mathrm{N/C}\) em \(r=R\) e decai como
+              \(1/r\) até \(5{,}99\times10^{3}\,\mathrm{N/C}\) em \(r=2R\),
+              exatamente a metade do valor no salto.
+            </p>
+            <p>
+              A descontinuidade é a assinatura de uma camada de carga
+              superficial. Espalhada sobre a parede, a carga por unidade de
+              área é \(\sigma=\lambda/(2\pi R)\), e a lei de Gauss em uma
+              pequena caixa que atravessa a parede mostra que a componente
+              normal do campo salta em \(\sigma/\varepsilon_0\):
+            </p>
+            <div class="math-block math-display">
+              \[
+              \begin{aligned}
+              \sigma&=\frac{\lambda}{2\pi R}
+              =\frac{2{,}00\times10^{-8}}{2\pi(0{,}0300)}
+              =1{,}06\times10^{-7}\,\mathrm{C/m^2},\\[4pt]
+              \Delta E&=E(R^+)-E(R^-)=\frac{\sigma}{\varepsilon_0}
+              =\frac{1{,}06\times10^{-7}}{8{,}85\times10^{-12}}
+              =1{,}20\times10^{4}\,\mathrm{N/C}.
+              \end{aligned}
+              \]
+            </div>
+            <p>
+              Como \(E(R^-)=0\), o salto é o próprio valor externo na parede,
+              em acordo com o resultado anterior.
+            </p>
+          </section>
+
+          <section>
+            <span class="solution-step">verificações</span>
+            <h3>Dimensões, limites e proporções</h3>
+            <p>
+              A combinação \(\lambda/(\varepsilon_0 r)\) tem a unidade de
+              campo elétrico:
+            </p>
+            <div class="math-block math-display">
+              \[
+              \begin{aligned}
+              \left[\frac{\lambda}{\varepsilon_0 r}\right]
+              &=\frac{\mathrm{C/m}}{\left(\mathrm{C^2/(N\,m^2)}\right)\mathrm{m}}
+              =\frac{\mathrm{C}}{\mathrm{m}}\cdot\frac{\mathrm{N\,m^2}}{\mathrm{C^2\,m}}
+              =\frac{\mathrm{N}}{\mathrm{C}}.
+              \end{aligned}
+              \]
+            </div>
+            <div class="concept-grid">
+              <article>
+                <h4>Limite \(r\gg R\)</h4>
+                <p>
+                  A expressão externa é idêntica à de uma linha infinita de
+                  carga: de longe, o tubo é indistinguível de um fio com a
+                  mesma \(\lambda\).
+                </p>
+              </article>
+              <article>
+                <h4>Proporção \(1/r\)</h4>
+                <p>
+                  Dobrar a distância divide o campo por dois:
+                  \(E(2R)=E(R^+)/2=1{,}20\times10^{4}/2=5{,}99\times10^{3}\,\mathrm{N/C}\),
+                  dentro do arredondamento.
+                </p>
+              </article>
+              <article>
+                <h4>Interior de condutor</h4>
+                <p>
+                  \(E=0\) para \(r&lt;R\) também segue da propriedade geral
+                  dos condutores: campo nulo no material e, por simetria, no
+                  oco sem carga.
+                </p>
+              </article>
+              <article>
+                <h4>Ordem de grandeza</h4>
+                <p>
+                  Dezenas de nanocoulombs por metro a poucos centímetros do
+                  eixo dão campos de milhares de \(\mathrm{N/C}\), coerentes
+                  com \(2k\lambda/r\) e \(k\approx9\times10^{9}\).
+                </p>
+              </article>
+            </div>
+          </section>
+        </article>
+      </section>
+
+      <section class="lesson-section" id="diagrama" aria-label="Diagrama">
+        <article class="static-diagram-shell field-figure">
+          <header class="static-diagram-heading">
+            <div>
+              <p class="eyebrow">Geometria e gráfico</p>
+              <h2>Gaussiana coaxial e a curva \(E(r)\)</h2>
+            </div>
+            <p>
+              À esquerda, o tubo carregado com a superfície gaussiana
+              cilíndrica tracejada de raio \(r\) e comprimento \(h\). À
+              direita, o gráfico pedido no item (c), com o salto em
+              \(r=R\) e o decaimento em \(1/r\).
+            </p>
+          </header>
+
+          <svg class="teaching-diagram field-diagram" viewBox="0 0 1160 760" role="img" aria-labelledby="halliday-23-24-title halliday-23-24-desc">
+            <title id="halliday-23-24-title">Tubo metálico longo com gaussiana coaxial e gráfico do campo em função de r</title>
+            <desc id="halliday-23-24-desc">À esquerda, um tubo cilíndrico horizontal de raio R igual a 3,00 centímetros, com cargas positivas espalhadas pela parede, e um cilindro gaussiano coaxial tracejado, de raio r igual a 2R e comprimento h, envolvendo o tubo. Vetores radiais de campo saem da superfície lateral da gaussiana; nas tampas o fluxo é nulo. Uma nota indica que, para r menor que R, a gaussiana não envolve carga e o campo é zero. À direita, o gráfico de E em função de r de 0 a 2R: a curva vale zero até r igual a R, salta verticalmente para 1,20 vezes dez elevado a quatro newtons por coulomb e decai como um sobre r até 5,99 vezes dez elevado a três newtons por coulomb em r igual a 2R. A base informa R igual a 3,00 centímetros, lambda igual a 2,00 vezes dez elevado a menos oito coulombs por metro e o campo em 2R.</desc>
+            <defs>
+              <marker id="halliday-23-24-axis-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+                <path d="M 0 0 L 10 5 L 0 10 z" style="fill: var(--ink-soft)"></path>
+              </marker>
+              <marker id="halliday-23-24-field-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+                <path d="M 0 0 L 10 5 L 0 10 z" style="fill: var(--force-1)"></path>
+              </marker>
+              <marker id="halliday-23-24-dimension" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                <path d="M 10 0 L 0 5 L 10 10 z" style="fill: var(--measure)"></path>
+              </marker>
+            </defs>
+
+            <rect class="field-panel" x="24" y="24" width="520" height="640" rx="8"></rect>
+            <rect class="field-panel" x="568" y="24" width="568" height="640" rx="8"></rect>
+
+            <text class="field-title" x="52" y="62">TUBO CARREGADO E GAUSSIANA COAXIAL</text>
+            <text class="field-title" x="596" y="62">CAMPO E(r) PARA 0 ≤ r ≤ 2R</text>
+
+            <line class="field-axis field-axis--light" x1="60" y1="350" x2="490" y2="350" marker-end="url(#halliday-23-24-axis-arrow)"></line>
+            <text class="field-note" x="494" y="344">eixo</text>
+
+            <path class="field-guide" d="M 180 230 A 40 120 0 0 0 180 470"></path>
+            <line class="field-guide" x1="180" y1="230" x2="340" y2="230"></line>
+            <line class="field-guide" x1="180" y1="470" x2="340" y2="470"></line>
+            <ellipse class="field-guide" cx="340" cy="350" rx="40" ry="120"></ellipse>
+            <text class="field-note" x="300" y="118">gaussiana: cilindro coaxial</text>
+            <text class="field-note" x="300" y="138">raio r, comprimento h</text>
+            <text class="field-note" x="52" y="118">E radial, módulo constante</text>
+            <text class="field-note" x="52" y="138">na lateral: Φ = E (2πrh)</text>
+
+            <line class="field-object" x1="90" y1="290" x2="430" y2="290"></line>
+            <line class="field-object" x1="90" y1="410" x2="430" y2="410"></line>
+            <path class="field-object" d="M 90 290 A 22 60 0 0 0 90 410"></path>
+            <ellipse class="field-object" cx="430" cy="350" rx="22" ry="60"></ellipse>
+            <path class="field-guide" d="M 90 290 A 22 60 0 0 1 90 410"></path>
+
+            <circle class="field-charge-positive" cx="130" cy="290" r="9"></circle>
+            <text class="field-sign" x="130" y="296">+</text>
+            <circle class="field-charge-positive" cx="230" cy="290" r="9"></circle>
+            <text class="field-sign" x="230" y="296">+</text>
+            <circle class="field-charge-positive" cx="330" cy="290" r="9"></circle>
+            <text class="field-sign" x="330" y="296">+</text>
+            <circle class="field-charge-positive" cx="150" cy="410" r="9"></circle>
+            <text class="field-sign" x="150" y="416">+</text>
+            <circle class="field-charge-positive" cx="250" cy="410" r="9"></circle>
+            <text class="field-sign" x="250" y="416">+</text>
+            <circle class="field-charge-positive" cx="350" cy="410" r="9"></circle>
+            <text class="field-sign" x="350" y="416">+</text>
+            <circle class="field-charge-positive" cx="452" cy="350" r="9"></circle>
+            <text class="field-sign" x="452" y="356">+</text>
+
+            <line class="field-vector" x1="215" y1="228" x2="215" y2="164" marker-end="url(#halliday-23-24-field-arrow)"></line>
+            <line class="field-vector" x1="305" y1="228" x2="305" y2="164" marker-end="url(#halliday-23-24-field-arrow)"></line>
+            <line class="field-vector" x1="215" y1="472" x2="215" y2="536" marker-end="url(#halliday-23-24-field-arrow)"></line>
+            <line class="field-vector" x1="305" y1="472" x2="305" y2="536" marker-end="url(#halliday-23-24-field-arrow)"></line>
+            <text class="field-value" x="244" y="192">E</text>
+            <text class="field-value" x="334" y="192">E</text>
+
+            <line class="field-distance" x1="430" y1="350" x2="430" y2="292" marker-start="url(#halliday-23-24-dimension)" marker-end="url(#halliday-23-24-dimension)"></line>
+            <text class="field-value field-value--warm" x="470" y="318">R</text>
+            <line class="field-distance" x1="340" y1="350" x2="340" y2="232" marker-start="url(#halliday-23-24-dimension)" marker-end="url(#halliday-23-24-dimension)"></line>
+            <text class="field-value field-value--warm" x="350" y="268">r = 2R</text>
+
+            <line class="field-distance" x1="180" y1="580" x2="340" y2="580" marker-start="url(#halliday-23-24-dimension)" marker-end="url(#halliday-23-24-dimension)"></line>
+            <text class="field-value field-value--warm" x="252" y="606">h</text>
+            <line class="field-guide" x1="180" y1="470" x2="180" y2="572"></line>
+            <line class="field-guide" x1="340" y1="470" x2="340" y2="572"></line>
+
+            <text class="field-note" x="360" y="520">tampas: E ∥ superfície,</text>
+            <text class="field-note" x="360" y="540">fluxo nulo</text>
+            <text class="field-label" x="52" y="632">r &lt; R: q_env = 0, logo E = 0</text>
+            <text class="field-note" x="52" y="654">r &gt; R: q_env = λh, E = λ/(2πε₀r)</text>
+
+            <line class="field-axis" x1="640" y1="560" x2="1108" y2="560" marker-end="url(#halliday-23-24-axis-arrow)"></line>
+            <line class="field-axis" x1="640" y1="560" x2="640" y2="96" marker-end="url(#halliday-23-24-axis-arrow)"></line>
+            <text class="field-label" x="1096" y="590">r</text>
+            <text class="field-label" x="600" y="108">E</text>
+            <text class="field-note" x="622" y="586">0</text>
+            <text class="field-label" x="732" y="590">R/2</text>
+            <text class="field-label" x="834" y="590">R</text>
+            <text class="field-label" x="1028" y="590">2R</text>
+            <line class="field-axis" x1="740" y1="554" x2="740" y2="566"></line>
+            <line class="field-axis" x1="840" y1="554" x2="840" y2="566"></line>
+            <line class="field-axis" x1="1040" y1="554" x2="1040" y2="566"></line>
+
+            <path class="field-vector field-vector--resultant" d="M 640 560 L 840 560"></path>
+            <line class="field-guide" x1="840" y1="560" x2="840" y2="160"></line>
+            <path class="field-vector field-vector--resultant" d="M 840 160 L 860 196 L 880 227 L 900 252 L 920 274 L 940 293 L 960 310 L 980 325 L 1000 338 L 1020 350 L 1040 360"></path>
+
+            <line class="field-guide" x1="640" y1="160" x2="840" y2="160"></line>
+            <line class="field-guide" x1="640" y1="360" x2="1040" y2="360"></line>
+            <line class="field-guide" x1="1040" y1="560" x2="1040" y2="360"></line>
+
+            <circle class="field-point" cx="740" cy="560" r="10"></circle>
+            <circle class="field-point" cx="840" cy="160" r="10"></circle>
+            <circle class="field-point" cx="1040" cy="360" r="10"></circle>
+
+            <text class="field-value" x="656" y="150">1,20 × 10⁴ N/C</text>
+            <text class="field-note" x="656" y="172">= λ/(2πε₀R)</text>
+            <text class="field-value" x="656" y="350">5,99 × 10³ N/C</text>
+            <text class="field-note" x="656" y="372">= λ/(2πε₀ · 2R)</text>
+            <text class="field-note" x="700" y="536">E = 0 no interior</text>
+            <text class="field-note" x="850" y="470">salto ΔE = σ/ε₀</text>
+            <text class="field-note" x="850" y="490">σ = λ/(2πR)</text>
+            <text class="field-note" x="920" y="250">decai como 1/r</text>
+            <text class="field-value" x="1000" y="410">E(2R)</text>
+
+            <rect class="field-panel" x="48" y="686" width="1088" height="50" rx="4"></rect>
+            <text class="field-label" x="74" y="717">DADOS:</text>
+            <text class="field-note" x="146" y="717">R = 3,00 cm</text>
+            <text class="field-note" x="286" y="717">λ = 2,00 × 10⁻⁸ C/m</text>
+            <text class="field-label" x="520" y="717">INTERIOR:</text>
+            <text class="field-value" x="620" y="717">E = 0</text>
+            <text class="field-label" x="720" y="717">EM r = 2R:</text>
+            <text class="field-value" x="836" y="717">E = 5,99 × 10³ N/C</text>
+          </svg>
+
+          <p class="diagram-caption field-diagram-caption">
+            <strong>Leitura da curva · esquema sem escala</strong>
+            <span>
+              A gaussiana de raio \(r&lt;R\) não envolve carga e dá \(E=0\);
+              a de raio \(r&gt;R\) envolve \(\lambda h\) e dá
+              \(E=\frac{\lambda}{2\pi\varepsilon_0 r}\). O salto em
+              \(r=R\) vale \(\sigma/\varepsilon_0=1{,}20\times10^{4}\,\mathrm{N/C}\)
+              e, em \(r=2R\), o campo já caiu à metade,
+              \(5{,}99\times10^{3}\,\mathrm{N/C}\).
+            </span>
+          </p>
+        </article>
+      </section>
+    </div>
+  </main>
+
+  <div class="exercise-navigation-shell" data-exercise-navigation data-current-id="halliday-23-24" data-registry-url="../../materiais.json" data-chapter-url="../capitulo-23/" data-root-path="../../" data-reference="Halliday" data-chapter="23"></div>
+
+  <footer class="lesson-footer site-footer">
+    <p>Halliday 23.24 · capítulo 23 · tubo metálico longo</p>
+    <a href="../../">Voltar ao catálogo</a>
+  </footer>
+
+  <script type="module" src="../../componentes/navegacao-principal.js"></script>
+  <script type="module" src="../../componentes/navegacao-exercicios.js"></script>
+  <script type="module" src="../exercicio-estatico.js"></script>
+</body>
+</html>

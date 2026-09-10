@@ -1,0 +1,528 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Resolução do exercício Halliday 23.52: campo elétrico de uma casca esférica espessa com densidade volumétrica de carga uniforme, na cavidade, dentro do material e fora da casca, pela lei de Gauss.">
+  <title>Halliday 23.52 — Casca esférica com carga volumétrica · Eletromagnetismo</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='28' fill='%237a3ce7'/%3E%3Cpath d='M18 32h28M32 18v28' stroke='white' stroke-width='6'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="../../assets/base.css">
+  <link rel="stylesheet" href="../../assets/simulador.css">
+  <link rel="stylesheet" href="../../assets/campo-eletrico.css">
+  <script>try{if(localStorage.getItem("tema")==="escuro"){document.documentElement.dataset.theme="escuro"}}catch(erro){}</script>
+</head>
+<body class="lesson-page field-page">
+  <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+
+  <div class="site-topbar" data-topbar>
+    <div class="site-topbar__inner">
+      <nav class="breadcrumb" aria-label="Navegação estrutural">
+        <a href="../../disciplinas/prcfemg/">Fundamentos do Eletromagnetismo</a>
+        <span aria-hidden="true">/</span>
+        <a href="../">Exercícios</a>
+        <span aria-hidden="true">/</span>
+        <a href="../capitulo-23/">Lei de Gauss · Capítulo 23</a>
+        <span aria-hidden="true">/</span>
+        <strong aria-current="page">Exercício 52</strong>
+      </nav>
+      <div class="lesson-area-navigation" data-site-navigation data-root-path="../../" data-active-section="exercicios"></div>
+    </div>
+    <nav class="section-nav" aria-label="Seções do exercício" data-section-nav>
+      <a href="#enunciado">Enunciado</a>
+      <a href="#resolucao">Resolução</a>
+      <a href="#diagrama">Diagrama</a>
+    </nav>
+  </div>
+
+  <header class="lesson-header">
+    <div class="lesson-title-row">
+      <div>
+        <p class="eyebrow">Halliday · Capítulo 23</p>
+        <h1>Casca esférica com carga volumétrica</h1>
+      </div>
+      <p class="lesson-intro">
+        A carga está espalhada no volume entre dois raios. A esfera gaussiana
+        envolve nada na cavidade, uma fração crescente dentro do material e
+        a carga total do lado de fora.
+      </p>
+    </div>
+  </header>
+
+  <main class="lesson-main" id="conteudo">
+    <div class="lesson-sections">
+
+      <section class="lesson-section" id="enunciado" aria-label="Enunciado">
+        <article class="problem-sheet">
+          <div class="problem-number">
+            <span>Halliday</span>
+            <strong>23.52</strong>
+          </div>
+          <div class="problem-copy">
+            <p>
+              A Fig. 23-53 mostra uma casca esférica com uma densidade
+              volumétrica de cargas uniforme
+              \(\rho=1{,}84\,\mathrm{nC/m^3}\), raio interno
+              \(a=10{,}0\,\mathrm{cm}\) e raio externo \(b=2{,}00a\).
+            </p>
+            <p>
+              Determine o módulo do campo elétrico (a) em \(r=0\); (b) em
+              \(r=a/2{,}00\); (c) em \(r=a\); (d) em \(r=1{,}50a\); (e) em
+              \(r=b\); (f) em \(r=3{,}00b\).
+            </p>
+          </div>
+          <div class="answer-strip">
+            <span>Resultados</span>
+            <strong>
+              \(\displaystyle E(0)=E(a/2)=E(a)=0,\quad
+              E(1{,}50a)=7{,}32\,\mathrm{N/C},\quad
+              E(b)=12{,}1\,\mathrm{N/C},\quad
+              E(3{,}00b)=1{,}35\,\mathrm{N/C}\)
+            </strong>
+          </div>
+        </article>
+      </section>
+
+      <section class="lesson-section" id="resolucao" aria-label="Resolução">
+        <article class="solution-article">
+          <header class="solution-heading">
+            <p class="eyebrow">Resolução passo a passo</p>
+            <h2>Integre a densidade só até onde a gaussiana alcança</h2>
+            <p>
+              A lei de Gauss com simetria esférica pede apenas a carga
+              envolvida. Como a carga é volumétrica, essa quantidade é
+              \(\rho\) vezes o volume de material que fica dentro da esfera
+              de raio \(r\).
+            </p>
+          </header>
+
+          <section>
+            <span class="solution-step">lei de Gauss</span>
+            <h3>Superfície gaussiana esférica e fórmula geral</h3>
+            <p>
+              A distribuição é esfericamente simétrica: a densidade depende
+              apenas da distância ao centro. Logo \(\vec{E}\) é radial e seu
+              módulo é o mesmo em todos os pontos de uma esfera de raio
+              \(r\). Escolhendo essa esfera como superfície gaussiana,
+            </p>
+            <div class="math-block math-block--result math-display">
+              \[
+              \begin{aligned}
+              \Phi
+              &=\oint\vec{E}\cdot d\vec{A}
+                =E\left(4\pi r^2\right),\\
+              \varepsilon_0\Phi&=q_{\text{env}}
+              \quad\Longrightarrow\quad
+              E=\frac{q_{\text{env}}}{4\pi\varepsilon_0 r^2}.
+              \end{aligned}
+              \]
+            </div>
+            <div class="assumption-note">
+              <strong>Dados em unidades do SI</strong>
+              <p>
+                \(\rho=1{,}84\times10^{-9}\,\mathrm{C/m^3}\),
+                \(a=0{,}100\,\mathrm{m}\), \(b=0{,}200\,\mathrm{m}\) e
+                \(\varepsilon_0=8{,}85\times10^{-12}\,\mathrm{C^2/(N\,m^2)}\).
+                Os cubos dos raios são \(a^3=1{,}000\times10^{-3}\,\mathrm{m^3}\)
+                e \(b^3=8{,}000\times10^{-3}\,\mathrm{m^3}\).
+              </p>
+            </div>
+          </section>
+
+          <section>
+            <span class="solution-step">partes a, b e c</span>
+            <h3>Na cavidade não há carga envolvida</h3>
+            <p>
+              Para \(r\le a\) a esfera gaussiana fica inteiramente dentro da
+              cavidade, onde não há carga. O fluxo é nulo e, pela simetria,
+              o campo também. Isso vale para \(r=0\), \(r=a/2{,}00\) e
+              \(r=a\) (na fronteira interna, o volume de material envolvido
+              ainda é zero).
+            </p>
+            <div class="math-block math-display">
+              \[
+              \begin{aligned}
+              q_{\text{env}}=0
+              \quad\Longrightarrow\quad
+              E\left(4\pi r^2\right)=0
+              \quad\Longrightarrow\quad
+              E=0
+              \qquad (0\le r\le a).
+              \end{aligned}
+              \]
+            </div>
+            <div class="result-callout">
+              <span>(a), (b) e (c) Campo na cavidade</span>
+              <strong>\(\displaystyle E(0)=E(a/2)=E(a)=0\)</strong>
+            </div>
+            <p>
+              Fisicamente, cada elemento de carga da casca tem contrapartes
+              que cancelam seu campo em qualquer ponto interno: é o teorema
+              das cascas aplicado camada por camada.
+            </p>
+          </section>
+
+          <section>
+            <span class="solution-step">dentro do material</span>
+            <h3>Carga envolvida entre a e r</h3>
+            <p>
+              Para \(a\le r\le b\), a gaussiana envolve o material contido
+              entre os raios \(a\) e \(r\). Como \(\rho\) é uniforme, a carga
+              é \(\rho\) vezes o volume dessa casca parcial:
+            </p>
+            <div class="math-block math-block--result math-display">
+              \[
+              \begin{aligned}
+              q_{\text{env}}
+              &=\rho\left(\frac{4}{3}\pi r^3-\frac{4}{3}\pi a^3\right)
+                =\frac{4\pi\rho}{3}\left(r^3-a^3\right),\\[4pt]
+              E
+              &=\frac{1}{4\pi\varepsilon_0 r^2}\cdot
+                \frac{4\pi\rho}{3}\left(r^3-a^3\right)
+                =\frac{\rho\left(r^3-a^3\right)}{3\varepsilon_0 r^2}
+              \qquad (a\le r\le b).
+              \end{aligned}
+              \]
+            </div>
+            <p>
+              A expressão se anula em \(r=a\), o que confirma a continuidade
+              com a cavidade, e cresce com \(r\) porque o numerador
+              (\(r^3\)) aumenta mais depressa que o denominador (\(r^2\)).
+            </p>
+          </section>
+
+          <section>
+            <span class="solution-step">parte d</span>
+            <h3>Campo em r = 1,50a</h3>
+            <p>
+              Em \(r=1{,}50a=0{,}150\,\mathrm{m}\):
+            </p>
+            <div class="math-block math-display">
+              \[
+              \begin{aligned}
+              r^3-a^3
+              &=3{,}375\times10^{-3}-1{,}000\times10^{-3}
+                =2{,}375\times10^{-3}\,\mathrm{m^3},\\[4pt]
+              E
+              &=\frac{\left(1{,}84\times10^{-9}\,\mathrm{C/m^3}\right)
+                \left(2{,}375\times10^{-3}\,\mathrm{m^3}\right)}
+                {3\left(8{,}85\times10^{-12}\,\mathrm{C^2/(N\,m^2)}\right)
+                \left(0{,}150\,\mathrm{m}\right)^2}\\
+              &=\frac{4{,}37\times10^{-12}}{5{,}97\times10^{-13}}\,\mathrm{N/C}
+                =7{,}315\ldots\,\mathrm{N/C}.
+              \end{aligned}
+              \]
+            </div>
+            <div class="result-callout">
+              <span>(d) Campo em r = 1,50a</span>
+              <strong>\(\displaystyle E=7{,}32\,\mathrm{N/C}\)</strong>
+            </div>
+            <div class="assumption-note">
+              <strong>Sobre o último algarismo</strong>
+              <p>
+                Com \(\varepsilon_0=8{,}854\times10^{-12}\,\mathrm{C^2/(N\,m^2)}\)
+                o item (d) arredonda para \(7{,}31\,\mathrm{N/C}\). A
+                diferença está apenas no último algarismo e vem do
+                arredondamento da constante, não do método.
+              </p>
+            </div>
+          </section>
+
+          <section>
+            <span class="solution-step">parte e</span>
+            <h3>Campo na superfície externa, r = b</h3>
+            <p>
+              Em \(r=b\) a gaussiana envolve toda a casca. A mesma fórmula do
+              material vale na fronteira:
+            </p>
+            <div class="math-block math-display">
+              \[
+              \begin{aligned}
+              b^3-a^3
+              &=8{,}000\times10^{-3}-1{,}000\times10^{-3}
+                =7{,}000\times10^{-3}\,\mathrm{m^3},\\[4pt]
+              E
+              &=\frac{\left(1{,}84\times10^{-9}\right)
+                \left(7{,}000\times10^{-3}\right)}
+                {3\left(8{,}85\times10^{-12}\right)
+                \left(0{,}200\right)^2}\,\mathrm{N/C}
+                =\frac{1{,}288\times10^{-11}}{1{,}062\times10^{-12}}\,\mathrm{N/C}\\
+              &=12{,}13\ldots\,\mathrm{N/C}.
+              \end{aligned}
+              \]
+            </div>
+            <div class="result-callout">
+              <span>(e) Campo em r = b</span>
+              <strong>\(\displaystyle E=12{,}1\,\mathrm{N/C}\)</strong>
+            </div>
+            <p>
+              Esse é o maior valor do campo. A carga total da casca, que
+              será usada no próximo item, é
+            </p>
+            <div class="math-block math-block--result math-display">
+              \[
+              \begin{aligned}
+              Q
+              &=\frac{4\pi\rho}{3}\left(b^3-a^3\right)
+                =\frac{4\pi\left(1{,}84\times10^{-9}\right)}{3}
+                \left(7{,}000\times10^{-3}\right)\,\mathrm{C}\\
+              &=5{,}40\times10^{-11}\,\mathrm{C}.
+              \end{aligned}
+              \]
+            </div>
+          </section>
+
+          <section>
+            <span class="solution-step">parte f</span>
+            <h3>Fora da casca: carga puntiforme Q</h3>
+            <p>
+              Para \(r\ge b\) a carga envolvida é sempre \(Q\); a casca se
+              comporta como uma carga puntiforme no centro. Em
+              \(r=3{,}00b=0{,}600\,\mathrm{m}\):
+            </p>
+            <div class="math-block math-display">
+              \[
+              \begin{aligned}
+              E
+              &=\frac{Q}{4\pi\varepsilon_0 r^2}
+                =\frac{\left(8{,}99\times10^{9}\,\mathrm{N\,m^2/C^2}\right)
+                  \left(5{,}40\times10^{-11}\,\mathrm{C}\right)}
+                  {\left(0{,}600\,\mathrm{m}\right)^2}
+                =\frac{0{,}485}{0{,}360}\,\mathrm{N/C}
+                =1{,}35\,\mathrm{N/C}.
+              \end{aligned}
+              \]
+            </div>
+            <p>
+              O mesmo resultado sai sem recalcular \(Q\): entre \(r=b\) e
+              \(r=3b\) a carga envolvida não muda e \(E\propto1/r^2\), logo
+              o campo cai pelo fator \(3^2=9\):
+            </p>
+            <div class="math-block math-display">
+              \[
+              \begin{aligned}
+              E(3b)
+              &=\frac{E(b)}{9}
+                =\frac{12{,}1\,\mathrm{N/C}}{9}
+                =1{,}35\,\mathrm{N/C}.
+              \end{aligned}
+              \]
+            </div>
+            <div class="result-callout">
+              <span>(f) Campo em r = 3,00b</span>
+              <strong>\(\displaystyle E=1{,}35\,\mathrm{N/C}\)</strong>
+            </div>
+          </section>
+
+          <section>
+            <span class="solution-step">verificações</span>
+            <h3>Confira dimensões, continuidade e limites</h3>
+            <div class="math-block math-display">
+              \[
+              \begin{aligned}
+              \left[\frac{\rho\left(r^3-a^3\right)}{\varepsilon_0 r^2}\right]
+              &=\frac{\mathrm{C/m^3}\cdot\mathrm{m^3}}
+                {\mathrm{C^2/(N\,m^2)}\cdot\mathrm{m^2}}
+                =\frac{\mathrm{N}}{\mathrm{C}}.
+              \end{aligned}
+              \]
+            </div>
+            <div class="concept-grid">
+              <article>
+                <h4>Continuidade em r = a</h4>
+                <p>
+                  A fórmula do material dá zero em \(r=a\), igual ao valor na
+                  cavidade. Não há carga superficial, logo não há salto.
+                </p>
+              </article>
+              <article>
+                <h4>Continuidade em r = b</h4>
+                <p>
+                  A fórmula do material em \(r=b\) e a fórmula externa
+                  \(\frac{Q}{4\pi\varepsilon_0 b^2}\) dão o mesmo
+                  \(12{,}1\,\mathrm{N/C}\), pois
+                  \(Q=\frac{4\pi\rho}{3}(b^3-a^3)\).
+                </p>
+              </article>
+              <article>
+                <h4>Limite a → 0</h4>
+                <p>
+                  Sem cavidade, o campo interno vira
+                  \(\frac{\rho r}{3\varepsilon_0}\), o resultado clássico da
+                  esfera maciça uniforme.
+                </p>
+              </article>
+              <article>
+                <h4>Ordem de grandeza</h4>
+                <p>
+                  \(Q\approx54\,\mathrm{pC}\) a dezenas de centímetros produz
+                  campos de alguns newtons por coulomb, coerente com os
+                  valores \(7{,}32\), \(12{,}1\) e \(1{,}35\,\mathrm{N/C}\).
+                </p>
+              </article>
+            </div>
+          </section>
+        </article>
+      </section>
+
+      <section class="lesson-section" id="diagrama" aria-label="Diagrama">
+        <article class="static-diagram-shell field-figure">
+          <header class="static-diagram-heading">
+            <div>
+              <p class="eyebrow">Geometria e gráfico</p>
+              <h2>Da seção da Fig. 23-53 à curva \(E(r)\)</h2>
+            </div>
+            <p>
+              A casca espessa carregada aparece em seção à esquerda, com as
+              gaussianas tracejadas em \(r=1{,}50a\) e \(r=3b\); à direita, o
+              gráfico do campo nas três regiões.
+            </p>
+          </header>
+
+          <svg class="teaching-diagram field-diagram" viewBox="0 0 1160 760" role="img" aria-labelledby="halliday-23-52-title halliday-23-52-desc">
+            <title id="halliday-23-52-title">Seção de uma casca esférica espessa com carga volumétrica uniforme e gráfico do campo em função do raio</title>
+            <desc id="halliday-23-52-desc">À esquerda, a seção mostra um anel espesso entre os raios a igual a 10,0 centímetros e b igual a 20,0 centímetros, preenchido com sinais positivos que representam a densidade volumétrica de carga de 1,84 nanocoulombs por metro cúbico; a cavidade central é vazia. Esferas gaussianas tracejadas aparecem em r igual a 1,5a, dentro do material, e em r igual a 3b, do lado de fora, com vetores de campo radiais para fora. À direita, o gráfico do campo em função de r é zero até a, cresce de forma curva até 12,1 newtons por coulomb em b e decai com o inverso do quadrado de r até 1,35 newtons por coulomb em 3b; o ponto em 1,5a vale 7,32 newtons por coulomb. A base informa os dados e os resultados.</desc>
+            <defs>
+              <marker id="halliday-23-52-axis-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+                <path d="M 0 0 L 10 5 L 0 10 z" style="fill: var(--ink-soft)"></path>
+              </marker>
+              <marker id="halliday-23-52-field-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerUnits="userSpaceOnUse" markerWidth="20" markerHeight="20" orient="auto">
+                <path d="M 0 0 L 10 5 L 0 10 z" style="fill: var(--force-1)"></path>
+              </marker>
+              <marker id="halliday-23-52-result-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerUnits="userSpaceOnUse" markerWidth="22" markerHeight="22" orient="auto">
+                <path d="M 0 0 L 10 5 L 0 10 z" style="fill: var(--resultant)"></path>
+              </marker>
+              <marker id="halliday-23-52-dimension" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                <path d="M 10 0 L 0 5 L 10 10 z" style="fill: var(--measure)"></path>
+              </marker>
+            </defs>
+
+            <rect class="field-panel" x="24" y="24" width="520" height="640" rx="8"></rect>
+            <rect class="field-panel" x="568" y="24" width="568" height="640" rx="8"></rect>
+
+            <text class="field-title" x="52" y="62">SEÇÃO DA CASCA ESPESSA</text>
+            <text class="field-title" x="596" y="62">CAMPO RADIAL E(r)</text>
+
+            <text class="field-label" x="52" y="98">ρ = 1,84 nC/m³ uniforme entre a e b</text>
+            <text class="field-note" x="52" y="120">a = 10,0 cm · b = 2,00a = 20,0 cm · cavidade: E = 0</text>
+            <text class="field-value" x="52" y="144">Q = 5,40 × 10⁻¹¹ C</text>
+
+            <circle class="field-guide" cx="284" cy="392" r="240"></circle>
+            <path class="field-surface" fill-rule="evenodd" d="M 284 312 A 80 80 0 1 0 284 472 A 80 80 0 1 0 284 312 Z M 284 352 A 40 40 0 1 1 284 432 A 40 40 0 1 1 284 352 Z"></path>
+            <circle class="field-guide" cx="284" cy="392" r="60"></circle>
+            <circle class="field-point" cx="284" cy="392" r="5"></circle>
+            <text class="field-note" x="266" y="414">ρ = 0</text>
+
+            <circle class="field-charge-positive" cx="334" cy="392" r="8"></circle>
+            <text class="field-sign" x="334" y="399">+</text>
+            <circle class="field-charge-positive" cx="309" cy="435" r="8"></circle>
+            <text class="field-sign" x="309" y="442">+</text>
+            <circle class="field-charge-positive" cx="259" cy="435" r="8"></circle>
+            <text class="field-sign" x="259" y="442">+</text>
+            <circle class="field-charge-positive" cx="234" cy="392" r="8"></circle>
+            <text class="field-sign" x="234" y="399">+</text>
+            <circle class="field-charge-positive" cx="259" cy="349" r="8"></circle>
+            <text class="field-sign" x="259" y="356">+</text>
+            <circle class="field-charge-positive" cx="309" cy="349" r="8"></circle>
+            <text class="field-sign" x="309" y="356">+</text>
+            <circle class="field-charge-positive" cx="345" cy="427" r="8"></circle>
+            <text class="field-sign" x="345" y="434">+</text>
+            <circle class="field-charge-positive" cx="284" cy="462" r="8"></circle>
+            <text class="field-sign" x="284" y="469">+</text>
+            <circle class="field-charge-positive" cx="223" cy="427" r="8"></circle>
+            <text class="field-sign" x="223" y="434">+</text>
+            <circle class="field-charge-positive" cx="223" cy="357" r="8"></circle>
+            <text class="field-sign" x="223" y="364">+</text>
+            <circle class="field-charge-positive" cx="284" cy="322" r="8"></circle>
+            <text class="field-sign" x="284" y="329">+</text>
+            <circle class="field-charge-positive" cx="345" cy="357" r="8"></circle>
+            <text class="field-sign" x="345" y="364">+</text>
+
+            <line class="field-distance" x1="284" y1="392" x2="312" y2="364" marker-start="url(#halliday-23-52-dimension)" marker-end="url(#halliday-23-52-dimension)"></line>
+            <text class="field-value field-value--warm" x="322" y="372">a</text>
+            <line class="field-distance" x1="284" y1="392" x2="227" y2="449" marker-start="url(#halliday-23-52-dimension)" marker-end="url(#halliday-23-52-dimension)"></line>
+            <text class="field-value field-value--warm" x="206" y="462">b</text>
+
+            <line class="field-vector" x1="346" y1="392" x2="382" y2="392" marker-end="url(#halliday-23-52-field-arrow)"></line>
+            <line class="field-vector" x1="315" y1="446" x2="333" y2="477" marker-end="url(#halliday-23-52-field-arrow)"></line>
+            <line class="field-vector" x1="253" y1="446" x2="235" y2="477" marker-end="url(#halliday-23-52-field-arrow)"></line>
+            <line class="field-vector" x1="222" y1="392" x2="186" y2="392" marker-end="url(#halliday-23-52-field-arrow)"></line>
+            <line class="field-vector" x1="253" y1="338" x2="235" y2="307" marker-end="url(#halliday-23-52-field-arrow)"></line>
+            <line class="field-vector" x1="315" y1="338" x2="333" y2="307" marker-end="url(#halliday-23-52-field-arrow)"></line>
+            <text class="field-label" x="392" y="300">r = 1,50a</text>
+
+            <line class="field-vector field-vector--resultant" x1="456" y1="220" x2="480" y2="196" marker-end="url(#halliday-23-52-result-arrow)"></line>
+            <line class="field-vector field-vector--resultant" x1="456" y1="564" x2="480" y2="588" marker-end="url(#halliday-23-52-result-arrow)"></line>
+            <line class="field-vector field-vector--resultant" x1="112" y1="564" x2="88" y2="588" marker-end="url(#halliday-23-52-result-arrow)"></line>
+            <line class="field-vector field-vector--resultant" x1="112" y1="220" x2="88" y2="196" marker-end="url(#halliday-23-52-result-arrow)"></line>
+            <text class="field-label" x="400" y="638">r = 3b</text>
+
+            <line class="field-axis" x1="640" y1="585" x2="1097" y2="585" marker-end="url(#halliday-23-52-axis-arrow)"></line>
+            <line class="field-axis" x1="640" y1="585" x2="640" y2="104" marker-end="url(#halliday-23-52-axis-arrow)"></line>
+            <text class="field-label" x="1086" y="615">r</text>
+            <text class="field-label" x="604" y="115">E(r)</text>
+            <text class="field-note" x="620" y="610">0</text>
+
+            <line class="field-axis field-axis--light" x1="710" y1="585" x2="710" y2="596"></line>
+            <line class="field-axis field-axis--light" x1="745" y1="585" x2="745" y2="596"></line>
+            <line class="field-axis field-axis--light" x1="780" y1="585" x2="780" y2="596"></line>
+            <line class="field-axis field-axis--light" x1="1060" y1="585" x2="1060" y2="596"></line>
+            <text class="field-label" x="704" y="616">a</text>
+            <text class="field-note" x="728" y="636">1,5a</text>
+            <text class="field-label" x="774" y="616">b</text>
+            <text class="field-label" x="1046" y="616">3b</text>
+
+            <path class="field-vector" d="M 640 585 L 710 585 L 717 518 L 724 462 L 731 413 L 738 369 L 745 328 L 752 291 L 759 256 L 766 222 L 773 190 L 780 160 L 815 313 L 850 396 L 885 446 L 920 479 L 955 501 L 990 517 L 1025 529 L 1060 538 L 1074 541" marker-end="url(#halliday-23-52-field-arrow)"></path>
+
+            <line class="field-guide" x1="780" y1="160" x2="780" y2="585"></line>
+            <line class="field-guide" x1="640" y1="160" x2="780" y2="160"></line>
+            <circle class="field-point" cx="780" cy="160" r="10"></circle>
+            <text class="field-value" x="798" y="150">12,1 N/C (r = b)</text>
+
+            <line class="field-guide" x1="745" y1="328" x2="745" y2="585"></line>
+            <line class="field-guide" x1="640" y1="328" x2="745" y2="328"></line>
+            <circle class="field-point" cx="745" cy="328" r="10"></circle>
+            <text class="field-value" x="654" y="318">7,32 N/C</text>
+
+            <line class="field-guide" x1="1060" y1="538" x2="1060" y2="585"></line>
+            <line class="field-guide" x1="640" y1="538" x2="1060" y2="538"></line>
+            <circle class="field-point" cx="1060" cy="538" r="10"></circle>
+            <text class="field-value" x="990" y="500">1,35 N/C</text>
+
+            <text class="field-note" x="656" y="566">E = 0</text>
+            <text class="field-note" x="660" y="128">ρ(r³ − a³)/(3ε₀r²)</text>
+            <text class="field-note" x="890" y="440">Q/(4πε₀r²)</text>
+
+            <rect class="field-panel" x="48" y="686" width="1088" height="50" rx="4"></rect>
+            <text class="field-label" x="74" y="717">DADOS:</text>
+            <text class="field-note" x="146" y="717">ρ = 1,84 nC/m³ · a = 10,0 cm · b = 20,0 cm</text>
+            <text class="field-label" x="560" y="717">CAMPOS:</text>
+            <text class="field-value" x="644" y="717">E(1,5a) = 7,32 · E(b) = 12,1 · E(3b) = 1,35 N/C</text>
+          </svg>
+
+          <p class="diagram-caption field-diagram-caption">
+            <strong>Leitura da curva · esquema sem escala</strong>
+            <span>
+              O campo é nulo na cavidade, cresce como
+              \(\frac{\rho(r^3-a^3)}{3\varepsilon_0 r^2}\) dentro do material
+              até \(E(b)=12{,}1\,\mathrm{N/C}\) e decai como
+              \(\frac{Q}{4\pi\varepsilon_0 r^2}\) fora, chegando a
+              \(1{,}35\,\mathrm{N/C}\) em \(r=3b\).
+            </span>
+          </p>
+        </article>
+      </section>
+    </div>
+  </main>
+
+  <div class="exercise-navigation-shell" data-exercise-navigation data-current-id="halliday-23-52" data-registry-url="../../materiais.json" data-chapter-url="../capitulo-23/" data-root-path="../../" data-reference="Halliday" data-chapter="23"></div>
+
+  <footer class="lesson-footer site-footer">
+    <p>Halliday 23.52 · capítulo 23 · casca esférica com carga volumétrica</p>
+    <a href="../../">Voltar ao catálogo</a>
+  </footer>
+
+  <script type="module" src="../../componentes/navegacao-principal.js"></script>
+  <script type="module" src="../../componentes/navegacao-exercicios.js"></script>
+  <script type="module" src="../exercicio-estatico.js"></script>
+</body>
+</html>

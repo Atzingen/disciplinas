@@ -69,6 +69,14 @@ exercícios do Halliday — 22.24, 22.26 e 22.28 — aplicam os mesmos argumento
 simetria e geometria. As duas sequências são identificadas e navegadas
 separadamente.
 
+Em **Lei de Gauss → Capítulo 23**, doze exercícios do Halliday — 4, 5, 9, 11,
+16, 24, 27, 29, 34, 45, 49 e 52 — percorrem o fluxo elétrico em superfícies
+abertas e fechadas, o balanço face a face em cubos e paralelepípedos e as
+aplicações da lei de Gauss às simetrias cilíndrica, planar e esférica. Cada
+página traz o enunciado, a resolução em LaTeX com a superfície gaussiana
+justificada e um diagrama próprio; os exercícios com dependência radial também
+trazem o gráfico de E em função de r.
+
 ## PRCLFBE — Laboratório de Física Básica: Eletromagnetismo
 
 Os quatro roteiros baseados no conjunto de eletromagnetismo AZEHEB foram
@@ -150,6 +158,7 @@ O exercício que iniciou o projeto permanece em:
 - [Enade · Física](site/enade/)
 - [Halliday — Capítulo 21](site/exercicios/capitulo-21/)
 - [Campo elétrico — Capítulo 22](site/exercicios/capitulo-22/)
+- [Lei de Gauss — Capítulo 23](site/exercicios/capitulo-23/)
 - [Índice de experimentos](site/experimentos/)
 - [Índice de simulações](site/simuladores/)
 - [Simulador de cargas e vetores](site/simuladores/cargas-e-vetores/)

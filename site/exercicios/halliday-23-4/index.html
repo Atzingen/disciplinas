@@ -1,0 +1,389 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Resolução do exercício Halliday 23.4 sobre o fluxo elétrico através de uma rede de pegar borboletas imersa em um campo uniforme, usando a lei de Gauss em uma superfície fechada.">
+  <title>Halliday 23.4 — Fluxo através de uma rede · Eletromagnetismo</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='28' fill='%237a3ce7'/%3E%3Cpath d='M18 32h28M32 18v28' stroke='white' stroke-width='6'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="../../assets/base.css">
+  <link rel="stylesheet" href="../../assets/simulador.css">
+  <link rel="stylesheet" href="../../assets/campo-eletrico.css">
+  <script>try{if(localStorage.getItem("tema")==="escuro"){document.documentElement.dataset.theme="escuro"}}catch(erro){}</script>
+</head>
+<body class="lesson-page field-page">
+  <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+
+  <div class="site-topbar" data-topbar>
+    <div class="site-topbar__inner">
+      <nav class="breadcrumb" aria-label="Navegação estrutural">
+        <a href="../../disciplinas/prcfemg/">Fundamentos do Eletromagnetismo</a>
+        <span aria-hidden="true">/</span>
+        <a href="../">Exercícios</a>
+        <span aria-hidden="true">/</span>
+        <a href="../capitulo-23/">Lei de Gauss · Capítulo 23</a>
+        <span aria-hidden="true">/</span>
+        <strong aria-current="page">Exercício 4</strong>
+      </nav>
+      <div class="lesson-area-navigation" data-site-navigation data-root-path="../../" data-active-section="exercicios"></div>
+    </div>
+    <nav class="section-nav" aria-label="Seções do exercício" data-section-nav>
+      <a href="#enunciado">Enunciado</a>
+      <a href="#resolucao">Resolução</a>
+      <a href="#diagrama">Diagrama</a>
+    </nav>
+  </div>
+
+  <header class="lesson-header">
+    <div class="lesson-title-row">
+      <div>
+        <p class="eyebrow">Halliday · Capítulo 23</p>
+        <h1>Fluxo através de uma rede</h1>
+      </div>
+      <p class="lesson-intro">
+        A malha da rede tem uma forma complicada, mas a lei de Gauss dispensa
+        a integral: basta fechar a superfície com o disco do aro e usar o fato
+        de que não há carga envolvida.
+      </p>
+    </div>
+  </header>
+
+  <main class="lesson-main" id="conteudo">
+    <div class="lesson-sections">
+
+      <section class="lesson-section" id="enunciado" aria-label="Enunciado">
+        <article class="problem-sheet">
+          <div class="problem-number">
+            <span>Halliday</span>
+            <strong>23.4</strong>
+          </div>
+          <div class="problem-copy">
+            <p>
+              Na Fig. 23-28, uma rede para pegar borboletas está imersa em um
+              campo elétrico uniforme de módulo \(E=3{,}0\,\mathrm{mN/C}\).
+              O plano do aro da rede, uma circunferência de raio
+              \(a=11\,\mathrm{cm}\), é mantido perpendicular à direção do
+              campo. A rede é eletricamente neutra.
+            </p>
+            <p>
+              Determine o fluxo elétrico através da rede.
+            </p>
+          </div>
+          <div class="answer-strip">
+            <span>Resultado</span>
+            <strong>
+              \(\displaystyle \Phi_{\text{rede}}=-1{,}1\times10^{-4}\,\mathrm{N\,m^2/C}\)
+            </strong>
+          </div>
+        </article>
+      </section>
+
+      <section class="lesson-section" id="resolucao" aria-label="Resolução">
+        <article class="solution-article">
+          <header class="solution-heading">
+            <p class="eyebrow">Resolução passo a passo</p>
+            <h2>Feche a superfície e deixe a lei de Gauss fazer a conta</h2>
+            <p>
+              O fluxo através de uma superfície aberta e irregular seria
+              difícil de integrar diretamente. A estratégia é transformar a
+              rede em parte de uma superfície fechada, para a qual a lei de
+              Gauss fornece o fluxo total sem nenhuma integral.
+            </p>
+          </header>
+
+          <section>
+            <span class="solution-step">lei de Gauss</span>
+            <h3>Escolha a superfície gaussiana</h3>
+            <p>
+              A lei de Gauss relaciona o fluxo do campo elétrico através de
+              uma superfície <em>fechada</em> com a carga que ela envolve:
+            </p>
+            <div class="math-block math-display">
+              \[
+              \begin{aligned}
+              \varepsilon_0\Phi&=q_{\text{env}},
+              \qquad
+              \Phi=\oint\vec{E}\cdot d\vec{A}.
+              \end{aligned}
+              \]
+            </div>
+            <p>
+              A malha da rede, sozinha, não é uma superfície fechada: ela tem
+              uma abertura circular no aro. Fechamos essa abertura com um
+              disco plano imaginário de raio \(a\), apoiado no plano do aro.
+              A união da malha com o disco é uma superfície fechada que
+              envolve o volume interno da rede. Como a rede é eletricamente
+              neutra e não há nenhuma outra carga em seu interior,
+            </p>
+            <div class="math-block math-block--result math-display">
+              \[
+              \begin{aligned}
+              q_{\text{env}}&=0
+              \quad\Longrightarrow\quad
+              \Phi_{\text{total}}
+              =\Phi_{\text{rede}}+\Phi_{\text{aro}}
+              =\frac{q_{\text{env}}}{\varepsilon_0}=0.
+              \end{aligned}
+              \]
+            </div>
+            <div class="assumption-note">
+              <strong>Por que a hipótese "neutra" é decisiva?</strong>
+              <p>
+                Se a rede tivesse carga, parte das linhas de campo nasceria
+                ou morreria na própria malha e o fluxo total não seria nulo.
+                A neutralidade garante que toda linha que entra pela malha
+                precisa sair pelo disco do aro, e vice-versa.
+              </p>
+            </div>
+          </section>
+
+          <section>
+            <span class="solution-step">fluxo no disco</span>
+            <h3>Calcule o fluxo através do disco do aro</h3>
+            <p>
+              No disco, o campo é uniforme e perpendicular ao plano do aro.
+              A normal externa da superfície fechada, nesse disco, aponta para
+              fora do volume da rede, isto é, no mesmo sentido do campo. Assim
+              \(\vec{E}\cdot d\vec{A}=E\,dA\) em todo o disco e a integral
+              se reduz a um produto:
+            </p>
+            <div class="math-block math-display">
+              \[
+              \begin{aligned}
+              \Phi_{\text{aro}}
+              &=\int_{\text{disco}}\vec{E}\cdot d\vec{A}
+              =E\int_{\text{disco}}dA
+              =E\pi a^2\\
+              &=\left(3{,}0\times10^{-3}\,\mathrm{N/C}\right)
+                \pi\left(0{,}11\,\mathrm{m}\right)^2\\
+              &=+1{,}1\times10^{-4}\,\mathrm{N\,m^2/C}.
+              \end{aligned}
+              \]
+            </div>
+            <p>
+              O sinal positivo indica que o campo <em>sai</em> da superfície
+              fechada através do disco.
+            </p>
+          </section>
+
+          <section>
+            <span class="solution-step">fluxo na rede</span>
+            <h3>Obtenha o fluxo pela malha por diferença</h3>
+            <p>
+              Como a soma dos dois fluxos é nula, o fluxo através da malha da
+              rede é o oposto do fluxo através do disco:
+            </p>
+            <div class="math-block math-block--result math-display">
+              \[
+              \begin{aligned}
+              \Phi_{\text{rede}}
+              &=-\Phi_{\text{aro}}
+              =-E\pi a^2\\
+              &=-\left(3{,}0\times10^{-3}\right)\pi\left(0{,}11\right)^2\\
+              &=-1{,}1\times10^{-4}\,\mathrm{N\,m^2/C}.
+              \end{aligned}
+              \]
+            </div>
+            <div class="result-callout">
+              <span>Fluxo através da rede</span>
+              <strong>
+                \(\displaystyle \Phi_{\text{rede}}=-1{,}1\times10^{-4}\,\mathrm{N\,m^2/C}\)
+              </strong>
+            </div>
+            <p>
+              O sinal negativo tem significado físico: o campo <em>entra</em>
+              na superfície fechada pela malha. Cada linha de campo atravessa
+              o saco da rede vindo de fora, percorre o interior e sai pela
+              abertura do aro. Com a normal externa da malha apontando contra
+              o campo, \(\vec{E}\cdot d\vec{A}&lt;0\) em toda a malha.
+            </p>
+          </section>
+
+          <section>
+            <span class="solution-step">verificações</span>
+            <h3>Confira unidades, forma e dependência angular</h3>
+            <p>
+              O produto \(E\pi a^2\) tem as dimensões corretas de fluxo
+              elétrico:
+            </p>
+            <div class="math-block math-display">
+              \[
+              \begin{aligned}
+              \left[E\pi a^2\right]
+              &=\frac{\mathrm{N}}{\mathrm{C}}\,\mathrm{m^2}
+              =\mathrm{N\,m^2/C}.
+              \end{aligned}
+              \]
+            </div>
+            <div class="concept-grid">
+              <article>
+                <h4>A forma do saco não importa</h4>
+                <p>
+                  Qualquer superfície aberta apoiada no mesmo aro teria o
+                  mesmo fluxo, pois só a área projetada \(\pi a^2\) entra no
+                  cálculo. É a mesma ideia de contar as linhas de campo que
+                  atravessam a abertura.
+                </p>
+              </article>
+              <article>
+                <h4>Se o aro fosse inclinado</h4>
+                <p>
+                  Com a normal do aro fazendo um ângulo \(\theta\) com o
+                  campo, o fluxo cairia para \(-E\pi a^2\cos\theta\) e se
+                  anularia quando o plano do aro ficasse paralelo ao campo.
+                </p>
+              </article>
+            </div>
+            <p>
+              A ordem de grandeza também é coerente: um campo de milinewtons
+              por coulomb através de uma área de algumas centenas de
+              centímetros quadrados produz um fluxo da ordem de
+              \(10^{-4}\,\mathrm{N\,m^2/C}\). Os dados têm dois algarismos
+              significativos, e o resultado foi arredondado de acordo.
+            </p>
+          </section>
+        </article>
+      </section>
+
+      <section class="lesson-section" id="diagrama" aria-label="Diagrama">
+        <article class="static-diagram-shell field-figure">
+          <header class="static-diagram-heading">
+            <div>
+              <p class="eyebrow">Geometria e balanço de fluxo</p>
+              <h2>A rede fechada pelo disco do aro</h2>
+            </div>
+            <p>
+              As linhas de campo horizontais entram pela malha e saem pela
+              abertura do aro. As setas menores indicam as normais externas da
+              superfície fechada em cada trecho.
+            </p>
+          </header>
+
+          <svg class="teaching-diagram field-diagram" viewBox="0 0 1160 760" role="img" aria-labelledby="halliday-23-4-title halliday-23-4-desc">
+            <title id="halliday-23-4-title">Rede de pegar borboletas em campo elétrico uniforme e balanço de fluxo</title>
+            <desc id="halliday-23-4-desc">À esquerda, linhas de campo horizontais da esquerda para a direita atravessam o saco de uma rede, desenhado como uma gota fechada, e saem pelo aro circular à direita, que aparece como uma elipse com um cabo para baixo. Um disco imaginário fecha o aro. As normais externas apontam para a esquerda na malha, contra o campo, e para a direita no disco, a favor do campo. À direita, o balanço mostra que, sem carga envolvida, o fluxo pela rede mais o fluxo pelo aro é zero; o fluxo pelo aro vale E vezes pi a ao quadrado, igual a mais 1,1 vezes dez elevado a menos quatro newton metro quadrado por coulomb, e o fluxo pela rede é o oposto, menos 1,1 vezes dez elevado a menos quatro. A base informa E igual a 3,0 milinewtons por coulomb e a igual a 11 centímetros.</desc>
+            <defs>
+              <marker id="halliday-23-4-axis-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+                <path d="M 0 0 L 10 5 L 0 10 z" style="fill: var(--ink-soft)"></path>
+              </marker>
+              <marker id="halliday-23-4-field-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+                <path d="M 0 0 L 10 5 L 0 10 z" style="fill: var(--force-2)"></path>
+              </marker>
+              <marker id="halliday-23-4-normal-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+                <path d="M 0 0 L 10 5 L 0 10 z" style="fill: var(--force-1)"></path>
+              </marker>
+              <marker id="halliday-23-4-result-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+                <path d="M 0 0 L 10 5 L 0 10 z" style="fill: var(--resultant)"></path>
+              </marker>
+              <marker id="halliday-23-4-dimension" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                <path d="M 10 0 L 0 5 L 10 10 z" style="fill: var(--measure)"></path>
+              </marker>
+            </defs>
+
+            <rect class="field-panel" x="24" y="24" width="520" height="640" rx="8"></rect>
+            <rect class="field-panel" x="568" y="24" width="568" height="640" rx="8"></rect>
+
+            <text class="field-title" x="52" y="62">REDE EM CAMPO UNIFORME</text>
+            <text class="field-title" x="596" y="62">BALANÇO NA SUPERFÍCIE FECHADA</text>
+
+            <g aria-label="Linhas de campo uniforme">
+              <line class="field-vector field-vector--component" x1="60" y1="185" x2="520" y2="185" marker-end="url(#halliday-23-4-field-arrow)"></line>
+              <line class="field-vector field-vector--component" x1="60" y1="245" x2="520" y2="245" marker-end="url(#halliday-23-4-field-arrow)"></line>
+              <line class="field-vector field-vector--component" x1="60" y1="305" x2="520" y2="305" marker-end="url(#halliday-23-4-field-arrow)"></line>
+              <line class="field-vector field-vector--component" x1="60" y1="365" x2="520" y2="365" marker-end="url(#halliday-23-4-field-arrow)"></line>
+              <line class="field-vector field-vector--component" x1="60" y1="425" x2="520" y2="425" marker-end="url(#halliday-23-4-field-arrow)"></line>
+              <line class="field-vector field-vector--component" x1="60" y1="485" x2="520" y2="485" marker-end="url(#halliday-23-4-field-arrow)"></line>
+              <text class="field-value" x="60" y="118">E = 3,0 mN/C (uniforme)</text>
+              <text class="field-note" x="60" y="142">linhas de campo horizontais</text>
+            </g>
+
+            <g aria-label="Saco da rede, aro, disco de fechamento e cabo">
+              <path class="field-axis" d="M 380 200 C 300 196 190 246 150 350 C 190 454 300 504 380 500"></path>
+              <path class="field-guide" d="M 380 240 C 320 240 250 270 220 350 C 250 430 320 460 380 460"></path>
+              <path class="field-guide" d="M 380 285 C 340 285 300 305 285 350 C 300 395 340 415 380 415"></path>
+              <ellipse class="field-surface" cx="380" cy="350" rx="28" ry="150"></ellipse>
+              <ellipse class="field-object" cx="380" cy="350" rx="28" ry="150"></ellipse>
+              <line class="field-object" x1="380" y1="500" x2="380" y2="625"></line>
+              <text class="field-note" x="396" y="612">cabo</text>
+              <text class="field-label" x="150" y="545">malha da rede (neutra)</text>
+              <text class="field-note" x="150" y="567">o campo ENTRA por aqui</text>
+              <text class="field-label" x="404" y="130">aro de raio a</text>
+              <text class="field-note" x="404" y="152">disco que fecha</text>
+              <text class="field-note" x="404" y="172">a superfície</text>
+              <line class="field-distance" x1="380" y1="350" x2="380" y2="200" marker-start="url(#halliday-23-4-dimension)" marker-end="url(#halliday-23-4-dimension)"></line>
+              <text class="field-value field-value--warm" x="416" y="280">a = 11 cm</text>
+            </g>
+
+            <g aria-label="Normais externas da superfície fechada">
+              <line class="field-vector" x1="148" y1="350" x2="92" y2="350" marker-end="url(#halliday-23-4-normal-arrow)"></line>
+              <line class="field-vector" x1="232" y1="238" x2="206" y2="196" marker-end="url(#halliday-23-4-normal-arrow)"></line>
+              <line class="field-vector" x1="232" y1="462" x2="206" y2="504" marker-end="url(#halliday-23-4-normal-arrow)"></line>
+              <text class="field-label" x="70" y="334">n̂</text>
+              <text class="field-note" x="70" y="380">contra E</text>
+              <line class="field-vector" x1="392" y1="335" x2="468" y2="335" marker-end="url(#halliday-23-4-normal-arrow)"></line>
+              <text class="field-label" x="452" y="322">n̂</text>
+              <text class="field-note" x="424" y="392">a favor de E</text>
+            </g>
+
+            <g aria-label="Balanço de fluxo">
+              <text class="field-note" x="596" y="106">superfície fechada = malha + disco do aro</text>
+              <text class="field-value" x="596" y="140">q_env = 0 (rede neutra)</text>
+              <text class="field-label" x="596" y="178">ε₀ Φ_total = q_env = 0</text>
+              <text class="field-label" x="596" y="206">Φ_rede + Φ_aro = 0</text>
+
+              <line class="field-axis field-axis--light" x1="596" y1="228" x2="1108" y2="228"></line>
+
+              <text class="field-label" x="596" y="262">Φ_aro = +E π a²</text>
+              <text class="field-note" x="596" y="288">= (3,0 × 10⁻³)(π)(0,11)²</text>
+              <text class="field-value" x="596" y="316">= +1,1 × 10⁻⁴ N·m²/C</text>
+              <text class="field-note" x="596" y="342">o campo SAI pelo disco: fluxo positivo</text>
+
+              <line class="field-axis field-axis--light" x1="596" y1="364" x2="1108" y2="364"></line>
+
+              <text class="field-label" x="596" y="398">Φ_rede = −Φ_aro = −E π a²</text>
+              <text class="field-value" x="596" y="428">Φ_rede = −1,1 × 10⁻⁴ N·m²/C</text>
+              <text class="field-note" x="596" y="454">o campo ENTRA pela malha: fluxo negativo</text>
+
+              <rect class="field-surface" x="760" y="500" width="180" height="110" rx="6"></rect>
+              <line class="field-vector field-vector--resultant" x1="640" y1="555" x2="748" y2="555" marker-end="url(#halliday-23-4-result-arrow)"></line>
+              <line class="field-vector field-vector--resultant" x1="952" y1="555" x2="1060" y2="555" marker-end="url(#halliday-23-4-result-arrow)"></line>
+              <text class="field-note" x="618" y="595">entra (−)</text>
+              <text class="field-note" x="984" y="595">sai (+)</text>
+              <text class="field-label" x="806" y="561">q_env = 0</text>
+              <text class="field-note" x="596" y="640">tudo o que entra por um lado sai pelo outro</text>
+            </g>
+
+            <rect class="field-panel" x="48" y="686" width="1088" height="50" rx="4"></rect>
+            <text class="field-label" x="74" y="717">DADOS:</text>
+            <text class="field-note" x="146" y="717">E = 3,0 mN/C</text>
+            <text class="field-note" x="292" y="717">a = 11 cm</text>
+            <text class="field-label" x="470" y="717">RESULTADO:</text>
+            <text class="field-value" x="592" y="717">Φ_rede = −1,1 × 10⁻⁴ N·m²/C</text>
+          </svg>
+
+          <p class="diagram-caption field-diagram-caption">
+            <strong>Leitura do esquema · sem escala</strong>
+            <span>
+              O disco tracejado no aro é fictício: ele só serve para fechar a
+              superfície. Como \(q_{\text{env}}=0\), o fluxo positivo pelo
+              disco, \(+E\pi a^2\), é compensado exatamente pelo fluxo
+              negativo pela malha, \(\Phi_{\text{rede}}=-E\pi a^2\).
+            </span>
+          </p>
+        </article>
+      </section>
+    </div>
+  </main>
+
+  <div class="exercise-navigation-shell" data-exercise-navigation data-current-id="halliday-23-4" data-registry-url="../../materiais.json" data-chapter-url="../capitulo-23/" data-root-path="../../" data-reference="Halliday" data-chapter="23"></div>
+
+  <footer class="lesson-footer site-footer">
+    <p>Halliday 23.4 · capítulo 23 · fluxo através de uma rede</p>
+    <a href="../../">Voltar ao catálogo</a>
+  </footer>
+
+  <script type="module" src="../../componentes/navegacao-principal.js"></script>
+  <script type="module" src="../../componentes/navegacao-exercicios.js"></script>
+  <script type="module" src="../exercicio-estatico.js"></script>
+</body>
+</html>

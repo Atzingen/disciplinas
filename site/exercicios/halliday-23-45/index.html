@@ -1,0 +1,470 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Resolução do exercício Halliday 23.45 sobre o campo elétrico de duas cascas esféricas concêntricas carregadas, usando a lei de Gauss em r = 12,0 cm e r = 20,0 cm.">
+  <title>Halliday 23.45 — Duas cascas esféricas concêntricas · Eletromagnetismo</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='28' fill='%237a3ce7'/%3E%3Cpath d='M18 32h28M32 18v28' stroke='white' stroke-width='6'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="../../assets/base.css">
+  <link rel="stylesheet" href="../../assets/simulador.css">
+  <link rel="stylesheet" href="../../assets/campo-eletrico.css">
+  <script>try{if(localStorage.getItem("tema")==="escuro"){document.documentElement.dataset.theme="escuro"}}catch(erro){}</script>
+</head>
+<body class="lesson-page field-page">
+  <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+
+  <div class="site-topbar" data-topbar>
+    <div class="site-topbar__inner">
+      <nav class="breadcrumb" aria-label="Navegação estrutural">
+        <a href="../../disciplinas/prcfemg/">Fundamentos do Eletromagnetismo</a>
+        <span aria-hidden="true">/</span>
+        <a href="../">Exercícios</a>
+        <span aria-hidden="true">/</span>
+        <a href="../capitulo-23/">Lei de Gauss · Capítulo 23</a>
+        <span aria-hidden="true">/</span>
+        <strong aria-current="page">Exercício 45</strong>
+      </nav>
+      <div class="lesson-area-navigation" data-site-navigation data-root-path="../../" data-active-section="exercicios"></div>
+    </div>
+    <nav class="section-nav" aria-label="Seções do exercício" data-section-nav>
+      <a href="#enunciado">Enunciado</a>
+      <a href="#resolucao">Resolução</a>
+      <a href="#diagrama">Diagrama</a>
+    </nav>
+  </div>
+
+  <header class="lesson-header">
+    <div class="lesson-title-row">
+      <div>
+        <p class="eyebrow">Halliday · Capítulo 23</p>
+        <h1>Duas cascas esféricas concêntricas</h1>
+      </div>
+      <p class="lesson-intro">
+        Com simetria esférica, a lei de Gauss reduz o campo a uma pergunta
+        única: quanta carga fica dentro da esfera de raio \(r\)? A resposta
+        muda a cada casca atravessada.
+      </p>
+    </div>
+  </header>
+
+  <main class="lesson-main" id="conteudo">
+    <div class="lesson-sections">
+
+      <section class="lesson-section" id="enunciado" aria-label="Enunciado">
+        <article class="problem-sheet">
+          <div class="problem-number">
+            <span>Halliday</span>
+            <strong>23.45</strong>
+          </div>
+          <div class="problem-copy">
+            <p>
+              Duas cascas esféricas concêntricas carregadas têm raios de
+              \(10{,}0\,\mathrm{cm}\) e \(15{,}0\,\mathrm{cm}\). A carga da
+              casca menor é \(4{,}00\times10^{-8}\,\mathrm{C}\) e a da casca
+              maior é \(2{,}00\times10^{-8}\,\mathrm{C}\).
+            </p>
+            <p>
+              Determine o campo elétrico (a) em \(r=12{,}0\,\mathrm{cm}\);
+              (b) em \(r=20{,}0\,\mathrm{cm}\).
+            </p>
+          </div>
+          <div class="answer-strip">
+            <span>Resultados</span>
+            <strong>
+              \(\displaystyle E(12{,}0\,\mathrm{cm})=2{,}50\times10^{4}\,\mathrm{N/C},\quad
+              E(20{,}0\,\mathrm{cm})=1{,}35\times10^{4}\,\mathrm{N/C}\)
+              (ambos radiais, para fora)
+            </strong>
+          </div>
+        </article>
+      </section>
+
+      <section class="lesson-section" id="resolucao" aria-label="Resolução">
+        <article class="solution-article">
+          <header class="solution-heading">
+            <p class="eyebrow">Resolução passo a passo</p>
+            <h2>Conte a carga envolvida antes de calcular</h2>
+            <p>
+              A superfície gaussiana esférica converte a lei de Gauss em uma
+              fórmula do tipo carga puntiforme. O único cuidado é decidir,
+              para cada raio, quais cascas ficam dentro da superfície.
+            </p>
+          </header>
+
+          <section>
+            <span class="solution-step">lei de Gauss</span>
+            <h3>Escolha a superfície gaussiana pela simetria</h3>
+            <p>
+              As duas cascas são esféricas, concêntricas e uniformemente
+              carregadas. Nenhuma direção é privilegiada além da radial, de
+              modo que o campo em qualquer ponto deve ser radial e depender
+              apenas da distância \(r\) ao centro comum. A superfície
+              gaussiana natural é uma esfera de raio \(r\) com o mesmo
+              centro: nela, \(\vec{E}\) é paralelo a \(d\vec{A}\) em todo
+              ponto e tem módulo constante.
+            </p>
+            <div class="math-block math-block--result math-display">
+              \[
+              \begin{aligned}
+              \Phi
+              &=\oint\vec{E}\cdot d\vec{A}
+                =E\oint dA
+                =E\left(4\pi r^2\right),\\
+              \varepsilon_0\Phi
+              &=q_{\text{env}}
+              \quad\Longrightarrow\quad
+              E=\frac{q_{\text{env}}}{4\pi\varepsilon_0 r^2}
+                =\frac{k\,q_{\text{env}}}{r^2}.
+              \end{aligned}
+              \]
+            </div>
+            <p>
+              O resultado tem a forma do campo de uma carga puntiforme
+              \(q_{\text{env}}\) colocada no centro. Ele contém o teorema das
+              cascas: uma casca uniforme não produz campo em seu interior
+              (fica fora de \(q_{\text{env}}\)) e, do lado de fora, age como se
+              toda a sua carga estivesse no centro.
+            </p>
+            <div class="assumption-note">
+              <strong>Dados em unidades do SI</strong>
+              <p>
+                \(R_1=0{,}100\,\mathrm{m}\), \(q_1=4{,}00\times10^{-8}\,\mathrm{C}\),
+                \(R_2=0{,}150\,\mathrm{m}\), \(q_2=2{,}00\times10^{-8}\,\mathrm{C}\)
+                e \(k=\frac{1}{4\pi\varepsilon_0}=8{,}99\times10^{9}\,\mathrm{N\,m^2/C^2}\).
+                As duas cargas são positivas, portanto o campo aponta para
+                fora sempre que \(q_{\text{env}}\neq0\).
+              </p>
+            </div>
+          </section>
+
+          <section>
+            <span class="solution-step">parte a</span>
+            <h3>Entre as cascas, só a casca menor conta</h3>
+            <p>
+              O ponto \(r=12{,}0\,\mathrm{cm}\) fica entre os dois raios
+              (\(R_1&lt;r&lt;R_2\)). A esfera gaussiana de raio \(r\) envolve
+              inteiramente a casca de \(10{,}0\,\mathrm{cm}\), mas não toca a
+              casca de \(15{,}0\,\mathrm{cm}\), cuja carga fica do lado de
+              fora e não contribui para o fluxo.
+            </p>
+            <div class="math-block math-display">
+              \[
+              \begin{aligned}
+              q_{\text{env}}&=q_1=4{,}00\times10^{-8}\,\mathrm{C},\\[4pt]
+              E&=\frac{k\,q_1}{r^2}
+                =\frac{\left(8{,}99\times10^{9}\,\mathrm{N\,m^2/C^2}\right)
+                  \left(4{,}00\times10^{-8}\,\mathrm{C}\right)}
+                  {\left(0{,}120\,\mathrm{m}\right)^2}\\
+              &=\frac{359{,}6\,\mathrm{N\,m^2/C}}{1{,}44\times10^{-2}\,\mathrm{m^2}}
+                =2{,}497\ldots\times10^{4}\,\mathrm{N/C}.
+              \end{aligned}
+              \]
+            </div>
+            <div class="result-callout">
+              <span>Campo em r = 12,0 cm</span>
+              <strong>
+                \(\displaystyle E=2{,}50\times10^{4}\,\mathrm{N/C}\),
+                radial e para fora
+              </strong>
+            </div>
+          </section>
+
+          <section>
+            <span class="solution-step">parte b</span>
+            <h3>Fora das duas cascas, as cargas se somam</h3>
+            <p>
+              Em \(r=20{,}0\,\mathrm{cm}\) a esfera gaussiana envolve as duas
+              cascas. A carga envolvida é a soma das cargas, e o sistema todo
+              se comporta como uma única carga puntiforme no centro.
+            </p>
+            <div class="math-block math-display">
+              \[
+              \begin{aligned}
+              q_{\text{env}}&=q_1+q_2
+                =4{,}00\times10^{-8}+2{,}00\times10^{-8}
+                =6{,}00\times10^{-8}\,\mathrm{C},\\[4pt]
+              E&=\frac{k\,(q_1+q_2)}{r^2}
+                =\frac{\left(8{,}99\times10^{9}\,\mathrm{N\,m^2/C^2}\right)
+                  \left(6{,}00\times10^{-8}\,\mathrm{C}\right)}
+                  {\left(0{,}200\,\mathrm{m}\right)^2}\\
+              &=\frac{539{,}4\,\mathrm{N\,m^2/C}}{4{,}00\times10^{-2}\,\mathrm{m^2}}
+                =1{,}348\ldots\times10^{4}\,\mathrm{N/C}.
+              \end{aligned}
+              \]
+            </div>
+            <div class="result-callout">
+              <span>Campo em r = 20,0 cm</span>
+              <strong>
+                \(\displaystyle E=1{,}35\times10^{4}\,\mathrm{N/C}\),
+                radial e para fora
+              </strong>
+            </div>
+          </section>
+
+          <section>
+            <span class="solution-step">região interna</span>
+            <h3>Dentro da casca menor o campo é nulo</h3>
+            <p>
+              Embora o enunciado não peça, vale completar o mapa do campo.
+              Para \(r&lt;10{,}0\,\mathrm{cm}\) a esfera gaussiana não envolve
+              carga alguma; pela lei de Gauss e pela simetria,
+            </p>
+            <div class="math-block math-display">
+              \[
+              \begin{aligned}
+              q_{\text{env}}=0
+              \quad\Longrightarrow\quad
+              E\left(4\pi r^2\right)=0
+              \quad\Longrightarrow\quad
+              E=0
+              \qquad (r&lt;R_1).
+              \end{aligned}
+              \]
+            </div>
+            <div class="limit-grid">
+              <article>
+                <h4>r &lt; 10,0 cm</h4>
+                <p>
+                  Nenhuma carga envolvida: \(E=0\). As contribuições dos
+                  elementos da casca se cancelam exatamente.
+                </p>
+              </article>
+              <article>
+                <h4>10,0 cm &lt; r &lt; 15,0 cm</h4>
+                <p>
+                  Só \(q_1\) conta: \(E=\frac{kq_1}{r^2}\), de
+                  \(3{,}60\times10^{4}\,\mathrm{N/C}\) logo após \(R_1\) até
+                  \(1{,}60\times10^{4}\,\mathrm{N/C}\) logo antes de \(R_2\).
+                </p>
+              </article>
+              <article>
+                <h4>r &gt; 15,0 cm</h4>
+                <p>
+                  \(q_1+q_2\) contam: \(E=\frac{k(q_1+q_2)}{r^2}\), com salto
+                  para \(2{,}40\times10^{4}\,\mathrm{N/C}\) logo após \(R_2\)
+                  e decaimento em \(1/r^2\).
+                </p>
+              </article>
+            </div>
+          </section>
+
+          <section>
+            <span class="solution-step">verificações</span>
+            <h3>Confira dimensões, sinais e ordem de grandeza</h3>
+            <p>
+              A combinação \(\frac{kq}{r^2}\) tem as dimensões corretas de
+              campo elétrico:
+            </p>
+            <div class="math-block math-display">
+              \[
+              \begin{aligned}
+              \left[\frac{kq}{r^2}\right]
+              &=\frac{\mathrm{N\,m^2}}{\mathrm{C^2}}
+                \cdot\frac{\mathrm{C}}{\mathrm{m^2}}
+                =\frac{\mathrm{N}}{\mathrm{C}}.
+              \end{aligned}
+              \]
+            </div>
+            <p>
+              O campo em (b) é menor que em (a) apesar de envolver mais
+              carga. A carga cresceu pelo fator \(6{,}00/4{,}00=1{,}5\), mas o
+              quadrado da distância cresceu por
+              \((20{,}0/12{,}0)^2=2{,}78\); a razão entre os campos é
+              \(1{,}5/2{,}78=0{,}54\), e de fato
+              \(1{,}35\times10^{4}/2{,}50\times10^{4}=0{,}54\).
+            </p>
+            <div class="concept-grid">
+              <article>
+                <h4>Sentido do campo</h4>
+                <p>
+                  Ambas as cargas são positivas, logo o fluxo através de
+                  qualquer gaussiana que as envolva é positivo e o campo
+                  aponta para fora nas duas regiões.
+                </p>
+              </article>
+              <article>
+                <h4>Descontinuidades</h4>
+                <p>
+                  Em cada casca o campo salta em \(\sigma/\varepsilon_0\),
+                  com \(\sigma=q/(4\pi R^2)\): a carga superficial é a única
+                  fonte de descontinuidade em \(E\).
+                </p>
+              </article>
+            </div>
+          </section>
+        </article>
+      </section>
+
+      <section class="lesson-section" id="diagrama" aria-label="Diagrama">
+        <article class="static-diagram-shell field-figure">
+          <header class="static-diagram-heading">
+            <div>
+              <p class="eyebrow">Geometria e gráfico</p>
+              <h2>Das cascas à curva \(E(r)\)</h2>
+            </div>
+            <p>
+              As esferas gaussianas tracejadas em \(r=12{,}0\,\mathrm{cm}\) e
+              \(r=20{,}0\,\mathrm{cm}\) correspondem aos dois pontos marcados
+              no gráfico à direita.
+            </p>
+          </header>
+
+          <svg class="teaching-diagram field-diagram" viewBox="0 0 1160 760" role="img" aria-labelledby="halliday-23-45-title halliday-23-45-desc">
+            <title id="halliday-23-45-title">Seção de duas cascas esféricas concêntricas e gráfico do campo em função do raio</title>
+            <desc id="halliday-23-45-desc">À esquerda, a seção mostra duas circunferências concêntricas: a casca interna de raio 10,0 centímetros com carga 4,00 vezes dez elevado a menos oito coulombs e a casca externa de raio 15,0 centímetros com carga 2,00 vezes dez elevado a menos oito coulombs, ambas marcadas com sinais positivos. Duas esferas gaussianas tracejadas, em r igual a 12,0 e 20,0 centímetros, têm vetores de campo radiais apontando para fora. À direita, o gráfico do campo em função de r é zero até 10,0 centímetros, salta e decai com o inverso do quadrado de r até 15,0 centímetros, salta novamente e decai; os pontos marcados valem 2,50 vezes dez elevado a quatro newtons por coulomb em 12,0 centímetros e 1,35 vezes dez elevado a quatro newtons por coulomb em 20,0 centímetros. A base informa os dados e os dois resultados.</desc>
+            <defs>
+              <marker id="halliday-23-45-axis-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+                <path d="M 0 0 L 10 5 L 0 10 z" style="fill: var(--ink-soft)"></path>
+              </marker>
+              <marker id="halliday-23-45-field-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerUnits="userSpaceOnUse" markerWidth="20" markerHeight="20" orient="auto">
+                <path d="M 0 0 L 10 5 L 0 10 z" style="fill: var(--force-1)"></path>
+              </marker>
+              <marker id="halliday-23-45-result-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerUnits="userSpaceOnUse" markerWidth="22" markerHeight="22" orient="auto">
+                <path d="M 0 0 L 10 5 L 0 10 z" style="fill: var(--resultant)"></path>
+              </marker>
+              <marker id="halliday-23-45-dimension" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                <path d="M 10 0 L 0 5 L 10 10 z" style="fill: var(--measure)"></path>
+              </marker>
+            </defs>
+
+            <rect class="field-panel" x="24" y="24" width="520" height="640" rx="8"></rect>
+            <rect class="field-panel" x="568" y="24" width="568" height="640" rx="8"></rect>
+
+            <text class="field-title" x="52" y="62">SEÇÃO DAS CASCAS E GAUSSIANAS</text>
+            <text class="field-title" x="596" y="62">CAMPO RADIAL E(r)</text>
+
+            <text class="field-label" x="52" y="98">casca 1: R₁ = 10,0 cm</text>
+            <text class="field-value" x="52" y="120">q₁ = 4,00 × 10⁻⁸ C</text>
+            <text class="field-label" x="300" y="98">casca 2: R₂ = 15,0 cm</text>
+            <text class="field-value" x="300" y="120">q₂ = 2,00 × 10⁻⁸ C</text>
+
+            <circle class="field-guide" cx="284" cy="372" r="180"></circle>
+            <circle class="field-object" cx="284" cy="372" r="135"></circle>
+            <circle class="field-guide" cx="284" cy="372" r="108"></circle>
+            <circle class="field-object" cx="284" cy="372" r="90"></circle>
+            <circle class="field-point" cx="284" cy="372" r="6"></circle>
+            <text class="field-note" x="292" y="364">O</text>
+
+            <circle class="field-charge-positive" cx="284" cy="282" r="11"></circle>
+            <text class="field-sign" x="284" y="289">+</text>
+            <circle class="field-charge-positive" cx="362" cy="327" r="11"></circle>
+            <text class="field-sign" x="362" y="334">+</text>
+            <circle class="field-charge-positive" cx="362" cy="417" r="11"></circle>
+            <text class="field-sign" x="362" y="424">+</text>
+            <circle class="field-charge-positive" cx="284" cy="462" r="11"></circle>
+            <text class="field-sign" x="284" y="469">+</text>
+            <circle class="field-charge-positive" cx="206" cy="417" r="11"></circle>
+            <text class="field-sign" x="206" y="424">+</text>
+            <circle class="field-charge-positive" cx="206" cy="327" r="11"></circle>
+            <text class="field-sign" x="206" y="334">+</text>
+
+            <circle class="field-charge-positive" cx="284" cy="237" r="11"></circle>
+            <text class="field-sign" x="284" y="244">+</text>
+            <circle class="field-charge-positive" cx="401" cy="304" r="11"></circle>
+            <text class="field-sign" x="401" y="311">+</text>
+            <circle class="field-charge-positive" cx="401" cy="440" r="11"></circle>
+            <text class="field-sign" x="401" y="447">+</text>
+            <circle class="field-charge-positive" cx="284" cy="507" r="11"></circle>
+            <text class="field-sign" x="284" y="514">+</text>
+            <circle class="field-charge-positive" cx="167" cy="440" r="11"></circle>
+            <text class="field-sign" x="167" y="447">+</text>
+            <circle class="field-charge-positive" cx="167" cy="304" r="11"></circle>
+            <text class="field-sign" x="167" y="311">+</text>
+
+            <line class="field-distance" x1="284" y1="372" x2="220" y2="308" marker-start="url(#halliday-23-45-dimension)" marker-end="url(#halliday-23-45-dimension)"></line>
+            <text class="field-value field-value--warm" x="222" y="358">R₁</text>
+            <line class="field-distance" x1="284" y1="372" x2="188" y2="468" marker-start="url(#halliday-23-45-dimension)" marker-end="url(#halliday-23-45-dimension)"></line>
+            <text class="field-value field-value--warm" x="166" y="494">R₂</text>
+
+            <line class="field-vector" x1="396" y1="372" x2="434" y2="372" marker-end="url(#halliday-23-45-field-arrow)"></line>
+            <line class="field-vector" x1="340" y1="275" x2="359" y2="242" marker-end="url(#halliday-23-45-field-arrow)"></line>
+            <line class="field-vector" x1="228" y1="275" x2="209" y2="242" marker-end="url(#halliday-23-45-field-arrow)"></line>
+            <line class="field-vector" x1="172" y1="372" x2="134" y2="372" marker-end="url(#halliday-23-45-field-arrow)"></line>
+            <line class="field-vector" x1="228" y1="469" x2="209" y2="502" marker-end="url(#halliday-23-45-field-arrow)"></line>
+            <line class="field-vector" x1="340" y1="469" x2="359" y2="502" marker-end="url(#halliday-23-45-field-arrow)"></line>
+            <text class="field-label" x="398" y="350">r = 12,0 cm</text>
+
+            <line class="field-vector field-vector--resultant" x1="284" y1="190" x2="284" y2="148" marker-end="url(#halliday-23-45-result-arrow)"></line>
+            <line class="field-vector field-vector--resultant" x1="442" y1="281" x2="478" y2="260" marker-end="url(#halliday-23-45-result-arrow)"></line>
+            <line class="field-vector field-vector--resultant" x1="442" y1="463" x2="478" y2="484" marker-end="url(#halliday-23-45-result-arrow)"></line>
+            <line class="field-vector field-vector--resultant" x1="284" y1="554" x2="284" y2="596" marker-end="url(#halliday-23-45-result-arrow)"></line>
+            <line class="field-vector field-vector--resultant" x1="126" y1="463" x2="90" y2="484" marker-end="url(#halliday-23-45-result-arrow)"></line>
+            <line class="field-vector field-vector--resultant" x1="126" y1="281" x2="90" y2="260" marker-end="url(#halliday-23-45-result-arrow)"></line>
+            <text class="field-label" x="330" y="598">r = 20,0 cm</text>
+
+            <text class="field-note" x="52" y="640">tracejado: esferas gaussianas de raio r · dentro de R₁, E = 0</text>
+
+            <line class="field-axis" x1="640" y1="585" x2="1097" y2="585" marker-end="url(#halliday-23-45-axis-arrow)"></line>
+            <line class="field-axis" x1="640" y1="585" x2="640" y2="104" marker-end="url(#halliday-23-45-axis-arrow)"></line>
+            <text class="field-label" x="1086" y="615">r</text>
+            <text class="field-label" x="604" y="115">E(r)</text>
+            <text class="field-note" x="620" y="610">0</text>
+
+            <line class="field-axis field-axis--light" x1="840" y1="585" x2="840" y2="596"></line>
+            <line class="field-axis field-axis--light" x1="880" y1="585" x2="880" y2="596"></line>
+            <line class="field-axis field-axis--light" x1="940" y1="585" x2="940" y2="596"></line>
+            <line class="field-axis field-axis--light" x1="1040" y1="585" x2="1040" y2="596"></line>
+            <text class="field-label" x="822" y="616">R₁</text>
+            <text class="field-note" x="850" y="636">12,0 cm</text>
+            <text class="field-label" x="922" y="616">R₂</text>
+            <text class="field-note" x="1010" y="636">20,0 cm</text>
+            
+            <path class="field-vector" d="M 640 585 L 840 585"></path>
+            <line class="field-guide" x1="840" y1="585" x2="840" y2="160"></line>
+            <path class="field-vector" d="M 840 160 L 850 200 L 860 234 L 870 264 L 880 290 L 890 313 L 900 334 L 910 352 L 920 368 L 930 383 L 940 396"></path>
+            <line class="field-guide" x1="940" y1="396" x2="940" y2="302"></line>
+            <path class="field-vector" d="M 940 302 L 960 336 L 980 365 L 1000 388 L 1020 408 L 1040 426 L 1060 441 L 1080 453" marker-end="url(#halliday-23-45-field-arrow)"></path>
+
+            <text class="field-note" x="700" y="566">E = 0 (r &lt; R₁)</text>
+            <text class="field-note" x="856" y="150">3,60 × 10⁴</text>
+            <text class="field-note" x="956" y="296">2,40 × 10⁴</text>
+            <line class="field-guide" x1="840" y1="396" x2="940" y2="396"></line>
+            <text class="field-note" x="760" y="400">1,60 × 10⁴</text>
+
+            <line class="field-guide" x1="880" y1="290" x2="880" y2="585"></line>
+            <line class="field-guide" x1="640" y1="290" x2="880" y2="290"></line>
+            <circle class="field-point" cx="880" cy="290" r="10"></circle>
+            <text class="field-value" x="654" y="280">2,50 × 10⁴ N/C</text>
+
+            <line class="field-guide" x1="1040" y1="426" x2="1040" y2="585"></line>
+            <line class="field-guide" x1="640" y1="426" x2="1040" y2="426"></line>
+            <circle class="field-point" cx="1040" cy="426" r="10"></circle>
+            <text class="field-value" x="654" y="452">1,35 × 10⁴ N/C</text>
+
+            <text class="field-note" x="700" y="222">kq₁/r²</text>
+            <text class="field-note" x="1000" y="490">k(q₁+q₂)/r²</text>
+
+            <rect class="field-panel" x="48" y="686" width="1088" height="50" rx="4"></rect>
+            <text class="field-label" x="74" y="717">DADOS:</text>
+            <text class="field-note" x="146" y="717">R₁ = 10,0 cm · R₂ = 15,0 cm · q₁ = 4,00 × 10⁻⁸ C · q₂ = 2,00 × 10⁻⁸ C</text>
+            <text class="field-label" x="706" y="717">CAMPOS:</text>
+            <text class="field-value" x="790" y="717">2,50 × 10⁴ N/C · 1,35 × 10⁴ N/C</text>
+          </svg>
+
+          <p class="diagram-caption field-diagram-caption">
+            <strong>Leitura da curva · esquema sem escala</strong>
+            <span>
+              O campo é nulo dentro da casca menor, salta em cada casca e, entre
+              saltos, decai como \(\frac{kq_{\text{env}}}{r^2}\). Os pontos
+              marcados são \(E(12{,}0\,\mathrm{cm})=2{,}50\times10^{4}\,\mathrm{N/C}\)
+              e \(E(20{,}0\,\mathrm{cm})=1{,}35\times10^{4}\,\mathrm{N/C}\).
+            </span>
+          </p>
+        </article>
+      </section>
+    </div>
+  </main>
+
+  <div class="exercise-navigation-shell" data-exercise-navigation data-current-id="halliday-23-45" data-registry-url="../../materiais.json" data-chapter-url="../capitulo-23/" data-root-path="../../" data-reference="Halliday" data-chapter="23"></div>
+
+  <footer class="lesson-footer site-footer">
+    <p>Halliday 23.45 · capítulo 23 · duas cascas esféricas concêntricas</p>
+    <a href="../../">Voltar ao catálogo</a>
+  </footer>
+
+  <script type="module" src="../../componentes/navegacao-principal.js"></script>
+  <script type="module" src="../../componentes/navegacao-exercicios.js"></script>
+  <script type="module" src="../exercicio-estatico.js"></script>
+</body>
+</html>

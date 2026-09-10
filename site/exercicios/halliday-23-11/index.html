@@ -1,0 +1,485 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Resolução do exercício Halliday 23.11: carga total contida em um cubo gaussiano deslocado da origem, imerso em um campo elétrico cuja componente y varia com o quadrado de y, usando a lei de Gauss face a face.">
+  <title>Halliday 23.11 — Carga em um cubo deslocado · Eletromagnetismo</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='28' fill='%237a3ce7'/%3E%3Cpath d='M18 32h28M32 18v28' stroke='white' stroke-width='6'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="../../assets/base.css">
+  <link rel="stylesheet" href="../../assets/simulador.css">
+  <link rel="stylesheet" href="../../assets/campo-eletrico.css">
+  <script>try{if(localStorage.getItem("tema")==="escuro"){document.documentElement.dataset.theme="escuro"}}catch(erro){}</script>
+</head>
+<body class="lesson-page field-page">
+  <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+
+  <div class="site-topbar" data-topbar>
+    <div class="site-topbar__inner">
+      <nav class="breadcrumb" aria-label="Navegação estrutural">
+        <a href="../../disciplinas/prcfemg/">Fundamentos do Eletromagnetismo</a>
+        <span aria-hidden="true">/</span>
+        <a href="../">Exercícios</a>
+        <span aria-hidden="true">/</span>
+        <a href="../capitulo-23/">Lei de Gauss · Capítulo 23</a>
+        <span aria-hidden="true">/</span>
+        <strong aria-current="page">Exercício 11</strong>
+      </nav>
+      <div class="lesson-area-navigation" data-site-navigation data-root-path="../../" data-active-section="exercicios"></div>
+    </div>
+    <nav class="section-nav" aria-label="Seções do exercício" data-section-nav>
+      <a href="#enunciado">Enunciado</a>
+      <a href="#resolucao">Resolução</a>
+      <a href="#diagrama">Diagrama</a>
+    </nav>
+  </div>
+
+  <header class="lesson-header">
+    <div class="lesson-title-row">
+      <div>
+        <p class="eyebrow">Halliday · Capítulo 23</p>
+        <h1>Carga em um cubo deslocado</h1>
+      </div>
+      <p class="lesson-intro">
+        Um cubo gaussiano longe da origem, dentro de um campo cuja componente
+        \(y\) cresce com \(y^2\). Só a variação do campo entre duas faces
+        opostas produz fluxo líquido, e a lei de Gauss converte esse fluxo em
+        carga.
+      </p>
+    </div>
+  </header>
+
+  <main class="lesson-main" id="conteudo">
+    <div class="lesson-sections">
+
+      <section class="lesson-section" id="enunciado" aria-label="Enunciado">
+        <article class="problem-sheet">
+          <div class="problem-number">
+            <span>Halliday</span>
+            <strong>23.11</strong>
+          </div>
+          <div class="problem-copy">
+            <p>
+              A Fig. 23-31 mostra uma superfície gaussiana com a forma de um
+              cubo de \(2{,}00\,\mathrm{m}\) de aresta, com um vértice no
+              ponto \(x_1=5{,}00\,\mathrm{m}\), \(y_1=4{,}00\,\mathrm{m}\).
+              O cubo está imerso em um campo elétrico dado por
+            </p>
+            <p>
+              \(\vec{E}=-3{,}00\hat{i}-4{,}00y^2\hat{j}+3{,}00\hat{k}\,\mathrm{N/C}\),
+              com \(y\) em metros.
+            </p>
+            <p>
+              Qual é a carga total contida no cubo?
+            </p>
+          </div>
+          <div class="answer-strip">
+            <span>Resultado</span>
+            <strong>
+              \(\displaystyle \Phi=-320\,\mathrm{N\,m^2/C},\quad
+              q_{\text{env}}=\varepsilon_0\Phi=-2{,}83\times10^{-9}\,\mathrm{C}=-2{,}83\,\mathrm{nC}\)
+            </strong>
+          </div>
+        </article>
+      </section>
+
+      <section class="lesson-section" id="resolucao" aria-label="Resolução">
+        <article class="solution-article">
+          <header class="solution-heading">
+            <p class="eyebrow">Resolução passo a passo</p>
+            <h2>Some o fluxo face a face e aplique a lei de Gauss</h2>
+            <p>
+              O cubo já é a superfície gaussiana. Basta calcular o fluxo total
+              através das seis faces, com atenção ao sinal de cada normal
+              externa, e usar \(\varepsilon_0\Phi=q_{\text{env}}\) para obter
+              a carga envolvida.
+            </p>
+          </header>
+
+          <section>
+            <span class="solution-step">lei de Gauss</span>
+            <h3>O fluxo total revela a carga envolvida</h3>
+            <p>
+              A lei de Gauss relaciona o fluxo do campo elétrico através de
+              qualquer superfície fechada com a carga líquida que ela envolve:
+            </p>
+            <div class="math-block math-display">
+              \[
+              \begin{aligned}
+              \varepsilon_0\Phi&=q_{\text{env}},
+              \qquad
+              \Phi=\oint\vec{E}\cdot d\vec{A}.
+              \end{aligned}
+              \]
+            </div>
+            <p>
+              Em um cubo, a integral fechada se divide em seis integrais, uma
+              por face. Em cada face o vetor \(d\vec{A}\) aponta para fora do
+              cubo e, como o campo dado só depende de \(y\), ele é constante
+              sobre cada face perpendicular a \(\hat{j}\). O fluxo por face se
+              reduz ao produto da componente do campo ao longo da normal pela
+              área \(A\).
+            </p>
+            <div class="assumption-note">
+              <strong>Hipótese sobre a posição do cubo</strong>
+              <p>
+                Na Fig. 23-31, o vértice em \((x_1, y_1)\) é o mais próximo da
+                origem, e o cubo se estende afastando-se dela: de
+                \(y_1=4{,}00\,\mathrm{m}\) até
+                \(y_2=y_1+2{,}00=6{,}00\,\mathrm{m}\), e de
+                \(x_1=5{,}00\,\mathrm{m}\) até \(x_2=7{,}00\,\mathrm{m}\).
+                Como o campo não depende de \(x\) nem de \(z\), a posição em
+                \(x\) e em \(z\) não altera o resultado; só o intervalo em
+                \(y\) importa.
+              </p>
+            </div>
+          </section>
+
+          <section>
+            <span class="solution-step">componentes uniformes</span>
+            <h3>As componentes \(x\) e \(z\) não produzem fluxo líquido</h3>
+            <p>
+              A componente \(E_x=-3{,}00\,\mathrm{N/C}\) é a mesma em todo o
+              espaço. Nas duas faces perpendiculares a \(\hat{i}\), ela entra
+              por uma face e sai pela outra com o mesmo módulo: a face em
+              \(x_2\) tem normal \(+\hat{i}\) e a face em \(x_1\) tem normal
+              \(-\hat{i}\), de modo que as contribuições são opostas. O mesmo
+              raciocínio vale para \(E_z=+3{,}00\,\mathrm{N/C}\) nas faces
+              perpendiculares a \(\hat{k}\).
+            </p>
+            <div class="math-block math-display">
+              \[
+              \begin{aligned}
+              \Phi_{x}&=(-3{,}00)A+(+3{,}00)A=0,\\
+              \Phi_{z}&=(+3{,}00)A+(-3{,}00)A=0.
+              \end{aligned}
+              \]
+            </div>
+            <p>
+              Nas quatro faces restantes, a componente \(E_y\) é paralela à
+              superfície e não contribui, pois
+              \(\vec{E}\cdot d\vec{A}\) só envolve a componente ao longo da
+              normal. Restam, portanto, apenas as duas faces perpendiculares
+              ao eixo \(y\).
+            </p>
+          </section>
+
+          <section>
+            <span class="solution-step">faces em y</span>
+            <h3>Avalie \(E_y\) nas duas faces e some com os sinais corretos</h3>
+            <p>
+              A área de cada face é \(A=(2{,}00\,\mathrm{m})^2=4{,}00\,\mathrm{m^2}\).
+              A componente \(E_y=-4{,}00y^2\) é negativa em todo o cubo: o
+              campo aponta para \(-\hat{j}\) tanto em \(y=4{,}00\,\mathrm{m}\)
+              quanto em \(y=6{,}00\,\mathrm{m}\), mas com módulos diferentes.
+            </p>
+            <p>
+              Na face superior, \(y_2=6{,}00\,\mathrm{m}\), a normal externa é
+              \(+\hat{j}\). O campo aponta contra a normal: o fluxo é negativo
+              (o campo entra no cubo).
+            </p>
+            <div class="math-block math-display">
+              \[
+              \begin{aligned}
+              E_y(6{,}00)&=-4{,}00(6{,}00)^2=-4{,}00(36{,}0)=-144\,\mathrm{N/C},\\
+              \Phi_2&=E_y(6{,}00)\,(+1)\,A=(-144)(4{,}00)=-576\,\mathrm{N\,m^2/C}.
+              \end{aligned}
+              \]
+            </div>
+            <p>
+              Na face inferior, \(y_1=4{,}00\,\mathrm{m}\), a normal externa é
+              \(-\hat{j}\). O campo aponta no mesmo sentido da normal: o fluxo
+              é positivo (o campo sai do cubo).
+            </p>
+            <div class="math-block math-display">
+              \[
+              \begin{aligned}
+              E_y(4{,}00)&=-4{,}00(4{,}00)^2=-4{,}00(16{,}0)=-64{,}0\,\mathrm{N/C},\\
+              \Phi_1&=E_y(4{,}00)\,(-1)\,A=(+64{,}0)(4{,}00)=+256\,\mathrm{N\,m^2/C}.
+              \end{aligned}
+              \]
+            </div>
+            <p>
+              O fluxo total é a soma das duas contribuições não nulas:
+            </p>
+            <div class="math-block math-block--result math-display">
+              \[
+              \begin{aligned}
+              \Phi&=\Phi_1+\Phi_2+\Phi_x+\Phi_z\\
+              &=256-576+0+0\\
+              &=-320\,\mathrm{N\,m^2/C}.
+              \end{aligned}
+              \]
+            </div>
+          </section>
+
+          <section>
+            <span class="solution-step">carga envolvida</span>
+            <h3>Converta o fluxo em carga</h3>
+            <p>
+              Com \(\varepsilon_0=8{,}85\times10^{-12}\,\mathrm{C^2/(N\,m^2)}\),
+              a lei de Gauss fornece diretamente a carga contida no cubo:
+            </p>
+            <div class="math-block math-block--result math-display">
+              \[
+              \begin{aligned}
+              q_{\text{env}}&=\varepsilon_0\Phi\\
+              &=\left(8{,}85\times10^{-12}\,\mathrm{\frac{C^2}{N\,m^2}}\right)
+                \left(-320\,\mathrm{\frac{N\,m^2}{C}}\right)\\
+              &=-2{,}832\times10^{-9}\,\mathrm{C}.
+              \end{aligned}
+              \]
+            </div>
+            <div class="result-callout">
+              <span>Carga total no cubo</span>
+              <strong>
+                \(\displaystyle q_{\text{env}}=-2{,}83\times10^{-9}\,\mathrm{C}=-2{,}83\,\mathrm{nC}\)
+              </strong>
+            </div>
+            <p>
+              O sinal negativo tem significado físico: entra mais fluxo pela
+              face de cima (\(y=6{,}00\,\mathrm{m}\), onde o campo é mais
+              intenso) do que sai pela face de baixo. Fluxo líquido para
+              dentro só é possível se a superfície envolver carga negativa,
+              que é o sumidouro das linhas de campo.
+            </p>
+          </section>
+
+          <section>
+            <span class="solution-step">confirmação</span>
+            <h3>Confira pela variação do campo dentro do volume</h3>
+            <p>
+              Como o fluxo líquido vem apenas da diferença entre
+              \(E_y\) nas duas faces, ele pode ser escrito como uma integral da
+              taxa de variação \(\partial E_y/\partial y=-8{,}00y\) ao longo da
+              aresta, multiplicada pela área da face. Essa é a forma
+              diferencial da lei de Gauss aplicada a um cubo com
+              \(E_x\) e \(E_z\) constantes.
+            </p>
+            <div class="math-block math-display">
+              \[
+              \begin{aligned}
+              \Phi&=A\int_{4{,}00}^{6{,}00}\frac{\partial E_y}{\partial y}\,dy
+                =A\int_{4{,}00}^{6{,}00}(-8{,}00y)\,dy\\
+              &=A\left[-4{,}00y^2\right]_{4{,}00}^{6{,}00}
+                =A\left[-4{,}00(36{,}0)+4{,}00(16{,}0)\right]\\
+              &=(4{,}00)(-80{,}0)=-320\,\mathrm{N\,m^2/C}.
+              \end{aligned}
+              \]
+            </div>
+            <p>
+              O resultado coincide com a soma face a face, o que confirma o
+              balanço de sinais.
+            </p>
+          </section>
+
+          <section>
+            <span class="solution-step">verificações</span>
+            <h3>Dimensões, sinais e ordem de grandeza</h3>
+            <p>
+              O produto de uma componente de campo, em \(\mathrm{N/C}\), por
+              uma área, em \(\mathrm{m^2}\), tem a unidade de fluxo
+              \(\mathrm{N\,m^2/C}\). Multiplicando por \(\varepsilon_0\), em
+              \(\mathrm{C^2/(N\,m^2)}\), sobra coulomb, como deve ser.
+            </p>
+            <div class="math-block math-display">
+              \[
+              \begin{aligned}
+              \left[\varepsilon_0\Phi\right]
+              &=\frac{\mathrm{C^2}}{\mathrm{N\,m^2}}\cdot\frac{\mathrm{N\,m^2}}{\mathrm{C}}
+              =\mathrm{C}.
+              \end{aligned}
+              \]
+            </div>
+            <div class="concept-grid">
+              <article>
+                <h4>Campo uniforme não gera fluxo líquido</h4>
+                <p>
+                  As parcelas \(-3{,}00\hat{i}\) e \(+3{,}00\hat{k}\) entram
+                  e saem com o mesmo módulo; só a parcela que varia no espaço,
+                  \(-4{,}00y^2\hat{j}\), deixa saldo.
+                </p>
+              </article>
+              <article>
+                <h4>Posição em \(x\) e \(z\) irrelevante</h4>
+                <p>
+                  Deslocar o cubo ao longo de \(x\) ou \(z\) não muda a
+                  resposta; deslocá-lo em \(y\) mudaria, porque
+                  \(E_y(y_2)-E_y(y_1)\) depende de onde o cubo está.
+                </p>
+              </article>
+              <article>
+                <h4>Sinal coerente</h4>
+                <p>
+                  Fluxo líquido negativo (mais linhas entrando do que saindo)
+                  corresponde a carga envolvida negativa.
+                </p>
+              </article>
+              <article>
+                <h4>Ordem de grandeza</h4>
+                <p>
+                  Um fluxo de centenas de \(\mathrm{N\,m^2/C}\) corresponde a
+                  poucos nanocoulombs, pois \(\varepsilon_0\) é da ordem de
+                  \(10^{-11}\).
+                </p>
+              </article>
+            </div>
+          </section>
+        </article>
+      </section>
+
+      <section class="lesson-section" id="diagrama" aria-label="Diagrama">
+        <article class="static-diagram-shell field-figure">
+          <header class="static-diagram-heading">
+            <div>
+              <p class="eyebrow">Geometria e gráfico</p>
+              <h2>Cubo deslocado e a curva \(E_y=-4{,}00y^2\)</h2>
+            </div>
+            <p>
+              À esquerda, o cubo em perspectiva com os vetores \(E_y\) que
+              entram pela face superior e saem pela inferior. À direita, o
+              gráfico de \(E_y\) mostra por que a face em \(y=6{,}00\,\mathrm{m}\)
+              domina o balanço.
+            </p>
+          </header>
+
+          <svg class="teaching-diagram field-diagram" viewBox="0 0 1160 760" role="img" aria-labelledby="halliday-23-11-title halliday-23-11-desc">
+            <title id="halliday-23-11-title">Cubo gaussiano deslocado da origem e gráfico da componente E_y</title>
+            <desc id="halliday-23-11-desc">À esquerda, eixos x, y e z e um cubo de aresta 2,00 metros em perspectiva, com o vértice em x igual a 5,00 metros e y igual a 4,00 metros ligado aos eixos por linhas tracejadas. Vetores grandes apontando para menos y entram pela face superior, em y igual a 6,00 metros, e vetores menores saem pela face inferior, em y igual a 4,00 metros. Setas tracejadas indicam a componente x uniforme, que entra e sai do cubo sem saldo. À direita, o gráfico da componente E_y igual a menos 4,00 y ao quadrado entre y igual a 4 e y igual a 6, com as alturas menos 64,0 e menos 144 newtons por coulomb marcadas. A base informa aresta 2,00 metros, fluxo total menos 320 newtons metro quadrado por coulomb e carga envolvida menos 2,83 nanocoulombs.</desc>
+            <defs>
+              <marker id="halliday-23-11-axis-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+                <path d="M 0 0 L 10 5 L 0 10 z" style="fill: var(--ink-soft)"></path>
+              </marker>
+              <marker id="halliday-23-11-field-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+                <path d="M 0 0 L 10 5 L 0 10 z" style="fill: var(--force-1)"></path>
+              </marker>
+              <marker id="halliday-23-11-result-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+                <path d="M 0 0 L 10 5 L 0 10 z" style="fill: var(--resultant)"></path>
+              </marker>
+              <marker id="halliday-23-11-cancelled-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+                <path d="M 0 0 L 10 5 L 0 10 z" style="fill: var(--ink-soft)"></path>
+              </marker>
+              <marker id="halliday-23-11-dimension" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                <path d="M 10 0 L 0 5 L 10 10 z" style="fill: var(--measure)"></path>
+              </marker>
+            </defs>
+
+            <rect class="field-panel" x="24" y="24" width="520" height="640" rx="8"></rect>
+            <rect class="field-panel" x="568" y="24" width="568" height="640" rx="8"></rect>
+
+            <text class="field-title" x="52" y="62">CUBO GAUSSIANO DESLOCADO</text>
+            <text class="field-title" x="596" y="62">COMPONENTE E_y ENTRE AS DUAS FACES</text>
+
+            <line class="field-axis" x1="120" y1="560" x2="528" y2="560" marker-end="url(#halliday-23-11-axis-arrow)"></line>
+            <line class="field-axis" x1="120" y1="560" x2="120" y2="96" marker-end="url(#halliday-23-11-axis-arrow)"></line>
+            <line class="field-axis" x1="120" y1="560" x2="56" y2="624" marker-end="url(#halliday-23-11-axis-arrow)"></line>
+            <text class="field-label" x="514" y="588">x</text>
+            <text class="field-label" x="132" y="108">y</text>
+            <text class="field-label" x="40" y="644">z</text>
+            <text class="field-note" x="98" y="582">O</text>
+
+            <line class="field-guide" x1="370" y1="360" x2="370" y2="560"></line>
+            <line class="field-guide" x1="370" y1="360" x2="120" y2="360"></line>
+            <text class="field-value field-value--warm" x="300" y="584">x₁ = 5,00 m</text>
+            <text class="field-value field-value--warm" x="130" y="382">y₁ = 4,00 m</text>
+
+            <line class="field-guide" x1="370" y1="360" x2="404" y2="326"></line>
+            <line class="field-guide" x1="404" y1="326" x2="504" y2="326"></line>
+            <line class="field-guide" x1="404" y1="326" x2="404" y2="226"></line>
+
+            <polygon class="field-surface" points="370,260 470,260 504,226 404,226"></polygon>
+            <polygon class="field-surface" points="370,260 470,260 470,360 370,360"></polygon>
+            <polygon class="field-surface" points="470,260 504,226 504,326 470,360"></polygon>
+
+            <circle class="field-point" cx="370" cy="360" r="8"></circle>
+            <text class="field-note" x="290" y="384">(x₁, y₁)</text>
+
+            <line class="field-distance" x1="522" y1="232" x2="522" y2="320" marker-start="url(#halliday-23-11-dimension)" marker-end="url(#halliday-23-11-dimension)"></line>
+            <text class="field-value field-value--warm" x="530" y="282">a</text>
+
+            <line class="field-vector" x1="395" y1="166" x2="395" y2="250" marker-end="url(#halliday-23-11-field-arrow)"></line>
+            <line class="field-vector" x1="462" y1="150" x2="462" y2="234" marker-end="url(#halliday-23-11-field-arrow)"></line>
+            <text class="field-label" x="330" y="98">face y = 6,00 m</text>
+            <text class="field-note" x="330" y="120">E_y = −144 N/C, entra</text>
+            <text class="field-note" x="330" y="142">Φ₂ = −576 N·m²/C</text>
+
+            <line class="field-vector" x1="395" y1="364" x2="395" y2="406" marker-end="url(#halliday-23-11-field-arrow)"></line>
+            <line class="field-vector" x1="445" y1="364" x2="445" y2="406" marker-end="url(#halliday-23-11-field-arrow)"></line>
+            <text class="field-label" x="380" y="440">face y = 4,00 m</text>
+            <text class="field-note" x="380" y="462">E_y = −64,0 N/C, sai</text>
+            <text class="field-note" x="380" y="484">Φ₁ = +256 N·m²/C</text>
+
+            <line class="field-vector field-vector--cancelled" x1="536" y1="345" x2="492" y2="345" marker-end="url(#halliday-23-11-cancelled-arrow)"></line>
+            <line class="field-vector field-vector--cancelled" x1="366" y1="345" x2="322" y2="345" marker-end="url(#halliday-23-11-cancelled-arrow)"></line>
+            <text class="field-note" x="128" y="318">−3,00 î uniforme:</text>
+            <text class="field-note" x="128" y="338">entra e sai, saldo nulo</text>
+
+            <text class="field-note" x="200" y="614">componentes x e z uniformes não deixam</text>
+            <text class="field-note" x="200" y="636">saldo; só E_y(6) − E_y(4) gera fluxo</text>
+
+            <line class="field-axis" x1="640" y1="140" x2="1108" y2="140" marker-end="url(#halliday-23-11-axis-arrow)"></line>
+            <line class="field-axis" x1="640" y1="600" x2="640" y2="96" marker-end="url(#halliday-23-11-axis-arrow)"></line>
+            <text class="field-label" x="1096" y="128">y</text>
+            <text class="field-label" x="600" y="108">E_y</text>
+            <text class="field-note" x="622" y="160">0</text>
+
+            <path class="field-vector field-vector--resultant" d="M 640 140 L 674 143 L 708 151 L 742 165 L 776 184 L 810 209 L 844 240 L 878 276 L 912 318 L 946 362 L 980 418 L 1014 476 L 1048 540"></path>
+
+            <line class="field-guide" x1="912" y1="140" x2="912" y2="318"></line>
+            <line class="field-guide" x1="1048" y1="140" x2="1048" y2="540"></line>
+            <line class="field-guide" x1="640" y1="318" x2="912" y2="318"></line>
+            <line class="field-guide" x1="640" y1="540" x2="1048" y2="540"></line>
+            <circle class="field-point" cx="912" cy="318" r="10"></circle>
+            <circle class="field-point" cx="1048" cy="540" r="10"></circle>
+
+            <text class="field-label" x="880" y="128">y₁ = 4</text>
+            <text class="field-label" x="1016" y="128">y₂ = 6</text>
+            <text class="field-value" x="660" y="310">−64,0 N/C</text>
+            <text class="field-value" x="660" y="532">−144 N/C</text>
+            <text class="field-note" x="700" y="220">E_y = −4,00 y²</text>
+            <text class="field-note" x="700" y="240">(sempre para −y)</text>
+
+            <line class="field-distance" x1="1076" y1="326" x2="1076" y2="532" marker-start="url(#halliday-23-11-dimension)" marker-end="url(#halliday-23-11-dimension)"></line>
+            <text class="field-value field-value--warm" x="1084" y="436">−80,0</text>
+            <text class="field-note" x="820" y="590">Φ = A[E_y(6) − E_y(4)]</text>
+            <text class="field-note" x="820" y="610">= 4,00 × (−80,0)</text>
+            <text class="field-value" x="820" y="636">Φ = −320 N·m²/C</text>
+
+            <rect class="field-panel" x="48" y="686" width="1088" height="50" rx="4"></rect>
+            <text class="field-label" x="74" y="717">DADOS:</text>
+            <text class="field-note" x="146" y="717">a = 2,00 m</text>
+            <text class="field-note" x="270" y="717">A = 4,00 m²</text>
+            <text class="field-label" x="420" y="717">FLUXO:</text>
+            <text class="field-value" x="492" y="717">Φ = −320 N·m²/C</text>
+            <text class="field-label" x="720" y="717">CARGA:</text>
+            <text class="field-value" x="796" y="717">q = −2,83 × 10⁻⁹ C = −2,83 nC</text>
+          </svg>
+
+          <p class="diagram-caption field-diagram-caption">
+            <strong>Leitura do balanço · esquema sem escala</strong>
+            <span>
+              Os vetores \(E_y\) apontam para \(-\hat{j}\) nas duas faces, mas
+              o módulo em \(y=6{,}00\,\mathrm{m}\) é \(2{,}25\) vezes maior.
+              Entra mais fluxo do que sai, o saldo é
+              \(\Phi=-320\,\mathrm{N\,m^2/C}\) e a carga envolvida,
+              \(q_{\text{env}}=\varepsilon_0\Phi=-2{,}83\,\mathrm{nC}\), é
+              negativa.
+            </span>
+          </p>
+        </article>
+      </section>
+    </div>
+  </main>
+
+  <div class="exercise-navigation-shell" data-exercise-navigation data-current-id="halliday-23-11" data-registry-url="../../materiais.json" data-chapter-url="../capitulo-23/" data-root-path="../../" data-reference="Halliday" data-chapter="23"></div>
+
+  <footer class="lesson-footer site-footer">
+    <p>Halliday 23.11 · capítulo 23 · carga em um cubo deslocado</p>
+    <a href="../../">Voltar ao catálogo</a>
+  </footer>
+
+  <script type="module" src="../../componentes/navegacao-principal.js"></script>
+  <script type="module" src="../../componentes/navegacao-exercicios.js"></script>
+  <script type="module" src="../exercicio-estatico.js"></script>
+</body>
+</html>

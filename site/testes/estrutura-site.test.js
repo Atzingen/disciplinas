@@ -120,14 +120,16 @@ test("PPC está incluído nas referências publicadas", async () => {
   assert.match(documentation, /e18d8569868752b56d79b604c692a71707ca8a29fab3a1c6192d71c6db5b1fe3/);
 });
 
-test("índice de exercícios encaminha aos capítulos 21 e 22", async () => {
+test("índice de exercícios encaminha aos capítulos 21, 22 e 23", async () => {
   const html = await readSitePage("exercicios/index.html");
 
   assert.equal(count(html, /<h1\b/g), 1);
   assert.match(html, /href="\.\/capitulo-21\/"/);
   assert.match(html, /href="\.\/capitulo-22\/"/);
+  assert.match(html, /href="\.\/capitulo-23\/"/);
   assert.match(html, /5 exercícios/);
   assert.match(html, /8 resoluções/);
+  assert.match(html, /12 exercícios/);
   assert.match(html, /data-active-section="exercicios"/);
 });
 
@@ -221,7 +223,9 @@ test("cada página restaura o tema escolhido antes de pintar a tela", async () =
     "exercicios/index.html",
     "exercicios/capitulo-21/index.html",
     "exercicios/capitulo-22/index.html",
+    "exercicios/capitulo-23/index.html",
     "exercicios/halliday-21-33/index.html",
+    "exercicios/halliday-23-29/index.html",
     "experimentos/index.html",
     "experimentos/01-campo-corrente/index.html",
     "simuladores/index.html",

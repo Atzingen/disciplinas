@@ -1,0 +1,486 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Resolução do exercício Halliday 23.29: campo elétrico de uma barra condutora dentro de uma casca coaxial, módulo e sentido em duas distâncias radiais e cargas nas superfícies interna e externa da casca, pela lei de Gauss.">
+  <title>Halliday 23.29 — Barra e casca condutoras coaxiais · Eletromagnetismo</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='28' fill='%237a3ce7'/%3E%3Cpath d='M18 32h28M32 18v28' stroke='white' stroke-width='6'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="../../assets/base.css">
+  <link rel="stylesheet" href="../../assets/simulador.css">
+  <link rel="stylesheet" href="../../assets/campo-eletrico.css">
+  <script>try{if(localStorage.getItem("tema")==="escuro"){document.documentElement.dataset.theme="escuro"}}catch(erro){}</script>
+</head>
+<body class="lesson-page field-page">
+  <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+
+  <div class="site-topbar" data-topbar>
+    <div class="site-topbar__inner">
+      <nav class="breadcrumb" aria-label="Navegação estrutural">
+        <a href="../../disciplinas/prcfemg/">Fundamentos do Eletromagnetismo</a>
+        <span aria-hidden="true">/</span>
+        <a href="../">Exercícios</a>
+        <span aria-hidden="true">/</span>
+        <a href="../capitulo-23/">Lei de Gauss · Capítulo 23</a>
+        <span aria-hidden="true">/</span>
+        <strong aria-current="page">Exercício 29</strong>
+      </nav>
+      <div class="lesson-area-navigation" data-site-navigation data-root-path="../../" data-active-section="exercicios"></div>
+    </div>
+    <nav class="section-nav" aria-label="Seções do exercício" data-section-nav>
+      <a href="#enunciado">Enunciado</a>
+      <a href="#resolucao">Resolução</a>
+      <a href="#diagrama">Diagrama</a>
+    </nav>
+  </div>
+
+  <header class="lesson-header">
+    <div class="lesson-title-row">
+      <div>
+        <p class="eyebrow">Halliday · Capítulo 23</p>
+        <h1>Barra e casca condutoras coaxiais</h1>
+      </div>
+      <p class="lesson-intro">
+        Uma única superfície gaussiana cilíndrica, com o raio ajustado à
+        região de interesse, responde a todas as perguntas: o campo depende
+        apenas da carga por unidade de comprimento que fica envolvida.
+      </p>
+    </div>
+  </header>
+
+  <main class="lesson-main" id="conteudo">
+    <div class="lesson-sections">
+
+      <section class="lesson-section" id="enunciado" aria-label="Enunciado">
+        <article class="problem-sheet">
+          <div class="problem-number">
+            <span>Halliday</span>
+            <strong>23.29</strong>
+          </div>
+          <div class="problem-copy">
+            <p>
+              A Fig. 23-38 é uma seção de uma barra condutora de raio
+              \(R_1=1{,}30\,\mathrm{mm}\) e comprimento
+              \(L=11{,}00\,\mathrm{m}\) no interior de uma casca coaxial, de
+              paredes finas, de raio \(R_2=10{,}0R_1\) e mesmo comprimento
+              \(L\). A carga da barra é
+              \(Q_1=+3{,}40\times10^{-12}\,\mathrm{C}\); a carga da casca é
+              \(Q_2=-2{,}00Q_1\).
+            </p>
+            <p>
+              Determine (a) o módulo \(E\) e (b) a direção (para dentro ou
+              para fora) do campo elétrico a uma distância radial
+              \(r=2{,}00R_2\). Determine (c) \(E\) e (d) a direção do campo
+              elétrico para \(r=5{,}00R_1\). Determine a carga (e) na
+              superfície interna e (f) na superfície externa da casca.
+            </p>
+          </div>
+          <div class="answer-strip">
+            <span>Resultados</span>
+            <strong>
+              \(\displaystyle E(2R_2)=0{,}214\,\mathrm{N/C}\ \text{(para dentro)},\quad
+              E(5R_1)=0{,}855\,\mathrm{N/C}\ \text{(para fora)},\quad
+              q_{\text{int}}=-3{,}40\times10^{-12}\,\mathrm{C},\quad
+              q_{\text{ext}}=-3{,}40\times10^{-12}\,\mathrm{C}\)
+            </strong>
+          </div>
+        </article>
+      </section>
+
+      <section class="lesson-section" id="resolucao" aria-label="Resolução">
+        <article class="solution-article">
+          <header class="solution-heading">
+            <p class="eyebrow">Resolução passo a passo</p>
+            <h2>Escolha o raio da gaussiana conforme a região</h2>
+            <p>
+              Entre a barra e a casca, somente a barra fica envolvida. Fora da
+              casca, a soma das duas cargas é que conta. Dentro do metal da
+              casca, o campo nulo fixa a carga da face interna.
+            </p>
+          </header>
+
+          <section>
+            <span class="solution-step">dados</span>
+            <h3>Converta as cargas em densidades lineares</h3>
+            <p>
+              Como a barra e a casca têm o mesmo comprimento \(L\), é
+              conveniente trabalhar com a carga por unidade de comprimento de
+              cada uma. Os raios também são convertidos para o SI:
+            </p>
+            <div class="math-block math-block--result math-display">
+              \[
+              \begin{aligned}
+              \lambda_1&=\frac{Q_1}{L}
+                =\frac{3{,}40\times10^{-12}\,\mathrm{C}}{11{,}00\,\mathrm{m}}
+                =3{,}09\times10^{-13}\,\mathrm{C/m},\\[4pt]
+              \lambda_2&=\frac{Q_2}{L}=-2{,}00\lambda_1
+                =-6{,}18\times10^{-13}\,\mathrm{C/m},\\[4pt]
+              R_1&=1{,}30\times10^{-3}\,\mathrm{m},\qquad
+              R_2=10{,}0R_1=1{,}30\times10^{-2}\,\mathrm{m}.
+              \end{aligned}
+              \]
+            </div>
+            <div class="assumption-note">
+              <strong>Cilindros "infinitos"</strong>
+              <p>
+                O comprimento \(L=11{,}00\,\mathrm{m}\) é cerca de 850 vezes
+                maior que \(R_2\) e as distâncias pedidas ficam a no máximo
+                \(2R_2=26{,}0\,\mathrm{mm}\) do eixo. Longe das extremidades,
+                a simetria é cilíndrica e podemos tratar barra e casca como
+                infinitas. Como a barra é condutora, sua carga fica na
+                superfície \(r=R_1\), o que não altera nada para \(r&gt;R_1\).
+              </p>
+            </div>
+          </section>
+
+          <section>
+            <span class="solution-step">lei de Gauss</span>
+            <h3>Campo radial de uma distribuição cilíndrica</h3>
+            <p>
+              A superfície gaussiana é um cilindro coaxial de raio \(r\) e
+              comprimento \(h\). Por simetria, \(\vec{E}\) é radial e tem
+              módulo constante na superfície lateral; nas tampas,
+              \(\vec{E}\perp d\vec{A}\) e o fluxo é nulo. Chamando
+              \(\lambda_{\text{env}}\) a carga por unidade de comprimento
+              envolvida pelo cilindro,
+            </p>
+            <div class="math-block math-block--result math-display">
+              \[
+              \begin{aligned}
+              \varepsilon_0\Phi
+              &=\varepsilon_0\oint\vec{E}\cdot d\vec{A}
+                =\varepsilon_0\,E_r\,(2\pi r h)
+                =q_{\text{env}}=\lambda_{\text{env}}\,h,\\[4pt]
+              E_r&=\frac{\lambda_{\text{env}}}{2\pi\varepsilon_0 r}.
+              \end{aligned}
+              \]
+            </div>
+            <p>
+              Aqui \(E_r\) é a componente radial assinada: \(E_r&gt;0\)
+              significa campo para fora e \(E_r&lt;0\), campo para dentro. O
+              sinal é decidido apenas pelo sinal de
+              \(\lambda_{\text{env}}\).
+            </p>
+          </section>
+
+          <section>
+            <span class="solution-step">partes a e b</span>
+            <h3>Fora da casca: \(r=2{,}00R_2\)</h3>
+            <p>
+              Em \(r=2{,}00R_2=26{,}0\,\mathrm{mm}\), a gaussiana envolve a
+              barra e a casca; a carga por unidade de comprimento é
+              \(\lambda_{\text{env}}=\lambda_1+\lambda_2=-\lambda_1\).
+            </p>
+            <div class="math-block math-display">
+              \[
+              \begin{aligned}
+              E_r
+              &=\frac{-\lambda_1}{2\pi\varepsilon_0 r}\\
+              &=-\frac{3{,}09\times10^{-13}\,\mathrm{C/m}}
+                {2\pi\left(8{,}85\times10^{-12}\,\mathrm{C^2/(N\,m^2)}\right)
+                \left(2{,}60\times10^{-2}\,\mathrm{m}\right)}\\
+              &=-0{,}2138\ldots\,\mathrm{N/C}.
+              \end{aligned}
+              \]
+            </div>
+            <div class="result-callout">
+              <span>Itens (a) e (b)</span>
+              <strong>
+                \(\displaystyle E=0{,}214\,\mathrm{N/C},\quad
+                \text{apontando para dentro (radialmente para o eixo)}\)
+              </strong>
+            </div>
+            <p>
+              A carga líquida envolvida é negativa
+              (\(-3{,}40\times10^{-12}\,\mathrm{C}\) no total), de modo que
+              as linhas de campo convergem para o sistema.
+            </p>
+          </section>
+
+          <section>
+            <span class="solution-step">partes c e d</span>
+            <h3>Entre a barra e a casca: \(r=5{,}00R_1\)</h3>
+            <p>
+              Em \(r=5{,}00R_1=6{,}50\,\mathrm{mm}\), a gaussiana fica entre
+              a barra (\(R_1=1{,}30\,\mathrm{mm}\)) e a casca
+              (\(R_2=13{,}0\,\mathrm{mm}\)). Apenas a barra está envolvida:
+              \(\lambda_{\text{env}}=\lambda_1&gt;0\).
+            </p>
+            <div class="math-block math-display">
+              \[
+              \begin{aligned}
+              E_r
+              &=\frac{\lambda_1}{2\pi\varepsilon_0 r}\\
+              &=\frac{3{,}09\times10^{-13}\,\mathrm{C/m}}
+                {2\pi\left(8{,}85\times10^{-12}\,\mathrm{C^2/(N\,m^2)}\right)
+                \left(6{,}50\times10^{-3}\,\mathrm{m}\right)}\\
+              &=+0{,}8551\ldots\,\mathrm{N/C}.
+              \end{aligned}
+              \]
+            </div>
+            <div class="result-callout">
+              <span>Itens (c) e (d)</span>
+              <strong>
+                \(\displaystyle E=0{,}855\,\mathrm{N/C},\quad
+                \text{apontando para fora (radialmente a partir do eixo)}\)
+              </strong>
+            </div>
+            <p>
+              A casca não contribui para o campo em seu interior: sua carga,
+              distribuída com simetria cilíndrica, fica do lado de fora da
+              gaussiana e o fluxo que ela produz pela superfície é nulo.
+            </p>
+          </section>
+
+          <section>
+            <span class="solution-step">partes e e f</span>
+            <h3>Cargas nas duas faces da casca</h3>
+            <p>
+              A casca é condutora. Em equilíbrio eletrostático, o campo
+              dentro do metal é nulo. Escolha uma gaussiana cilíndrica cuja
+              superfície lateral esteja dentro da parede da casca: o fluxo é
+              zero e, pela lei de Gauss, a carga envolvida também deve ser
+              zero. Essa carga é a da barra mais a da face interna da casca:
+            </p>
+            <div class="math-block math-block--result math-display">
+              \[
+              \begin{aligned}
+              \varepsilon_0\Phi=0
+              &\;\Longrightarrow\;Q_1+q_{\text{int}}=0\\
+              q_{\text{int}}&=-Q_1=-3{,}40\times10^{-12}\,\mathrm{C}.
+              \end{aligned}
+              \]
+            </div>
+            <p>
+              A carga total da casca é fixa, \(Q_2=-2{,}00Q_1\). O que não
+              está na face interna fica na face externa:
+            </p>
+            <div class="math-block math-block--result math-display">
+              \[
+              \begin{aligned}
+              q_{\text{ext}}
+              &=Q_2-q_{\text{int}}
+                =-2{,}00Q_1-(-Q_1)\\
+              &=-Q_1=-3{,}40\times10^{-12}\,\mathrm{C}.
+              \end{aligned}
+              \]
+            </div>
+            <div class="result-callout">
+              <span>Itens (e) e (f)</span>
+              <strong>
+                \(\displaystyle q_{\text{int}}=-3{,}40\times10^{-12}\,\mathrm{C},\qquad
+                q_{\text{ext}}=-3{,}40\times10^{-12}\,\mathrm{C}\)
+              </strong>
+            </div>
+            <div class="limit-grid">
+              <article>
+                <h4>Face interna</h4>
+                <p>
+                  Carga induzida pela barra: sempre \(-Q_1\), qualquer que
+                  seja a carga total da casca, para que o metal fique livre de
+                  campo.
+                </p>
+              </article>
+              <article>
+                <h4>Face externa</h4>
+                <p>
+                  Recebe o restante, \(Q_2-(-Q_1)\). É essa carga, somada à
+                  da barra, que determina o campo para \(r&gt;R_2\).
+                </p>
+              </article>
+            </div>
+          </section>
+
+          <section>
+            <span class="solution-step">verificações</span>
+            <h3>Confira razões, sinais e conservação de carga</h3>
+            <p>
+              Os dois módulos calculados envolvem a mesma
+              \(|\lambda_{\text{env}}|=\lambda_1\), de modo que a razão entre
+              eles deve ser apenas a razão inversa das distâncias:
+            </p>
+            <div class="math-block math-display">
+              \[
+              \begin{aligned}
+              \frac{E(5R_1)}{E(2R_2)}
+              &=\frac{r_{\text{a}}}{r_{\text{c}}}
+                =\frac{2R_2}{5R_1}=\frac{20R_1}{5R_1}=4{,}00,\\[4pt]
+              \frac{0{,}855}{0{,}214}&=4{,}0.
+              \end{aligned}
+              \]
+            </div>
+            <p>
+              A soma das cargas nas duas faces reproduz a carga total da
+              casca: \(q_{\text{int}}+q_{\text{ext}}=-2Q_1=Q_2\). Do lado de
+              fora, a carga total vista pela gaussiana é
+              \(Q_1+q_{\text{int}}+q_{\text{ext}}=-Q_1\), exatamente a
+              \(\lambda_{\text{env}}=-\lambda_1\) usada no item (a).
+            </p>
+            <div class="concept-grid">
+              <article>
+                <h4>Dimensões</h4>
+                <p>
+                  \(\left[\frac{\lambda}{\varepsilon_0 r}\right]
+                  =\frac{\mathrm{C/m}}{\mathrm{C^2/(N\,m^2)}\cdot\mathrm{m}}
+                  =\frac{\mathrm{N}}{\mathrm{C}}\), como esperado para um campo.
+                </p>
+              </article>
+              <article>
+                <h4>Ordem de grandeza</h4>
+                <p>
+                  Cargas de picocoulombs espalhadas por 11 m produzem campos
+                  bem abaixo de \(1\,\mathrm{N/C}\); os valores de décimos de
+                  N/C são coerentes.
+                </p>
+              </article>
+            </div>
+          </section>
+        </article>
+      </section>
+
+      <section class="lesson-section" id="diagrama" aria-label="Diagrama">
+        <article class="static-diagram-shell field-figure">
+          <header class="static-diagram-heading">
+            <div>
+              <p class="eyebrow">Seção transversal e perfil radial</p>
+              <h2>Duas gaussianas, dois sentidos de campo</h2>
+            </div>
+            <p>
+              À esquerda, a seção da barra e da casca com as gaussianas em
+              \(r=5R_1\) e \(r=2R_2\). À direita, o perfil esquemático de
+              \(E_r(r)\): positivo entre a barra e a casca, negativo fora.
+            </p>
+          </header>
+
+          <svg class="teaching-diagram field-diagram" viewBox="0 0 1160 760" role="img" aria-labelledby="halliday-23-29-title halliday-23-29-desc">
+            <title id="halliday-23-29-title">Barra condutora dentro de casca coaxial, gaussianas e perfil radial do campo</title>
+            <desc id="halliday-23-29-desc">À esquerda, a seção transversal: uma barra positiva de raio 1,30 milímetro no centro, uma casca negativa de raio 13,0 milímetros e duas circunferências tracejadas, uma em r igual a 5 R1 com vetores apontando para fora, outra em r igual a 2 R2 com vetores apontando para dentro. A face interna da casca leva a carga menos Q1 e a face externa também menos Q1. À direita, o gráfico esquemático do campo radial: positivo e decaindo com 1 sobre r entre R1 e R2, salto em R2 e valores negativos fora, com os pontos 0,855 newtons por coulomb em 5 R1 e 0,214 newtons por coulomb em 2 R2. A base informa os dados e os resultados.</desc>
+            <defs>
+              <marker id="halliday-23-29-axis-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+                <path d="M 0 0 L 10 5 L 0 10 z" style="fill: var(--ink-soft)"></path>
+              </marker>
+              <marker id="halliday-23-29-field-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+                <path d="M 0 0 L 10 5 L 0 10 z" style="fill: var(--force-1)"></path>
+              </marker>
+              <marker id="halliday-23-29-component-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+                <path d="M 0 0 L 10 5 L 0 10 z" style="fill: var(--force-2)"></path>
+              </marker>
+              <marker id="halliday-23-29-result-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+                <path d="M 0 0 L 10 5 L 0 10 z" style="fill: var(--resultant)"></path>
+              </marker>
+              <marker id="halliday-23-29-dimension" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                <path d="M 10 0 L 0 5 L 10 10 z" style="fill: var(--measure)"></path>
+              </marker>
+            </defs>
+
+            <rect class="field-panel" x="24" y="24" width="520" height="640" rx="8"></rect>
+            <rect class="field-panel" x="568" y="24" width="568" height="640" rx="8"></rect>
+
+            <text class="field-title" x="52" y="62">SEÇÃO: BARRA, CASCA E GAUSSIANAS</text>
+            <text class="field-title" x="596" y="62">PERFIL RADIAL E_r(r) · SINAL = SENTIDO</text>
+
+            <text class="field-label" x="52" y="100">barra condutora</text>
+            <text class="field-note" x="52" y="122">R₁ = 1,30 mm · Q₁ = +3,40 pC</text>
+
+            <circle class="field-guide" cx="270" cy="370" r="200"></circle>
+            <text class="field-note" x="286" y="200">r = 2R₂ = 26,0 mm</text>
+
+            <circle class="field-object field-object--negative" cx="270" cy="370" r="100"></circle>
+
+            <circle class="field-guide" cx="270" cy="370" r="50"></circle>
+            <text class="field-note" x="300" y="336">r = 5R₁</text>
+
+            <line class="field-vector" x1="307.5" y1="332.5" x2="332.2" y2="307.8" marker-end="url(#halliday-23-29-field-arrow)"></line>
+            <line class="field-vector" x1="232.5" y1="332.5" x2="207.8" y2="307.8" marker-end="url(#halliday-23-29-field-arrow)"></line>
+            <line class="field-vector" x1="232.5" y1="407.5" x2="207.8" y2="432.2" marker-end="url(#halliday-23-29-field-arrow)"></line>
+            <line class="field-vector" x1="307.5" y1="407.5" x2="332.2" y2="432.2" marker-end="url(#halliday-23-29-field-arrow)"></line>
+
+            <line class="field-vector field-vector--component" x1="468" y1="370" x2="425" y2="370" marker-end="url(#halliday-23-29-component-arrow)"></line>
+            <line class="field-vector field-vector--component" x1="72" y1="370" x2="115" y2="370" marker-end="url(#halliday-23-29-component-arrow)"></line>
+            <line class="field-vector field-vector--component" x1="270" y1="172" x2="270" y2="215" marker-end="url(#halliday-23-29-component-arrow)"></line>
+            <line class="field-vector field-vector--component" x1="270" y1="568" x2="270" y2="535" marker-end="url(#halliday-23-29-component-arrow)"></line>
+
+            <circle class="field-charge-positive" cx="270" cy="370" r="13"></circle>
+            <text class="field-sign" x="270" y="377">+</text>
+
+            <line class="field-distance" x1="283" y1="377" x2="356.6" y2="420" marker-start="url(#halliday-23-29-dimension)" marker-end="url(#halliday-23-29-dimension)"></line>
+            <text class="field-value field-value--warm" x="368" y="414">R₂</text>
+
+            <text class="field-label" x="270" y="440" text-anchor="middle">−Q₁</text>
+            <text class="field-note" x="270" y="458" text-anchor="middle">face interna</text>
+            <text class="field-label" x="270" y="498" text-anchor="middle">−Q₁</text>
+            <text class="field-note" x="270" y="516" text-anchor="middle">face externa</text>
+
+            <text class="field-value" x="340" y="258">0,855 N/C</text>
+            <text class="field-note" x="340" y="278">para fora</text>
+            <text class="field-value" x="330" y="600">0,214 N/C</text>
+            <text class="field-note" x="330" y="620">para dentro</text>
+
+            <text class="field-label" x="52" y="606">casca condutora, paredes finas</text>
+            <text class="field-note" x="52" y="628">R₂ = 13,0 mm · Q₂ = −2Q₁</text>
+
+            <line class="field-axis" x1="620" y1="380" x2="1100" y2="380" marker-end="url(#halliday-23-29-axis-arrow)"></line>
+            <line class="field-axis" x1="640" y1="600" x2="640" y2="110" marker-end="url(#halliday-23-29-axis-arrow)"></line>
+            <text class="field-label" x="604" y="120">E_r</text>
+            <text class="field-label" x="1090" y="410">r</text>
+            <text class="field-note" x="618" y="402">0</text>
+
+            <line class="field-guide" x1="668" y1="380" x2="668" y2="150"></line>
+            <path class="field-vector" d="M 668 150 C 690 235 715 258 730 262 C 780 275 820 298 860 305"></path>
+            <line class="field-guide" x1="860" y1="305" x2="860" y2="455"></line>
+            <path class="field-vector field-vector--component" d="M 860 455 C 910 428 960 408 1000 402 C 1040 397 1070 393 1090 391"></path>
+
+            <line class="field-guide" x1="730" y1="262" x2="730" y2="380"></line>
+            <circle class="field-point" cx="730" cy="262" r="9"></circle>
+            <text class="field-value" x="748" y="250">0,855 N/C</text>
+            <text class="field-note" x="748" y="270">para fora (E_r &gt; 0)</text>
+
+            <line class="field-guide" x1="1000" y1="380" x2="1000" y2="402"></line>
+            <circle class="field-point" cx="1000" cy="402" r="9"></circle>
+            <text class="field-value" x="940" y="470">−0,214 N/C</text>
+            <text class="field-note" x="940" y="490">para dentro (E_r &lt; 0)</text>
+
+            <text class="field-note" x="658" y="406">R₁</text>
+            <text class="field-note" x="716" y="406">5R₁</text>
+            <text class="field-note" x="848" y="365">R₂</text>
+            <text class="field-note" x="984" y="365">2R₂</text>
+
+            <text class="field-note" x="640" y="548">r &lt; R₁ (dentro do condutor): E = 0</text>
+            <text class="field-note" x="640" y="572">R₁ &lt; r &lt; R₂: λ_env = λ₁ &gt; 0, campo para fora</text>
+            <text class="field-note" x="640" y="596">r &gt; R₂: λ_env = λ₁ + λ₂ = −λ₁ &lt; 0, campo para dentro</text>
+
+            <rect class="field-panel" x="48" y="686" width="1088" height="50" rx="4"></rect>
+            <text class="field-label" x="74" y="717">DADOS:</text>
+            <text class="field-note" x="146" y="717">R₁ = 1,30 mm · R₂ = 13,0 mm · Q₁ = 3,40 pC</text>
+            <text class="field-label" x="512" y="717">CAMPO:</text>
+            <text class="field-value" x="588" y="717">E(2R₂) = 0,214 N/C</text>
+            <text class="field-value" x="820" y="717">E(5R₁) = 0,855 N/C</text>
+          </svg>
+
+          <p class="diagram-caption field-diagram-caption">
+            <strong>Leitura do esquema · sem escala</strong>
+            <span>
+              A gaussiana interna envolve apenas \(\lambda_1&gt;0\) e o campo
+              aponta para fora; a externa envolve
+              \(\lambda_1+\lambda_2=-\lambda_1\) e o campo aponta para dentro.
+              A face interna da casca carrega \(-Q_1\) para anular o campo no
+              metal, e a face externa fica com o restante, também \(-Q_1\).
+            </span>
+          </p>
+        </article>
+      </section>
+    </div>
+  </main>
+
+  <div class="exercise-navigation-shell" data-exercise-navigation data-current-id="halliday-23-29" data-registry-url="../../materiais.json" data-chapter-url="../capitulo-23/" data-root-path="../../" data-reference="Halliday" data-chapter="23"></div>
+
+  <footer class="lesson-footer site-footer">
+    <p>Halliday 23.29 · capítulo 23 · barra e casca condutoras coaxiais</p>
+    <a href="../../">Voltar ao catálogo</a>
+  </footer>
+
+  <script type="module" src="../../componentes/navegacao-principal.js"></script>
+  <script type="module" src="../../componentes/navegacao-exercicios.js"></script>
+  <script type="module" src="../exercicio-estatico.js"></script>
+</body>
+</html>

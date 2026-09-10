@@ -1,0 +1,478 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Resolução do exercício Halliday 23.34: campo elétrico no eixo de um furo circular aberto em uma placa infinita não condutora, combinando a lei de Gauss para a placa com o campo de um disco por superposição.">
+  <title>Halliday 23.34 — Placa infinita com um furo · Eletromagnetismo</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='28' fill='%237a3ce7'/%3E%3Cpath d='M18 32h28M32 18v28' stroke='white' stroke-width='6'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="../../assets/base.css">
+  <link rel="stylesheet" href="../../assets/simulador.css">
+  <link rel="stylesheet" href="../../assets/campo-eletrico.css">
+  <script>try{if(localStorage.getItem("tema")==="escuro"){document.documentElement.dataset.theme="escuro"}}catch(erro){}</script>
+</head>
+<body class="lesson-page field-page">
+  <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+
+  <div class="site-topbar" data-topbar>
+    <div class="site-topbar__inner">
+      <nav class="breadcrumb" aria-label="Navegação estrutural">
+        <a href="../../disciplinas/prcfemg/">Fundamentos do Eletromagnetismo</a>
+        <span aria-hidden="true">/</span>
+        <a href="../">Exercícios</a>
+        <span aria-hidden="true">/</span>
+        <a href="../capitulo-23/">Lei de Gauss · Capítulo 23</a>
+        <span aria-hidden="true">/</span>
+        <strong aria-current="page">Exercício 34</strong>
+      </nav>
+      <div class="lesson-area-navigation" data-site-navigation data-root-path="../../" data-active-section="exercicios"></div>
+    </div>
+    <nav class="section-nav" aria-label="Seções do exercício" data-section-nav>
+      <a href="#enunciado">Enunciado</a>
+      <a href="#resolucao">Resolução</a>
+      <a href="#diagrama">Diagrama</a>
+    </nav>
+  </div>
+
+  <header class="lesson-header">
+    <div class="lesson-title-row">
+      <div>
+        <p class="eyebrow">Halliday · Capítulo 23</p>
+        <h1>Placa infinita com um furo</h1>
+      </div>
+      <p class="lesson-intro">
+        Um furo é o mesmo que uma placa inteira somada a um disco de carga
+        oposta. A lei de Gauss dá o campo da placa; a fórmula do disco dá o
+        resto; a superposição fecha a conta.
+      </p>
+    </div>
+  </header>
+
+  <main class="lesson-main" id="conteudo">
+    <div class="lesson-sections">
+
+      <section class="lesson-section" id="enunciado" aria-label="Enunciado">
+        <article class="problem-sheet">
+          <div class="problem-number">
+            <span>Halliday</span>
+            <strong>23.34</strong>
+          </div>
+          <div class="problem-copy">
+            <p>
+              Na Fig. 23-41, um pequeno furo circular de raio
+              \(R=1{,}80\,\mathrm{cm}\) foi aberto no meio de uma placa fina,
+              infinita, não condutora, com uma densidade superficial de
+              cargas \(\sigma=4{,}50\,\mathrm{pC/m^2}\). O eixo \(z\), cuja
+              origem está no centro do furo, é perpendicular à placa.
+            </p>
+            <p>
+              Determine, em termos dos vetores unitários, o campo elétrico no
+              ponto \(P\), situado em \(z=2{,}56\,\mathrm{cm}\). (Sugestão:
+              use a Eq. 22-26 e o princípio de superposição.)
+            </p>
+          </div>
+          <div class="answer-strip">
+            <span>Resultado</span>
+            <strong>
+              \(\displaystyle \vec{E}
+              =\frac{\sigma}{2\varepsilon_0}\frac{z}{\sqrt{z^2+R^2}}\,\hat{k}
+              =(0{,}208\,\mathrm{N/C})\,\hat{k}\)
+            </strong>
+          </div>
+        </article>
+      </section>
+
+      <section class="lesson-section" id="resolucao" aria-label="Resolução">
+        <article class="solution-article">
+          <header class="solution-heading">
+            <p class="eyebrow">Resolução passo a passo</p>
+            <h2>Monte o furo por superposição</h2>
+            <p>
+              A distribuição real não tem simetria suficiente para a lei de
+              Gauss sozinha. A saída é decompor a placa com furo em duas
+              distribuições cujos campos no eixo já são conhecidos.
+            </p>
+          </header>
+
+          <section>
+            <span class="solution-step">superposição</span>
+            <h3>Placa com furo = placa completa + disco negativo</h3>
+            <p>
+              Sobrepor uma placa infinita inteira, com densidade \(+\sigma\),
+              a um disco de raio \(R\) com densidade \(-\sigma\), centrado na
+              origem, produz carga líquida nula dentro do círculo de raio
+              \(R\) e \(+\sigma\) em todo o resto: exatamente a placa com o
+              furo. Como o campo elétrico é linear nas fontes, o campo em
+              \(P\) é a soma dos campos das duas distribuições:
+            </p>
+            <div class="math-block math-block--result math-display">
+              \[
+              \begin{aligned}
+              \vec{E}_P&=\vec{E}_{\text{placa}}(+\sigma)
+                +\vec{E}_{\text{disco}}(-\sigma).
+              \end{aligned}
+              \]
+            </div>
+            <div class="assumption-note">
+              <strong>Por que a placa é não condutora?</strong>
+              <p>
+                A carga \(\sigma\) permanece uniforme mesmo com o furo. Em um
+                condutor, as cargas se redistribuiriam perto da borda do furo
+                e a superposição de distribuições uniformes não valeria.
+              </p>
+            </div>
+          </section>
+
+          <section>
+            <span class="solution-step">placa infinita</span>
+            <h3>Lei de Gauss para a placa completa</h3>
+            <p>
+              Por simetria, o campo de uma placa infinita uniforme é
+              perpendicular à placa, aponta para longe dela (carga positiva)
+              e tem o mesmo módulo dos dois lados. Escolha um cilindro
+              gaussiano de tampas com área \(A\), paralelas à placa, uma de
+              cada lado. Na superfície lateral \(\vec{E}\perp d\vec{A}\) e o
+              fluxo é nulo; em cada tampa \(\vec{E}\parallel d\vec{A}\):
+            </p>
+            <div class="math-block math-display">
+              \[
+              \begin{aligned}
+              \varepsilon_0\Phi
+              &=\varepsilon_0\oint\vec{E}\cdot d\vec{A}
+                =\varepsilon_0\left(EA+EA\right)
+                =q_{\text{env}}=\sigma A.
+              \end{aligned}
+              \]
+            </div>
+            <div class="math-block math-block--result math-display">
+              \[
+              \begin{aligned}
+              \vec{E}_{\text{placa}}
+              &=\frac{\sigma}{2\varepsilon_0}\,\hat{k}
+              \qquad(z&gt;0).
+              \end{aligned}
+              \]
+            </div>
+            <p>
+              O resultado não depende de \(z\): a placa infinita produz um
+              campo uniforme em cada semiespaço.
+            </p>
+          </section>
+
+          <section>
+            <span class="solution-step">disco</span>
+            <h3>Campo do disco no eixo (Eq. 22-26)</h3>
+            <p>
+              A Eq. 22-26 dá o campo no eixo de um disco de raio \(R\) com
+              densidade uniforme, a uma distância \(z\) do centro. Para o
+              disco com densidade \(-\sigma\), o campo aponta para o disco,
+              ou seja, no sentido \(-\hat{k}\) para \(z&gt;0\):
+            </p>
+            <div class="math-block math-block--result math-display">
+              \[
+              \begin{aligned}
+              \vec{E}_{\text{disco}}
+              &=-\frac{\sigma}{2\varepsilon_0}
+                \left(1-\frac{z}{\sqrt{z^2+R^2}}\right)\hat{k}.
+              \end{aligned}
+              \]
+            </div>
+            <p>
+              Repare que, quando \(R\to\infty\), o parêntese tende a 1 e a
+              expressão recupera o campo da placa infinita, o que confirma a
+              coerência entre as duas fórmulas.
+            </p>
+          </section>
+
+          <section>
+            <span class="solution-step">soma</span>
+            <h3>Combine os dois campos</h3>
+            <p>
+              Os dois vetores estão sobre o eixo \(z\), de modo que basta
+              somar as componentes. O termo constante
+              \(\frac{\sigma}{2\varepsilon_0}\) cancela e sobra apenas a
+              fração:
+            </p>
+            <div class="math-block math-block--result math-display">
+              \[
+              \begin{aligned}
+              E_z
+              &=\frac{\sigma}{2\varepsilon_0}
+                -\frac{\sigma}{2\varepsilon_0}
+                \left(1-\frac{z}{\sqrt{z^2+R^2}}\right)\\
+              &=\frac{\sigma}{2\varepsilon_0}\,
+                \frac{z}{\sqrt{z^2+R^2}}.
+              \end{aligned}
+              \]
+            </div>
+            <p>
+              O campo aponta em \(+\hat{k}\), como o da placa, mas com módulo
+              reduzido pelo fator \(\frac{z}{\sqrt{z^2+R^2}}&lt;1\), que mede
+              o quanto o furo "rouba" do campo da placa inteira.
+            </p>
+          </section>
+
+          <section>
+            <span class="solution-step">cálculo numérico</span>
+            <h3>Substitua os dados</h3>
+            <p>
+              O fator geométrico pode ser calculado diretamente em
+              centímetros, porque é adimensional; o prefator exige o SI.
+            </p>
+            <div class="math-block math-display">
+              \[
+              \begin{aligned}
+              \frac{\sigma}{2\varepsilon_0}
+              &=\frac{4{,}50\times10^{-12}\,\mathrm{C/m^2}}
+                {2\left(8{,}85\times10^{-12}\,\mathrm{C^2/(N\,m^2)}\right)}
+                =0{,}254\,\mathrm{N/C},\\[6pt]
+              \frac{z}{\sqrt{z^2+R^2}}
+              &=\frac{2{,}56}{\sqrt{2{,}56^2+1{,}80^2}}
+                =\frac{2{,}56}{\sqrt{9{,}79}}
+                =\frac{2{,}56}{3{,}13}
+                =0{,}818,\\[6pt]
+              E_z&=(0{,}254\,\mathrm{N/C})(0{,}818)
+                =0{,}208\,\mathrm{N/C}.
+              \end{aligned}
+              \]
+            </div>
+            <div class="result-callout">
+              <span>Campo em \(P\)</span>
+              <strong>
+                \(\displaystyle \vec{E}=(0{,}208\,\mathrm{N/C})\,\hat{k}\)
+              </strong>
+            </div>
+            <p>
+              Em termos das duas parcelas: a placa completa contribui com
+              \(+0{,}254\,\mathrm{N/C}\) e o disco negativo com
+              \(-0{,}254(1-0{,}818)=-0{,}046\,\mathrm{N/C}\); a soma é
+              \(0{,}208\,\mathrm{N/C}\).
+            </p>
+          </section>
+
+          <section>
+            <span class="solution-step">verificações</span>
+            <h3>Confira limites, dimensões e sentido</h3>
+            <p>
+              O prefator \(\frac{\sigma}{2\varepsilon_0}\) tem dimensão de
+              campo, e o fator geométrico é adimensional:
+            </p>
+            <div class="math-block math-display">
+              \[
+              \begin{aligned}
+              \left[\frac{\sigma}{\varepsilon_0}\right]
+              &=\frac{\mathrm{C/m^2}}{\mathrm{C^2/(N\,m^2)}}
+                =\frac{\mathrm{N}}{\mathrm{C}}.
+              \end{aligned}
+              \]
+            </div>
+            <div class="limit-grid">
+              <article>
+                <h4>Quando \(z\to\infty\)</h4>
+                <p>
+                  O fator \(\frac{z}{\sqrt{z^2+R^2}}\to1\) e o campo tende a
+                  \(\frac{\sigma}{2\varepsilon_0}\): longe do furo, a placa
+                  parece inteira.
+                </p>
+              </article>
+              <article>
+                <h4>Quando \(z\to0\)</h4>
+                <p>
+                  O fator tende a zero. No centro do furo, cada anel de carga
+                  da placa tem um oposto que cancela seu campo por simetria.
+                </p>
+              </article>
+              <article>
+                <h4>Quando \(R\to0\)</h4>
+                <p>
+                  O furo desaparece e o campo volta a ser
+                  \(\frac{\sigma}{2\varepsilon_0}\) para qualquer
+                  \(z&gt;0\).
+                </p>
+              </article>
+            </div>
+            <div class="concept-grid">
+              <article>
+                <h4>Sentido</h4>
+                <p>
+                  Com \(\sigma&gt;0\) e \(z&gt;0\), o campo se afasta da
+                  placa, em \(+\hat{k}\); o furo reduz o módulo, mas não
+                  inverte o sentido.
+                </p>
+              </article>
+              <article>
+                <h4>Ordem de grandeza</h4>
+                <p>
+                  Picocoulombs por metro quadrado dão décimos de N/C; o valor
+                  \(0{,}208\,\mathrm{N/C}\) fica entre zero e o máximo
+                  \(0{,}254\,\mathrm{N/C}\), como deve.
+                </p>
+              </article>
+            </div>
+          </section>
+        </article>
+      </section>
+
+      <section class="lesson-section" id="diagrama" aria-label="Diagrama">
+        <article class="static-diagram-shell field-figure">
+          <header class="static-diagram-heading">
+            <div>
+              <p class="eyebrow">Geometria e superposição</p>
+              <h2>Placa, furo e o ponto \(P\) no eixo</h2>
+            </div>
+            <p>
+              À esquerda, a placa em perspectiva com o furo e o ponto \(P\)
+              sobre o eixo \(z\); ao lado do vetor resultante aparecem as duas
+              parcelas da superposição. À direita, as expressões e o gráfico
+              de \(E_z(z)\).
+            </p>
+          </header>
+
+          <svg class="teaching-diagram field-diagram" viewBox="0 0 1160 760" role="img" aria-labelledby="halliday-23-34-title halliday-23-34-desc">
+            <title id="halliday-23-34-title">Placa infinita com furo circular, ponto P no eixo z e superposição dos campos</title>
+            <desc id="halliday-23-34-desc">À esquerda, uma placa positiva desenhada em perspectiva com um furo circular de raio 1,80 centímetro no centro; o eixo z sobe do centro do furo até o ponto P, em z igual a 2,56 centímetros. Em P, o vetor resultante aponta para cima, com módulo 0,208 newtons por coulomb; ao lado, uma seta maior para cima representa a placa completa, com 0,254 newtons por coulomb, e uma seta pequena para baixo representa o disco negativo, com 0,046 newtons por coulomb. À direita, as três expressões da superposição e um gráfico de E z em função de z que parte de zero, passa por 0,208 em z igual a 2,56 centímetros e tende a sigma sobre 2 épsilon zero. A base informa os dados e o resultado.</desc>
+            <defs>
+              <marker id="halliday-23-34-axis-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+                <path d="M 0 0 L 10 5 L 0 10 z" style="fill: var(--ink-soft)"></path>
+              </marker>
+              <marker id="halliday-23-34-component-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+                <path d="M 0 0 L 10 5 L 0 10 z" style="fill: var(--force-2)"></path>
+              </marker>
+              <marker id="halliday-23-34-result-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+                <path d="M 0 0 L 10 5 L 0 10 z" style="fill: var(--resultant)"></path>
+              </marker>
+              <marker id="halliday-23-34-dimension" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                <path d="M 10 0 L 0 5 L 10 10 z" style="fill: var(--measure)"></path>
+              </marker>
+            </defs>
+
+            <rect class="field-panel" x="24" y="24" width="520" height="640" rx="8"></rect>
+            <rect class="field-panel" x="568" y="24" width="568" height="640" rx="8"></rect>
+
+            <text class="field-title" x="52" y="62">PLACA COM FURO E O PONTO P NO EIXO z</text>
+            <text class="field-title" x="596" y="62">SUPERPOSIÇÃO: PLACA + DISCO NEGATIVO</text>
+
+            <path class="field-surface" d="M 56 520 L 276 380 L 536 380 L 316 520 Z"></path>
+            <ellipse class="field-panel" cx="296" cy="450" rx="44" ry="17"></ellipse>
+
+            <circle class="field-charge-positive" cx="262" cy="400" r="11"></circle>
+            <text class="field-sign" x="262" y="407">+</text>
+            <circle class="field-charge-positive" cx="318" cy="400" r="11"></circle>
+            <text class="field-sign" x="318" y="407">+</text>
+            <circle class="field-charge-positive" cx="374" cy="400" r="11"></circle>
+            <text class="field-sign" x="374" y="407">+</text>
+            <circle class="field-charge-positive" cx="430" cy="400" r="11"></circle>
+            <text class="field-sign" x="430" y="407">+</text>
+            <circle class="field-charge-positive" cx="486" cy="400" r="11"></circle>
+            <text class="field-sign" x="486" y="407">+</text>
+            <circle class="field-charge-positive" cx="180" cy="450" r="11"></circle>
+            <text class="field-sign" x="180" y="457">+</text>
+            <circle class="field-charge-positive" cx="234" cy="450" r="11"></circle>
+            <text class="field-sign" x="234" y="457">+</text>
+            <circle class="field-charge-positive" cx="372" cy="450" r="11"></circle>
+            <text class="field-sign" x="372" y="457">+</text>
+            <circle class="field-charge-positive" cx="412" cy="450" r="11"></circle>
+            <text class="field-sign" x="412" y="457">+</text>
+            <circle class="field-charge-positive" cx="100" cy="500" r="11"></circle>
+            <text class="field-sign" x="100" y="507">+</text>
+            <circle class="field-charge-positive" cx="156" cy="500" r="11"></circle>
+            <text class="field-sign" x="156" y="507">+</text>
+            <circle class="field-charge-positive" cx="212" cy="500" r="11"></circle>
+            <text class="field-sign" x="212" y="507">+</text>
+            <circle class="field-charge-positive" cx="268" cy="500" r="11"></circle>
+            <text class="field-sign" x="268" y="507">+</text>
+            <circle class="field-charge-positive" cx="324" cy="500" r="11"></circle>
+            <text class="field-sign" x="324" y="507">+</text>
+
+            <line class="field-distance" x1="296" y1="450" x2="340" y2="450" marker-end="url(#halliday-23-34-dimension)"></line>
+            <text class="field-value field-value--warm" x="312" y="444">R</text>
+            <circle class="field-point" cx="296" cy="450" r="6"></circle>
+            <text class="field-note" x="256" y="486">O (centro do furo)</text>
+
+            <line class="field-axis" x1="296" y1="450" x2="296" y2="90" marker-end="url(#halliday-23-34-axis-arrow)"></line>
+            <text class="field-label" x="306" y="102">z</text>
+
+            <line class="field-distance" x1="270" y1="440" x2="270" y2="258" marker-start="url(#halliday-23-34-dimension)" marker-end="url(#halliday-23-34-dimension)"></line>
+            <text class="field-value field-value--warm" x="246" y="352">z</text>
+
+            <circle class="field-point" cx="296" cy="250" r="10"></circle>
+            <text class="field-label" x="216" y="232">P</text>
+            <text class="field-note" x="176" y="254">z = 2,56 cm</text>
+
+            <line class="field-vector field-vector--resultant" x1="296" y1="238" x2="296" y2="158" marker-end="url(#halliday-23-34-result-arrow)"></line>
+            <text class="field-value" x="200" y="140">E = (0,208 N/C) k̂</text>
+
+            <text class="field-note" x="372" y="124">superposição em P:</text>
+            <line class="field-vector field-vector--component" x1="392" y1="250" x2="392" y2="150" marker-end="url(#halliday-23-34-component-arrow)"></line>
+            <text class="field-note" x="404" y="184">placa +σ</text>
+            <text class="field-note" x="404" y="204">0,254 N/C</text>
+            <line class="field-vector field-vector--component" x1="470" y1="250" x2="470" y2="296" marker-end="url(#halliday-23-34-component-arrow)"></line>
+            <text class="field-note" x="452" y="318">disco −σ</text>
+            <text class="field-note" x="452" y="338">0,046 N/C</text>
+            <line class="field-guide" x1="296" y1="250" x2="470" y2="250"></line>
+
+            <text class="field-label" x="52" y="590">placa infinita, não condutora</text>
+            <text class="field-note" x="52" y="612">σ = 4,50 pC/m² · furo circular de raio R = 1,80 cm</text>
+            <text class="field-note" x="52" y="634">eixo z perpendicular à placa, origem no centro do furo</text>
+
+            <text class="field-label" x="596" y="106">1. placa completa (+σ), lei de Gauss:</text>
+            <text class="field-value" x="616" y="132">E₁ = σ / (2ε₀) = 0,254 N/C, em +k̂</text>
+            <text class="field-label" x="596" y="180">2. disco de raio R com −σ (Eq. 22-26):</text>
+            <text class="field-value" x="616" y="206">E₂ = −(σ/2ε₀)[1 − z/√(z² + R²)] = −0,046 N/C</text>
+            <text class="field-label" x="596" y="254">3. soma:</text>
+            <text class="field-value" x="616" y="280">E_z = (σ/2ε₀) · z/√(z² + R²)</text>
+            <text class="field-note" x="616" y="304">z/√(z² + R²) = 2,56/3,13 = 0,818</text>
+            <text class="field-value" x="616" y="332">E_z = 0,254 × 0,818 = 0,208 N/C</text>
+
+            <text class="field-label" x="660" y="392">E_z(z) sobre o eixo do furo</text>
+            <line class="field-axis" x1="640" y1="600" x2="1100" y2="600" marker-end="url(#halliday-23-34-axis-arrow)"></line>
+            <line class="field-axis" x1="640" y1="600" x2="640" y2="404" marker-end="url(#halliday-23-34-axis-arrow)"></line>
+            <text class="field-label" x="600" y="416">E_z</text>
+            <text class="field-label" x="1090" y="630">z</text>
+            <text class="field-note" x="622" y="624">0</text>
+
+            <line class="field-guide" x1="640" y1="420" x2="1100" y2="420"></line>
+            <text class="field-note" x="760" y="412">assíntota: σ/2ε₀ = 0,254 N/C</text>
+            <path class="field-vector field-vector--resultant" d="M 640 600 C 665 520 690 470 725 453 C 800 428 900 421 1060 420"></path>
+            <line class="field-guide" x1="725" y1="600" x2="725" y2="453"></line>
+            <line class="field-guide" x1="640" y1="453" x2="725" y2="453"></line>
+            <circle class="field-point" cx="725" cy="453" r="9"></circle>
+            <text class="field-value" x="742" y="478">0,208 N/C</text>
+            <text class="field-note" x="690" y="626">z = 2,56 cm</text>
+            <text class="field-note" x="660" y="560">E_z → 0 no centro do furo</text>
+
+            <rect class="field-panel" x="48" y="686" width="1088" height="50" rx="4"></rect>
+            <text class="field-label" x="74" y="717">DADOS:</text>
+            <text class="field-note" x="146" y="717">R = 1,80 cm · σ = 4,50 pC/m² · z = 2,56 cm</text>
+            <text class="field-label" x="560" y="717">RESULTADO:</text>
+            <text class="field-value" x="682" y="717">E = (0,208 N/C) k̂</text>
+          </svg>
+
+          <p class="diagram-caption field-diagram-caption">
+            <strong>Leitura do esquema · sem escala</strong>
+            <span>
+              A placa completa produz \(\frac{\sigma}{2\varepsilon_0}\) para
+              cima; o disco negativo que representa o furo produz
+              \(\frac{\sigma}{2\varepsilon_0}\left(1-\frac{z}{\sqrt{z^2+R^2}}\right)\)
+              para baixo. A diferença é o campo em \(P\), que cresce de zero,
+              no centro do furo, até o valor da placa inteira para
+              \(z\gg R\).
+            </span>
+          </p>
+        </article>
+      </section>
+    </div>
+  </main>
+
+  <div class="exercise-navigation-shell" data-exercise-navigation data-current-id="halliday-23-34" data-registry-url="../../materiais.json" data-chapter-url="../capitulo-23/" data-root-path="../../" data-reference="Halliday" data-chapter="23"></div>
+
+  <footer class="lesson-footer site-footer">
+    <p>Halliday 23.34 · capítulo 23 · placa infinita com um furo</p>
+    <a href="../../">Voltar ao catálogo</a>
+  </footer>
+
+  <script type="module" src="../../componentes/navegacao-principal.js"></script>
+  <script type="module" src="../../componentes/navegacao-exercicios.js"></script>
+  <script type="module" src="../exercicio-estatico.js"></script>
+</body>
+</html>

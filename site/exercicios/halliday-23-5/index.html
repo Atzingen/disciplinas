@@ -1,0 +1,389 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Resolução do exercício Halliday 23.5 sobre o fluxo elétrico de um próton através de um quadrado, tratando o quadrado como uma das faces de um cubo e aplicando a lei de Gauss com simetria.">
+  <title>Halliday 23.5 — Próton sobre um quadrado · Eletromagnetismo</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='28' fill='%237a3ce7'/%3E%3Cpath d='M18 32h28M32 18v28' stroke='white' stroke-width='6'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="../../assets/base.css">
+  <link rel="stylesheet" href="../../assets/simulador.css">
+  <link rel="stylesheet" href="../../assets/campo-eletrico.css">
+  <script>try{if(localStorage.getItem("tema")==="escuro"){document.documentElement.dataset.theme="escuro"}}catch(erro){}</script>
+</head>
+<body class="lesson-page field-page">
+  <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+
+  <div class="site-topbar" data-topbar>
+    <div class="site-topbar__inner">
+      <nav class="breadcrumb" aria-label="Navegação estrutural">
+        <a href="../../disciplinas/prcfemg/">Fundamentos do Eletromagnetismo</a>
+        <span aria-hidden="true">/</span>
+        <a href="../">Exercícios</a>
+        <span aria-hidden="true">/</span>
+        <a href="../capitulo-23/">Lei de Gauss · Capítulo 23</a>
+        <span aria-hidden="true">/</span>
+        <strong aria-current="page">Exercício 5</strong>
+      </nav>
+      <div class="lesson-area-navigation" data-site-navigation data-root-path="../../" data-active-section="exercicios"></div>
+    </div>
+    <nav class="section-nav" aria-label="Seções do exercício" data-section-nav>
+      <a href="#enunciado">Enunciado</a>
+      <a href="#resolucao">Resolução</a>
+      <a href="#diagrama">Diagrama</a>
+    </nav>
+  </div>
+
+  <header class="lesson-header">
+    <div class="lesson-title-row">
+      <div>
+        <p class="eyebrow">Halliday · Capítulo 23</p>
+        <h1>Próton sobre um quadrado</h1>
+      </div>
+      <p class="lesson-intro">
+        Integrar o campo de uma carga puntiforme sobre um quadrado é
+        trabalhoso. Completar o quadrado até formar um cubo transforma o
+        problema em uma simples divisão por seis.
+      </p>
+    </div>
+  </header>
+
+  <main class="lesson-main" id="conteudo">
+    <div class="lesson-sections">
+
+      <section class="lesson-section" id="enunciado" aria-label="Enunciado">
+        <article class="problem-sheet">
+          <div class="problem-number">
+            <span>Halliday</span>
+            <strong>23.5</strong>
+          </div>
+          <div class="problem-copy">
+            <p>
+              Na Fig. 23-29, um próton se encontra a uma distância vertical
+              \(d/2\) do centro de um quadrado de aresta \(d\).
+            </p>
+            <p>
+              Qual é o módulo do fluxo elétrico através do quadrado?
+              (Sugestão: pense no quadrado como uma das faces de um cubo de
+              aresta \(d\).)
+            </p>
+          </div>
+          <div class="answer-strip">
+            <span>Resultado</span>
+            <strong>
+              \(\displaystyle \Phi=\frac{e}{6\varepsilon_0}=3{,}01\times10^{-9}\,\mathrm{N\,m^2/C}\)
+            </strong>
+          </div>
+        </article>
+      </section>
+
+      <section class="lesson-section" id="resolucao" aria-label="Resolução">
+        <article class="solution-article">
+          <header class="solution-heading">
+            <p class="eyebrow">Resolução passo a passo</p>
+            <h2>Construa o cubo e use a simetria das seis faces</h2>
+            <p>
+              A lei de Gauss dá o fluxo total através de uma superfície
+              fechada. Se essa superfície for um cubo centrado no próton, a
+              simetria distribui o fluxo igualmente entre as faces, e o
+              quadrado do problema é exatamente uma delas.
+            </p>
+          </header>
+
+          <section>
+            <span class="solution-step">superfície gaussiana</span>
+            <h3>Complete o quadrado até formar um cubo</h3>
+            <p>
+              O quadrado tem aresta \(d\), e o próton está a \(d/2\) do seu
+              centro, sobre a perpendicular que passa por esse centro. Um cubo
+              de aresta \(d\) cujo centro coincide com o próton tem cada uma
+              das seis faces a uma distância \(d/2\) do centro. Portanto o
+              quadrado do enunciado é uma face desse cubo, e as outras cinco
+              faces são cópias dela em posições equivalentes.
+            </p>
+            <div class="assumption-note">
+              <strong>Por que o cubo, e não outra superfície?</strong>
+              <p>
+                O cubo é a única superfície fechada, formada por quadrados
+                iguais, em que a face dada aparece sem deformação. Como o
+                próton fica no centro, todas as faces "veem" a carga do mesmo
+                modo, o que permite dividir o fluxo total sem integrar.
+              </p>
+            </div>
+          </section>
+
+          <section>
+            <span class="solution-step">lei de Gauss</span>
+            <h3>Obtenha o fluxo total pelo cubo</h3>
+            <p>
+              O cubo é uma superfície fechada que envolve apenas o próton, de
+              carga \(q=+e\). Pela lei de Gauss,
+            </p>
+            <div class="math-block math-block--result math-display">
+              \[
+              \begin{aligned}
+              \varepsilon_0\Phi_{\text{cubo}}&=q_{\text{env}}=e,
+              \qquad
+              \Phi_{\text{cubo}}=\oint\vec{E}\cdot d\vec{A}
+              =\frac{e}{\varepsilon_0}.
+              \end{aligned}
+              \]
+            </div>
+            <p>
+              Esse resultado independe do tamanho do cubo e da forma da
+              superfície: qualquer superfície fechada em torno do próton
+              recebe o mesmo fluxo total \(e/\varepsilon_0\).
+            </p>
+          </section>
+
+          <section>
+            <span class="solution-step">simetria</span>
+            <h3>Divida o fluxo igualmente entre as faces</h3>
+            <p>
+              O fluxo total é a soma dos fluxos pelas seis faces. Uma rotação
+              do cubo em torno do próton leva qualquer face a qualquer outra
+              sem alterar a posição da carga, de modo que o campo "atravessa"
+              cada face da mesma maneira. Logo as seis contribuições são
+              iguais:
+            </p>
+            <div class="math-block math-block--result math-display">
+              \[
+              \begin{aligned}
+              \Phi_{\text{cubo}}
+              &=\sum_{i=1}^{6}\Phi_i
+              =6\,\Phi_{\text{quadrado}}\\
+              \Phi_{\text{quadrado}}
+              &=\frac{\Phi_{\text{cubo}}}{6}
+              =\frac{e}{6\varepsilon_0}.
+              \end{aligned}
+              \]
+            </div>
+            <p>
+              Repare que não foi necessário conhecer \(\vec{E}\) em nenhum
+              ponto da face: a lei de Gauss e a simetria substituíram a
+              integral \(\int\vec{E}\cdot d\vec{A}\) sobre o quadrado.
+            </p>
+          </section>
+
+          <section>
+            <span class="solution-step">números</span>
+            <h3>Substitua as constantes</h3>
+            <p>
+              Com \(e=1{,}60\times10^{-19}\,\mathrm{C}\) e
+              \(\varepsilon_0=8{,}85\times10^{-12}\,\mathrm{C^2/(N\,m^2)}\),
+            </p>
+            <div class="math-block math-display">
+              \[
+              \begin{aligned}
+              \Phi_{\text{quadrado}}
+              &=\frac{e}{6\varepsilon_0}
+              =\frac{1{,}60\times10^{-19}\,\mathrm{C}}
+                {6\left(8{,}85\times10^{-12}\,\mathrm{C^2/(N\,m^2)}\right)}\\
+              &=\frac{1{,}60\times10^{-19}}{5{,}31\times10^{-11}}
+                \,\mathrm{N\,m^2/C}\\
+              &=3{,}01\times10^{-9}\,\mathrm{N\,m^2/C}.
+              \end{aligned}
+              \]
+            </div>
+            <div class="result-callout">
+              <span>Fluxo através do quadrado</span>
+              <strong>
+                \(\displaystyle \Phi=\frac{e}{6\varepsilon_0}=3{,}01\times10^{-9}\,\mathrm{N\,m^2/C}\)
+              </strong>
+            </div>
+            <p>
+              Como o próton é positivo, as linhas de campo saem dele e o
+              fluxo pelo quadrado é positivo; o enunciado pede apenas o
+              módulo, que é esse mesmo valor.
+            </p>
+          </section>
+
+          <section>
+            <span class="solution-step">verificações</span>
+            <h3>Confira unidades, dependência de \(d\) e ordem de grandeza</h3>
+            <p>
+              A razão \(e/\varepsilon_0\) tem as dimensões de fluxo elétrico:
+            </p>
+            <div class="math-block math-display">
+              \[
+              \begin{aligned}
+              \left[\frac{e}{\varepsilon_0}\right]
+              &=\mathrm{C}\cdot\frac{\mathrm{N\,m^2}}{\mathrm{C^2}}
+              =\mathrm{N\,m^2/C}.
+              \end{aligned}
+              \]
+            </div>
+            <div class="concept-grid">
+              <article>
+                <h4>O resultado não depende de \(d\)</h4>
+                <p>
+                  Se a aresta dobra, a área da face cresce por um fator 4,
+                  mas a distância à carga também dobra e o campo cai por um
+                  fator 4. O produto, isto é, o fluxo, permanece o mesmo.
+                </p>
+              </article>
+              <article>
+                <h4>Por que evitar a integral direta</h4>
+                <p>
+                  Sobre o quadrado, \(\vec{E}\) muda de módulo e de direção
+                  ponto a ponto. A integral \(\int\vec{E}\cdot d\vec{A}\)
+                  é possível, mas envolve funções trigonométricas inversas;
+                  a simetria do cubo entrega o mesmo valor sem esforço.
+                </p>
+              </article>
+            </div>
+            <p>
+              A ordem de grandeza é a esperada: a carga elementar é
+              minúscula, e \(e/\varepsilon_0\approx1{,}8\times10^{-8}\,
+              \mathrm{N\,m^2/C}\); um sexto disso é justamente
+              \(3\times10^{-9}\,\mathrm{N\,m^2/C}\).
+            </p>
+          </section>
+        </article>
+      </section>
+
+      <section class="lesson-section" id="diagrama" aria-label="Diagrama">
+        <article class="static-diagram-shell field-figure">
+          <header class="static-diagram-heading">
+            <div>
+              <p class="eyebrow">Geometria e simetria</p>
+              <h2>O quadrado como face de um cubo</h2>
+            </div>
+            <p>
+              O cubo imaginário tem o próton no centro. A face inferior
+              destacada é o quadrado do problema; as linhas de campo radiais
+              atravessam as seis faces de modo equivalente.
+            </p>
+          </header>
+
+          <svg class="teaching-diagram field-diagram" viewBox="0 0 1160 760" role="img" aria-labelledby="halliday-23-5-title halliday-23-5-desc">
+            <title id="halliday-23-5-title">Próton no centro de um cubo e fluxo através de uma das faces</title>
+            <desc id="halliday-23-5-desc">À esquerda, um cubo de aresta d em perspectiva com um próton no centro. A face de baixo, destacada, é o quadrado do problema, a uma distância d sobre dois do próton. Linhas de campo radiais saem do próton e atravessam as seis faces. À direita, a planificação do cubo mostra seis quadrados iguais, cada um recebendo um sexto do fluxo total e sobre ε₀. A base informa a carga q igual a e e o resultado fluxo igual a e sobre seis ε₀, igual a 3,01 vezes dez elevado a menos nove newton metro quadrado por coulomb.</desc>
+            <defs>
+              <marker id="halliday-23-5-axis-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+                <path d="M 0 0 L 10 5 L 0 10 z" style="fill: var(--ink-soft)"></path>
+              </marker>
+              <marker id="halliday-23-5-field-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+                <path d="M 0 0 L 10 5 L 0 10 z" style="fill: var(--force-2)"></path>
+              </marker>
+              <marker id="halliday-23-5-dimension" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                <path d="M 10 0 L 0 5 L 10 10 z" style="fill: var(--measure)"></path>
+              </marker>
+            </defs>
+
+            <rect class="field-panel" x="24" y="24" width="520" height="640" rx="8"></rect>
+            <rect class="field-panel" x="568" y="24" width="568" height="640" rx="8"></rect>
+
+            <text class="field-title" x="52" y="62">CUBO COM O PRÓTON NO CENTRO</text>
+            <text class="field-title" x="596" y="62">SEIS FACES EQUIVALENTES</text>
+
+            <g aria-label="Cubo em perspectiva com a face inferior destacada">
+              <polygon class="field-surface" points="270,330 441,396.5 298.5,482 127.5,415.5"></polygon>
+              <line class="field-guide" x1="270" y1="330" x2="270" y2="140"></line>
+              <line class="field-axis" x1="127.5" y1="415.5" x2="298.5" y2="482"></line>
+              <line class="field-axis" x1="298.5" y1="482" x2="441" y2="396.5"></line>
+              <line class="field-axis" x1="127.5" y1="225.5" x2="298.5" y2="292"></line>
+              <line class="field-axis" x1="298.5" y1="292" x2="441" y2="206.5"></line>
+              <line class="field-axis" x1="441" y1="206.5" x2="270" y2="140"></line>
+              <line class="field-axis" x1="270" y1="140" x2="127.5" y2="225.5"></line>
+              <line class="field-axis" x1="127.5" y1="415.5" x2="127.5" y2="225.5"></line>
+              <line class="field-axis" x1="298.5" y1="482" x2="298.5" y2="292"></line>
+              <line class="field-axis" x1="441" y1="396.5" x2="441" y2="206.5"></line>
+            </g>
+
+            <g aria-label="Linhas de campo radiais saindo do próton">
+              <line class="field-vector field-vector--component" x1="284" y1="311" x2="284" y2="186" marker-end="url(#halliday-23-5-field-arrow)"></line>
+              <line class="field-vector field-vector--component" x1="284" y1="311" x2="284" y2="436" marker-end="url(#halliday-23-5-field-arrow)"></line>
+              <line class="field-vector field-vector--component" x1="284" y1="311" x2="394" y2="354" marker-end="url(#halliday-23-5-field-arrow)"></line>
+              <line class="field-vector field-vector--component" x1="284" y1="311" x2="192" y2="367" marker-end="url(#halliday-23-5-field-arrow)"></line>
+              <line class="field-vector field-vector--component" x1="284" y1="311" x2="377" y2="255" marker-end="url(#halliday-23-5-field-arrow)"></line>
+              <line class="field-vector field-vector--component" x1="284" y1="311" x2="175" y2="268" marker-end="url(#halliday-23-5-field-arrow)"></line>
+              <line class="field-vector field-vector--component" x1="284" y1="311" x2="388" y2="419" marker-end="url(#halliday-23-5-field-arrow)"></line>
+              <line class="field-vector field-vector--component" x1="284" y1="311" x2="293" y2="468" marker-end="url(#halliday-23-5-field-arrow)"></line>
+              <line class="field-vector field-vector--component" x1="284" y1="311" x2="181" y2="431" marker-end="url(#halliday-23-5-field-arrow)"></line>
+            </g>
+
+            <circle class="field-charge-positive" cx="284" cy="311" r="13"></circle>
+            <text class="field-sign" x="284" y="318">+</text>
+            <text class="field-label" x="304" y="300">próton, q = +e</text>
+
+            <g aria-label="Cotas d sobre dois e d">
+              <line class="field-guide" x1="297" y1="311" x2="486" y2="311"></line>
+              <line class="field-guide" x1="297" y1="406" x2="486" y2="406"></line>
+              <line class="field-distance" x1="486" y1="311" x2="486" y2="406" marker-start="url(#halliday-23-5-dimension)" marker-end="url(#halliday-23-5-dimension)"></line>
+              <text class="field-value field-value--warm" x="496" y="364">d/2</text>
+              <line class="field-distance" x1="453" y1="417" x2="311" y2="503" marker-start="url(#halliday-23-5-dimension)" marker-end="url(#halliday-23-5-dimension)"></line>
+              <text class="field-value field-value--warm" x="398" y="482">d</text>
+            </g>
+
+            <text class="field-label" x="52" y="556">face de baixo = o quadrado do problema</text>
+            <text class="field-note" x="52" y="580">o próton fica a d/2 do centro dessa face</text>
+            <text class="field-value" x="52" y="612">1/6 do fluxo total atravessa cada face</text>
+
+            <g aria-label="Planificação do cubo com seis faces iguais">
+              <text class="field-note" x="596" y="102">planificação do cubo: 6 quadrados iguais</text>
+              <rect class="field-surface" x="820" y="130" width="70" height="70"></rect>
+              <rect class="field-surface" x="750" y="200" width="70" height="70"></rect>
+              <rect class="field-surface" x="820" y="200" width="70" height="70"></rect>
+              <rect class="field-surface" x="890" y="200" width="70" height="70"></rect>
+              <rect class="field-surface" x="820" y="270" width="70" height="70"></rect>
+              <rect class="field-surface" x="820" y="340" width="70" height="70"></rect>
+              <text class="field-label" x="855" y="171" text-anchor="middle">Φ/6</text>
+              <text class="field-label" x="785" y="241" text-anchor="middle">Φ/6</text>
+              <text class="field-label" x="855" y="241" text-anchor="middle">Φ/6</text>
+              <text class="field-label" x="925" y="241" text-anchor="middle">Φ/6</text>
+              <text class="field-label" x="855" y="311" text-anchor="middle">Φ/6</text>
+              <text class="field-label" x="855" y="381" text-anchor="middle">Φ/6</text>
+              <circle class="field-charge-positive" cx="640" cy="235" r="13"></circle>
+              <text class="field-sign" x="640" y="242">+</text>
+              <text class="field-note" x="606" y="280">q_env = +e</text>
+              <text class="field-note" x="606" y="302">no centro</text>
+              <text class="field-note" x="980" y="311">Φ = Φ_cubo</text>
+              <text class="field-note" x="980" y="333">= e/ε₀</text>
+            </g>
+
+            <g aria-label="Cálculo do fluxo por face">
+              <line class="field-axis field-axis--light" x1="596" y1="432" x2="1108" y2="432"></line>
+              <text class="field-label" x="596" y="466">ε₀ Φ_cubo = q_env = e</text>
+              <text class="field-label" x="596" y="496">Φ_quadrado = Φ_cubo / 6 = e / (6 ε₀)</text>
+              <text class="field-note" x="596" y="526">= 1,60 × 10⁻¹⁹ / [6 (8,85 × 10⁻¹²)]</text>
+              <text class="field-value" x="596" y="560">Φ_quadrado = 3,01 × 10⁻⁹ N·m²/C</text>
+              <text class="field-note" x="596" y="596">independe da aresta d</text>
+              <text class="field-note" x="596" y="620">não é preciso integrar E·dA sobre o quadrado</text>
+            </g>
+
+            <rect class="field-panel" x="48" y="686" width="1088" height="50" rx="4"></rect>
+            <text class="field-label" x="74" y="717">DADOS:</text>
+            <text class="field-note" x="146" y="717">q = e = 1,60 × 10⁻¹⁹ C</text>
+            <text class="field-note" x="370" y="717">distância d/2 à face</text>
+            <text class="field-label" x="590" y="717">RESULTADO:</text>
+            <text class="field-value" x="712" y="717">Φ = e/(6ε₀) = 3,01 × 10⁻⁹ N·m²/C</text>
+          </svg>
+
+          <p class="diagram-caption field-diagram-caption">
+            <strong>Leitura do esquema · sem escala</strong>
+            <span>
+              O cubo é apenas um artifício: ele não existe no problema, mas
+              é a superfície fechada que torna a lei de Gauss útil. Pela
+              simetria, o quadrado destacado recebe
+              \(\Phi=\frac{1}{6}\cdot\frac{e}{\varepsilon_0}\), qualquer
+              que seja \(d\).
+            </span>
+          </p>
+        </article>
+      </section>
+    </div>
+  </main>
+
+  <div class="exercise-navigation-shell" data-exercise-navigation data-current-id="halliday-23-5" data-registry-url="../../materiais.json" data-chapter-url="../capitulo-23/" data-root-path="../../" data-reference="Halliday" data-chapter="23"></div>
+
+  <footer class="lesson-footer site-footer">
+    <p>Halliday 23.5 · capítulo 23 · próton sobre um quadrado</p>
+    <a href="../../">Voltar ao catálogo</a>
+  </footer>
+
+  <script type="module" src="../../componentes/navegacao-principal.js"></script>
+  <script type="module" src="../../componentes/navegacao-exercicios.js"></script>
+  <script type="module" src="../exercicio-estatico.js"></script>
+</body>
+</html>

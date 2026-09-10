@@ -22,10 +22,10 @@ const apiAvailable =
   typeof catalog.normalizeSearchText === "function" &&
   typeof catalog.filterCatalog === "function";
 
-test("catálogo expõe busca e registra os vinte e um materiais", () => {
+test("catálogo expõe busca e registra os trinta e três materiais", () => {
   assert.equal(typeof catalog.normalizeSearchText, "function");
   assert.equal(typeof catalog.filterCatalog, "function");
-  assert.equal(items.length, 21);
+  assert.equal(items.length, 33);
 });
 
 test("busca ignora acentos e caixa", { skip: !apiAvailable }, () => {
@@ -62,6 +62,18 @@ test("busca encontra livro e capítulo nas etiquetas", { skip: !apiAvailable }, 
     "halliday-22-24",
     "halliday-22-26",
     "halliday-22-28",
+    "halliday-23-4",
+    "halliday-23-5",
+    "halliday-23-9",
+    "halliday-23-11",
+    "halliday-23-16",
+    "halliday-23-24",
+    "halliday-23-27",
+    "halliday-23-29",
+    "halliday-23-34",
+    "halliday-23-45",
+    "halliday-23-49",
+    "halliday-23-52",
   ]);
   assert.deepEqual(byChapter.map((item) => item.id), expectedChapter21);
 });
@@ -94,7 +106,7 @@ test("escopo por disciplina mantém teoria e laboratório separados", { skip: !a
     discipline: "PRCLFBE",
   });
 
-  assert.equal(electromagnetism.length, 14);
+  assert.equal(electromagnetism.length, 26);
   assert.equal(laboratory.length, 7);
   assert.ok(electromagnetism.every((item) => item.kind !== "experimento"));
   assert.ok(laboratory.some((item) => item.id === "cuba-eletrolitica-potencial"));
@@ -188,6 +200,18 @@ test("filtro separa simuladores, resoluções e experimentos", { skip: !apiAvail
     "halliday-22-24",
     "halliday-22-26",
     "halliday-22-28",
+    "halliday-23-4",
+    "halliday-23-5",
+    "halliday-23-9",
+    "halliday-23-11",
+    "halliday-23-16",
+    "halliday-23-24",
+    "halliday-23-27",
+    "halliday-23-29",
+    "halliday-23-34",
+    "halliday-23-45",
+    "halliday-23-49",
+    "halliday-23-52",
   ]);
   assert.deepEqual(experiments.map((item) => item.id), [
     "experimento-01-campo-corrente",
@@ -235,7 +259,7 @@ test("registro fornece os metadados que orientam cada área", () => {
 
     if (item.section === "exercicios") {
       assert.ok(["Halliday", "Temático"].includes(item.reference));
-      assert.ok([21, 22].includes(item.chapter));
+      assert.ok([21, 22, 23].includes(item.chapter));
       assert.equal(typeof item.exerciseNumber, "number");
     }
   }

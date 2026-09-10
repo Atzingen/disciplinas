@@ -1,0 +1,472 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Resolução do exercício Halliday 23.27: densidade superficial de carga que uma casca cilíndrica coaxial precisa ter para anular o campo elétrico de um fio longo do lado de fora, pela lei de Gauss.">
+  <title>Halliday 23.27 — Casca que blinda um fio · Eletromagnetismo</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='28' fill='%237a3ce7'/%3E%3Cpath d='M18 32h28M32 18v28' stroke='white' stroke-width='6'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="../../assets/base.css">
+  <link rel="stylesheet" href="../../assets/simulador.css">
+  <link rel="stylesheet" href="../../assets/campo-eletrico.css">
+  <script>try{if(localStorage.getItem("tema")==="escuro"){document.documentElement.dataset.theme="escuro"}}catch(erro){}</script>
+</head>
+<body class="lesson-page field-page">
+  <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+
+  <div class="site-topbar" data-topbar>
+    <div class="site-topbar__inner">
+      <nav class="breadcrumb" aria-label="Navegação estrutural">
+        <a href="../../disciplinas/prcfemg/">Fundamentos do Eletromagnetismo</a>
+        <span aria-hidden="true">/</span>
+        <a href="../">Exercícios</a>
+        <span aria-hidden="true">/</span>
+        <a href="../capitulo-23/">Lei de Gauss · Capítulo 23</a>
+        <span aria-hidden="true">/</span>
+        <strong aria-current="page">Exercício 27</strong>
+      </nav>
+      <div class="lesson-area-navigation" data-site-navigation data-root-path="../../" data-active-section="exercicios"></div>
+    </div>
+    <nav class="section-nav" aria-label="Seções do exercício" data-section-nav>
+      <a href="#enunciado">Enunciado</a>
+      <a href="#resolucao">Resolução</a>
+      <a href="#diagrama">Diagrama</a>
+    </nav>
+  </div>
+
+  <header class="lesson-header">
+    <div class="lesson-title-row">
+      <div>
+        <p class="eyebrow">Halliday · Capítulo 23</p>
+        <h1>Casca que blinda um fio</h1>
+      </div>
+      <p class="lesson-intro">
+        Campo nulo do lado de fora significa carga envolvida nula. A lei de
+        Gauss transforma essa exigência em uma relação direta entre a
+        densidade linear do fio e a densidade superficial da casca.
+      </p>
+    </div>
+  </header>
+
+  <main class="lesson-main" id="conteudo">
+    <div class="lesson-sections">
+
+      <section class="lesson-section" id="enunciado" aria-label="Enunciado">
+        <article class="problem-sheet">
+          <div class="problem-number">
+            <span>Halliday</span>
+            <strong>23.27</strong>
+          </div>
+          <div class="problem-copy">
+            <p>
+              Um fio reto longo possui cargas negativas fixas com uma
+              densidade linear de \(3{,}6\,\mathrm{nC/m}\). O fio é envolvido
+              por uma casca coaxial cilíndrica, não condutora, de paredes
+              finas, com \(1{,}5\,\mathrm{cm}\) de raio. A casca possui uma
+              carga positiva na superfície externa, com uma densidade
+              superficial \(\sigma\), que anula o campo elétrico do lado de
+              fora da casca.
+            </p>
+            <p>
+              Determine o valor de \(\sigma\).
+            </p>
+          </div>
+          <div class="answer-strip">
+            <span>Resultado</span>
+            <strong>
+              \(\displaystyle \sigma=-\frac{\lambda}{2\pi R}
+              =3{,}8\times10^{-8}\,\mathrm{C/m^2}=38\,\mathrm{nC/m^2}\)
+            </strong>
+          </div>
+        </article>
+      </section>
+
+      <section class="lesson-section" id="resolucao" aria-label="Resolução">
+        <article class="solution-article">
+          <header class="solution-heading">
+            <p class="eyebrow">Resolução passo a passo</p>
+            <h2>Traduza "campo nulo fora" em "carga envolvida nula"</h2>
+            <p>
+              A simetria cilíndrica permite escrever o fluxo em função de um
+              único valor de campo. A lei de Gauss então relaciona esse fluxo
+              com a soma das cargas do fio e da casca dentro da superfície
+              escolhida.
+            </p>
+          </header>
+
+          <section>
+            <span class="solution-step">simetria</span>
+            <h3>Escolha uma superfície gaussiana coaxial</h3>
+            <p>
+              O fio e a casca são longos e coaxiais, de modo que a
+              distribuição de cargas não muda quando deslocamos o sistema ao
+              longo do eixo nem quando o giramos em torno dele. O campo
+              elétrico herda essa simetria: \(\vec{E}\) é radial e seu módulo
+              depende apenas da distância \(r\) ao eixo. A superfície natural
+              é um cilindro coaxial de raio \(r\) e comprimento \(h\).
+            </p>
+            <p>
+              Nas duas tampas o campo é paralelo à superfície
+              (\(\vec{E}\perp d\vec{A}\)) e o fluxo é nulo. Na superfície
+              lateral, \(\vec{E}\) é paralelo a \(d\vec{A}\) e tem módulo
+              constante, o que permite retirá-lo da integral:
+            </p>
+            <div class="math-block math-block--result math-display">
+              \[
+              \begin{aligned}
+              \Phi
+              &=\oint\vec{E}\cdot d\vec{A}
+                =\underbrace{\int_{\text{tampas}}\vec{E}\cdot d\vec{A}}_{0}
+                +\int_{\text{lateral}}E\,dA\\
+              &=E(r)\,(2\pi r h).
+              \end{aligned}
+              \]
+            </div>
+            <div class="assumption-note">
+              <strong>Fio "longo" e casca "longa"</strong>
+              <p>
+                Tratamos ambos como infinitos: o comprimento \(h\) da
+                superfície gaussiana é muito menor que o comprimento real do
+                sistema, e os efeitos de borda nas extremidades são
+                desprezados. Essa é a hipótese que garante a simetria
+                cilíndrica usada acima.
+              </p>
+            </div>
+          </section>
+
+          <section>
+            <span class="solution-step">carga envolvida</span>
+            <h3>Some as cargas do fio e da casca dentro do cilindro</h3>
+            <p>
+              Para uma superfície com \(r&gt;R\), o cilindro envolve um trecho
+              de comprimento \(h\) do fio e o mesmo trecho da casca. O fio
+              contribui com \(\lambda h\), em que
+              \(\lambda=-3{,}6\times10^{-9}\,\mathrm{C/m}\) (o sinal negativo
+              registra que as cargas do fio são negativas). A casca, de raio
+              \(R=1{,}5\times10^{-2}\,\mathrm{m}\), contribui com a densidade
+              \(\sigma\) multiplicada pela área lateral \(2\pi Rh\):
+            </p>
+            <div class="math-block math-block--result math-display">
+              \[
+              \begin{aligned}
+              q_{\text{env}}
+              &=q_{\text{fio}}+q_{\text{casca}}\\
+              &=\lambda h+\sigma\,(2\pi R h).
+              \end{aligned}
+              \]
+            </div>
+          </section>
+
+          <section>
+            <span class="solution-step">lei de Gauss</span>
+            <h3>Imponha campo nulo fora da casca</h3>
+            <p>
+              A lei de Gauss, \(\varepsilon_0\Phi=q_{\text{env}}\), vale para
+              qualquer \(r&gt;R\). Se o campo do lado de fora é nulo, então
+              \(E(r)=0\) para todo \(r&gt;R\), o fluxo pela superfície
+              lateral é zero e, portanto, a carga envolvida deve ser zero:
+            </p>
+            <div class="math-block math-display">
+              \[
+              \begin{aligned}
+              \varepsilon_0\,E(r)\,(2\pi r h)&=\lambda h+\sigma\,(2\pi R h)\\
+              E(r)=0\;\Longrightarrow\;
+              0&=\lambda h+\sigma\,(2\pi R h).
+              \end{aligned}
+              \]
+            </div>
+            <p>
+              O comprimento \(h\) aparece em todos os termos e se cancela,
+              como deve ocorrer em um problema com simetria de translação.
+              Isolando \(\sigma\), obtemos
+            </p>
+            <div class="math-block math-block--result math-display">
+              \[
+              \begin{aligned}
+              \sigma&=-\frac{\lambda}{2\pi R}.
+              \end{aligned}
+              \]
+            </div>
+            <p>
+              Como \(\lambda&lt;0\), o resultado é positivo: a casca precisa
+              carregar, por unidade de comprimento, exatamente a carga oposta
+              à do fio, \(\sigma\,(2\pi R)=-\lambda\).
+            </p>
+          </section>
+
+          <section>
+            <span class="solution-step">cálculo numérico</span>
+            <h3>Substitua os dados no SI</h3>
+            <p>
+              Os dados possuem dois algarismos significativos, de modo que a
+              resposta também deve ter dois.
+            </p>
+            <div class="math-block math-display">
+              \[
+              \begin{aligned}
+              \sigma
+              &=-\frac{\left(-3{,}6\times10^{-9}\,\mathrm{C/m}\right)}
+                {2\pi\left(1{,}5\times10^{-2}\,\mathrm{m}\right)}\\
+              &=\frac{3{,}6\times10^{-9}\,\mathrm{C/m}}
+                {9{,}42\times10^{-2}\,\mathrm{m}}\\
+              &=3{,}82\ldots\times10^{-8}\,\mathrm{C/m^2}.
+              \end{aligned}
+              \]
+            </div>
+            <div class="result-callout">
+              <span>Densidade superficial da casca</span>
+              <strong>
+                \(\displaystyle \sigma=3{,}8\times10^{-8}\,\mathrm{C/m^2}
+                =38\,\mathrm{nC/m^2}\)
+              </strong>
+            </div>
+          </section>
+
+          <section>
+            <span class="solution-step">entre o fio e a casca</span>
+            <h3>O campo não é nulo em toda parte</h3>
+            <p>
+              A blindagem vale apenas para \(r&gt;R\). Para uma superfície
+              gaussiana com \(r&lt;R\), somente o fio fica envolvido e a lei
+              de Gauss fornece um campo radial não nulo:
+            </p>
+            <div class="math-block math-display">
+              \[
+              \begin{aligned}
+              \varepsilon_0\,E(r)\,(2\pi r h)&=\lambda h\\
+              E(r)&=\frac{\lambda}{2\pi\varepsilon_0 r}
+              \qquad(r&lt;R).
+              \end{aligned}
+              \]
+            </div>
+            <p>
+              Como \(\lambda&lt;0\), a componente radial é negativa: o campo
+              aponta para o fio. Em \(r=1{,}0\,\mathrm{cm}\), por exemplo, o
+              módulo vale
+              \(\frac{3{,}6\times10^{-9}}{2\pi(8{,}85\times10^{-12})(0{,}010)}
+              =6{,}5\times10^{3}\,\mathrm{N/C}\).
+            </p>
+            <div class="limit-grid">
+              <article>
+                <h4>Região \(r&lt;R\)</h4>
+                <p>
+                  Carga envolvida \(\lambda h&lt;0\). O campo tem módulo
+                  \(\frac{|\lambda|}{2\pi\varepsilon_0 r}\) e aponta
+                  radialmente para dentro, em direção ao fio.
+                </p>
+              </article>
+              <article>
+                <h4>Região \(r&gt;R\)</h4>
+                <p>
+                  Carga envolvida \(\lambda h+\sigma 2\pi Rh=0\). O campo é
+                  nulo: a casca blinda completamente o exterior.
+                </p>
+              </article>
+            </div>
+          </section>
+
+          <section>
+            <span class="solution-step">verificações</span>
+            <h3>Confira unidades, sinal e a hipótese sobre a casca</h3>
+            <p>
+              A razão entre uma densidade linear e um comprimento tem a
+              dimensão correta de densidade superficial:
+            </p>
+            <div class="math-block math-display">
+              \[
+              \begin{aligned}
+              \left[\frac{\lambda}{2\pi R}\right]
+              &=\frac{\mathrm{C/m}}{\mathrm{m}}
+                =\frac{\mathrm{C}}{\mathrm{m^2}}.
+              \end{aligned}
+              \]
+            </div>
+            <p>
+              A carga por unidade de comprimento da casca reproduz a do fio
+              com sinal trocado:
+              \(\sigma\,(2\pi R)=(3{,}8\times10^{-8})(2\pi)(0{,}015)
+              =3{,}6\times10^{-9}\,\mathrm{C/m}=-\lambda\).
+            </p>
+            <div class="assumption-note">
+              <strong>Por que a casca é não condutora?</strong>
+              <p>
+                Em um condutor, as cargas se redistribuiriam por indução e a
+                casca ficaria com carga negativa induzida na face interna e a
+                carga colocada na face externa. Sendo não condutora, a carga
+                positiva foi depositada na superfície externa e permanece
+                fixa ali; a lei de Gauss não distingue as duas situações para
+                \(r&gt;R\), mas o enunciado deixa claro que não há indução.
+              </p>
+            </div>
+            <div class="concept-grid">
+              <article>
+                <h4>Sinal coerente</h4>
+                <p>
+                  Fio negativo exige casca positiva. O sinal de menos em
+                  \(\sigma=-\frac{\lambda}{2\pi R}\) converte
+                  \(\lambda&lt;0\) em \(\sigma&gt;0\).
+                </p>
+              </article>
+              <article>
+                <h4>Independência de \(h\)</h4>
+                <p>
+                  Qualquer comprimento de cilindro gaussiano leva à mesma
+                  condição, porque tanto o fio quanto a casca são
+                  proporcionais a \(h\).
+                </p>
+              </article>
+            </div>
+          </section>
+        </article>
+      </section>
+
+      <section class="lesson-section" id="diagrama" aria-label="Diagrama">
+        <article class="static-diagram-shell field-figure">
+          <header class="static-diagram-heading">
+            <div>
+              <p class="eyebrow">Seção transversal e balanço</p>
+              <h2>Fio, casca e superfície gaussiana</h2>
+            </div>
+            <p>
+              A seção transversal mostra o fio negativo no centro, a casca com
+              carga positiva na face externa e a superfície gaussiana
+              tracejada para \(r&gt;R\). O painel direito registra o balanço
+              de cargas e o perfil radial do campo.
+            </p>
+          </header>
+
+          <svg class="teaching-diagram field-diagram" viewBox="0 0 1160 760" role="img" aria-labelledby="halliday-23-27-title halliday-23-27-desc">
+            <title id="halliday-23-27-title">Fio negativo envolvido por casca cilíndrica positiva e superfície gaussiana coaxial</title>
+            <desc id="halliday-23-27-desc">À esquerda, uma seção transversal: o fio negativo, com densidade linear de menos 3,6 nanocoulombs por metro, está no centro; uma casca circular de raio 1,5 centímetro carrega cargas positivas na face externa; uma circunferência tracejada maior representa a superfície gaussiana com raio maior que R. Entre o fio e a casca, vetores de campo apontam para o fio; fora da casca, vetores tracejados indicam campo nulo. À direita, o balanço de cargas lambda h mais sigma vezes 2 pi R h igual a zero leva a sigma igual a 3,8 vezes dez elevado a menos oito coulombs por metro quadrado, e um gráfico esquemático mostra o campo decaindo com 1 sobre r até R e nulo depois. A base informa os dados e o resultado.</desc>
+            <defs>
+              <marker id="halliday-23-27-axis-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+                <path d="M 0 0 L 10 5 L 0 10 z" style="fill: var(--ink-soft)"></path>
+              </marker>
+              <marker id="halliday-23-27-component-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+                <path d="M 0 0 L 10 5 L 0 10 z" style="fill: var(--force-2)"></path>
+              </marker>
+              <marker id="halliday-23-27-result-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+                <path d="M 0 0 L 10 5 L 0 10 z" style="fill: var(--resultant)"></path>
+              </marker>
+              <marker id="halliday-23-27-dimension" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                <path d="M 10 0 L 0 5 L 10 10 z" style="fill: var(--measure)"></path>
+              </marker>
+            </defs>
+
+            <rect class="field-panel" x="24" y="24" width="520" height="640" rx="8"></rect>
+            <rect class="field-panel" x="568" y="24" width="568" height="640" rx="8"></rect>
+
+            <text class="field-title" x="52" y="62">SEÇÃO TRANSVERSAL: FIO, CASCA E GAUSSIANA</text>
+            <text class="field-title" x="596" y="62">BALANÇO DE CARGA PARA r &gt; R</text>
+
+            <text class="field-label" x="52" y="100">fio longo</text>
+            <text class="field-note" x="52" y="122">λ = −3,6 nC/m (cargas negativas)</text>
+
+            <circle class="field-guide" cx="270" cy="360" r="205"></circle>
+            <text class="field-note" x="286" y="150">gaussiana: r &gt; R, comprimento h</text>
+
+            <circle class="field-object" cx="270" cy="360" r="118"></circle>
+
+            <circle class="field-charge-positive" cx="379" cy="315" r="11"></circle>
+            <text class="field-sign" x="379" y="322">+</text>
+            <circle class="field-charge-positive" cx="315" cy="251" r="11"></circle>
+            <text class="field-sign" x="315" y="258">+</text>
+            <circle class="field-charge-positive" cx="225" cy="251" r="11"></circle>
+            <text class="field-sign" x="225" y="258">+</text>
+            <circle class="field-charge-positive" cx="161" cy="315" r="11"></circle>
+            <text class="field-sign" x="161" y="322">+</text>
+            <circle class="field-charge-positive" cx="161" cy="405" r="11"></circle>
+            <text class="field-sign" x="161" y="412">+</text>
+            <circle class="field-charge-positive" cx="225" cy="469" r="11"></circle>
+            <text class="field-sign" x="225" y="476">+</text>
+            <circle class="field-charge-positive" cx="315" cy="469" r="11"></circle>
+            <text class="field-sign" x="315" y="476">+</text>
+            <circle class="field-charge-positive" cx="379" cy="405" r="11"></circle>
+            <text class="field-sign" x="379" y="412">+</text>
+
+            <line class="field-vector field-vector--component" x1="370" y1="360" x2="302" y2="360" marker-end="url(#halliday-23-27-component-arrow)"></line>
+            <line class="field-vector field-vector--component" x1="170" y1="360" x2="238" y2="360" marker-end="url(#halliday-23-27-component-arrow)"></line>
+            <line class="field-vector field-vector--component" x1="270" y1="260" x2="270" y2="328" marker-end="url(#halliday-23-27-component-arrow)"></line>
+            <line class="field-vector field-vector--component" x1="270" y1="460" x2="270" y2="392" marker-end="url(#halliday-23-27-component-arrow)"></line>
+            <line class="field-vector field-vector--component" x1="199" y1="289" x2="247" y2="337" marker-end="url(#halliday-23-27-component-arrow)"></line>
+            <line class="field-vector field-vector--component" x1="341" y1="431" x2="293" y2="383" marker-end="url(#halliday-23-27-component-arrow)"></line>
+
+            <circle class="field-charge-negative" cx="270" cy="360" r="14"></circle>
+            <text class="field-sign" x="270" y="367">−</text>
+
+            <line class="field-distance" x1="282" y1="348" x2="345" y2="285" marker-start="url(#halliday-23-27-dimension)" marker-end="url(#halliday-23-27-dimension)"></line>
+            <text class="field-value field-value--warm" x="326" y="322">R</text>
+
+            <line class="field-vector field-vector--cancelled" x1="410" y1="360" x2="462" y2="360"></line>
+            <line class="field-vector field-vector--cancelled" x1="130" y1="360" x2="78" y2="360"></line>
+            <line class="field-vector field-vector--cancelled" x1="270" y1="220" x2="270" y2="168"></line>
+            <line class="field-vector field-vector--cancelled" x1="270" y1="500" x2="270" y2="552"></line>
+            <text class="field-value" x="404" y="342">E = 0</text>
+            <text class="field-value" x="82" y="342">E = 0</text>
+            <text class="field-note" x="292" y="212">E = 0 fora da casca</text>
+
+            <text class="field-label" x="52" y="602">casca não condutora, paredes finas</text>
+            <text class="field-note" x="52" y="624">R = 1,5 cm · σ &gt; 0 na face externa</text>
+            <text class="field-note" x="52" y="646">entre o fio e a casca: E aponta para o fio</text>
+
+            <text class="field-label" x="596" y="106">lei de Gauss:</text>
+            <text class="field-note" x="728" y="106">ε₀ Φ = q_env, com Φ = ∮ E · dA</text>
+            <text class="field-note" x="596" y="132">fora da casca: E = 0 ⇒ Φ = 0 ⇒ q_env = 0</text>
+
+            <text class="field-label" x="596" y="176">fio (trecho h):</text>
+            <text class="field-value field-value--warm" x="760" y="176">λh = −(3,6 nC/m) h</text>
+            <text class="field-label" x="596" y="204">casca (área 2πRh):</text>
+            <text class="field-value field-value--warm" x="790" y="204">σ (2πRh)</text>
+
+            <text class="field-value" x="596" y="250">λh + σ 2πRh = 0</text>
+            <text class="field-value" x="596" y="280">σ = −λ / (2πR)</text>
+            <text class="field-value" x="596" y="310">σ = 3,8 × 10⁻⁸ C/m² = 38 nC/m²</text>
+
+            <line class="field-axis" x1="640" y1="610" x2="1097" y2="610" marker-end="url(#halliday-23-27-axis-arrow)"></line>
+            <line class="field-axis" x1="640" y1="610" x2="640" y2="368" marker-end="url(#halliday-23-27-axis-arrow)"></line>
+            <text class="field-label" x="604" y="380">|E|</text>
+            <text class="field-label" x="1088" y="640">r</text>
+            <text class="field-note" x="622" y="634">0</text>
+
+            <path class="field-vector field-vector--component" d="M 662 392 C 690 490 750 540 830 556"></path>
+            <line class="field-guide" x1="830" y1="556" x2="830" y2="610"></line>
+            <line class="field-vector field-vector--cancelled" x1="830" y1="610" x2="1080" y2="610"></line>
+            <text class="field-label" x="822" y="640">R</text>
+            <text class="field-note" x="700" y="440">|E| = |λ| / (2πε₀ r)</text>
+            <text class="field-note" x="700" y="462">aponta para o fio</text>
+            <text class="field-note" x="880" y="590">E = 0 para r &gt; R</text>
+
+            <rect class="field-panel" x="48" y="686" width="1088" height="50" rx="4"></rect>
+            <text class="field-label" x="74" y="717">DADOS:</text>
+            <text class="field-note" x="146" y="717">λ = −3,6 nC/m</text>
+            <text class="field-note" x="300" y="717">R = 1,5 cm</text>
+            <text class="field-label" x="470" y="717">RESULTADO:</text>
+            <text class="field-value" x="592" y="717">σ = 3,8 × 10⁻⁸ C/m² = 38 nC/m²</text>
+          </svg>
+
+          <p class="diagram-caption field-diagram-caption">
+            <strong>Leitura do esquema · sem escala</strong>
+            <span>
+              Dentro da casca, apenas o fio é envolvido e o campo aponta para
+              ele com módulo \(\frac{|\lambda|}{2\pi\varepsilon_0 r}\). Fora
+              dela, a carga positiva \(\sigma\,2\pi Rh\) cancela
+              \(\lambda h\) e a lei de Gauss impõe \(E=0\).
+            </span>
+          </p>
+        </article>
+      </section>
+    </div>
+  </main>
+
+  <div class="exercise-navigation-shell" data-exercise-navigation data-current-id="halliday-23-27" data-registry-url="../../materiais.json" data-chapter-url="../capitulo-23/" data-root-path="../../" data-reference="Halliday" data-chapter="23"></div>
+
+  <footer class="lesson-footer site-footer">
+    <p>Halliday 23.27 · capítulo 23 · casca que blinda um fio</p>
+    <a href="../../">Voltar ao catálogo</a>
+  </footer>
+
+  <script type="module" src="../../componentes/navegacao-principal.js"></script>
+  <script type="module" src="../../componentes/navegacao-exercicios.js"></script>
+  <script type="module" src="../exercicio-estatico.js"></script>
+</body>
+</html>

@@ -1,0 +1,505 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Resolução do exercício Halliday 23.16: determinação da constante b do campo elétrico a partir do fluxo através de uma superfície gaussiana em forma de paralelepípedo que envolve uma carga conhecida, pela lei de Gauss face a face.">
+  <title>Halliday 23.16 — Paralelepípedo e campo com termo em z · Eletromagnetismo</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='28' fill='%237a3ce7'/%3E%3Cpath d='M18 32h28M32 18v28' stroke='white' stroke-width='6'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="../../assets/base.css">
+  <link rel="stylesheet" href="../../assets/simulador.css">
+  <link rel="stylesheet" href="../../assets/campo-eletrico.css">
+  <script>try{if(localStorage.getItem("tema")==="escuro"){document.documentElement.dataset.theme="escuro"}}catch(erro){}</script>
+</head>
+<body class="lesson-page field-page">
+  <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+
+  <div class="site-topbar" data-topbar>
+    <div class="site-topbar__inner">
+      <nav class="breadcrumb" aria-label="Navegação estrutural">
+        <a href="../../disciplinas/prcfemg/">Fundamentos do Eletromagnetismo</a>
+        <span aria-hidden="true">/</span>
+        <a href="../">Exercícios</a>
+        <span aria-hidden="true">/</span>
+        <a href="../capitulo-23/">Lei de Gauss · Capítulo 23</a>
+        <span aria-hidden="true">/</span>
+        <strong aria-current="page">Exercício 16</strong>
+      </nav>
+      <div class="lesson-area-navigation" data-site-navigation data-root-path="../../" data-active-section="exercicios"></div>
+    </div>
+    <nav class="section-nav" aria-label="Seções do exercício" data-section-nav>
+      <a href="#enunciado">Enunciado</a>
+      <a href="#resolucao">Resolução</a>
+      <a href="#diagrama">Diagrama</a>
+    </nav>
+  </div>
+
+  <header class="lesson-header">
+    <div class="lesson-title-row">
+      <div>
+        <p class="eyebrow">Halliday · Capítulo 23</p>
+        <h1>Paralelepípedo e campo com termo em z</h1>
+      </div>
+      <p class="lesson-intro">
+        Aqui a lei de Gauss funciona ao contrário: a carga envolvida é
+        conhecida e o fluxo total, somado face a face, fixa a constante
+        desconhecida \(b\) do campo.
+      </p>
+    </div>
+  </header>
+
+  <main class="lesson-main" id="conteudo">
+    <div class="lesson-sections">
+
+      <section class="lesson-section" id="enunciado" aria-label="Enunciado">
+        <article class="problem-sheet">
+          <div class="problem-number">
+            <span>Halliday</span>
+            <strong>23.16</strong>
+          </div>
+          <div class="problem-copy">
+            <p>
+              A superfície gaussiana em forma de paralelepípedo da Fig. 23-34
+              envolve uma carga de \(+24{,}0\varepsilon_0\,\mathrm{C}\) e está
+              imersa em um campo elétrico dado por
+            </p>
+            <p>
+              \(\vec{E}=[(10{,}0+2{,}00x)\hat{i}-3{,}00\hat{j}+bz\hat{k}]\,\mathrm{N/C}\),
+              com \(x\) e \(z\) em metros e \(b\) constante.
+            </p>
+            <p>
+              A face inferior está no plano \(xz\); a face superior está no
+              plano horizontal que passa pelo ponto \(y_2=1{,}00\,\mathrm{m}\).
+              Qual é o valor de \(b\) para \(x_1=1{,}00\,\mathrm{m}\),
+              \(x_2=4{,}00\,\mathrm{m}\), \(z_1=1{,}00\,\mathrm{m}\) e
+              \(z_2=3{,}00\,\mathrm{m}\)?
+            </p>
+          </div>
+          <div class="answer-strip">
+            <span>Resultado</span>
+            <strong>
+              \(\displaystyle \Phi=12{,}0+6{,}00b=24{,}0\,\mathrm{N\,m^2/C}
+              \quad\Longrightarrow\quad
+              b=2{,}00\,\mathrm{N/(C\,m)}\)
+            </strong>
+          </div>
+        </article>
+      </section>
+
+      <section class="lesson-section" id="resolucao" aria-label="Resolução">
+        <article class="solution-article">
+          <header class="solution-heading">
+            <p class="eyebrow">Resolução passo a passo</p>
+            <h2>Monte o balanço de fluxo e iguale à carga envolvida</h2>
+            <p>
+              Cada face do paralelepípedo contribui com o produto da componente
+              do campo ao longo da normal externa pela área da face. Somando as
+              seis parcelas, obtemos uma expressão linear em \(b\) que a lei de
+              Gauss iguala a \(q_{\text{env}}/\varepsilon_0\).
+            </p>
+          </header>
+
+          <section>
+            <span class="solution-step">geometria</span>
+            <h3>Delimite a caixa e calcule as áreas das faces</h3>
+            <p>
+              A face inferior está no plano \(xz\) (\(y=0\)) e a superior em
+              \(y_2=1{,}00\,\mathrm{m}\). Com os limites dados em \(x\) e em
+              \(z\), a superfície gaussiana é a caixa
+            </p>
+            <div class="math-block math-display">
+              \[
+              \begin{aligned}
+              1{,}00\,\mathrm{m}\le x\le4{,}00\,\mathrm{m},\qquad
+              0\le y\le1{,}00\,\mathrm{m},\qquad
+              1{,}00\,\mathrm{m}\le z\le3{,}00\,\mathrm{m},
+              \end{aligned}
+              \]
+            </div>
+            <p>
+              de dimensões \(3{,}00\times1{,}00\times2{,}00\,\mathrm{m}\).
+              Cada par de faces opostas tem a mesma área:
+            </p>
+            <div class="math-block math-block--result math-display">
+              \[
+              \begin{aligned}
+              A_x&=(y_2-0)(z_2-z_1)=(1{,}00)(2{,}00)=2{,}00\,\mathrm{m^2}
+                \quad\text{(faces perpendiculares a }\hat{i}\text{)},\\
+              A_y&=(x_2-x_1)(z_2-z_1)=(3{,}00)(2{,}00)=6{,}00\,\mathrm{m^2}
+                \quad\text{(faces perpendiculares a }\hat{j}\text{)},\\
+              A_z&=(x_2-x_1)(y_2-0)=(3{,}00)(1{,}00)=3{,}00\,\mathrm{m^2}
+                \quad\text{(faces perpendiculares a }\hat{k}\text{)}.
+              \end{aligned}
+              \]
+            </div>
+            <p>
+              A lei de Gauss que vamos usar é
+              \(\varepsilon_0\Phi=q_{\text{env}}\), com
+              \(\Phi=\oint\vec{E}\cdot d\vec{A}\). Como \(E_x\) depende só de
+              \(x\), \(E_z\) só de \(z\) e \(E_y\) é constante, cada componente
+              é uniforme sobre a face que lhe é perpendicular, e a integral em
+              cada face vira um simples produto.
+            </p>
+          </section>
+
+          <section>
+            <span class="solution-step">faces em x</span>
+            <h3>A componente \(E_x\) cresce com \(x\) e deixa saldo positivo</h3>
+            <p>
+              Na face \(x_2=4{,}00\,\mathrm{m}\) a normal externa é \(+\hat{i}\);
+              na face \(x_1=1{,}00\,\mathrm{m}\) é \(-\hat{i}\). Avaliando
+              \(E_x=10{,}0+2{,}00x\) em cada uma:
+            </p>
+            <div class="math-block math-display">
+              \[
+              \begin{aligned}
+              E_x(4{,}00)&=10{,}0+2{,}00(4{,}00)=18{,}0\,\mathrm{N/C},\\
+              \Phi_{x_2}&=(+18{,}0)(2{,}00)=+36{,}0\,\mathrm{N\,m^2/C},\\[4pt]
+              E_x(1{,}00)&=10{,}0+2{,}00(1{,}00)=12{,}0\,\mathrm{N/C},\\
+              \Phi_{x_1}&=(-1)(12{,}0)(2{,}00)=-24{,}0\,\mathrm{N\,m^2/C}.
+              \end{aligned}
+              \]
+            </div>
+            <p>
+              O campo entra pela face de \(x\) menor e sai, mais intenso, pela
+              face de \(x\) maior. O saldo do par é
+            </p>
+            <div class="math-block math-block--result math-display">
+              \[
+              \begin{aligned}
+              \Phi_x&=\Phi_{x_2}+\Phi_{x_1}=36{,}0-24{,}0=+12{,}0\,\mathrm{N\,m^2/C}.
+              \end{aligned}
+              \]
+            </div>
+          </section>
+
+          <section>
+            <span class="solution-step">faces em y</span>
+            <h3>A componente uniforme \(E_y\) se cancela</h3>
+            <p>
+              \(E_y=-3{,}00\,\mathrm{N/C}\) é a mesma nas duas faces. Na face
+              superior (\(y_2=1{,}00\,\mathrm{m}\), normal \(+\hat{j}\)) o
+              campo aponta para dentro; na inferior (\(y=0\), normal
+              \(-\hat{j}\)) aponta para fora, com o mesmo módulo:
+            </p>
+            <div class="math-block math-display">
+              \[
+              \begin{aligned}
+              \Phi_{y_2}&=(-3{,}00)(6{,}00)=-18{,}0\,\mathrm{N\,m^2/C},\\
+              \Phi_{y_1}&=(-1)(-3{,}00)(6{,}00)=+18{,}0\,\mathrm{N\,m^2/C},\\
+              \Phi_y&=\Phi_{y_2}+\Phi_{y_1}=0.
+              \end{aligned}
+              \]
+            </div>
+            <p>
+              Um campo uniforme nunca produz fluxo líquido em uma superfície
+              fechada: tudo o que entra por um lado sai pelo outro.
+            </p>
+          </section>
+
+          <section>
+            <span class="solution-step">faces em z</span>
+            <h3>A componente \(E_z=bz\) carrega a incógnita</h3>
+            <p>
+              Na face \(z_2=3{,}00\,\mathrm{m}\) (normal \(+\hat{k}\)),
+              \(E_z=3{,}00b\); na face \(z_1=1{,}00\,\mathrm{m}\) (normal
+              \(-\hat{k}\)), \(E_z=1{,}00b\). Com \(A_z=3{,}00\,\mathrm{m^2}\):
+            </p>
+            <div class="math-block math-display">
+              \[
+              \begin{aligned}
+              \Phi_{z_2}&=(3{,}00b)(3{,}00)=+9{,}00b,\\
+              \Phi_{z_1}&=(-1)(1{,}00b)(3{,}00)=-3{,}00b,
+              \end{aligned}
+              \]
+            </div>
+            <div class="math-block math-block--result math-display">
+              \[
+              \begin{aligned}
+              \Phi_z&=\Phi_{z_2}+\Phi_{z_1}=6{,}00b
+              \qquad(\text{em }\mathrm{N\,m^2/C}\text{ quando }b\text{ está em }\mathrm{N/(C\,m)}).
+              \end{aligned}
+              \]
+            </div>
+          </section>
+
+          <section>
+            <span class="solution-step">lei de Gauss</span>
+            <h3>Iguale o fluxo total à carga envolvida sobre \(\varepsilon_0\)</h3>
+            <p>
+              Somando os três pares de faces, o fluxo total é
+              \(\Phi=\Phi_x+\Phi_y+\Phi_z=12{,}0+0+6{,}00b\). A carga foi
+              dada como \(q_{\text{env}}=24{,}0\varepsilon_0\,\mathrm{C}\)
+              justamente para que o quociente \(q_{\text{env}}/\varepsilon_0\)
+              seja um número limpo:
+            </p>
+            <div class="math-block math-display">
+              \[
+              \begin{aligned}
+              \varepsilon_0\Phi&=q_{\text{env}}
+              \;\Longrightarrow\;
+              \Phi=\frac{q_{\text{env}}}{\varepsilon_0}
+              =\frac{24{,}0\varepsilon_0}{\varepsilon_0}
+              =24{,}0\,\mathrm{N\,m^2/C},\\[4pt]
+              12{,}0+6{,}00b&=24{,}0
+              \;\Longrightarrow\;
+              6{,}00b=12{,}0.
+              \end{aligned}
+              \]
+            </div>
+            <div class="result-callout">
+              <span>Constante do campo</span>
+              <strong>
+                \(\displaystyle b=\frac{12{,}0}{6{,}00}=2{,}00\,\mathrm{N/(C\,m)}\)
+              </strong>
+            </div>
+            <p>
+              A unidade de \(b\) decorre de \(bz\) ser um campo elétrico: com
+              \(z\) em metros, \(b\) deve estar em newtons por coulomb por
+              metro.
+            </p>
+            <div class="assumption-note">
+              <strong>Por que a carga vem multiplicada por \(\varepsilon_0\)?</strong>
+              <p>
+                Escrever \(q_{\text{env}}=24{,}0\varepsilon_0\,\mathrm{C}\) é
+                uma forma de dizer que \(q_{\text{env}}/\varepsilon_0\) vale
+                \(24{,}0\,\mathrm{N\,m^2/C}\). Em coulombs, essa carga é
+                \(24{,}0\times8{,}85\times10^{-12}=2{,}12\times10^{-10}\,\mathrm{C}\),
+                mas o valor numérico de \(\varepsilon_0\) nunca precisa entrar
+                na conta.
+              </p>
+            </div>
+          </section>
+
+          <section>
+            <span class="solution-step">verificações</span>
+            <h3>Confira pela divergência, pelos sinais e pelas unidades</h3>
+            <p>
+              Como \(E_x\) e \(E_z\) são lineares nas respectivas coordenadas,
+              o fluxo total também pode ser obtido multiplicando a taxa de
+              variação do campo pelo volume da caixa. A divergência do campo
+              é constante:
+            </p>
+            <div class="math-block math-display">
+              \[
+              \begin{aligned}
+              \frac{\partial E_x}{\partial x}+\frac{\partial E_y}{\partial y}+\frac{\partial E_z}{\partial z}
+              &=2{,}00+0+b,\\
+              V&=(3{,}00)(1{,}00)(2{,}00)=6{,}00\,\mathrm{m^3},\\
+              \Phi&=(2{,}00+b)(6{,}00)=24{,}0
+              \;\Longrightarrow\;
+              b=2{,}00\,\mathrm{N/(C\,m)}.
+              \end{aligned}
+              \]
+            </div>
+            <p>
+              O mesmo valor aparece pelos dois caminhos, o que confirma o
+              balanço face a face.
+            </p>
+            <div class="concept-grid">
+              <article>
+                <h4>Sinal coerente</h4>
+                <p>
+                  Com \(b&gt;0\), o campo \(bz\hat{k}\) sai mais pela face
+                  \(z_2\) do que entra por \(z_1\): fluxo líquido para fora,
+                  como exige uma carga envolvida positiva.
+                </p>
+              </article>
+              <article>
+                <h4>Unidades</h4>
+                <p>
+                  \([b]=\mathrm{N/(C\,m)}\), de modo que \(bz\) tem
+                  \(\mathrm{N/C}\); \([\Phi]=\mathrm{N\,m^2/C}\) e
+                  \([\varepsilon_0\Phi]=\mathrm{C}\).
+                </p>
+              </article>
+              <article>
+                <h4>Termos constantes não contam</h4>
+                <p>
+                  O \(10{,}0\) de \(E_x\) e o \(-3{,}00\) de \(E_y\) entram e
+                  saem sem saldo. Somente \(2{,}00x\) e \(bz\) contribuem.
+                </p>
+              </article>
+              <article>
+                <h4>Escala razoável</h4>
+                <p>
+                  Cada parcela é da ordem de dezenas de \(\mathrm{N\,m^2/C}\),
+                  compatível com campos de dezenas de \(\mathrm{N/C}\) e áreas
+                  de poucos \(\mathrm{m^2}\).
+                </p>
+              </article>
+            </div>
+          </section>
+        </article>
+      </section>
+
+      <section class="lesson-section" id="diagrama" aria-label="Diagrama">
+        <article class="static-diagram-shell field-figure">
+          <header class="static-diagram-heading">
+            <div>
+              <p class="eyebrow">Geometria e balanço</p>
+              <h2>A caixa da Fig. 23-34 e o fluxo em cada face</h2>
+            </div>
+            <p>
+              À esquerda, a caixa gaussiana em perspectiva com as cotas e os
+              vetores de campo nas faces. À direita, a tabela do balanço e a
+              equação que determina \(b\).
+            </p>
+          </header>
+
+          <svg class="teaching-diagram field-diagram" viewBox="0 0 1160 760" role="img" aria-labelledby="halliday-23-16-title halliday-23-16-desc">
+            <title id="halliday-23-16-title">Paralelepípedo gaussiano da Fig. 23-34 e balanço do fluxo por face</title>
+            <desc id="halliday-23-16-desc">À esquerda, eixos x, y e z e uma caixa em perspectiva apoiada no plano xz, que se estende de x igual a 1,00 até 4,00 metros, de y igual a 0 até 1,00 metro e de z igual a 1,00 até 3,00 metros, com cotas ligadas aos eixos por linhas tracejadas. Vetores de E_x apontam para mais x, menores entrando pela face em x igual a 1 e maiores saindo pela face em x igual a 4. Vetores de E_z apontam para mais z, menores entrando pela face em z igual a 1 e maiores saindo pela face em z igual a 3. Setas tracejadas para menos y representam a componente uniforme E_y, que entra por cima e sai por baixo sem saldo. À direita, a tabela do balanço lista as contribuições mais 36,0, menos 24,0, menos 18,0, mais 18,0, mais 9,00 b e menos 3,00 b, cuja soma 12,0 mais 6,00 b é igualada a 24,0, dando b igual a 2,00 newtons por coulomb por metro. A base informa a carga envolvida de 24,0 épsilon zero coulombs, as áreas das faces e o resultado.</desc>
+            <defs>
+              <marker id="halliday-23-16-axis-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+                <path d="M 0 0 L 10 5 L 0 10 z" style="fill: var(--ink-soft)"></path>
+              </marker>
+              <marker id="halliday-23-16-field-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+                <path d="M 0 0 L 10 5 L 0 10 z" style="fill: var(--force-1)"></path>
+              </marker>
+              <marker id="halliday-23-16-component-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+                <path d="M 0 0 L 10 5 L 0 10 z" style="fill: var(--force-2)"></path>
+              </marker>
+              <marker id="halliday-23-16-cancelled-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+                <path d="M 0 0 L 10 5 L 0 10 z" style="fill: var(--ink-soft)"></path>
+              </marker>
+              <marker id="halliday-23-16-dimension" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                <path d="M 10 0 L 0 5 L 10 10 z" style="fill: var(--measure)"></path>
+              </marker>
+            </defs>
+
+            <rect class="field-panel" x="24" y="24" width="520" height="640" rx="8"></rect>
+            <rect class="field-panel" x="568" y="24" width="568" height="640" rx="8"></rect>
+
+            <text class="field-title" x="52" y="62">CAIXA GAUSSIANA DA FIG. 23-34</text>
+            <text class="field-title" x="596" y="62">BALANÇO DO FLUXO FACE A FACE</text>
+
+            <line class="field-axis" x1="200" y1="410" x2="536" y2="410" marker-end="url(#halliday-23-16-axis-arrow)"></line>
+            <line class="field-axis" x1="200" y1="410" x2="200" y2="96" marker-end="url(#halliday-23-16-axis-arrow)"></line>
+            <line class="field-axis" x1="200" y1="410" x2="144" y2="530" marker-end="url(#halliday-23-16-axis-arrow)"></line>
+            <text class="field-label" x="524" y="398">x</text>
+            <text class="field-label" x="212" y="108">y</text>
+            <text class="field-label" x="156" y="548">z</text>
+            <text class="field-note" x="180" y="404">O</text>
+
+            <line class="field-guide" x1="256" y1="440" x2="270" y2="410"></line>
+            <line class="field-guide" x1="466" y1="440" x2="480" y2="410"></line>
+            <line class="field-axis" x1="270" y1="404" x2="270" y2="416"></line>
+            <line class="field-axis" x1="480" y1="404" x2="480" y2="416"></line>
+            <text class="field-value field-value--warm" x="262" y="396">x₁</text>
+            <text class="field-value field-value--warm" x="472" y="396">x₂</text>
+
+            <line class="field-guide" x1="256" y1="440" x2="186" y2="440"></line>
+            <line class="field-guide" x1="228" y1="500" x2="158" y2="500"></line>
+            <text class="field-value field-value--warm" x="150" y="436">z₁</text>
+            <text class="field-value field-value--warm" x="124" y="496">z₂</text>
+
+            <line class="field-guide" x1="256" y1="350" x2="186" y2="350"></line>
+            <line class="field-guide" x1="186" y1="350" x2="200" y2="320"></line>
+            <line class="field-axis" x1="194" y1="320" x2="206" y2="320"></line>
+            <text class="field-value field-value--warm" x="84" y="314">y₂ = 1,00 m</text>
+
+            <line class="field-guide" x1="256" y1="440" x2="466" y2="440"></line>
+            <line class="field-guide" x1="256" y1="440" x2="228" y2="500"></line>
+            <line class="field-guide" x1="256" y1="440" x2="256" y2="350"></line>
+
+            <polygon class="field-surface" points="256,350 466,350 438,410 228,410"></polygon>
+            <polygon class="field-surface" points="228,410 438,410 438,500 228,500"></polygon>
+            <polygon class="field-surface" points="466,350 466,440 438,500 438,410"></polygon>
+
+            <line class="field-vector" x1="186" y1="461" x2="234" y2="461" marker-end="url(#halliday-23-16-field-arrow)"></line>
+            <text class="field-note" x="36" y="596">E_x(x₁) = 12,0 N/C entra</text>
+            <line class="field-vector" x1="452" y1="425" x2="524" y2="425" marker-end="url(#halliday-23-16-field-arrow)"></line>
+            <text class="field-note" x="400" y="522">E_x(x₂) = 18,0 N/C</text>
+            <text class="field-note" x="400" y="542">sai, maior</text>
+
+            <line class="field-vector field-vector--component" x1="398" y1="318" x2="386" y2="344" marker-end="url(#halliday-23-16-component-arrow)"></line>
+            <text class="field-note" x="404" y="316">E_z(z₁) = b entra</text>
+            <line class="field-vector field-vector--component" x1="340" y1="470" x2="306" y2="542" marker-end="url(#halliday-23-16-component-arrow)"></line>
+            <text class="field-note" x="272" y="572">E_z(z₂) = 3,00b sai</text>
+
+            <line class="field-vector field-vector--cancelled" x1="320" y1="296" x2="320" y2="340" marker-end="url(#halliday-23-16-cancelled-arrow)"></line>
+            <line class="field-vector field-vector--cancelled" x1="250" y1="505" x2="250" y2="549" marker-end="url(#halliday-23-16-cancelled-arrow)"></line>
+            <text class="field-note" x="236" y="270">E_y = −3,00 N/C uniforme:</text>
+            <text class="field-note" x="236" y="290">entra por cima, sai por baixo</text>
+
+            <text class="field-note" x="52" y="620">caixa 3,00 × 1,00 × 2,00 m apoiada no plano xz</text>
+            <text class="field-note" x="52" y="640">carga envolvida: q = 24,0 ε₀ C</text>
+
+            <text class="field-label" x="600" y="110">face</text>
+            <text class="field-label" x="760" y="110">normal</text>
+            <text class="field-label" x="880" y="110">E·n̂ A (N·m²/C)</text>
+            <line class="field-axis field-axis--light" x1="596" y1="124" x2="1108" y2="124"></line>
+
+            <text class="field-note" x="600" y="158">x₂ = 4,00 m</text>
+            <text class="field-note" x="760" y="158">+î</text>
+            <text class="field-value" x="880" y="158">+36,0</text>
+
+            <text class="field-note" x="600" y="196">x₁ = 1,00 m</text>
+            <text class="field-note" x="760" y="196">−î</text>
+            <text class="field-value" x="880" y="196">−24,0</text>
+
+            <text class="field-note" x="600" y="234">y₂ = 1,00 m</text>
+            <text class="field-note" x="760" y="234">+ĵ</text>
+            <text class="field-note" x="880" y="234">−18,0</text>
+
+            <text class="field-note" x="600" y="272">y = 0</text>
+            <text class="field-note" x="760" y="272">−ĵ</text>
+            <text class="field-note" x="880" y="272">+18,0</text>
+
+            <text class="field-note" x="600" y="310">z₂ = 3,00 m</text>
+            <text class="field-note" x="760" y="310">+k̂</text>
+            <text class="field-value" x="880" y="310">+9,00 b</text>
+
+            <text class="field-note" x="600" y="348">z₁ = 1,00 m</text>
+            <text class="field-note" x="760" y="348">−k̂</text>
+            <text class="field-value" x="880" y="348">−3,00 b</text>
+
+            <line class="field-axis field-axis--light" x1="596" y1="368" x2="1108" y2="368"></line>
+            <text class="field-label" x="600" y="398">soma Φ</text>
+            <text class="field-value" x="880" y="398">12,0 + 6,00 b</text>
+
+            <text class="field-label" x="600" y="460">LEI DE GAUSS:</text>
+            <text class="field-note" x="600" y="488">ε₀ Φ = q_env  →  Φ = 24,0 ε₀ / ε₀ = 24,0 N·m²/C</text>
+            <text class="field-note" x="600" y="516">12,0 + 6,00 b = 24,0  →  6,00 b = 12,0</text>
+            <text class="field-value" x="600" y="556">b = 2,00 N/(C·m)</text>
+            <text class="field-note" x="600" y="596">verificação: ∇·E = 2,00 + b, V = 6,00 m³,</text>
+            <text class="field-note" x="600" y="616">(2,00 + b) 6,00 = 24,0 → b = 2,00</text>
+
+            <rect class="field-panel" x="48" y="686" width="1088" height="50" rx="4"></rect>
+            <text class="field-label" x="74" y="717">DADOS:</text>
+            <text class="field-note" x="146" y="717">q = 24,0 ε₀ C</text>
+            <text class="field-note" x="290" y="717">A_x = 2,00 m²</text>
+            <text class="field-note" x="430" y="717">A_y = 6,00 m²</text>
+            <text class="field-note" x="570" y="717">A_z = 3,00 m²</text>
+            <text class="field-label" x="740" y="717">RESULTADO:</text>
+            <text class="field-value" x="860" y="717">b = 2,00 N/(C·m)</text>
+          </svg>
+
+          <p class="diagram-caption field-diagram-caption">
+            <strong>Leitura do balanço · esquema sem escala</strong>
+            <span>
+              Só as componentes que variam no espaço deixam saldo:
+              \(2{,}00x\) contribui com \(+12{,}0\,\mathrm{N\,m^2/C}\) e
+              \(bz\) com \(6{,}00b\). Igualando a soma a
+              \(q_{\text{env}}/\varepsilon_0=24{,}0\,\mathrm{N\,m^2/C}\),
+              resulta \(b=2{,}00\,\mathrm{N/(C\,m)}\).
+            </span>
+          </p>
+        </article>
+      </section>
+    </div>
+  </main>
+
+  <div class="exercise-navigation-shell" data-exercise-navigation data-current-id="halliday-23-16" data-registry-url="../../materiais.json" data-chapter-url="../capitulo-23/" data-root-path="../../" data-reference="Halliday" data-chapter="23"></div>
+
+  <footer class="lesson-footer site-footer">
+    <p>Halliday 23.16 · capítulo 23 · paralelepípedo e campo com termo em z</p>
+    <a href="../../">Voltar ao catálogo</a>
+  </footer>
+
+  <script type="module" src="../../componentes/navegacao-principal.js"></script>
+  <script type="module" src="../../componentes/navegacao-exercicios.js"></script>
+  <script type="module" src="../exercicio-estatico.js"></script>
+</body>
+</html>
