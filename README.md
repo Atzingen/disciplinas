@@ -40,6 +40,11 @@ do catálogo indicam os códigos oficiais, em letras maiúsculas, na lista
 `disciplines` de `site/materiais.json`; uma simulação pode listar mais de uma
 disciplina.
 
+A pasta local histórica pode continuar se chamando `Eletromagnetismo-aulas`;
+o repositório remoto atual é `git@github.com:Atzingen/disciplinas.git`.
+O workflow `.github/workflows/pages.yml` publica o conteúdo de `site/` no
+endereço acima a partir de `main`.
+
 ## Exercícios
 
 A aba **Enade** reúne 137 questões específicas de Física: 37 de 2024 e 50
@@ -109,6 +114,17 @@ O roteiro possui um laboratório virtual complementar em
 Nele, cilindros e retângulos móveis funcionam como condições de potencial
 fixo, enquanto uma malha resolvida por Gauss–Seidel/SOR mostra a convergência
 do mapa e das equipotenciais inteiramente no navegador.
+
+O sétimo roteiro aborda circuitos RC com aquisição pelo Arduino:
+
+7. [carga e descarga de capacitores](site/experimentos/07-carga-descarga-capacitores/):
+   capacitor fixo de 2.200 µF e resistores de 47, 56 e 68 kΩ, com meias-vidas
+   nominais de 71,7, 85,4 e 103,7 s. Três pares de curvas, amostragem nominal
+   de 20 ms, sketch de chaveamento, coletor Web Serial no navegador, alternativa
+   em Python e roteiro de análise/relatório.
+   Cada fase dura 5τ (8,6–12,5 min); a aquisição completa soma cerca de 63 min.
+   A base é o artigo de Cavalcante, Tavolaro e Molisani (RBEF, 2011), com
+   componentes adaptados. Tempos físicos dependem de tolerância e fuga.
 
 Na página de cada experimento, a aba **Relatório** contém uma folha preparada
 para impressão. O botão de impressão ativa essa aba e remove da cópia os

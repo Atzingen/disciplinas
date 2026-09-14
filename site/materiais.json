@@ -447,5 +447,29 @@
     "description": "Mapeie todos os cruzamentos de uma região quadrada ao redor de três eletrodos em 0 V, 5 V e 10 V, trace equipotenciais e estime o campo elétrico.",
     "path": "experimentos/06-cuba-eletrolitica/",
     "tags": ["cuba eletrolítica", "potencial elétrico", "equipotenciais", "campo elétrico", "gradiente", "Laplace", "malha"]
+  },
+  {
+    "id": "experimento-07-carga-descarga-capacitores",
+    "title": "Experimento 7 — Carga e descarga de capacitores",
+    "kind": "experimento",
+    "section": "experimentos",
+    "disciplines": [
+      "PRCLFBE"
+    ],
+    "reference": "RBEF · Cavalcante, Tavolaro e Molisani (2011)",
+    "theme": "Circuito RC, aquisição com Arduino e meia-vida",
+    "description": "Obtenha três curvas de carga e três de descarga com Arduino, capacitor fixo de 2.200 µF e resistores de 47, 56 e 68 kΩ; estime RC e a meia-vida com dados CSV a cada 20 ms.",
+    "path": "experimentos/07-carga-descarga-capacitores/",
+    "tags": [
+      "capacitor",
+      "capacitores",
+      "carga",
+      "descarga",
+      "Arduino",
+      "RC",
+      "meia-vida",
+      "constante de tempo",
+      "CSV"
+    ]
   }
 ]

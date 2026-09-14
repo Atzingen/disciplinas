@@ -1,0 +1,71 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "side-tab",
+        "value": "*",
+        "files": [
+          "site/experimentos/07-carga-descarga-capacitores/index.html"
+        ],
+        "createdAt": "2026-09-14T14:04:33.443Z",
+        "reason": "Agent: page-local CSS reduces the safety and serial status borders to one pixel; residual hits are imported global selectors"
+      },
+      {
+        "rule": "ai-color-palette",
+        "value": "*",
+        "files": [
+          "site/experimentos/07-carga-descarga-capacitores/index.html"
+        ],
+        "createdAt": "2026-09-14T14:04:33.986Z",
+        "reason": "Agent: page-local prediction styling uses the warm measurement token and ink; residual purple is an imported global token"
+      },
+      {
+        "rule": "low-contrast",
+        "value": "*",
+        "files": [
+          "site/experimentos/07-carga-descarga-capacitores/index.html"
+        ],
+        "createdAt": "2026-09-14T14:04:34.548Z",
+        "reason": "Agent: page-local safety text uses the ink token and measured contrast is 14.93 light and 14.38 dark; residual color is imported CSS"
+      },
+      {
+        "rule": "cramped-padding",
+        "value": "*",
+        "files": [
+          "site/experimentos/07-carga-descarga-capacitores/index.html"
+        ],
+        "createdAt": "2026-09-14T14:04:35.096Z",
+        "reason": "Agent: rendered topbar has its inner gutter and table cells provide their own inset; wrapper-level flush layout is intentional"
+      },
+      {
+        "rule": "all-caps-body",
+        "value": "*",
+        "files": [
+          "site/experimentos/07-carga-descarga-capacitores/index.html"
+        ],
+        "createdAt": "2026-09-14T14:04:35.642Z",
+        "reason": "Agent: page-local safety label disables uppercase; residual uppercase declaration comes from imported global CSS"
+      },
+      {
+        "rule": "overused-font",
+        "value": "*",
+        "files": [
+          "site/experimentos/07-carga-descarga-capacitores/index.html"
+        ],
+        "createdAt": "2026-09-14T14:04:36.181Z",
+        "reason": "Agent: Space Grotesk is the incumbent portal display type used consistently across all experiment pages"
+      },
+      {
+        "rule": "codex-grid-background",
+        "value": "*",
+        "files": [
+          "site/experimentos/07-carga-descarga-capacitores/index.html"
+        ],
+        "createdAt": "2026-09-14T14:04:36.717Z",
+        "reason": "Agent: the incumbent graph-paper background is domain-appropriate for this physics laboratory and measurement portal"
+      }
+    ]
+  }
+}

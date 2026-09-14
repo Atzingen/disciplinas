@@ -8,3 +8,5 @@ __pycache__/
 .vscode/
 .worktrees/
 tmp/
+.impeccable/config.local.json
+.impeccable/hook.cache.json

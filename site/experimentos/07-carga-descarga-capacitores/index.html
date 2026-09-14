@@ -1,0 +1,327 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Circuito RC com Arduino: três curvas de carga e três de descarga, capacitor fixo de 2200 µF, coleta CSV a cada 20 ms e meia-vida entre 1 e 2 minutos.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='28' fill='%23d1402c'/%3E%3Cpath d='M18 32h28M32 18v28' stroke='white' stroke-width='6'/%3E%3C/svg%3E">
+  <title>Carga e descarga de capacitores com Arduino · Experimento 07</title>
+  <link rel="stylesheet" href="../../assets/base.css">
+  <link rel="stylesheet" href="../../assets/experimentos.css">
+  <style>
+    .rc-code { max-width: 100%; overflow-x: auto; padding: 1rem; background: var(--paper-deep); border: 1px solid var(--line); border-radius: 12px; font-size: .85rem; }
+    .rc-figure { margin: 1.5rem 0; padding: 1rem; background: var(--surface); border: 1px solid var(--line); border-radius: 16px; }
+    .rc-figure svg { display: block; width: 100%; height: auto; color: var(--ink); }
+    .rc-figure figcaption { margin-top: .8rem; color: var(--ink-soft); }
+    .rc-downloads { display: flex; flex-wrap: wrap; gap: 1rem; margin: 1rem 0; }
+    .experiment-safety { border-width: 1px; }
+    .experiment-safety strong { color: var(--ink); letter-spacing: .02em; text-transform: none; }
+    .prediction-box { border-color: var(--measure); background: var(--tint-warm); }
+    .prediction-box strong { color: var(--ink); }
+    .serial-collector { margin: 1.25rem 0; padding: clamp(1rem, 3vw, 1.5rem); border: 1px solid var(--line-strong); border-radius: var(--radius-lg); background: var(--surface); }
+    .serial-collector__status { margin: 1rem 0; padding: .85rem 1rem; border: 1px solid var(--measure); background: var(--paper-deep); }
+    .serial-collector__status[data-kind="ready"], .serial-collector__status[data-kind="complete"] { border-color: var(--accent); }
+    .serial-collector__status[data-kind="warning"] { border-color: #d89018; }
+    .serial-collector__status[data-kind="error"] { border-color: #c9463d; }
+    .serial-collector__controls { display: flex; flex-wrap: wrap; gap: .75rem; margin-bottom: 1rem; }
+    .serial-collector__controls button { padding: .7rem 1rem; border: 1px solid var(--line-strong); border-radius: 999px; background: var(--surface); color: var(--ink); font-weight: 700; cursor: pointer; }
+    .serial-collector__controls button:first-child, .serial-collector__controls button[data-serial-start] { background: var(--ink); color: var(--surface); }
+    .serial-collector__controls button:disabled { cursor: not-allowed; opacity: 1; background: var(--paper-deep); color: var(--ink-soft); border-color: var(--line); }
+    .serial-collector__readings { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: .75rem; margin: 1rem 0; }
+    .serial-collector__reading { padding: .75rem; border: 1px solid var(--line); border-radius: var(--radius-md); }
+    .serial-collector__reading dt { color: var(--ink-soft); font: 700 .7rem/1.4 var(--font-mono); letter-spacing: .04em; text-transform: uppercase; }
+    .serial-collector__reading dd { margin: .35rem 0 0; font: 700 1.05rem/1.2 var(--font-mono); }
+    .serial-collector progress { width: 100%; height: .7rem; accent-color: var(--accent); }
+    @media (max-width: 720px) { .serial-collector__readings { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  </style>
+  <script>try{if(localStorage.getItem("tema")==="escuro"){document.documentElement.dataset.theme="escuro"}}catch(erro){}</script>
+</head>
+<body class="experiment-page">
+  <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+
+  <div class="page-shell" data-experiment-tabs>
+  <div class="site-topbar" data-topbar>
+    <div class="site-topbar__inner">
+      <nav class="experiment-breadcrumb" aria-label="Caminho de navegação">
+        <a href="../../disciplinas/prclfbe/">Laboratório de Física Básica: Eletromagnetismo</a>
+        <span aria-hidden="true">/</span>
+        <a href="../">Experimentos</a>
+        <span aria-hidden="true">/</span>
+        <span aria-current="page">Experimento 07</span>
+      </nav>
+      <div class="experiment-header__navigation">
+        <div
+          data-site-navigation
+          data-root-path="../../"
+          data-active-section="experimentos"
+        ></div>
+      </div>
+    </div>
+      <div class="experiment-tab-list" role="tablist" aria-label="Etapas do experimento">
+        <button
+          class="experiment-tab"
+          id="aba-montagem"
+          type="button"
+          role="tab"
+          aria-controls="painel-montagem"
+          aria-selected="true"
+          tabindex="0"
+        >Montagem</button>
+        <button
+          class="experiment-tab"
+          id="aba-fundamentos"
+          type="button"
+          role="tab"
+          aria-controls="painel-fundamentos"
+          aria-selected="false"
+          tabindex="-1"
+        >Fundamentos</button>
+        <button
+          class="experiment-tab"
+          id="aba-dados"
+          type="button"
+          role="tab"
+          aria-controls="painel-dados"
+          aria-selected="false"
+          tabindex="-1"
+        >Dados</button>
+        <button
+          class="experiment-tab"
+          id="aba-relatorio"
+          type="button"
+          role="tab"
+          aria-controls="painel-relatorio"
+          aria-selected="false"
+          tabindex="-1"
+        >Relatório</button>
+      </div>
+  </div>
+
+
+  <header class="experiment-header">
+    <div class="experiment-hero">
+      <div><h1>Carga e descarga de capacitores</h1></div>
+      <div><p class="experiment-hero__lead">Um capacitor, três resistores e seis curvas. Use o Arduino para acompanhar a tensão a cada 20 ms e investigar como a resistência determina o tempo de meia-vida.</p>
+      <ul class="experiment-meta" aria-label="Características do roteiro"><li>PRCLFBE</li><li>Arduino · aquisição CSV</li><li>C = 2.200 µF fixo</li></ul></div>
+    </div>
+  </header>
+  <main class="experiment-main" id="conteudo">
+    <section class="experiment-panel" id="painel-montagem" role="tabpanel" aria-labelledby="aba-montagem" tabindex="0">
+      <header class="experiment-section-heading"><h2>Montagem</h2><p>Meça a tensão nos terminais do capacitor, com resistor e capacitor em série. O resistor é substituído entre as três aquisições; o capacitor permanece o mesmo.</p></header>
+      <div class="experiment-grid">
+        <article class="lab-card"><h3>O que vamos investigar</h3><ul>
+          <li>Obter três curvas de carga e três de descarga, uma dupla para cada resistência.</li>
+          <li>Distinguir constante de tempo, meia-vida e duração da aquisição.</li>
+          <li>Determinar τ e t₁/₂ por ajuste exponencial e por linearização.</li>
+          <li>Comparar τ/R entre os ensaios e discutir a capacitância e a fuga.</li>
+        </ul></article>
+        <article class="lab-card"><h3>Material por bancada</h3><ul>
+          <li>Arduino Uno R3 ou Nano clássico, ATmega328P de 5 V, cabo USB e computador;</li>
+          <li>um capacitor eletrolítico de <strong>2.200 µF, 10 V ou 16 V</strong>, em bom estado; preferir componente com baixa fuga documentada;</li>
+          <li>resistores de <strong>47 kΩ, 56 kΩ e 68 kΩ</strong>, ¼ W, preferencialmente 1%;</li>
+          <li>um resistor auxiliar de 1 kΩ, ¼ W, para a descarga inicial;</li>
+          <li>protoboard, jumpers, multímetro e, se disponível, capacímetro.</li>
+        </ul><p>Outras placas, especialmente as de 3,3 V, exigem revisão da tensão, dos pinos e da resolução do ADC.</p></article>
+      </div>
+      <div class="prediction-box"><strong>O alvo é a meia-vida, não o tempo total.</strong> Com estes componentes, o sistema percorre metade da distância até o patamar em aproximadamente 72–104 s. Para registrar até 5τ, cada fase leva 8,6–12,5 min. Os três pares completos somam cerca de 63 min de aquisição, além da montagem e das trocas. Valores nominais: a bancada pode diferir.</div>
+      <div class="data-table-wrapper"><table class="data-table"><thead><tr><th scope="col">Resistor nominal</th><th scope="col">Capacitor fixo</th><th scope="col">τ = RC</th><th scope="col">t₁/₂ = RC ln 2</th><th scope="col">Duração de cada fase (5τ)</th></tr></thead><tbody><tr><td>47 kΩ</td><td>2.200 µF</td><td>103,4 s</td><td>71,7 s</td><td>517 s (8,6 min)</td></tr><tr><td>56 kΩ</td><td>2.200 µF</td><td>123,2 s</td><td>85,4 s</td><td>616 s (10,3 min)</td></tr><tr><td>68 kΩ</td><td>2.200 µF</td><td>149,6 s</td><td>103,7 s</td><td>748 s (12,5 min)</td></tr></tbody></table></div>
+      <p>O valor central de 56 kΩ dá 85,4 s, próximo de um minuto e meio. A partir de t₁/₂ = 90 s e C = 0,0022 F, o resistor calculado é 59,0 kΩ; 56 kΩ é a escolha nominal adotada. Manter 470 µF, como na figura 8 do artigo, exigiria cerca de 276 kΩ e tornaria a montagem mais sensível à fuga. Os valores deste roteiro são uma adaptação.</p>
+      <figure class="rc-figure">
+        <svg viewBox="0 0 740 280" role="img" aria-labelledby="circuito-titulo circuito-desc">
+          <title id="circuito-titulo">Circuito de carga e descarga com Arduino</title>
+          <desc id="circuito-desc">D8 conecta ao resistor de 47, 56 ou 68 quilo-ohms; o resistor conecta ao positivo do capacitor e a A0. O negativo do capacitor conecta ao GND. D8 alto carrega e D8 baixo descarrega pelo mesmo resistor.</desc>
+          <g fill="none" stroke="currentColor" stroke-width="3"><rect x="20" y="40" width="165" height="195" rx="12"/><path d="M185 90 H270 M375 90 H470 V145 M470 160 V225 H185 M470 90 H645"/><rect x="270" y="77" width="105" height="26"/><path d="M438 145 H502 M438 160 H502"/><circle cx="470" cy="90" r="5" fill="currentColor"/></g>
+          <g fill="currentColor" font-family="sans-serif" font-size="19"><text x="40" y="70">Arduino 5 V</text><text x="45" y="111">D8 →</text><text x="40" y="207">GND</text><text x="286" y="62">R escolhido</text><text x="550" y="77">A0 (entrada)</text><text x="490" y="133">+</text><text x="516" y="161">2.200 µF</text><text x="490" y="186">−</text><text x="250" y="267">D8 HIGH: carga · D8 LOW: descarga</text></g>
+        </svg><figcaption>Esquema próprio, adaptado da ideia de chaveamento digital da figura 11 da referência. A0 mede o potencial do terminal positivo em relação ao GND; ele não alimenta o circuito. O capacitor nunca é ligado diretamente a D8.</figcaption>
+      </figure>
+      <div class="experiment-safety"><strong>Polaridade e descarga antes de mexer</strong><p>Confira a faixa negativa do eletrolítico: ela deve ir ao GND. Alimente a montagem somente pelo USB do Arduino, sem fonte externa neste roteiro. A tensão em A0 deve ficar entre GND e a alimentação da placa. Com 47 kΩ, a corrente inicial ideal é apenas 5/47000 ≈ 106 µA. Mesmo assim, não faça curto no capacitor nem una D8 diretamente ao GND.</p><p>Antes de trocar o resistor ou desconectar a placa, envie <code>x</code>, coloque o resistor auxiliar de 1 kΩ em paralelo com o capacitor e espere <strong>pelo menos 15 s</strong>; confirme menos de 0,05 V. Remova o resistor auxiliar antes da coleta. Com 2.200 µF, 1 kΩ dá τ = 2,2 s; a potência inicial a 5 V é 25 mW. Não descarregue um capacitor carregado através de uma placa desligada.</p></div>
+      <article class="lab-card"><h3>Sequência experimental</h3><ol class="procedure-list">
+        <li><strong>Caracterização:</strong> com tudo desligado e descarregado, meça os três resistores fora do circuito. Registre tolerâncias, capacitância nominal, tensão nominal e capacitância medida, se disponível.</li>
+        <li><strong>Montagem:</strong> conecte D8 → resistor de 47 kΩ → positivo do capacitor; negativo → GND. Ligue A0 ao positivo. Confira a polaridade antes do USB.</li>
+        <li><strong>Programa:</strong> baixe o sketch na aba Dados. Abra <code>capacitores.ino</code> dentro de uma pasta chamada <code>capacitores</code>. Selecione a placa e a porta na IDE e envie o código. Comece com <code>RESISTOR_OHM = 47000UL</code>.</li>
+        <li><strong>Condição inicial:</strong> descarregue com o auxiliar de 1 kΩ, confira a tensão e retire o auxiliar. O programa só inicia quando A0 ≤ 10 contagens, aproximadamente 0,05 V.</li>
+        <li><strong>Primeiro par:</strong> feche o Monitor Serial e execute o coletor CSV. Ele envia <code>i</code>: D8 sobe, registra a carga por 5τ, desce e registra a descarga por mais 5τ. Os tempos reiniciam em cada fase. Espere a confirmação de conclusão.</li>
+        <li><strong>Mais dois pares:</strong> descarregue, desconecte o USB e troque apenas o resistor por 56 kΩ, depois por 68 kΩ. Atualize <code>RESISTOR_OHM</code> para 56000UL ou 68000UL, reenvie o sketch e grave cada par em um CSV novo. Use sempre o mesmo capacitor.</li>
+        <li><strong>Conferência:</strong> abra cada CSV e verifique as duas fases, a ordem dos tempos, o resistor nominal e a duração. Preserve os arquivos completos; se uma coleta for interrompida, identifique-a como parcial e repita em outro arquivo.</li>
+      </ol></article>
+      <p>Meça a alimentação e os níveis alto/baixo de D8 antes/depois dos ensaios. Não deixe um multímetro de baixa impedância ligado em paralelo durante a aquisição. As curvas devem ser monotônicas em média; patamares muito baixos, deriva ou diferenças sistemáticas entre carga e descarga pedem inspeção da fuga e das conexões.</p>
+    </section>
+
+    <section class="experiment-panel" id="painel-fundamentos" role="tabpanel" aria-labelledby="aba-fundamentos" tabindex="0" hidden>
+      <header class="experiment-section-heading"><h2>Fundamentos</h2><p>O Arduino mede tensão. A carga elétrica é inferida por Q = CV; a corrente pode ser calculada a partir da queda de tensão no resistor.</p></header>
+      <article class="theory-card"><h3>Do circuito à exponencial</h3><p>Pela lei das malhas, Vₛ = Ri + V꜀ e i = C dV꜀/dt. Com fonte constante durante cada fase:</p>
+      <div class="math-block math-display">\[\begin{aligned}RC\frac{dV_C}{dt}+V_C&=V_s,\\ V_C(t)&=V_\infty+(V_0-V_\infty)e^{-t/\tau},\\ \tau&=RC.\end{aligned}\]</div>
+      <p>V₀ é a tensão no início daquela fase; V∞ é o patamar assintótico. No modelo ideal, V∞ é o nível de D8: próximo da alimentação na carga e de zero na descarga. A carga iniciada em zero e a descarga com tensão inicial V₀ ficam:</p>
+      <div class="math-block math-display">\[\begin{aligned}V_{\mathrm{carga}}(t)&=V_s\left(1-e^{-t/(RC)}\right),\\ V_{\mathrm{descarga}}(t)&=V_0e^{-t/(RC)},\\ Q(t)&=CV_C(t),\qquad i(t)=\frac{V_s-V_C(t)}{R}.\end{aligned}\]</div></article>
+      <div class="experiment-grid"><article class="theory-card"><h3>O que significa meia-vida na carga?</h3><p>É o tempo para reduzir à metade a <em>diferença até o patamar</em>. Saindo de zero, a carga chega a 50% do valor final; na descarga ideal, a tensão cai a 50% do valor inicial.</p><div class="math-block math-display">\[\frac{|V_C(t_{1/2})-V_\infty|}{|V_0-V_\infty|}=\frac12\quad\Rightarrow\quad t_{1/2}=RC\ln 2.\]</div><p>Em τ, a carga percorre 63,2% do caminho. Em 5τ, percorre 99,33%. A tensão nunca chega exatamente ao patamar no modelo exponencial.</p></article>
+      <article class="theory-card"><h3>Por que tantos pontos?</h3><p>O intervalo nominal de 20 ms produz 50 leituras por segundo: aproximadamente 3.583–5.185 pontos por meia-vida. Isso detalha a forma da curva, mas não elimina erros sistemáticos.</p><p>O ADC de 10 bits retorna 0–1023. Para gráficos, use a aproximação V꜀ ≈ ADC × Vref/1023, com Vref medida. A escala nominal de um código é cerca de 5/1024 ≈ 4,88 mV. Muitos pontos consecutivos terão o mesmo código: resolução e taxa de amostragem são coisas diferentes.</p><p>O sketch usa <code>millis()</code> para registrar o tempo real de cada leitura. Não reconstrua o tempo apenas multiplicando a linha por 20 ms.</p></article></div>
+      <div class="experiment-grid"><figure class="rc-figure"><svg viewBox="0 0 600 340" role="img" aria-labelledby="grafico-carga"><title id="grafico-carga">Três curvas teóricas de carga, capacitor de 2200 microfarads, tensão em volts e tempo em segundos</title><g fill="currentColor" font-family="sans-serif" font-size="15"><text x="65" y="22">Tensão (V)</text><path d="M65 270 H565" stroke="currentColor" opacity=".15"/><text x="38" y="275">0</text><path d="M65 228 H565" stroke="currentColor" opacity=".15"/><text x="38" y="233">1</text><path d="M65 186 H565" stroke="currentColor" opacity=".15"/><text x="38" y="191">2</text><path d="M65 144 H565" stroke="currentColor" opacity=".15"/><text x="38" y="149">3</text><path d="M65 102 H565" stroke="currentColor" opacity=".15"/><text x="38" y="107">4</text><path d="M65 60 H565" stroke="currentColor" opacity=".15"/><text x="38" y="65">5</text><text x="65.0" y="293" text-anchor="middle">0</text><text x="190.0" y="293" text-anchor="middle">200</text><text x="315.0" y="293" text-anchor="middle">400</text><text x="440.0" y="293" text-anchor="middle">600</text><text x="565.0" y="293" text-anchor="middle">800</text><text x="510" y="325" text-anchor="middle">Tempo (s)</text></g><polyline points="65.00,270.00 67.50,262.03 70.00,254.37 72.50,246.99 75.00,239.89 77.50,233.07 80.00,226.50 82.50,220.18 85.00,214.10 87.50,208.26 90.00,202.63 92.50,197.22 95.00,192.01 97.50,187.00 100.00,182.18 102.50,177.55 105.00,173.09 107.50,168.80 110.00,164.67 112.50,160.70 115.00,156.87 117.50,153.20 120.00,149.66 122.50,146.26 125.00,142.99 127.50,139.84 130.00,136.81 132.50,133.89 135.00,131.09 137.50,128.39 140.00,125.80 142.50,123.30 145.00,120.90 147.50,118.59 150.00,116.36 152.50,114.23 155.00,112.17 157.50,110.19 160.00,108.28 162.50,106.45 165.00,104.69 167.50,102.99 170.00,101.36 172.50,99.79 175.00,98.28 177.50,96.83 180.00,95.43 182.50,94.09 185.00,92.79 187.50,91.55 190.00,90.35 192.50,89.20 195.00,88.09 197.50,87.03 200.00,86.00 202.50,85.01 205.00,84.07 207.50,83.15 210.00,82.27 212.50,81.43 215.00,80.62 217.50,79.83 220.00,79.08 222.50,78.36 225.00,77.66 227.50,76.99 230.00,76.34 232.50,75.72 235.00,75.13 237.50,74.55 240.00,74.00 242.50,73.47 245.00,72.96 247.50,72.47 250.00,71.99 252.50,71.54 255.00,71.10 257.50,70.68 260.00,70.27 262.50,69.88 265.00,69.51 267.50,69.15 270.00,68.80 272.50,68.47 275.00,68.15 277.50,67.84 280.00,67.54 282.50,67.25 285.00,66.98 287.50,66.71 290.00,66.46 292.50,66.21 295.00,65.98 297.50,65.75 300.00,65.53 302.50,65.32 305.00,65.12 307.50,64.93 310.00,64.74 312.50,64.56 315.00,64.39 317.50,64.22 320.00,64.06 322.50,63.91 325.00,63.76 327.50,63.62 330.00,63.48 332.50,63.35 335.00,63.22 337.50,63.10 340.00,62.98 342.50,62.87 345.00,62.76 347.50,62.65 350.00,62.55 352.50,62.46 355.00,62.36 357.50,62.27 360.00,62.19 362.50,62.10 365.00,62.02 367.50,61.95 370.00,61.87 372.50,61.80 375.00,61.73 377.50,61.67 380.00,61.60 382.50,61.54 385.00,61.49 387.50,61.43 390.00,61.37 392.50,61.32 395.00,61.27 397.50,61.22 400.00,61.18 402.50,61.13 405.00,61.09 407.50,61.05 410.00,61.01 412.50,60.97 415.00,60.93 417.50,60.90 420.00,60.86 422.50,60.83 425.00,60.80 427.50,60.77 430.00,60.74 432.50,60.71 435.00,60.69 437.50,60.66 440.00,60.63 442.50,60.61 445.00,60.59 447.50,60.56 450.00,60.54 452.50,60.52 455.00,60.50 457.50,60.48 460.00,60.47 462.50,60.45 465.00,60.43 467.50,60.41 470.00,60.40 472.50,60.38 475.00,60.37 477.50,60.35 480.00,60.34 482.50,60.33 485.00,60.32 487.50,60.30 490.00,60.29 492.50,60.28 495.00,60.27 497.50,60.26 500.00,60.25 502.50,60.24 505.00,60.23 507.50,60.22 510.00,60.21 512.50,60.21 515.00,60.20 517.50,60.19 520.00,60.18 522.50,60.18 525.00,60.17 527.50,60.16 530.00,60.16 532.50,60.15 535.00,60.15 537.50,60.14 540.00,60.13 542.50,60.13 545.00,60.12 547.50,60.12 550.00,60.12 552.50,60.11 555.00,60.11 557.50,60.10 560.00,60.10 562.50,60.10 565.00,60.09" fill="none" stroke="#b05d00" stroke-width="3" stroke-dasharray=""/><text x="75" y="45" fill="#b05d00" font-family="sans-serif" font-size="16">47 kΩ</text><polyline points="65.00,270.00 67.50,263.29 70.00,256.80 72.50,250.51 75.00,244.42 77.50,238.53 80.00,232.83 82.50,227.31 85.00,221.96 87.50,216.79 90.00,211.78 92.50,206.93 95.00,202.24 97.50,197.69 100.00,193.29 102.50,189.04 105.00,184.91 107.50,180.92 110.00,177.06 112.50,173.32 115.00,169.70 117.50,166.20 120.00,162.80 122.50,159.52 125.00,156.34 127.50,153.26 130.00,150.28 132.50,147.40 135.00,144.61 137.50,141.90 140.00,139.29 142.50,136.75 145.00,134.30 147.50,131.93 150.00,129.63 152.50,127.41 155.00,125.25 157.50,123.17 160.00,121.15 162.50,119.20 165.00,117.31 167.50,115.48 170.00,113.70 172.50,111.99 175.00,110.33 177.50,108.72 180.00,107.16 182.50,105.66 185.00,104.20 187.50,102.79 190.00,101.42 192.50,100.10 195.00,98.81 197.50,97.57 200.00,96.37 202.50,95.21 205.00,94.09 207.50,93.00 210.00,91.94 212.50,90.92 215.00,89.94 217.50,88.98 220.00,88.05 222.50,87.16 225.00,86.29 227.50,85.45 230.00,84.64 232.50,83.85 235.00,83.09 237.50,82.35 240.00,81.64 242.50,80.95 245.00,80.28 247.50,79.63 250.00,79.00 252.50,78.39 255.00,77.81 257.50,77.24 260.00,76.69 262.50,76.15 265.00,75.64 267.50,75.14 270.00,74.65 272.50,74.19 275.00,73.73 277.50,73.29 280.00,72.87 282.50,72.46 285.00,72.06 287.50,71.68 290.00,71.30 292.50,70.94 295.00,70.59 297.50,70.25 300.00,69.93 302.50,69.61 305.00,69.30 307.50,69.00 310.00,68.72 312.50,68.44 315.00,68.17 317.50,67.91 320.00,67.66 322.50,67.41 325.00,67.17 327.50,66.94 330.00,66.72 332.50,66.51 335.00,66.30 337.50,66.10 340.00,65.90 342.50,65.72 345.00,65.53 347.50,65.36 350.00,65.19 352.50,65.02 355.00,64.86 357.50,64.70 360.00,64.55 362.50,64.41 365.00,64.27 367.50,64.13 370.00,64.00 372.50,63.87 375.00,63.75 377.50,63.63 380.00,63.51 382.50,63.40 385.00,63.29 387.50,63.19 390.00,63.08 392.50,62.99 395.00,62.89 397.50,62.80 400.00,62.71 402.50,62.62 405.00,62.54 407.50,62.46 410.00,62.38 412.50,62.30 415.00,62.23 417.50,62.16 420.00,62.09 422.50,62.02 425.00,61.96 427.50,61.90 430.00,61.83 432.50,61.78 435.00,61.72 437.50,61.66 440.00,61.61 442.50,61.56 445.00,61.51 447.50,61.46 450.00,61.41 452.50,61.37 455.00,61.33 457.50,61.28 460.00,61.24 462.50,61.20 465.00,61.16 467.50,61.13 470.00,61.09 472.50,61.06 475.00,61.02 477.50,60.99 480.00,60.96 482.50,60.93 485.00,60.90 487.50,60.87 490.00,60.84 492.50,60.81 495.00,60.79 497.50,60.76 500.00,60.74 502.50,60.72 505.00,60.69 507.50,60.67 510.00,60.65 512.50,60.63 515.00,60.61 517.50,60.59 520.00,60.57 522.50,60.55 525.00,60.53 527.50,60.52 530.00,60.50 532.50,60.48 535.00,60.47 537.50,60.45 540.00,60.44 542.50,60.43 545.00,60.41 547.50,60.40 550.00,60.39 552.50,60.37 555.00,60.36 557.50,60.35 560.00,60.34 562.50,60.33 565.00,60.32" fill="none" stroke="#3178c6" stroke-width="3" stroke-dasharray="9 4"/><text x="225" y="45" fill="#3178c6" font-family="sans-serif" font-size="16">56 kΩ</text><polyline points="65.00,270.00 67.50,264.46 70.00,259.07 72.50,253.81 75.00,248.70 77.50,243.72 80.00,238.87 82.50,234.15 85.00,229.56 87.50,225.09 90.00,220.73 92.50,216.49 95.00,212.36 97.50,208.34 100.00,204.43 102.50,200.62 105.00,196.91 107.50,193.29 110.00,189.78 112.50,186.35 115.00,183.02 117.50,179.77 120.00,176.61 122.50,173.54 125.00,170.54 127.50,167.63 130.00,164.79 132.50,162.02 135.00,159.33 137.50,156.71 140.00,154.16 142.50,151.67 145.00,149.25 147.50,146.90 150.00,144.61 152.50,142.37 155.00,140.20 157.50,138.09 160.00,136.03 162.50,134.02 165.00,132.07 167.50,130.17 170.00,128.31 172.50,126.51 175.00,124.76 177.50,123.05 180.00,121.38 182.50,119.77 185.00,118.19 187.50,116.65 190.00,115.16 192.50,113.70 195.00,112.29 197.50,110.91 200.00,109.56 202.50,108.26 205.00,106.98 207.50,105.74 210.00,104.54 212.50,103.36 215.00,102.22 217.50,101.10 220.00,100.02 222.50,98.96 225.00,97.94 227.50,96.93 230.00,95.96 232.50,95.01 235.00,94.09 237.50,93.19 240.00,92.31 242.50,91.46 245.00,90.63 247.50,89.82 250.00,89.03 252.50,88.27 255.00,87.52 257.50,86.80 260.00,86.09 262.50,85.40 265.00,84.73 267.50,84.08 270.00,83.44 272.50,82.82 275.00,82.22 277.50,81.64 280.00,81.07 282.50,80.51 285.00,79.97 287.50,79.44 290.00,78.93 292.50,78.43 295.00,77.94 297.50,77.47 300.00,77.01 302.50,76.56 305.00,76.12 307.50,75.70 310.00,75.28 312.50,74.88 315.00,74.49 317.50,74.11 320.00,73.73 322.50,73.37 325.00,73.02 327.50,72.67 330.00,72.34 332.50,72.01 335.00,71.70 337.50,71.39 340.00,71.09 342.50,70.80 345.00,70.51 347.50,70.23 350.00,69.96 352.50,69.70 355.00,69.45 357.50,69.20 360.00,68.95 362.50,68.72 365.00,68.49 367.50,68.26 370.00,68.05 372.50,67.83 375.00,67.63 377.50,67.43 380.00,67.23 382.50,67.04 385.00,66.85 387.50,66.67 390.00,66.50 392.50,66.32 395.00,66.16 397.50,66.00 400.00,65.84 402.50,65.68 405.00,65.53 407.50,65.39 410.00,65.24 412.50,65.11 415.00,64.97 417.50,64.84 420.00,64.71 422.50,64.59 425.00,64.47 427.50,64.35 430.00,64.23 432.50,64.12 435.00,64.01 437.50,63.91 440.00,63.81 442.50,63.70 445.00,63.61 447.50,63.51 450.00,63.42 452.50,63.33 455.00,63.24 457.50,63.16 460.00,63.07 462.50,62.99 465.00,62.91 467.50,62.84 470.00,62.76 472.50,62.69 475.00,62.62 477.50,62.55 480.00,62.48 482.50,62.42 485.00,62.35 487.50,62.29 490.00,62.23 492.50,62.17 495.00,62.11 497.50,62.06 500.00,62.00 502.50,61.95 505.00,61.90 507.50,61.85 510.00,61.80 512.50,61.75 515.00,61.71 517.50,61.66 520.00,61.62 522.50,61.57 525.00,61.53 527.50,61.49 530.00,61.45 532.50,61.41 535.00,61.38 537.50,61.34 540.00,61.31 542.50,61.27 545.00,61.24 547.50,61.21 550.00,61.17 552.50,61.14 555.00,61.11 557.50,61.08 560.00,61.05 562.50,61.03 565.00,61.00" fill="none" stroke="#a24ead" stroke-width="3" stroke-dasharray="3 4"/><text x="375" y="45" fill="#a24ead" font-family="sans-serif" font-size="16">68 kΩ</text></svg><figcaption>Previsão ideal de carga. Valores calculados, não medições. Na descarga, este desenho adota V₀ = 5 V; use o V₀ efetivamente medido no ajuste.</figcaption></figure><figure class="rc-figure"><svg viewBox="0 0 600 340" role="img" aria-labelledby="grafico-descarga"><title id="grafico-descarga">Três curvas teóricas de descarga, capacitor de 2200 microfarads, tensão em volts e tempo em segundos</title><g fill="currentColor" font-family="sans-serif" font-size="15"><text x="65" y="22">Tensão (V)</text><path d="M65 270 H565" stroke="currentColor" opacity=".15"/><text x="38" y="275">0</text><path d="M65 228 H565" stroke="currentColor" opacity=".15"/><text x="38" y="233">1</text><path d="M65 186 H565" stroke="currentColor" opacity=".15"/><text x="38" y="191">2</text><path d="M65 144 H565" stroke="currentColor" opacity=".15"/><text x="38" y="149">3</text><path d="M65 102 H565" stroke="currentColor" opacity=".15"/><text x="38" y="107">4</text><path d="M65 60 H565" stroke="currentColor" opacity=".15"/><text x="38" y="65">5</text><text x="65.0" y="293" text-anchor="middle">0</text><text x="190.0" y="293" text-anchor="middle">200</text><text x="315.0" y="293" text-anchor="middle">400</text><text x="440.0" y="293" text-anchor="middle">600</text><text x="565.0" y="293" text-anchor="middle">800</text><text x="510" y="325" text-anchor="middle">Tempo (s)</text></g><polyline points="65.00,60.00 67.50,67.97 70.00,75.63 72.50,83.01 75.00,90.11 77.50,96.93 80.00,103.50 82.50,109.82 85.00,115.90 87.50,121.74 90.00,127.37 92.50,132.78 95.00,137.99 97.50,143.00 100.00,147.82 102.50,152.45 105.00,156.91 107.50,161.20 110.00,165.33 112.50,169.30 115.00,173.13 117.50,176.80 120.00,180.34 122.50,183.74 125.00,187.01 127.50,190.16 130.00,193.19 132.50,196.11 135.00,198.91 137.50,201.61 140.00,204.20 142.50,206.70 145.00,209.10 147.50,211.41 150.00,213.64 152.50,215.77 155.00,217.83 157.50,219.81 160.00,221.72 162.50,223.55 165.00,225.31 167.50,227.01 170.00,228.64 172.50,230.21 175.00,231.72 177.50,233.17 180.00,234.57 182.50,235.91 185.00,237.21 187.50,238.45 190.00,239.65 192.50,240.80 195.00,241.91 197.50,242.97 200.00,244.00 202.50,244.99 205.00,245.93 207.50,246.85 210.00,247.73 212.50,248.57 215.00,249.38 217.50,250.17 220.00,250.92 222.50,251.64 225.00,252.34 227.50,253.01 230.00,253.66 232.50,254.28 235.00,254.87 237.50,255.45 240.00,256.00 242.50,256.53 245.00,257.04 247.50,257.53 250.00,258.01 252.50,258.46 255.00,258.90 257.50,259.32 260.00,259.73 262.50,260.12 265.00,260.49 267.50,260.85 270.00,261.20 272.50,261.53 275.00,261.85 277.50,262.16 280.00,262.46 282.50,262.75 285.00,263.02 287.50,263.29 290.00,263.54 292.50,263.79 295.00,264.02 297.50,264.25 300.00,264.47 302.50,264.68 305.00,264.88 307.50,265.07 310.00,265.26 312.50,265.44 315.00,265.61 317.50,265.78 320.00,265.94 322.50,266.09 325.00,266.24 327.50,266.38 330.00,266.52 332.50,266.65 335.00,266.78 337.50,266.90 340.00,267.02 342.50,267.13 345.00,267.24 347.50,267.35 350.00,267.45 352.50,267.54 355.00,267.64 357.50,267.73 360.00,267.81 362.50,267.90 365.00,267.98 367.50,268.05 370.00,268.13 372.50,268.20 375.00,268.27 377.50,268.33 380.00,268.40 382.50,268.46 385.00,268.51 387.50,268.57 390.00,268.63 392.50,268.68 395.00,268.73 397.50,268.78 400.00,268.82 402.50,268.87 405.00,268.91 407.50,268.95 410.00,268.99 412.50,269.03 415.00,269.07 417.50,269.10 420.00,269.14 422.50,269.17 425.00,269.20 427.50,269.23 430.00,269.26 432.50,269.29 435.00,269.31 437.50,269.34 440.00,269.37 442.50,269.39 445.00,269.41 447.50,269.44 450.00,269.46 452.50,269.48 455.00,269.50 457.50,269.52 460.00,269.53 462.50,269.55 465.00,269.57 467.50,269.59 470.00,269.60 472.50,269.62 475.00,269.63 477.50,269.65 480.00,269.66 482.50,269.67 485.00,269.68 487.50,269.70 490.00,269.71 492.50,269.72 495.00,269.73 497.50,269.74 500.00,269.75 502.50,269.76 505.00,269.77 507.50,269.78 510.00,269.79 512.50,269.79 515.00,269.80 517.50,269.81 520.00,269.82 522.50,269.82 525.00,269.83 527.50,269.84 530.00,269.84 532.50,269.85 535.00,269.85 537.50,269.86 540.00,269.87 542.50,269.87 545.00,269.88 547.50,269.88 550.00,269.88 552.50,269.89 555.00,269.89 557.50,269.90 560.00,269.90 562.50,269.90 565.00,269.91" fill="none" stroke="#b05d00" stroke-width="3" stroke-dasharray=""/><text x="75" y="45" fill="#b05d00" font-family="sans-serif" font-size="16">47 kΩ</text><polyline points="65.00,60.00 67.50,66.71 70.00,73.20 72.50,79.49 75.00,85.58 77.50,91.47 80.00,97.17 82.50,102.69 85.00,108.04 87.50,113.21 90.00,118.22 92.50,123.07 95.00,127.76 97.50,132.31 100.00,136.71 102.50,140.96 105.00,145.09 107.50,149.08 110.00,152.94 112.50,156.68 115.00,160.30 117.50,163.80 120.00,167.20 122.50,170.48 125.00,173.66 127.50,176.74 130.00,179.72 132.50,182.60 135.00,185.39 137.50,188.10 140.00,190.71 142.50,193.25 145.00,195.70 147.50,198.07 150.00,200.37 152.50,202.59 155.00,204.75 157.50,206.83 160.00,208.85 162.50,210.80 165.00,212.69 167.50,214.52 170.00,216.30 172.50,218.01 175.00,219.67 177.50,221.28 180.00,222.84 182.50,224.34 185.00,225.80 187.50,227.21 190.00,228.58 192.50,229.90 195.00,231.19 197.50,232.43 200.00,233.63 202.50,234.79 205.00,235.91 207.50,237.00 210.00,238.06 212.50,239.08 215.00,240.06 217.50,241.02 220.00,241.95 222.50,242.84 225.00,243.71 227.50,244.55 230.00,245.36 232.50,246.15 235.00,246.91 237.50,247.65 240.00,248.36 242.50,249.05 245.00,249.72 247.50,250.37 250.00,251.00 252.50,251.61 255.00,252.19 257.50,252.76 260.00,253.31 262.50,253.85 265.00,254.36 267.50,254.86 270.00,255.35 272.50,255.81 275.00,256.27 277.50,256.71 280.00,257.13 282.50,257.54 285.00,257.94 287.50,258.32 290.00,258.70 292.50,259.06 295.00,259.41 297.50,259.75 300.00,260.07 302.50,260.39 305.00,260.70 307.50,261.00 310.00,261.28 312.50,261.56 315.00,261.83 317.50,262.09 320.00,262.34 322.50,262.59 325.00,262.83 327.50,263.06 330.00,263.28 332.50,263.49 335.00,263.70 337.50,263.90 340.00,264.10 342.50,264.28 345.00,264.47 347.50,264.64 350.00,264.81 352.50,264.98 355.00,265.14 357.50,265.30 360.00,265.45 362.50,265.59 365.00,265.73 367.50,265.87 370.00,266.00 372.50,266.13 375.00,266.25 377.50,266.37 380.00,266.49 382.50,266.60 385.00,266.71 387.50,266.81 390.00,266.92 392.50,267.01 395.00,267.11 397.50,267.20 400.00,267.29 402.50,267.38 405.00,267.46 407.50,267.54 410.00,267.62 412.50,267.70 415.00,267.77 417.50,267.84 420.00,267.91 422.50,267.98 425.00,268.04 427.50,268.10 430.00,268.17 432.50,268.22 435.00,268.28 437.50,268.34 440.00,268.39 442.50,268.44 445.00,268.49 447.50,268.54 450.00,268.59 452.50,268.63 455.00,268.67 457.50,268.72 460.00,268.76 462.50,268.80 465.00,268.84 467.50,268.87 470.00,268.91 472.50,268.94 475.00,268.98 477.50,269.01 480.00,269.04 482.50,269.07 485.00,269.10 487.50,269.13 490.00,269.16 492.50,269.19 495.00,269.21 497.50,269.24 500.00,269.26 502.50,269.28 505.00,269.31 507.50,269.33 510.00,269.35 512.50,269.37 515.00,269.39 517.50,269.41 520.00,269.43 522.50,269.45 525.00,269.47 527.50,269.48 530.00,269.50 532.50,269.52 535.00,269.53 537.50,269.55 540.00,269.56 542.50,269.57 545.00,269.59 547.50,269.60 550.00,269.61 552.50,269.63 555.00,269.64 557.50,269.65 560.00,269.66 562.50,269.67 565.00,269.68" fill="none" stroke="#3178c6" stroke-width="3" stroke-dasharray="9 4"/><text x="225" y="45" fill="#3178c6" font-family="sans-serif" font-size="16">56 kΩ</text><polyline points="65.00,60.00 67.50,65.54 70.00,70.93 72.50,76.19 75.00,81.30 77.50,86.28 80.00,91.13 82.50,95.85 85.00,100.44 87.50,104.91 90.00,109.27 92.50,113.51 95.00,117.64 97.50,121.66 100.00,125.57 102.50,129.38 105.00,133.09 107.50,136.71 110.00,140.22 112.50,143.65 115.00,146.98 117.50,150.23 120.00,153.39 122.50,156.46 125.00,159.46 127.50,162.37 130.00,165.21 132.50,167.98 135.00,170.67 137.50,173.29 140.00,175.84 142.50,178.33 145.00,180.75 147.50,183.10 150.00,185.39 152.50,187.63 155.00,189.80 157.50,191.91 160.00,193.97 162.50,195.98 165.00,197.93 167.50,199.83 170.00,201.69 172.50,203.49 175.00,205.24 177.50,206.95 180.00,208.62 182.50,210.23 185.00,211.81 187.50,213.35 190.00,214.84 192.50,216.30 195.00,217.71 197.50,219.09 200.00,220.44 202.50,221.74 205.00,223.02 207.50,224.26 210.00,225.46 212.50,226.64 215.00,227.78 217.50,228.90 220.00,229.98 222.50,231.04 225.00,232.06 227.50,233.07 230.00,234.04 232.50,234.99 235.00,235.91 237.50,236.81 240.00,237.69 242.50,238.54 245.00,239.37 247.50,240.18 250.00,240.97 252.50,241.73 255.00,242.48 257.50,243.20 260.00,243.91 262.50,244.60 265.00,245.27 267.50,245.92 270.00,246.56 272.50,247.18 275.00,247.78 277.50,248.36 280.00,248.93 282.50,249.49 285.00,250.03 287.50,250.56 290.00,251.07 292.50,251.57 295.00,252.06 297.50,252.53 300.00,252.99 302.50,253.44 305.00,253.88 307.50,254.30 310.00,254.72 312.50,255.12 315.00,255.51 317.50,255.89 320.00,256.27 322.50,256.63 325.00,256.98 327.50,257.33 330.00,257.66 332.50,257.99 335.00,258.30 337.50,258.61 340.00,258.91 342.50,259.20 345.00,259.49 347.50,259.77 350.00,260.04 352.50,260.30 355.00,260.55 357.50,260.80 360.00,261.05 362.50,261.28 365.00,261.51 367.50,261.74 370.00,261.95 372.50,262.17 375.00,262.37 377.50,262.57 380.00,262.77 382.50,262.96 385.00,263.15 387.50,263.33 390.00,263.50 392.50,263.68 395.00,263.84 397.50,264.00 400.00,264.16 402.50,264.32 405.00,264.47 407.50,264.61 410.00,264.76 412.50,264.89 415.00,265.03 417.50,265.16 420.00,265.29 422.50,265.41 425.00,265.53 427.50,265.65 430.00,265.77 432.50,265.88 435.00,265.99 437.50,266.09 440.00,266.19 442.50,266.30 445.00,266.39 447.50,266.49 450.00,266.58 452.50,266.67 455.00,266.76 457.50,266.84 460.00,266.93 462.50,267.01 465.00,267.09 467.50,267.16 470.00,267.24 472.50,267.31 475.00,267.38 477.50,267.45 480.00,267.52 482.50,267.58 485.00,267.65 487.50,267.71 490.00,267.77 492.50,267.83 495.00,267.89 497.50,267.94 500.00,268.00 502.50,268.05 505.00,268.10 507.50,268.15 510.00,268.20 512.50,268.25 515.00,268.29 517.50,268.34 520.00,268.38 522.50,268.43 525.00,268.47 527.50,268.51 530.00,268.55 532.50,268.59 535.00,268.62 537.50,268.66 540.00,268.69 542.50,268.73 545.00,268.76 547.50,268.79 550.00,268.83 552.50,268.86 555.00,268.89 557.50,268.92 560.00,268.95 562.50,268.97 565.00,269.00" fill="none" stroke="#a24ead" stroke-width="3" stroke-dasharray="3 4"/><text x="375" y="45" fill="#a24ead" font-family="sans-serif" font-size="16">68 kΩ</text></svg><figcaption>Previsão ideal de descarga. Valores calculados, não medições. Na descarga, este desenho adota V₀ = 5 V; use o V₀ efetivamente medido no ajuste.</figcaption></figure></div>
+      <article class="theory-card"><h3>Limites reais: tolerância, fuga e instrumentos</h3><p>Os resistores deste roteiro são maiores que os usados no exemplo rápido do artigo. A fuga do eletrolítico pode ser significativa frente a correntes de dezenas de microampères. Escolha um componente em bom estado, confira sua especificação e faça um ensaio piloto; não há garantia de meia-vida real apenas pelo valor impresso.</p>
+      <p>Uma fuga aproximadamente ôhmica equivale a Rₗ em paralelo com C. Nesse modelo:</p><div class="math-block math-display">\[\tau_{\mathrm{ef}}=(R\parallel R_\ell)C,\qquad V_{\infty,\mathrm{carga}}=V_s\frac{R_\ell}{R+R_\ell}.\]</div>
+      <p>O patamar fica abaixo de Vₛ e τ/R deixa de ser uma estimativa direta de C. Um multímetro permanentemente em paralelo também acrescenta uma resistência de carga. A fuga real pode depender da tensão e do tempo; o modelo de Rₗ é uma hipótese a testar nos resíduos.</p><p>A0 está diretamente no nó do capacitor, que fornece a carga das amostragens. Use apenas A0, fios curtos e referência estável; não acrescente divisor resistivo nem alterne canais nesta montagem. Considere também a corrente de fuga da entrada analógica. Se o comportamento fugir do modelo ideal, registre o desvio e investigue a montagem antes de ajustar componentes para forçar concordância.</p></article>
+      <article class="lab-card"><h3>Referência e adaptação</h3><p>CAVALCANTE, Marisa Almeida; TAVOLARO, Cristiane Rodrigues Caetano; MOLISANI, Elio. <cite>Física com Arduino para iniciantes</cite>. Revista Brasileira de Ensino de Física, v. 33, n. 4, 4503, 2011. <a href="https://doi.org/10.1590/S1806-11172011000400018" target="_blank" rel="noopener">DOI e artigo</a> · <a href="https://www.sbfisica.org.br/rbef/pdf/334503.pdf" target="_blank" rel="noopener">PDF na SBF</a>.</p><p>Base didática: montagem RC, leitura analógica, aquisição serial, gráficos e determinação de RC; seções 2.1–2.2, figuras 8–11. A figura 8 usa 1,5 kΩ e 470 µF, com intervalos de 10, 50 e 100 ms. Aqui adotamos componentes mais lentos, D8 para chavear, 20 ms e armazenamento CSV. O desenho e o código foram preparados para este roteiro.</p><p>Documentação de apoio: <a href="https://docs.arduino.cc/hardware/uno-rev3/" target="_blank" rel="noopener">Arduino Uno R3</a>, <a href="https://docs.arduino.cc/language-reference/en/functions/analog-io/analogRead/" target="_blank" rel="noopener">analogRead()</a> e <a href="https://docs.arduino.cc/language-reference/en/functions/time/millis/" target="_blank" rel="noopener">millis()</a>.</p></article>
+    </section>
+
+    <section class="experiment-panel" id="painel-dados" role="tabpanel" aria-labelledby="aba-dados" tabindex="0" hidden>
+      <header class="experiment-section-heading"><h2>Dados</h2><p>Guarde as leituras brutas, os tempos reais e a identificação de cada resistor. Gere seis curvas experimentais a partir dos três arquivos.</p></header>
+      <article class="lab-card"><h3>1. Leitura básica e programa completo</h3><p>A ideia central da aquisição é esta; o trecho abaixo é apenas a leitura contínua, sem chaveamento nem separação de fases:</p>
+      <pre class="rc-code"><code>void setup() {
+  Serial.begin(115200);
+}
+void loop() {
+  unsigned long t = millis();
+  int valor = analogRead(A0);
+  Serial.print(t);
+  Serial.print(',');
+  Serial.println(valor);
+  delay(20);
+}</code></pre>
+      <p>Para executar os seis ensaios, use o sketch completo abaixo. Ele inclui a verificação de descarga inicial, o chaveamento por D8, os tempos de cada fase e o encerramento de cada par. O intervalo é nominal: use os tempos registrados, pois a leitura e a comunicação levam tempo.</p>
+      <div class="rc-downloads"><a href="./capacitores/capacitores.ino" download>Baixar sketch Arduino (.ino)</a><a href="./coletar.py" download>Baixar coletor Python (.py)</a><a href="./relatorio.md" download>Baixar roteiro do relatório (.md)</a></div>
+      <details><summary>Ver o código Arduino completo</summary><pre class="rc-code"><code>// Arduino Uno R3 / Nano classico (ATmega328P, 5 V).
+// D8 -- resistor escolhido -- (+) capacitor; (-) capacitor -- GND.
+// A0 no terminal (+). O mesmo resistor limita carga E descarga.
+const byte DRIVE_PIN = 8;
+const byte SENSOR_PIN = A0;
+const unsigned long RESISTOR_OHM = 47000UL;  // Trocar por 56000UL ou 68000UL.
+const unsigned long CAPACITOR_UF = 2200UL;
+const unsigned long SAMPLE_MS = 20UL;
+const unsigned long PHASE_MS = 5UL * RESISTOR_OHM * CAPACITOR_UF / 1000UL;
+
+enum Phase { IDLE, CHARGING, DISCHARGING };
+Phase phase = IDLE;
+unsigned long phaseStart = 0;
+unsigned long lastSample = 0;
+
+void sample() {
+  const unsigned long elapsed = millis() - phaseStart;
+  const int adc = analogRead(SENSOR_PIN);
+  Serial.print(phase == CHARGING ? F(&quot;carga,&quot;) : F(&quot;descarga,&quot;));
+  Serial.print(elapsed);
+  Serial.print(&#x27;,&#x27;);
+  Serial.print(adc);
+  Serial.print(&#x27;,&#x27;);
+  Serial.println(RESISTOR_OHM);
+  lastSample = elapsed;
+}
+
+void startPhase(Phase next) {
+  phase = next;
+  digitalWrite(DRIVE_PIN, phase == CHARGING ? HIGH : LOW);
+  phaseStart = millis();
+  sample();
+}
+
+void setup() {
+  digitalWrite(DRIVE_PIN, LOW);
+  pinMode(DRIVE_PIN, OUTPUT);
+  pinMode(SENSOR_PIN, INPUT);
+  Serial.begin(115200);
+  Serial.println(F(&quot;# pronto: i=iniciar par carga/descarga; x=interromper&quot;));
+}
+
+void loop() {
+  if (Serial.available()) {
+    const char command = Serial.read();
+    if (command == &#x27;x&#x27;) {
+      phase = IDLE;
+      digitalWrite(DRIVE_PIN, LOW);
+      Serial.println(F(&quot;# interrompido&quot;));
+    } else if (command == &#x27;i&#x27; &amp;&amp; phase == IDLE) {
+      if (analogRead(SENSOR_PIN) &gt; 10) {
+        Serial.println(F(&quot;# erro: descarregue o capacitor ate ADC &lt;= 10 e tente de novo&quot;));
+      } else {
+        Serial.println(F(&quot;fase,t_ms,adc,r_nominal_ohm&quot;));
+        startPhase(CHARGING);
+      }
+    }
+  }
+  if (phase == IDLE) return;
+
+  const unsigned long elapsed = millis() - phaseStart;
+  if (elapsed &gt;= PHASE_MS) {
+    if (elapsed &gt; lastSample) sample();
+    if (phase == CHARGING) {
+      startPhase(DISCHARGING);
+    } else {
+      phase = IDLE;
+      digitalWrite(DRIVE_PIN, LOW);
+      Serial.println(F(&quot;# fim&quot;));
+    }
+  } else if (elapsed - lastSample &gt;= SAMPLE_MS) {
+    sample();
+  }
+}
+</code></pre></details>
+      <p><strong>Comandos:</strong> <code>i</code> inicia um par; <code>x</code> interrompe e mantém D8 baixo, descarregando pelo resistor. A desconexão USB não é um procedimento de descarga. Para conferir os dados no Monitor Serial, configure 115200 baud; feche-o antes de usar o coletor, pois os dois disputam a mesma porta.</p></article>
+      <article class="lab-card"><h3>2. Coletar diretamente no navegador</h3>
+      <p>Em Chrome, Edge ou Chromium para computador, a página pode acessar a porta serial depois da sua autorização. Nada é enviado ao servidor: as linhas ficam na memória desta aba até você baixar o CSV. Mantenha a página aberta durante toda a coleta e feche o Monitor Serial da IDE.</p>
+      <div class="serial-collector" data-web-serial-collector>
+        <h4>Coletor Web Serial</h4>
+        <p class="serial-collector__status" data-serial-status role="status" aria-live="polite">Verificando suporte do navegador…</p>
+        <div class="serial-collector__controls">
+          <button type="button" data-serial-connect>Conectar Arduino</button>
+          <button type="button" data-serial-start disabled>Iniciar carga e descarga</button>
+          <button type="button" data-serial-stop disabled>Interromper</button>
+          <button type="button" data-serial-download disabled>Baixar CSV</button>
+          <button type="button" data-serial-disconnect disabled>Desconectar</button>
+        </div>
+        <dl class="serial-collector__readings" aria-label="Leituras da aquisição">
+          <div class="serial-collector__reading"><dt>Fase</dt><dd data-serial-phase>—</dd></div>
+          <div class="serial-collector__reading"><dt>Tempo</dt><dd data-serial-time>—</dd></div>
+          <div class="serial-collector__reading"><dt>Leituras</dt><dd data-serial-count>0</dd></div>
+          <div class="serial-collector__reading"><dt>ADC</dt><dd data-serial-adc>—</dd></div>
+          <div class="serial-collector__reading"><dt>Resistor</dt><dd data-serial-resistance>—</dd></div>
+        </dl>
+        <label>Progresso da fase atual <progress data-serial-progress max="100" value="0">0%</progress></label>
+      </div>
+      <ol class="procedure-list">
+        <li>Conecte o Arduino por USB, feche o Monitor Serial e clique em <strong>Conectar Arduino</strong>. Escolha a porta da placa na janela segura do navegador.</li>
+        <li>Espere a mensagem <strong>Arduino pronto</strong>. Confira que o capacitor está descarregado e sem o resistor auxiliar de 1 kΩ.</li>
+        <li>Clique em <strong>Iniciar carga e descarga</strong>. Não feche nem recarregue a aba; acompanhe a fase, o tempo e a contagem.</li>
+        <li>Ao aparecer <strong>Par completo</strong>, clique em <strong>Baixar CSV</strong>. Se interromper ou perder a conexão, baixe o arquivo parcial, que será identificado no nome.</li>
+      </ol>
+      <p>O seletor de porta precisa ser aberto por um clique e a página precisa estar em HTTPS ou localhost. A API Web Serial tem disponibilidade limitada: se o botão estiver desativado, use a alternativa Python abaixo. Consulte a <a href="https://developer.mozilla.org/en-US/docs/Web/API/Web_Serial_API" target="_blank" rel="noopener">documentação da Web Serial API</a> e o <a href="https://developer.chrome.com/docs/capabilities/serial" target="_blank" rel="noopener">guia do Chrome</a>.</p></article>
+      <article class="lab-card"><h3>3. Alternativa com Python</h3><p>Use esta opção quando o navegador não oferecer Web Serial ou quando for necessário executar uma coleta por linha de comando. Instale Python e o pacote pyserial em um ambiente virtual; na pasta do coletor:</p>
+      <pre class="rc-code"><code>python -m venv .venv
+# Linux/macOS:
+source .venv/bin/activate
+# Windows PowerShell (em vez do comando anterior):
+# .venv\Scripts\Activate.ps1
+python -m pip install pyserial
+python -m serial.tools.list_ports
+python coletar.py /dev/ttyACM0 R47k.csv
+# No Windows, substitua /dev/ttyACM0 pela porta listada, por exemplo COM3.</code></pre>
+      <p>Depois de trocar o resistor e reenviar o sketch com o valor correspondente, execute com <code>R56k.csv</code> e depois <code>R68k.csv</code>. O nome do arquivo não muda o programa nem o resistor físico. O coletor recusa sobrescrita; dados parciais permanecem no arquivo se houver interrupção. Só considere o par concluído quando o terminal informar <strong>Concluido</strong>.</p>
+      <p>Cada linha contém <code>fase,t_ms,adc,r_nominal_ohm</code>. <code>t_ms</code> é o tempo desde a comutação daquela fase; divida por 1000 para obter segundos. A resistência gravada é <strong>nominal</strong>; mantenha a resistência medida na tabela de bancada.</p><p>Esperam-se aproximadamente 25.851, 30.801 e 37.401 leituras por fase, respectivamente. A contagem pode ser menor se houver atrasos: inspecione Δt entre linhas. Se houver perda de conexão, o coletor interrompe após 10 s sem dados. Não use a aparência do gráfico como única confirmação da integridade do arquivo.</p></article>
+      <article class="lab-card"><h3>4. Tratamento das seis curvas</h3><ol class="procedure-list">
+        <li>Separe cada arquivo por <code>fase</code>. Faça um gráfico com as três cargas e outro com as três descargas. Use tempo em segundos, tensão em volts, legenda com R medido e os mesmos eixos para comparar.</li>
+        <li>Ajuste cada curva a V(t) = V∞ + (V₀ − V∞) exp(−t/τ). Registre τ, V₀, V∞, incertezas e resíduos. Na descarga, use a tensão efetiva no começo; o fim da carga de 5τ não é exatamente 5 V.</li>
+        <li>Calcule t₁/₂ = τ ln 2. Como verificação gráfica, localize o nível (V₀ + V∞)/2 e interpole entre os dois pontos que o cercam; relate a sensibilidade ao ruído e à quantização.</li>
+        <li>Linearize usando o patamar ajustado ou determinado independentemente. Não trate a última amostra como V∞ exato. Restrinja a análise à região em que a diferença para o patamar está bem acima de alguns códigos do ADC.</li>
+        <li>Compare τcarga e τdescarga para o mesmo R. Calcule Cestimado = τ/R somente quando o modelo ideal for adequado. Compare também τ em função de R: o modelo ideal prevê uma reta que passa pela origem e tem inclinação C.</li>
+      </ol>
+      <div class="math-block math-display">\[\begin{aligned}y(t)&=\ln\left|\frac{V(t)-V_\infty}{V_0-V_\infty}\right|=-\frac{t}{\tau},\\ m&=-\frac1\tau,\qquad t_{1/2}=-\frac{\ln2}{m}.\end{aligned}\]</div>
+      <p>Descarte da linearização pontos com argumento nulo/negativo dentro do logaritmo das formas específicas, ou diferença dominada pelo ruído. A transformação logarítmica amplifica o ruído perto do patamar e altera sua distribuição; priorize o ajuste exponencial na escala original e use a reta como verificação.</p></article>
+      <div class="data-table-wrapper"><table class="data-table"><thead><tr><th scope="col">R nominal / medido (kΩ)</th><th scope="col">Fase</th><th scope="col">τ ajustado (s)</th><th scope="col">t₁/₂ (s)</th><th scope="col">V∞ (V)</th><th scope="col">C estimado (µF)</th></tr></thead><tbody><tr><td>47 / ____</td><td>Carga</td><td>____</td><td>____</td><td>____</td><td>____</td></tr><tr><td>47 / ____</td><td>Descarga</td><td>____</td><td>____</td><td>____</td><td>____</td></tr><tr><td>56 / ____</td><td>Carga</td><td>____</td><td>____</td><td>____</td><td>____</td></tr><tr><td>56 / ____</td><td>Descarga</td><td>____</td><td>____</td><td>____</td><td>____</td></tr><tr><td>68 / ____</td><td>Carga</td><td>____</td><td>____</td><td>____</td><td>____</td></tr><tr><td>68 / ____</td><td>Descarga</td><td>____</td><td>____</td><td>____</td><td>____</td></tr></tbody></table></div>
+      <article class="lab-card"><h3>Incertezas e perguntas para discussão</h3><ul>
+        <li>Uma tolerância de ±20% no capacitor muda proporcionalmente o RC nominal. Com resistores de 1%, a tolerância do capacitor pode dominar a previsão. Não apresente os tempos da tabela como medidas exatas.</li>
+        <li>Para incertezas-padrão independentes: uτ/τ = √[(uR/R)² + (uC/C)²] e u(t₁/₂) = ln 2 · uτ. Tolerância de fabricante não é automaticamente uma incerteza-padrão.</li>
+        <li>Os resíduos são aleatórios ou apresentam deriva? A fuga explica o patamar? A resistência interna do pino é desprezível diante de dezenas de kΩ?</li>
+        <li>Por que reduzir o intervalo de 20 para 10 ms não dobra a precisão? Compare, sem apagar o original, um ajuste com todos os pontos e outro com um ponto a cada 100 ms.</li>
+        <li>Se t₁/₂ fosse 90 s, que fração da variação total ocorreria em 180 s? Justifique os 75% na carga e 25% restantes na descarga.</li>
+      </ul></article>
+    </section>
+    <section class="experiment-panel" id="painel-relatorio" role="tabpanel" aria-labelledby="aba-relatorio" tabindex="0" hidden>
+      <header class="experiment-section-heading"><h2>Relatório</h2><p>Apresente os três pares de curvas, os arquivos brutos e a análise das meias-vidas. Preencha com os resultados reais do grupo.</p></header>
+      <div class="rc-downloads"><button type="button" data-print-report>Imprimir relatório</button><a href="./relatorio.md" download>Baixar modelo em Markdown</a><a href="../modelo-relatorio/">Consultar exemplo de formatação acadêmica</a></div>
+      <div class="report-template" data-markdown-report="./relatorio.md"><p>Carregando o modelo de relatório. Se o conteúdo não aparecer, use o link para baixar o Markdown.</p></div>
+    </section>
+  </main>
+  <footer class="experiment-footer"><p>Experimento 07 · Carga e descarga de capacitores</p><a href="../">Voltar aos experimentos</a></footer>
+  <script type="module" src="../../componentes/navegacao-principal.js"></script>
+  <script type="module" src="../experimento.js"></script>
+  <script type="module" src="./coletor-web-serial.js"></script>
+  </div>
+</body>
+</html>
