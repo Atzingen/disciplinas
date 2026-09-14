@@ -22,10 +22,10 @@ const apiAvailable =
   typeof catalog.normalizeSearchText === "function" &&
   typeof catalog.filterCatalog === "function";
 
-test("catálogo expõe busca e registra os trinta e quatro materiais", () => {
+test("catálogo expõe busca e registra os trinta e cinco materiais", () => {
   assert.equal(typeof catalog.normalizeSearchText, "function");
   assert.equal(typeof catalog.filterCatalog, "function");
-  assert.equal(items.length, 34);
+  assert.equal(items.length, 35);
 });
 
 test("busca ignora acentos e caixa", { skip: !apiAvailable }, () => {
@@ -246,16 +246,23 @@ test("registro fornece os metadados que orientam cada área", () => {
   assert.equal(new Set(ids).size, ids.length);
 
   for (const item of items) {
-    assert.ok(["simulador", "resolucao", "experimento"].includes(item.kind));
-    assert.ok(["simulacoes", "exercicios", "experimentos"].includes(item.section));
+    assert.ok(["simulador", "resolucao", "experimento", "topico"].includes(item.kind));
+    assert.ok(
+      ["simulacoes", "exercicios", "experimentos", "topicos"].includes(item.section),
+    );
     assert.ok(Array.isArray(item.disciplines) && item.disciplines.length > 0);
     assert.ok(
-      item.disciplines.every((code) => ["PRCFEMG", "PRCLFBE"].includes(code)),
+      item.disciplines.every((code) =>
+        ["PRCFEMG", "PRCLFBE", "PRCCOMP"].includes(code),
+      ),
     );
     assert.ok(item.title.length > 0);
     assert.ok(item.description.length > 0);
     assert.ok(Array.isArray(item.tags) && item.tags.length > 0);
-    assert.match(item.path, /^(simuladores|exercicios|experimentos)\/[a-z0-9-]+\/$/);
+    assert.match(
+      item.path,
+      /^(simuladores|exercicios|experimentos|topicos)\/[a-z0-9-]+\/$/,
+    );
     assert.ok(!item.path.includes(".."));
 
     if (item.section === "exercicios") {

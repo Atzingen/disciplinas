@@ -12,7 +12,11 @@ As páginas usadas neste site são:
 - PRCFEMG — Fundamentos do Eletromagnetismo: p. 205–206 do documento,
   p. 207–208 do PDF;
 - PRCLFBE — Laboratório de Física Básica: Eletromagnetismo: p. 216–218 do
-  documento, p. 218–220 do PDF.
+  documento, p. 218–220 do PDF;
+- PRCCOMP — Física Computacional: p. 250–252 do documento, p. 252–254 do PDF.
+  A matriz curricular do 8º semestre está na mesma página da matriz do 6º
+  semestre (p. 48 do documento, p. 50 do PDF) e registra os mesmos dados da
+  ficha: 4 aulas semanais, 80 aulas e 66,7 h.
 
 ## Divergência registrada no PPC
 

@@ -20,9 +20,11 @@ test("página inicial apresenta as disciplinas e os perfis do professor", async 
   assert.equal(count(html, /<h1\b/g), 1);
   assert.match(html, /href="\.\/disciplinas\/prcfemg\/"/);
   assert.match(html, /href="\.\/disciplinas\/prclfbe\/"/);
+  assert.match(html, /href="\.\/disciplinas\/prccomp\/"/);
   assert.match(html, /href="\.\/simuladores\/"/);
   assert.match(html, /PRCFEMG/);
   assert.match(html, /PRCLFBE/);
+  assert.match(html, /PRCCOMP/);
   assert.match(html, /2023\.03\.07-PPC-LIC-Física-PRC-Reformulação\.pdf/);
   assert.doesNotMatch(html, /class="portal-reference/);
   assert.match(html, /id="sobre"/);
@@ -44,7 +46,7 @@ test("página inicial abre com a apresentação, segue com o professor e fecha c
 });
 
 test("páginas das disciplinas mostram os materiais primeiro e recolhem o PPC", async () => {
-  for (const code of ["prcfemg", "prclfbe"]) {
+  for (const code of ["prcfemg", "prclfbe", "prccomp"]) {
     const html = await readSitePage(`disciplinas/${code}/index.html`);
     const resources = html.indexOf('class="course-resources"');
     const catalog = html.indexOf("data-catalog-root");
@@ -60,7 +62,7 @@ test("páginas das disciplinas mostram os materiais primeiro e recolhem o PPC", 
 });
 
 test("páginas das disciplinas trazem o PPC como cartão lateral", async () => {
-  for (const code of ["prcfemg", "prclfbe"]) {
+  for (const code of ["prcfemg", "prclfbe", "prccomp"]) {
     const html = await readSitePage(`disciplinas/${code}/index.html`);
     assert.match(html, /class="course-facts-layout"/, code);
     assert.match(html, /class="portal-reference portal-reference--course"/, code);
@@ -117,6 +119,7 @@ test("PPC está incluído nas referências publicadas", async () => {
   assert.ok(pdf.length > 2_000_000);
   assert.match(documentation, /PRCFEMG/);
   assert.match(documentation, /PRCLFBE/);
+  assert.match(documentation, /PRCCOMP/);
   assert.match(documentation, /e18d8569868752b56d79b604c692a71707ca8a29fab3a1c6192d71c6db5b1fe3/);
 });
 

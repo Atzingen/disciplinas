@@ -1377,6 +1377,10 @@ h1 {
   background: var(--force-3);
 }
 
+.discipline-card--computational::before {
+  background: var(--force-5);
+}
+
 a.discipline-card:hover {
   transform: translateY(-4px);
   box-shadow: var(--shadow);
@@ -1409,6 +1413,10 @@ a.discipline-card:hover {
 
 .discipline-card--laboratory p {
   color: var(--force-3);
+}
+
+.discipline-card--computational p {
+  color: var(--force-5);
 }
 
 .discipline-card h3 {
@@ -1560,7 +1568,8 @@ a.discipline-card:hover {
 }
 
 .course-page--prcfemg .course-hero h1,
-.course-page--prclfbe .course-hero h1 {
+.course-page--prclfbe .course-hero h1,
+.course-page--prccomp .course-hero h1 {
   max-width: none;
   font-size: clamp(2.8rem, 5vw, 4.4rem);
 }

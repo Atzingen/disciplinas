@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Tópicos de PRCCOMP — Física Computacional: programação, modelagem e simulação aplicadas ao ensino de Física.">
+  <title>Tópicos · PRCCOMP</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='28' fill='%236c63b7'/%3E%3Cpath d='M18 32h28M32 18v28' stroke='white' stroke-width='6'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="../assets/base.css">
+  <script>try{if(localStorage.getItem("tema")==="escuro"){document.documentElement.dataset.theme="escuro"}}catch(erro){}</script>
+</head>
+<body class="area-page">
+  <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+  <header class="site-header">
+    <a class="brand" href="../" aria-label="Portal docente — início">
+      <span class="brand__mark" aria-hidden="true">G</span>
+      <span><strong>Gustavo von Atzingen</strong><small>IFSP · materiais didáticos</small></span>
+    </a>
+    <div data-site-navigation data-root-path="../" data-active-section="topicos"></div>
+  </header>
+
+  <main class="area-page-main" id="conteudo">
+    <header class="area-hero">
+      <p class="eyebrow">PRCCOMP · Física Computacional</p>
+      <h1>Tópicos</h1>
+      <p>
+        Cada tópico é uma sequência de trabalho completa: o que se quer
+        investigar, a ferramenta escolhida, o código para rodar e as
+        referências para ir além. Diferente das listas de exercícios, aqui o
+        resultado é sempre algo que roda — um programa, uma simulação ou um
+        dispositivo respondendo.
+      </p>
+    </header>
+
+    <section class="catalog-section catalog-section--area" aria-labelledby="catalog-title" data-catalog-root>
+      <div class="section-heading">
+        <div><p class="eyebrow">Programação, modelagem e simulação</p><h2 id="catalog-title">Tópicos publicados</h2></div>
+        <p class="catalog-count" data-catalog-count aria-live="polite">Carregando materiais…</p>
+      </div>
+      <div class="catalog-controls" data-catalog-controls aria-busy="true">
+        <label class="search-field"><span>Buscar tópico</span><input type="search" placeholder="Ex.: Picoh, serial, blocos, Python" autocomplete="off" data-catalog-search></label>
+        <div class="filter-group" aria-label="Filtrar tipo de material">
+          <button type="button" data-catalog-filter="todos" aria-pressed="true">Todos</button>
+          <button type="button" data-catalog-filter="topico" aria-pressed="false">Tópicos</button>
+        </div>
+      </div>
+      <div class="catalog-grid" data-catalog-results aria-live="polite"></div>
+    </section>
+  </main>
+
+  <footer class="site-footer"><p>Tópicos · PRCCOMP</p><a href="../disciplinas/prccomp/">Voltar à disciplina</a></footer>
+  <script type="module" src="../componentes/navegacao-principal.js"></script>
+  <script type="module">
+    import { mountCatalog } from "../componentes/catalogo.js";
+    mountCatalog(document.querySelector("[data-catalog-root]"), {
+      registryUrl: "../materiais.json",
+      pathPrefix: "../",
+      scope: { section: "topicos", discipline: "PRCCOMP" },
+    });
+  </script>
+</body>
+</html>

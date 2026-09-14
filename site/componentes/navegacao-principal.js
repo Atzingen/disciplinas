@@ -12,6 +12,12 @@ export function buildMainNavigation(rootPath = "./", activeSection = "inicio") {
       href: `${rootPath}disciplinas/prclfbe/`,
       current: ["prclfbe", "experimentos"].includes(activeSection),
     },
+    {
+      id: "prccomp",
+      label: "PRCCOMP — Física Computacional",
+      href: `${rootPath}disciplinas/prccomp/`,
+      current: ["prccomp", "topicos"].includes(activeSection),
+    },
   ];
 
   return [

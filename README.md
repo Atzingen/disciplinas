@@ -10,12 +10,14 @@ O acervo está publicado em:
 **https://atzingen.github.io/disciplinas/**
 
 A página inicial abre com um texto de apresentação, segue com o professor e
-encaminha para os dois componentes curriculares atualmente disponíveis:
+encaminha para os três componentes curriculares atualmente disponíveis:
 
 - **PRCFEMG — Fundamentos do Eletromagnetismo:** resoluções organizadas por
   referência e capítulo e simulações de cargas, forças, campos e vetores;
 - **PRCLFBE — Laboratório de Física Básica: Eletromagnetismo:** roteiros
-  experimentais, montagens, dados, relatórios e recursos virtuais de apoio.
+  experimentais, montagens, dados, relatórios e recursos virtuais de apoio;
+- **PRCCOMP — Física Computacional:** tópicos de programação, modelagem e
+  simulação, cada um com o código para rodar e as referências.
 
 Os nomes, códigos, ementas, objetivos, conteúdos programáticos e bibliografias
 seguem o
@@ -134,6 +136,24 @@ controles de navegação. A mesma estrutura também está disponível em
 As fotografias selecionadas do manual permanecem creditadas à AZEHEB. O PDF
 original não é publicado neste repositório; a proveniência das imagens está em
 [site/assets/experimentos/azeheb/README.md](site/assets/experimentos/azeheb/README.md).
+
+## PRCCOMP — Física Computacional
+
+A disciplina não organiza listas de exercícios: o material é uma sequência de
+**tópicos** (`site/topicos/`), cada um com a explicação do que está em jogo, a
+ferramenta escolhida, o código para rodar e as referências. O catálogo usa
+`kind: "topico"` e `section: "topicos"`.
+
+1. [manipulação do robô Picoh](site/topicos/01-picoh/): a cabeça de robô social
+   da Ohbot como primeiro objeto programável do semestre. A página cobre o
+   funcionamento do robô (quatro servos, olhos em matriz de LED, base RGB e um
+   Raspberry Pi Pico que só executa comandos recebidos), a programação por
+   blocos no Scratch da Ohbot — com a extensão OhBridge e a Web Serial —, a
+   programação em Python com `picoh_simples.py` (só depende do `pyserial`) e o
+   protocolo serial que as duas ferramentas usam por baixo. Acompanham o tópico
+   o script Python, a regra de udev `60-picoh.rules` para o acesso à porta no
+   Linux e as capturas do editor de blocos em
+   [site/assets/topicos/](site/assets/topicos/).
 
 ## Executar localmente
 

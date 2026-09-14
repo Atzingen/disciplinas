@@ -1,0 +1,7 @@
+# Picoh (Ohbot) — dá acesso ao usuário da sessão gráfica sem precisar de sudo.
+# Copie para /etc/udev/rules.d/ e recarregue:
+#   sudo cp 60-picoh.rules /etc/udev/rules.d/
+#   sudo udevadm control --reload-rules && sudo udevadm trigger
+# O prefixo 60 importa: com 99 a regra roda depois de 70-uaccess.rules e o
+# TAG+="uaccess" não tem efeito.
+SUBSYSTEM=="tty", ATTRS{idVendor}=="2e8a", TAG+="uaccess"

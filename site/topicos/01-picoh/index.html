@@ -1,0 +1,544 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Tópico 1 de Física Computacional: como o robô Picoh funciona, como programá-lo com blocos no Scratch da Ohbot e como comandá-lo em Python pela porta serial.">
+  <title>Picoh: blocos, Python e porta serial · Tópico 01</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='28' fill='%236c63b7'/%3E%3Cpath d='M18 32h28M32 18v28' stroke='white' stroke-width='6'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="../../assets/base.css">
+  <link rel="stylesheet" href="../../assets/simulador.css">
+  <style>
+    .picoh-code { max-width: 100%; margin: 1.2rem 0; overflow-x: auto; padding: 1rem 1.2rem; background: var(--paper-deep); border: 1px solid var(--line); border-radius: 12px; font: .84rem/1.6 var(--font-mono); }
+    .picoh-figure { margin: 1.8rem 0; }
+    .picoh-figure img { display: block; width: 100%; height: auto; border: 1px solid var(--line-strong); border-radius: 12px; }
+    .picoh-figure figcaption { margin-top: .7rem; color: var(--ink-soft); font-size: .92rem; }
+    .picoh-downloads { display: flex; flex-wrap: wrap; gap: .8rem; margin: 1.4rem 0; }
+    .picoh-downloads a { padding: .65rem 1rem; border: 1px solid var(--line-strong); border-radius: 999px; color: var(--ink); font: 700 .82rem/1 var(--font-display); text-decoration: none; }
+    .picoh-downloads a:hover { background: var(--paper-deep); }
+    .picoh-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 1rem; margin: 1.6rem 0; }
+    .picoh-card { padding: 1.1rem 1.2rem; border: 1px solid var(--line); border-radius: 14px; background: var(--surface); }
+    .picoh-card h3 { margin: 0 0 .5rem; font-size: 1.02rem; }
+    .picoh-card p { margin: 0; color: var(--ink-soft); font-size: .93rem; }
+    .picoh-steps { margin: 1.2rem 0; padding-left: 1.3rem; }
+    .picoh-steps li { margin-bottom: .7rem; }
+    .picoh-inline { font-family: var(--font-mono); font-size: .9em; background: var(--paper-deep); padding: .1rem .35rem; border-radius: 4px; }
+    .value-table td:first-child, .value-table th:first-child { text-align: left; }
+  </style>
+  <script>try{if(localStorage.getItem("tema")==="escuro"){document.documentElement.dataset.theme="escuro"}}catch(erro){}</script>
+</head>
+<body class="lesson-page">
+  <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+
+  <div class="site-topbar" data-topbar>
+    <div class="site-topbar__inner">
+      <nav class="breadcrumb" aria-label="Navegação estrutural">
+        <a href="../../disciplinas/prccomp/">Física Computacional</a>
+        <span aria-hidden="true">/</span>
+        <a href="../">Tópicos</a>
+        <span aria-hidden="true">/</span>
+        <strong aria-current="page">Tópico 01</strong>
+      </nav>
+      <div class="lesson-area-navigation" data-site-navigation data-root-path="../../" data-active-section="topicos"></div>
+    </div>
+    <nav class="section-nav" aria-label="Seções do tópico" data-section-nav>
+      <a href="#robo">O robô</a>
+      <a href="#ligar">Ligar</a>
+      <a href="#blocos">Blocos</a>
+      <a href="#python">Python</a>
+      <a href="#protocolo">Protocolo</a>
+      <a href="#referencias">Referências</a>
+    </nav>
+  </div>
+
+  <header class="lesson-header">
+    <div class="lesson-title-row">
+      <div>
+        <p class="eyebrow">Tópico 01 · PRCCOMP</p>
+        <h1>Manipulação do robô Picoh</h1>
+      </div>
+      <p class="lesson-intro">
+        O Picoh é uma cabeça de robô social que não guarda programa nenhum:
+        tudo o que ele faz chega por um cabo USB, em linhas de texto. Isso
+        permite comandá-lo de duas formas, no mesmo dia de aula — arrastando
+        blocos no navegador e escrevendo Python — e comparar as duas
+        experiências com o mesmo hardware na mesa.
+      </p>
+    </div>
+  </header>
+
+  <main class="lesson-main" id="conteudo">
+    <div class="lesson-sections">
+
+      <section class="lesson-section" id="robo" aria-labelledby="robo-title">
+        <p class="solution-step">Parte 1</p>
+        <h2 id="robo-title">Como o robô funciona</h2>
+
+        <p>
+          Por fora, o Picoh é uma cabeça sobre uma base iluminada. Por dentro,
+          são três famílias de atuadores e um microcontrolador que só sabe
+          obedecer:
+        </p>
+
+        <div class="picoh-cards">
+          <article class="picoh-card">
+            <h3>Quatro servos</h3>
+            <p>
+              Dois movem a cabeça (girar e acenar) e dois movem os lábios
+              superior e inferior. São os únicos movimentos mecânicos do robô.
+            </p>
+          </article>
+          <article class="picoh-card">
+            <h3>Duas matrizes de LED</h3>
+            <p>
+              São os olhos. O desenho da íris, a posição da pupila, a pálpebra
+              e o brilho são imagens na matriz — nada ali se mexe de verdade.
+            </p>
+          </article>
+          <article class="picoh-card">
+            <h3>Base RGB</h3>
+            <p>
+              Dois LEDs coloridos iluminam a base translúcida. É o canal mais
+              simples de todos e o mais visível a distância.
+            </p>
+          </article>
+          <article class="picoh-card">
+            <h3>Um Raspberry Pi Pico</h3>
+            <p>
+              A placa aparece no computador como porta serial USB
+              (<span class="picoh-inline">2e8a:000a</span>). Ela recebe linhas
+              de texto e aciona servos e LEDs — não roda o seu programa.
+            </p>
+          </article>
+        </div>
+
+        <p>
+          Essa divisão é o ponto pedagógico do tópico. <strong>O programa roda
+          sempre no computador</strong>; o robô é um periférico. Quando o
+          Scratch mostra a boca abrindo, é o navegador enviando uma linha de
+          texto a cada instante; quando um <span class="picoh-inline">for</span>
+          em Python faz a cabeça varrer de um lado ao outro, é o mesmo canal
+          recebendo as mesmas linhas. Trocar de linguagem não muda nada dentro
+          do robô — muda só quem escreve na porta.
+        </p>
+
+        <p>
+          A tabela abaixo reúne o que se pode comandar. Os nomes são os da
+          definição oficial da Ohbot, e as posições vão sempre de 0 a 10, com
+          5 no meio — uma escala pensada para a sala de aula, que o programa
+          converte para graus antes de enviar.
+        </p>
+
+        <div class="table-scroll">
+          <table class="value-table">
+            <caption class="diagram-caption">Atuadores do Picoh e faixa de cada um</caption>
+            <thead>
+              <tr><th>Nome</th><th>Tipo</th><th>0</th><th>5</th><th>10</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>HeadTurn</td><td>servo</td><td>esquerda</td><td>centro</td><td>direita</td></tr>
+              <tr><td>HeadNod</td><td>servo</td><td>para baixo</td><td>centro</td><td>para cima</td></tr>
+              <tr><td>TopLip</td><td>servo</td><td>abaixado</td><td>repouso</td><td>levantado</td></tr>
+              <tr><td>BottomLip</td><td>servo</td><td>fechado</td><td>repouso</td><td>bem aberto</td></tr>
+              <tr><td>EyeTurn</td><td>matriz (eixo x)</td><td>olhar à esquerda</td><td>centro</td><td>olhar à direita</td></tr>
+              <tr><td>EyeTilt</td><td>matriz (eixo y)</td><td>olhar para baixo</td><td>centro</td><td>olhar para cima</td></tr>
+              <tr><td>LidBlink</td><td>matriz (pálpebra)</td><td>olhos abertos</td><td>meio fechados</td><td>fechados</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="solution-note">
+          <p>
+            <strong>Repare na coluna “tipo”.</strong> EyeTurn, EyeTilt e
+            LidBlink aparecem com nome de motor na documentação, mas não são
+            servos: são coordenadas de desenho na matriz de LED. O modelo
+            mental de “sete motores” é uma abstração da Ohbot para unificar a
+            interface — e é um bom exemplo, em aula, de como uma camada de
+            software esconde o hardware real.
+          </p>
+        </div>
+      </section>
+
+      <section class="lesson-section" id="ligar" aria-labelledby="ligar-title">
+        <p class="solution-step">Parte 2</p>
+        <h2 id="ligar-title">Ligar o robô e achar a porta</h2>
+
+        <p>
+          O cabo USB alimenta e comunica ao mesmo tempo: o conector pequeno vai
+          na traseira do Picoh e o grande no computador. Assim que o robô é
+          ligado, o sistema cria uma porta serial nova.
+        </p>
+
+        <div class="table-scroll">
+          <table class="value-table">
+            <caption class="diagram-caption">Onde o robô aparece em cada sistema</caption>
+            <thead><tr><th>Sistema</th><th>Nome da porta</th><th>Como conferir</th></tr></thead>
+            <tbody>
+              <tr><td>Linux</td><td><span class="picoh-inline">/dev/ttyACM0</span></td><td><span class="picoh-inline">ls /dev/ttyACM*</span> e <span class="picoh-inline">lsusb | grep 2e8a</span></td></tr>
+              <tr><td>Windows</td><td><span class="picoh-inline">COM3</span>, <span class="picoh-inline">COM4</span>…</td><td>Gerenciador de Dispositivos → Portas (COM e LPT)</td></tr>
+              <tr><td>macOS</td><td><span class="picoh-inline">/dev/tty.usbmodem…</span></td><td><span class="picoh-inline">ls /dev/tty.usbmodem*</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p>
+          Existir a porta não basta: é preciso ter permissão para abri-la. No
+          Windows e no macOS isso já vem resolvido. No Linux, o usuário comum
+          costuma não ter acesso a <span class="picoh-inline">/dev/ttyACM0</span>,
+          e a saída limpa é uma regra do udev que libera o dispositivo para
+          quem está na sessão gráfica:
+        </p>
+
+        <pre class="picoh-code"><code>sudo cp 60-picoh.rules /etc/udev/rules.d/
+sudo udevadm control --reload-rules &amp;&amp; sudo udevadm trigger
+# desconecte e reconecte o robô</code></pre>
+
+        <p>
+          O número no começo do arquivo não é decoração: as regras do udev
+          rodam em ordem alfabética, e a regra que concede
+          <span class="picoh-inline">uaccess</span> precisa vir antes da regra
+          <span class="picoh-inline">70-uaccess.rules</span> do sistema. Com o
+          prefixo <span class="picoh-inline">99-</span> a mesma regra não tem
+          efeito nenhum — um erro clássico, e difícil de diagnosticar.
+        </p>
+
+        <div class="solution-note">
+          <p>
+            <strong>Uma porta, um programa.</strong> A porta serial é exclusiva:
+            enquanto a aba do Scratch estiver conectada, nenhum script Python
+            consegue abrir o robô, e vice-versa. Quase todo “o robô parou de
+            responder” em sala é isso. Feche o que estava usando antes de trocar
+            de ferramenta.
+          </p>
+        </div>
+      </section>
+
+      <section class="lesson-section" id="blocos" aria-labelledby="blocos-title">
+        <p class="solution-step">Parte 3</p>
+        <h2 id="blocos-title">Programando com blocos</h2>
+
+        <p>
+          A Ohbot mantém uma versão do Scratch 3 com os blocos do robô, que roda
+          direto no navegador em
+          <a href="https://scratch.ohbot.co.uk" target="_blank" rel="noopener noreferrer">scratch.ohbot.co.uk</a>.
+          É o caminho recomendado para a primeira aula: a interface é a mesma do
+          Scratch que os estudantes já conhecem, e o robô entra como mais um
+          conjunto de blocos.
+        </p>
+
+        <figure class="picoh-figure">
+          <img src="../../assets/topicos/picoh-scratch-editor.png" alt="Editor Scratch da Ohbot, em português, com o ator Picoh e um simulador tridimensional do robô à direita.">
+          <figcaption>
+            O editor abre em português, com o ator <strong>Picoh</strong>
+            selecionado e um simulador do robô no lugar do palco. O simulador
+            obedece aos mesmos blocos, o que permite preparar e testar a aula
+            inteira sem o robô na mesa.
+          </figcaption>
+        </figure>
+
+        <h3>Preparar o navegador (uma vez só)</h3>
+        <ol class="picoh-steps">
+          <li>
+            Use o <strong>Google Chrome</strong> ou o <strong>Microsoft Edge</strong>.
+            A comunicação usa a Web Serial, que não existe no Firefox nem no Safari.
+          </li>
+          <li>
+            Instale a extensão
+            <a href="https://chromewebstore.google.com/detail/ohbridge/bfjihladgnccpchokgeeicpjcakdmkbe" target="_blank" rel="noopener noreferrer">OhBridge</a>.
+            Ela é obrigatória: a página do Scratch não fala com a porta serial
+            sozinha, ela envia os comandos para a extensão, e é a extensão que
+            abre o robô.
+          </li>
+          <li>
+            Conecte o Picoh no USB e abra
+            <a href="https://scratch.ohbot.co.uk" target="_blank" rel="noopener noreferrer">scratch.ohbot.co.uk</a>.
+          </li>
+          <li>
+            <strong>Clique em qualquer lugar da página.</strong> O navegador só
+            pede a porta depois de um gesto do usuário — é uma exigência de
+            segurança da Web Serial, não um capricho do site. Escolha a porta do
+            robô e confirme; ele reinicia, e esse é o sinal de que conectou.
+          </li>
+        </ol>
+
+        <h3>Os blocos do robô</h3>
+        <p>
+          Todos ficam na categoria <strong>Ohbot</strong>, no fim da coluna de
+          categorias. O resto do editor é o Scratch de sempre: eventos,
+          repetições, condicionais, variáveis e operadores continuam valendo.
+        </p>
+
+        <figure class="picoh-figure">
+          <img src="../../assets/topicos/picoh-scratch-blocos.png" alt="Paleta de blocos da categoria Ohbot no editor Scratch, com blocos de motor, olhos, cor e fala.">
+          <figcaption>A paleta da categoria Ohbot é todo o vocabulário do robô — treze blocos.</figcaption>
+        </figure>
+
+        <div class="table-scroll">
+          <table class="value-table">
+            <caption class="diagram-caption">Blocos da categoria Ohbot</caption>
+            <thead><tr><th>Bloco</th><th>O que faz</th><th>Valores</th></tr></thead>
+            <tbody>
+              <tr><td>set [HeadTurn] to (5)</td><td>Leva um atuador a uma posição</td><td>0 a 10</td></tr>
+              <tr><td>change [HeadTurn] by (1)</td><td>Soma à posição atual</td><td>−10 a 10</td></tr>
+              <tr><td>set [HeadTurn] speed to (5)</td><td>Velocidade daquele atuador</td><td>0 a 10</td></tr>
+              <tr><td>set eyeshape to [Eyeball]</td><td>Desenho dos olhos na matriz</td><td>Eyeball, Angry, Sad, Heart…</td></tr>
+              <tr><td>set colour to [off]</td><td>Cor da base por nome</td><td>off, red, green, blue…</td></tr>
+              <tr><td>set colour RGB [red] to (5)</td><td>Cor da base por componente</td><td>0 a 10 por canal</td></tr>
+              <tr><td>reset</td><td>Devolve o robô ao repouso</td><td>—</td></tr>
+              <tr><td>speak [hello]</td><td>Fala e segue o script imediatamente</td><td>texto</td></tr>
+              <tr><td>speak [hello] until done</td><td>Fala e só continua ao terminar</td><td>texto</td></tr>
+              <tr><td>speak [what is your name?] and wait</td><td>Pergunta e espera a resposta</td><td>texto</td></tr>
+              <tr><td>set voice to [alto]</td><td>Escolhe a voz</td><td>vozes do navegador</td></tr>
+              <tr><td>set language to [Português (brasileiro)]</td><td>Idioma da fala</td><td>lista de idiomas</td></tr>
+              <tr><td>lip · mouse x · mouse y</td><td>Valores para usar dentro de outros blocos: abertura do lábio durante a fala e posição do ponteiro</td><td>0 a 10</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p>
+          A síntese de voz é do <em>navegador</em>, não do robô — o Picoh não tem
+          alto-falante. O bloco <span class="picoh-inline">speak</span> faz o
+          computador falar e, ao mesmo tempo, manda os lábios acompanharem. Daí o
+          valor <span class="picoh-inline">lip</span>, que entrega a abertura da
+          boca instante a instante e permite sincronizar outros efeitos com a fala.
+        </p>
+
+        <h3>Um primeiro programa</h3>
+        <pre class="picoh-code"><code>quando a bandeira verde for clicada
+  reset
+  set colour RGB [green] to (10)
+  set eyeshape to [Heart]
+  speak [Oi, eu sou o Picoh] until done
+  repita (3) vezes
+    set [HeadTurn] to (8)
+    espere (0.6) segundos
+    set [HeadTurn] to (2)
+    espere (0.6) segundos
+  set [HeadTurn] to (5)
+  reset</code></pre>
+
+        <h3>Salvar e recuperar o trabalho</h3>
+        <p>
+          O editor não tem conta nem nuvem: tudo passa pelo menu
+          <strong>Arquivo</strong>, em arquivos <span class="picoh-inline">.sb3</span>
+          no computador. <em>Baixar para o seu computador</em> salva;
+          <em>Carregar do seu computador</em> abre de volta. Fechar a aba sem
+          baixar perde o projeto.
+        </p>
+
+        <figure class="picoh-figure">
+          <img src="../../assets/topicos/picoh-scratch-arquivo.png" alt="Menu Arquivo aberto no editor, com as opções Novo, Carregar do seu computador e Baixar para o seu computador.">
+          <figcaption>As três opções do menu <strong>Arquivo</strong> — é assim que o projeto vai e volta.</figcaption>
+        </figure>
+      </section>
+
+      <section class="lesson-section" id="python" aria-labelledby="python-title">
+        <p class="solution-step">Parte 4</p>
+        <h2 id="python-title">Programando em Python</h2>
+
+        <p>
+          Os blocos resolvem a primeira aula, mas escondem o que está
+          acontecendo. Em Python o mesmo robô é comandado por funções curtas, e
+          fica visível que cada gesto é uma linha escrita numa porta.
+        </p>
+
+        <p>
+          O arquivo abaixo é autocontido: depende apenas do
+          <span class="picoh-inline">pyserial</span> e não exige instalar nada
+          da Ohbot. Baixe os dois arquivos na mesma pasta.
+        </p>
+
+        <div class="picoh-downloads">
+          <a href="./picoh_simples.py" download>Baixar picoh_simples.py</a>
+          <a href="./60-picoh.rules" download>Baixar 60-picoh.rules</a>
+        </div>
+
+        <pre class="picoh-code"><code>python -m venv .venv
+source .venv/bin/activate      # Windows: .venv\Scripts\activate
+pip install pyserial
+
+python picoh_simples.py        # demonstração completa
+python picoh_simples.py --repouso</code></pre>
+
+        <p>
+          Como biblioteca, o uso típico cabe em poucas linhas. Todas as posições
+          seguem a mesma escala de 0 a 10 dos blocos, de propósito: a passagem de
+          uma ferramenta para a outra não exige reaprender as faixas.
+        </p>
+
+        <pre class="picoh-code"><code>from picoh_simples import conectar
+
+robo = conectar()              # procura o robô nas portas USB
+
+robo.cor(0, 200, 255)          # base ciano
+robo.formato_olho("coracao")
+robo.brilho_olhos(10)
+
+robo.virar(8)                  # cabeça para a direita
+robo.olhar(8, 5)               # e as pupilas acompanham
+robo.falar_boca(2.5)           # mexe a boca por 2,5 s
+
+robo.concordar()               # gesto de "sim"
+robo.negar()                   # gesto de "não"
+robo.piscar(2)
+
+robo.repouso()                 # devolve tudo ao estado inicial
+robo.fechar()                  # libera a porta serial</code></pre>
+
+        <div class="table-scroll">
+          <table class="value-table">
+            <caption class="diagram-caption">Funções de <span class="picoh-inline">picoh_simples.py</span></caption>
+            <thead><tr><th>Função</th><th>O que faz</th><th>Valores</th></tr></thead>
+            <tbody>
+              <tr><td>conectar(porta=None)</td><td>Acha o robô pelo handshake e devolve o objeto</td><td>porta explícita ou busca automática</td></tr>
+              <tr><td>cor(r, g, b)</td><td>Cor da base</td><td>0 a 255 por canal</td></tr>
+              <tr><td>boca(abertura)</td><td>Abre a boca</td><td>0 fechada … 10 escancarada</td></tr>
+              <tr><td>falar_boca(segundos)</td><td>Mexe a boca como se falasse</td><td>segundos</td></tr>
+              <tr><td>virar(pos) · acenar(pos)</td><td>Cabeça na horizontal e na vertical</td><td>0 a 10</td></tr>
+              <tr><td>concordar(vezes) · negar(vezes)</td><td>Gestos de “sim” e “não”</td><td>nº de balanços</td></tr>
+              <tr><td>olhar(x, y)</td><td>Move as pupilas</td><td>0 a 10 · (5, 5) é o centro</td></tr>
+              <tr><td>formato_olho(nome)</td><td>Desenho dos olhos</td><td>normal, grande, bravo, triste, coracao, quadrado, oculos, cheio</td></tr>
+              <tr><td>brilho_olhos(nivel)</td><td>Brilho da matriz</td><td>0 a 10</td></tr>
+              <tr><td>palpebras(fechadas) · piscar(vezes)</td><td>Pálpebras e piscadas</td><td>0 a 1 · nº de piscadas</td></tr>
+              <tr><td>mover(motor, pos, vel)</td><td>Atuador cru, para o que as demais não cobrem</td><td>0 a 10</td></tr>
+              <tr><td>repouso() · fechar()</td><td>Volta ao estado inicial e libera a porta</td><td>—</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="solution-note">
+          <p>
+            <strong>Sempre termine com <span class="picoh-inline">repouso()</span> e
+            <span class="picoh-inline">fechar()</span>.</strong> Servo ligado e
+            parado esquenta, e a porta fica presa ao processo até ser fechada. Se
+            um programa morreu no meio, <span class="picoh-inline">python picoh_simples.py --repouso</span>
+            recolhe o robô.
+          </p>
+        </div>
+
+        <h3>A biblioteca oficial</h3>
+        <p>
+          A Ohbot publica a
+          <a href="https://github.com/ohbot/picoh-python" target="_blank" rel="noopener noreferrer">picoh-python</a>
+          (<span class="picoh-inline">pip install picoh</span>), que acrescenta
+          síntese de fala com sincronismo labial e leitura de sensores. Vale
+          conhecer as duas: a oficial entrega mais recursos, e a versão deste
+          tópico entrega o protocolo à vista. Atenção a uma diferença ao comparar
+          códigos — na biblioteca oficial a cor da base vai de <strong>0 a 10</strong>,
+          enquanto no protocolo cru vai de 0 a 255.
+        </p>
+      </section>
+
+      <section class="lesson-section" id="protocolo" aria-labelledby="protocolo-title">
+        <p class="solution-step">Parte 5</p>
+        <h2 id="protocolo-title">O protocolo, por baixo das duas ferramentas</h2>
+
+        <p>
+          Blocos e Python terminam no mesmo lugar: linhas de texto ASCII
+          terminadas por <span class="picoh-inline">\n</span>, escritas na porta
+          serial. Conhecer essas linhas fecha o tópico — depois delas não há mais
+          camada de software, só o firmware do robô.
+        </p>
+
+        <div class="table-scroll">
+          <table class="value-table">
+            <caption class="diagram-caption">Comandos aceitos pelo Picoh</caption>
+            <thead><tr><th>Linha enviada</th><th>Significado</th></tr></thead>
+            <tbody>
+              <tr><td>v</td><td>Handshake: o robô responde <span class="picoh-inline">v2…</span>. É assim que um programa descobre qual porta é o Picoh</td></tr>
+              <tr><td>a0&lt;m&gt; · d0&lt;m&gt;</td><td>Liga e desliga o servo do atuador <span class="picoh-inline">m</span></td></tr>
+              <tr><td>m0&lt;m&gt;,&lt;graus&gt;,&lt;vel&gt;</td><td>Move o atuador para uma posição em graus (velocidade de 0 a 250)</td></tr>
+              <tr><td>l00,r,g,b · l01,r,g,b</td><td>Os dois LEDs da base, de 0 a 255</td></tr>
+              <tr><td>FI,&lt;0-255&gt;</td><td>Brilho dos olhos</td></tr>
+              <tr><td>FE,0,&lt;x&gt;,&lt;y&gt;</td><td>Posição das pupilas na matriz</td></tr>
+              <tr><td>FL,+0,&lt;0-255&gt;</td><td>Pálpebras (0 aberto, 255 fechado)</td></tr>
+              <tr><td>FB,&lt;conjunto&gt;,&lt;18 bytes hex&gt;</td><td>Desenho dos olhos, um conjunto de linhas por vez</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p>
+          A conversão da escala didática para o hardware acontece no computador.
+          Cada atuador tem um intervalo próprio de graus, e alguns são invertidos,
+          conforme a definição que a Ohbot distribui com o software:
+        </p>
+
+        <div class="table-scroll">
+          <table class="value-table">
+            <caption class="diagram-caption">Faixa mecânica de cada servo</caption>
+            <thead><tr><th>Atuador</th><th>Índice</th><th>Graus</th><th>Invertido</th></tr></thead>
+            <tbody>
+              <tr><td>HeadNod</td><td>0</td><td>54 – 111</td><td>sim</td></tr>
+              <tr><td>HeadTurn</td><td>1</td><td>0 – 180</td><td>não</td></tr>
+              <tr><td>TopLip</td><td>4</td><td>0 – 99</td><td>sim</td></tr>
+              <tr><td>BottomLip</td><td>5</td><td>34 – 151</td><td>sim</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p>
+          Dá para conversar com o robô sem programa nenhum, o que costuma
+          convencer a turma de que não há mágica. Com o Picoh conectado e nenhum
+          outro programa usando a porta, no Linux:
+        </p>
+
+        <pre class="picoh-code"><code>stty -F /dev/ttyACM0 19200 raw
+printf 'l00,255,0,0\nl01,255,0,0\n' &gt; /dev/ttyACM0   # base vermelha
+printf 'l00,0,0,0\nl01,0,0,0\n' &gt; /dev/ttyACM0       # apaga</code></pre>
+
+        <div class="solution-note">
+          <p>
+            <strong>Uma curiosidade útil.</strong> A extensão do navegador abre a
+            porta a 115200 bauds e a biblioteca de Python a 19200 — e as duas
+            funcionam. A ligação é USB (classe CDC), em que a taxa negociada é um
+            número que o dispositivo ignora; a velocidade real é a do barramento.
+            A mesma linha de código num Arduino clássico, com conversor
+            USB-serial de verdade, não perdoaria a diferença.
+          </p>
+        </div>
+      </section>
+
+      <section class="lesson-section" id="referencias" aria-labelledby="referencias-title">
+        <p class="solution-step">Parte 6</p>
+        <h2 id="referencias-title">Referências</h2>
+
+        <h3>Documentação da Ohbot</h3>
+        <ul class="bibliography-list">
+          <li>OHBOT. <cite>Picoh</cite>. Página do produto e primeiros passos. <a href="https://www.ohbot.co.uk/picoh.html" target="_blank" rel="noopener noreferrer">ohbot.co.uk/picoh.html</a>.</li>
+          <li>OHBOT. <cite>Getting started with a Picoh Programmable Robot</cite>. <a href="https://learn.ohbot.co.uk/picohgetstarted.html" target="_blank" rel="noopener noreferrer">learn.ohbot.co.uk/picohgetstarted.html</a>.</li>
+          <li>OHBOT. <cite>Scratch 3 setup</cite> — instalação da extensão OhBridge e conexão pela Web Serial. <a href="https://learn.ohbot.co.uk/scratch3setup.html" target="_blank" rel="noopener noreferrer">learn.ohbot.co.uk/scratch3setup.html</a>.</li>
+          <li>OHBOT. <cite>Ohbot help — referência dos blocos</cite>. <a href="https://community.ohbot.co.uk/ohbothelp/help30.html" target="_blank" rel="noopener noreferrer">community.ohbot.co.uk/ohbothelp/help30.html</a>.</li>
+          <li>OHBOT. <cite>A guide to using the programmable Picoh robot in KS2 and KS3 teaching</cite>. <a href="https://learn.ohbot.co.uk/learnpicoh.html" target="_blank" rel="noopener noreferrer">learn.ohbot.co.uk/learnpicoh.html</a>.</li>
+        </ul>
+
+        <h3>Código</h3>
+        <ul class="bibliography-list">
+          <li>OHBOT. <cite>picoh-python</cite> — biblioteca oficial em Python. <a href="https://github.com/ohbot/picoh-python" target="_blank" rel="noopener noreferrer">github.com/ohbot/picoh-python</a>.</li>
+          <li>OHBOT. <cite>OhBridge</cite> — extensão do Chrome que liga o editor à porta serial. <a href="https://chromewebstore.google.com/detail/ohbridge/bfjihladgnccpchokgeeicpjcakdmkbe" target="_blank" rel="noopener noreferrer">Chrome Web Store</a>.</li>
+          <li>OHBOT. <cite>Scratch 3 GUI da Ohbot</cite>. <a href="https://scratch.ohbot.co.uk" target="_blank" rel="noopener noreferrer">scratch.ohbot.co.uk</a>.</li>
+        </ul>
+
+        <h3>Tecnologias envolvidas</h3>
+        <ul class="bibliography-list">
+          <li>MDN WEB DOCS. <cite>Web Serial API</cite> — a interface que permite a uma página falar com dispositivos seriais. <a href="https://developer.mozilla.org/en-US/docs/Web/API/Web_Serial_API" target="_blank" rel="noopener noreferrer">developer.mozilla.org</a>.</li>
+          <li>PYSERIAL. <cite>Documentação do pyserial</cite>. <a href="https://pyserial.readthedocs.io/" target="_blank" rel="noopener noreferrer">pyserial.readthedocs.io</a>.</li>
+          <li>RASPBERRY PI. <cite>Raspberry Pi Pico</cite> — o microcontrolador dentro do Picoh. <a href="https://www.raspberrypi.com/documentation/microcontrollers/pico-series.html" target="_blank" rel="noopener noreferrer">raspberrypi.com</a>.</li>
+        </ul>
+
+        <p class="course-source">
+          Este tópico atende aos itens “Programação com linguagens de alto nível”,
+          “Interfaces da Computação com a Física e a Educação”, “Bibliotecas livres”
+          e “Aplicativos didáticos e objetos educacionais digitais no ensino da
+          Física” do conteúdo programático de
+          <a href="../../disciplinas/prccomp/#ppc">PRCCOMP no PPC</a>.
+        </p>
+      </section>
+
+    </div>
+  </main>
+
+  <footer class="site-footer"><p>Tópico 01 · Manipulação do robô Picoh</p><a href="../">Voltar aos tópicos</a></footer>
+  <script type="module" src="../../componentes/navegacao-principal.js"></script>
+  <script type="module" src="../../componentes/navegacao-secoes.js"></script>
+</body>
+</html>

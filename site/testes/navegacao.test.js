@@ -45,6 +45,12 @@ test("navegação principal resolve o portal e as disciplinas a partir da raiz",
           href: "../../disciplinas/prclfbe/",
           current: false,
         },
+        {
+          id: "prccomp",
+          label: "PRCCOMP — Física Computacional",
+          href: "../../disciplinas/prccomp/",
+          current: false,
+        },
       ],
     },
     {
@@ -88,6 +94,14 @@ test("áreas legadas ativam a disciplina correspondente", () => {
     ["prclfbe"],
   );
 
+  const topicLinks = navigation.buildMainNavigation("../", "topicos");
+  const topicDisciplines = topicLinks.find((link) => link.id === "disciplinas");
+  assert.equal(topicDisciplines.current, true);
+  assert.deepEqual(
+    topicDisciplines.children.filter((link) => link.current).map((link) => link.id),
+    ["prccomp"],
+  );
+
   const exerciseLinks = navigation.buildMainNavigation("../", "exercicios");
   const exerciseDisciplines = exerciseLinks.find(
     (link) => link.id === "disciplinas",
@@ -111,10 +125,10 @@ test("disciplinas ocupam um único item expansível na navegação principal", (
     "enade",
     "sobre",
   ]);
-  assert.equal(disciplines.children.length, 2);
+  assert.equal(disciplines.children.length, 3);
   assert.deepEqual(
     disciplines.children.map((discipline) => discipline.id),
-    ["prcfemg", "prclfbe"],
+    ["prcfemg", "prclfbe", "prccomp"],
   );
 });
 

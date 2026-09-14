@@ -471,5 +471,27 @@
       "constante de tempo",
       "CSV"
     ]
+  },
+  {
+    "id": "topico-01-picoh",
+    "title": "Tópico 1 — Manipulação do robô Picoh",
+    "kind": "topico",
+    "section": "topicos",
+    "disciplines": [
+      "PRCCOMP"
+    ],
+    "theme": "Programação por blocos, Python e porta serial",
+    "description": "Como o robô funciona, como programá-lo com blocos no Scratch da Ohbot e como comandá-lo em Python pela porta serial.",
+    "path": "topicos/01-picoh/",
+    "tags": [
+      "Picoh",
+      "Ohbot",
+      "Scratch",
+      "blocos",
+      "Python",
+      "pyserial",
+      "porta serial",
+      "robótica educacional"
+    ]
   }
 ]

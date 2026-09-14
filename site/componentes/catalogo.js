@@ -84,6 +84,7 @@ function createCard(item, pathPrefix = "", showDisciplines = false) {
     experimento: "Experimento",
     resolucao: "Resolução",
     simulador: "Simulador",
+    topico: "Tópico",
   };
   const kindLabel = kindLabels[item.kind] ?? "Material";
   const eyebrow = element("span", "catalog-card__kind", kindLabel);
