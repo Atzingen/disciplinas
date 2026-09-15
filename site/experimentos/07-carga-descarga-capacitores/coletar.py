@@ -7,6 +7,7 @@ Windows: python coletar.py COM3 R47k.csv
 
 import argparse
 import csv
+import os
 import time
 from pathlib import Path
 from typing import TextIO
@@ -69,6 +70,19 @@ def collect(connection, output: TextIO, timeout: float = 10.0) -> int:
         count += 1
 
 
+def leave_port_usable_by_chrome(connection) -> None:
+    """No Linux, pyserial deixa VMIN=0 e o Chrome passa a tratar read()==0 como
+    porta perdida ("The device has been lost"). Restaura VMIN=1 antes de fechar."""
+    if os.name != "posix":
+        return
+    import termios
+
+    attributes = termios.tcgetattr(connection.fd)
+    attributes[6][termios.VMIN] = 1
+    attributes[6][termios.VTIME] = 0
+    termios.tcsetattr(connection.fd, termios.TCSANOW, attributes)
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("porta", help="Ex.: /dev/ttyACM0 ou COM3")
@@ -87,6 +101,7 @@ def main() -> None:
                 count = collect(connection, output)
             finally:
                 connection.write(b"x")
+                leave_port_usable_by_chrome(connection)
             print(f"Concluido: {count} leituras em {args.arquivo}")
 
 

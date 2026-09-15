@@ -1,3 +1,5 @@
+import { setupSerialChart } from "./grafico-serial.js";
+
 const HEADER = "fase,t_ms,adc,r_nominal_ohm";
 const ALLOWED_RESISTANCES = new Set([47000, 56000, 68000]);
 
@@ -15,6 +17,7 @@ export function createSerialCapture() {
     lastTime: new Map(),
     resistance: null,
     latest: null,
+    armed: false,
   };
 
   function ingest(rawLine) {
@@ -62,6 +65,9 @@ export function createSerialCapture() {
       return { type: "header" };
     }
     if (!state.headerSeen) {
+      // Antes de a aquisição ser pedida, a porta ainda carrega o que a placa
+      // imprime ao reiniciar (o ESP32 despeja o log do bootloader). Descartar.
+      if (!state.armed) return { type: "ignore" };
       return protocolError(state, "Foram recebidos dados antes do cabeçalho.");
     }
 
@@ -129,7 +135,11 @@ export function createSerialCapture() {
     return `${HEADER}\n${state.rows.join("\n")}\n`;
   }
 
-  return { ingest, summary, csv };
+  function arm() {
+    state.armed = true;
+  }
+
+  return { ingest, summary, csv, arm };
 }
 
 function formatElapsed(milliseconds) {
@@ -185,6 +195,9 @@ export function setupWebSerialCollector(
   let capture = createSerialCapture();
   let lastPaint = 0;
   let saved = false;
+  let readyTimer = null;
+  const chartRoot = root.querySelector("[data-serial-chart]");
+  const chart = chartRoot ? setupSerialChart(chartRoot, { download }) : null;
 
   function setStatus(message, kind = "neutral") {
     elements.status.textContent = message;
@@ -210,6 +223,42 @@ export function setupWebSerialCollector(
     elements.save.disabled = !state.downloadable;
   }
 
+  const wait = (milliseconds) => new Promise((resolve) => setTimeout(resolve, milliseconds));
+
+  // O Chrome abre a porta sem pulsar DTR/RTS, então a placa não reinicia e o
+  // "# pronto" (impresso só no setup) nunca chega. Primeiro o pulso de DTR, que
+  // reinicia o Arduino; depois o de RTS, que reinicia o ESP32 pelo pino EN.
+  // A ordem importa: no ESP32 o DTR controla o GPIO0, e soltar o EN com o DTR
+  // ainda acionado faz a placa subir no bootloader em vez de rodar o sketch.
+  async function restartBoard() {
+    if (typeof port?.setSignals !== "function") return;
+    try {
+      await port.setSignals({ dataTerminalReady: true, requestToSend: false });
+      await wait(120);
+      await port.setSignals({ dataTerminalReady: false, requestToSend: false });
+      await wait(150);
+      await port.setSignals({ dataTerminalReady: false, requestToSend: true });
+      await wait(120);
+      await port.setSignals({ dataTerminalReady: false, requestToSend: false });
+    } catch (error) {
+      // Adaptadores sem controle de DTR/RTS caem no aviso por tempo abaixo.
+    }
+  }
+
+  // Rede de segurança: se a placa não avisar que está pronta, a tela libera o
+  // início mesmo assim em vez de travar o aluno com um único botão útil.
+  function waitForReady() {
+    clearTimeout(readyTimer);
+    readyTimer = setTimeout(() => {
+      if (!port || capture.summary().status !== "waiting") return;
+      setStatus(
+        "A placa não avisou que está pronta. Aperte RESET nela ou clique em “Iniciar carga e descarga” mesmo assim.",
+        "warning",
+      );
+      elements.start.disabled = false;
+    }, 3000);
+  }
+
   async function send(command) {
     if (!port?.writable) throw new Error("A porta serial não está disponível para escrita.");
     const writer = port.writable.getWriter();
@@ -222,6 +271,7 @@ export function setupWebSerialCollector(
 
   function handleEvent(event) {
     if (event.type === "ready") {
+      clearTimeout(readyTimer);
       setStatus("Arduino pronto. Confira a descarga inicial e inicie a aquisição.", "ready");
       elements.start.disabled = false;
     } else if (event.type === "header") {
@@ -229,6 +279,7 @@ export function setupWebSerialCollector(
       elements.start.disabled = true;
       elements.stop.disabled = false;
     } else if (event.type === "data") {
+      chart?.add(event);
       setStatus(
         event.phase === "carga" ? "Coletando carga…" : "Coletando descarga…",
         "collecting",
@@ -255,6 +306,7 @@ export function setupWebSerialCollector(
     reading = true;
     const decoder = new TextDecoder();
     let buffer = "";
+    let bytesReceived = 0;
     try {
       while (port?.readable && reading) {
         reader = port.readable.getReader();
@@ -262,6 +314,7 @@ export function setupWebSerialCollector(
           while (reading) {
             const { value, done } = await reader.read();
             if (done) break;
+            bytesReceived += value.length;
             buffer += decoder.decode(value, { stream: true });
             const lines = buffer.split(/\r?\n/);
             buffer = lines.pop() ?? "";
@@ -273,7 +326,14 @@ export function setupWebSerialCollector(
         }
       }
     } catch (error) {
-      if (reading) {
+      if (reading && bytesReceived === 0 && error.name === "NetworkError" && navigator.userAgent.includes("Linux")) {
+        // No Linux o Chromium trata read()==0 como porta perdida, e read() devolve 0
+        // quando a porta ficou com VMIN=0 de um programa anterior (pyserial, esptool).
+        setStatus(
+          "O Chrome perdeu a porta logo ao abrir. No Linux, rode no terminal: stty -F /dev/ttyUSB0 min 1 (troque pela sua porta), depois desconecte e conecte de novo.",
+          "error",
+        );
+      } else if (reading) {
         setStatus(`Conexão perdida: ${error.message}. Baixe o CSV parcial.`, "error");
       }
     } finally {
@@ -289,10 +349,18 @@ export function setupWebSerialCollector(
     try {
       port = await serial.requestPort();
       await port.open({ baudRate: 115200 });
+      // Uma nova conexão é uma coleta nova: sem isto, o estado "complete" da
+      // aquisição anterior faz a tela ignorar o próximo "# pronto".
+      capture = createSerialCapture();
+      saved = false;
       elements.connect.disabled = true;
       elements.disconnect.disabled = false;
-      setStatus("Conectado. Aguarde o Arduino reiniciar e informar que está pronto…");
+      elements.save.disabled = true;
+      setStatus("Conectado. Reiniciando a placa e aguardando o aviso de pronto…");
       readPromise = readLoop();
+      await restartBoard();
+      waitForReady();
+      update(true);
     } catch (error) {
       if (error.name === "NotFoundError") {
         setStatus("Nenhuma porta foi selecionada.", "warning");
@@ -303,7 +371,10 @@ export function setupWebSerialCollector(
   }
 
   async function start() {
+    clearTimeout(readyTimer);
     capture = createSerialCapture();
+    capture.arm();
+    chart?.reset();
     saved = false;
     update(true);
     elements.start.disabled = true;
@@ -351,6 +422,7 @@ export function setupWebSerialCollector(
       setStatus("Baixe o CSV antes de desconectar ou interrompa para preservá-lo.", "warning");
       return;
     }
+    clearTimeout(readyTimer);
     reading = false;
     if (reader) await reader.cancel();
     if (readPromise) await readPromise;

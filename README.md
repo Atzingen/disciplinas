@@ -42,8 +42,8 @@ do catálogo indicam os códigos oficiais, em letras maiúsculas, na lista
 `disciplines` de `site/materiais.json`; uma simulação pode listar mais de uma
 disciplina.
 
-A pasta local histórica pode continuar se chamando `Eletromagnetismo-aulas`;
-o repositório remoto atual é `git@github.com:Atzingen/disciplinas.git`.
+A pasta local e o repositório remoto se chamam `disciplinas`
+(`git@github.com:Atzingen/disciplinas.git`).
 O workflow `.github/workflows/pages.yml` publica o conteúdo de `site/` no
 endereço acima a partir de `main`.
 
