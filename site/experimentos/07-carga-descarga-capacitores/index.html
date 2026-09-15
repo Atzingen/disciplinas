@@ -32,6 +32,25 @@
     .serial-collector__reading dt { color: var(--ink-soft); font: 700 .7rem/1.4 var(--font-mono); letter-spacing: .04em; text-transform: uppercase; }
     .serial-collector__reading dd { margin: .35rem 0 0; font: 700 1.05rem/1.2 var(--font-mono); }
     .serial-collector progress { width: 100%; height: .7rem; accent-color: var(--accent); }
+    .serial-chart { margin-top: 1.25rem; padding-top: 1rem; border-top: 1px solid var(--line); }
+    .serial-chart h4 { margin: 0 0 .75rem; }
+    .serial-chart__toolbar { display: flex; flex-wrap: wrap; align-items: center; gap: .6rem 1rem; margin-bottom: .75rem; font: 700 .8rem/1.4 var(--font-mono); color: var(--ink-soft); }
+    .serial-chart__toolbar label { display: inline-flex; align-items: center; gap: .4rem; }
+    .serial-chart__toolbar select, .serial-chart__toolbar input { padding: .35rem .5rem; border: 1px solid var(--line-strong); border-radius: var(--radius-md); background: var(--surface); color: var(--ink); font: inherit; }
+    .serial-chart__toolbar input { width: 5.5rem; }
+    .serial-chart__toolbar input:disabled { color: var(--ink-soft); background: var(--paper-deep); }
+    .serial-chart__toolbar button { padding: .5rem .9rem; border: 1px solid var(--line-strong); border-radius: 999px; background: var(--surface); color: var(--ink); font: inherit; cursor: pointer; }
+    .serial-chart__toolbar button:disabled { cursor: not-allowed; background: var(--paper-deep); color: var(--ink-soft); border-color: var(--line); }
+    .serial-chart__svg { display: block; width: 100%; height: auto; border: 1px solid var(--line); border-radius: var(--radius-md); background: var(--paper-deep); touch-action: none; cursor: crosshair; user-select: none; }
+    .serial-chart__grid { stroke: var(--line); stroke-width: 1; }
+    .serial-chart__frame { fill: none; stroke: var(--line-strong); stroke-width: 1; }
+    .serial-chart__label { fill: var(--ink-soft); font: 700 11px var(--font-mono); }
+    .serial-chart__line { fill: none; stroke-width: 2; stroke-linejoin: round; stroke-linecap: round; }
+    .serial-chart__line--carga { stroke: var(--accent); }
+    .serial-chart__line--descarga { stroke: #d89018; }
+    .serial-chart__switch { stroke: var(--ink-soft); stroke-width: 1; stroke-dasharray: 4 4; }
+    .serial-chart__crop { fill: var(--accent); fill-opacity: .15; stroke: var(--accent); stroke-width: 1; }
+    .serial-chart__info { margin: .6rem 0 0; color: var(--ink-soft); font-size: .9rem; }
     @media (max-width: 720px) { .serial-collector__readings { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
   </style>
   <script>try{if(localStorage.getItem("tema")==="escuro"){document.documentElement.dataset.theme="escuro"}}catch(erro){}</script>
@@ -274,12 +293,32 @@ void loop() {
           <div class="serial-collector__reading"><dt>Resistor</dt><dd data-serial-resistance>—</dd></div>
         </dl>
         <label>Progresso da fase atual <progress data-serial-progress max="100" value="0">0%</progress></label>
+        <div class="serial-chart" data-serial-chart>
+          <h4>Gráfico em tempo real</h4>
+          <div class="serial-chart__toolbar">
+            <label>Eixo X (s)
+              <select data-chart-x-mode><option value="auto">automático</option><option value="manual">manual</option></select>
+              <input type="number" data-chart-x-min value="0" min="0" step="1" aria-label="Mínimo do eixo X em segundos">
+              <input type="number" data-chart-x-max value="60" min="0" step="1" aria-label="Máximo do eixo X em segundos">
+            </label>
+            <label>Eixo Y (ADC)
+              <select data-chart-y-mode><option value="auto">automático</option><option value="manual">manual</option></select>
+              <input type="number" data-chart-y-min value="0" min="0" max="1023" step="1" aria-label="Mínimo do eixo Y">
+              <input type="number" data-chart-y-max value="1023" min="0" max="1023" step="1" aria-label="Máximo do eixo Y">
+            </label>
+            <button type="button" data-chart-reset>Zerar gráfico</button>
+            <button type="button" data-chart-crop-clear disabled>Limpar recorte</button>
+            <button type="button" data-chart-crop-download disabled>Baixar recorte CSV</button>
+          </div>
+          <svg class="serial-chart__svg" data-chart-svg viewBox="0 0 800 320" role="img" aria-label="ADC em função do tempo durante a carga e a descarga"></svg>
+          <p class="serial-chart__info" data-chart-crop-info>Arraste sobre o gráfico para escolher o trecho a exportar.</p>
+        </div>
       </div>
       <ol class="procedure-list">
         <li>Conecte o Arduino por USB, feche o Monitor Serial e clique em <strong>Conectar Arduino</strong>. Escolha a porta da placa na janela segura do navegador.</li>
         <li>Espere a mensagem <strong>Arduino pronto</strong>. Confira que o capacitor está descarregado e sem o resistor auxiliar de 1 kΩ.</li>
-        <li>Clique em <strong>Iniciar carga e descarga</strong>. Não feche nem recarregue a aba; acompanhe a fase, o tempo e a contagem.</li>
-        <li>Ao aparecer <strong>Par completo</strong>, clique em <strong>Baixar CSV</strong>. Se interromper ou perder a conexão, baixe o arquivo parcial, que será identificado no nome.</li>
+        <li>Clique em <strong>Iniciar carga e descarga</strong>. Não feche nem recarregue a aba; acompanhe a fase, o tempo, a contagem e o gráfico em tempo real. Os eixos podem ficar automáticos ou ser fixados manualmente; <strong>Zerar gráfico</strong> limpa só o desenho, não os dados coletados.</li>
+        <li>Ao aparecer <strong>Par completo</strong>, clique em <strong>Baixar CSV</strong>. Se interromper ou perder a conexão, baixe o arquivo parcial, que será identificado no nome. Para exportar apenas um trecho, arraste sobre o gráfico e use <strong>Baixar recorte CSV</strong>; o recorte mantém o mesmo formato de linhas.</li>
       </ol>
       <p>O seletor de porta precisa ser aberto por um clique e a página precisa estar em HTTPS ou localhost. A API Web Serial tem disponibilidade limitada: se o botão estiver desativado, use a alternativa Python abaixo. Consulte a <a href="https://developer.mozilla.org/en-US/docs/Web/API/Web_Serial_API" target="_blank" rel="noopener">documentação da Web Serial API</a> e o <a href="https://developer.chrome.com/docs/capabilities/serial" target="_blank" rel="noopener">guia do Chrome</a>.</p></article>
       <article class="lab-card"><h3>3. Alternativa com Python</h3><p>Use esta opção quando o navegador não oferecer Web Serial ou quando for necessário executar uma coleta por linha de comando. Instale Python e o pacote pyserial em um ambiente virtual; na pasta do coletor:</p>
