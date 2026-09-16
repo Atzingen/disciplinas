@@ -155,6 +155,15 @@ ferramenta escolhida, o código para rodar e as referências. O catálogo usa
    Linux e as capturas do editor de blocos em
    [site/assets/topicos/](site/assets/topicos/).
 
+2. [visão computacional](site/topicos/02-visao-computacional/): organizada em
+   capítulos de fundamentos de imagem, vídeo como instrumento de medida e
+   convolução/redes neurais. Inclui exemplos Python curtos, três demonstrações
+   interativas, vídeos e CSV do pêndulo e quatro notebooks com resultados para
+   leitura: convolução, MNIST (densa versus CNN), Fashion-MNIST e cães/gatos.
+   O quarto capítulo apresenta detecção, segmentação e embarcados
+   (Raspberry Pi, Hailo e OAK-D), com códigos completos e inferências YOLO reais.
+   Os notebooks são lidos dentro do capítulo 3; cards organizam capítulos e seções.
+
 ## Executar localmente
 
 ```powershell

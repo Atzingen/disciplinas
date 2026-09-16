@@ -1,0 +1,76 @@
+/* Extensões locais: o tópico herda o tema e a tipografia do portal. */
+.vision-page { --on-accent:#101620; --tinta:var(--ink); --tinta2:var(--ink-soft); --tinta3:var(--ink-soft); --papel:var(--surface); --papel2:var(--paper-deep); --laranja:var(--accent); }
+.vision-page .lesson-sections { min-width:0; }
+.vision-page .lesson-section { min-width:0; }
+.vision-page .lesson-section p, .vision-page .lesson-section li { max-width:78ch; }
+.vision-page .vision-code { max-width:100%; overflow-x:auto; padding:1rem 1.2rem; background:var(--paper-deep); border:1px solid var(--line); border-radius:8px; font: .83rem/1.65 var(--font-mono); white-space:pre; }
+.vision-page :not(pre) > code { font: .88em var(--font-mono); overflow-wrap:anywhere; }
+.vision-page .vision-example { margin:1.5rem 0; }
+.vision-page .lesson-main details { margin-top:1rem; }
+.vision-page .lesson-main summary { cursor:pointer; font-family:var(--font-display); }
+.vision-page .vision-pager { display:flex; flex-wrap:wrap; gap:1rem 2rem; justify-content:space-between; padding:2rem 0; border-top:1px solid var(--line); }
+.vision-page .vision-figure { margin:1.5rem 0; }
+.vision-page .vision-figure img, .vision-page video { max-width:100%; height:auto; border-radius:8px; }
+.vision-page .vision-figure img { background:#fff; }
+.vision-page figcaption { color:var(--ink-soft); font-size:.9rem; margin-top:.65rem; }
+.vision-page .vision-demo { margin:1.4rem 0; padding:1rem; background:var(--surface); border:1px solid var(--line-strong); border-radius:10px; overflow-x:auto; }
+.vision-page .controles { display:flex; flex-wrap:wrap; gap:.65rem; margin-bottom:1rem; font-family:var(--font-display); }
+.vision-page .controles button { background:var(--paper-deep); color:var(--ink); border:1px solid var(--line-strong); border-radius:6px; padding:.55rem .8rem; cursor:pointer; }
+.vision-page .controles button.ativo { background:var(--ink); color:var(--paper); }
+.vision-page .controles label { display:flex; align-items:center; gap:.5rem; font-size:.82rem; }
+.vision-page .controles input { max-width:130px; }
+.vision-page canvas { image-rendering:pixelated; max-width:100%; }
+.vision-page .vision-demo .grade09 { grid-template-columns:repeat(10,1.6rem); }
+.vision-page .vision-demo .grade09 div { height:1.6rem; }
+.vision-page #conta09 { overflow-wrap:anywhere; }
+.vision-page .vision-note { border:1px solid var(--line-strong); border-radius:8px; padding:1rem 1.1rem; background:var(--paper-deep); margin:1.3rem 0; }
+.vision-page .table-scroll { max-width:100%; overflow-x:auto; }
+.vision-page :focus-visible { outline:3px solid var(--accent); outline-offset:3px; }
+@media (max-width:600px) { .vision-page .vision-demo { padding:.65rem; } .vision-page .vision-code { font-size:.76rem; padding:.8rem; } .vision-page .vision-pager a { flex:1 1 100%; } }
+
+@media (max-width:600px) {
+  .vision-page .site-topbar { position:static; }
+  .vision-page .section-nav { flex-wrap:nowrap; overflow-x:auto; padding-bottom:.6rem; }
+  .vision-page .section-nav a { white-space:nowrap; flex-shrink:0; }
+}
+
+@media (max-width:600px) { .vision-page .lesson-title-row { min-width:0; } .vision-page h1 { font-size:clamp(2rem,9vw,3rem); overflow-wrap:anywhere; } }
+
+.vision-page .vision-demo canvas { height:auto !important; }
+
+.vision-page mjx-container[display="true"] { max-width:100%; overflow-x:auto; overflow-y:hidden; padding:.3rem 0; }
+
+/* Cards inteiramente clicáveis, seguindo o catálogo de disciplinas. */
+.vision-page .vision-card-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:1rem; list-style:none; padding:0; margin:1.5rem 0 2rem; }
+.vision-page .vision-card-grid > li { display:flex; max-width:none; min-width:0; }
+.vision-page .vision-card { display:flex; flex-direction:column; align-items:flex-start; gap:.7rem; width:100%; min-width:0; padding:1.35rem; color:var(--ink); }
+.vision-page .vision-card-number { color:var(--ink-soft); font:700 .85rem var(--font-mono); }
+.vision-page .vision-card strong { font:700 1.25rem/1.3 var(--font-display); }
+.vision-page .vision-card-description { font-size:.98rem; line-height:1.55; color:var(--ink-soft); }
+.vision-page .vision-card .vision-card-action { margin-top:auto; padding-top:.45rem; color:var(--ink); text-decoration:underline; text-underline-offset:.2em; font:700 .85rem var(--font-display); }
+.vision-page .vision-card:hover, .vision-page .vision-card:focus-visible { border-color:var(--accent); }
+.vision-page .vision-section-index { padding-bottom:1rem; border-bottom:1px solid var(--line); margin-bottom:2rem; }
+.vision-page .vision-section-index h2 { margin-top:0; }
+.vision-page .vision-notebook { padding:1.4rem 0 0; border-left:0; border-top:2px solid var(--accent); }
+.vision-page .vision-notebook h3, .vision-page .vision-notebook h4 { margin-top:2rem; }
+.vision-page .vision-notebook-intro { color:var(--ink-soft); }
+.vision-page .vision-cell { min-width:0; margin:1.5rem 0 2rem; }
+.vision-page .vision-cell-label { font:600 .76rem var(--font-mono); color:var(--ink-soft); text-transform:uppercase; letter-spacing:.05em; margin-bottom:.4rem; }
+.vision-page .vision-output { border-color:var(--line-strong); background:var(--surface); }
+.vision-page .vision-widget-note { font-size:.9rem; color:var(--ink-soft); }
+.vision-page .vision-environment { color:var(--ink-soft); font-size:.9rem; }
+.vision-page .vision-download { display:inline-block; padding:.7rem 1rem; border:1px solid var(--line-strong); border-radius:8px; font:600 .9rem var(--font-display); }
+@media (max-width:650px) { .vision-page .vision-card-grid { grid-template-columns:1fr; } .vision-page .vision-card { padding:1.1rem; min-height:0; } }
+
+.vision-page .vision-notebook h4 { font:700 1.15rem/1.4 var(--font-display); }
+@media (max-width:600px) { .vision-page .lesson-section { scroll-margin-top:1rem; } }
+
+/* Vídeo, reconhecimento e medida usam um único relógio de reprodução. */
+.vision-page .vision-measurement-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:1rem; margin:1.5rem 0 1rem; }
+.vision-page .vision-measurement-grid figure { margin:0; min-width:0; }
+.vision-page .vision-measurement-grid h3 { font:700 1rem/1.4 var(--font-display); margin:0 0 .7rem; }
+.vision-page .vision-measurement-grid video, .vision-page .vision-measurement-grid canvas { display:block; width:100%; height:auto; aspect-ratio:640/416; border:1px solid var(--line-strong); border-radius:8px; background:var(--surface); }
+.vision-page .vision-measurement-grid canvas { image-rendering:auto; }
+.vision-page .vision-measurement-status { display:block; font:.9rem/1.6 var(--font-mono); color:var(--ink); min-height:1.6em; }
+.vision-page .vision-measurement-caption { color:var(--ink-soft); font-size:.9rem; }
+@media (max-width:850px) { .vision-page .vision-measurement-grid { grid-template-columns:1fr; } }

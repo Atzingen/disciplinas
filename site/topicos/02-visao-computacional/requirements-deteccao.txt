@@ -1,0 +1,9 @@
+# Detecção, rastreamento e segmentação no computador
+ultralytics==8.4.136
+opencv-python==4.12.0.88
+numpy==2.2.6
+lap==0.5.13
+
+# Raspberry Pi: instale python3-picamera2 pelo apt, conforme o manual oficial.
+# Hailo: hailo_platform acompanha o HailoRT compatível com a placa e o HEF.
+# O exemplo 14 preserva a API do acervo: pip install "depthai>=2.24,<3"

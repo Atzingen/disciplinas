@@ -1,0 +1,3 @@
+-r requirements-imagem.txt
+scipy>=1.12,<2
+matplotlib>=3.8,<4

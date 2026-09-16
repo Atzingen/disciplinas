@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Da imagem como matriz à câmera como instrumento de medida. Uma sequência para entender o algoritmo, experimentar com dados reais e discutir o que o resultado significa.">
+  <title>Visão computacional · PRCCOMP</title>
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../assets/base.css">
+  <link rel="stylesheet" href="../../assets/simulador.css">
+  <link rel="stylesheet" href="./visao.css">
+  <script>try{if(localStorage.getItem("tema")==="escuro"){document.documentElement.dataset.theme="escuro"}}catch(erro){}</script>
+</head>
+<body class="lesson-page vision-page">
+  <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+  <div class="site-topbar" data-topbar>
+    <div class="site-topbar__inner">
+      <nav class="breadcrumb" aria-label="Navegação estrutural"><a href="../../disciplinas/prccomp/">Física Computacional</a><span aria-hidden="true">/</span><strong aria-current="page">Visão computacional</strong></nav>
+      <div data-site-navigation data-root-path="../../" data-active-section="topicos"></div>
+    </div>
+    <nav class="section-nav" aria-label="Seções do capítulo" data-section-nav><a href="#capitulos">Capítulos</a><a href="#preparar">Preparar</a><a href="#fontes">Fontes</a></nav>
+  </div>
+  <header class="lesson-header"><div class="lesson-title-row"><div>
+    <p class="eyebrow">Tópico 02 · PRCCOMP</p>
+    <h1>Visão computacional</h1></div><p class="lesson-intro">Da imagem como matriz à câmera como instrumento de medida. Uma sequência para entender o algoritmo, experimentar com dados reais e discutir o que o resultado significa.</p></div></header>
+  <main class="lesson-main" id="conteudo"><div class="lesson-sections"><section class="lesson-section" id="capitulos" aria-labelledby="capitulos-title"><h2 id="capitulos-title">O percurso</h2><p>Escolha um capítulo nos cards abaixo. Comece pelos pixels e avance até os modelos que aprendem. Cada capítulo reúne explicação, código e uma pergunta para investigar. Os exemplos de imagem usam a mesma bolinha que depois aparece no experimento do pêndulo.</p><ol class="vision-chapters vision-card-grid"><li><a class="resource-card vision-card" href="01-fundamentos/"><span class="vision-card-number">01</span><strong>Fundamentos de imagem</strong><span class="vision-card-description">Pixels, captura, movimento, cor e posição. Código e demonstrações interativas.</span><span class="vision-card-action">Abrir capítulo <span aria-hidden="true">→</span></span></a></li><li><a class="resource-card vision-card" href="02-video-medida/"><span class="vision-card-number">02</span><strong>Vídeo como instrumento de medida</strong><span class="vision-card-description">Vídeos do pêndulo, rastreamento, gráficos e estimativa da gravidade.</span><span class="vision-card-action">Abrir capítulo <span aria-hidden="true">→</span></span></a></li><li><a class="resource-card vision-card" href="03-convolucao-redes/"><span class="vision-card-number">03</span><strong>Convolução e redes neurais</strong><span class="vision-card-description">Convolução, MNIST, Fashion-MNIST e cães/gatos: código e resultados na página.</span><span class="vision-card-action">Abrir capítulo <span aria-hidden="true">→</span></span></a></li><li><a class="resource-card vision-card" href="04-deteccao-segmentacao/"><span class="vision-card-number">04</span><strong>Detecção, segmentação e embarcados</strong><span class="vision-card-description">YOLO, caixas, máscaras, rastreamento e inferência em dispositivos embarcados.</span><span class="vision-card-action">Abrir capítulo <span aria-hidden="true">→</span></span></a></li></ol></section><section class="lesson-section" id="preparar" aria-labelledby="preparar-title"><h2 id="preparar-title">Preparar o ambiente</h2><p>As demonstrações desta página funcionam no navegador. Para os scripts com janela ou webcam, use Python no computador. Os notebooks podem ser abertos no Jupyter ou enviados ao <a href="https://colab.research.google.com/">Google Colab</a> por <strong>Arquivo → Fazer upload de notebook</strong>.</p>
+<h3>Obter os arquivos</h3><p>Na cópia deste repositório, entre em <code>site/topicos/02-visao-computacional</code>. Os comandos dos exemplos partem dessa pasta. Ao baixar arquivos individualmente, preserve as subpastas <code>scripts/</code>, <code>imagens/</code>, <code>videos/</code> e <code>dados/</code>; os links de cada capítulo indicam suas entradas.</p><pre class="vision-code"><code>python -m venv .venv
+# Linux/macOS
+source .venv/bin/activate
+# Windows PowerShell: .venv\Scripts\Activate.ps1
+python -m pip install -r requirements-imagem.txt
+python scripts/01_imagem.py</code></pre><p>Instale só o percurso que vai usar:</p><ul><li><a href="requirements-imagem.txt" download>Imagem</a>: OpenCV e NumPy.</li><li><a href="requirements-medida.txt" download>Medida</a>: acrescenta SciPy e Matplotlib.</li><li><a href="requirements-redes.txt" download>Redes neurais</a>: dependências dos notebooks.</li><li><a href="requirements-deteccao.txt" download>Detecção e segmentação</a>: YOLO no computador; a preparação dos embarcados está no capítulo 4.</li></ul><p>Use <kbd>q</kbd> para encerrar os vídeos; os exemplos de imagem fixa fecham com uma tecla. A leitura de webcam depende da câmera e da permissão do sistema. O primeiro uso de um dataset nos notebooks requer internet.</p></section><section class="lesson-section" id="fontes" aria-labelledby="fontes-title"><h2 id="fontes-title">De onde vem este material</h2><p>Esta sequência adapta o acervo de <a href="https://github.com/Atzingen/visao-computacional-fisica">visão computacional aplicada à física</a> e seleciona exemplos dos cursos <a href="https://github.com/Atzingen/Palestra-SAMBA2022-CNN">SAMBA 2022</a>, <a href="https://github.com/Atzingen/Webinar-Vis-o-computacional-Embarcada">Webinar de visão embarcada</a> e <a href="https://github.com/Atzingen/IA-FIC-IFSP">FIC de Inteligência Artificial</a>. Os vídeos vêm do experimento de <a href="https://github.com/Atzingen/rastreador-pendulo">rastreamento do pêndulo</a>.</p><p><a href="README.md">Guia de arquivos e procedência</a>. O capítulo 4 traz também as referências de formigas e de visão embarcada.</p></section></div></main>
+  <footer class="site-footer"><p>Visão computacional · Física Computacional</p><a href="../../topicos/">Todos os tópicos</a></footer>
+  <script type="module" src="../../componentes/navegacao-principal.js"></script>
+  <script type="module" src="../../componentes/navegacao-secoes.js"></script>
+  <script type="module">import { typesetMath } from "../../componentes/matematica.js"; typesetMath(document.querySelector("main"));</script>
+</body>
+</html>

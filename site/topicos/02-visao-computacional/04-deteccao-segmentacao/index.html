@@ -1,0 +1,529 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Aula completa de detecção, rastreamento, segmentação e visão embarcada, com inferência YOLO executada em CPU e código legível.">
+  <title>Detecção, segmentação e embarcados · Visão computacional · PRCCOMP</title>
+  <link rel="icon" href="../../../assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../../assets/base.css">
+  <link rel="stylesheet" href="../../../assets/simulador.css">
+  <link rel="stylesheet" href="../visao.css">
+  <script>try{if(localStorage.getItem("tema")==="escuro"){document.documentElement.dataset.theme="escuro"}}catch(erro){}</script>
+</head>
+<body class="lesson-page vision-page">
+  <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+  <div class="site-topbar" data-topbar>
+    <div class="site-topbar__inner">
+      <nav class="breadcrumb" aria-label="Navegação estrutural"><a href="../../../disciplinas/prccomp/">Física Computacional</a><span aria-hidden="true">/</span><a href="../">Visão computacional</a><span aria-hidden="true">/</span><strong aria-current="page">Capítulo 4</strong></nav>
+      <div data-site-navigation data-root-path="../../../" data-active-section="topicos"></div>
+    </div>
+    <nav class="section-nav" aria-label="Seções do capítulo" data-section-nav><a href="#representacoes">Representações</a><a href="#deteccao">Detecção</a><a href="#tracking">Tracking</a><a href="#formigas">Formigas</a><a href="#segmentacao">Segmentação</a><a href="#embarcados">Embarcados</a><a href="#executar">Executar</a><a href="#referencias">Referências</a></nav>
+  </div>
+  <header class="lesson-header"><div class="lesson-title-row"><div>
+    <p class="eyebrow">Tópico 02 · Capítulo 4</p>
+    <h1>Detecção, segmentação e embarcados</h1></div><p class="lesson-intro">Uma classe responde “o quê?”. Uma caixa acrescenta “onde?”. Uma máscara diz “quais pixels?”. Neste capítulo, essas respostas viram medidas, trajetórias e um fluxo que pode chegar à câmera.</p></div></header>
+  <main class="lesson-main" id="conteudo"><div class="lesson-sections">
+    <section class="lesson-section vision-section-index" aria-labelledby="mapa-title">
+      <h2 id="mapa-title">Percurso da aula</h2>
+      <ul class="vision-card-grid">
+        <li><a class="resource-card vision-card panel-link" href="#representacoes"><span class="vision-card-number">4.1</span><strong>Da classe à máscara</strong><span class="vision-card-description">Compare as respostas possíveis para a mesma cena.</span><span class="vision-card-action">Começar →</span></a></li>
+        <li><a class="resource-card vision-card panel-link" href="#deteccao"><span class="vision-card-number">4.2</span><strong>Detectar e avaliar</strong><span class="vision-card-description">Leia caixas, confiança e IoU numa inferência real.</span><span class="vision-card-action">Ver resultado →</span></a></li>
+        <li><a class="resource-card vision-card panel-link" href="#tracking"><span class="vision-card-number">4.3</span><strong>Seguir no tempo</strong><span class="vision-card-description">Associe detecções consecutivas por um ID.</span><span class="vision-card-action">Acompanhar →</span></a></li>
+        <li><a class="resource-card vision-card panel-link" href="#segmentacao"><span class="vision-card-number">4.4</span><strong>Medir pela máscara</strong><span class="vision-card-description">Conte pixels e separe medida de calibração.</span><span class="vision-card-action">Medir →</span></a></li>
+        <li><a class="resource-card vision-card panel-link" href="#embarcados"><span class="vision-card-number">4.5</span><strong>Levar ao dispositivo</strong><span class="vision-card-description">Percorra Raspberry Pi, Hailo e OAK-D sem esconder o formato do modelo.</span><span class="vision-card-action">Ver fluxos →</span></a></li>
+        <li><a class="resource-card vision-card panel-link" href="#executar"><span class="vision-card-number">4.6</span><strong>Executar os exemplos</strong><span class="vision-card-description">Instale o ambiente e rode scripts pequenos.</span><span class="vision-card-action">Abrir guia →</span></a></li>
+      </ul>
+    </section>
+
+    <section class="lesson-section" id="representacoes" aria-labelledby="representacoes-title">
+      <h2 id="representacoes-title">4.1 Uma cena, quatro tipos de resposta</h2>
+      <p>A entrada é uma matriz de pixels. A saída depende da pergunta feita ao modelo. Classificação, detecção, segmentação e rastreamento não são nomes diferentes para a mesma tarefa.</p>
+      <div class="table-scroll"><table class="value-table"><thead><tr><th>Tarefa</th><th>Saída</th><th>Pergunta respondida</th><th>O que ainda falta</th></tr></thead><tbody>
+        <tr><td>Classificação</td><td>classe e escore para a imagem</td><td>O que predomina na cena?</td><td>Não localiza cada objeto.</td></tr>
+        <tr><td>Detecção</td><td>classe, confiança e caixa por objeto</td><td>O que há e onde está?</td><td>A caixa inclui fundo.</td></tr>
+        <tr><td>Segmentação semântica</td><td>uma classe por pixel</td><td>A que região pertence cada pixel?</td><td>Objetos da mesma classe podem ficar unidos.</td></tr>
+        <tr><td>Segmentação por instância</td><td>máscara separada por objeto</td><td>Quais pixels pertencem a cada objeto?</td><td>Não mantém identidade no tempo.</td></tr>
+        <tr><td>Rastreamento</td><td>detecção mais ID ao longo dos quadros</td><td>É o mesmo objeto do quadro anterior?</td><td>Oclusões podem trocar ou perder IDs.</td></tr>
+      </tbody></table></div>
+      <figure class="vision-figure"><img src="../imagens/deteccao-entrada.jpg" alt="Rua com um ônibus e pessoas, imagem usada na inferência"><figcaption>Imagem aberta de demonstração do projeto Ultralytics. Nesta cena, classificar poderia devolver “ônibus”; detectar devolve caixas; segmentar devolve os pixels de cada instância.</figcaption></figure>
+      <div class="vision-note"><p><strong>O modelo conhece um vocabulário finito.</strong> Um detector pré-treinado no COCO conhece 80 categorias. “Formiga” e “bola de pingue-pongue” não fazem parte desse vocabulário. Uma forma parecida com uma categoria conhecida pode receber outro rótulo, ou não produzir detecção.</p></div>
+    </section>
+
+    <section class="lesson-section" id="deteccao" aria-labelledby="deteccao-title">
+      <h2 id="deteccao-title">4.2 YOLO: da imagem às caixas</h2>
+      <p>YOLO realiza a detecção numa passagem pela rede. Para cada candidato preservado, o resultado contém uma classe, um escore de confiança e quatro coordenadas. Neste exemplo usamos o formato <code>(x1, y1, x2, y2)</code>: canto superior esquerdo e canto inferior direito, medidos em pixels a partir do topo esquerdo.</p>
+      <pre class="vision-code"><code>modelo = YOLO(caminho_do_modelo)
+resultado = modelo.predict(imagem, conf=0.25, device="cpu")[0]
+
+for caixa, confianca, classe in zip(
+    resultado.boxes.xyxy,
+    resultado.boxes.conf,
+    resultado.boxes.cls,
+):
+    x1, y1, x2, y2 = caixa
+    nome = resultado.names[int(classe)]</code></pre>
+      <p>O limiar <code>conf=0.25</code> descarta previsões abaixo de 0,25. Esse número não é uma garantia de 25% ou 95% de acerto: é um escore do modelo, útil para ordenar e filtrar resultados. Sua calibração varia com o modelo e com os dados.</p>
+      <h3>Resultado executado em CPU</h3>
+      <figure class="vision-figure"><img src="../imagens/deteccao-resultado.jpg" alt="Ônibus e quatro pessoas marcados por caixas de detecção YOLO"><figcaption>YOLO11n, Ultralytics 8.4.136, CPU, limiar 0,25. A execução encontrou cinco objetos: um ônibus e quatro pessoas.</figcaption></figure>
+      <div class="table-scroll"><table class="value-table"><thead><tr><th>Classe</th><th>Confiança</th><th>Caixa (x1, y1, x2, y2)</th></tr></thead><tbody>
+        <tr><td>bus</td><td>0,940</td><td>(4, 229, 796, 728)</td></tr>
+        <tr><td>person</td><td>0,888</td><td>(671, 395, 810, 879)</td></tr>
+        <tr><td>person</td><td>0,878</td><td>(47, 400, 239, 904)</td></tr>
+        <tr><td>person</td><td>0,856</td><td>(223, 409, 344, 860)</td></tr>
+        <tr><td>person</td><td>0,622</td><td>(0, 556, 69, 872)</td></tr>
+      </tbody></table></div>
+      <p>As caixas cortadas na borda não são erro de coordenada: há pessoas parcialmente fora da imagem. O pixel <code>x=0</code> marca justamente o limite esquerdo.</p>
+      <h3>IoU: quanto duas regiões se sobrepõem?</h3>
+      <p>A interseção sobre união, ou IoU, divide a área compartilhada pela área coberta por pelo menos uma das duas regiões:</p>
+      <p>\[\operatorname{IoU}(A,B)=\frac{|A\cap B|}{|A\cup B|}\]</p>
+      <p>Se A vai de (0, 0) a (100, 100) e B vai de (50, 0) a (150, 100), a interseção tem 5.000 px² e a união tem 15.000 px²: IoU = 1/3. Durante o pós-processamento, a supressão de não máximos usa a sobreposição para eliminar caixas repetidas da mesma classe. Na avaliação, a IoU pode comparar uma previsão com a anotação de referência. São comparações com finalidades diferentes.</p>
+      <div class="vision-note"><p><strong>Erros que uma imagem bonita pode esconder:</strong> falso positivo é uma detecção sem objeto correspondente; falso negativo é um objeto não detectado. Elevar o limiar costuma reduzir falsos positivos e também pode aumentar falsos negativos. A escolha precisa ser avaliada no conjunto e na aplicação.</p></div>
+      <h3>Um limite observado: a bolinha do pêndulo</h3>
+      <figure class="vision-figure"><img src="../imagens/deteccao-bolinha-limite.jpg" alt="Quadro do pêndulo sem caixas de detecção YOLO"><figcaption>No quadro usado nos capítulos anteriores, o mesmo YOLO11n retornou zero detecções com limiar 0,25. A ausência de caixa é um resultado: o modelo genérico não substitui o detector de cor nem um modelo treinado para a bolinha.</figcaption></figure>
+      <div class="vision-example"><p>O script completo baixa o peso pequeno para o cache do usuário, executa na CPU, grava uma nova saída fora do Git e imprime as coordenadas.</p><pre class="vision-code"><code>python scripts/09_yolo_imagem.py</code></pre><a class="vision-download" href="../scripts/09_yolo_imagem.py" download>Baixar 09_yolo_imagem.py</a></div>
+    </section>
+
+    <section class="lesson-section" id="tracking" aria-labelledby="tracking-title">
+      <h2 id="tracking-title">4.3 Tracking: caixas ganham memória</h2>
+      <p>Detectar cada quadro separadamente não diz se a pessoa 2 de agora é a pessoa 2 do quadro anterior. Um tracker associa detecções próximas e compatíveis e atribui um ID temporário. O argumento <code>persist=True</code> informa que os quadros chegam na ordem da mesma sequência.</p>
+      <pre class="vision-code"><code>while True:
+    ok, frame = video.read()
+    if not ok:
+        break
+
+    resultado = modelo.track(
+        frame,
+        persist=True,
+        tracker="bytetrack.yaml",
+        conf=0.25,
+        device="cpu",
+    )[0]
+
+    if resultado.boxes.id is not None:
+        ids = resultado.boxes.id.int().cpu().tolist()</code></pre>
+      <p><code>persist=True</code> não treina o modelo e não guarda uma identidade universal. O ID só faz sentido dentro da sequência e do estado daquele tracker. Uma oclusão longa, objetos cruzando ou uma detecção perdida podem encerrar uma trajetória ou trocar IDs. Ao mudar de vídeo, reinicie o modelo/tracker.</p>
+      <div class="vision-example"><pre class="vision-code"><code>python scripts/10_yolo_tracking.py videos/pendulo_trena.mp4
+# ou, para a webcam:
+python scripts/10_yolo_tracking.py 0</code></pre><a class="vision-download" href="../scripts/10_yolo_tracking.py" download>Baixar 10_yolo_tracking.py</a></div>
+      <div class="vision-note"><p><strong>Escolha uma classe que o modelo realmente conhece.</strong> No vídeo do pêndulo, o detector genérico pode não produzir caixas para a bolinha. Para rastreá-la, continue com cor/contorno, prepare anotações e treine um detector específico, ou use outra estratégia apropriada à medida.</p></div>
+    </section>
+
+    <section class="lesson-section" id="formigas" aria-labelledby="formigas-title">
+      <h2 id="formigas-title">Caso do acervo: várias formigas</h2>
+      <p>O repositório <code>formigas</code> torna concreto um problema de múltiplos objetos. O arquivo <code>rastreio.py</code> abre <code>datasets/videos_raw/ants.mp4</code>, carrega <code>models/best.pt</code>, chama <code>model.track(..., persist=True)</code> e conserva, para cada ID, uma lista de centros. O arquivo <code>run_croped.py</code> usa uma transformação de perspectiva e referencia <code>models/last.pt</code>.</p>
+      <pre class="vision-code"><code>track_history = defaultdict(list)
+resultado = modelo.track(frame, persist=True)[0]
+
+if resultado.boxes.id is not None:
+    centros = resultado.boxes.xywh.cpu()
+    ids = resultado.boxes.id.int().cpu().tolist()
+    for (x, y, largura, altura), id_objeto in zip(centros, ids):
+        track_history[id_objeto].append((float(x), float(y)))</code></pre>
+      <p>Os pesos <code>best.pt</code>/<code>last.pt</code> e o vídeo <code>ants.mp4</code> citados pelo código não estão versionados no acervo local ou no GitHub. Por isso, este capítulo não publica caixas inventadas nem afirma uma métrica de formigas. Recuperados os ativos, a validação deve manter sequências diferentes em treino, validação e teste; quadros vizinhos do mesmo vídeo são muito parecidos e podem inflar a avaliação.</p>
+      <p>Os limiares extremamente baixos do experimento antigo registram que aquele modelo precisava de revisão. Baixar o limiar não melhora o que a rede aprendeu: apenas aceita mais candidatos, inclusive ruído. Antes de contar formigas, revise exemplos de falsos positivos, falsos negativos, trocas de ID e o efeito de oclusões.</p>
+    </section>
+
+    <section class="lesson-section" id="segmentacao" aria-labelledby="segmentacao-title">
+      <h2 id="segmentacao-title">4.4 Da caixa aos pixels do objeto</h2>
+      <p>Uma caixa é conveniente, mas sua área inclui fundo. A segmentação por instância devolve uma máscara binária para cada objeto: 1 nos pixels atribuídos à instância e 0 nos demais. O modelo usado aqui é <code>yolo11n-seg.pt</code>; um checkpoint de detecção comum não passa a produzir máscaras apenas porque mudamos o método chamado.</p>
+      <pre class="vision-code"><code>resultado = modelo.predict(
+    imagem,
+    conf=0.25,
+    device="cpu",
+    retina_masks=True,
+)[0]
+
+for mascara, classe in zip(resultado.masks.data, resultado.boxes.cls):
+    area_px = int(mascara.sum())
+    nome = resultado.names[int(classe)]
+    print(nome, area_px)</code></pre>
+      <figure class="vision-figure"><img src="../imagens/segmentacao-resultado.jpg" alt="Ônibus, pessoas e placa com máscaras coloridas de segmentação"><figcaption>Inferência real em CPU com YOLO11n-seg e máscaras na resolução da imagem. Cada cor corresponde a uma instância.</figcaption></figure>
+      <div class="table-scroll"><table class="value-table"><thead><tr><th>Instância</th><th>Confiança</th><th>Área da máscara</th></tr></thead><tbody>
+        <tr><td>bus</td><td>0,899</td><td>262.715 px²</td></tr>
+        <tr><td>person</td><td>0,885</td><td>21.955 px²</td></tr>
+        <tr><td>person</td><td>0,863</td><td>50.394 px²</td></tr>
+        <tr><td>person</td><td>0,822</td><td>35.075 px²</td></tr>
+        <tr><td>stop sign</td><td>0,461</td><td>1.879 px²</td></tr>
+        <tr><td>person</td><td>0,443</td><td>11.276 px²</td></tr>
+      </tbody></table></div>
+      <p>O detector e o segmentador não preservaram exatamente as mesmas instâncias: o segmentador encontrou também uma placa. Resultados de modelos diferentes devem ser comparados, não presumidos iguais.</p>
+      <h3>De pixels para área física</h3>
+      <p>A soma da máscara produz área em pixels. Se o objeto estiver num plano frontal e uma calibração válida fornecer uma escala constante <em>s</em> em milímetros por pixel, então:</p>
+      <p>\[A_{\rm física}=N_{\rm pixels}\,s^2\]</p>
+      <p>Na fotografia do ônibus, a perspectiva muda a escala com a posição. Portanto, os números acima não devem ser convertidos diretamente para metros quadrados. Uma medida física exige referência no mesmo plano, correção de perspectiva por homografia quando apropriada e propagação da incerteza da máscara e da calibração.</p>
+      <p>Para avaliar a máscara, a IoU usa pixels em vez de áreas de caixas: interseção é o número de pixels marcados nas duas máscaras; união é o número marcado em pelo menos uma.</p>
+      <div class="vision-example"><pre class="vision-code"><code>python scripts/11_yolo_segmentacao.py</code></pre><a class="vision-download" href="../scripts/11_yolo_segmentacao.py" download>Baixar 11_yolo_segmentacao.py</a></div>
+      <h3>Extensão: segmentar por indicação</h3>
+      <p>Modelos como SAM recebem uma imagem e uma indicação, por exemplo um ponto ou uma caixa, e devolvem máscaras candidatas. Isso muda a pergunta: em vez de escolher apenas entre classes fixas, o usuário indica a região de interesse. O prompt não transforma automaticamente a máscara em medida física, não resolve calibração e pode escolher o objeto errado. Como os checkpoints são grandes e a extensão é opcional, esta aula mantém SAM no nível conceitual.</p>
+    </section>
+
+    <section class="lesson-section" id="embarcados" aria-labelledby="embarcados-title">
+      <h2 id="embarcados-title">4.5 Visão computacional perto da câmera</h2>
+      <p>Treinamento e inferência são etapas distintas. É comum treinar no computador e converter o modelo para um formato aceito pelo acelerador. Em todos os dispositivos, o fluxo conserva as mesmas decisões:</p>
+      <p><strong>captura → redimensionamento e cores → inferência → pós-processamento → coordenadas na imagem → visualização ou medida.</strong></p>
+      <div class="table-scroll"><table class="value-table"><thead><tr><th>Plataforma</th><th>Modelo no exemplo</th><th>Onde ocorre a inferência</th><th>O programa recebe</th></tr></thead><tbody>
+        <tr><td>Raspberry Pi + OpenCV</td><td>nenhum, no filtro Canny</td><td>CPU do Raspberry Pi</td><td>quadro BGR como array NumPy</td></tr>
+        <tr><td>Raspberry Pi + Hailo</td><td>HEF de detecção com NMS</td><td>NPU Hailo</td><td>detecções agrupadas por classe</td></tr>
+        <tr><td>OAK-D + DepthAI v2</td><td>BLOB OpenVINO compatível</td><td>processador da câmera</td><td>quadro e metadados de detecção</td></tr>
+      </tbody></table></div>
+      <h3>Raspberry Pi: Picamera2 e OpenCV</h3>
+      <p>Picamera2 entrega quadros como arrays NumPy, o formato que o OpenCV já manipula. A nomenclatura vem do libcamera: selecionar <code>RGB888</code> produz no array a ordem B, G, R que o OpenCV espera. Por isso, a conversão correta usa <code>COLOR_BGR2GRAY</code>.</p>
+      <pre class="vision-code"><code>camera = Picamera2()
+configuracao = camera.create_preview_configuration(
+    main={"size": (1280, 720), "format": "RGB888"},
+)
+camera.configure(configuracao)
+camera.start()
+
+quadro_bgr = camera.capture_array("main")
+cinza = cv2.cvtColor(quadro_bgr, cv2.COLOR_BGR2GRAY)
+bordas = cv2.Canny(cinza, 80, 160)</code></pre>
+      <p>O script mantém a captura em laço e encerra a câmera num bloco <code>finally</code>.</p>
+      <a class="vision-download" href="../scripts/12_picamera_opencv.py" download>Baixar 12_picamera_opencv.py</a>
+      <h3>Hailo: o HEF define a interface executável</h3>
+      <p>HEF é o arquivo compilado para uma arquitetura Hailo. O exemplo oficial do Picamera2 oferece uma interface síncrona curta: <code>Hailo</code> lê a forma da entrada e <code>run</code> executa o quadro. O recorte abaixo exige um HEF de detecção que já inclua pós-processamento NMS e um arquivo de rótulos correspondente. A ordem de canais também pertence ao contrato do modelo: o script recebe <code>rgb</code> ou <code>bgr</code> em vez de adivinhar.</p>
+      <pre class="vision-code"><code>ordem_modelo = "rgb"  # confirme na documentação do HEF
+formato_camera = "BGR888" if ordem_modelo == "rgb" else "RGB888"
+
+with Hailo(str(caminho_hef)) as hailo:
+    altura, largura, _ = hailo.get_input_shape()
+    with Picamera2() as camera:
+        config = camera.create_preview_configuration(
+            lores={"size": (largura, altura), "format": formato_camera},
+        )
+        camera.configure(config)
+        camera.start()
+
+        quadro = camera.capture_array("lores")
+        saida_com_nms = hailo.run(quadro)</code></pre>
+      <p>Um HEF sem esse pós-processamento produz tensores com outro layout e precisa do decodificador específico do modelo. Também é necessário instalar Picamera2 0.3.20 ou posterior, driver e HailoRT compatíveis com a placa e um HEF compilado para a arquitetura presente.</p>
+      <a class="vision-download" href="../scripts/13_hailo_hef.py" download>Baixar 13_hailo_hef.py</a>
+      <h3>OAK-D: câmera e rede no mesmo pipeline</h3>
+      <p>O exemplo histórico do acervo usa DepthAI v2. Um <code>ColorCamera</code> envia a prévia ao <code>YoloDetectionNetwork</code>. O BLOB contém a rede para o dispositivo; âncoras, máscaras, número de classes e tamanho precisam corresponder exatamente ao modelo usado.</p>
+      <pre class="vision-code"><code>pipeline = dai.Pipeline()
+camera = pipeline.create(dai.node.ColorCamera)
+detector = pipeline.create(dai.node.YoloDetectionNetwork)
+
+camera.setPreviewSize(416, 416)
+detector.setBlobPath(str(blob))
+detector.setNumClasses(80)
+detector.setCoordinateSize(4)
+detector.setAnchors([10, 14, 23, 27, 37, 58, 81, 82, 135, 169, 344, 319])
+detector.setAnchorMasks({"side26": [1, 2, 3], "side13": [3, 4, 5]})
+
+camera.preview.link(detector.input)</code></pre>
+      <p><code>passthrough</code> devolve o quadro que realmente alimentou a rede; assim, quadro e detecções permanecem sincronizados. A API DepthAI v3 substituiu os nós específicos de YOLO por <code>DetectionNetwork</code>, mas este script preserva o fluxo v2 do material original e fixa o requisito <code>depthai&lt;3</code>.</p>
+      <a class="vision-download" href="../scripts/14_oakd_blob.py" download>Baixar 14_oakd_blob.py</a>
+      <h3>Como medir desempenho</h3>
+      <ul>
+        <li><strong>Latência:</strong> tempo entre capturar um quadro e obter sua resposta.</li>
+        <li><strong>Vazão:</strong> quantos quadros são concluídos por segundo.</li>
+        <li><strong>Qualidade:</strong> erros do modelo no mesmo conjunto e limiar.</li>
+        <li><strong>Condições:</strong> resolução, formato, versão do modelo, precisão numérica, aquecimento e hardware.</li>
+      </ul>
+      <p>Filas maiores podem elevar a vazão e também deixar a resposta atrasada. Quantização pode reduzir custo e alterar resultados. Sem executar no equipamento físico, este material não atribui FPS nem equivalência de precisão a Hailo ou OAK-D.</p>
+    </section>
+
+    <section class="lesson-section" id="executar" aria-labelledby="executar-title">
+      <h2 id="executar-title">4.6 Executar e investigar</h2>
+      <p>Na pasta do tópico, crie um ambiente e instale as dependências para computador:</p>
+      <pre class="vision-code"><code>python -m venv .venv
+source .venv/bin/activate
+python -m pip install -r requirements-deteccao.txt
+
+python scripts/09_yolo_imagem.py
+python scripts/11_yolo_segmentacao.py</code></pre>
+      <p>Os dois pesos pequenos são baixados para <code>~/.cache/disciplinas/</code>, fora do repositório. Cada execução cria <code>saidas/</code>, também fora do Git. A imagem de entrada e os resultados reais desta aula permanecem em <code>imagens/</code> como evidência publicada. O primeiro download exige rede; as execuções seguintes usam o cache.</p>
+      <p>Picamera2 é distribuído no Raspberry Pi OS; HailoRT acompanha o ambiente do acelerador; o exemplo OAK-D usa DepthAI v2. Esses três scripts exigem o respectivo hardware e um modelo HEF/BLOB compatível.</p>
+      <h3>Códigos completos</h3>
+      <p>Os seis programas estão reproduzidos abaixo. Eles também podem ser baixados separadamente.</p>
+      <details open><summary>09_yolo_imagem.py</summary><pre class="vision-code"><code>"""Detecta objetos numa imagem com YOLO11; execute na pasta do tópico."""
+from pathlib import Path
+from urllib.request import urlretrieve
+
+import cv2
+from ultralytics import YOLO
+
+MODELO_URL = "https://github.com/ultralytics/assets/releases/download/v8.3.0/yolo11n.pt"
+MODELO = Path.home() / ".cache" / "disciplinas" / "yolo11n.pt"
+ENTRADA = Path("imagens/deteccao-entrada.jpg")
+SAIDA = Path("saidas/deteccao-resultado.jpg")
+
+
+def obter_modelo() -&gt; Path:
+    if not MODELO.exists():
+        MODELO.parent.mkdir(parents=True, exist_ok=True)
+        urlretrieve(MODELO_URL, MODELO)
+    return MODELO
+
+
+imagem = cv2.imread(str(ENTRADA))
+if imagem is None:
+    raise SystemExit(f"Não encontrei {ENTRADA}. Execute na pasta do tópico.")
+
+modelo = YOLO(obter_modelo())
+resultado = modelo.predict(imagem, conf=0.25, device="cpu", verbose=False)[0]
+SAIDA.parent.mkdir(exist_ok=True)
+cv2.imwrite(str(SAIDA), resultado.plot())
+
+for caixa, confianca, classe in zip(
+    resultado.boxes.xyxy.cpu().numpy(),
+    resultado.boxes.conf.cpu().numpy(),
+    resultado.boxes.cls.cpu().numpy(),
+):
+    x1, y1, x2, y2 = caixa.round().astype(int)
+    nome = resultado.names[int(classe)]
+    print(f"{nome:10s} conf={confianca:.3f} caixa=({x1}, {y1}, {x2}, {y2})")
+
+print(f"{len(resultado.boxes)} objetos; imagem salva em {SAIDA}")</code></pre><a class="vision-download" href="../scripts/09_yolo_imagem.py" download>Baixar 09_yolo_imagem.py</a></details>
+      <details open><summary>10_yolo_tracking.py</summary><pre class="vision-code"><code>"""Mantém IDs entre quadros consecutivos; execute na pasta do tópico."""
+from pathlib import Path
+from urllib.request import urlretrieve
+import sys
+
+import cv2
+from ultralytics import YOLO
+
+MODELO_URL = "https://github.com/ultralytics/assets/releases/download/v8.3.0/yolo11n.pt"
+MODELO = Path.home() / ".cache" / "disciplinas" / "yolo11n.pt"
+
+
+def obter_modelo() -&gt; Path:
+    if not MODELO.exists():
+        MODELO.parent.mkdir(parents=True, exist_ok=True)
+        urlretrieve(MODELO_URL, MODELO)
+    return MODELO
+
+
+fonte = sys.argv[1] if len(sys.argv) &gt; 1 else "videos/pendulo_trena.mp4"
+video = cv2.VideoCapture(int(fonte) if fonte.isdigit() else fonte)
+if not video.isOpened():
+    raise SystemExit(f"Não foi possível abrir {fonte}")
+
+modelo = YOLO(obter_modelo())
+while True:
+    ok, frame = video.read()
+    if not ok:
+        break
+
+    resultado = modelo.track(
+        frame, persist=True, tracker="bytetrack.yaml",
+        conf=0.25, device="cpu", verbose=False,
+    )[0]
+    anotado = resultado.plot()
+
+    if resultado.boxes.id is not None:
+        ids = resultado.boxes.id.int().cpu().tolist()
+        cv2.putText(anotado, f"IDs: {ids}", (20, 30),
+                    cv2.FONT_HERSHEY_SIMPLEX, 0.7, (20, 220, 255), 2)
+
+    cv2.imshow("YOLO tracking", anotado)
+    if cv2.waitKey(1) &amp; 0xFF == ord("q"):
+        break
+
+video.release()
+cv2.destroyAllWindows()</code></pre><a class="vision-download" href="../scripts/10_yolo_tracking.py" download>Baixar 10_yolo_tracking.py</a></details>
+      <details open><summary>11_yolo_segmentacao.py</summary><pre class="vision-code"><code>"""Segmenta instâncias e mede suas áreas em pixels; execute no tópico."""
+from pathlib import Path
+from urllib.request import urlretrieve
+
+import cv2
+from ultralytics import YOLO
+
+MODELO_URL = "https://github.com/ultralytics/assets/releases/download/v8.3.0/yolo11n-seg.pt"
+MODELO = Path.home() / ".cache" / "disciplinas" / "yolo11n-seg.pt"
+ENTRADA = Path("imagens/deteccao-entrada.jpg")
+SAIDA = Path("saidas/segmentacao-resultado.jpg")
+
+
+def obter_modelo() -&gt; Path:
+    if not MODELO.exists():
+        MODELO.parent.mkdir(parents=True, exist_ok=True)
+        urlretrieve(MODELO_URL, MODELO)
+    return MODELO
+
+
+imagem = cv2.imread(str(ENTRADA))
+if imagem is None:
+    raise SystemExit(f"Não encontrei {ENTRADA}. Execute na pasta do tópico.")
+
+modelo = YOLO(obter_modelo())
+resultado = modelo.predict(
+    imagem, conf=0.25, device="cpu", retina_masks=True, verbose=False,
+)[0]
+SAIDA.parent.mkdir(exist_ok=True)
+cv2.imwrite(str(SAIDA), resultado.plot())
+
+if resultado.masks is None:
+    print(f"Nenhuma máscara; imagem salva em {SAIDA}")
+else:
+    for mascara, classe, confianca in zip(
+        resultado.masks.data.cpu().numpy(),
+        resultado.boxes.cls.cpu().numpy(),
+        resultado.boxes.conf.cpu().numpy(),
+    ):
+        nome = resultado.names[int(classe)]
+        area_px = int(mascara.sum())
+        print(f"{nome:10s} conf={confianca:.3f} área={area_px} px²")
+
+    print(f"{len(resultado.masks.data)} máscaras; imagem salva em {SAIDA}")</code></pre><a class="vision-download" href="../scripts/11_yolo_segmentacao.py" download>Baixar 11_yolo_segmentacao.py</a></details>
+      <details open><summary>12_picamera_opencv.py</summary><pre class="vision-code"><code>"""Captura a câmera Raspberry Pi e mostra bordas com OpenCV."""
+import cv2
+from picamera2 import Picamera2
+
+
+camera = Picamera2()
+configuracao = camera.create_preview_configuration(
+    main={"size": (1280, 720), "format": "RGB888"},
+)
+camera.configure(configuracao)
+camera.start()
+
+try:
+    while True:
+        # Apesar do nome libcamera RGB888, o array fica em ordem BGR para OpenCV.
+        quadro_bgr = camera.capture_array("main")
+        cinza = cv2.cvtColor(quadro_bgr, cv2.COLOR_BGR2GRAY)
+        bordas = cv2.Canny(cinza, 80, 160)
+        cv2.imshow("Bordas na Raspberry Pi", bordas)
+        if cv2.waitKey(1) &amp; 0xFF == ord("q"):
+            break
+finally:
+    camera.stop()
+    cv2.destroyAllWindows()</code></pre><a class="vision-download" href="../scripts/12_picamera_opencv.py" download>Baixar 12_picamera_opencv.py</a></details>
+      <details open><summary>13_hailo_hef.py</summary><pre class="vision-code"><code>"""Detecção com câmera Pi e um HEF que já inclui pós-processamento NMS."""
+from pathlib import Path
+import sys
+
+from picamera2 import Picamera2
+from picamera2.devices import Hailo
+
+
+def extrair_deteccoes(
+    saida: list, nomes: list[str], limiar: float = 0.5,
+) -&gt; list[tuple[str, float]]:
+    deteccoes: list[tuple[str, float]] = []
+    for classe, objetos in enumerate(saida):
+        for objeto in objetos:
+            confianca = float(objeto[4])
+            if confianca &gt;= limiar:
+                deteccoes.append((nomes[classe], confianca))
+    return deteccoes
+
+
+if len(sys.argv) != 4 or sys.argv[3].lower() not in {"rgb", "bgr"}:
+    raise SystemExit(
+        "Uso: python scripts/13_hailo_hef.py modelo.hef rotulos.txt rgb|bgr"
+    )
+
+caminho_hef, caminho_rotulos = map(Path, sys.argv[1:3])
+ordem_modelo = sys.argv[3].lower()
+if not caminho_hef.exists() or not caminho_rotulos.exists():
+    raise SystemExit("Confira os caminhos do HEF e dos rótulos.")
+
+nomes = caminho_rotulos.read_text(encoding="utf-8").splitlines()
+with Hailo(str(caminho_hef)) as hailo:
+    altura, largura, _ = hailo.get_input_shape()
+    # Os nomes libcamera são invertidos em relação à ordem do array NumPy.
+    formato_camera = "BGR888" if ordem_modelo == "rgb" else "RGB888"
+    with Picamera2() as camera:
+        config = camera.create_preview_configuration(
+            lores={"size": (largura, altura), "format": formato_camera},
+        )
+        camera.configure(config)
+        camera.start()
+        try:
+            while True:
+                quadro = camera.capture_array("lores")
+                deteccoes = extrair_deteccoes(hailo.run(quadro), nomes)
+                print(deteccoes)
+        except KeyboardInterrupt:
+            pass</code></pre><a class="vision-download" href="../scripts/13_hailo_hef.py" download>Baixar 13_hailo_hef.py</a></details>
+      <details open><summary>14_oakd_blob.py</summary><pre class="vision-code"><code>"""Tiny YOLOv4 COCO num OAK-D com DepthAI v2 e um BLOB compatível."""
+from pathlib import Path
+import sys
+
+import cv2
+import depthai as dai
+
+
+if len(sys.argv) != 2:
+    raise SystemExit("Uso: python scripts/14_oakd_blob.py tiny-yolov4-coco.blob")
+
+blob = Path(sys.argv[1])
+if not blob.exists():
+    raise SystemExit(f"Não encontrei {blob}")
+
+pipeline = dai.Pipeline()
+camera = pipeline.create(dai.node.ColorCamera)
+detector = pipeline.create(dai.node.YoloDetectionNetwork)
+quadros = pipeline.create(dai.node.XLinkOut)
+deteccoes = pipeline.create(dai.node.XLinkOut)
+quadros.setStreamName("quadros")
+deteccoes.setStreamName("deteccoes")
+
+camera.setPreviewSize(416, 416)
+camera.setInterleaved(False)
+camera.setColorOrder(dai.ColorCameraProperties.ColorOrder.BGR)
+detector.setBlobPath(str(blob))
+detector.setConfidenceThreshold(0.5)
+detector.setNumClasses(80)
+detector.setCoordinateSize(4)
+detector.setAnchors([10, 14, 23, 27, 37, 58, 81, 82, 135, 169, 344, 319])
+detector.setAnchorMasks({"side26": [1, 2, 3], "side13": [3, 4, 5]})
+detector.setIouThreshold(0.5)
+
+camera.preview.link(detector.input)
+detector.passthrough.link(quadros.input)
+detector.out.link(deteccoes.input)
+
+with dai.Device(pipeline) as dispositivo:
+    fila_quadros = dispositivo.getOutputQueue("quadros", 4, True)
+    fila_deteccoes = dispositivo.getOutputQueue("deteccoes", 4, True)
+    while True:
+        quadro = fila_quadros.get().getCvFrame()
+        for objeto in fila_deteccoes.get().detections:
+            altura, largura = quadro.shape[:2]
+            p1 = (int(objeto.xmin * largura), int(objeto.ymin * altura))
+            p2 = (int(objeto.xmax * largura), int(objeto.ymax * altura))
+            cv2.rectangle(quadro, p1, p2, (0, 255, 0), 2)
+            cv2.putText(quadro, f"classe {objeto.label}: {objeto.confidence:.2f}",
+                        p1, cv2.FONT_HERSHEY_SIMPLEX, 0.45, (0, 255, 0), 1)
+        cv2.imshow("OAK-D", quadro)
+        if cv2.waitKey(1) &amp; 0xFF == ord("q"):
+            break</code></pre><a class="vision-download" href="../scripts/14_oakd_blob.py" download>Baixar 14_oakd_blob.py</a></details>
+      <h3>Questões para a prática</h3>
+      <ol>
+        <li>Varie o limiar de confiança. Quais previsões aparecem ou desaparecem?</li>
+        <li>Compare área da caixa e área da máscara da mesma instância. Por que diferem?</li>
+        <li>Num vídeo de classe conhecida, onde os IDs trocam? O que aconteceu na imagem?</li>
+        <li>Defina como medir latência sem confundi-la com FPS.</li>
+        <li>Para medir uma área real, onde você colocaria a referência de escala?</li>
+      </ol>
+      <a class="vision-download" href="../requirements-deteccao.txt" download>Baixar requirements-deteccao.txt</a>
+    </section>
+
+    <section class="lesson-section" id="referencias" aria-labelledby="referencias-title">
+      <h2 id="referencias-title">Referências</h2>
+      <ul class="bibliography-list">
+        <li><a href="https://docs.ultralytics.com/modes/predict/">Ultralytics: inferência e objetos de resultado</a>.</li>
+        <li><a href="https://docs.ultralytics.com/modes/track/">Ultralytics: rastreamento com IDs persistentes</a>.</li>
+        <li><a href="https://docs.ultralytics.com/tasks/segment/">Ultralytics: segmentação por instância</a>.</li>
+        <li><a href="https://github.com/Atzingen/visao-computacional-fisica">Acervo Visão computacional aplicada à Física</a>.</li>
+        <li><a href="https://github.com/Atzingen/formigas">Acervo Formigas: detecção e rastreamento</a>.</li>
+        <li><a href="https://github.com/Atzingen/VisaoComputacionalEmbarcada-2024">Embarcados Experience 2024: Picamera2 e Hailo</a>.</li>
+        <li><a href="https://github.com/Atzingen/Webinar-Vis-o-computacional-Embarcada">Webinar: exemplo OAK-D com DepthAI v2</a>.</li>
+        <li><a href="https://datasheets.raspberrypi.com/camera/picamera2-manual.pdf">Raspberry Pi: manual oficial do Picamera2</a>.</li>
+        <li><a href="https://github.com/raspberrypi/picamera2/blob/main/examples/hailo/detect.py">Raspberry Pi: exemplo oficial de detecção Hailo</a>.</li>
+        <li><a href="https://docs.luxonis.com/software-v3/depthai/depthai-components/nodes/detection_network">Luxonis: DetectionNetwork no DepthAI v3</a> e <a href="https://docs.luxonis.com/software/depthai/examples/tiny_yolo">exemplo legado Tiny YOLO no DepthAI v2</a>.</li>
+      </ul>
+    </section>
+    <nav class="vision-pager" aria-label="Capítulos"><a href="../03-convolucao-redes/">← Convolução e redes neurais</a><a href="../">Sumário do tópico →</a></nav>
+  </div></main>
+  <footer class="site-footer"><p>Visão computacional · Física Computacional</p><a href="../../../topicos/">Todos os tópicos</a></footer>
+  <script type="module" src="../../../componentes/navegacao-principal.js"></script>
+  <script type="module" src="../../../componentes/navegacao-secoes.js"></script>
+  <script type="module">import { typesetMath } from "../../../componentes/matematica.js"; typesetMath(document.querySelector("main"));</script>
+</body>
+</html>

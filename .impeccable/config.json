@@ -65,6 +65,60 @@
         ],
         "createdAt": "2026-09-14T14:04:36.717Z",
         "reason": "Agent: the incumbent graph-paper background is domain-appropriate for this physics laboratory and measurement portal"
+      },
+      {
+        "rule": "overused-font",
+        "value": "space grotesk",
+        "files": [
+          "site/topicos/02-visao-computacional/04-deteccao-segmentacao/index.html"
+        ],
+        "createdAt": "2026-09-16T14:03:36.684Z",
+        "reason": "Agent: incumbent portal display face in site/assets/base.css; user asked for cards consistent with existing chapters, not a rebrand."
+      },
+      {
+        "rule": "hero-eyebrow-chip",
+        "value": "*",
+        "files": [
+          "site/topicos/02-visao-computacional/04-deteccao-segmentacao/index.html"
+        ],
+        "createdAt": "2026-09-16T14:03:36.691Z",
+        "reason": "Agent: curricular topic/chapter numbering follows existing lesson-header in site/topicos/01-picoh/index.html; preserving portal identity in this scoped correction."
+      },
+      {
+        "rule": "codex-grid-background",
+        "value": "*",
+        "files": [
+          "site/topicos/02-visao-computacional/04-deteccao-segmentacao/index.html"
+        ],
+        "createdAt": "2026-09-16T14:03:36.699Z",
+        "reason": "Agent: inherited physics portal background from shared base.css; no background redesign was requested."
+      },
+      {
+        "rule": "flat-type-hierarchy",
+        "value": "*",
+        "files": [
+          "site/topicos/02-visao-computacional/04-deteccao-segmentacao/index.html"
+        ],
+        "createdAt": "2026-09-16T14:03:36.706Z",
+        "reason": "Agent: browser computed h2 24.48px, h3 19.0944px and body 16.32px at 1440 and 390px; detector reports all as 16.3px incorrectly."
+      },
+      {
+        "rule": "cramped-padding",
+        "value": "*",
+        "files": [
+          "site/topicos/02-visao-computacional/04-deteccao-segmentacao/index.html"
+        ],
+        "createdAt": "2026-09-16T14:03:36.714Z",
+        "reason": "Agent: flagged site-topbar is a flat navigation strip with bottom separator, not a boxed card; visible viewport inset is 30px desktop and 16px mobile, controls have own padding."
+      },
+      {
+        "rule": "side-tab",
+        "value": "*",
+        "files": [
+          "site/topicos/02-visao-computacional/04-deteccao-segmentacao/index.html"
+        ],
+        "createdAt": "2026-09-16T14:03:36.721Z",
+        "reason": "Agent: local callouts/output borders reduced to uniform 1px; remaining detector stripes belong to shared .area-card, .report-template-promo and .discipline-card, all absent from this page DOM."
       }
     ]
   }

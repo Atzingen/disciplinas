@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Uma imagem é uma matriz. Vamos ler seus números, acompanhar quadros e transformar uma região colorida em uma posição.">
+  <title>Fundamentos de imagem · Visão computacional · PRCCOMP</title>
+  <link rel="icon" href="../../../assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../../assets/base.css">
+  <link rel="stylesheet" href="../../../assets/simulador.css">
+  <link rel="stylesheet" href="../visao.css">
+  <script>try{if(localStorage.getItem("tema")==="escuro"){document.documentElement.dataset.theme="escuro"}}catch(erro){}</script>
+</head>
+<body class="lesson-page vision-page">
+  <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+  <div class="site-topbar" data-topbar>
+    <div class="site-topbar__inner">
+      <nav class="breadcrumb" aria-label="Navegação estrutural"><a href="../../../disciplinas/prccomp/">Física Computacional</a><span aria-hidden="true">/</span><a href="../">Visão computacional</a><span aria-hidden="true">/</span><strong aria-current="page">Capítulo 1</strong></nav>
+      <div data-site-navigation data-root-path="../../../" data-active-section="topicos"></div>
+    </div>
+    <nav class="section-nav" aria-label="Seções do capítulo" data-section-nav><a href="#pixels">Pixels</a><a href="#captura">Captura</a><a href="#movimento">Movimento</a><a href="#cor">Cor</a><a href="#posicao">Posição</a><a href="#referencias">Referências</a></nav>
+  </div>
+  <header class="lesson-header"><div class="lesson-title-row"><div>
+    <p class="eyebrow">Tópico 02 · Capítulo 1</p>
+    <h1>Fundamentos de imagem</h1></div><p class="lesson-intro">Uma imagem é uma matriz. Vamos ler seus números, acompanhar quadros e transformar uma região colorida em uma posição.</p></div></header>
+  <main class="lesson-main" id="conteudo"><div class="lesson-sections"><nav class="vision-section-index" aria-labelledby="secoes-title"><h2 id="secoes-title">Neste capítulo</h2><p>Escolha uma seção para ir direto à explicação e aos exemplos.</p><div class="vision-card-grid"><a class="resource-card vision-card" href="#pixels"><span class="vision-card-number">01</span><strong>Pixels e canais</strong><span class="vision-card-description">Leia uma imagem como matriz e explore as cores.</span><span class="vision-card-action">Ir para a seção <span aria-hidden="true">→</span></span></a><a class="resource-card vision-card" href="#captura"><span class="vision-card-number">02</span><strong>Captura de vídeo</strong><span class="vision-card-description">Leia e mostre quadros de arquivo ou webcam.</span><span class="vision-card-action">Ir para a seção <span aria-hidden="true">→</span></span></a><a class="resource-card vision-card" href="#movimento"><span class="vision-card-number">03</span><strong>Detectar movimento</strong><span class="vision-card-description">Compare quadros consecutivos e observe as diferenças.</span><span class="vision-card-action">Ir para a seção <span aria-hidden="true">→</span></span></a><a class="resource-card vision-card" href="#cor"><span class="vision-card-number">04</span><strong>Cor e máscara HSV</strong><span class="vision-card-description">Escolha faixas de cor e separe a bolinha do fundo.</span><span class="vision-card-action">Ir para a seção <span aria-hidden="true">→</span></span></a><a class="resource-card vision-card" href="#posicao"><span class="vision-card-number">05</span><strong>Encontrar a posição</strong><span class="vision-card-description">Passe da região segmentada para centro e raio.</span><span class="vision-card-action">Ir para a seção <span aria-hidden="true">→</span></span></a></div></nav><section class="lesson-section" id="pixels" aria-labelledby="pixels-title"><h2 id="pixels-title">1.1 Pixels, canais e coordenadas</h2><p>Uma imagem colorida de 640 × 416 pixels costuma chegar ao OpenCV como um array de formato <code>(416, 640, 3)</code>: linhas, colunas e canais. Em imagens de 8 bits, cada intensidade está entre 0 e 255. Preto é intensidade zero; o valor máximo depende da codificação, não é uma medida direta da potência luminosa.</p>
+<p>O índice é <code>imagem[linha, coluna]</code>, ou <code>imagem[y, x]</code>. A origem está no canto superior esquerdo e y cresce para baixo. O OpenCV lê os canais em <strong>BGR</strong>; o Matplotlib espera RGB. Para trocar, use <code>cv2.cvtColor(imagem, cv2.COLOR_BGR2RGB)</code>.</p>
+<figure class="vision-figure"><img src="../imagens/frame_bolinha.png" width="640" height="416" alt="Quadro do experimento: bolinha laranja, fundo azul e trena" loading="lazy"><figcaption>Imagem real usada nos scripts. <a href="../imagens/frame_bolinha.png" download>Baixar em imagens/frame_bolinha.png</a>.</figcaption></figure>
+<p><strong>Explore os canais.</strong> A grade abaixo é uma cena sintética reduzida, não um recorte do vídeo. Troque R, G e B e observe em qual canal a bolinha se destaca.</p><div class="vision-demo" data-demo="pixels">
+    <div class="controles">
+      <button data-canal="2" class="ativo">R</button>
+      <button data-canal="1">G</button>
+      <button data-canal="0">B</button>
+      <button data-canal="cinza">cinza</button>
+      <span id="dica01" style="color:var(--tinta3)"></span>
+    </div>
+    <div style="display:flex;gap:1rem;flex-wrap:wrap;align-items:flex-start">
+      <canvas aria-label="Cena didática em pixels" role="img" id="cena" width="12" height="12" style="width:168px;height:168px"></canvas>
+      <div id="grade" style="display:grid;grid-template-columns:repeat(12,1fr);gap:2px;flex:1;min-width:260px;font:500 .62rem 'IBM Plex Mono',monospace;text-align:center"></div>
+    </div>
+  </div>
+
+  <script type="module" src="../demo-pixels.js"></script><div class="vision-note"><p><strong>Aritmética também depende do tipo.</strong> Arrays <code>uint8</code> do NumPy podem dar a volta ao ultrapassar 255. Algumas operações do OpenCV saturam nesse limite. Para diferenças entre quadros, use <code>absdiff</code>; para contas com resultados negativos, converta para ponto flutuante.</p></div><div class="vision-example"><p>Veja o formato, um pixel e os canais separados. Troque a entrada por <a href="../imagens/frame_papelao.png" download>frame_papelao.png</a> e compare com o fundo bege.</p><pre class="vision-code"><code>python scripts/01_imagem.py</code></pre><a href="../scripts/01_imagem.py" download>Baixar 01_imagem.py</a><details open><summary>Código completo (20 linhas)</summary><pre class="vision-code"><code>&quot;&quot;&quot;Execute na pasta do tópico: python scripts/01_imagem.py&quot;&quot;&quot;
+import cv2
+
+imagem = cv2.imread(&quot;imagens/frame_bolinha.png&quot;)
+if imagem is None:
+    raise SystemExit(&quot;Não encontrei imagens/frame_bolinha.png.&quot;)
+
+print(&quot;Linhas, colunas e canais:&quot;, imagem.shape)
+print(&quot;Tipo dos valores:&quot;, imagem.dtype)
+print(&quot;Pixel [linha 100, coluna 100] em BGR:&quot;, imagem[100, 100])
+
+azul, verde, vermelho = cv2.split(imagem)
+cinza = cv2.cvtColor(imagem, cv2.COLOR_BGR2GRAY)
+
+cv2.imshow(&quot;Imagem colorida&quot;, imagem)
+cv2.imshow(&quot;Canal azul&quot;, azul)
+cv2.imshow(&quot;Canal vermelho&quot;, vermelho)
+cv2.imshow(&quot;Cinza&quot;, cinza)
+cv2.waitKey(0)
+cv2.destroyAllWindows()</code></pre></details></div></section><section class="lesson-section" id="captura" aria-labelledby="captura-title"><h2 id="captura-title">1.2 Um vídeo é uma sequência de imagens</h2><p>O laço essencial tem três ações: ler, processar, mostrar. <code>read()</code> devolve um indicador de sucesso e o quadro. Testar esse indicador evita processar uma imagem inexistente no fim do vídeo.</p><pre class="vision-code"><code>leu, quadro = video.read()
+if not leu:
+    break
+cv2.imshow(&quot;Captura&quot;, quadro)</code></pre><p>Uma fonte <code>0</code> seleciona a primeira câmera; um caminho seleciona um arquivo. <code>waitKey</code> mantém a janela respondendo e permite sair. Seu atraso não mede o tempo físico da cena.</p><div class="vision-example"><p>Para repetir sem webcam, baixe <a href="../videos/pendulo_livre.mp4" download>pendulo_livre.mp4</a> para a pasta videos.</p><pre class="vision-code"><code>python scripts/02_captura.py
+python scripts/02_captura.py videos/pendulo_livre.mp4</code></pre><a href="../scripts/02_captura.py" download>Baixar 02_captura.py</a><details open><summary>Código completo (22 linhas)</summary><pre class="vision-code"><code>&quot;&quot;&quot;Sem argumento: webcam. Com argumento: caminho de um vídeo. Q encerra.&quot;&quot;&quot;
+import sys
+import cv2
+
+fonte = 0
+if len(sys.argv) &gt; 1:
+    fonte = sys.argv[1]
+
+video = cv2.VideoCapture(fonte)
+if not video.isOpened():
+    raise SystemExit(&quot;Não foi possível abrir a câmera ou o vídeo.&quot;)
+
+while True:
+    leu, quadro = video.read()
+    if not leu:
+        break
+    cv2.imshow(&quot;Captura&quot;, quadro)
+    if cv2.waitKey(30) == ord(&quot;q&quot;):
+        break
+
+video.release()
+cv2.destroyAllWindows()</code></pre></details></div></section><section class="lesson-section" id="movimento" aria-labelledby="movimento-title"><h2 id="movimento-title">1.3 Movimento por diferença</h2><p>Subtraia quadros consecutivos em cinza e tome o valor absoluto. Depois escolha um limiar: diferenças maiores ficam brancas; as outras ficam pretas.</p><p>\[D_t(x,y)=|I_t(x,y)-I_{t-1}(x,y)|\]</p><p>O método destaca mudança, não identidade. Uma câmera que treme ou uma lâmpada que pisca também altera pixels. Nos extremos do pêndulo, a velocidade cai e a diferença pode desaparecer justamente onde queremos medir a posição.</p><div class="vision-example"><p>Altere LIMIAR e veja o compromisso entre ruído e movimento perdido.</p><pre class="vision-code"><code>python scripts/03_movimento.py</code></pre><a href="../scripts/03_movimento.py" download>Baixar 03_movimento.py</a><details open><summary>Código completo (26 linhas)</summary><pre class="vision-code"><code>&quot;&quot;&quot;Diferença de quadros. Execute na pasta do tópico. Q encerra.&quot;&quot;&quot;
+import cv2
+
+FONTE = &quot;videos/pendulo_livre.mp4&quot;  # Use 0 para a webcam.
+LIMIAR = 12
+video = cv2.VideoCapture(FONTE)
+leu, quadro = video.read()
+if not leu:
+    video.release()
+    raise SystemExit(&quot;Não foi possível ler o primeiro quadro.&quot;)
+anterior = cv2.cvtColor(quadro, cv2.COLOR_BGR2GRAY)
+
+while True:
+    leu, quadro = video.read()
+    if not leu:
+        break
+    atual = cv2.cvtColor(quadro, cv2.COLOR_BGR2GRAY)
+    diferenca = cv2.absdiff(atual, anterior)
+    _, mascara = cv2.threshold(diferenca, LIMIAR, 255, cv2.THRESH_BINARY)
+    anterior = atual
+    cv2.imshow(&quot;Movimento&quot;, mascara)
+    if cv2.waitKey(30) == ord(&quot;q&quot;):
+        break
+
+video.release()
+cv2.destroyAllWindows()</code></pre></details></div><p><strong>Investigue:</strong> a diferença marca toda a bolinha ou principalmente as regiões que ela deixou e passou a ocupar?</p></section><section class="lesson-section" id="cor" aria-labelledby="cor-title"><h2 id="cor-title">1.4 Cor, HSV e máscara</h2><p>HSV reorganiza a informação: H é matiz, S é saturação e V é valor. No formato de 8 bits do OpenCV, H vai de 0 a 179 e S/V de 0 a 255. Essa separação facilita definir uma faixa de cor, mas não elimina reflexos, sombras e variações de iluminação.</p><pre class="vision-code"><code>hsv = cv2.cvtColor(quadro, cv2.COLOR_BGR2HSV)
+mascara = cv2.inRange(hsv, (0, 120, 120), (25, 255, 255))
+resultado = cv2.bitwise_and(quadro, quadro, mask=mascara)</code></pre><p>A máscara contém 0 ou 255; o resultado mantém a imagem original onde a máscara passou. A faixa acima foi escolhida para a bolinha laranja deste acervo. Outra cor ou iluminação pede nova calibração.</p><p><strong>Explore:</strong> abra os limites e reduza H; depois aumente S mínimo para retirar a trena clara. Compare a cena sintética com a máscara.</p><div class="vision-demo" data-demo="hsv">
+    <div class="controles" id="sliders04"></div>
+    <div style="display:flex;gap:1rem;flex-wrap:wrap">
+      <figure style="margin:0"><canvas aria-label="Cena didática em pixels" role="img" id="cena04" width="48" height="36" style="width:288px;height:216px"></canvas><figcaption>cena</figcaption></figure>
+      <figure style="margin:0"><canvas aria-label="Cena didática em pixels" role="img" id="mascara04" width="48" height="36" style="width:288px;height:216px"></canvas><figcaption>máscara (<span id="pct04">…</span>% dos pixels passam)</figcaption></figure>
+    </div>
+  </div>
+
+  <script type="module" src="../demo-hsv.js"></script><div class="vision-example"><p>Os sliders agora trabalham numa imagem real fixa. Ao sair, anote os limites impressos e copie para MINIMO/MAXIMO nos exemplos seguintes.</p><pre class="vision-code"><code>python scripts/04_cor.py</code></pre><a href="../scripts/04_cor.py" download>Baixar 04_cor.py</a><details open><summary>Código completo (36 linhas)</summary><pre class="vision-code"><code>&quot;&quot;&quot;Ajuste HSV numa imagem fixa. Anote as faixas para os exemplos 05 e 06.&quot;&quot;&quot;
+import cv2
+
+imagem = cv2.imread(&quot;imagens/frame_bolinha.png&quot;)
+if imagem is None:
+    raise SystemExit(&quot;Não encontrei a imagem. Execute na pasta do tópico.&quot;)
+hsv = cv2.cvtColor(imagem, cv2.COLOR_BGR2HSV)
+
+
+def mudou(valor: int) -&gt; None:
+    pass  # A leitura dos controles ocorre no laço abaixo.
+
+
+cv2.namedWindow(&quot;Filtro HSV&quot;)
+controles = [(&quot;Hmin&quot;, 0, 179), (&quot;Hmax&quot;, 25, 179),
+             (&quot;Smin&quot;, 120, 255), (&quot;Smax&quot;, 255, 255),
+             (&quot;Vmin&quot;, 120, 255), (&quot;Vmax&quot;, 255, 255)]
+for nome, valor, maximo in controles:
+    cv2.createTrackbar(nome, &quot;Filtro HSV&quot;, valor, maximo, mudou)
+
+while True:
+    hmin = cv2.getTrackbarPos(&quot;Hmin&quot;, &quot;Filtro HSV&quot;)
+    hmax = cv2.getTrackbarPos(&quot;Hmax&quot;, &quot;Filtro HSV&quot;)
+    smin = cv2.getTrackbarPos(&quot;Smin&quot;, &quot;Filtro HSV&quot;)
+    smax = cv2.getTrackbarPos(&quot;Smax&quot;, &quot;Filtro HSV&quot;)
+    vmin = cv2.getTrackbarPos(&quot;Vmin&quot;, &quot;Filtro HSV&quot;)
+    vmax = cv2.getTrackbarPos(&quot;Vmax&quot;, &quot;Filtro HSV&quot;)
+    mascara = cv2.inRange(hsv, (hmin, smin, vmin), (hmax, smax, vmax))
+    resultado = cv2.bitwise_and(imagem, imagem, mask=mascara)
+    cv2.imshow(&quot;Filtro HSV&quot;, resultado)
+    cv2.imshow(&quot;Mascara&quot;, mascara)
+    if cv2.waitKey(30) == ord(&quot;q&quot;):
+        break
+
+print(&quot;Mínimo:&quot;, (hmin, smin, vmin), &quot;Máximo:&quot;, (hmax, smax, vmax))
+cv2.destroyAllWindows()</code></pre></details></div><p>Um objeto diferente com a mesma cor também passa. Vermelho cruza a emenda de H: pode exigir duas faixas, unidas com <code>bitwise_or</code>. Pequenas manchas podem ser removidas com uma abertura morfológica, mas só acrescente essa etapa quando o ruído realmente aparecer.</p></section><section class="lesson-section" id="posicao" aria-labelledby="posicao-title"><h2 id="posicao-title">1.5 Da região ao ponto</h2><p>Contornos descrevem as bordas das regiões brancas. Neste cenário, escolhemos o maior contorno acima de uma área mínima e obtemos o centro do menor círculo que o envolve. A hipótese é que a bolinha seja a maior região da cor escolhida.</p><div class="vision-example"><p>O script mostra a bolinha marcada e imprime centro e raio em pixels.</p><pre class="vision-code"><code>python scripts/05_posicao.py</code></pre><a href="../scripts/05_posicao.py" download>Baixar 05_posicao.py</a><details open><summary>Código completo (28 linhas)</summary><pre class="vision-code"><code>&quot;&quot;&quot;Da máscara ao centro da bolinha. Q ou qualquer tecla encerra a imagem.&quot;&quot;&quot;
+import cv2
+
+MINIMO = (0, 120, 120)
+MAXIMO = (25, 255, 255)
+AREA_MINIMA = 30
+imagem = cv2.imread(&quot;imagens/frame_bolinha.png&quot;)
+if imagem is None:
+    raise SystemExit(&quot;Não encontrei a imagem. Execute na pasta do tópico.&quot;)
+
+hsv = cv2.cvtColor(imagem, cv2.COLOR_BGR2HSV)
+mascara = cv2.inRange(hsv, MINIMO, MAXIMO)
+contornos, _ = cv2.findContours(mascara, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+
+if contornos:
+    maior = max(contornos, key=cv2.contourArea)
+    if cv2.contourArea(maior) &gt; AREA_MINIMA:
+        (x, y), raio = cv2.minEnclosingCircle(maior)
+        print(f&quot;Centro: x={x:.1f} px, y={y:.1f} px; raio={raio:.1f} px&quot;)
+        cv2.circle(imagem, (int(x), int(y)), int(raio), (0, 255, 0), 2)
+    else:
+        print(&quot;A região é menor que a área mínima.&quot;)
+else:
+    print(&quot;Nenhuma região encontrada nessa faixa de cor.&quot;)
+
+cv2.imshow(&quot;Posicao&quot;, imagem)
+cv2.waitKey(0)
+cv2.destroyAllWindows()</code></pre></details></div><h3>Contorno ou Hough?</h3><p><code>minEnclosingCircle</code> envolve uma região já segmentada. <code>HoughCircles</code> procura evidência de uma circunferência a partir de bordas, com parâmetros de raio e limiares. Um não é universalmente melhor: compare os métodos quando a bolinha estiver borrada, parcialmente oculta ou tiver cor próxima ao fundo.</p><p><strong>Investigue:</strong> coloque uma região laranja maior na cena. O algoritmo ainda localiza a bolinha? Essa falha mostra qual hipótese precisamos revisar.</p></section><section class="lesson-section" id="referencias" aria-labelledby="referencias-title"><h2 id="referencias-title">Referências e próxima etapa</h2><ul class="bibliography-list"><li><a href="https://docs.opencv.org/4.x/dd/d43/tutorial_py_video_display.html">OpenCV: captura de vídeo</a>.</li><li><a href="https://docs.opencv.org/4.x/df/d9d/tutorial_py_colorspaces.html">OpenCV: espaços de cor</a>.</li><li><a href="https://docs.opencv.org/4.x/dd/d49/tutorial_py_contour_features.html">OpenCV: características de contornos</a>.</li><li><a href="https://github.com/Atzingen/visao-computacional-fisica">Sequência original, etapas 01–05</a>.</li></ul><p>Agora podemos repetir a detecção em cada quadro e guardar uma tabela de posições.</p></section><nav class="vision-pager" aria-label="Capítulos"><a href="../">← Sumário do tópico</a><a href="../02-video-medida/">Vídeo como instrumento de medida →</a></nav></div></main>
+  <footer class="site-footer"><p>Visão computacional · Física Computacional</p><a href="../../../topicos/">Todos os tópicos</a></footer>
+  <script type="module" src="../../../componentes/navegacao-principal.js"></script>
+  <script type="module" src="../../../componentes/navegacao-secoes.js"></script>
+  <script type="module">import { typesetMath } from "../../../componentes/matematica.js"; typesetMath(document.querySelector("main"));</script>
+</body>
+</html>

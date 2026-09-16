@@ -1,0 +1,4 @@
+saidas/
+.venv/
+.ipynb_checkpoints/
+__pycache__/

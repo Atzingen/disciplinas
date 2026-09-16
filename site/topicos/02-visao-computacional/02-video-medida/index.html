@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A câmera registra posição e tempo. O objetivo agora é transformar essas observações em um período e discutir os limites de uma estimativa de gravidade.">
+  <title>Vídeo como instrumento de medida · Visão computacional · PRCCOMP</title>
+  <link rel="icon" href="../../../assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../../assets/base.css">
+  <link rel="stylesheet" href="../../../assets/simulador.css">
+  <link rel="stylesheet" href="../visao.css">
+  <script>try{if(localStorage.getItem("tema")==="escuro"){document.documentElement.dataset.theme="escuro"}}catch(erro){}</script>
+</head>
+<body class="lesson-page vision-page">
+  <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+  <div class="site-topbar" data-topbar>
+    <div class="site-topbar__inner">
+      <nav class="breadcrumb" aria-label="Navegação estrutural"><a href="../../../disciplinas/prccomp/">Física Computacional</a><span aria-hidden="true">/</span><a href="../">Visão computacional</a><span aria-hidden="true">/</span><strong aria-current="page">Capítulo 2</strong></nav>
+      <div data-site-navigation data-root-path="../../../" data-active-section="topicos"></div>
+    </div>
+    <nav class="section-nav" aria-label="Seções do capítulo" data-section-nav><a href="#experimento">Vídeos</a><a href="#trajetoria">Trajetória</a><a href="#modelo">Modelo</a><a href="#limites">Limites</a><a href="#geometria">Geometria</a><a href="#referencias">Referências</a></nav>
+  </div>
+  <header class="lesson-header"><div class="lesson-title-row"><div>
+    <p class="eyebrow">Tópico 02 · Capítulo 2</p>
+    <h1>Vídeo como instrumento de medida</h1></div><p class="lesson-intro">A câmera registra posição e tempo. O objetivo agora é transformar essas observações em um período e discutir os limites de uma estimativa de gravidade.</p></div></header>
+  <main class="lesson-main" id="conteudo"><div class="lesson-sections"><nav class="vision-section-index" aria-labelledby="secoes-title"><h2 id="secoes-title">Neste capítulo</h2><p>Escolha uma seção para ir direto à explicação e aos exemplos.</p><div class="vision-card-grid"><a class="resource-card vision-card" href="#experimento"><span class="vision-card-number">01</span><strong>Montagem e vídeos</strong><span class="vision-card-description">Observe o experimento e os arquivos usados na análise.</span><span class="vision-card-action">Ir para a seção <span aria-hidden="true">→</span></span></a><a class="resource-card vision-card" href="#trajetoria"><span class="vision-card-number">02</span><strong>Do vídeo à tabela</strong><span class="vision-card-description">Rastreie a bolinha e registre tempo e posição.</span><span class="vision-card-action">Ir para a seção <span aria-hidden="true">→</span></span></a><a class="resource-card vision-card" href="#modelo"><span class="vision-card-number">03</span><strong>Período e gravidade</strong><span class="vision-card-description">Ajuste a oscilação e interprete os resultados.</span><span class="vision-card-action">Ir para a seção <span aria-hidden="true">→</span></span></a><a class="resource-card vision-card" href="#limites"><span class="vision-card-number">04</span><strong>Limites da medida</strong><span class="vision-card-description">Discuta tempo, calibração e incertezas.</span><span class="vision-card-action">Ir para a seção <span aria-hidden="true">→</span></span></a><a class="resource-card vision-card" href="#geometria"><span class="vision-card-number">05</span><strong>Extensão geométrica</strong><span class="vision-card-description">Estime o pivô a partir do arco da trajetória.</span><span class="vision-card-action">Ir para a seção <span aria-hidden="true">→</span></span></a></div></nav><section class="lesson-section" id="experimento" aria-labelledby="experimento-title"><h2 id="experimento-title">2.1 A montagem e os vídeos</h2><p>Uma bolinha suspensa por um fio oscila diante da câmera. A trena serve de referência espacial. Posicione a câmera perpendicular ao plano do movimento e meça o comprimento do ponto de suspensão ao centro da bolinha.</p>
+<div class="vision-measurement" data-video-measurement>
+  <p id="video-medida-instrucoes">Dê play no vídeo original: o alvo acompanha o centro reconhecido e o gráfico desenha x(t). Pausar ou mudar o instante do vídeo atualiza os três painéis juntos.</p>
+  <div class="vision-measurement-grid">
+    <figure><h3>Vídeo original</h3><video controls muted playsinline preload="auto" width="640" height="416" aria-label="Vídeo do pêndulo com trena" aria-describedby="video-medida-instrucoes"><source src="../videos/pendulo_trena.mp4" type="video/mp4">Seu navegador não reproduz este vídeo. Use o link de download abaixo.</video></figure>
+    <figure><h3>Centro reconhecido</h3><canvas data-recognized width="640" height="416" role="img" aria-label="Mesmo quadro do vídeo com um alvo no centro detectado da bolinha">O centro detectado aparece numericamente abaixo dos painéis.</canvas></figure>
+    <figure><h3>Posição ao longo do tempo</h3><canvas data-position-plot width="640" height="416" role="img" aria-label="Gráfico de x em pixels pelo tempo em segundos, mostrando os últimos dez segundos">Os dados estão disponíveis no CSV desta aula.</canvas></figure>
+  </div>
+  <output class="vision-measurement-status" data-measurement-status aria-live="off">Carregando as posições medidas…</output>
+  <p class="vision-measurement-caption">A marcação usa os centros já extraídos pelo filtro HSV do script 06, sincronizados com o vídeo. O alvo indica a posição do centro; seu tamanho não representa o raio da bolinha. O gráfico mantém a mesma escala vertical para tornar visível a redução da amplitude.</p>
+  <noscript><p>Ative JavaScript para ver o reconhecimento e o gráfico sincronizados. O vídeo e o <a href="../dados/pendulo_trena.csv" download>CSV das posições</a> continuam disponíveis.</p></noscript>
+</div>
+
+<div class="table-scroll"><table class="value-table"><thead><tr><th>Arquivo</th><th>Uso em aula</th><th>Atenção</th></tr></thead><tbody><tr><td><a href="../videos/pendulo_livre.mp4" download>pendulo_livre.mp4</a></td><td>Visualizar amortecimento</td><td>Comprimento não é o 0,83 m adotado para a trena</td></tr><tr><td><a href="../videos/pendulo_trena.mp4" download>pendulo_trena.mp4</a></td><td>CSV e ajuste desta página</td><td>Comprimento adotado: 0,83 m</td></tr><tr><td><a href="../videos/pendulo_trena_vertical.mp4" download>pendulo_trena_vertical.mp4</a></td><td>Comparar outra tomada</td><td>Há outro impulso perto de 110 s; analisar separadamente</td></tr></tbody></table></div></section><section class="lesson-section" id="trajetoria" aria-labelledby="trajetoria-title"><h2 id="trajetoria-title">2.2 Do vídeo à tabela</h2><p>Para um vídeo com taxa constante, reconstruímos o tempo pelo índice do quadro: \(t_n=n/f\). Esse relógio deve avançar mesmo quando a máscara não encontra a bolinha. Apagar as linhas sem detecção é diferente de comprimir o tempo.</p><div class="vision-example"><p>O resultado é saidas/trajetoria.csv, com três colunas: tempo em segundos e x/y em pixels. O programa termina no fim do vídeo ou ao pressionar q.</p><pre class="vision-code"><code>python scripts/06_trajetoria.py</code></pre><a href="../scripts/06_trajetoria.py" download>Baixar 06_trajetoria.py</a><details open><summary>Código completo (44 linhas)</summary><pre class="vision-code"><code>&quot;&quot;&quot;Vídeo de taxa constante → CSV. Execute na pasta do tópico; Q salva e sai.&quot;&quot;&quot;
+from pathlib import Path
+import cv2
+import numpy as np
+
+FONTE = &quot;videos/pendulo_trena.mp4&quot;
+MINIMO = (0, 120, 120)
+MAXIMO = (25, 255, 255)
+video = cv2.VideoCapture(FONTE)
+fps = video.get(cv2.CAP_PROP_FPS)
+if not video.isOpened() or fps &lt;= 0:
+    video.release()
+    raise SystemExit(&quot;Vídeo não abriu ou não informa FPS válido.&quot;)
+
+dados = []
+numero = 0
+while True:
+    leu, quadro = video.read()
+    if not leu:
+        break
+    tempo = numero / fps
+    numero += 1  # O relógio avança mesmo se a detecção falhar.
+    hsv = cv2.cvtColor(quadro, cv2.COLOR_BGR2HSV)
+    mascara = cv2.inRange(hsv, MINIMO, MAXIMO)
+    contornos, _ = cv2.findContours(mascara, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+    if contornos:
+        maior = max(contornos, key=cv2.contourArea)
+        if cv2.contourArea(maior) &gt; 30:
+            (x, y), raio = cv2.minEnclosingCircle(maior)
+            dados.append((tempo, x, y))
+            cv2.circle(quadro, (int(x), int(y)), int(raio), (0, 255, 0), 2)
+    cv2.imshow(&quot;Trajetoria&quot;, quadro)
+    if cv2.waitKey(1) == ord(&quot;q&quot;):
+        break
+
+video.release()
+cv2.destroyAllWindows()
+if not dados:
+    raise SystemExit(&quot;Nenhuma posição detectada; reveja a faixa HSV.&quot;)
+Path(&quot;saidas&quot;).mkdir(exist_ok=True)
+np.savetxt(&quot;saidas/trajetoria.csv&quot;, dados, delimiter=&quot;,&quot;,
+           header=&quot;t_s,x_px,y_px&quot;, comments=&quot;&quot;, fmt=&quot;%.6f&quot;)
+print(f&quot;{len(dados)} posições em {numero} quadros; FPS declarado: {fps:.6f}.&quot;)
+print(&quot;Arquivo: saidas/trajetoria.csv&quot;)</code></pre></details></div><p>Para começar direto pela análise, baixe o <a href="../dados/pendulo_trena.csv" download>CSV já extraído do vídeo da trena</a> em <code>dados/pendulo_trena.csv</code>. Foram detectadas 3.379 posições em 3.379 quadros nesta execução, usando a faixa HSV do capítulo 1.</p><h3>Qual é o relógio?</h3><p>Arquivos podem carregar timestamps e ter taxa variável; nesse caso, contar quadros e dividir por um FPS médio distorce o tempo. Para webcam, meça os instantes de aquisição: o ritmo do processamento não é necessariamente o ritmo da câmera. O script desta aula está limitado a um arquivo de taxa constante.</p></section><section class="lesson-section" id="modelo" aria-labelledby="modelo-title"><h2 id="modelo-title">2.3 Período, amortecimento e gravidade</h2><p>Antes do ajuste, abra os primeiros dez segundos da trajetória. Use o zoom da janela para medir a distância entre dois picos ou divida o intervalo de vários ciclos pelo número de ciclos.</p><div class="vision-example"><pre class="vision-code"><code>python scripts/07_visualizar_trajetoria.py</code></pre><a href="../scripts/07_visualizar_trajetoria.py" download>Baixar visualização da trajetória</a><details open><summary>Código completo (15 linhas)</summary><pre class="vision-code"><code>&quot;&quot;&quot;Veja os primeiros ciclos antes de escolher o período inicial do ajuste.&quot;&quot;&quot;
+import numpy as np
+import matplotlib.pyplot as plt
+
+ARQUIVO = &quot;dados/pendulo_trena.csv&quot;
+dados = np.loadtxt(ARQUIVO, delimiter=&quot;,&quot;, skiprows=1, ndmin=2)
+tempo = dados[:, 0] - dados[0, 0]
+posicao = dados[:, 1]
+
+plt.plot(tempo, posicao, &quot;.-&quot;, markersize=2)
+plt.xlim(0, 10)
+plt.xlabel(&quot;Tempo (s)&quot;)
+plt.ylabel(&quot;x (pixels)&quot;)
+plt.title(&quot;Estime o período pela distância entre picos&quot;)
+plt.show()
+</code></pre></details></div><p>O primeiro gráfico é x(t). Estime a separação entre picos; esse valor inicia o ajuste. Para pequenas oscilações com amortecimento fraco, usamos:</p><p>\[x(t)=x_0+A\,e^{-t/\tau}\cos\left(\frac{2\pi t}{T}+\varphi\right)\]</p><p>A é a amplitude inicial, τ é o tempo de decaimento, T é o período, φ é a fase e x₀ é a posição de equilíbrio. Em um intervalo τ, o envelope cai para 1/e do valor anterior. O algoritmo ajusta esses números para reduzir os resíduos entre dados e modelo.</p><p>Medindo o comprimento L do pêndulo simples, a aproximação de pequenos ângulos fornece:</p><p>\[g\approx\frac{4\pi^2 L}{T^2}\]</p><p>O período medido de um sistema amortecido aproxima o período natural apenas quando o amortecimento é fraco. Uma oscilação grande, movimento fora do plano ou atrito diferente do modelo podem exigir outra descrição.</p><div class="vision-example"><p>Este exemplo lê somente o CSV. Altere ARQUIVO, COMPRIMENTO e PERIODO_INICIAL no início; o ajuste usa os tempos registrados, inclusive se houver lacunas.</p><pre class="vision-code"><code>python -m pip install -r requirements-medida.txt
+python scripts/07_pendulo.py</code></pre><a href="../scripts/07_pendulo.py" download>Baixar 07_pendulo.py</a><details open><summary>Código completo (50 linhas)</summary><pre class="vision-code"><code>&quot;&quot;&quot;Ajusta o CSV do vídeo da trena; execute na pasta do tópico.&quot;&quot;&quot;
+from pathlib import Path
+import numpy as np
+import matplotlib.pyplot as plt
+from scipy.optimize import curve_fit
+
+ARQUIVO = &quot;dados/pendulo_trena.csv&quot;  # Troque por saidas/trajetoria.csv.
+COMPRIMENTO = 0.83  # Metros, do ponto de suspensão ao centro da bolinha.
+PERIODO_INICIAL = 1.8  # Estime a distância entre picos no gráfico de x(t).
+dados = np.loadtxt(ARQUIVO, delimiter=&quot;,&quot;, skiprows=1, ndmin=2)
+if len(dados) &lt; 10 or dados.shape[1] != 3 or not np.isfinite(dados).all():
+    raise SystemExit(&quot;O CSV precisa de pelo menos 10 posições válidas: t, x, y.&quot;)
+tempo = dados[:, 0] - dados[0, 0]
+posicao = dados[:, 1]
+if np.any(np.diff(tempo) &lt;= 0):
+    raise SystemExit(&quot;Os tempos precisam estar em ordem crescente.&quot;)
+
+
+def oscilacao(t: np.ndarray, amplitude: float, tau: float,
+              periodo: float, fase: float, centro: float) -&gt; np.ndarray:
+    envelope = amplitude * np.exp(-t / tau)
+    return centro + envelope * np.cos(2 * np.pi * t / periodo + fase)
+
+
+chute = [np.ptp(posicao) / 2, 100, PERIODO_INICIAL, 0, np.mean(posicao)]
+limites = ([0, 0.01, 0.1, -2 * np.pi, -np.inf],
+           [np.inf, 100000, 10, 2 * np.pi, np.inf])
+parametros, _ = curve_fit(oscilacao, tempo, posicao, p0=chute,
+                         bounds=limites, maxfev=20000)
+amplitude, tau, periodo, fase, centro = parametros
+ajuste = oscilacao(tempo, *parametros)
+residuo = posicao - ajuste
+gravidade = 4 * np.pi**2 * COMPRIMENTO / periodo**2
+print(f&quot;Período: {periodo:.4f} s; amortecimento: {tau:.1f} s&quot;)
+print(f&quot;g estimado: {gravidade:.3f} m/s²; comprimento adotado: {COMPRIMENTO} m&quot;)
+print(f&quot;Desvio padrão dos resíduos: {np.std(residuo):.2f} px&quot;)
+
+figura, eixos = plt.subplots(2, 1, sharex=True, figsize=(9, 6))
+eixos[0].plot(tempo, posicao, &quot;.&quot;, markersize=1, label=&quot;Posições medidas&quot;)
+eixos[0].plot(tempo, ajuste, label=&quot;Oscilação amortecida&quot;)
+eixos[0].set_ylabel(&quot;x (pixels)&quot;)
+eixos[0].legend()
+eixos[1].plot(tempo, residuo, linewidth=0.6)
+eixos[1].axhline(0, color=&quot;black&quot;, linewidth=0.5)
+eixos[1].set(xlabel=&quot;Tempo (s)&quot;, ylabel=&quot;Resíduo (pixels)&quot;)
+figura.suptitle(&quot;Pêndulo: medida, modelo e resíduos&quot;)
+figura.tight_layout()
+Path(&quot;saidas&quot;).mkdir(exist_ok=True)
+figura.savefig(&quot;saidas/ajuste_pendulo.png&quot;, dpi=120)
+plt.show()</code></pre></details></div><figure class="vision-figure"><img src="../imagens/pendulo-ajuste.png" width="1080" height="720" alt="Posições medidas e curva ajustada na parte superior; resíduos em pixels na parte inferior" loading="lazy"><figcaption>Resultado executado com o CSV incluído: T ≈ 1,8072 s, τ ≈ 109,3 s e g ≈ 10,033 m/s², adotando L = 0,83 m e o FPS declarado de 30,303030. O desvio padrão dos resíduos é aproximadamente 10 pixels.</figcaption></figure></section><section class="lesson-section" id="limites" aria-labelledby="limites-title"><h2 id="limites-title">2.4 O que a medida permite concluir</h2><p>Um gráfico bem ajustado não prova que todas as entradas estão corretas. Resíduos com estrutura podem indicar movimento fora do modelo, detecção enviesada ou mudança nas condições. O desvio padrão dos resíduos não é, por si só, a incerteza de g.</p><ul><li><strong>Espaço:</strong> pixels só viram metros com uma referência no mesmo plano. Perspectiva, distorção da lente e definição do centro afetam a escala.</li><li><strong>Tempo:</strong> FPS incorreto afeta o período. Quadros perdidos na detecção deixam lacunas; uma FFT direta pressupõe amostras regulares e requer cuidado nesse caso.</li><li><strong>Modelo:</strong> grandes amplitudes e impulsos adicionais podem invalidar um único ajuste.</li></ul><p>Para incertezas pequenas e independentes em L e T:</p><p>\[\frac{\sigma_g}{g}\approx\sqrt{\left(\frac{\sigma_L}{L}\right)^2+\left(2\frac{\sigma_T}{T}\right)^2}\]</p><div class="vision-note"><p><strong>Hipótese, não correção automática.</strong> Interpretar este vídeo como 30 FPS, em lugar de 30,303030, aumentaria T e levaria a g ≈ 9,833 m/s². A proximidade de um valor de referência não comprova que 30 FPS seja a taxa real. Precisamos de evidência independente sobre a gravação.</p></div><p><strong>Investigue:</strong> altere o comprimento em 1% e compare g. Depois discuta o efeito de um erro de 1% no relógio. Qual grandeza precisa de maior atenção relativa?</p></section><section class="lesson-section" id="geometria" aria-labelledby="geometria-title"><h2 id="geometria-title">2.5 Uma extensão geométrica</h2><p>Se a câmera vê o plano do pêndulo sem distorção importante, os centros da bolinha descrevem aproximadamente um arco. Ajustar uma circunferência pode estimar o pivô fora da imagem e o comprimento em pixels. Arcos muito curtos tornam essa estimativa instável; perspectiva pode transformar a projeção em outra curva.</p><p>Essa extensão existe no <a href="https://github.com/Atzingen/visao-computacional-fisica/blob/main/scripts/07_pendulo_fit_g.py">script original de ajuste</a>. Aqui, o exemplo principal usa o comprimento medido diretamente para manter clara a passagem de posição para período e gravidade.</p></section><section class="lesson-section" id="referencias" aria-labelledby="referencias-title"><h2 id="referencias-title">Referências</h2><ul class="bibliography-list"><li><a href="https://github.com/Atzingen/rastreador-pendulo">Rastreador de pêndulo: origem dos vídeos</a>.</li><li><a href="https://github.com/Atzingen/visao-computacional-fisica">Sequência recente: rastreamento e ajuste</a>.</li><li><a href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.curve_fit.html">SciPy: ajuste não linear com curve_fit</a>.</li><li><a href="https://openstax.org/books/university-physics-volume-1/pages/15-4-pendulums">OpenStax: pêndulo simples e aproximação de pequenos ângulos</a>.</li></ul></section><nav class="vision-pager" aria-label="Capítulos"><a href="../01-fundamentos/">← Fundamentos de imagem</a><a href="../03-convolucao-redes/">Convolução e redes neurais →</a></nav></div></main>
+  <footer class="site-footer"><p>Visão computacional · Física Computacional</p><a href="../../../topicos/">Todos os tópicos</a></footer>
+  <script type="module" src="../demo-video-medida.js"></script>
+  <script type="module" src="../../../componentes/navegacao-principal.js"></script>
+  <script type="module" src="../../../componentes/navegacao-secoes.js"></script>
+  <script type="module">import { typesetMath } from "../../../componentes/matematica.js"; typesetMath(document.querySelector("main"));</script>
+</body>
+</html>

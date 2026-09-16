@@ -493,5 +493,31 @@
       "porta serial",
       "robótica educacional"
     ]
+  },
+  {
+    "id": "topico-02-visao-computacional",
+    "title": "Tópico 2 — Visão computacional",
+    "kind": "topico",
+    "section": "topicos",
+    "disciplines": [
+      "PRCCOMP"
+    ],
+    "theme": "Imagem, medida e redes neurais",
+    "description": "Pixels e filtros, rastreamento do pêndulo, convolução e comparação de redes com MNIST, Fashion-MNIST e cães/gatos. Roteiro de detecção, segmentação e embarcados.",
+    "path": "topicos/02-visao-computacional/",
+    "tags": [
+      "visão computacional",
+      "OpenCV",
+      "Python",
+      "pêndulo",
+      "convolução",
+      "CNN",
+      "MNIST",
+      "Fashion-MNIST",
+      "cães e gatos",
+      "YOLO",
+      "segmentação",
+      "embarcados"
+    ]
   }
 ]

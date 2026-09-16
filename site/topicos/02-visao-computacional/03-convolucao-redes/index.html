@@ -1,0 +1,1193 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Primeiro escolhemos os pesos de um filtro. Depois deixamos o treinamento ajustar esses pesos. Vamos comparar uma rede densa e uma CNN e observar o que elas aprendem.">
+  <title>Convolução e redes neurais · Visão computacional · PRCCOMP</title>
+  <link rel="icon" href="../../../assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../../assets/base.css">
+  <link rel="stylesheet" href="../../../assets/simulador.css">
+  <link rel="stylesheet" href="../visao.css">
+  <script>try{if(localStorage.getItem("tema")==="escuro"){document.documentElement.dataset.theme="escuro"}}catch(erro){}</script>
+</head>
+<body class="lesson-page vision-page">
+  <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+  <div class="site-topbar" data-topbar>
+    <div class="site-topbar__inner">
+      <nav class="breadcrumb" aria-label="Navegação estrutural"><a href="../../../disciplinas/prccomp/">Física Computacional</a><span aria-hidden="true">/</span><a href="../">Visão computacional</a><span aria-hidden="true">/</span><strong aria-current="page">Capítulo 3</strong></nav>
+      <div data-site-navigation data-root-path="../../../" data-active-section="topicos"></div>
+    </div>
+    <nav class="section-nav" aria-label="Seções do capítulo" data-section-nav><a href="#kernels">Kernels</a><a href="#aprendizado">Aprendizado</a><a href="#mnist">MNIST</a><a href="#fashion">Fashion-MNIST</a><a href="#animais">Cães e gatos</a><a href="#executar">Executar</a><a href="#referencias">Referências</a></nav>
+  </div>
+  <header class="lesson-header"><div class="lesson-title-row"><div>
+    <p class="eyebrow">Tópico 02 · Capítulo 3</p>
+    <h1>Convolução e redes neurais</h1></div><p class="lesson-intro">Primeiro escolhemos os pesos de um filtro. Depois deixamos o treinamento ajustar esses pesos. Vamos comparar uma rede densa e uma CNN e observar o que elas aprendem.</p></div></header>
+  <main class="lesson-main" id="conteudo"><div class="lesson-sections"><nav class="vision-section-index" aria-labelledby="secoes-title"><h2 id="secoes-title">Neste capítulo</h2><p>Escolha uma seção para ir direto à explicação e aos exemplos.</p><div class="vision-card-grid"><a class="resource-card vision-card" href="#kernels"><span class="vision-card-number">01</span><strong>Convolução passo a passo</strong><span class="vision-card-description">Janelas, filtros, padding e stride em 1D e 2D.</span><span class="vision-card-action">Ir para a seção <span aria-hidden="true">→</span></span></a><a class="resource-card vision-card" href="#aprendizado"><span class="vision-card-number">02</span><strong>Como a rede aprende</strong><span class="vision-card-description">Pesos, perda, gradiente e divisão dos dados.</span><span class="vision-card-action">Ir para a seção <span aria-hidden="true">→</span></span></a><a class="resource-card vision-card" href="#mnist"><span class="vision-card-number">03</span><strong>MNIST: densa × CNN</strong><span class="vision-card-description">Compare as redes com código, curvas e erros.</span><span class="vision-card-action">Ir para a seção <span aria-hidden="true">→</span></span></a><a class="resource-card vision-card" href="#fashion"><span class="vision-card-number">04</span><strong>Fashion-MNIST</strong><span class="vision-card-description">Classifique roupas e examine as confusões.</span><span class="vision-card-action">Ir para a seção <span aria-hidden="true">→</span></span></a><a class="resource-card vision-card" href="#animais"><span class="vision-card-number">05</span><strong>Cães e gatos</strong><span class="vision-card-description">Treine uma CNN pequena com fotografias RGB.</span><span class="vision-card-action">Ir para a seção <span aria-hidden="true">→</span></span></a></div></nav><section class="lesson-section" id="kernels" aria-labelledby="kernels-title"><h2 id="kernels-title">3.1 Uma janela de pesos</h2><p>Um kernel é uma matriz pequena que percorre a imagem. Multiplicamos cada valor da janela pelo peso correspondente e somamos. Um kernel de média suaviza; um Sobel responde a mudanças de intensidade. Regiões uniformes dão resposta zero ao Sobel porque seus pesos somam zero.</p><p>\[S(i,j)=\sum_a\sum_b K(a,b)\,I(i+a,j+b)\]</p><p>Essa forma, sem inverter o kernel, é uma <strong>correlação</strong>. A convolução matemática inverte o kernel antes da soma. Operações como <code>filter2D</code> e camadas chamadas convolucionais usam a convenção de correlação; o nome é tradicional na área.</p><p>Escolha um kernel e toque, foque pelo teclado ou passe o mouse num pixel da saída. A demonstração replica a borda da imagem; outros tratamentos de borda produzem resultados diferentes.</p><div class="vision-demo" data-demo="convolucao">
+    <div class="controles">
+      <button data-k="vertical" class="ativo">Sobel vertical</button>
+      <button data-k="horizontal">Sobel horizontal</button>
+      <button data-k="media">média (borra)</button>
+      <button data-k="identidade">identidade</button>
+    </div>
+    <div style="display:flex;gap:1.4rem;flex-wrap:wrap;align-items:flex-start">
+      <figure style="margin:0"><div id="entrada09" class="grade09"></div><figcaption>entrada</figcaption></figure>
+      <figure style="margin:0"><div id="kernel09" class="grade09" style="grid-template-columns:repeat(3,2rem)"></div><figcaption>kernel</figcaption></figure>
+      <figure style="margin:0"><div id="saida09" class="grade09"></div><figcaption>saída (valores com sinal)</figcaption></figure>
+    </div>
+    <p>Os números preservam o sinal da resposta. Na identidade e na média, entrada e saída usam a mesma escala de cinza (0–255). No Sobel, a cor representa o módulo reescalado pelo maior valor absoluto, para destacar as bordas.</p>
+    <p id="conta09" aria-live="polite" class="mono" style="font-size:.78rem;color:var(--tinta2);margin:.8rem 0 0;min-height:1.4em"></p>
+  </div>
+  <style>
+    .grade09 { display: grid; grid-template-columns: repeat(10, 2rem); gap: 2px; font: 500 .6rem "IBM Plex Mono", monospace; }
+    .grade09 div { height: 2rem; display: grid; place-items: center; border-radius: 3px; }
+    .grade09 .foco { outline: 2px solid var(--laranja); outline-offset: -2px; }
+  </style>
+
+  <script type="module" src="../demo-convolucao.js"></script><div class="vision-example"><p>Preservamos a resposta com sinal em ponto flutuante. Só tomamos o módulo e normalizamos para exibir a imagem.</p><pre class="vision-code"><code>python scripts/08_sobel.py</code></pre><a href="../scripts/08_sobel.py" download>Baixar 08_sobel.py</a><details open><summary>Código completo (22 linhas)</summary><pre class="vision-code"><code>&quot;&quot;&quot;Kernel escrito à mão numa imagem fixa; execute na pasta do tópico.&quot;&quot;&quot;
+import cv2
+import numpy as np
+
+imagem = cv2.imread(&quot;imagens/frame_bolinha.png&quot;, cv2.IMREAD_GRAYSCALE)
+if imagem is None:
+    raise SystemExit(&quot;Não encontrei a imagem. Execute na pasta do tópico.&quot;)
+
+kernel = np.array([[-1, 0, 1],
+                   [-2, 0, 2],
+                   [-1, 0, 1]], dtype=np.float32)
+
+# O resultado pode ser negativo: preservamos os sinais em ponto flutuante.
+resposta = cv2.filter2D(imagem, cv2.CV_32F, kernel, borderType=cv2.BORDER_REPLICATE)
+magnitude = np.abs(resposta)
+visualizacao = cv2.normalize(magnitude, None, 0, 255, cv2.NORM_MINMAX)
+visualizacao = visualizacao.astype(np.uint8)
+
+cv2.imshow(&quot;Original&quot;, imagem)
+cv2.imshow(&quot;Bordas verticais - modulo&quot;, visualizacao)
+cv2.waitKey(0)
+cv2.destroyAllWindows()</code></pre></details></div><h3>Padding e stride</h3><p><em>Padding</em> acrescenta bordas; <em>stride</em> é o passo da janela. Sem dilatação, uma dimensão de entrada N, kernel K, padding P de cada lado e passo S resulta em:</p><p>\[N_{\rm saída}=\left\lfloor\frac{N+2P-K}{S}\right\rfloor+1\]</p><p>Uma imagem 28×28, kernel 3×3, sem padding e passo 1 gera 26×26. O notebook explora a operação numérica em 1D e 2D antes de apresentar uma rede.</p><!-- notebook:01-convolucao:inicio -->
+<article class="vision-notebook" data-notebook="01-convolucao">
+<p class="vision-notebook-intro">A prática completa está abaixo: explicação, código e resultados da execução.</p>
+<h3>1 &#8212; Convolu&#231;&#227;o: de sinais a imagens</h3><p><strong>Objetivo.</strong> Entender a convolução como uma janela que desliza, multiplica e soma; calcular exemplos 1D e 2D; e observar como <em>padding</em>, <em>stride</em> e o kernel mudam a saída.</p>
+<p>Este tutorial adapta a primeira metade de <a href="https://github.com/Atzingen/visao-computacional-fisica/blob/d0167834a4a071272845206812b5c7487a43b61d/notebooks/10_convolucao_e_cnn.ipynb"><code>10_convolucao_e_cnn.ipynb</code></a>, de Gustavo von Atzingen, preservando a procedência. A parte de CNN foi movida para o notebook 2. A discussão e a API também seguem a <a href="https://keras.io/api/layers/convolution_layers/convolution2d/">documentação de <code>Conv2D</code> do Keras</a>.</p>
+<blockquote>
+<p>Os widgets ajudam quando há um kernel ativo. Logo abaixo de cada widget há uma vista estática equivalente, que continua visível no GitHub e no HTML exportado.</p>
+</blockquote>
+
+<h4>Prepara&#231;&#227;o</h4><p>Precisamos apenas de NumPy, Matplotlib e ipywidgets. Se o widget não aparecer no seu leitor, use as figuras estáticas já salvas no notebook.</p>
+
+<div class="vision-cell" data-cell="2"><p class="vision-cell-label">Código · célula 1</p>
+<pre class="vision-code"><code class="language-python">from pathlib import Path
+from urllib.request import urlretrieve
+
+import matplotlib.pyplot as plt
+import numpy as np
+from IPython.display import display
+import ipywidgets as widgets
+
+
+plt.rcParams.update({
+    &quot;figure.figsize&quot;: (9, 4),
+    &quot;figure.dpi&quot;: 110,
+    &quot;axes.spines.top&quot;: False,
+    &quot;axes.spines.right&quot;: False,
+    &quot;axes.grid&quot;: True,
+    &quot;grid.alpha&quot;: 0.2,
+})
+
+np.random.seed(42)</code></pre>
+</div>
+<h4>1. Convolu&#231;&#227;o em uma dimens&#227;o</h4><p>Para funções contínuas, a convolução é</p>
+<p>$$(f * g)(t)=\int_{-\infty}^{\infty}f(\tau)g(t-\tau)\,d\tau.$$</p>
+<p>Imagine uma cópia invertida de $g$ deslizando sobre $f$. Em cada posição, multiplicamos as duas funções e integramos a sobreposição. Em dados amostrados, a integral vira uma soma:</p>
+<p>$$y[i]=\sum_{j=0}^{K-1}x[i+j]k[j].$$</p>
+<p>A expressão acima, sem inverter <code>k</code>, é tecnicamente <strong>correlação cruzada</strong>. Bibliotecas de visão e camadas <code>Conv2D</code> usam essa forma, embora mantenham o nome “convolução”. Como os valores do kernel são escolhidos ou aprendidos, essa convenção não atrapalha a CNN — mas vale conhecer a diferença matemática.</p>
+
+<div class="vision-cell" data-cell="4"><p class="vision-cell-label">Código · célula 2</p>
+<pre class="vision-code"><code class="language-python">sinal = np.array([1, 2, 3, 4, 5], dtype=float)
+kernel = np.array([1, 0, -1], dtype=float)
+
+def correlacao_1d(sinal: np.ndarray, kernel: np.ndarray) -&gt; np.ndarray:
+    n_saida = len(sinal) - len(kernel) + 1
+    saida = np.zeros(n_saida)
+    for i in range(n_saida):
+        janela = sinal[i : i + len(kernel)]
+        saida[i] = np.sum(janela * kernel)
+    return saida
+
+resultado = correlacao_1d(sinal, kernel)
+print(&quot;sinal:       &quot;, sinal)
+print(&quot;kernel:      &quot;, kernel)
+print(&quot;correlação:  &quot;, resultado)
+print(&quot;convolução:  &quot;, np.convolve(sinal, kernel, mode=&quot;valid&quot;))</code></pre>
+<pre class="vision-code vision-output">sinal:        [1. 2. 3. 4. 5.]
+kernel:       [ 1.  0. -1.]
+correlação:   [-2. -2. -2.]
+convolução:   [2. 2. 2.]
+</pre>
+</div>
+<p>No primeiro valor, a janela <code>[1, 2, 3]</code> produz <code>1×1 + 2×0 + 3×(-1) = -2</code>. O kernel <code>[1, 0, -1]</code> responde a variações: regiões constantes ficam próximas de zero; transições produzem valores com módulo maior.</p>
+<h5>Widget: acompanhe a multiplica&#231;&#227;o e a soma</h5>
+<div class="vision-cell" data-cell="6"><p class="vision-cell-label">Código · célula 3</p>
+<pre class="vision-code"><code class="language-python">sinal_longo = np.array([0, 0, 1, 1, 1, 3, 3, 2, 2, 0, 0], dtype=float)
+kernel_media = np.ones(3) / 3
+
+def desenhar_janela_1d(posicao: int = 0) -&gt; None:
+    janela = sinal_longo[posicao : posicao + len(kernel_media)]
+    produto = janela * kernel_media
+    fig, eixos = plt.subplots(1, 2, figsize=(9, 3))
+    eixos[0].stem(range(len(sinal_longo)), sinal_longo, basefmt=&quot; &quot;)
+    eixos[0].axvspan(posicao - 0.4, posicao + 2.4, color=&quot;#E69F00&quot;, alpha=0.25)
+    eixos[0].set(title=f&quot;Janela na posição {posicao}&quot;, xlabel=&quot;amostra&quot;, ylabel=&quot;valor&quot;)
+    eixos[1].bar([&quot;1º&quot;, &quot;2º&quot;, &quot;3º&quot;], produto, color=&quot;#0072B2&quot;)
+    eixos[1].axhline(0, color=&quot;0.25&quot;, linewidth=1)
+    eixos[1].set(title=f&quot;Produtos; soma = {produto.sum():.2f}&quot;, ylabel=&quot;janela × kernel&quot;)
+    plt.tight_layout()
+    plt.show()
+
+controle_1d = widgets.interactive(
+    desenhar_janela_1d,
+    posicao=widgets.IntSlider(min=0, max=len(sinal_longo) - 3, step=1, value=0),
+)
+display(controle_1d)</code></pre>
+<p class="vision-widget-note">Este controle Python funciona ao executar o notebook no Jupyter. As figuras desta página mostram os resultados salvos; a demonstração no início do capítulo permite experimentar no navegador.</p>
+</div>
+<div class="vision-cell" data-cell="7"><p class="vision-cell-label">Código · célula 4</p>
+<pre class="vision-code"><code class="language-python"># Vista estática do mesmo processo em três posições.
+fig, eixos = plt.subplots(1, 3, figsize=(11, 3), sharey=True)
+for eixo, posicao in zip(eixos, [0, 4, 8]):
+    eixo.stem(range(len(sinal_longo)), sinal_longo, basefmt=&quot; &quot;)
+    eixo.axvspan(posicao - 0.4, posicao + 2.4, color=&quot;#E69F00&quot;, alpha=0.28)
+    valor = np.sum(sinal_longo[posicao : posicao + 3] * kernel_media)
+    eixo.set_title(f&quot;posição {posicao} → {valor:.2f}&quot;)
+    eixo.set_xlabel(&quot;amostra&quot;)
+eixos[0].set_ylabel(&quot;valor do sinal&quot;)
+fig.suptitle(&quot;A janela de média desliza pelo sinal&quot;)
+plt.tight_layout()</code></pre>
+<figure class="vision-figure"><img src="../imagens/notebooks/01-convolucao-01.png" loading="lazy" width="1184" height="328" alt="Widget: acompanhe a multiplicação e a soma — resultado da execução"><figcaption>Widget: acompanhe a multiplicação e a soma — resultado da execução</figcaption></figure>
+</div>
+<h4>2. Da linha para a imagem: convolu&#231;&#227;o 2D</h4><p>Uma imagem em tons de cinza é uma matriz. O kernel agora possui altura e largura:</p>
+<p>$$S[i,j]=\sum_m\sum_n I[i+m,j+n]K[m,n].$$</p>
+<ul>
+<li><strong>Padding</strong> acrescenta uma borda (aqui, de zeros). Com padding 1, um kernel 3×3 pode preservar altura e largura.</li>
+<li><strong>Stride</strong> é o passo da janela. Stride 2 pula uma posição a cada movimento e reduz a saída.</li>
+</ul>
+<p>Para entrada $H\times W$, kernel $K_h\times K_w$, padding $P$ e stride $S$:</p>
+<p>$$H_{out}=\left\lfloor\frac{H+2P-K_h}{S}\right\rfloor+1,$$</p>
+<p>e a mesma fórmula vale para $W_{out}$. A divisão inteira explica por que algumas posições finais não cabem.</p>
+
+<div class="vision-cell" data-cell="9"><p class="vision-cell-label">Código · célula 5</p>
+<pre class="vision-code"><code class="language-python">def correlacao_2d(
+    imagem: np.ndarray,
+    kernel: np.ndarray,
+    padding: int = 0,
+    stride: int = 1,
+) -&gt; np.ndarray:
+    imagem_com_borda = np.pad(imagem, padding, mode=&quot;constant&quot;)
+    altura = (imagem_com_borda.shape[0] - kernel.shape[0]) // stride + 1
+    largura = (imagem_com_borda.shape[1] - kernel.shape[1]) // stride + 1
+    saida = np.zeros((altura, largura))
+    for linha in range(altura):
+        for coluna in range(largura):
+            inicio_linha = linha * stride
+            inicio_coluna = coluna * stride
+            janela = imagem_com_borda[
+                inicio_linha : inicio_linha + kernel.shape[0],
+                inicio_coluna : inicio_coluna + kernel.shape[1],
+            ]
+            saida[linha, coluna] = np.sum(janela * kernel)
+    return saida
+
+imagem_pequena = np.array([
+    [1, 2, 0, 1],
+    [3, 1, 2, 2],
+    [0, 1, 3, 1],
+    [2, 2, 1, 0],
+], dtype=float)
+kernel_pequeno = np.array([[1, 0], [0, -1]], dtype=float)
+
+saida_s1 = correlacao_2d(imagem_pequena, kernel_pequeno, stride=1)
+saida_s2 = correlacao_2d(imagem_pequena, kernel_pequeno, stride=2)
+print(&quot;Entrada 4×4:\n&quot;, imagem_pequena)
+print(&quot;\nKernel 2×2:\n&quot;, kernel_pequeno)
+print(&quot;\nSaída, padding 0 e stride 1 (3×3):\n&quot;, saida_s1)
+print(&quot;\nSaída, padding 0 e stride 2 (2×2):\n&quot;, saida_s2)</code></pre>
+<pre class="vision-code vision-output">Entrada 4×4:
+ [[1. 2. 0. 1.]
+ [3. 1. 2. 2.]
+ [0. 1. 3. 1.]
+ [2. 2. 1. 0.]]
+
+Kernel 2×2:
+ [[ 1.  0.]
+ [ 0. -1.]]
+
+Saída, padding 0 e stride 1 (3×3):
+ [[ 0.  0. -2.]
+ [ 2. -2.  1.]
+ [-2.  0.  3.]]
+
+Saída, padding 0 e stride 2 (2×2):
+ [[ 0. -2.]
+ [-2.  3.]]
+</pre>
+</div>
+<p>O primeiro valor é <code>1×1 + 2×0 + 3×0 + 1×(-1) = 0</code>. Com stride 2, calculamos menos posições; o kernel não mudou, apenas o caminho da janela.</p>
+
+<div class="vision-cell" data-cell="11"><p class="vision-cell-label">Código · célula 6</p>
+<pre class="vision-code"><code class="language-python">fig, eixos = plt.subplots(1, 3, figsize=(10, 3))
+for eixo, dados, titulo in zip(
+    eixos,
+    [imagem_pequena, saida_s1, saida_s2],
+    [&quot;entrada 4×4&quot;, &quot;stride 1 → 3×3&quot;, &quot;stride 2 → 2×2&quot;],
+):
+    im = eixo.imshow(dados, cmap=&quot;Blues&quot;)
+    for (linha, coluna), valor in np.ndenumerate(dados):
+        eixo.text(coluna, linha, f&quot;{valor:g}&quot;, ha=&quot;center&quot;, va=&quot;center&quot;, color=&quot;black&quot;)
+    eixo.set_title(titulo)
+    eixo.set_xticks([])
+    eixo.set_yticks([])
+fig.suptitle(&quot;Mesmo kernel, duas escolhas de stride&quot;)
+plt.tight_layout()</code></pre>
+<figure class="vision-figure"><img src="../imagens/notebooks/01-convolucao-02.png" loading="lazy" width="984" height="328" alt="2. Da linha para a imagem: convolução 2D — resultado da execução"><figcaption>2. Da linha para a imagem: convolução 2D — resultado da execução</figcaption></figure>
+</div>
+<h4>3. Kernels cl&#225;ssicos em uma imagem real</h4><p>O frame abaixo vem do experimento da bolinha do repositório de origem. Primeiro procuramos a cópia local em <code>../imagens/</code>; se ela não existir (por exemplo, no Colab), baixamos uma cópia para o cache do usuário, fora do repositório.</p>
+
+<div class="vision-cell" data-cell="13"><p class="vision-cell-label">Código · célula 7</p>
+<pre class="vision-code"><code class="language-python">caminho_local = Path(&quot;../imagens/frame_bolinha.png&quot;)
+if caminho_local.exists():
+    caminho_imagem = caminho_local
+else:
+    caminho_cache = Path.home() / &quot;.cache&quot; / &quot;disciplinas&quot; / &quot;frame_bolinha.png&quot;
+    caminho_cache.parent.mkdir(parents=True, exist_ok=True)
+    if not caminho_cache.exists():
+        url = (
+            &quot;https://raw.githubusercontent.com/Atzingen/&quot;
+            &quot;visao-computacional-fisica/main/imagens/frame_bolinha.png&quot;
+        )
+        urlretrieve(url, caminho_cache)
+    caminho_imagem = caminho_cache
+
+imagem_rgb = plt.imread(caminho_imagem)[..., :3]
+if imagem_rgb.max() &gt; 1:
+    imagem_rgb = imagem_rgb / 255.0
+imagem_cinza = (
+    0.2126 * imagem_rgb[..., 0]
+    + 0.7152 * imagem_rgb[..., 1]
+    + 0.0722 * imagem_rgb[..., 2]
+)
+# Redução apenas para a demonstração ficar rápida no navegador.
+imagem_cinza = imagem_cinza[::4, ::4]
+print(&quot;arquivo:&quot;, caminho_imagem)
+print(&quot;forma usada:&quot;, imagem_cinza.shape)</code></pre>
+<pre class="vision-code vision-output">arquivo: ../imagens/frame_bolinha.png
+forma usada: (104, 160)
+</pre>
+</div>
+<div class="vision-cell" data-cell="14"><p class="vision-cell-label">Código · célula 8</p>
+<pre class="vision-code"><code class="language-python">kernels = {
+    &quot;média (suaviza)&quot;: np.ones((3, 3)) / 9,
+    &quot;Sobel x (bordas verticais)&quot;: np.array([
+        [-1, 0, 1], [-2, 0, 2], [-1, 0, 1]
+    ]),
+    &quot;Sobel y (bordas horizontais)&quot;: np.array([
+        [-1, -2, -1], [0, 0, 0], [1, 2, 1]
+    ]),
+    &quot;Laplaciano (variações)&quot;: np.array([
+        [0, 1, 0], [1, -4, 1], [0, 1, 0]
+    ]),
+}
+
+respostas = {
+    nome: correlacao_2d(imagem_cinza, kernel, padding=1)
+    for nome, kernel in kernels.items()
+}
+
+fig, eixos = plt.subplots(1, 5, figsize=(15, 3))
+eixos[0].imshow(imagem_cinza, cmap=&quot;gray&quot;)
+eixos[0].set_title(&quot;imagem original&quot;)
+for eixo, (nome, resposta) in zip(eixos[1:], respostas.items()):
+    eixo.imshow(resposta, cmap=&quot;gray&quot;)
+    eixo.set_title(nome, fontsize=9)
+for eixo in eixos:
+    eixo.axis(&quot;off&quot;)
+fig.suptitle(&quot;A escolha dos números do kernel determina a resposta&quot;)
+plt.tight_layout()</code></pre>
+<figure class="vision-figure"><img src="../imagens/notebooks/01-convolucao-03.png" loading="lazy" width="1639" height="298" alt="3. Kernels clássicos em uma imagem real — resultado da execução"><figcaption>3. Kernels clássicos em uma imagem real — resultado da execução</figcaption></figure>
+</div>
+<h5>Widget: troque o kernel e compare a matriz com a resposta</h5>
+<div class="vision-cell" data-cell="16"><p class="vision-cell-label">Código · célula 9</p>
+<pre class="vision-code"><code class="language-python">def mostrar_kernel(nome: str = &quot;média (suaviza)&quot;) -&gt; None:
+    kernel = kernels[nome]
+    fig, eixos = plt.subplots(1, 3, figsize=(10, 3))
+    eixos[0].imshow(imagem_cinza, cmap=&quot;gray&quot;)
+    eixos[0].set_title(&quot;entrada&quot;)
+    eixos[1].imshow(kernel, cmap=&quot;coolwarm&quot;)
+    for (linha, coluna), valor in np.ndenumerate(kernel):
+        eixos[1].text(coluna, linha, f&quot;{valor:g}&quot;, ha=&quot;center&quot;, va=&quot;center&quot;)
+    eixos[1].set_title(&quot;kernel&quot;)
+    eixos[2].imshow(respostas[nome], cmap=&quot;gray&quot;)
+    eixos[2].set_title(&quot;resposta&quot;)
+    for eixo in eixos:
+        eixo.axis(&quot;off&quot;)
+    fig.suptitle(nome)
+    plt.tight_layout()
+    plt.show()
+
+controle_kernel = widgets.interactive(
+    mostrar_kernel,
+    nome=widgets.Dropdown(options=list(kernels), value=&quot;média (suaviza)&quot;),
+)
+display(controle_kernel)</code></pre>
+<p class="vision-widget-note">Este controle Python funciona ao executar o notebook no Jupyter. As figuras desta página mostram os resultados salvos; a demonstração no início do capítulo permite experimentar no navegador.</p>
+</div>
+<h4>Checagem e pr&#243;ximos passos</h4><ul>
+<li>A saída 2D calculada à mão concorda com a fórmula de tamanho.</li>
+<li>Padding controla a borda; stride controla quantas posições avaliamos.</li>
+<li>Média, Sobel e Laplaciano fazem operações diferentes porque seus números são diferentes.</li>
+<li>Em uma CNN, a operação é a mesma, mas os valores dos kernels são aprendidos a partir dos exemplos.</li>
+</ul>
+<p>No próximo notebook, uma rede densa e uma CNN receberão exatamente as mesmas partições do MNIST. Isso permite comparar os modelos sem misturar a diferença de arquitetura com uma diferença nos dados.</p>
+
+<p><a class="vision-download" href="../notebooks/01-convolucao.ipynb" download>Baixar esta prática como notebook (.ipynb)</a></p></article>
+<!-- notebook:01-convolucao:fim --></section><section class="lesson-section" id="aprendizado" aria-labelledby="aprendizado-title"><h2 id="aprendizado-title">3.2 O que uma rede aprende</h2><p>Um neurônio calcula uma soma ponderada e aplica uma função de ativação:</p><p>\[z=\sum_i w_i x_i+b\]</p><p>\[a=\max(0,z)\ \text{(ReLU)}\]</p><p>Os pesos w e o bias b são parâmetros aprendidos. A função de perda compara a previsão com o rótulo. O gradiente informa como pequenas mudanças nos parâmetros alteram a perda; o otimizador usa essa informação para atualizá-los.</p><p>Um <strong>lote</strong> reúne exemplos para uma atualização. Uma <strong>época</strong> percorre uma vez os exemplos de treinamento. Validação ajuda a escolher decisões; teste fica separado para a avaliação final. Melhorar no treino e piorar na validação é um sinal de memorização excessiva, ou <em>overfitting</em>.</p><p>Na rede densa, cada unidade combina toda a entrada anterior. Na CNN, um mesmo kernel atua em várias posições: isso compartilha parâmetros e explora vizinhanças. Pooling resume regiões. Nenhuma dessas operações garante reconhecer objetos fora dos dados estudados.</p></section><section class="lesson-section" id="mnist" aria-labelledby="mnist-title"><h2 id="mnist-title">3.3 MNIST: rede densa versus CNN</h2><p>O MNIST contém imagens de dígitos em tons de cinza, de 28×28 pixels. A comparação começa com a mesma normalização e as mesmas partições de dados:</p><div class="table-scroll"><table class="value-table"><thead><tr><th>Rede densa</th><th>CNN</th></tr></thead><tbody><tr><td>Achata a imagem em uma lista</td><td>Conserva a organização espacial na entrada</td></tr><tr><td>Dense + ativação + saída de 10 classes</td><td>Convolução + pooling + saída de 10 classes</td></tr><tr><td>Pesos próprios para cada conexão</td><td>Kernels compartilhados entre posições</td></tr></tbody></table></div><p>Treinamos com o mesmo orçamento de épocas e mostramos o número de parâmetros. Isso não torna as arquiteturas equivalentes em capacidade ou custo. Compare perda, acurácia e os erros concretos; não escolha a vencedora antes de executar.</p><!-- notebook:02-mnist-densa-cnn:inicio -->
+<article class="vision-notebook" data-notebook="02-mnist-densa-cnn">
+<p class="vision-notebook-intro">A prática completa está abaixo: explicação, código e resultados da execução.</p>
+<h3>2 &#8212; MNIST: rede densa e CNN sob as mesmas condi&#231;&#245;es</h3><p><strong>Pergunta.</strong> O que muda quando uma rede que ignora a vizinhança dos pixels é substituída por uma rede convolucional?</p>
+<p>Vamos treinar dois modelos pequenos com <strong>a mesma semente, os mesmos 12.000 exemplos de treino, os mesmos 2.000 de validação, o teste oficial com 10.000 imagens e 3 épocas</strong>. O objetivo é uma comparação didática controlada, não um recorde.</p>
+<p>Referências: <a href="https://keras.io/examples/vision/mnist_convnet/">Keras — exemplo MNIST convnet</a> e <a href="https://www.tensorflow.org/tutorials/quickstart/beginner">TensorFlow — quickstart para iniciantes</a>.</p>
+
+<h4>1. Preparar dados e parti&#231;&#245;es</h4><p>O MNIST possui dígitos 28×28 em tons de cinza. Dividimos somente o conjunto oficial de treino em treino e validação; o teste oficial permanece separado até a avaliação final. Dividir por uma permutação fixa torna a experiência reproduzível.</p>
+
+<div class="vision-cell" data-cell="2"><p class="vision-cell-label">Código · célula 1</p>
+<pre class="vision-code"><code class="language-python">import os
+os.environ[&quot;TF_CPP_MIN_LOG_LEVEL&quot;] = &quot;2&quot;
+os.environ[&quot;OMP_NUM_THREADS&quot;] = &quot;2&quot;
+
+import matplotlib.pyplot as plt
+import numpy as np
+import tensorflow as tf
+
+tf.keras.utils.set_random_seed(42)
+tf.config.threading.set_intra_op_parallelism_threads(2)
+tf.config.threading.set_inter_op_parallelism_threads(2)
+
+plt.rcParams.update({
+    &quot;figure.figsize&quot;: (9, 4),
+    &quot;figure.dpi&quot;: 110,
+    &quot;axes.spines.top&quot;: False,
+    &quot;axes.spines.right&quot;: False,
+    &quot;axes.grid&quot;: True,
+    &quot;grid.alpha&quot;: 0.2,
+})
+
+print(&quot;TensorFlow&quot;, tf.__version__)</code></pre>
+<details class="vision-environment"><summary>Mensagens do ambiente da execução</summary><pre class="vision-code vision-output">WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1789564555.947223 1664735 port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+I0000 00:00:1789564555.947484 1664735 cudart_stub.cc:31] Could not find cuda drivers on your machine, GPU will not be used.
+</pre></details>
+<pre class="vision-code vision-output">TensorFlow 2.21.0
+</pre>
+<details class="vision-environment"><summary>Mensagens do ambiente da execução</summary><pre class="vision-code vision-output">WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1789564556.559712 1664735 port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+I0000 00:00:1789564556.559876 1664735 cudart_stub.cc:31] Could not find cuda drivers on your machine, GPU will not be used.
+</pre></details>
+</div>
+<div class="vision-cell" data-cell="3"><p class="vision-cell-label">Código · célula 2</p>
+<pre class="vision-code"><code class="language-python">(x_dev, y_dev), (x_teste, y_teste) = tf.keras.datasets.mnist.load_data()
+
+rng = np.random.default_rng(42)
+indices = rng.permutation(len(x_dev))
+indices_treino = indices[:12_000]
+indices_validacao = indices[12_000:14_000]
+
+x_treino = x_dev[indices_treino].astype(&quot;float32&quot;) / 255.0
+y_treino = y_dev[indices_treino]
+x_validacao = x_dev[indices_validacao].astype(&quot;float32&quot;) / 255.0
+y_validacao = y_dev[indices_validacao]
+x_teste = x_teste.astype(&quot;float32&quot;) / 255.0
+
+# Canal explícito: (altura, largura, canais).
+x_treino_cnn = x_treino[..., np.newaxis]
+x_validacao_cnn = x_validacao[..., np.newaxis]
+x_teste_cnn = x_teste[..., np.newaxis]
+
+assert set(indices_treino).isdisjoint(indices_validacao)
+print(f&quot;treino:    {len(x_treino):&gt;5} imagens&quot;)
+print(f&quot;validação: {len(x_validacao):&gt;5} imagens&quot;)
+print(f&quot;teste:     {len(x_teste):&gt;5} imagens&quot;)</code></pre>
+<pre class="vision-code vision-output">treino:    12000 imagens
+validação:  2000 imagens
+teste:     10000 imagens
+</pre>
+</div>
+<div class="vision-cell" data-cell="4"><p class="vision-cell-label">Código · célula 3</p>
+<pre class="vision-code"><code class="language-python">fig, eixos = plt.subplots(2, 5, figsize=(8, 4))
+for eixo, imagem, rotulo in zip(eixos.flat, x_treino[:10], y_treino[:10]):
+    eixo.imshow(imagem, cmap=&quot;gray&quot;)
+    eixo.set_title(f&quot;rótulo: {rotulo}&quot;)
+    eixo.axis(&quot;off&quot;)
+fig.suptitle(&quot;Amostras do conjunto de treino&quot;)
+plt.tight_layout()</code></pre>
+<figure class="vision-figure"><img src="../imagens/notebooks/02-mnist-densa-cnn-01.png" loading="lazy" width="869" height="423" alt="1. Preparar dados e partições — resultado da execução"><figcaption>1. Preparar dados e partições — resultado da execução</figcaption></figure>
+</div>
+<h4>2. Modelo denso</h4><p><code>Flatten</code> transforma 28×28 pixels em um vetor de 784 números. Cada neurônio denso aprende um peso para cada entrada e um <em>bias</em>. A ativação ReLU mantém respostas positivas; a camada final usa <code>softmax</code> para produzir dez probabilidades que somam 1.</p>
+<p>A perda <code>sparse_categorical_crossentropy</code> mede quão pouca probabilidade o modelo deu à classe correta. O otimizador Adam usa o gradiente dessa perda para atualizar pesos e biases. Uma <strong>época</strong> é uma passagem pelo conjunto; um <strong>lote</strong> é o grupo usado em cada atualização.</p>
+
+<div class="vision-cell" data-cell="6"><p class="vision-cell-label">Código · célula 4</p>
+<pre class="vision-code"><code class="language-python">modelo_denso = tf.keras.Sequential([
+    tf.keras.layers.Input(shape=(28, 28)),
+    tf.keras.layers.Flatten(),
+    tf.keras.layers.Dense(64, activation=&quot;relu&quot;),
+    tf.keras.layers.Dense(10, activation=&quot;softmax&quot;),
+], name=&quot;rede_densa&quot;)
+modelo_denso.summary()</code></pre>
+<details class="vision-environment"><summary>Mensagens do ambiente da execução</summary><pre class="vision-code vision-output">E0000 00:00:1789564557.077626 1664735 cuda_executor.cc:1737] INTERNAL: CUDA Runtime error: Failed call to cudaGetRuntimeVersion: Error loading CUDA libraries. GPU will not be used.: Error loading CUDA libraries. GPU will not be used.
+</pre></details>
+<pre class="vision-code vision-output">Model: &quot;rede_densa&quot;
+</pre>
+<pre class="vision-code vision-output">┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━┓
+┃ Layer (type)                    ┃ Output Shape           ┃       Param # ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━┩
+│ flatten (Flatten)               │ (None, 784)            │             0 │
+├─────────────────────────────────┼────────────────────────┼───────────────┤
+│ dense (Dense)                   │ (None, 64)             │        50,240 │
+├─────────────────────────────────┼────────────────────────┼───────────────┤
+│ dense_1 (Dense)                 │ (None, 10)             │           650 │
+└─────────────────────────────────┴────────────────────────┴───────────────┘
+</pre>
+<pre class="vision-code vision-output"> Total params: 50,890 (198.79 KB)
+</pre>
+<pre class="vision-code vision-output"> Trainable params: 50,890 (198.79 KB)
+</pre>
+<pre class="vision-code vision-output"> Non-trainable params: 0 (0.00 B)
+</pre>
+</div>
+<div class="vision-cell" data-cell="7"><p class="vision-cell-label">Código · célula 5</p>
+<pre class="vision-code"><code class="language-python">modelo_denso.compile(
+    optimizer=&quot;adam&quot;,
+    loss=&quot;sparse_categorical_crossentropy&quot;,
+    metrics=[&quot;accuracy&quot;],
+)</code></pre>
+</div>
+<div class="vision-cell" data-cell="8"><p class="vision-cell-label">Código · célula 6</p>
+<pre class="vision-code"><code class="language-python">historia_densa = modelo_denso.fit(
+    x_treino,
+    y_treino,
+    validation_data=(x_validacao, y_validacao),
+    epochs=3,
+    batch_size=128,
+    verbose=2,
+)</code></pre>
+<pre class="vision-code vision-output">Epoch 1/3
+</pre>
+<pre class="vision-code vision-output">94/94 - 0s - 4ms/step - accuracy: 0.7628 - loss: 0.8965 - val_accuracy: 0.8855 - val_loss: 0.4204
+</pre>
+<pre class="vision-code vision-output">Epoch 2/3
+</pre>
+<pre class="vision-code vision-output">94/94 - 0s - 1ms/step - accuracy: 0.9023 - loss: 0.3690 - val_accuracy: 0.9095 - val_loss: 0.3234
+</pre>
+<pre class="vision-code vision-output">Epoch 3/3
+</pre>
+<pre class="vision-code vision-output">94/94 - 0s - 1ms/step - accuracy: 0.9197 - loss: 0.2967 - val_accuracy: 0.9195 - val_loss: 0.2841
+</pre>
+</div>
+<h4>3. Modelo convolucional</h4><p>Uma <code>Conv2D</code> reaproveita o mesmo kernel em todas as posições. Esse compartilhamento de parâmetros preserva a estrutura espacial e costuma ser apropriado para imagens. <code>MaxPooling2D</code> reduz altura e largura, mantendo a maior resposta de cada região 2×2.</p>
+
+<div class="vision-cell" data-cell="10"><p class="vision-cell-label">Código · célula 7</p>
+<pre class="vision-code"><code class="language-python">modelo_cnn = tf.keras.Sequential([
+    tf.keras.layers.Input(shape=(28, 28, 1)),
+    tf.keras.layers.Conv2D(16, 3, activation=&quot;relu&quot;, name=&quot;conv1&quot;),
+    tf.keras.layers.MaxPooling2D(),
+    tf.keras.layers.Conv2D(32, 3, activation=&quot;relu&quot;, name=&quot;conv2&quot;),
+    tf.keras.layers.MaxPooling2D(),
+    tf.keras.layers.Flatten(),
+    tf.keras.layers.Dense(32, activation=&quot;relu&quot;),
+    tf.keras.layers.Dense(10, activation=&quot;softmax&quot;),
+], name=&quot;cnn_pequena&quot;)
+modelo_cnn.summary()</code></pre>
+<pre class="vision-code vision-output">Model: &quot;cnn_pequena&quot;
+</pre>
+<pre class="vision-code vision-output">┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━┓
+┃ Layer (type)                    ┃ Output Shape           ┃       Param # ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━┩
+│ conv1 (Conv2D)                  │ (None, 26, 26, 16)     │           160 │
+├─────────────────────────────────┼────────────────────────┼───────────────┤
+│ max_pooling2d (MaxPooling2D)    │ (None, 13, 13, 16)     │             0 │
+├─────────────────────────────────┼────────────────────────┼───────────────┤
+│ conv2 (Conv2D)                  │ (None, 11, 11, 32)     │         4,640 │
+├─────────────────────────────────┼────────────────────────┼───────────────┤
+│ max_pooling2d_1 (MaxPooling2D)  │ (None, 5, 5, 32)       │             0 │
+├─────────────────────────────────┼────────────────────────┼───────────────┤
+│ flatten_1 (Flatten)             │ (None, 800)            │             0 │
+├─────────────────────────────────┼────────────────────────┼───────────────┤
+│ dense_2 (Dense)                 │ (None, 32)             │        25,632 │
+├─────────────────────────────────┼────────────────────────┼───────────────┤
+│ dense_3 (Dense)                 │ (None, 10)             │           330 │
+└─────────────────────────────────┴────────────────────────┴───────────────┘
+</pre>
+<pre class="vision-code vision-output"> Total params: 30,762 (120.16 KB)
+</pre>
+<pre class="vision-code vision-output"> Trainable params: 30,762 (120.16 KB)
+</pre>
+<pre class="vision-code vision-output"> Non-trainable params: 0 (0.00 B)
+</pre>
+</div>
+<div class="vision-cell" data-cell="11"><p class="vision-cell-label">Código · célula 8</p>
+<pre class="vision-code"><code class="language-python">modelo_cnn.compile(
+    optimizer=&quot;adam&quot;,
+    loss=&quot;sparse_categorical_crossentropy&quot;,
+    metrics=[&quot;accuracy&quot;],
+)</code></pre>
+</div>
+<div class="vision-cell" data-cell="12"><p class="vision-cell-label">Código · célula 9</p>
+<pre class="vision-code"><code class="language-python">historia_cnn = modelo_cnn.fit(
+    x_treino_cnn,
+    y_treino,
+    validation_data=(x_validacao_cnn, y_validacao),
+    epochs=3,
+    batch_size=128,
+    verbose=2,
+)</code></pre>
+<pre class="vision-code vision-output">Epoch 1/3
+</pre>
+<pre class="vision-code vision-output">94/94 - 1s - 10ms/step - accuracy: 0.7507 - loss: 0.9251 - val_accuracy: 0.9090 - val_loss: 0.3059
+</pre>
+<pre class="vision-code vision-output">Epoch 2/3
+</pre>
+<pre class="vision-code vision-output">94/94 - 0s - 5ms/step - accuracy: 0.9302 - loss: 0.2405 - val_accuracy: 0.9440 - val_loss: 0.1803
+</pre>
+<pre class="vision-code vision-output">Epoch 3/3
+</pre>
+<pre class="vision-code vision-output">94/94 - 0s - 5ms/step - accuracy: 0.9533 - loss: 0.1577 - val_accuracy: 0.9595 - val_loss: 0.1397
+</pre>
+</div>
+<h4>4. Curvas e teste final</h4>
+<div class="vision-cell" data-cell="14"><p class="vision-cell-label">Código · célula 10</p>
+<pre class="vision-code"><code class="language-python">cores = {&quot;densa&quot;: &quot;#0072B2&quot;, &quot;cnn&quot;: &quot;#E69F00&quot;}
+fig, eixos = plt.subplots(1, 2, figsize=(10, 4))
+for nome, historia in [(&quot;densa&quot;, historia_densa), (&quot;cnn&quot;, historia_cnn)]:
+    epocas = range(1, 4)
+    eixos[0].plot(epocas, historia.history[&quot;loss&quot;], &quot;o-&quot;, color=cores[nome], label=f&quot;{nome}: treino&quot;)
+    eixos[0].plot(epocas, historia.history[&quot;val_loss&quot;], &quot;--&quot;, color=cores[nome], label=f&quot;{nome}: validação&quot;)
+    eixos[1].plot(epocas, historia.history[&quot;accuracy&quot;], &quot;o-&quot;, color=cores[nome], label=f&quot;{nome}: treino&quot;)
+    eixos[1].plot(epocas, historia.history[&quot;val_accuracy&quot;], &quot;--&quot;, color=cores[nome], label=f&quot;{nome}: validação&quot;)
+eixos[0].set(title=&quot;Perda por época&quot;, xlabel=&quot;época&quot;, ylabel=&quot;entropia cruzada&quot;)
+eixos[1].set(title=&quot;Acurácia por época&quot;, xlabel=&quot;época&quot;, ylabel=&quot;acurácia&quot;, ylim=(0.75, 1.0))
+for eixo in eixos:
+    eixo.legend(fontsize=8)
+plt.tight_layout()</code></pre>
+<figure class="vision-figure"><img src="../imagens/notebooks/02-mnist-densa-cnn-02.png" loading="lazy" width="1089" height="429" alt="4. Curvas e teste final — resultado da execução"><figcaption>4. Curvas e teste final — resultado da execução</figcaption></figure>
+</div>
+<div class="vision-cell" data-cell="15"><p class="vision-cell-label">Código · célula 11</p>
+<pre class="vision-code"><code class="language-python">perda_densa, acc_densa = modelo_denso.evaluate(x_teste, y_teste, verbose=0)
+perda_cnn, acc_cnn = modelo_cnn.evaluate(x_teste_cnn, y_teste, verbose=0)
+print(f&quot;Densa — parâmetros: {modelo_denso.count_params():,}; teste: perda={perda_densa:.4f}, acurácia={acc_densa:.4f}&quot;)
+print(f&quot;CNN   — parâmetros: {modelo_cnn.count_params():,}; teste: perda={perda_cnn:.4f}, acurácia={acc_cnn:.4f}&quot;)
+diferenca = 100 * (acc_cnn - acc_densa)
+print(f&quot;Diferença observada nesta execução (CNN − densa): {diferenca:+.2f} ponto(s) percentual(is).&quot;)
+print(&quot;Essa diferença é uma observação deste recorte, semente e orçamento — não uma garantia universal.&quot;)</code></pre>
+<pre class="vision-code vision-output">Densa — parâmetros: 50,890; teste: perda=0.2801, acurácia=0.9188
+CNN   — parâmetros: 30,762; teste: perda=0.1313, acurácia=0.9625
+Diferença observada nesta execução (CNN − densa): +4.37 ponto(s) percentual(is).
+Essa diferença é uma observação deste recorte, semente e orçamento — não uma garantia universal.
+</pre>
+</div>
+<h4>5. Onde os modelos erram?</h4><p>Acurácia resume o conjunto, mas não explica casos individuais. Vamos olhar erros da CNN; exemplos ambíguos mostram por que uma previsão errada não significa necessariamente um erro de programação.</p>
+
+<div class="vision-cell" data-cell="17"><p class="vision-cell-label">Código · célula 12</p>
+<pre class="vision-code"><code class="language-python">probabilidades = modelo_cnn.predict(x_teste_cnn, verbose=0)
+previstos = probabilidades.argmax(axis=1)
+erros = np.flatnonzero(previstos != y_teste)[:12]
+
+fig, eixos = plt.subplots(3, 4, figsize=(9, 7))
+for eixo, indice in zip(eixos.flat, erros):
+    eixo.imshow(x_teste[indice], cmap=&quot;gray&quot;)
+    eixo.set_title(
+        f&quot;real {y_teste[indice]} · previsto {previstos[indice]}\n&quot;
+        f&quot;confiança {probabilidades[indice, previstos[indice]]:.0%}&quot;,
+        fontsize=9,
+    )
+    eixo.axis(&quot;off&quot;)
+fig.suptitle(&quot;Primeiros erros da CNN no teste&quot;)
+plt.tight_layout()</code></pre>
+<figure class="vision-figure"><img src="../imagens/notebooks/02-mnist-densa-cnn-03.png" loading="lazy" width="942" height="760" alt="5. Onde os modelos erram? — resultado da execução"><figcaption>5. Onde os modelos erram? — resultado da execução</figcaption></figure>
+</div>
+<h4>6. Kernels aprendidos e mapas de caracter&#237;sticas</h4><p>Cada filtro da primeira camada possui 3×3 pesos. A imagem de ativação mostra onde aquele filtro respondeu para um dígito. Não devemos dar um significado humano rígido a cada filtro; a visualização mostra padrões de resposta, não uma explicação completa da decisão.</p>
+
+<div class="vision-cell" data-cell="19"><p class="vision-cell-label">Código · célula 13</p>
+<pre class="vision-code"><code class="language-python">pesos = modelo_cnn.get_layer(&quot;conv1&quot;).get_weights()[0]
+fig, eixos = plt.subplots(4, 4, figsize=(7, 7))
+limite = np.abs(pesos).max()
+for filtro, eixo in enumerate(eixos.flat):
+    eixo.imshow(pesos[:, :, 0, filtro], cmap=&quot;coolwarm&quot;, vmin=-limite, vmax=limite)
+    eixo.set_title(f&quot;filtro {filtro}&quot;, fontsize=8)
+    eixo.axis(&quot;off&quot;)
+fig.suptitle(&quot;16 kernels 3×3 aprendidos na primeira camada&quot;)
+plt.tight_layout()</code></pre>
+<figure class="vision-figure"><img src="../imagens/notebooks/02-mnist-densa-cnn-04.png" loading="lazy" width="730" height="760" alt="6. Kernels aprendidos e mapas de características — resultado da execução"><figcaption>6. Kernels aprendidos e mapas de características — resultado da execução</figcaption></figure>
+</div>
+<div class="vision-cell" data-cell="20"><p class="vision-cell-label">Código · célula 14</p>
+<pre class="vision-code"><code class="language-python">extrator = tf.keras.Model(
+    inputs=modelo_cnn.inputs,
+    outputs=modelo_cnn.get_layer(&quot;conv1&quot;).output,
+)
+exemplo = x_teste_cnn[0:1]
+mapas = extrator.predict(exemplo, verbose=0)[0]
+
+fig, eixos = plt.subplots(4, 4, figsize=(7, 7))
+for filtro, eixo in enumerate(eixos.flat):
+    eixo.imshow(mapas[:, :, filtro], cmap=&quot;magma&quot;)
+    eixo.set_title(f&quot;mapa {filtro}&quot;, fontsize=8)
+    eixo.axis(&quot;off&quot;)
+fig.suptitle(f&quot;Respostas da primeira camada ao dígito {y_teste[0]}&quot;)
+plt.tight_layout()</code></pre>
+<figure class="vision-figure"><img src="../imagens/notebooks/02-mnist-densa-cnn-05.png" loading="lazy" width="731" height="760" alt="6. Kernels aprendidos e mapas de características — resultado da execução"><figcaption>6. Kernels aprendidos e mapas de características — resultado da execução</figcaption></figure>
+</div>
+<h4>S&#237;ntese</h4><ul>
+<li>A comparação usou dados e orçamento idênticos; apenas a arquitetura mudou.</li>
+<li>A rede densa conecta cada pixel a cada neurônio e perde a organização 2D após <code>Flatten</code>.</li>
+<li>A CNN compartilha kernels pelo campo visual e produz mapas de características.</li>
+<li>Os números do teste descrevem esta execução. Outra semente, amostra, arquitetura ou orçamento pode mudar a ordem dos modelos.</li>
+</ul>
+<p><strong>Experiência sugerida:</strong> aumente o recorte de treino sem tocar no teste e observe se a diferença entre treino e validação diminui.</p>
+
+<p><a class="vision-download" href="../notebooks/02-mnist-densa-cnn.ipynb" download>Baixar esta prática como notebook (.ipynb)</a></p></article>
+<!-- notebook:02-mnist-densa-cnn:fim --><p><strong>Investigue:</strong> quais pares de dígitos confundem as redes? Os filtros aprendidos lembram bordas? É uma observação a fazer, não uma propriedade garantida de todo kernel.</p></section><section class="lesson-section" id="fashion" aria-labelledby="fashion-title"><h2 id="fashion-title">3.4 Fashion-MNIST: as roupas confundem mais?</h2><p>As imagens continuam com 28×28 pixels em cinza, mas agora os rótulos são categorias de roupas. Mantemos uma CNN pequena para observar como mudar os dados altera o problema. Camiseta e camisa podem compartilhar silhuetas; o erro tem uma interpretação visual.</p><!-- notebook:03-fashion-mnist:inicio -->
+<article class="vision-notebook" data-notebook="03-fashion-mnist">
+<p class="vision-notebook-intro">A prática completa está abaixo: explicação, código e resultados da execução.</p>
+<h3>3 &#8212; Fashion-MNIST: classificar pe&#231;as de roupa com uma CNN</h3><p><strong>Objetivo.</strong> Reutilizar uma CNN pequena em um problema visual mais ambíguo que dígitos. Usaremos 12.000 imagens para treino, 2.000 para validação, as 10.000 imagens oficiais de teste e 3 épocas.</p>
+<p>O fluxo segue o tutorial oficial <a href="https://www.tensorflow.org/tutorials/keras/classification">Classificação básica: roupas</a>, com um recorte menor e uma CNN explícita para execução didática rápida.</p>
+
+<h4>1. Dados, classes e parti&#231;&#245;es</h4>
+<div class="vision-cell" data-cell="2"><p class="vision-cell-label">Código · célula 1</p>
+<pre class="vision-code"><code class="language-python">import os
+os.environ[&quot;TF_CPP_MIN_LOG_LEVEL&quot;] = &quot;2&quot;
+os.environ[&quot;OMP_NUM_THREADS&quot;] = &quot;2&quot;
+
+import matplotlib.pyplot as plt
+import numpy as np
+import tensorflow as tf
+
+tf.keras.utils.set_random_seed(42)
+tf.config.threading.set_intra_op_parallelism_threads(2)
+tf.config.threading.set_inter_op_parallelism_threads(2)
+
+plt.rcParams.update({
+    &quot;figure.figsize&quot;: (9, 4),
+    &quot;figure.dpi&quot;: 110,
+    &quot;axes.spines.top&quot;: False,
+    &quot;axes.spines.right&quot;: False,
+    &quot;axes.grid&quot;: True,
+    &quot;grid.alpha&quot;: 0.2,
+})
+
+print(&quot;TensorFlow&quot;, tf.__version__)</code></pre>
+<details class="vision-environment"><summary>Mensagens do ambiente da execução</summary><pre class="vision-code vision-output">WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1789564563.360928 1666173 port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+I0000 00:00:1789564563.361189 1666173 cudart_stub.cc:31] Could not find cuda drivers on your machine, GPU will not be used.
+</pre></details>
+<pre class="vision-code vision-output">TensorFlow 2.21.0
+</pre>
+<details class="vision-environment"><summary>Mensagens do ambiente da execução</summary><pre class="vision-code vision-output">WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1789564563.984318 1666173 port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+I0000 00:00:1789564563.984461 1666173 cudart_stub.cc:31] Could not find cuda drivers on your machine, GPU will not be used.
+</pre></details>
+</div>
+<div class="vision-cell" data-cell="3"><p class="vision-cell-label">Código · célula 2</p>
+<pre class="vision-code"><code class="language-python">nomes_classes = [
+    &quot;camiseta/top&quot;, &quot;calça&quot;, &quot;suéter&quot;, &quot;vestido&quot;, &quot;casaco&quot;,
+    &quot;sandália&quot;, &quot;camisa&quot;, &quot;tênis&quot;, &quot;bolsa&quot;, &quot;bota&quot;,
+]
+(x_dev, y_dev), (x_teste, y_teste) = tf.keras.datasets.fashion_mnist.load_data()
+
+rng = np.random.default_rng(42)
+indices = rng.permutation(len(x_dev))
+indices_treino = indices[:12_000]
+indices_validacao = indices[12_000:14_000]
+
+x_treino = x_dev[indices_treino].astype(&quot;float32&quot;) / 255.0
+y_treino = y_dev[indices_treino]
+x_validacao = x_dev[indices_validacao].astype(&quot;float32&quot;) / 255.0
+y_validacao = y_dev[indices_validacao]
+x_teste = x_teste.astype(&quot;float32&quot;) / 255.0
+
+x_treino = x_treino[..., np.newaxis]
+x_validacao = x_validacao[..., np.newaxis]
+x_teste = x_teste[..., np.newaxis]
+
+assert set(indices_treino).isdisjoint(indices_validacao)
+print(f&quot;treino: {len(x_treino)} · validação: {len(x_validacao)} · teste: {len(x_teste)}&quot;)</code></pre>
+<pre class="vision-code vision-output">treino: 12000 · validação: 2000 · teste: 10000
+</pre>
+</div>
+<div class="vision-cell" data-cell="4"><p class="vision-cell-label">Código · célula 3</p>
+<pre class="vision-code"><code class="language-python">fig, eixos = plt.subplots(2, 5, figsize=(9, 4))
+for eixo, imagem, rotulo in zip(eixos.flat, x_treino[:10], y_treino[:10]):
+    eixo.imshow(imagem[:, :, 0], cmap=&quot;gray&quot;)
+    eixo.set_title(nomes_classes[rotulo], fontsize=9)
+    eixo.axis(&quot;off&quot;)
+fig.suptitle(&quot;Exemplos do Fashion-MNIST&quot;)
+plt.tight_layout()</code></pre>
+<figure class="vision-figure"><img src="../imagens/notebooks/03-fashion-mnist-01.png" loading="lazy" width="974" height="436" alt="1. Dados, classes e partições — resultado da execução"><figcaption>1. Dados, classes e partições — resultado da execução</figcaption></figure>
+</div>
+<h4>2. CNN pequena</h4><p>A saída possui dez neurônios com <code>softmax</code>, um por classe. Assim como no MNIST, a perda compara a distribuição prevista com o rótulo correto. O modelo é pequeno e treinado do zero; não usamos transferência de aprendizado nem callbacks avançados.</p>
+
+<div class="vision-cell" data-cell="6"><p class="vision-cell-label">Código · célula 4</p>
+<pre class="vision-code"><code class="language-python">modelo = tf.keras.Sequential([
+    tf.keras.layers.Input(shape=(28, 28, 1)),
+    tf.keras.layers.Conv2D(16, 3, activation=&quot;relu&quot;),
+    tf.keras.layers.MaxPooling2D(),
+    tf.keras.layers.Conv2D(32, 3, activation=&quot;relu&quot;),
+    tf.keras.layers.MaxPooling2D(),
+    tf.keras.layers.Flatten(),
+    tf.keras.layers.Dense(32, activation=&quot;relu&quot;),
+    tf.keras.layers.Dense(10, activation=&quot;softmax&quot;),
+], name=&quot;cnn_fashion_mnist&quot;)
+modelo.summary()</code></pre>
+<details class="vision-environment"><summary>Mensagens do ambiente da execução</summary><pre class="vision-code vision-output">E0000 00:00:1789564564.590532 1666173 cuda_executor.cc:1737] INTERNAL: CUDA Runtime error: Failed call to cudaGetRuntimeVersion: Error loading CUDA libraries. GPU will not be used.: Error loading CUDA libraries. GPU will not be used.
+</pre></details>
+<pre class="vision-code vision-output">Model: &quot;cnn_fashion_mnist&quot;
+</pre>
+<pre class="vision-code vision-output">┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━┓
+┃ Layer (type)                    ┃ Output Shape           ┃       Param # ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━┩
+│ conv2d (Conv2D)                 │ (None, 26, 26, 16)     │           160 │
+├─────────────────────────────────┼────────────────────────┼───────────────┤
+│ max_pooling2d (MaxPooling2D)    │ (None, 13, 13, 16)     │             0 │
+├─────────────────────────────────┼────────────────────────┼───────────────┤
+│ conv2d_1 (Conv2D)               │ (None, 11, 11, 32)     │         4,640 │
+├─────────────────────────────────┼────────────────────────┼───────────────┤
+│ max_pooling2d_1 (MaxPooling2D)  │ (None, 5, 5, 32)       │             0 │
+├─────────────────────────────────┼────────────────────────┼───────────────┤
+│ flatten (Flatten)               │ (None, 800)            │             0 │
+├─────────────────────────────────┼────────────────────────┼───────────────┤
+│ dense (Dense)                   │ (None, 32)             │        25,632 │
+├─────────────────────────────────┼────────────────────────┼───────────────┤
+│ dense_1 (Dense)                 │ (None, 10)             │           330 │
+└─────────────────────────────────┴────────────────────────┴───────────────┘
+</pre>
+<pre class="vision-code vision-output"> Total params: 30,762 (120.16 KB)
+</pre>
+<pre class="vision-code vision-output"> Trainable params: 30,762 (120.16 KB)
+</pre>
+<pre class="vision-code vision-output"> Non-trainable params: 0 (0.00 B)
+</pre>
+</div>
+<div class="vision-cell" data-cell="7"><p class="vision-cell-label">Código · célula 5</p>
+<pre class="vision-code"><code class="language-python">modelo.compile(
+    optimizer=&quot;adam&quot;,
+    loss=&quot;sparse_categorical_crossentropy&quot;,
+    metrics=[&quot;accuracy&quot;],
+)</code></pre>
+</div>
+<div class="vision-cell" data-cell="8"><p class="vision-cell-label">Código · célula 6</p>
+<pre class="vision-code"><code class="language-python">historia = modelo.fit(
+    x_treino,
+    y_treino,
+    validation_data=(x_validacao, y_validacao),
+    epochs=3,
+    batch_size=128,
+    verbose=2,
+)</code></pre>
+<pre class="vision-code vision-output">Epoch 1/3
+</pre>
+<pre class="vision-code vision-output">94/94 - 1s - 10ms/step - accuracy: 0.5681 - loss: 1.2232 - val_accuracy: 0.7380 - val_loss: 0.7420
+</pre>
+<pre class="vision-code vision-output">Epoch 2/3
+</pre>
+<pre class="vision-code vision-output">94/94 - 0s - 5ms/step - accuracy: 0.7708 - loss: 0.6304 - val_accuracy: 0.7620 - val_loss: 0.6450
+</pre>
+<pre class="vision-code vision-output">Epoch 3/3
+</pre>
+<pre class="vision-code vision-output">94/94 - 0s - 5ms/step - accuracy: 0.7971 - loss: 0.5508 - val_accuracy: 0.7880 - val_loss: 0.5695
+</pre>
+</div>
+<h4>3. Curvas de aprendizagem e teste</h4>
+<div class="vision-cell" data-cell="10"><p class="vision-cell-label">Código · célula 7</p>
+<pre class="vision-code"><code class="language-python">epocas = range(1, 4)
+fig, eixos = plt.subplots(1, 2, figsize=(10, 4))
+eixos[0].plot(epocas, historia.history[&quot;loss&quot;], &quot;o-&quot;, color=&quot;#0072B2&quot;, label=&quot;treino&quot;)
+eixos[0].plot(epocas, historia.history[&quot;val_loss&quot;], &quot;o--&quot;, color=&quot;#E69F00&quot;, label=&quot;validação&quot;)
+eixos[1].plot(epocas, historia.history[&quot;accuracy&quot;], &quot;o-&quot;, color=&quot;#0072B2&quot;, label=&quot;treino&quot;)
+eixos[1].plot(epocas, historia.history[&quot;val_accuracy&quot;], &quot;o--&quot;, color=&quot;#E69F00&quot;, label=&quot;validação&quot;)
+eixos[0].set(title=&quot;Perda por época&quot;, xlabel=&quot;época&quot;, ylabel=&quot;entropia cruzada&quot;)
+eixos[1].set(title=&quot;Acurácia por época&quot;, xlabel=&quot;época&quot;, ylabel=&quot;acurácia&quot;, ylim=(0.5, 1.0))
+for eixo in eixos:
+    eixo.legend()
+plt.tight_layout()</code></pre>
+<figure class="vision-figure"><img src="../imagens/notebooks/03-fashion-mnist-02.png" loading="lazy" width="1089" height="429" alt="3. Curvas de aprendizagem e teste — resultado da execução"><figcaption>3. Curvas de aprendizagem e teste — resultado da execução</figcaption></figure>
+</div>
+<div class="vision-cell" data-cell="11"><p class="vision-cell-label">Código · célula 8</p>
+<pre class="vision-code"><code class="language-python">perda_teste, acc_teste = modelo.evaluate(x_teste, y_teste, verbose=0)
+print(f&quot;Teste final — perda: {perda_teste:.4f}; acurácia: {acc_teste:.4f}&quot;)
+print(&quot;O teste foi usado somente agora, depois de finalizar o treino.&quot;)</code></pre>
+<pre class="vision-code vision-output">Teste final — perda: 0.5622; acurácia: 0.7931
+O teste foi usado somente agora, depois de finalizar o treino.
+</pre>
+</div>
+<h4>4. Erros e confus&#245;es</h4><p>Algumas classes têm formato parecido em 28×28 pixels: “camiseta/top”, “camisa”, “suéter” e “casaco” podem compartilhar contornos. A matriz de confusão conta a classe real nas linhas e a prevista nas colunas.</p>
+
+<div class="vision-cell" data-cell="13"><p class="vision-cell-label">Código · célula 9</p>
+<pre class="vision-code"><code class="language-python">probabilidades = modelo.predict(x_teste, verbose=0)
+previstos = probabilidades.argmax(axis=1)
+erros = np.flatnonzero(previstos != y_teste)[:12]
+
+fig, eixos = plt.subplots(3, 4, figsize=(10, 7))
+for eixo, indice in zip(eixos.flat, erros):
+    eixo.imshow(x_teste[indice, :, :, 0], cmap=&quot;gray&quot;)
+    eixo.set_title(
+        f&quot;real: {nomes_classes[y_teste[indice]]}\n&quot;
+        f&quot;prev.: {nomes_classes[previstos[indice]]} ({probabilidades[indice, previstos[indice]]:.0%})&quot;,
+        fontsize=8,
+    )
+    eixo.axis(&quot;off&quot;)
+fig.suptitle(&quot;Primeiros erros no conjunto de teste&quot;)
+plt.tight_layout()</code></pre>
+<figure class="vision-figure"><img src="../imagens/notebooks/03-fashion-mnist-03.png" loading="lazy" width="1013" height="760" alt="4. Erros e confusões — resultado da execução"><figcaption>4. Erros e confusões — resultado da execução</figcaption></figure>
+</div>
+<div class="vision-cell" data-cell="14"><p class="vision-cell-label">Código · célula 10</p>
+<pre class="vision-code"><code class="language-python">matriz = np.zeros((10, 10), dtype=int)
+np.add.at(matriz, (y_teste, previstos), 1)
+
+fig, eixo = plt.subplots(figsize=(8, 7))
+imagem = eixo.imshow(matriz, cmap=&quot;Blues&quot;)
+eixo.set(
+    title=&quot;Matriz de confusão no teste&quot;,
+    xlabel=&quot;classe prevista&quot;,
+    ylabel=&quot;classe real&quot;,
+    xticks=range(10),
+    yticks=range(10),
+    xticklabels=nomes_classes,
+    yticklabels=nomes_classes,
+)
+plt.setp(eixo.get_xticklabels(), rotation=45, ha=&quot;right&quot;)
+for linha in range(10):
+    for coluna in range(10):
+        cor = &quot;white&quot; if matriz[linha, coluna] &gt; matriz.max() / 2 else &quot;black&quot;
+        eixo.text(coluna, linha, matriz[linha, coluna], ha=&quot;center&quot;, va=&quot;center&quot;, color=cor, fontsize=7)
+fig.colorbar(imagem, ax=eixo, label=&quot;número de imagens&quot;)
+plt.tight_layout()</code></pre>
+<figure class="vision-figure"><img src="../imagens/notebooks/03-fashion-mnist-04.png" loading="lazy" width="856" height="745" alt="4. Erros e confusões — resultado da execução"><figcaption>4. Erros e confusões — resultado da execução</figcaption></figure>
+</div>
+<h4>S&#237;ntese</h4><ul>
+<li>Treino, validação e teste são conjuntos separados; isso evita escolher o modelo olhando o resultado final.</li>
+<li>A CNN aprende padrões locais, mas 3 épocas e 12.000 imagens impõem um limite deliberado.</li>
+<li>A matriz de confusão revela quais categorias concentram os erros; acurácia sozinha esconde essa estrutura.</li>
+<li>O resultado não demonstra que a arquitetura “entende roupas”: ela aprende regularidades do conjunto Fashion-MNIST.</li>
+</ul>
+<p><strong>Experiência sugerida:</strong> escolha uma dupla frequentemente confundida, filtre apenas essas imagens e compare visualmente bordas e silhuetas.</p>
+
+<p><a class="vision-download" href="../notebooks/03-fashion-mnist.ipynb" download>Baixar esta prática como notebook (.ipynb)</a></p></article>
+<!-- notebook:03-fashion-mnist:fim --><p><strong>Investigue:</strong> a rede perde informação ao reduzir a imagem com pooling? Compare erros entre peças parecidas antes de aumentar o número de camadas.</p></section><section class="lesson-section" id="animais" aria-labelledby="animais-title"><h2 id="animais-title">3.5 Cães e gatos: imagens RGB</h2><p>Fotografias acrescentam canais de cor, fundos e tamanhos diferentes. Redimensionamos as imagens, normalizamos as intensidades e treinamos uma CNN pequena. A saída binária usa uma unidade com sigmoid; a saída de dez classes dos notebooks anteriores usa softmax.</p><p>O notebook usa uma amostra reduzida do conjunto público da Microsoft. O primeiro download é de aproximadamente 825 MB; depois, o arquivo fica no cache local. As imagens reservadas para o teste não entram no ajuste nem na escolha de épocas. Uma rede pode se apoiar no fundo da foto: acertar um dataset não prova que ela reconheceu o conceito de animal em qualquer situação.</p><!-- notebook:04-caes-gatos:inicio -->
+<article class="vision-notebook" data-notebook="04-caes-gatos">
+<p class="vision-notebook-intro">A prática completa está abaixo: explicação, código e resultados da execução.</p>
+<h3>4 &#8212; C&#227;es e gatos: uma CNN pequena com imagens RGB</h3><p><strong>Objetivo.</strong> Treinar do zero uma CNN binária em fotografias reais, entender RGB e redimensionamento, e separar corretamente treino, validação e teste.</p>
+<p>Usaremos o conjunto público <a href="https://www.microsoft.com/en-us/download/details.aspx?id=54765">Kaggle Cats and Dogs, distribuído pela Microsoft</a>. Selecionaremos os mesmos intervalos do recorte didático usado no tutorial oficial do TensorFlow <a href="https://www.tensorflow.org/tutorials/images/transfer_learning">Transfer learning and fine-tuning</a>: índices 0–999 para desenvolvimento e 2000–2499 para teste final. O arquivo completo tem cerca de 825 MB e o cache fica em ~/.keras/datasets, fora deste repositório.</p>
+<blockquote>
+<p>Os índices 2000–2499 permanecem como <strong>teste final</strong>. A validação usada durante o treino sai apenas dos índices 0–999; assim nenhuma imagem do teste influencia o treinamento.</p>
+</blockquote>
+
+<h4>1. Prepara&#231;&#227;o e download</h4><p>Fotografias têm tamanhos diferentes. Vamos convertê-las para 128×128 pixels com três canais: vermelho, verde e azul. Redimensionar perde detalhes, mas torna os lotes retangulares e reduz o custo do exemplo.</p>
+
+<div class="vision-cell" data-cell="2"><p class="vision-cell-label">Código · célula 1</p>
+<pre class="vision-code"><code class="language-python">import os
+os.environ[&quot;TF_CPP_MIN_LOG_LEVEL&quot;] = &quot;2&quot;
+os.environ[&quot;OMP_NUM_THREADS&quot;] = &quot;2&quot;
+
+from pathlib import Path
+
+import matplotlib.pyplot as plt
+import numpy as np
+from PIL import Image
+import tensorflow as tf
+
+tf.keras.utils.set_random_seed(42)
+tf.config.threading.set_intra_op_parallelism_threads(2)
+tf.config.threading.set_inter_op_parallelism_threads(2)
+
+plt.rcParams.update({
+    &quot;figure.figsize&quot;: (9, 4),
+    &quot;figure.dpi&quot;: 110,
+    &quot;axes.spines.top&quot;: False,
+    &quot;axes.spines.right&quot;: False,
+    &quot;axes.grid&quot;: True,
+    &quot;grid.alpha&quot;: 0.2,
+})
+
+print(&quot;TensorFlow&quot;, tf.__version__)</code></pre>
+<details class="vision-environment"><summary>Mensagens do ambiente da execução</summary><pre class="vision-code vision-output">WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1789564569.902478 1667404 port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+I0000 00:00:1789564569.902731 1667404 cudart_stub.cc:31] Could not find cuda drivers on your machine, GPU will not be used.
+</pre></details>
+<pre class="vision-code vision-output">TensorFlow 2.21.0
+</pre>
+<details class="vision-environment"><summary>Mensagens do ambiente da execução</summary><pre class="vision-code vision-output">WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1789564570.554829 1667404 port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+I0000 00:00:1789564570.554993 1667404 cudart_stub.cc:31] Could not find cuda drivers on your machine, GPU will not be used.
+</pre></details>
+</div>
+<div class="vision-cell" data-cell="3"><p class="vision-cell-label">Código · célula 2</p>
+<pre class="vision-code"><code class="language-python">URL_DADOS = (
+    &quot;https://download.microsoft.com/download/3/E/1/&quot;
+    &quot;3E1C3F21-ECDB-4869-8368-6DEBA77B919F/kagglecatsanddogs_5340.zip&quot;
+)
+caminho = Path(tf.keras.utils.get_file(
+    &quot;kagglecatsanddogs_5340.zip&quot;,
+    origin=URL_DADOS,
+    extract=True,
+))
+pasta_extraida = caminho.parent if caminho.is_file() else caminho
+base = pasta_extraida / &quot;PetImages&quot;
+assert (base / &quot;Cat&quot;).is_dir() and (base / &quot;Dog&quot;).is_dir()
+print(&quot;dados em cache:&quot;, base)</code></pre>
+<pre class="vision-code vision-output">dados em cache: /home/gustavo/.keras/datasets/kagglecatsanddogs_5340_extracted/PetImages
+</pre>
+</div>
+<h4>2. Carregar e separar as imagens</h4><p>O arquivo completo contém algumas imagens danificadas. Os dois laços abaixo abrem somente os 3.000 arquivos usados, convertem cada imagem para RGB e redimensionam. Arquivos inválidos são ignorados com uma mensagem curta.</p>
+
+<div class="vision-cell" data-cell="5"><p class="vision-cell-label">Código · célula 3</p>
+<pre class="vision-code"><code class="language-python">TAMANHO = (128, 128)
+imagens_pool, rotulos_pool = [], []
+
+for pasta, rotulo in [(&quot;Cat&quot;, 0), (&quot;Dog&quot;, 1)]:
+    for indice in range(1000):
+        caminho = base / pasta / f&quot;{indice}.jpg&quot;
+        try:
+            with Image.open(caminho) as imagem:
+                imagem_rgb = imagem.convert(&quot;RGB&quot;).resize(
+                    TAMANHO, Image.Resampling.BILINEAR
+                )
+            imagens_pool.append(np.asarray(imagem_rgb, dtype=&quot;uint8&quot;))
+            rotulos_pool.append(rotulo)
+        except (OSError, ValueError):
+            print(&quot;ignorada imagem inválida:&quot;, caminho.name)</code></pre>
+<pre class="vision-code vision-output">ignorada imagem inválida: 666.jpg
+</pre>
+</div>
+<div class="vision-cell" data-cell="6"><p class="vision-cell-label">Código · célula 4</p>
+<pre class="vision-code"><code class="language-python">imagens_teste, rotulos_teste = [], []
+
+for pasta, rotulo in [(&quot;Cat&quot;, 0), (&quot;Dog&quot;, 1)]:
+    for indice in range(2000, 2500):
+        caminho = base / pasta / f&quot;{indice}.jpg&quot;
+        try:
+            with Image.open(caminho) as imagem:
+                imagem_rgb = imagem.convert(&quot;RGB&quot;).resize(
+                    TAMANHO, Image.Resampling.BILINEAR
+                )
+            imagens_teste.append(np.asarray(imagem_rgb, dtype=&quot;uint8&quot;))
+            rotulos_teste.append(rotulo)
+        except (OSError, ValueError):
+            print(&quot;ignorada imagem inválida:&quot;, caminho.name)
+
+x_pool = np.stack(imagens_pool)
+y_pool = np.array(rotulos_pool, dtype=&quot;float32&quot;)
+x_teste = np.stack(imagens_teste)
+y_teste = np.array(rotulos_teste, dtype=&quot;float32&quot;)
+
+n_por_classe = min(np.sum(y_pool == 0), np.sum(y_pool == 1))
+indices_equilibrados = np.concatenate([
+    np.flatnonzero(y_pool == 0)[:n_por_classe],
+    np.flatnonzero(y_pool == 1)[:n_por_classe],
+])
+x_pool = x_pool[indices_equilibrados]
+y_pool = y_pool[indices_equilibrados]
+print(&quot;pool de desenvolvimento:&quot;, x_pool.shape)
+print(&quot;teste final:&quot;, x_teste.shape)</code></pre>
+<pre class="vision-code vision-output">pool de desenvolvimento: (1998, 128, 128, 3)
+teste final: (1000, 128, 128, 3)
+</pre>
+</div>
+<p>Dentro do pool de desenvolvimento, embaralhamos cada classe com a mesma semente e usamos 80% no treino e 20% na validação. Os índices do teste vieram de outro intervalo e nunca entram nessa divisão.</p>
+
+<div class="vision-cell" data-cell="8"><p class="vision-cell-label">Código · célula 5</p>
+<pre class="vision-code"><code class="language-python">rng = np.random.default_rng(42)
+indices_treino, indices_validacao = [], []
+
+for classe in [0, 1]:
+    indices_classe = np.flatnonzero(y_pool == classe)
+    rng.shuffle(indices_classe)
+    corte = int(0.8 * len(indices_classe))
+    indices_treino.extend(indices_classe[:corte])
+    indices_validacao.extend(indices_classe[corte:])
+
+indices_treino = rng.permutation(indices_treino)
+indices_validacao = rng.permutation(indices_validacao)
+x_treino, y_treino = x_pool[indices_treino], y_pool[indices_treino]
+x_validacao, y_validacao = x_pool[indices_validacao], y_pool[indices_validacao]
+
+assert set(indices_treino).isdisjoint(indices_validacao)
+assert set(range(1000)).isdisjoint(range(2000, 2500))
+print(f&quot;treino: {len(x_treino)} · validação: {len(x_validacao)} · teste: {len(x_teste)}&quot;)
+print(&quot;rótulos: 0 = gato; 1 = cachorro&quot;)</code></pre>
+<pre class="vision-code vision-output">treino: 1598 · validação: 400 · teste: 1000
+rótulos: 0 = gato; 1 = cachorro
+</pre>
+</div>
+<div class="vision-cell" data-cell="9"><p class="vision-cell-label">Código · célula 6</p>
+<pre class="vision-code"><code class="language-python">fig, eixos = plt.subplots(2, 4, figsize=(9, 5))
+for eixo, imagem, rotulo in zip(eixos.flat, x_treino[:8], y_treino[:8]):
+    eixo.imshow(imagem)
+    eixo.set_title(&quot;cachorro&quot; if rotulo == 1 else &quot;gato&quot;)
+    eixo.axis(&quot;off&quot;)
+fig.suptitle(&quot;Fotografias RGB redimensionadas para 128×128&quot;)
+plt.tight_layout()</code></pre>
+<figure class="vision-figure"><img src="../imagens/notebooks/04-caes-gatos-01.png" loading="lazy" width="979" height="543" alt="2. Carregar e separar as imagens — resultado da execução"><figcaption>2. Carregar e separar as imagens — resultado da execução</figcaption></figure>
+</div>
+<h4>3. Classifica&#231;&#227;o bin&#225;ria</h4><p>A primeira camada divide valores de pixel por 255. Depois, três blocos de convolução e pooling extraem padrões locais. Há somente um neurônio de saída:</p>
+<ul>
+<li>sigmoid produz um número entre 0 e 1, interpretado aqui como probabilidade de “cachorro”;</li>
+<li>abaixo de 0,5 prevemos “gato”; a partir de 0,5, “cachorro”;</li>
+<li>binary crossentropy penaliza probabilidades distantes do rótulo 0 ou 1.</li>
+</ul>
+<p>O modelo aprende do zero por 4 épocas. Não há transferência de aprendizado, aumento de dados nem checkpoints.</p>
+
+<div class="vision-cell" data-cell="11"><p class="vision-cell-label">Código · célula 7</p>
+<pre class="vision-code"><code class="language-python">modelo = tf.keras.Sequential([
+    tf.keras.layers.Input(shape=(128, 128, 3)),
+    tf.keras.layers.Rescaling(1.0 / 255),
+    tf.keras.layers.Conv2D(16, 3, activation=&quot;relu&quot;),
+    tf.keras.layers.MaxPooling2D(),
+    tf.keras.layers.Conv2D(32, 3, activation=&quot;relu&quot;),
+    tf.keras.layers.MaxPooling2D(),
+    tf.keras.layers.Conv2D(64, 3, activation=&quot;relu&quot;),
+    tf.keras.layers.MaxPooling2D(),
+    tf.keras.layers.Flatten(),
+    tf.keras.layers.Dense(32, activation=&quot;relu&quot;),
+    tf.keras.layers.Dense(1, activation=&quot;sigmoid&quot;),
+], name=&quot;cnn_caes_gatos&quot;)
+modelo.summary()</code></pre>
+<details class="vision-environment"><summary>Mensagens do ambiente da execução</summary><pre class="vision-code vision-output">E0000 00:00:1789564580.011864 1667404 cuda_executor.cc:1737] INTERNAL: CUDA Runtime error: Failed call to cudaGetRuntimeVersion: Error loading CUDA libraries. GPU will not be used.: Error loading CUDA libraries. GPU will not be used.
+</pre></details>
+<pre class="vision-code vision-output">Model: &quot;cnn_caes_gatos&quot;
+</pre>
+<pre class="vision-code vision-output">┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━┓
+┃ Layer (type)                    ┃ Output Shape           ┃       Param # ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━┩
+│ rescaling (Rescaling)           │ (None, 128, 128, 3)    │             0 │
+├─────────────────────────────────┼────────────────────────┼───────────────┤
+│ conv2d (Conv2D)                 │ (None, 126, 126, 16)   │           448 │
+├─────────────────────────────────┼────────────────────────┼───────────────┤
+│ max_pooling2d (MaxPooling2D)    │ (None, 63, 63, 16)     │             0 │
+├─────────────────────────────────┼────────────────────────┼───────────────┤
+│ conv2d_1 (Conv2D)               │ (None, 61, 61, 32)     │         4,640 │
+├─────────────────────────────────┼────────────────────────┼───────────────┤
+│ max_pooling2d_1 (MaxPooling2D)  │ (None, 30, 30, 32)     │             0 │
+├─────────────────────────────────┼────────────────────────┼───────────────┤
+│ conv2d_2 (Conv2D)               │ (None, 28, 28, 64)     │        18,496 │
+├─────────────────────────────────┼────────────────────────┼───────────────┤
+│ max_pooling2d_2 (MaxPooling2D)  │ (None, 14, 14, 64)     │             0 │
+├─────────────────────────────────┼────────────────────────┼───────────────┤
+│ flatten (Flatten)               │ (None, 12544)          │             0 │
+├─────────────────────────────────┼────────────────────────┼───────────────┤
+│ dense (Dense)                   │ (None, 32)             │       401,440 │
+├─────────────────────────────────┼────────────────────────┼───────────────┤
+│ dense_1 (Dense)                 │ (None, 1)              │            33 │
+└─────────────────────────────────┴────────────────────────┴───────────────┘
+</pre>
+<pre class="vision-code vision-output"> Total params: 425,057 (1.62 MB)
+</pre>
+<pre class="vision-code vision-output"> Trainable params: 425,057 (1.62 MB)
+</pre>
+<pre class="vision-code vision-output"> Non-trainable params: 0 (0.00 B)
+</pre>
+</div>
+<div class="vision-cell" data-cell="12"><p class="vision-cell-label">Código · célula 8</p>
+<pre class="vision-code"><code class="language-python">modelo.compile(
+    optimizer=&quot;adam&quot;,
+    loss=&quot;binary_crossentropy&quot;,
+    metrics=[&quot;accuracy&quot;],
+)</code></pre>
+</div>
+<div class="vision-cell" data-cell="13"><p class="vision-cell-label">Código · célula 9</p>
+<pre class="vision-code"><code class="language-python">historia = modelo.fit(
+    x_treino,
+    y_treino,
+    validation_data=(x_validacao, y_validacao),
+    epochs=4,
+    batch_size=32,
+    verbose=2,
+)</code></pre>
+<pre class="vision-code vision-output">Epoch 1/4
+</pre>
+<pre class="vision-code vision-output">50/50 - 3s - 65ms/step - accuracy: 0.5056 - loss: 0.6951 - val_accuracy: 0.5000 - val_loss: 0.6907
+</pre>
+<pre class="vision-code vision-output">Epoch 2/4
+</pre>
+<pre class="vision-code vision-output">50/50 - 3s - 52ms/step - accuracy: 0.5488 - loss: 0.6856 - val_accuracy: 0.5925 - val_loss: 0.6740
+</pre>
+<pre class="vision-code vision-output">Epoch 3/4
+</pre>
+<pre class="vision-code vision-output">50/50 - 3s - 54ms/step - accuracy: 0.5970 - loss: 0.6617 - val_accuracy: 0.5925 - val_loss: 0.6716
+</pre>
+<pre class="vision-code vision-output">Epoch 4/4
+</pre>
+<pre class="vision-code vision-output">50/50 - 3s - 54ms/step - accuracy: 0.6333 - loss: 0.6365 - val_accuracy: 0.6225 - val_loss: 0.6577
+</pre>
+</div>
+<h4>4. Curvas e teste preservado</h4>
+<div class="vision-cell" data-cell="15"><p class="vision-cell-label">Código · célula 10</p>
+<pre class="vision-code"><code class="language-python">epocas = range(1, 5)
+fig, eixos = plt.subplots(1, 2, figsize=(10, 4))
+eixos[0].plot(epocas, historia.history[&quot;loss&quot;], &quot;o-&quot;, color=&quot;#0072B2&quot;, label=&quot;treino&quot;)
+eixos[0].plot(epocas, historia.history[&quot;val_loss&quot;], &quot;o--&quot;, color=&quot;#E69F00&quot;, label=&quot;validação&quot;)
+eixos[1].plot(epocas, historia.history[&quot;accuracy&quot;], &quot;o-&quot;, color=&quot;#0072B2&quot;, label=&quot;treino&quot;)
+eixos[1].plot(epocas, historia.history[&quot;val_accuracy&quot;], &quot;o--&quot;, color=&quot;#E69F00&quot;, label=&quot;validação&quot;)
+eixos[0].set(title=&quot;Perda por época&quot;, xlabel=&quot;época&quot;, ylabel=&quot;entropia cruzada binária&quot;)
+eixos[1].set(title=&quot;Acurácia por época&quot;, xlabel=&quot;época&quot;, ylabel=&quot;acurácia&quot;, ylim=(0.4, 1.0))
+for eixo in eixos:
+    eixo.legend()
+plt.tight_layout()</code></pre>
+<figure class="vision-figure"><img src="../imagens/notebooks/04-caes-gatos-02.png" loading="lazy" width="1089" height="429" alt="4. Curvas e teste preservado — resultado da execução"><figcaption>4. Curvas e teste preservado — resultado da execução</figcaption></figure>
+</div>
+<div class="vision-cell" data-cell="16"><p class="vision-cell-label">Código · célula 11</p>
+<pre class="vision-code"><code class="language-python">perda_teste, acc_teste = modelo.evaluate(x_teste, y_teste, verbose=0)
+acc_treino_final = historia.history[&quot;accuracy&quot;][-1]
+acc_val_final = historia.history[&quot;val_accuracy&quot;][-1]
+print(f&quot;Teste final preservado — perda: {perda_teste:.4f}; acurácia: {acc_teste:.4f}&quot;)
+print(f&quot;Última época — treino: {acc_treino_final:.4f}; validação: {acc_val_final:.4f}&quot;)
+print(f&quot;Lacuna treino − validação: {acc_treino_final - acc_val_final:+.4f}&quot;)</code></pre>
+<pre class="vision-code vision-output">Teste final preservado — perda: 0.6306; acurácia: 0.6500
+Última época — treino: 0.6333; validação: 0.6225
+Lacuna treino − validação: +0.0108
+</pre>
+</div>
+<p>Uma acurácia de treino maior que a de validação é um sinal compatível com memorização, mas a magnitude observada depende da amostra e da época. Quatro épocas e poucos milhares de imagens são deliberadamente modestos; o resultado medido não deve ser apresentado como desempenho geral de classificadores de cães e gatos.</p>
+
+<h4>5. Previs&#245;es e erros no teste</h4>
+<div class="vision-cell" data-cell="19"><p class="vision-cell-label">Código · célula 12</p>
+<pre class="vision-code"><code class="language-python">probabilidades = modelo.predict(x_teste, verbose=0).ravel()
+previstos = (probabilidades &gt;= 0.5).astype(int)
+erros = np.flatnonzero(previstos != y_teste.astype(int))
+escolhidos = erros[:8] if len(erros) &gt;= 8 else np.arange(8)
+
+fig, eixos = plt.subplots(2, 4, figsize=(10, 6))
+for eixo, indice in zip(eixos.flat, escolhidos):
+    eixo.imshow(x_teste[indice])
+    real = &quot;cachorro&quot; if y_teste[indice] == 1 else &quot;gato&quot;
+    previsto = &quot;cachorro&quot; if previstos[indice] == 1 else &quot;gato&quot;
+    confianca = probabilidades[indice] if previstos[indice] == 1 else 1 - probabilidades[indice]
+    eixo.set_title(f&quot;real: {real}\nprev.: {previsto} ({confianca:.0%})&quot;, fontsize=9)
+    eixo.axis(&quot;off&quot;)
+fig.suptitle(&quot;Erros do teste&quot; if len(erros) &gt;= 8 else &quot;Amostras do teste&quot;)
+plt.tight_layout()</code></pre>
+<figure class="vision-figure"><img src="../imagens/notebooks/04-caes-gatos-03.png" loading="lazy" width="1089" height="637" alt="5. Previsões e erros no teste — resultado da execução"><figcaption>5. Previsões e erros no teste — resultado da execução</figcaption></figure>
+</div>
+<h4>Limites e pr&#243;ximos passos</h4><ul>
+<li>O conjunto deriva de uma competição antiga; não representa toda a variedade de animais, câmeras e fundos.</li>
+<li>Uma saída confiante ainda pode estar errada. O modelo não sabe recusar imagens que não contenham cão nem gato.</li>
+<li>O limiar 0,5 é uma convenção deste exemplo, não uma fronteira universal.</li>
+<li>Se treino continuar melhorando enquanto validação piora, há evidência de sobreajuste. Um próximo experimento simples é aplicar espelhamento horizontal <strong>somente ao treino</strong> e comparar as curvas.</li>
+</ul>
+<p>O teste final foi mantido fora do treino. Ele oferece uma medida honesta para esta execução, mas não elimina as limitações de amostragem e do orçamento curto.</p>
+
+<p><a class="vision-download" href="../notebooks/04-caes-gatos.ipynb" download>Baixar esta prática como notebook (.ipynb)</a></p></article>
+<!-- notebook:04-caes-gatos:fim --><p><strong>Investigue:</strong> observe fotos em que a rede erra com confiança. O enquadramento, o fundo ou a iluminação ajudam a explicar?</p></section><section class="lesson-section" id="executar" aria-labelledby="executar-title"><h2 id="executar-title">Executar os notebooks</h2><p>Baixe o arquivo <code>.ipynb</code>. No Jupyter, use <strong>Kernel → Restart Kernel and Run All Cells</strong>; no Colab, envie o arquivo e execute as células em ordem. Todo o código e os resultados salvos estão nesta página. Baixar o notebook é opcional para executar ou modificar as práticas; os widgets Python exigem um kernel ativo.</p><pre class="vision-code"><code>python -m pip install -r requirements-redes.txt
+jupyter notebook notebooks/</code></pre><p>Os exemplos usam amostras e poucas épocas para facilitar a aula; as métricas são os resultados daquela execução, não promessas de desempenho. Consulte o próprio notebook para tamanho das partições, semente e configuração.</p></section><section class="lesson-section" id="referencias" aria-labelledby="referencias-title"><h2 id="referencias-title">Referências</h2><ul class="bibliography-list"><li><a href="https://github.com/Atzingen/Palestra-SAMBA2022-CNN">SAMBA 2022: imagens e convoluções</a>.</li><li><a href="https://github.com/Atzingen/Webinar-Vis-o-computacional-Embarcada">Webinar: convolução e CNN</a>.</li><li><a href="https://github.com/Atzingen/IA-FIC-IFSP/tree/main/Aula_08">FIC: rede densa e convolucional</a>.</li><li><a href="https://www.tensorflow.org/tutorials/quickstart/beginner">TensorFlow: primeira rede no MNIST</a>.</li><li><a href="https://keras.io/examples/vision/mnist_convnet/">Keras: CNN pequena no MNIST</a>.</li><li><a href="https://www.tensorflow.org/tutorials/keras/classification">TensorFlow: Fashion-MNIST</a>.</li><li><a href="https://keras.io/examples/vision/image_classification_from_scratch/">Keras: classificação de imagens de cães e gatos</a>.</li></ul></section><nav class="vision-pager" aria-label="Capítulos"><a href="../02-video-medida/">← Vídeo como instrumento de medida</a><a href="../04-deteccao-segmentacao/">Detecção, segmentação e embarcados →</a></nav></div></main>
+  <footer class="site-footer"><p>Visão computacional · Física Computacional</p><a href="../../../topicos/">Todos os tópicos</a></footer>
+  <script type="module" src="../../../componentes/navegacao-principal.js"></script>
+  <script type="module" src="../../../componentes/navegacao-secoes.js"></script>
+  <script type="module">import { typesetMath } from "../../../componentes/matematica.js"; typesetMath(document.querySelector("main"));</script>
+</body>
+</html>
