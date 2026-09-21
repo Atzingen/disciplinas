@@ -717,3 +717,192 @@
     break-inside: avoid;
   }
 }
+
+/* Explorador RC interativo (experimento 07, aba Fundamentos) */
+.rc-explorer {
+  --rc-carga: #3178c6;
+  --rc-descarga: #b05d00;
+  display: grid;
+  gap: 1rem;
+}
+
+.rc-explorer__controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.9rem 1.6rem;
+  padding: 0.9rem 1.1rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  background: var(--paper-deep);
+}
+
+.rc-explorer__controls label {
+  display: flex;
+  flex: 1 1 180px;
+  flex-direction: column;
+  gap: 0.25rem;
+  color: var(--ink-soft);
+  font: 0.85rem/1.4 var(--font-display);
+}
+
+.rc-explorer__controls output {
+  color: var(--ink);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.rc-explorer__controls input[type="range"] {
+  width: 100%;
+  accent-color: var(--accent);
+}
+
+.rc-explorer__tiles {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 0.7rem;
+}
+
+.rc-explorer__tile {
+  padding: 0.7rem 0.9rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  background: var(--surface);
+}
+
+.rc-explorer__tile span {
+  display: block;
+  color: var(--ink-soft);
+  font: 0.72rem/1.3 var(--font-display);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.rc-explorer__tile strong {
+  display: block;
+  margin-top: 0.15rem;
+  font: 700 1.3rem/1.2 var(--font-display);
+  font-variant-numeric: tabular-nums;
+}
+
+.rc-explorer__chart {
+  position: relative;
+  padding: 0.9rem 0.9rem 0.6rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  background: var(--surface);
+}
+
+.rc-explorer__chart h4 {
+  margin: 0 0 0.1rem;
+  font: 700 1rem/1.3 var(--font-display);
+}
+
+.rc-explorer__chart p {
+  margin: 0 0 0.5rem;
+  color: var(--ink-soft);
+  font-size: 0.85rem;
+}
+
+.rc-explorer__chart svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+.rc-explorer__chart svg text {
+  font: 12px var(--font-display);
+  fill: var(--ink-soft);
+}
+
+.rc-explorer__chart svg .rc-explorer__tick-time {
+  font-size: 10px;
+  fill: var(--ink-faint);
+}
+
+.rc-explorer__grid line { stroke: var(--line-soft); }
+.rc-explorer__axis line,
+.rc-explorer__axis path { stroke: var(--line-strong); fill: none; }
+.rc-explorer__zero { stroke: var(--line-strong); }
+.rc-explorer__tau { stroke: var(--ink-faint); stroke-dasharray: 4 4; }
+.rc-explorer__cursor { stroke: var(--ink-faint); }
+
+.rc-explorer__series {
+  fill: none;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.rc-explorer__series--carga { stroke: var(--rc-carga); }
+.rc-explorer__series--descarga { stroke: var(--rc-descarga); }
+.rc-explorer__dot { stroke: var(--surface); stroke-width: 2; }
+.rc-explorer__dot--carga { fill: var(--rc-carga); }
+.rc-explorer__dot--descarga { fill: var(--rc-descarga); }
+
+.rc-explorer__chart svg .rc-explorer__label {
+  font-weight: 700;
+  fill: var(--ink);
+}
+
+.rc-explorer__legend {
+  display: flex;
+  gap: 1.1rem;
+  margin: 0.4rem 0 0 0.2rem;
+  color: var(--ink-soft);
+  font: 0.85rem/1.4 var(--font-display);
+}
+
+.rc-explorer__legend span::before,
+.rc-explorer__tooltip-row i {
+  content: "";
+  display: inline-block;
+  width: 18px;
+  border-top: 2px solid;
+  border-radius: 2px;
+  vertical-align: middle;
+  margin-right: 0.4rem;
+}
+
+.rc-explorer__legend .rc-explorer__key--carga::before,
+.rc-explorer__tooltip-row i.rc-explorer__key--carga { border-color: var(--rc-carga); }
+.rc-explorer__legend .rc-explorer__key--descarga::before,
+.rc-explorer__tooltip-row i.rc-explorer__key--descarga { border-color: var(--rc-descarga); }
+
+.rc-explorer__tooltip {
+  position: absolute;
+  z-index: 5;
+  min-width: 160px;
+  padding: 0.5rem 0.65rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  box-shadow: var(--shadow);
+  font: 0.85rem/1.5 var(--font-display);
+  pointer-events: none;
+}
+
+.rc-explorer__tooltip-time {
+  margin-bottom: 0.2rem;
+  color: var(--ink-soft);
+  font-variant-numeric: tabular-nums;
+}
+
+.rc-explorer__tooltip-row {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.rc-explorer__tooltip-row i { width: 14px; margin-right: 0; }
+.rc-explorer__tooltip-row b { color: var(--ink); }
+.rc-explorer__tooltip-row span { color: var(--ink-soft); }
+
+.rc-explorer__table summary {
+  cursor: pointer;
+  color: var(--ink-soft);
+  font: 0.9rem/1.4 var(--font-display);
+}
+
+.rc-explorer__table[open] summary { margin-bottom: 0.5rem; }
