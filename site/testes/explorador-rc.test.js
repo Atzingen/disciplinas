@@ -73,6 +73,7 @@ test("a aba Fundamentos traz a dedução, os tipos de solução e o explorador",
   assert.match(fundamentos, /fator integrante/i);
   assert.match(fundamentos, /separação de variáveis/i);
   assert.match(fundamentos, /Energia: metade vira calor/);
+  assert.match(fundamentos, /TL;DR: carga e descarga em quatro passos/);
   assert.match(fundamentos, /data-explorador-rc/);
   assert.match(fundamentos, /data-rc-grafico-tensao/);
   assert.match(fundamentos, /data-rc-grafico-corrente/);

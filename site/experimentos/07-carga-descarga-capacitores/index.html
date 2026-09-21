@@ -281,6 +281,33 @@
         <tr><td><strong>Energia no resistor</strong></td><td>½ C Vₛ² (metade do fornecido)</td><td>½ C V₀² (tudo o que estava armazenado)</td></tr>
       </tbody></table></div></article>
 
+      <article class="theory-card"><h3>TL;DR: carga e descarga em quatro passos</h3><p>Sem classificar nada: escreva a equação da malha, chute uma exponencial, substitua para ver que o chute funciona e use a condição inicial para fixar a constante. O chute é a exponencial porque é a única função cuja derivada é proporcional a ela mesma, que é exatamente o que a equação pede.</p>
+      <div class="experiment-grid">
+        <div class="theory-note"><strong>Carga (D8 em nível alto, V꜀(0) = 0)</strong>
+        <ol class="procedure-list">
+          <li><strong>Equação.</strong> Malha com a fonte: Vₛ = R i + V꜀. Como i = C dV꜀/dt:
+          <div class="math-block math-display">\[RC\,\frac{dV_C}{dt}+V_C=V_s\]</div></li>
+          <li><strong>Chute.</strong> Uma constante (o patamar) mais uma exponencial (o que ainda está mudando):
+          <div class="math-block math-display">\[V_C(t)=V_s+A\,e^{-t/\tau}\]</div></li>
+          <li><strong>Substitua.</strong> A derivada é −(A/τ)e^(−t/τ). Levando na equação:
+          <div class="math-block math-display">\[\begin{aligned}-\frac{RC}{\tau}A\,e^{-t/\tau}+V_s+A\,e^{-t/\tau}&=V_s\\ A\,e^{-t/\tau}\left(1-\frac{RC}{\tau}\right)&=0\;\Longrightarrow\;\tau=RC\end{aligned}\]</div></li>
+          <li><strong>Condição inicial.</strong> V꜀(0) = Vₛ + A = 0, logo A = −Vₛ:
+          <div class="math-block math-display">\[V_C(t)=V_s\left(1-e^{-t/RC}\right),\qquad i(t)=\frac{V_s}{R}\,e^{-t/RC}\]</div></li>
+        </ol></div>
+        <div class="theory-note"><strong>Descarga (D8 em nível baixo, V꜀(0) = V₀)</strong>
+        <ol class="procedure-list">
+          <li><strong>Equação.</strong> Malha sem a fonte: 0 = R i + V꜀. Com i = C dV꜀/dt:
+          <div class="math-block math-display">\[RC\,\frac{dV_C}{dt}+V_C=0\]</div></li>
+          <li><strong>Chute.</strong> Não há patamar além de zero, então só a exponencial:
+          <div class="math-block math-display">\[V_C(t)=A\,e^{-t/\tau}\]</div></li>
+          <li><strong>Substitua.</strong> Mesma conta, sem o termo constante:
+          <div class="math-block math-display">\[\begin{aligned}-\frac{RC}{\tau}A\,e^{-t/\tau}+A\,e^{-t/\tau}&=0\\ A\,e^{-t/\tau}\left(1-\frac{RC}{\tau}\right)&=0\;\Longrightarrow\;\tau=RC\end{aligned}\]</div></li>
+          <li><strong>Condição inicial.</strong> V꜀(0) = A = V₀:
+          <div class="math-block math-display">\[V_C(t)=V_0\,e^{-t/RC},\qquad i(t)=-\frac{V_0}{R}\,e^{-t/RC}\]</div></li>
+        </ol></div>
+      </div>
+      <p>Nos dois casos a substituição não fixa A, só τ: a equação aceita qualquer amplitude de exponencial, e é a condição inicial que escolhe a certa. É por isso que carga e descarga têm o mesmo τ = RC e diferem apenas no ponto de partida e no patamar.</p></article>
+
       <article class="theory-card"><h3>Limites reais: tolerância, fuga e instrumentos</h3><p>Os resistores deste roteiro são maiores que os usados no exemplo rápido do artigo. A fuga do eletrolítico pode ser significativa frente a correntes de dezenas de microampères. Escolha um componente em bom estado, confira sua especificação e faça um ensaio piloto; não há garantia de meia-vida real apenas pelo valor impresso.</p>
       <p>Uma fuga aproximadamente ôhmica equivale a Rₗ em paralelo com C. Nesse modelo:</p><div class="math-block math-display">\[\tau_{\mathrm{ef}}=(R\parallel R_\ell)C,\qquad V_{\infty,\mathrm{carga}}=V_s\frac{R_\ell}{R+R_\ell}.\]</div>
       <p>O patamar fica abaixo de Vₛ e τ/R deixa de ser uma estimativa direta de C. Um multímetro permanentemente em paralelo também acrescenta uma resistência de carga. A fuga real pode depender da tensão e do tempo; o modelo de Rₗ é uma hipótese a testar nos resíduos.</p><p>A0 está diretamente no nó do capacitor, que fornece a carga das amostragens. Use apenas A0, fios curtos e referência estável; não acrescente divisor resistivo nem alterne canais nesta montagem. Considere também a corrente de fuga da entrada analógica. Se o comportamento fugir do modelo ideal, registre o desvio e investigue a montagem antes de ajustar componentes para forçar concordância.</p></article>
