@@ -22,10 +22,10 @@ const apiAvailable =
   typeof catalog.normalizeSearchText === "function" &&
   typeof catalog.filterCatalog === "function";
 
-test("catálogo expõe busca e registra os trinta e seis materiais", () => {
+test("catálogo expõe busca e registra os trinta e sete materiais", () => {
   assert.equal(typeof catalog.normalizeSearchText, "function");
   assert.equal(typeof catalog.filterCatalog, "function");
-  assert.equal(items.length, 36);
+  assert.equal(items.length, 37);
 });
 
 test("busca ignora acentos e caixa", { skip: !apiAvailable }, () => {
@@ -107,7 +107,7 @@ test("escopo por disciplina mantém teoria e laboratório separados", { skip: !a
   });
 
   assert.equal(electromagnetism.length, 26);
-  assert.equal(laboratory.length, 8);
+  assert.equal(laboratory.length, 9);
   assert.ok(electromagnetism.every((item) => item.kind !== "experimento"));
   assert.ok(laboratory.some((item) => item.id === "cuba-eletrolitica-potencial"));
   assert.ok(laboratory.every((item) => item.disciplines.includes("PRCLFBE")));
@@ -221,6 +221,7 @@ test("filtro separa simuladores, resoluções e experimentos", { skip: !apiAvail
     "experimento-05-escada-resistores",
     "experimento-06-cuba-eletrolitica",
     "experimento-07-carga-descarga-capacitores",
+    "experimento-08-ressonancia-rlc",
   ]);
 });
 

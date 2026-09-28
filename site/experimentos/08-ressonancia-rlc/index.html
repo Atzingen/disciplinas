@@ -1,0 +1,306 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Roteiro de ressonância RLC em série: esquema com gerador e osciloscópio, dedução da ressonância, medidas de amplitude e fase e relatório com valores a determinar na bancada.">
+  <title>Ressonância no circuito RLC · Experimento 08</title>
+  <link rel="icon" href="../../assets/favicon.svg">
+  <link rel="stylesheet" href="../../assets/base.css">
+  <link rel="stylesheet" href="../../assets/experimentos.css">
+  <link rel="stylesheet" href="./rlc.css">
+  <script>try{if(localStorage.getItem("tema")==="escuro"){document.documentElement.dataset.theme="escuro"}}catch(erro){}</script>
+</head>
+<body class="experiment-page">
+  <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+  <div class="page-shell" data-experiment-tabs>
+    <div class="site-topbar" data-topbar>
+      <div class="site-topbar__inner">
+        <nav class="experiment-breadcrumb" aria-label="Caminho de navegação">
+          <a href="../../disciplinas/prclfbe/">Laboratório de Física Básica: Eletromagnetismo</a>
+          <span aria-hidden="true">/</span><a href="../">Experimentos</a>
+          <span aria-hidden="true">/</span><span aria-current="page">Experimento 08</span>
+        </nav>
+        <div class="experiment-header__navigation">
+          <div data-site-navigation data-root-path="../../" data-active-section="experimentos"></div>
+        </div>
+      </div>
+      <div class="experiment-tab-list" role="tablist" aria-label="Etapas do experimento">
+        <button class="experiment-tab" id="aba-montagem" type="button" role="tab" aria-controls="painel-montagem" aria-selected="true" tabindex="0">Montagem</button>
+        <button class="experiment-tab" id="aba-fundamentos" type="button" role="tab" aria-controls="painel-fundamentos" aria-selected="false" tabindex="-1">Fundamentos</button>
+        <button class="experiment-tab" id="aba-dados" type="button" role="tab" aria-controls="painel-dados" aria-selected="false" tabindex="-1">Dados</button>
+        <button class="experiment-tab" id="aba-relatorio" type="button" role="tab" aria-controls="painel-relatorio" aria-selected="false" tabindex="-1">Relatório</button>
+      </div>
+    </div>
+
+    <header class="experiment-header">
+      <div class="experiment-hero">
+        <div><h1>Ressonância no circuito RLC</h1></div>
+        <div>
+          <p class="experiment-hero__lead">Varie a frequência de uma senoide e descubra onde o circuito responde mais. Meça a tensão no resistor para acompanhar a corrente, a fase e o efeito do amortecimento.</p>
+          <ul class="experiment-meta" aria-label="Características do roteiro"><li>PRCLFBE</li><li>Gerador + osciloscópio</li><li>R, L e C definidos na bancada</li></ul>
+        </div>
+      </div>
+    </header>
+
+    <main class="experiment-main" id="conteudo">
+      <section class="experiment-panel" id="painel-montagem" role="tabpanel" aria-labelledby="aba-montagem" tabindex="0">
+        <header class="experiment-section-heading">
+          <h2>Montagem</h2>
+          <p>Um circuito em série, duas leituras de tensão e um único terra comum. Preencha os valores no relatório antes de iniciar a varredura.</p>
+        </header>
+        <div class="experiment-grid">
+          <article class="lab-card"><h3>O que vamos investigar</h3>
+            <ul><li>Encontrar a frequência de máxima resposta e compará-la com a previsão de L e C.</li>
+              <li>Relacionar a tensão no resistor com a corrente do circuito.</li>
+              <li>Observar o adiantamento e o atraso da corrente em relação à entrada.</li>
+              <li>Medir a largura da ressonância e, se houver outro resistor, investigar o amortecimento.</li></ul>
+          </article>
+          <article class="lab-card"><h3>Material por bancada</h3>
+            <ul><li>Gerador de funções com saída senoidal e frequência ajustável;</li>
+              <li>osciloscópio, preferencialmente de dois canais, e pontas de prova;</li>
+              <li>um indutor, um capacitor não polarizado e um resistor; outro resistor para comparação, se disponível;</li>
+              <li>protoboard, cabos BNC/adaptadores, jumpers curtos e multímetro;</li>
+              <li>medidor de indutância e capacitância, se disponível.</li></ul>
+          </article>
+        </div>
+
+        <figure class="rlc-figure">
+          <div class="rlc-figure__scroll" tabindex="0" role="region" aria-label="Esquema elétrico; role horizontalmente em telas pequenas">
+            <img src="./circuito-rlc.svg" width="1000" height="500" alt="Saída do gerador → nó A → indutor L → capacitor C → nó B → resistor R → GND. CH1 em A, CH2 em B e as duas garras no GND comum.">
+          </div>
+          <figcaption>Figura 1. Ligação física. O resistor fica junto ao GND para que CH2 meça diretamente sua tensão. Em telas pequenas, deslize o desenho ou <a href="./circuito-rlc.svg">abra o esquema ampliado</a>.</figcaption>
+        </figure>
+
+        <article class="lab-card"><h3>Valores definidos no dia</h3>
+          <p>Escolha os componentes disponíveis com o professor ou técnico. Registre valores nominais, tolerâncias e medidas independentes; os espaços abaixo também constam da folha para impressão.</p>
+          <div class="data-table-wrapper"><table class="data-table rlc-values">
+            <thead><tr><th scope="col">Grandeza</th><th scope="col">Nominal</th><th scope="col">Medido / adotado</th><th scope="col">Unidade / observação</th></tr></thead>
+            <tbody>
+              <tr><td>Indutância L</td><td>________</td><td>________</td><td>H / mH / µH: ______</td></tr>
+              <tr><td>Capacitância C</td><td>________</td><td>________</td><td>F / µF / nF: ______</td></tr>
+              <tr><td>Resistor R, ensaio A</td><td>________</td><td>________</td><td>Ω / potência: ______</td></tr>
+              <tr><td>Resistor R, ensaio B</td><td>________</td><td>________</td><td>Ω / se disponível</td></tr>
+              <tr><td>Resistência DC da bobina rL</td><td>________</td><td>________</td><td>Ω</td></tr>
+              <tr><td>Resistência de saída Rs</td><td>________</td><td>________</td><td>Ω / consultar o manual</td></tr>
+              <tr><td>Amplitude de entrada</td><td>________</td><td>________</td><td>Vpp / CH1</td></tr>
+              <tr><td>Faixa de frequências</td><td>________</td><td>________</td><td>Hz / gerador e osciloscópio</td></tr>
+            </tbody>
+          </table></div>
+          <p>Converta antes de calcular: 1 µH = 10⁻⁶ H, 1 mH = 10⁻³ H, 1 nF = 10⁻⁹ F e 1 µF = 10⁻⁶ F. Use \(f_0=1/(2\pi\sqrt{LC})\) para planejar uma faixa que alcance os dois lados da ressonância.</p>
+        </article>
+
+        <article class="lab-card"><h3>Como ligar e ajustar</h3>
+          <ol class="procedure-list">
+            <li><strong>Saída desligada:</strong> meça R e a resistência contínua da bobina fora do circuito. Meça L e C se houver instrumento adequado. Não confunda a resistência em ohms com a indutância.</li>
+            <li><strong>Feche a malha:</strong> saída do gerador → L → C → R → retorno do gerador. Use capacitor não polarizado e conexões curtas.</li>
+            <li><strong>Conecte as pontas:</strong> CH1 no nó A e CH2 no nó B. As duas garras de terra vão ao mesmo GND, junto ao terminal inferior de R.</li>
+            <li><strong>Configure o osciloscópio:</strong> entrada de alta impedância, atenuação igual à da ponta, acoplamento DC e disparo por CH1. Ajuste V/div e tempo/div para mostrar alguns ciclos sem corte.</li>
+            <li><strong>Configure o gerador:</strong> senoide, offset zero, amplitude pequena definida na bancada. Registre a configuração de carga e confirme a amplitude real em CH1 antes de aumentar o sinal.</li>
+            <li><strong>Teste a faixa:</strong> confira uma senoide limpa nos dois canais e planeje frequências abaixo e acima de f₀. Respeite a banda, a amostragem e os limites dos instrumentos e dos componentes.</li>
+          </ol>
+        </article>
+        <aside class="rlc-note"><strong>As garras de terra não são pontas independentes.</strong>
+          <p>Em osciloscópios convencionais de bancada, os terras dos canais são interligados e normalmente conectados ao terra de proteção. Colocá-los em nós diferentes pode curto-circuitar componentes. Mantenha ambos no GND indicado e não desconecte o terra de proteção. Para medir diretamente sobre L ou C, seria necessária outra estratégia de medição.</p>
+          <p>Não use a terminação de 50 Ω do osciloscópio nesta montagem. A opção “High Z” no <em>gerador</em> geralmente ajusta a indicação da amplitude esperada; ela não elimina sua resistência interna. Desligue a saída antes de trocar componentes.</p>
+        </aside>
+      </section>
+
+      <section class="experiment-panel" id="painel-fundamentos" role="tabpanel" aria-labelledby="aba-fundamentos" tabindex="0" hidden>
+        <header class="experiment-section-heading"><h2>Fundamentos</h2><p>Do circuito à equação diferencial; da resposta senoidal à condição de ressonância. A mesma lei das malhas do experimento RC agora inclui o indutor.</p></header>
+        <article class="theory-card"><h3>1. Do RC ao RLC: escrevendo a equação</h3>
+          <p>No <a href="../07-carga-descarga-capacitores/">experimento de carga e descarga</a>, o capacitor armazenava energia e o resistor a dissipava. Agora o indutor também armazena energia, em seu campo magnético, e o gerador fornece uma excitação periódica.</p>
+          <p>Seja q a carga na placa de referência do capacitor e i = dq/dt a corrente da malha. Modele o gerador por uma fonte ideal interna \(v_s(t)=V_{s,p}\cos(\omega t)\) em série com sua resistência \(R_s\). Chame de \(R_e\) a soma das resistências externas: o resistor R, as perdas da bobina e as perdas série do capacitor, quando relevantes. Assim, \(R_\Sigma=R_s+R_e\).</p>
+          <div class="rlc-formula">\[
+            v_R=Ri,\qquad v_L=L\frac{di}{dt},\qquad v_C=\frac{q}{C}.
+          \]</div>
+          <p>Pela lei das malhas, a tensão da fonte é a soma das quedas. Substituindo i = dq/dt:</p>
+          <div class="rlc-formula">\[
+            v_s=R_\Sigma i+L\frac{di}{dt}+\frac{q}{C}
+            \quad\Longrightarrow\quad
+            \boxed{L\ddot q+R_\Sigma\dot q+\frac{q}{C}=V_{s,p}\cos(\omega t)}.
+          \]</div>
+          <p>Esta é uma EDO linear de segunda ordem com coeficientes constantes. A segunda derivada vem do indutor. A aproximação pressupõe componentes lineares, parâmetros aproximadamente constantes na faixa estudada e carregamento desprezível pelo osciloscópio.</p>
+        </article>
+
+        <article class="theory-card"><h3>2. Transitório e regime permanente</h3>
+          <p>A solução completa é a soma de uma solução homogênea e uma solução particular. Para a homogênea, tente \(q_h=e^{st}\). Substituir na equação sem a fonte dá:</p>
+          <div class="rlc-formula">\[
+            Ls^2+R_\Sigma s+\frac1C=0,\qquad
+            s=-\alpha\pm\sqrt{\alpha^2-\omega_0^2},\qquad
+            \alpha=\frac{R_\Sigma}{2L},\quad \omega_0=\frac1{\sqrt{LC}}.
+          \]</div>
+          <p>Se \(\alpha&lt;\omega_0\), o transitório oscila com envelope decrescente:</p>
+          <div class="rlc-formula">\[
+            q_h(t)=e^{-\alpha t}\!\left[K_1\cos(\omega_dt)+K_2\sin(\omega_dt)\right],
+            \qquad \omega_d=\sqrt{\omega_0^2-\alpha^2}.
+          \]</div>
+          <p>Se \(\alpha=\omega_0\), há amortecimento crítico; acima disso, a resposta livre não oscila. Com resistência positiva, o transitório desaparece. <strong>Na varredura, esperamos a estabilização e medimos a solução periódica forçada.</strong> Sua frequência é a do gerador, não \(\omega_d\). A frequência livre amortecida e a frequência de máxima corrente forçada são grandezas distintas.</p>
+        </article>
+
+        <article class="theory-card"><h3>3. Tente uma senoide e determine sua amplitude</h3>
+          <p>Como a fonte é senoidal, tente uma combinação de cosseno e seno, que permite uma defasagem: \(q_p=A\cos(\omega t)+B\sin(\omega t)\). As derivadas são:</p>
+          <div class="rlc-formula">\[
+            \dot q_p=-\omega A\sin(\omega t)+\omega B\cos(\omega t),\qquad
+            \ddot q_p=-\omega^2q_p.
+          \]</div>
+          <p>Substitua na EDO e iguale separadamente os coeficientes do cosseno e do seno. Definindo \(a=1/C-L\omega^2\) e \(b=\omega R_\Sigma\), obtemos:</p>
+          <div class="rlc-formula">\[
+            aA+bB=V_{s,p},\qquad aB-bA=0
+            \quad\Longrightarrow\quad
+            A=\frac{V_{s,p}a}{a^2+b^2},\quad
+            B=\frac{V_{s,p}b}{a^2+b^2}.
+          \]</div>
+          <p>A amplitude da carga é \(\sqrt{A^2+B^2}\). Derivar multiplica a amplitude por ω, portanto a amplitude de corrente é:</p>
+          <div class="rlc-formula">\[
+            I_p=\omega\sqrt{A^2+B^2}
+            =\frac{\omega V_{s,p}}{\sqrt{(1/C-L\omega^2)^2+(\omega R_\Sigma)^2}}
+            =\boxed{\frac{V_{s,p}}{\sqrt{R_\Sigma^2+(\omega L-1/(\omega C))^2}}}.
+          \]</div>
+          <p>O denominador é o módulo da impedância. As reatâncias são \(X_L=\omega L\) e \(X_C=1/(\omega C)\): uma aumenta com a frequência e a outra diminui.</p>
+        </article>
+
+        <article class="theory-card"><h3>4. Onde aparece a ressonância?</h3>
+          <p>Com \(V_{s,p}\) e \(R_\Sigma\) constantes, a corrente é máxima quando o denominador é mínimo. Como o termo quadrático nunca é negativo, o mínimo ocorre em \(X_L-X_C=0\):</p>
+          <div class="rlc-formula">\[
+            \omega_0L=\frac1{\omega_0C}
+            \Longrightarrow \omega_0^2=\frac1{LC}
+            \Longrightarrow \boxed{f_0=\frac1{2\pi\sqrt{LC}}}.
+          \]</div>
+          <p>Nesse ponto, \(I_{p,\max}=V_{s,p}/R_\Sigma\). As tensões ideais no indutor e no capacitor têm amplitudes iguais e fases opostas; elas se cancelam na soma da malha, mas <strong>não são individualmente nulas</strong>. Podem ser maiores que a tensão de entrada.</p>
+          <p>A energia alterna entre \(U_C=q^2/(2C)\) e \(U_L=Li^2/2\). A fonte repõe a energia dissipada nas resistências. O resistor limita a corrente e controla a largura da resposta.</p>
+        </article>
+
+        <article class="theory-card"><h3>5. O que os dois canais realmente medem</h3>
+          <p>CH1 mede \(v_{\mathrm{in}}\), nos terminais externos do gerador, depois de \(R_s\). CH2 mede \(v_R=Ri\). Para senoides, razões de amplitudes de pico, pico a pico ou RMS são iguais quando se usa a mesma convenção nos dois canais.</p>
+          <div class="rlc-formula">\[
+            \underline V_{\mathrm{in}}
+            =\underline I\!\left[R_e+j\left(\omega L-\frac1{\omega C}\right)\right],
+            \quad \underline V_R=R\underline I,\quad j^2=-1.
+          \]</div>
+          <p>As grandezas sublinhadas são fasores: representam amplitude e fase da senoide. Dividir suas amplitudes fornece a curva principal deste experimento:</p>
+          <div class="rlc-formula">\[
+            \boxed{H(f)=\frac{V_{R,pp}}{V_{\mathrm{in},pp}}
+            =\frac{R}{\sqrt{R_e^2+(2\pi fL-1/(2\pi fC))^2}}}.
+          \]</div>
+          <p>O máximo de H também ocorre em f₀ e vale \(H_{\max}=R/R_e\). No modelo externo sem perdas adicionais, \(R_e=R\) e \(H_{\max}=1\). Normalizar por CH1 ajuda a separar a resposta do circuito das variações da tensão aplicada.</p>
+          <aside class="rlc-note"><strong>Não conte a resistência do gerador duas vezes.</strong>
+            <p>Para prever a corrente a partir da fonte <em>interna</em>, use \(R_\Sigma=R_s+R_e\). Para prever a razão CH2/CH1, use \(R_e\), porque CH1 já mede a queda disponível depois de Rs. A corrente real continua sendo afetada por Rs.</p>
+          </aside>
+          <p>A fase da tensão no resistor em relação à entrada é:</p>
+          <div class="rlc-formula">\[
+            \phi=\arg(\underline V_R)-\arg(\underline V_{\mathrm{in}})
+            =-\arctan\!\left(\frac{\omega L-1/(\omega C)}{R_e}\right).
+          \]</div>
+          <ul><li><strong>Abaixo de f₀:</strong> predomina a reatância capacitiva; corrente e CH2 adiantam CH1, \(\phi&gt;0\).</li>
+            <li><strong>Em f₀:</strong> as reatâncias se compensam; CH2 e CH1 estão em fase.</li>
+            <li><strong>Acima de f₀:</strong> predomina a reatância indutiva; corrente e CH2 atrasam CH1, \(\phi&lt;0\).</li></ul>
+        </article>
+
+        <article class="theory-card"><h3>6. Largura da resposta e fator de qualidade</h3>
+          <p>Na curva H, encontre \(f_1&lt;f_0&lt;f_2\) onde a amplitude cai para \(H_{\max}/\sqrt2\), cerca de 70,7% do máximo. Com entrada constante, isso representa metade da potência no resistor, pois \(P_R=V_{R,\mathrm{rms}}^2/R\). É o nível de −3 dB relativo ao pico, não metade da amplitude.</p>
+          <div class="rlc-formula">\[
+            \frac{H}{H_{\max}}=\frac1{\sqrt2}
+            \Longrightarrow \left|\omega L-\frac1{\omega C}\right|=R_e.
+          \]</div>
+          <p>As duas soluções positivas e sua diferença são:</p>
+          <div class="rlc-formula">\[
+            \omega_{1,2}=\frac{\sqrt{R_e^2+4L/C}\mp R_e}{2L},\qquad
+            \Delta\omega=\frac{R_e}{L}.
+          \]</div>
+          <div class="rlc-formula">\[
+            \boxed{\Delta f=f_2-f_1=\frac{R_e}{2\pi L}},\qquad
+            \boxed{Q_H=\frac{f_0}{\Delta f}=\frac1{R_e}\sqrt{\frac LC}}.
+          \]</div>
+          <p>Para a curva de corrente com fonte interna constante, substitua \(R_e\) por \(R_\Sigma\): \(Q_\Sigma=\sqrt{L/C}/(R_s+R_e)\). Identifique qual curva foi usada. Aqui calcularemos \(Q_H\) a partir de CH2/CH1.</p>
+          <p>Aumentar R alarga a curva e reduz Q, mantendo f₀ no modelo ideal. A corrente máxima diminui para a mesma fonte interna. Já a tensão no próprio resistor pode aumentar, porque \(V_R=RI\): não conclua que um resistor maior sempre produz menor Vpp.</p>
+        </article>
+
+        <article class="theory-card"><h3>Resumo da dedução</h3>
+          <ol><li>Escreva a lei das malhas usando \(i=\dot q\), \(v_L=L\dot i\) e \(v_C=q/C\).</li>
+            <li>Tente uma solução senoidal e encontre a amplitude \(I_p=V_{s,p}/|Z|\).</li>
+            <li>Minimize \(|Z|\): \(X_L=X_C\), portanto \(f_0=1/(2\pi\sqrt{LC})\).</li>
+            <li>Meça \(V_R\), obtenha a corrente por \(i=v_R/R\) e compare CH2/CH1 para construir H.</li></ol>
+          <p>O modelo deixa de ser suficiente quando as perdas variam muito com a frequência, a bobina se aproxima da autorressonância, há saturação, distorção ou carregamento relevante das pontas. A resistência DC da bobina é um ponto de partida, não uma medida de todas as perdas em corrente alternada.</p>
+        </article>
+        <article class="lab-card"><h3>Referências para aprofundar</h3>
+          <ul><li>OpenStax, <cite>University Physics, volume 2</cite>: <a href="https://openstax.org/books/university-physics-volume-2/pages/15-3-rlc-series-circuits-with-ac">circuitos RLC em corrente alternada</a> e <a href="https://openstax.org/books/university-physics-volume-2/pages/15-5-resonance-in-an-ac-circuit">ressonância</a>.</li>
+            <li>L. A. Bumm, University of Oklahoma: <a href="https://www.nhn.ou.edu/~bumm/ELAB/Labs/lab07_RLC_Resonant_Circuits_v2_3_0.html">RLC Resonant Circuits</a>, medições de amplitude, fase e largura.</li>
+            <li>Tektronix: <a href="https://www.tek.com/en/documents/technical-brief/floating-oscilloscope-measurements-and-operator-protection">referência comum e aterramento nas medições com osciloscópio</a>.</li>
+            <li>Keysight: <a href="https://docs.keysight.com/kkbopen/why-can-a-function-generators-output-signal-amplitude-be-different-from-what-is-selected-577941706.html">amplitude de saída do gerador e efeito da carga</a>.</li></ul>
+        </article>
+      </section>
+
+      <section class="experiment-panel" id="painel-dados" role="tabpanel" aria-labelledby="aba-dados" tabindex="0" hidden>
+        <header class="experiment-section-heading"><h2>Dados</h2><p>Em cada frequência, uma senoide. Ao reunir suas amplitudes, uma curva de ressonância. Preserve as leituras dos dois canais.</p></header>
+        <article class="lab-card"><h3>Qual “pico” estamos procurando?</h3>
+          <p>Na tela, a tensão no resistor varia com o tempo. Em regime permanente, ela é uma senoide de amplitude estável, não uma tensão constante. Com o disparo ajustado, o desenho fica parado, embora o sinal continue oscilando.</p>
+          <div class="rlc-formula">\[
+            V_{pp}=V_{\max}-V_{\min},\qquad
+            V_p=\frac{V_{pp}}2,\qquad
+            V_{\mathrm{rms}}=\frac{V_{pp}}{2\sqrt2}.
+          \]</div>
+          <p>As duas últimas relações valem para senoides centradas em zero. Use a função Vpp ou conte as divisões entre máximo e mínimo e multiplique por V/div, considerando a atenuação da ponta. A média da senoide é aproximadamente zero e não serve para localizar a ressonância.</p>
+          <p><strong>O pico da curva de ressonância é o maior Vpp ao variar a frequência</strong>, para amplitude de entrada constante. Se a entrada variar, use o máximo de H = VR,pp/Vin,pp. Não confunda o eixo de tempo do osciloscópio com o eixo de frequência do gráfico final.</p>
+        </article>
+        <article class="lab-card"><h3>Varredura e registro</h3>
+          <ol class="procedure-list">
+            <li><strong>Calcule a previsão:</strong> use L e C medidos, ou nominais com tolerância declarada. Escolha uma faixa que cubra os dois lados de f₀; como planejamento inicial, tente cerca de 0,2f₀ a 5f₀, dentro dos limites dos equipamentos.</li>
+            <li><strong>Faça uma varredura ampla:</strong> mantenha o ajuste de amplitude do gerador e observe também CH1. Aguarde a estabilização e anote a frequência, Vin,pp e VR,pp em cada ponto.</li>
+            <li><strong>Refine o máximo:</strong> diminua os passos de frequência perto do pico. Colete pelo menos 15 pontos no total, com maior densidade perto do máximo e dos cruzamentos de meia potência.</li>
+            <li><strong>Meça a fase:</strong> compare cruzamentos ascendentes correspondentes dos dois canais. Registre o período T e \(\Delta t=t_R-t_{\mathrm{in}}\), positivo quando CH2 cruza depois de CH1.</li>
+            <li><strong>Encontre a largura:</strong> calcule H em cada ponto e procure ambos os cruzamentos em Hmax/√2. Amplie a faixa se necessário e possível; sem os dois cruzamentos, não declare Q medido.</li>
+            <li><strong>Compare resistores:</strong> desligue a saída, troque apenas R, registre o novo valor e repita com L e C fixos. Use o mesmo critério de amplitude e de normalização.</li>
+          </ol>
+          <p>Com apenas um canal, é possível medir amplitudes nos dois nós em momentos diferentes, mantendo os ajustes e verificando a estabilidade. A comparação simultânea e a medida de fase exigem dois canais; registre essa limitação no relatório.</p>
+        </article>
+        <div class="data-table-wrapper"><table class="data-table">
+          <caption>Repita a tabela para cada resistor; acrescente as linhas necessárias.</caption>
+          <thead><tr><th scope="col">f (Hz)</th><th scope="col">CH1: Vin,pp (V)</th><th scope="col">CH2: VR,pp (V)</th><th scope="col">Δt (s)</th><th scope="col">T (s)</th><th scope="col">H = CH2/CH1</th></tr></thead>
+          <tbody>
+            <tr><td>________</td><td>________</td><td>________</td><td>________</td><td>________</td><td>________</td></tr>
+            <tr><td>________</td><td>________</td><td>________</td><td>________</td><td>________</td><td>________</td></tr>
+            <tr><td>________</td><td>________</td><td>________</td><td>________</td><td>________</td><td>________</td></tr>
+          </tbody>
+        </table></div>
+        <article class="theory-card"><h3>Da leitura aos gráficos</h3>
+          <div class="rlc-formula">\[
+            I_{pp}=\frac{V_{R,pp}}{R},\qquad
+            I_{\mathrm{rms}}=\frac{V_{R,pp}}{2\sqrt2 R},\qquad
+            \phi=-360^\circ\frac{\Delta t}{T}.
+          \]</div>
+          <p>Faça três gráficos: VR,pp versus f, H versus f e fase versus f. Identifique unidades, componentes e cada resistor. Use frequência em escala logarítmica se a faixa cobrir várias décadas; nunca rotule previsões como medições.</p>
+          <p>Estime f₀ pelo máximo de H e verifique a fase próxima de zero. Calcule Δf = f₂ − f₁ e QH = f₀/Δf. Interpole entre pontos vizinhos quando necessário e explique o critério; a resolução da varredura limita a localização do pico.</p>
+        </article>
+        <article class="lab-card"><h3>Incertezas e interpretação</h3>
+          <p>Para valores independentes de L e C, a propagação das incertezas-padrão é:</p>
+          <div class="rlc-formula">\[
+            \frac{u(f_0)}{f_0}=\frac12\sqrt{
+            \left(\frac{u_L}{L}\right)^2+\left(\frac{u_C}{C}\right)^2}.
+          \]</div>
+          <p>Não trate tolerância de fabricante como incerteza-padrão sem justificar a conversão. Considere ainda ruído em Vpp, resolução dos instrumentos, passo de frequência, resistência AC da bobina, ESR do capacitor e capacitância das pontas. Se as senoides estiverem deformadas, investigue a montagem e a amplitude antes de aplicar relações de senoide pura.</p>
+          <ul><li>O pico de H e a fase nula indicaram a mesma frequência?</li>
+            <li>Como a largura mudou quando R aumentou?</li>
+            <li>A entrada real variou perto da ressonância? O que mudou ao normalizar por CH1?</li>
+            <li>Por que a corrente pode diminuir enquanto a tensão no resistor aumenta?</li>
+            <li>O modelo de perdas explica os dados dentro das incertezas?</li></ul>
+        </article>
+      </section>
+
+      <section class="experiment-panel" id="painel-relatorio" role="tabpanel" aria-labelledby="aba-relatorio" tabindex="0" hidden>
+        <header class="experiment-section-heading"><h2>Relatório</h2><p>Folha de registro com esquema, componentes a determinar, dados brutos, análise e discussão. Preencha no papel ou edite o arquivo Markdown.</p></header>
+        <div class="rlc-downloads">
+          <button type="button" data-print-report>Imprimir relatório</button>
+          <a href="./relatorio.md" download>Baixar modelo em Markdown</a>
+          <a href="./circuito-rlc.svg" download>Baixar esquema elétrico</a>
+          <a href="../modelo-relatorio/">Consultar exemplo de formatação acadêmica</a>
+        </div>
+        <div class="report-template" data-markdown-report="./relatorio.md"><p>Carregando o modelo de relatório. Se o conteúdo não aparecer, use o link para baixar o Markdown.</p></div>
+      </section>
+    </main>
+    <footer class="experiment-footer"><p>Experimento 08 · PRCLFBE · Roteiro de bancada</p><a href="../07-carga-descarga-capacitores/">Retomar carga e descarga de capacitores</a></footer>
+  </div>
+  <script type="module" src="../../componentes/navegacao-principal.js"></script>
+  <script type="module" src="../experimento.js"></script>
+</body>
+</html>

@@ -128,6 +128,15 @@ O sétimo roteiro aborda circuitos RC com aquisição pelo Arduino:
    A base é o artigo de Cavalcante, Tavolaro e Molisani (RBEF, 2011), com
    componentes adaptados. Tempos físicos dependem de tolerância e fuga.
 
+O oitavo roteiro investiga a resposta em frequência de um circuito RLC:
+
+8. [ressonância no circuito RLC](site/experimentos/08-ressonancia-rlc/):
+   montagem em série com gerador de funções e osciloscópio, esquema de CH1,
+   CH2 e terra comum, dedução da EDO e da condição de ressonância, medidas de
+   amplitude e fase e largura do pico. R, L, C e ajustes são definidos no dia.
+   O relatório traz tabelas vazias e distingue a resposta normalizada CH2/CH1
+   da corrente carregada pela resistência interna do gerador.
+
 Na página de cada experimento, a aba **Relatório** contém uma folha preparada
 para impressão. O botão de impressão ativa essa aba e remove da cópia os
 controles de navegação. A mesma estrutura também está disponível em

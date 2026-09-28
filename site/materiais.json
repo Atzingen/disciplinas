@@ -473,6 +473,18 @@
     ]
   },
   {
+    "id": "experimento-08-ressonancia-rlc",
+    "title": "Experimento 8 — Ressonância no circuito RLC",
+    "kind": "experimento",
+    "section": "experimentos",
+    "disciplines": ["PRCLFBE"],
+    "reference": "Montagem própria · OpenStax e University of Oklahoma",
+    "theme": "Circuito RLC, ressonância e amortecimento",
+    "description": "Monte um RLC em série com gerador e osciloscópio; deduza a ressonância, meça amplitude e fase e investigue a largura do pico. Valores dos componentes definidos na bancada.",
+    "path": "experimentos/08-ressonancia-rlc/",
+    "tags": ["RLC", "ressonância", "indutor", "capacitor", "resistor", "osciloscópio", "gerador de funções", "fase", "amortecimento", "fator de qualidade"]
+  },
+  {
     "id": "topico-01-picoh",
     "title": "Tópico 1 — Manipulação do robô Picoh",
     "kind": "topico",

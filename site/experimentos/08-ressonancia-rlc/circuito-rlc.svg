@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="500" viewBox="0 0 1000 500" role="img" aria-labelledby="titulo descricao">
+  <title id="titulo">Ligação do RLC em série e dos dois canais do osciloscópio</title>
+  <desc id="descricao">A saída do gerador conecta ao nó A, ao indutor L, ao capacitor C, ao nó B e ao resistor R. O resistor retorna ao GND do gerador. A ponta de CH1 mede A; a ponta de CH2 mede B. As duas garras de terra ficam no mesmo nó GND. Os valores de L, C e R serão definidos na bancada.</desc>
+  <rect width="1000" height="500" rx="16" fill="#ffffff"/>
+  <g font-family="sans-serif" fill="#202b36">
+    <text x="30" y="38" font-size="23" font-weight="700">RLC em série · valores definidos na bancada</text>
+    <rect x="32" y="181" width="184" height="173" rx="12" fill="#f2f5f7" stroke="#43515d" stroke-width="2"/>
+    <text x="53" y="212" font-size="21" font-weight="700">Gerador</text>
+    <text x="53" y="242" font-size="18">Senoide · offset 0</text>
+    <text x="53" y="277" font-size="18">Saída</text>
+    <text x="53" y="331" font-size="18">GND / carcaça</text>
+    <rect x="515" y="64" width="430" height="93" rx="12" fill="#f2f5f7" stroke="#43515d" stroke-width="2"/>
+    <text x="535" y="94" font-size="21" font-weight="700">Osciloscópio · alta impedância</text>
+    <text x="535" y="128" font-size="18" fill="#125a86">CH1: Ventrada</text>
+    <text x="768" y="128" font-size="18" fill="#9d3b18">CH2: VR</text>
+  </g>
+  <g fill="none" stroke="#202b36" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M216 270 H350 C350 238 375 238 375 270 C375 238 400 238 400 270 C400 238 425 238 425 270 C425 238 450 238 450 270 H557 M574 270 H745 V313 M745 375 V410 H270 V326 H216"/>
+    <path d="M557 243 V297 M574 243 V297"/>
+    <rect x="731" y="313" width="28" height="62"/>
+    <path d="M500 410 V430 M480 430 H520 M486 438 H514 M493 446 H507"/>
+  </g>
+  <g fill="#202b36">
+    <circle cx="290" cy="270" r="5"/><circle cx="745" cy="270" r="5"/><circle cx="500" cy="410" r="5"/>
+  </g>
+  <g fill="none" stroke-width="2.5" stroke-dasharray="7 5">
+    <path d="M570 157 V178 H290 V261" stroke="#125a86"/>
+    <path d="M835 157 V207 H745 V261" stroke="#9d3b18"/>
+  </g>
+  <g font-family="sans-serif" font-size="20" fill="#202b36">
+    <text x="360" y="225">L = _____</text>
+    <text x="528" y="225">C = _____</text>
+    <text x="785" y="351">R = _____</text>
+    <text x="265" y="299" fill="#125a86">A</text>
+    <text x="767" y="287" fill="#9d3b18">B</text>
+    <text x="530" y="448" font-size="18">GND comum: ligar aqui as duas garras de terra</text>
+    <text x="32" y="482" font-size="17">Linhas contínuas: circuito. Linhas tracejadas: pontas de prova. CH2 mede o resistor sem mudar o terra.</text>
+  </g>
+</svg>

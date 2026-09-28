@@ -1,0 +1,100 @@
+.rlc-figure {
+  margin: 1.5rem 0;
+}
+
+.rlc-figure__scroll {
+  overflow-x: auto;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  background: white;
+}
+
+.rlc-figure img {
+  display: block;
+  width: 100%;
+  min-width: 680px;
+  height: auto;
+}
+
+.rlc-figure figcaption {
+  margin-top: .75rem;
+  color: var(--ink-soft);
+}
+
+.rlc-downloads {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem;
+  margin-block: 1rem;
+}
+
+.rlc-downloads button {
+  padding: .7rem 1rem;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-md);
+  background: var(--ink);
+  color: var(--surface);
+  font: inherit;
+  cursor: pointer;
+}
+
+.rlc-downloads button:hover {
+  background: var(--ink-soft);
+}
+
+.rlc-downloads button:focus-visible,
+.rlc-figure__scroll:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 4px;
+}
+
+.rlc-formula {
+  max-width: 100%;
+  overflow-x: auto;
+  margin-block: 1.25rem;
+}
+
+.rlc-note {
+  margin-block: 1.25rem;
+  padding: 1rem 1.25rem;
+  border: 1px solid var(--line-strong);
+  background: var(--paper-deep);
+}
+
+.rlc-note p:last-child {
+  margin-bottom: 0;
+}
+
+.report-template {
+  overflow-wrap: anywhere;
+}
+
+.report-template img {
+  max-width: 100%;
+  height: auto;
+}
+
+.rlc-values td {
+  min-width: 8rem;
+}
+
+.rlc-values td:first-child {
+  min-width: 12rem;
+}
+
+@media print {
+  .rlc-downloads,
+  .experiment-header,
+  #painel-relatorio > .experiment-section-heading {
+    display: none;
+  }
+
+  .experiment-main {
+    padding-top: 0;
+  }
+
+  .report-template img {
+    break-inside: avoid;
+  }
+}
