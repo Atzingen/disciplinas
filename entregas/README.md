@@ -12,7 +12,11 @@ banco e arquivos. O desenho completo está em
    Google de professor.
 2. Criar a turma (disciplina e semestre).
 3. Colar a lista de alunos extraída do diário do SUAP, um aluno por linha, com o e-mail
-   `@aluno.ifsp.edu.br`.
+   `@aluno.ifsp.edu.br`. No SUAP, a página de cada aluno não mostra o e-mail acadêmico; ele
+   sai pela exportação "Relação Emails (Alunos)" do diário
+   (`https://suap.ifsp.edu.br/edu/relacao_alunos_email_xls/<id do diário>/`), uma planilha
+   com as colunas MATRICULA, ALUNO e EMAIL, já sem os alunos cancelados. Basta copiar as
+   linhas da planilha e colar: o importador reconhece o e-mail e o nome em cada linha.
 4. Criar as atividades. Elas aparecem na página da disciplina, e os alunos enviam por lá.
 5. No fim do semestre, baixar os zips e apagar a turma, o que remove do servidor a lista
    de alunos e todos os arquivos.
