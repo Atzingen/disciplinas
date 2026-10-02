@@ -14,7 +14,6 @@ from fastapi.responses import FileResponse
 from pydantic import BaseModel, Field
 from starlette.background import BackgroundTask
 
-from app.config import Configuracao
 from app.consultas import (
     atividade_para_json,
     buscar_atividade,
@@ -23,9 +22,9 @@ from app.consultas import (
     turma_para_json,
 )
 from app.dependencias import (
+    ConexaoDoBanco,
+    ConfiguracaoAtual,
     exigir_professor,
-    obter_conexao,
-    obter_configuracao,
     pasta_de_arquivos,
 )
 from app.regras import (
@@ -102,7 +101,7 @@ def nome_para_pasta(texto: str) -> str:
 
 
 @roteador.get("/turmas")
-def listar_turmas(conexao: sqlite3.Connection = Depends(obter_conexao)) -> list[dict[str, Any]]:
+def listar_turmas(conexao: ConexaoDoBanco) -> list[dict[str, Any]]:
     turmas = conexao.execute(
         """
         SELECT turma.*,
@@ -120,7 +119,7 @@ def listar_turmas(conexao: sqlite3.Connection = Depends(obter_conexao)) -> list[
 
 @roteador.post("/turmas", status_code=201)
 def criar_turma(
-    dados: NovaTurma, conexao: sqlite3.Connection = Depends(obter_conexao)
+    dados: NovaTurma, conexao: ConexaoDoBanco
 ) -> dict[str, Any]:
     disciplina = dados.disciplina.strip().upper()
     semestre = dados.semestre.strip()
@@ -144,8 +143,8 @@ def criar_turma(
 @roteador.delete("/turmas/{turma_id}", status_code=204)
 def apagar_turma(
     turma_id: int,
-    conexao: sqlite3.Connection = Depends(obter_conexao),
-    configuracao: Configuracao = Depends(obter_configuracao),
+    conexao: ConexaoDoBanco,
+    configuracao: ConfiguracaoAtual,
 ) -> None:
     """Apaga a turma com matrículas, atividades, entregas e arquivos."""
     buscar_turma(conexao, turma_id)
@@ -155,7 +154,7 @@ def apagar_turma(
 
 @roteador.get("/turmas/{turma_id}/matriculas")
 def listar_matriculas(
-    turma_id: int, conexao: sqlite3.Connection = Depends(obter_conexao)
+    turma_id: int, conexao: ConexaoDoBanco
 ) -> list[dict[str, Any]]:
     buscar_turma(conexao, turma_id)
     matriculas = conexao.execute(
@@ -167,7 +166,7 @@ def listar_matriculas(
 
 @roteador.put("/turmas/{turma_id}/matriculas")
 def importar_matriculas(
-    turma_id: int, dados: ListaDeAlunos, conexao: sqlite3.Connection = Depends(obter_conexao)
+    turma_id: int, dados: ListaDeAlunos, conexao: ConexaoDoBanco
 ) -> dict[str, Any]:
     """Substitui a lista de permitidos da turma pelo texto colado do SUAP."""
     buscar_turma(conexao, turma_id)
@@ -209,7 +208,7 @@ def importar_matriculas(
 
 @roteador.get("/turmas/{turma_id}/atividades")
 def listar_atividades_da_turma(
-    turma_id: int, conexao: sqlite3.Connection = Depends(obter_conexao)
+    turma_id: int, conexao: ConexaoDoBanco
 ) -> list[dict[str, Any]]:
     buscar_turma(conexao, turma_id)
     atividades = conexao.execute(
@@ -229,7 +228,7 @@ def listar_atividades_da_turma(
 
 @roteador.post("/turmas/{turma_id}/atividades", status_code=201)
 def criar_atividade(
-    turma_id: int, dados: NovaAtividade, conexao: sqlite3.Connection = Depends(obter_conexao)
+    turma_id: int, dados: NovaAtividade, conexao: ConexaoDoBanco
 ) -> dict[str, Any]:
     buscar_turma(conexao, turma_id)
     colunas = campos_da_atividade_para_o_banco(dados.model_dump())
@@ -249,7 +248,7 @@ def criar_atividade(
 def alterar_atividade(
     atividade_id: int,
     dados: AlteracaoDaAtividade,
-    conexao: sqlite3.Connection = Depends(obter_conexao),
+    conexao: ConexaoDoBanco,
 ) -> dict[str, Any]:
     buscar_atividade(conexao, atividade_id)
     colunas = campos_da_atividade_para_o_banco(dados.model_dump(exclude_none=True))
@@ -265,8 +264,8 @@ def alterar_atividade(
 @roteador.delete("/atividades/{atividade_id}", status_code=204)
 def apagar_atividade(
     atividade_id: int,
-    conexao: sqlite3.Connection = Depends(obter_conexao),
-    configuracao: Configuracao = Depends(obter_configuracao),
+    conexao: ConexaoDoBanco,
+    configuracao: ConfiguracaoAtual,
 ) -> None:
     atividade = buscar_atividade(conexao, atividade_id)
     conexao.execute("DELETE FROM atividade WHERE id = ?", (atividade_id,))
@@ -276,7 +275,7 @@ def apagar_atividade(
 
 @roteador.get("/atividades/{atividade_id}/entregas")
 def listar_entregas(
-    atividade_id: int, conexao: sqlite3.Connection = Depends(obter_conexao)
+    atividade_id: int, conexao: ConexaoDoBanco
 ) -> dict[str, Any]:
     atividade = buscar_atividade(conexao, atividade_id)
     turma = buscar_turma(conexao, atividade["turma_id"])
@@ -309,8 +308,8 @@ def listar_entregas(
 @roteador.get("/atividades/{atividade_id}/entregas.zip")
 def baixar_entregas_em_zip(
     atividade_id: int,
-    conexao: sqlite3.Connection = Depends(obter_conexao),
-    configuracao: Configuracao = Depends(obter_configuracao),
+    conexao: ConexaoDoBanco,
+    configuracao: ConfiguracaoAtual,
 ) -> FileResponse:
     """Um zip com as entregas vigentes, uma pasta por aluno ou grupo."""
     atividade = buscar_atividade(conexao, atividade_id)

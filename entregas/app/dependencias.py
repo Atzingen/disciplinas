@@ -5,6 +5,7 @@ from __future__ import annotations
 import sqlite3
 from collections.abc import Iterator
 from pathlib import Path
+from typing import Annotated
 
 from fastapi import Depends, Header, HTTPException, Request
 
@@ -39,6 +40,12 @@ def obter_conexao(
         conexao.close()
 
 
+# Com scope="function" o commit acontece antes de a resposta sair. No padrão do FastAPI
+# ("request") a resposta chega ao navegador antes do commit, e a consulta seguinte da página
+# não enxerga o que acabou de ser gravado.
+ConexaoDoBanco = Annotated[sqlite3.Connection, Depends(obter_conexao, scope="function")]
+
+
 def obter_usuario(
     request: Request,
     authorization: str | None = Header(default=None),
@@ -54,7 +61,11 @@ def obter_usuario(
         raise HTTPException(status_code=401, detail=str(erro)) from erro
 
 
-def exigir_professor(usuario: Usuario = Depends(obter_usuario)) -> Usuario:
+UsuarioAtual = Annotated[Usuario, Depends(obter_usuario)]
+ConfiguracaoAtual = Annotated[Configuracao, Depends(obter_configuracao)]
+
+
+def exigir_professor(usuario: UsuarioAtual) -> Usuario:
     if not usuario.professor:
         raise HTTPException(status_code=403, detail="Esta área é só para professores.")
     return usuario

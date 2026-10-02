@@ -6,10 +6,10 @@ import shutil
 import sqlite3
 from typing import Any
 
-from fastapi import APIRouter, Depends, File, Form, HTTPException, UploadFile
+from fastapi import APIRouter, File, Form, HTTPException, UploadFile
 from fastapi.responses import FileResponse
 
-from app.config import DOMINIOS_DE_ALUNO, MAXIMO_DE_VERSOES_POR_ATIVIDADE, Configuracao
+from app.config import DOMINIOS_DE_ALUNO, MAXIMO_DE_VERSOES_POR_ATIVIDADE
 from app.consultas import (
     atividade_para_json,
     buscar_atividade,
@@ -21,10 +21,10 @@ from app.consultas import (
     turma_para_json,
 )
 from app.dependencias import (
+    ConexaoDoBanco,
+    ConfiguracaoAtual,
+    UsuarioAtual,
     exigir_aluno_da_turma,
-    obter_conexao,
-    obter_configuracao,
-    obter_usuario,
     pasta_de_arquivos,
 )
 from app.identidade import Usuario
@@ -37,7 +37,7 @@ BYTES_POR_MB = 1024 * 1024
 
 @roteador.get("/disciplinas/{codigo}/atividades")
 def listar_atividades_da_disciplina(
-    codigo: str, conexao: sqlite3.Connection = Depends(obter_conexao)
+    codigo: str, conexao: ConexaoDoBanco
 ) -> dict[str, Any]:
     """Lista pública: só título, prazo e regras da atividade. Nenhum dado de aluno."""
     turma = buscar_turma_vigente(conexao, codigo)
@@ -55,8 +55,8 @@ def listar_atividades_da_disciplina(
 
 @roteador.get("/eu")
 def descrever_usuario(
-    usuario: Usuario = Depends(obter_usuario),
-    conexao: sqlite3.Connection = Depends(obter_conexao),
+    usuario: UsuarioAtual,
+    conexao: ConexaoDoBanco,
 ) -> dict[str, Any]:
     turmas: list[sqlite3.Row] = []
     if usuario.dominio in DOMINIOS_DE_ALUNO:
@@ -80,8 +80,8 @@ def descrever_usuario(
 @roteador.get("/disciplinas/{codigo}/minhas-entregas")
 def listar_minhas_entregas(
     codigo: str,
-    usuario: Usuario = Depends(obter_usuario),
-    conexao: sqlite3.Connection = Depends(obter_conexao),
+    usuario: UsuarioAtual,
+    conexao: ConexaoDoBanco,
 ) -> dict[str, Any]:
     turma = buscar_turma_vigente(conexao, codigo)
     if turma is None:
@@ -110,8 +110,8 @@ def listar_minhas_entregas(
 @roteador.get("/turmas/{turma_id}/colegas")
 def listar_colegas(
     turma_id: int,
-    usuario: Usuario = Depends(obter_usuario),
-    conexao: sqlite3.Connection = Depends(obter_conexao),
+    usuario: UsuarioAtual,
+    conexao: ConexaoDoBanco,
 ) -> list[dict[str, Any]]:
     """Nomes da turma para montar o grupo. Os e-mails dos colegas não são expostos."""
     buscar_turma(conexao, turma_id)
@@ -232,11 +232,11 @@ def recusar_excesso_de_versoes(
 @roteador.post("/atividades/{atividade_id}/entregas", status_code=201)
 def enviar_entrega(
     atividade_id: int,
+    usuario: UsuarioAtual,
+    conexao: ConexaoDoBanco,
+    configuracao: ConfiguracaoAtual,
     arquivos: list[UploadFile] = File(...),
     membros: list[int] = Form(default=[]),
-    usuario: Usuario = Depends(obter_usuario),
-    conexao: sqlite3.Connection = Depends(obter_conexao),
-    configuracao: Configuracao = Depends(obter_configuracao),
 ) -> dict[str, Any]:
     atividade = buscar_atividade(conexao, atividade_id)
     turma_id = atividade["turma_id"]
@@ -300,9 +300,9 @@ def enviar_entrega(
 @roteador.get("/arquivos/{arquivo_id}")
 def baixar_arquivo(
     arquivo_id: int,
-    usuario: Usuario = Depends(obter_usuario),
-    conexao: sqlite3.Connection = Depends(obter_conexao),
-    configuracao: Configuracao = Depends(obter_configuracao),
+    usuario: UsuarioAtual,
+    conexao: ConexaoDoBanco,
+    configuracao: ConfiguracaoAtual,
 ) -> FileResponse:
     arquivo = conexao.execute(
         """

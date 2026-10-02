@@ -80,16 +80,16 @@ O professor cola na página o texto extraído do diário do SUAP, um aluno por l
 | Rota | Quem | Função |
 |---|---|---|
 | `GET /saude` | público | verificação de funcionamento |
-| `GET /disciplinas/{codigo}/atividades` | público | atividades abertas da turma vigente: título, descrição, prazo, autoria, arquivos aceitos e material |
+| `GET /disciplinas/{codigo}/atividades` | público | atividades da turma vigente (as fechadas aparecem como encerradas): título, descrição, prazo, autoria, arquivos aceitos e material |
 | `GET /eu` | autenticado | papel, nome e turmas do usuário |
 | `GET /disciplinas/{codigo}/minhas-entregas` | aluno | situação da própria entrega em cada atividade |
 | `GET /turmas/{id}/atividades` | professor | todas as atividades da turma, inclusive as fechadas |
 | `GET /turmas/{id}/colegas` | aluno, professor | nomes da turma, para montar o grupo |
 | `POST /atividades/{id}/entregas` | aluno | envio de arquivos e, em grupo, dos membros |
 | `GET /arquivos/{id}` | membro, professor | download, sempre como anexo |
-| `POST /turmas`, `DELETE /turmas/{id}` | professor | criar turma; apagar turma com matrículas, entregas e arquivos |
-| `PUT /turmas/{id}/matriculas` | professor | importar a lista de permitidos |
-| `POST /turmas/{id}/atividades`, `PATCH /atividades/{id}` | professor | criar, editar, abrir e fechar atividade |
+| `GET /turmas`, `POST /turmas`, `DELETE /turmas/{id}` | professor | listar e criar turmas; apagar turma com matrículas, entregas e arquivos |
+| `GET /turmas/{id}/matriculas`, `PUT /turmas/{id}/matriculas` | professor | ver e importar a lista de permitidos |
+| `POST /turmas/{id}/atividades`, `PATCH /atividades/{id}`, `DELETE /atividades/{id}` | professor | criar, editar, abrir, fechar e apagar atividade |
 | `GET /atividades/{id}/entregas` | professor | quem entregou, quem falta, atrasos e versões |
 | `GET /atividades/{id}/entregas.zip` | professor | todas as entregas vigentes em um arquivo |
 
@@ -98,7 +98,7 @@ O CORS aceita somente `https://atzingen.github.io` e, em desenvolvimento, `http:
 ## Páginas
 
 - **Seção "Entregas" dentro de cada página de disciplina** (`site/disciplinas/<codigo>/index.html`, âncora `#entregas`), logo depois dos materiais. Não existe página separada para o aluno.
-  - Sem login, a seção já lista as atividades abertas da turma vigente, com título, prazo e o link para o material do portal a que a atividade se refere. Título e prazo de atividade não são dados pessoais, e assim o aluno vê o que há para entregar antes de entrar.
+  - Sem login, a seção já lista as atividades da turma vigente, com título, prazo e o link para o material do portal a que a atividade se refere. As atividades fechadas continuam na lista como encerradas, sem botão de envio, para que o aluno ainda veja a própria entrega. Título e prazo de atividade não são dados pessoais, e assim o aluno vê o que há para entregar antes de entrar.
   - O botão "Enviar" de cada atividade abre um diálogo (`<dialog>`) na mesma página. Se o aluno ainda não entrou, o diálogo mostra o botão "Entrar com Google"; depois do login, mostra a escolha dos arquivos e, em atividade em grupo, a escolha dos colegas.
   - Depois do login, cada atividade passa a mostrar a situação da entrega do aluno: enviada, atrasada, membros e arquivos.
   - Sem turma vigente ou sem atividades abertas, a seção diz que não há entregas abertas.
@@ -120,7 +120,7 @@ A turma vigente de uma disciplina é a de semestre mais recente.
 - Clone do repositório em `/var/local/apps/disciplinas/` (público, sem chave para o `git pull`) e `docker compose` em `entregas/`, com a porta publicada só em `127.0.0.1:8100`. O nginx do servidor faz o proxy de `entregas.iatzingen.com.br` com certificado do certbot.
 - Dados e banco em `/var/local/apps/disciplinas-dados/`, fora do clone, montados como volume.
 - Configuração em `.env` no servidor: `GOOGLE_CLIENT_ID`, `PROFESSORES`, `ORIGENS_PERMITIDAS`. Nenhum desses valores entra no repositório.
-- Workflow `entregas-deploy.yml`: a cada push em `main` que altere `entregas/**`, entra por SSH no `gustavo-01`, atualiza o clone e reconstrói o contêiner. Assim o merge do PR publica páginas e serviço juntos. A chave SSH do deploy é exclusiva desse workflow e fica nos secrets do repositório.
+- Workflow `entregas-deploy.yml`: a cada push em `main` que altere `entregas/**`, entra por SSH no `gustavo-01`, atualiza o clone e reconstrói o contêiner. Assim o merge do PR publica páginas e serviço juntos. A chave SSH do deploy é exclusiva desse workflow, fica nos secrets do repositório e só executa `entregas/deploy.sh` (comando forçado no `authorized_keys` do servidor), porque o repositório é público e o usuário `deployer` tem privilégios amplos.
 - Backup: um timer no PC `casa` copia todas as noites o banco (via `.backup` do SQLite) e os arquivos para `/mnt/backup-01/backups/disciplinas-entregas/`. A unidade fica versionada no `meu-setup-dev`.
 
 ### Passos que dependem de contas do Gustavo

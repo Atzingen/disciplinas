@@ -4,6 +4,7 @@ from pathlib import Path
 from typing import Any
 
 import pytest
+from fastapi import FastAPI
 from fastapi.testclient import TestClient
 
 from app.config import Configuracao
@@ -49,14 +50,19 @@ def pasta_dados(tmp_path: Path) -> Path:
 
 
 @pytest.fixture
-def cliente(pasta_dados: Path) -> TestClient:
+def aplicacao(pasta_dados: Path) -> FastAPI:
     configuracao = Configuracao(
         google_client_id="cliente-de-teste",
         professores=frozenset({"professor@ifsp.edu.br"}),
         origens_permitidas=("https://atzingen.github.io",),
         pasta_dados=pasta_dados,
     )
-    return TestClient(criar_app(configuracao, verificar_token_de_teste))
+    return criar_app(configuracao, verificar_token_de_teste)
+
+
+@pytest.fixture
+def cliente(aplicacao: FastAPI) -> TestClient:
+    return TestClient(aplicacao)
 
 
 @pytest.fixture

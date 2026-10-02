@@ -1,0 +1,56 @@
+name: Publicar serviço de entregas
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "entregas/**"
+      - ".github/workflows/entregas-deploy.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: entregas-deploy
+  cancel-in-progress: false
+
+jobs:
+  testar:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: entregas
+    steps:
+      - name: Baixar repositório
+        uses: actions/checkout@v7
+
+      - name: Configurar Python
+        uses: actions/setup-python@v7
+        with:
+          python-version: "3.13"
+
+      - name: Instalar dependências
+        run: pip install -r requirements-dev.txt
+
+      - name: Rodar os testes do serviço
+        run: python -m pytest -q
+
+  publicar:
+    needs: testar
+    runs-on: ubuntu-latest
+    steps:
+      # A chave só executa entregas/deploy.sh no servidor (comando forçado no authorized_keys).
+      - name: Atualizar e reconstruir no servidor
+        env:
+          SSH_HOST: ${{ secrets.SSH_HOST_GUSTAVO_01 }}
+          SSH_USER: ${{ secrets.SSH_USER_GUSTAVO_01 }}
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY_GUSTAVO_01 }}
+          SSH_KNOWN_HOSTS: ${{ secrets.SSH_KNOWN_HOSTS_GUSTAVO_01 }}
+        run: |
+          mkdir -p ~/.ssh
+          printf '%s\n' "$SSH_PRIVATE_KEY" > ~/.ssh/deploy
+          chmod 600 ~/.ssh/deploy
+          printf '%s\n' "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
+          ssh -i ~/.ssh/deploy -o IdentitiesOnly=yes "$SSH_USER@$SSH_HOST"
