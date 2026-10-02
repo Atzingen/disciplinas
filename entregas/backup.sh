@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
-# Refaz, no próprio servidor, o arquivo único de backup do serviço de entregas: uma cópia
-# consistente do banco e os arquivos enviados. Roda toda noite pelo cron do deployer.
+# Refaz, no próprio servidor, o arquivo único de backup do serviço de entregas (uma cópia
+# consistente do banco e os arquivos enviados) e o envia ao Google Drive. Roda toda noite
+# pelo cron do deployer.
 set -euo pipefail
 
 DADOS="/var/local/apps/disciplinas-dados"
@@ -27,3 +28,8 @@ mv "$ARQUIVO.novo" "$ARQUIVO"
 rm "$DADOS/entregas.backup.sqlite3"
 
 echo "$(date -Is) backup refeito: $ARQUIVO ($(du -h "$ARQUIVO" | cut -f1))"
+
+# Cópia fora do servidor: o mesmo arquivo único, substituído a cada noite, em uma pasta do
+# Google Drive do professor. O rclone só enxerga no Drive o que ele mesmo criou (drive.file).
+rclone copyto "$ARQUIVO" "gdrive-entregas:disciplinas-entregas/entregas-backup.tar.gz"
+echo "$(date -Is) backup enviado ao Google Drive"
