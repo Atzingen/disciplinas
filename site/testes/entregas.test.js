@@ -109,3 +109,13 @@ test("a área do professor existe e fica fora dos buscadores", async () => {
   assert.match(html, /data-teacher-root/);
   assert.match(html, /componentes\/entregas-professor\.js/);
 });
+
+// O endereço desta página está registrado no Google como política de privacidade do login.
+test("a página de privacidade registrada no Google existe e o login aponta para ela", async () => {
+  const html = await readSitePage("entregas/privacidade/index.html");
+  const component = await readSitePage("componentes/entregas.js");
+
+  assert.match(html, /<h1>Privacidade das entregas<\/h1>/);
+  assert.match(html, /gustavo\.von@ifsp\.edu\.br/);
+  assert.match(component, /entregas\/privacidade\//);
+});

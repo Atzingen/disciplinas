@@ -184,7 +184,11 @@ export async function mountSubmissions(root, { config, rootPath = "./" }) {
     const buttonHolder = element("div", "submission-google");
     const problem = element("p", "submission-error", message);
     problem.setAttribute("role", "alert");
-    body.append(buttonHolder, problem);
+    const privacy = element("p", "submission-hint", "O portal recebe do Google só o seu nome e e-mail. ");
+    const privacyLink = element("a", "", "Como os dados são usados");
+    privacyLink.href = `${rootPath}entregas/privacidade/`;
+    privacy.append(privacyLink, ".");
+    body.append(buttonHolder, problem, privacy);
 
     renderGoogleButton(buttonHolder, config.googleClientId, async () => {
       const refusal = await loadDeliveries();
