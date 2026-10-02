@@ -22,13 +22,14 @@ O portal continua publicado no GitHub Pages. Como o Pages só serve arquivos est
 ## Arquitetura
 
 ```
-navegador ── páginas estáticas ──> atzingen.github.io/disciplinas/entregas/   (GitHub Pages)
+navegador ── páginas estáticas ──> atzingen.github.io/disciplinas/            (GitHub Pages)
     │
-    └── chamadas autenticadas ───> entregas.iatzingen.com.br                  (gustavo-01)
+    └── chamadas em segundo plano ─> entregas.iatzingen.com.br                (gustavo-01)
                                      nginx + TLS ─> FastAPI ─> SQLite + arquivos em disco
 ```
 
-- **Páginas** em `site/entregas/`, em HTML e módulos JavaScript sem etapa de build, como o restante do site, reutilizando `assets/base.css` e a navegação principal.
+- **O aluno nunca sai do portal.** A entrega acontece dentro da página da disciplina. O endereço do serviço só é usado pelo JavaScript da página, em segundo plano; o aluno não o vê, não o recebe e não é redirecionado. A única janela externa é a do próprio Google, na hora de escolher a conta.
+- **Páginas** em HTML e módulos JavaScript sem etapa de build, como o restante do site, reutilizando `assets/base.css` e a navegação principal.
 - **Serviço** em `entregas/`, na raiz do repositório e fora de `site/`, portanto não publicado pelo Pages: FastAPI, `sqlite3` da biblioteca padrão (funções simples, sem ORM) e arquivos em disco, em um contêiner Docker.
 - **Sem cookies entre domínios.** As páginas e o serviço ficam em domínios diferentes, e cookies de terceiros são bloqueados por vários navegadores. A página guarda o token de identidade do Google em `sessionStorage` e o envia em `Authorization: Bearer` a cada chamada.
 
@@ -79,8 +80,10 @@ O professor cola na página o texto extraído do diário do SUAP, um aluno por l
 | Rota | Quem | Função |
 |---|---|---|
 | `GET /saude` | público | verificação de funcionamento |
+| `GET /disciplinas/{codigo}/atividades` | público | atividades abertas da turma vigente: título, descrição, prazo, autoria, arquivos aceitos e material |
 | `GET /eu` | autenticado | papel, nome e turmas do usuário |
-| `GET /turmas/{id}/atividades` | aluno, professor | atividades, com a situação da própria entrega para o aluno |
+| `GET /disciplinas/{codigo}/minhas-entregas` | aluno | situação da própria entrega em cada atividade |
+| `GET /turmas/{id}/atividades` | professor | todas as atividades da turma, inclusive as fechadas |
 | `GET /turmas/{id}/colegas` | aluno, professor | nomes da turma, para montar o grupo |
 | `POST /atividades/{id}/entregas` | aluno | envio de arquivos e, em grupo, dos membros |
 | `GET /arquivos/{id}` | membro, professor | download, sempre como anexo |
@@ -94,12 +97,16 @@ O CORS aceita somente `https://atzingen.github.io` e, em desenvolvimento, `http:
 
 ## Páginas
 
-- `site/entregas/index.html` — aluno. Aceita `?disciplina=<codigo>`; sem o parâmetro lista todas as turmas do aluno. Mostra login, atividades, prazo, situação da entrega (enviada, atrasada, membros, arquivos) e o formulário de envio.
-- `site/entregas/professor/index.html` — professor. Turmas, importação da lista, criação e edição de atividades, tabela de entregas e download em lote.
+- **Seção "Entregas" dentro de cada página de disciplina** (`site/disciplinas/<codigo>/index.html`, âncora `#entregas`), logo depois dos materiais. Não existe página separada para o aluno.
+  - Sem login, a seção já lista as atividades abertas da turma vigente, com título, prazo e o link para o material do portal a que a atividade se refere. Título e prazo de atividade não são dados pessoais, e assim o aluno vê o que há para entregar antes de entrar.
+  - O botão "Enviar" de cada atividade abre um diálogo (`<dialog>`) na mesma página. Se o aluno ainda não entrou, o diálogo mostra o botão "Entrar com Google"; depois do login, mostra a escolha dos arquivos e, em atividade em grupo, a escolha dos colegas.
+  - Depois do login, cada atividade passa a mostrar a situação da entrega do aluno: enviada, atrasada, membros e arquivos.
+  - Sem turma vigente ou sem atividades abertas, a seção diz que não há entregas abertas.
+- `site/entregas/professor/index.html` — só o professor usa. Turmas, importação da lista, criação e edição de atividades, tabela de entregas e download em lote.
 - `site/entregas/config.js` — endereço do serviço e client ID do Google. São valores públicos.
-- Um cartão "Entregas" na seção de materiais das três páginas de disciplina, apontando para `entregas/?disciplina=<codigo>`.
+- `site/componentes/entregas.js` — componente da seção, carregado pelas três páginas de disciplina.
 
-A atividade pode indicar o material do portal a que se refere; a página do aluno mostra esse link.
+A turma vigente de uma disciplina é a de semestre mais recente.
 
 ## Armazenamento e segurança dos arquivos
 
@@ -128,7 +135,8 @@ Cada teste abaixo corresponde a uma falha concreta que ele impede.
 | Teste do serviço (pytest) | Falha que pega |
 |---|---|
 | token com `hd` de outro domínio ou sem `hd` é recusado | conta Gmail comum com e-mail parecido entra |
-| e-mail fora da lista da turma é recusado | aluno de outra turma envia ou lê atividades |
+| e-mail fora da lista da turma é recusado | aluno de outra turma envia arquivos ou lê entregas |
+| a lista pública de atividades não traz nomes, e-mails nem entregas | dado de aluno exposto sem login |
 | aluno não baixa arquivo de entrega alheia | vazamento de trabalho entre alunos |
 | envio depois do prazo entra como atrasado | atraso passa despercebido ou envio é perdido |
 | reenvio mantém a versão anterior | versão no prazo some após reenvio atrasado |
@@ -140,7 +148,7 @@ Cada teste abaixo corresponde a uma falha concreta que ele impede.
 
 A verificação do token é substituída nos testes pelo mecanismo de dependências do FastAPI; a verificação real é exercitada no login de produção.
 
-No site, o teste de estrutura passa a exigir o cartão "Entregas" nas três páginas de disciplina e a presença das duas páginas novas.
+No site, o teste de estrutura passa a exigir a seção "Entregas" nas três páginas de disciplina e a presença da página do professor.
 
 Critérios de pronto: `pytest` e `npm test` sem falhas; contêiner `healthy`; `curl https://entregas.iatzingen.com.br/saude` com 200; no navegador, o professor entra, cria turma, importa a lista, cria uma atividade individual e uma em grupo, envia como aluno de teste e baixa o zip. O login de uma conta `@aluno.ifsp.edu.br` real só pode ser confirmado pelo primeiro aluno.
 
