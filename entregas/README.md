@@ -39,3 +39,8 @@ As páginas, servidas em `http://localhost:8000` (`npm run serve`), já apontam 
   do certbot.
 - O workflow `entregas-deploy.yml` roda os testes e executa `deploy.sh` no servidor a cada
   push na `main` que altere `entregas/`.
+- Backup: `backup.sh` refaz toda noite, pelo cron do `deployer`, um único arquivo em
+  `/var/local/apps/disciplinas-backup/entregas-backup.tar.gz` (banco e arquivos). Fica só no
+  servidor; nada é copiado para as máquinas do professor. Para restaurar, parar o contêiner,
+  extrair o arquivo, pôr `entregas.backup.sqlite3` como `entregas.sqlite3` e a pasta
+  `arquivos/` em `/var/local/apps/disciplinas-dados/`, e subir o contêiner de novo.

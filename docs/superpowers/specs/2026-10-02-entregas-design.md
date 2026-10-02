@@ -121,7 +121,7 @@ A turma vigente de uma disciplina é a de semestre mais recente.
 - Dados e banco em `/var/local/apps/disciplinas-dados/`, fora do clone, montados como volume.
 - Configuração em `.env` no servidor: `GOOGLE_CLIENT_ID`, `PROFESSORES`, `ORIGENS_PERMITIDAS`. Nenhum desses valores entra no repositório.
 - Workflow `entregas-deploy.yml`: a cada push em `main` que altere `entregas/**`, entra por SSH no `gustavo-01`, atualiza o clone e reconstrói o contêiner. Assim o merge do PR publica páginas e serviço juntos. A chave SSH do deploy é exclusiva desse workflow, fica nos secrets do repositório e só executa `entregas/deploy.sh` (comando forçado no `authorized_keys` do servidor), porque o repositório é público e o usuário `deployer` tem privilégios amplos.
-- Backup: um timer no PC `casa` copia todas as noites o banco (via `.backup` do SQLite) e os arquivos para `/mnt/backup-01/backups/disciplinas-entregas/`. A unidade fica versionada no `meu-setup-dev`.
+- Backup: um único arquivo no próprio servidor, `/var/local/apps/disciplinas-backup/entregas-backup.tar.gz`, refeito toda noite pelo cron do `deployer` com `entregas/backup.sh` (cópia consistente do banco via `.backup` do SQLite, mais os arquivos). Os dados e o backup nunca são copiados para as máquinas pessoais do professor. O arquivo fica no mesmo disco do serviço, então cobre erro de operação e corrupção do banco, não a perda do servidor; enviar esse arquivo ao Google Drive é a extensão prevista, ainda não configurada.
 
 ### Passos que dependem de contas do Gustavo
 
