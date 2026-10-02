@@ -7,6 +7,7 @@
   <title>PRCFEMG · Fundamentos do Eletromagnetismo</title>
   <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="../../assets/base.css">
+  <link rel="stylesheet" href="../../assets/entregas.css">
   <script>try{if(localStorage.getItem("tema")==="escuro"){document.documentElement.dataset.theme="escuro"}}catch(erro){}</script>
 </head>
 <body class="course-page course-page--prcfemg">
@@ -62,6 +63,16 @@
           <span><strong>Simulações</strong><small>Modelos interativos associados ao componente.</small></span>
           <span aria-hidden="true">→</span>
         </a>
+      </div>
+    </section>
+
+    <section class="submissions-section" id="entregas" aria-labelledby="entregas-title" data-submissions-root data-discipline="PRCFEMG">
+      <div class="section-heading section-heading--compact">
+        <div><p class="eyebrow">Entregas</p><h2 id="entregas-title">Atividades para entregar</h2></div>
+        <p class="catalog-count" data-submissions-account></p>
+      </div>
+      <div class="submissions-list" data-submissions-list aria-live="polite">
+        <p class="submission-empty">Carregando as entregas…</p>
       </div>
     </section>
 
@@ -235,6 +246,14 @@
       registryUrl: "../../materiais.json",
       pathPrefix: "../../",
       scope: { discipline: "PRCFEMG" },
+    });
+  </script>
+  <script type="module">
+    import { mountSubmissions } from "../../componentes/entregas.js";
+    import { ENTREGAS_CONFIG } from "../../entregas/config.js";
+    mountSubmissions(document.querySelector("[data-submissions-root]"), {
+      config: ENTREGAS_CONFIG,
+      rootPath: "../../",
     });
   </script>
 </body>

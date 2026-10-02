@@ -146,6 +146,22 @@ As fotografias selecionadas do manual permanecem creditadas à AZEHEB. O PDF
 original não é publicado neste repositório; a proveniência das imagens está em
 [site/assets/experimentos/azeheb/README.md](site/assets/experimentos/azeheb/README.md).
 
+## Entregas de arquivos
+
+Cada página de disciplina tem a seção **Entregas**, logo depois dos materiais. O aluno vê
+as atividades abertas, clica em "Enviar", entra com a conta Google do IFSP
+(`@aluno.ifsp.edu.br`) e envia o arquivo sem sair da página. Só envia quem está na lista
+da turma, extraída do SUAP uma vez por semestre; a atividade pode ser individual ou em
+grupo, e o envio depois do prazo é aceito e marcado como atrasado.
+
+O professor cria turmas e atividades, importa a lista e baixa as entregas em
+[site/entregas/professor/](site/entregas/professor/).
+
+Como o GitHub Pages só serve arquivos estáticos e este repositório é público, a lista de
+alunos e os arquivos ficam em um serviço próprio, descrito em
+[entregas/README.md](entregas/README.md). O código do serviço está em `entregas/`, fora de
+`site/`, e não é publicado pelo Pages.
+
 ## PRCCOMP — Física Computacional
 
 A disciplina não organiza listas de exercícios: o material é uma sequência de

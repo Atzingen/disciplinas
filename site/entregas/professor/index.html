@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <meta name="description" content="Área do professor para criar atividades e receber as entregas dos alunos.">
+  <title>Entregas · área do professor</title>
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../assets/base.css">
+  <link rel="stylesheet" href="../../assets/entregas.css">
+  <script>try{if(localStorage.getItem("tema")==="escuro"){document.documentElement.dataset.theme="escuro"}}catch(erro){}</script>
+</head>
+<body class="course-page">
+  <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+
+  <header class="site-header">
+    <a class="brand" href="../../" aria-label="Materiais didáticos — início">
+      <span class="brand__mark" aria-hidden="true">G</span>
+      <span><strong>Gustavo von Atzingen</strong><small>IFSP · materiais didáticos</small></span>
+    </a>
+    <div data-site-navigation data-root-path="../../" data-active-section="entregas"></div>
+  </header>
+
+  <main class="course-page-main teacher-area" id="conteudo" data-teacher-root>
+    <nav class="course-breadcrumb" aria-label="Caminho da página">
+      <a href="../../">Início</a><span aria-hidden="true">/</span><strong>Entregas · professor</strong>
+    </nav>
+
+    <header class="course-hero">
+      <div>
+        <p class="eyebrow">Área do professor</p>
+        <h1>Entregas</h1>
+      </div>
+    </header>
+
+    <section class="teacher-panel" data-teacher-gate>
+      <p>Entre com a conta Google de professor para administrar turmas, atividades e entregas.</p>
+      <div class="submission-google" data-google-button></div>
+      <p class="submission-error" role="alert" data-gate-message></p>
+    </section>
+
+    <div data-teacher-app hidden>
+      <p class="teacher-account">
+        <span data-teacher-name></span>
+        <button class="submission-link-button" type="button" data-sign-out>Sair</button>
+      </p>
+      <p class="submission-error" role="alert" data-teacher-message></p>
+
+      <section class="teacher-panel" aria-labelledby="turmas-title">
+        <h2 id="turmas-title">Turmas</h2>
+        <div class="teacher-class-list" data-class-list></div>
+        <form class="teacher-form teacher-form--inline" data-class-form>
+          <label class="submission-field">
+            <span>Disciplina</span>
+            <select name="disciplina" required>
+              <option value="PRCFEMG">PRCFEMG</option>
+              <option value="PRCLFBE">PRCLFBE</option>
+              <option value="PRCCOMP">PRCCOMP</option>
+            </select>
+          </label>
+          <label class="submission-field">
+            <span>Semestre</span>
+            <input name="semestre" placeholder="2026-2" pattern="\d{4}-[12]" required>
+          </label>
+          <button class="submission-button" type="submit">Criar turma</button>
+        </form>
+      </section>
+
+      <div data-class-panel hidden>
+        <section class="teacher-panel" aria-labelledby="lista-title">
+          <h2 id="lista-title">Lista de permitidos · <span data-class-name></span></h2>
+          <p data-roster-summary></p>
+          <details>
+            <summary>Ver os alunos da lista</summary>
+            <ul class="teacher-list" data-roster-list></ul>
+          </details>
+          <form class="teacher-form" data-roster-form>
+            <label class="submission-field">
+              <span>Lista extraída do diário do SUAP</span>
+              <textarea name="texto" rows="8" required placeholder="Um aluno por linha, com o e-mail @aluno.ifsp.edu.br"></textarea>
+              <small>Cada linha precisa conter o e-mail institucional do aluno. A lista colada substitui a atual: quem não estiver nela perde o acesso.</small>
+            </label>
+            <button class="submission-button" type="submit">Substituir a lista</button>
+            <p class="submission-hint" role="status" data-roster-result></p>
+          </form>
+        </section>
+
+        <section class="teacher-panel" aria-labelledby="atividades-title">
+          <div class="teacher-panel__heading">
+            <h2 id="atividades-title">Atividades</h2>
+            <button class="submission-button" type="button" data-new-activity>Nova atividade</button>
+          </div>
+          <div class="submissions-list" data-activity-list></div>
+        </section>
+
+        <section class="teacher-panel" aria-labelledby="entregas-title" data-deliveries-panel hidden>
+          <div class="teacher-panel__heading">
+            <h2 id="entregas-title">Entregas · <span data-deliveries-title></span></h2>
+            <button class="submission-button" type="button" data-download-zip>Baixar tudo (.zip)</button>
+          </div>
+          <p data-deliveries-summary></p>
+          <div class="teacher-table-wrapper">
+            <table class="teacher-table">
+              <thead><tr><th scope="col">Aluno ou grupo</th><th scope="col">Enviada em</th><th scope="col">Situação</th><th scope="col">Arquivos</th></tr></thead>
+              <tbody data-deliveries-body></tbody>
+            </table>
+          </div>
+          <h3>Ainda não entregaram</h3>
+          <ul class="teacher-list" data-missing-list></ul>
+          <details>
+            <summary>Versões substituídas (<span data-replaced-count>0</span>)</summary>
+            <div class="teacher-table-wrapper">
+              <table class="teacher-table">
+                <thead><tr><th scope="col">Aluno ou grupo</th><th scope="col">Enviada em</th><th scope="col">Situação</th><th scope="col">Arquivos</th></tr></thead>
+                <tbody data-replaced-body></tbody>
+              </table>
+            </div>
+          </details>
+        </section>
+
+        <section class="teacher-panel" aria-labelledby="encerrar-title">
+          <h2 id="encerrar-title">Encerrar o semestre</h2>
+          <p>Depois de baixar as entregas, apague a turma para remover do servidor a lista de alunos e todos os arquivos.</p>
+          <button class="submission-link-button teacher-danger" type="button" data-delete-class>Apagar a turma e todos os arquivos</button>
+        </section>
+      </div>
+    </div>
+
+    <dialog class="submission-dialog" aria-labelledby="atividade-dialog-title" data-activity-dialog>
+      <h3 class="submission-dialog__title" id="atividade-dialog-title" data-activity-dialog-title>Nova atividade</h3>
+      <form class="submission-form" data-activity-form>
+        <label class="submission-field">
+          <span>Título</span>
+          <input name="titulo" required maxlength="200" placeholder="Relatório do experimento 8">
+        </label>
+        <label class="submission-field">
+          <span>Orientações</span>
+          <textarea name="descricao" rows="3" maxlength="5000"></textarea>
+        </label>
+        <label class="submission-field">
+          <span>Prazo</span>
+          <input name="prazo_local" type="datetime-local" required>
+          <small>Horário de Brasília. Depois do prazo o envio é aceito e marcado como atrasado.</small>
+        </label>
+        <label class="submission-field--check">
+          <input name="em_grupo" type="checkbox">
+          <span>Entrega em grupo (quem envia marca os colegas)</span>
+        </label>
+        <label class="submission-field">
+          <span>Tipos de arquivo aceitos</span>
+          <input name="extensoes" required value="pdf" placeholder="pdf, csv, zip">
+          <small>Extensões separadas por vírgula.</small>
+        </label>
+        <div class="teacher-form teacher-form--pair">
+          <label class="submission-field">
+            <span>Tamanho máximo (MB)</span>
+            <input name="tamanho_max_mb" type="number" min="1" max="100" value="20" required>
+          </label>
+          <label class="submission-field">
+            <span>Arquivos por envio</span>
+            <input name="max_arquivos" type="number" min="1" max="5" value="1" required>
+          </label>
+        </div>
+        <label class="submission-field">
+          <span>Material no portal (opcional)</span>
+          <input name="material" maxlength="300" placeholder="experimentos/08-ressonancia-rlc/">
+          <small>Caminho da página do portal a que a atividade se refere.</small>
+        </label>
+        <p class="submission-error" role="alert" data-activity-error></p>
+        <div class="submission-dialog__actions">
+          <button class="submission-button submission-button--quiet" type="button" data-activity-cancel>Cancelar</button>
+          <button class="submission-button" type="submit">Salvar</button>
+        </div>
+      </form>
+    </dialog>
+  </main>
+
+  <footer class="site-footer"><p>Entregas · área do professor</p><a href="../../">Voltar ao início</a></footer>
+  <script type="module" src="../../componentes/navegacao-principal.js"></script>
+  <script type="module">
+    import { mountTeacherArea } from "../../componentes/entregas-professor.js";
+    import { ENTREGAS_CONFIG } from "../config.js";
+    mountTeacherArea(document.querySelector("[data-teacher-root]"), { config: ENTREGAS_CONFIG });
+  </script>
+</body>
+</html>

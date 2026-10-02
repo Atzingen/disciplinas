@@ -7,6 +7,7 @@
   <title>PRCCOMP · Física Computacional</title>
   <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="../../assets/base.css">
+  <link rel="stylesheet" href="../../assets/entregas.css">
   <script>try{if(localStorage.getItem("tema")==="escuro"){document.documentElement.dataset.theme="escuro"}}catch(erro){}</script>
 </head>
 <body class="course-page course-page--prccomp">
@@ -65,6 +66,16 @@
           <span><strong>Visão computacional</strong><small>Imagem, pêndulo, convolução e redes neurais.</small></span>
           <span aria-hidden="true">→</span>
         </a>
+      </div>
+    </section>
+
+    <section class="submissions-section" id="entregas" aria-labelledby="entregas-title" data-submissions-root data-discipline="PRCCOMP">
+      <div class="section-heading section-heading--compact">
+        <div><p class="eyebrow">Entregas</p><h2 id="entregas-title">Atividades para entregar</h2></div>
+        <p class="catalog-count" data-submissions-account></p>
+      </div>
+      <div class="submissions-list" data-submissions-list aria-live="polite">
+        <p class="submission-empty">Carregando as entregas…</p>
       </div>
     </section>
 
@@ -236,6 +247,14 @@
       registryUrl: "../../materiais.json",
       pathPrefix: "../../",
       scope: { discipline: "PRCCOMP" },
+    });
+  </script>
+  <script type="module">
+    import { mountSubmissions } from "../../componentes/entregas.js";
+    import { ENTREGAS_CONFIG } from "../../entregas/config.js";
+    mountSubmissions(document.querySelector("[data-submissions-root]"), {
+      config: ENTREGAS_CONFIG,
+      rootPath: "../../",
     });
   </script>
 </body>

@@ -1,0 +1,16 @@
+name: disciplinas-entregas
+
+services:
+  entregas:
+    build: .
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      PASTA_DADOS: /dados
+    # O serviço grava como o usuário dono da pasta de dados no servidor.
+    user: "${USUARIO_DO_SERVICO:-1000:1000}"
+    # Só em localhost: quem publica para fora é o nginx do servidor.
+    ports:
+      - "127.0.0.1:8100:8000"
+    volumes:
+      - "${PASTA_DADOS_NO_SERVIDOR:-./dados}:/dados"
