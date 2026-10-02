@@ -5,5 +5,5 @@ const runningLocally = ["localhost", "127.0.0.1"].includes(globalThis.location.h
 
 export const ENTREGAS_CONFIG = {
   apiUrl: runningLocally ? "http://localhost:8100" : "https://entregas.iatzingen.com.br",
-  googleClientId: "",
+  googleClientId: "791313619489-of0rs4ic8ccqd8i8bkcoqjqd8qcnjmp3.apps.googleusercontent.com",
 };
