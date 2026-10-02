@@ -10,3 +10,7 @@ __pycache__/
 tmp/
 .impeccable/config.local.json
 .impeccable/hook.cache.json
+
+# serviço de entregas: configuração e dados locais nunca entram no repositório
+entregas/.env
+entregas/dados/
