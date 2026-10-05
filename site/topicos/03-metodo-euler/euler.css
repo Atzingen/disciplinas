@@ -1,0 +1,85 @@
+.euler-page { --on-accent: #101620; }
+.euler-page .site-navigation a,
+.euler-page .site-navigation summary,
+.euler-page .theme-toggle__label,
+.euler-page .section-nav a { font-size: .875rem; }
+.euler-page .lesson-sections,
+.euler-page .lesson-section { min-width: 0; }
+.euler-page .lesson-section p,
+.euler-page .lesson-section li { max-width: 78ch; }
+.euler-page pre {
+  max-width: 100%;
+  overflow-x: auto;
+  padding: 1rem 1.2rem;
+  background: var(--paper-deep);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  font: .84rem/1.65 var(--font-mono);
+}
+.euler-page :not(pre) > code { font: .9em var(--font-mono); overflow-wrap: anywhere; }
+.euler-page .euler-note {
+  margin: 1.5rem 0;
+  padding: 1rem 1.2rem;
+  border: 1px solid var(--line-strong);
+  background: var(--paper-deep);
+}
+.euler-page .euler-note p { margin: 0; }
+.euler-page .math-block { border-left-width: 1px; }
+.euler-page .euler-steps li { margin-bottom: .8rem; }
+.euler-page figure { margin: 1.5rem 0; }
+.euler-page figure img { display: block; width: 100%; height: auto; border-radius: 8px; }
+.euler-page figcaption { margin-top: .7rem; color: var(--ink-soft); font-size: .92rem; }
+.euler-page caption { text-align: left; margin-bottom: .7rem; }
+.euler-page .value-table th { white-space: nowrap; font-size: .875rem; }
+.euler-page .euler-video { max-width: 900px; margin: 1.5rem 0; }
+.euler-page .euler-video iframe { display: block; width: 100%; aspect-ratio: 16 / 9; border: 0; border-radius: 8px; }
+.euler-page mjx-container[display="true"] { max-width: 100%; overflow-x: auto; overflow-y: hidden; padding: .3rem 0; }
+.rocket-derivation { margin: 1.4rem 0; border-block: 1px solid var(--line); padding: 1rem 0; }
+.rocket-derivation summary { cursor: pointer; font: 600 1rem/1.5 var(--font-display); }
+.rocket-explorer { margin: 1.5rem 0; padding: 1.3rem; border: 1px solid var(--line-strong); background: var(--surface); border-radius: 8px; }
+.rocket-controls { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); align-items: end; gap: 1rem; }
+.rocket-controls label { display: grid; gap: .45rem; font: 500 .9rem/1.4 var(--font-display); }
+.rocket-explorer input,
+.rocket-explorer select,
+.rocket-explorer button { min-width: 0; min-height: 44px; padding: .6rem .75rem; border: 1px solid var(--line-strong); border-radius: 5px; color: var(--ink); background: var(--paper); font: 500 .9rem/1.4 var(--font-display); }
+.rocket-explorer button { cursor: pointer; }
+.rocket-explorer button:hover:not(:disabled) { background: var(--paper-deep); border-color: var(--ink-soft); }
+.rocket-explorer button:disabled { opacity: .45; cursor: default; }
+.rocket-explorer :focus-visible { outline: 3px solid var(--negative); outline-offset: 3px; }
+.rocket-playback { display: flex; flex-wrap: wrap; gap: .65rem; align-items: center; margin: 1.3rem 0; }
+.rocket-zoom { display: flex; gap: .5rem; align-items: center; font: .9rem/1.5 var(--font-display); }
+.rocket-explorer input[type="checkbox"] { width: 20px; min-height: 20px; accent-color: var(--negative); }
+.rocket-step-control { display: grid; gap: .5rem; font: .9rem/1.4 var(--font-display); }
+.rocket-step-control input { width: 100%; padding: 0; accent-color: var(--negative); }
+.rocket-step-control output { font-variant-numeric: tabular-nums; }
+.rocket-chart svg { display: block; width: 100%; height: auto; overflow: visible; }
+.rocket-chart text { fill: var(--ink-soft); font: 14px var(--font-display); }
+.rocket-grid { stroke: var(--line); stroke-width: 1; }
+.rocket-exact { fill: none; stroke: var(--ink); stroke-width: 2; }
+.rocket-numeric { fill: none; stroke: var(--negative); stroke-width: 1.6; stroke-dasharray: 5 3; }
+.rocket-point { fill: var(--negative); }
+.rocket-selected { fill: none; stroke: var(--force-2); stroke-width: 4; }
+.rocket-current { fill: var(--force-2); stroke: var(--surface); stroke-width: 2; }
+.rocket-slope { stroke: var(--force-1); stroke-width: 2; stroke-dasharray: 3 2; }
+.rocket-stage-dot { fill: var(--force-1); }
+.rocket-chart .rocket-stage-label { fill: var(--ink); font-weight: 700; }
+.rocket-legend { display: flex; flex-wrap: wrap; gap: .8rem 1.5rem; font: .9rem/1.5 var(--font-display); }
+.rocket-key::before { content: ""; display: inline-block; width: 1.5rem; margin-right: .5rem; vertical-align: middle; border-top: 2px solid var(--ink); }
+.rocket-key--numeric::before { border-color: var(--negative); border-top-style: dashed; }
+.rocket-status { font-weight: 600; }
+.rocket-step-details { border-top: 1px solid var(--line); padding-top: .7rem; }
+.rocket-calculation { font-family: var(--font-mono); font-size: .95rem; line-height: 1.7; overflow-wrap: anywhere; }
+.rocket-full-table { max-height: 350px; }
+.rocket-explorer .value-table { font-variant-numeric: tabular-nums; }
+.rocket-error { font-weight: 600; }
+@media (max-width: 600px) {
+  .euler-page .site-topbar { position: static; }
+  .euler-page .section-nav { flex-wrap: nowrap; overflow-x: auto; }
+  .euler-page .section-nav a { white-space: nowrap; flex-shrink: 0; }
+  .euler-page h1 { font-size: clamp(2rem, 9vw, 3rem); }
+  .euler-page pre { font-size: .76rem; padding: .8rem; }
+  .euler-page .lesson-section { scroll-margin-top: 1rem; }
+  .rocket-explorer { padding: .8rem; }
+  .rocket-controls { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .rocket-playback button { flex: 1 1 40%; }
+}
