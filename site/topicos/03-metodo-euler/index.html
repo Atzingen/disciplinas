@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Método de Euler passo a passo: da EDO à evolução temporal, com resfriamento, queda com resistência do ar, Python simples e Runge–Kutta com SciPy.">
+  <meta name="description" content="Euler passo a passo, resfriamento e queda em Python, Runge–Kutta com SciPy e foguete interativo: solução analítica, Euler, RK2 e RK4 com os passos do cálculo.">
   <title>Método de Euler: evolução temporal e EDOs · Tópico 03</title>
   <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="../../assets/base.css">
@@ -34,6 +34,8 @@
       <a href="#queda">Queda</a>
       <a href="#runge-kutta">Runge–Kutta</a>
       <a href="#biblioteca">Com biblioteca</a>
+      <a href="#foguete">Foguete do vídeo</a>
+      <a href="#referencias">Referências</a>
     </nav>
   </div>
 
@@ -458,6 +460,296 @@ plt.show()</code></pre>
           Por que o mesmo modelo agora descreve um aquecimento?
         </p>
       </section>
+      <section class="lesson-section" id="foguete" aria-labelledby="foguete-title">
+        <p class="solution-step">Aplicação adicional</p>
+        <h2 id="foguete-title">O foguete do vídeo: da equação aos passos animados</h2>
+        <p>
+          No <a href="https://www.youtube.com/watch?v=6GfkRtf-A4M&amp;t=326s">exemplo a partir de 5min26s</a>,
+          Apastron acompanha a velocidade de um foguete que perde massa e sofre
+          resistência do ar. Vamos reproduzir a <strong>EDO simplificada apresentada
+          no vídeo</strong>, inclusive seus parâmetros, e comparar Euler com dois
+          métodos de Runge–Kutta. O sentido positivo é para cima.
+        </p>
+        <div class="table-scroll">
+          <table class="value-table">
+            <caption>Valores exibidos no vídeo em aproximadamente 6min44s.</caption>
+            <thead><tr><th scope="col">Grandeza</th><th scope="col">Símbolo</th><th scope="col">Valor</th></tr></thead>
+            <tbody>
+              <tr><td>Empuxo constante</td><td>\(F\)</td><td>1.500 N</td></tr>
+              <tr><td>Massa inicial</td><td>\(m_0\)</td><td>50 kg</td></tr>
+              <tr><td>Taxa de variação da massa</td><td>\(m_r=dm/dt\)</td><td>−0,5 kg/s</td></tr>
+              <tr><td>Coeficiente de arrasto quadrático</td><td>\(c\) (\(k\) no vídeo)</td><td>0,5 kg/m</td></tr>
+              <tr><td>Aceleração da gravidade</td><td>\(g\)</td><td>9,8 m/s²</td></tr>
+              <tr><td>Velocidade inicial e passo</td><td>\(v_0,\ h\)</td><td>0 m/s e 0,5 s</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>1. A massa depende do tempo</h3>
+        <p>Uma perda constante de massa dá uma função linear. Vamos escrever \(q=-m_r=0{,}5\;\mathrm{kg/s}\), positivo:</p>
+        <div class="math-block">\[m(t)=m_0+m_rt=m_0-qt=50-0{,}5t.\]</div>
+        <p>
+          Em 20 s, a massa é 40 kg. O explorador fica entre 0 e 20 s, com
+          empuxo constante. Não inclui o fim da queima, o movimento após o
+          combustível acabar ou a variação da gravidade com a altitude.
+        </p>
+
+        <h3>2. Do balanço adotado no vídeo à EDO</h3>
+        <p>
+          Para uma subida, o vídeo representa empuxo para cima, peso e arrasto
+          para baixo e escreve o seguinte balanço:
+        </p>
+        <div class="math-block">\[F-mg-cv^2=\frac{d(mv)}{dt}.\]</div>
+        <p>Como massa e velocidade dependem do tempo, aplicamos a regra do produto:</p>
+        <div class="math-block">
+          \[\frac{d(mv)}{dt}=m\frac{dv}{dt}+v\frac{dm}{dt}=m\frac{dv}{dt}-qv.\]
+          \[m\frac{dv}{dt}=F-mg-cv^2+qv.\]
+        </div>
+        <p>Substituindo a massa e dividindo por ela, temos a taxa que o programa precisa calcular:</p>
+        <div class="math-block math-block--result">
+          \[\frac{dv}{dt}=f(t,v)=\frac{1500-9{,}8(50-0{,}5t)-0{,}5v^2+0{,}5v}{50-0{,}5t},\qquad v(0)=v_0.\]
+        </div>
+        <p>
+          Cada termo do numerador tem unidade de força: por exemplo,
+          \(cv^2\) tem unidade \((\mathrm{kg/m})(\mathrm{m^2/s^2})=\mathrm{N}\).
+          Dividindo por kg, obtemos m/s². A taxa depende <strong>do tempo e da
+          velocidade</strong>: em cada avaliação de \(f\), recalculamos também a massa.
+        </p>
+        <aside class="euler-note"><p>
+          <strong>O que este modelo representa.</strong> Um foguete real é um
+          sistema aberto: o balanço de momento inclui os gases expelidos.
+          Se \(F\) já é o empuxo que incorpora esse fluxo, a equação usual é
+          \(m\,dv/dt=F-mg-cv^2\), sem acrescentar \(qv\).
+          Aqui mantemos a EDO do vídeo para estudar os métodos; a comparação
+          verifica a solução dessa EDO. A
+          <a href="https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/ideal-rocket-equation/">dedução da NASA para foguete e gases</a>
+          explica o balanço físico de massa variável.
+        </p></aside>
+
+        <h3>3. Os três primeiros passos de Euler</h3>
+        <p>Com \(v_0=0\) e \(h=0{,}5\;\mathrm{s}\), fazemos sempre \(v_{n+1}=v_n+h f(t_n,v_n)\):</p>
+        <ol class="euler-steps">
+          <li>Em \(t_0=0\), \(m=50\): \(f(0,0)=(1500-490)/50=20{,}2\;\mathrm{m/s^2}\).
+            Logo, \(v_1=0+0{,}5\times20{,}2=10{,}1\;\mathrm{m/s}\).</li>
+          <li>Em \(t_1=0{,}5\), \(m=49{,}75\):
+            \(f(0{,}5,10{,}1)\approx19{,}42704\;\mathrm{m/s^2}\).
+            Logo, \(v_2=10{,}1+0{,}5\times19{,}42704\approx19{,}81352\;\mathrm{m/s}\).</li>
+          <li>Em \(t_2=1\), \(m=49{,}5\):
+            \(f(1,19{,}81352)\approx16{,}73776\;\mathrm{m/s^2}\).
+            Logo, \(v_3\approx19{,}81352+0{,}5\times16{,}73776\approx28{,}18240\;\mathrm{m/s}\).</li>
+        </ol>
+        <p>Os valores exibidos estão arredondados; o cálculo mantém todas as casas disponíveis.</p>
+        <details class="rocket-derivation">
+          <summary>Rodar o mesmo foguete com Euler em Python</summary>
+          <p><a href="euler_foguete.py" download>Baixar euler_foguete.py</a> e executar com <code>python euler_foguete.py</code>.</p>
+          <pre><code data-source="euler_foguete.py">empuxo = 1500.0  # N
+massa_inicial = 50.0  # kg
+consumo = 0.5  # kg/s
+arrasto = 0.5  # kg/m
+g = 9.8  # m/s²
+velocidade = 0.0  # m/s
+dt = 0.5  # s
+tempo_final = 20.0  # s
+numero_passos = round(tempo_final / dt)
+
+print("t (s) | v (m/s)")
+print(f"{0.0:5.1f} | {velocidade:9.5f}")
+
+for passo in range(numero_passos):
+    tempo = passo * dt
+    massa = massa_inicial - consumo * tempo
+    # EDO simplificada usada no vídeo.
+    aceleracao = (
+        empuxo - massa * g - arrasto * velocidade**2
+        + consumo * velocidade
+    ) / massa
+    velocidade = velocidade + aceleracao * dt
+    print(f"{tempo + dt:5.1f} | {velocidade:9.5f}")</code></pre>
+        </details>
+
+        <h3>4. Os dois Runge–Kutta que vamos comparar</h3>
+        <p>
+          Nesta notação, cada \(k_i\) é uma <strong>aceleração</strong>, em m/s²;
+          o fator \(h\) aparece na atualização. Os estados intermediários são
+          estimativas para consultar a EDO, não pontos extras da trajetória calculada.
+        </p>
+        <p><strong>RK2 pelo ponto médio:</strong> primeiro estimamos a velocidade na metade do intervalo; depois usamos a taxa nesse ponto.</p>
+        <div class="math-block">
+          \[k_1=f(t_n,v_n),\qquad k_2=f\!\left(t_n+\frac h2,\ v_n+\frac h2 k_1\right)\]
+          \[v_{n+1}=v_n+h k_2.\]
+        </div>
+        <p><strong>RK4 clássico:</strong> consultamos o início, duas estimativas de meio de passo e uma estimativa de fim de passo.</p>
+        <div class="math-block">
+          \[\begin{aligned}
+          k_1&amp;=f(t_n,v_n),\\
+          k_2&amp;=f\!\left(t_n+\frac h2,v_n+\frac h2 k_1\right),\\
+          k_3&amp;=f\!\left(t_n+\frac h2,v_n+\frac h2 k_2\right),\\
+          k_4&amp;=f(t_n+h,v_n+h k_3),\\
+          v_{n+1}&amp;=v_n+\frac h6(k_1+2k_2+2k_3+k_4).
+          \end{aligned}\]
+        </div>
+        <p>
+          Os pesos são \(1,2,2,1\), divididos por 6. Para soluções suaves e
+          passos suficientemente pequenos, os erros globais de Euler, RK2 e
+          RK4 são, respectivamente, proporcionais a \(h\), \(h^2\) e \(h^4\).
+          Diminuir \(h\) pela metade tende a reduzir esses erros por fatores
+          de aproximadamente 2, 4 e 16. Os três métodos abaixo usam passo fixo,
+          com um último passo menor quando necessário para atingir o tempo final.
+        </p>
+
+        <h3>5. De onde vem a curva analítica</h3>
+        <p>
+          Esta EDO tem um termo \(v^2\) e coeficientes que variam com o tempo:
+          é uma equação de Riccati. Sua solução pode ser escrita como uma
+          <strong>série convergente</strong>. A curva de referência avalia essa
+          expressão com 160 termos; os pontos dos métodos numéricos são calculados
+          separadamente. A derivação completa está abaixo.
+        </p>
+        <details class="rocket-derivation">
+          <summary>Deduzir a solução analítica em série</summary>
+          <p>
+            Começamos com \(m\dot v=F-mg-cv^2+qv\).
+            Introduzimos uma função auxiliar \(u(t)\) pela substituição
+            \(v=(m/c)\dot u/u\), que permite eliminar o termo quadrático:
+          </p>
+          <div class="math-block">
+            \[\dot v=-\frac qc\frac{\dot u}{u}
+              +\frac mc\left(\frac{\ddot u}{u}-\left(\frac{\dot u}{u}\right)^2\right).\]
+          </div>
+          <p>Substituindo na EDO e cancelando os termos em \((\dot u/u)^2\), resulta:</p>
+          <div class="math-block">\[m^2\ddot u-2qm\dot u+(cgm-cF)u=0.\]</div>
+          <p>
+            Definimos o tempo sem unidade \(s=qt/m_0=t/(100\;\mathrm{s})\).
+            Então \(m=m_0(1-s)\). As derivadas abaixo são em relação a \(s\):
+          </p>
+          <div class="math-block">
+            \[(1-s)^2u''-2(1-s)u'+[A(1-s)-B]u=0,\]
+            \[A=\frac{cgm_0}{q^2}=980,\qquad B=\frac{cF}{q^2}=3000.\]
+          </div>
+          <p>
+            Procuramos \(u(s)=\sum_{n=0}^{\infty}a_ns^n\).
+            Podemos escolher \(u(0)=1\), pois multiplicar \(u\) por uma constante
+            não altera \(u'/u\). A condição inicial determina os dois primeiros coeficientes:
+          </p>
+          <div class="math-block">
+            \[a_0=1,\qquad a_1=\frac cq v_0,\qquad a_{-1}=0.\]
+          </div>
+          <p>
+            Substituímos as séries de \(u\), \(u'\) e \(u''\) na equação e
+            agrupamos os coeficientes de cada potência \(s^n\). Cada um precisa ser zero:
+          </p>
+          <div class="math-block">
+            \[\begin{aligned}
+            0={}&amp;(n+2)(n+1)a_{n+2}-2(n+1)^2a_{n+1}\\
+              &amp;+[n(n+1)+A-B]a_n-Aa_{n-1}.
+            \end{aligned}\]
+            \[a_{n+2}=\frac{2(n+1)^2a_{n+1}+[B-A-n(n+1)]a_n+Aa_{n-1}}{(n+2)(n+1)}.\]
+          </div>
+          <p>Voltando à velocidade, a expressão analítica é:</p>
+          <div class="math-block math-block--result">
+            \[v(t)=\frac qc(1-s)\frac{u'(s)}{u(s)}
+              =\frac qc(1-s)\frac{\sum_{n=1}^{\infty}n a_n s^{n-1}}{\sum_{n=0}^{\infty}a_n s^n}.\]
+          </div>
+          <p>
+            A equação linear de \(u\) tem seu ponto singular em \(s=1\).
+            A série em torno de zero converge para \(|s|&lt;1\); no explorador,
+            \(0\leq s\leq0{,}2\). Com \(0\leq v_0\leq60\), usamos o trecho
+            regular da solução. A série infinita define a solução analítica;
+            usar 160 termos é a aproximação de sua avaliação no computador.
+            Ela foi conferida pela EDO e por uma integração independente de alta precisão.
+          </p>
+          <p>
+            Para \(v_0=0\), por exemplo, \(a_0=1\), \(a_1=0\),
+            \(a_2=1010\) e \(a_3=1510\). A expressão fornece
+            \(v(1)\approx19{,}15980\;\mathrm{m/s}\) e
+            \(v(20)\approx47{,}48724\;\mathrm{m/s}\).
+          </p>
+        </details>
+
+        <h3 id="foguete-explorador-title">6. Explore e acompanhe cada passo</h3>
+        <p>
+          Mude \(v_0\), o método e \(h\). A curva contínua representa a solução
+          analítica e os pontos representam o método escolhido. A reprodução
+          destaca os passos no gráfico de <strong>velocidade, não de altitude</strong>.
+          Use o zoom para ver onde cada inclinação intermediária foi calculada.
+        </p>
+        <div class="rocket-explorer" data-rocket-explorer aria-labelledby="foguete-explorador-title">
+          <noscript>Ative JavaScript para usar o gráfico interativo. As equações e o exemplo Python acima continuam disponíveis.</noscript>
+          <form class="rocket-controls" data-rocket-form>
+            <label>Velocidade inicial v₀ (m/s)<input name="initialVelocity" type="number" min="0" max="60" step="1" value="0" required></label>
+            <label>Método<select name="method"><option value="euler">Euler</option><option value="rk2">RK2 — ponto médio</option><option value="rk4">RK4 — clássico</option></select></label>
+            <label>Passo h (s)<input name="step" type="number" min="0.1" max="2" step="0.1" value="0.5" required></label>
+            <label>Tempo final (s)<input name="finalTime" type="number" min="1" max="20" step="1" value="20" required></label>
+            <button type="reset">Valores do vídeo</button>
+          </form>
+          <p class="rocket-error" data-rocket-error role="alert" hidden></p>
+          <div data-rocket-results>
+            <div class="rocket-playback">
+              <button type="button" data-rocket-restart>Recomeçar</button>
+              <button type="button" data-rocket-previous>Anterior</button>
+              <button type="button" data-rocket-play>Reproduzir passos</button>
+              <button type="button" data-rocket-next>Próximo</button>
+              <label class="rocket-zoom"><input type="checkbox" data-rocket-zoom>Ampliar passo selecionado</label>
+            </div>
+            <label class="rocket-step-control">Passo em destaque <output data-rocket-counter></output><input type="range" min="0" max="39" value="0" step="1" data-rocket-step aria-label="Selecionar passo do método"></label>
+            <figure class="rocket-chart">
+              <svg data-rocket-chart role="img" aria-labelledby="rocket-chart-title rocket-chart-description" viewBox="0 0 900 380">
+                <title id="rocket-chart-title">Velocidade do foguete em função do tempo</title>
+                <desc id="rocket-chart-description">Comparação entre a solução analítica em série e os passos do método escolhido.</desc>
+              </svg>
+              <figcaption class="rocket-legend"><span class="rocket-key rocket-key--exact">Solução analítica (série)</span><span class="rocket-key rocket-key--numeric" data-rocket-method-label>Euler — pontos calculados</span><span>Passo selecionado em destaque; k₁…k₄ aparecem no zoom.</span></figcaption>
+            </figure>
+            <p class="rocket-status" data-rocket-status role="status" aria-live="polite"></p>
+            <div class="rocket-step-details">
+              <h4>Contas deste passo</h4>
+              <p data-rocket-start></p>
+              <p data-rocket-recipe></p>
+              <div class="table-scroll">
+                <table class="value-table rocket-stage-table">
+                  <caption>Avaliações da aceleração: cada linha substitui seu próprio tempo e velocidade em f(t, v).</caption>
+                  <thead><tr><th scope="col">Etapa</th><th scope="col">t (s)</th><th scope="col">v estimada (m/s)</th><th scope="col">m(t) (kg)</th><th scope="col">kᵢ = f(t, v) (m/s²)</th></tr></thead>
+                  <tbody data-rocket-stages></tbody>
+                </table>
+              </div>
+              <p class="rocket-calculation" data-rocket-calculation></p>
+              <p data-rocket-error-value></p>
+            </div>
+            <details class="rocket-derivation">
+              <summary>Tabela completa: método, solução analítica e erro</summary>
+              <div class="table-scroll rocket-full-table" tabindex="0" aria-label="Tabela completa dos passos, com rolagem">
+                <table class="value-table">
+                  <thead><tr><th scope="col">n</th><th scope="col">t (s)</th><th scope="col">Método (m/s)</th><th scope="col">Analítica (m/s)</th><th scope="col">Erro absoluto (m/s)</th></tr></thead>
+                  <tbody data-rocket-table></tbody>
+                </table>
+              </div>
+            </details>
+          </div>
+        </div>
+        <p>
+          <strong>Experimente:</strong> reproduza Euler com os valores do vídeo;
+          depois mantenha \(h=0{,}5\;\mathrm{s}\) e selecione RK2 e RK4.
+          Compare o erro no mesmo instante. Aumente \(h\) para 2 s e amplie
+          um passo: os estados intermediários dos Runge–Kutta ficam mais visíveis.
+          Por fim, altere \(v_0\): a curva analítica também precisa partir da nova condição inicial.
+        </p>
+        <p>
+          <strong>Observe a estabilidade:</strong> um passo grande pode produzir oscilações,
+          velocidades negativas ou valores muito distantes da curva analítica, especialmente
+          ao começar com uma velocidade alta. Neste intervalo, a solução do modelo permanece
+          positiva após a partida: esses resultados indicam que a aproximação numérica
+          ficou instável. Reduza \(h\) e compare novamente; uma ordem maior, sozinha,
+          não garante estabilidade para qualquer tamanho de passo.
+        </p>
+      </section>
+      <section class="lesson-section" id="referencias" aria-labelledby="referencias-title">
+        <h2 id="referencias-title">Referências e outras formas de visualizar EDOs</h2>
+        <ul>
+          <li><strong>Apastron.</strong> <a href="https://www.youtube.com/watch?v=6GfkRtf-A4M&amp;t=326s">Why does Euler's Method Work?</a> Intuição geométrica do método de Euler e exemplo do foguete, a partir de 5min26s.</li>
+          <li><strong>3Blue1Brown.</strong> <a href="https://www.youtube.com/watch?v=p_di4Zn4wz4">Differential equations, a tourist's guide | DE1.</a> Uma introdução visual às equações diferenciais e à descrição de sistemas que evoluem no tempo.</li>
+          <li><strong>SciPy.</strong> <a href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.integrate.solve_ivp.html">Documentação de solve_ivp.</a> Métodos disponíveis, condições iniciais, tolerâncias e saída do integrador.</li>
+          <li><strong>NASA Glenn Research Center.</strong> <a href="https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/ideal-rocket-equation/">Ideal Rocket Equation.</a> Balanço de quantidade de movimento do foguete e dos gases expelidos.</li>
+        </ul>
+      </section>
     </div>
   </main>
   <footer class="site-footer">
@@ -466,6 +758,7 @@ plt.show()</code></pre>
   </footer>
   <script type="module" src="../../componentes/navegacao-principal.js"></script>
   <script type="module" src="../../componentes/navegacao-secoes.js"></script>
+  <script type="module" src="foguete-explorador.js"></script>
   <script type="module">import { typesetMath } from "../../componentes/matematica.js"; typesetMath(document.querySelector("main"));</script>
 </body>
 </html>

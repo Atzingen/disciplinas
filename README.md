@@ -195,7 +195,10 @@ ferramenta escolhida, o código para rodar e as referências. O catálogo usa
    calculados à mão e reproduzidos em Python sem bibliotecas. Compara passos
    com a solução exata, aplica Euler à queda com resistência do ar e termina
    com uma introdução a Runge–Kutta e o mesmo resfriamento usando SciPy/RK45.
-   Os três scripts podem ser baixados diretamente na página.
+   Os exemplos iniciais são seguidos pelo foguete do vídeo: dedução da EDO
+   adotada, solução analítica em série e gráfico interativo com condição
+   inicial ajustável, Euler/RK2/RK4, zoom e reprodução dos passos.
+   Os quatro scripts podem ser baixados diretamente na página.
 
 ## Executar localmente
 
