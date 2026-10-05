@@ -20,10 +20,11 @@
 .euler-page .euler-note {
   margin: 1.5rem 0;
   padding: 1rem 1.2rem;
-  border-left: 3px solid var(--accent);
+  border: 1px solid var(--line-strong);
   background: var(--paper-deep);
 }
 .euler-page .euler-note p { margin: 0; }
+.euler-page .math-block { border-left-width: 1px; }
 .euler-page .euler-steps li { margin-bottom: .8rem; }
 .euler-page figure { margin: 1.5rem 0; }
 .euler-page figure img { display: block; width: 100%; height: auto; border-radius: 8px; }

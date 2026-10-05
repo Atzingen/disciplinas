@@ -121,13 +121,103 @@
         "reason": "Agent: local callouts/output borders reduced to uniform 1px; remaining detector stripes belong to shared .area-card, .report-template-promo and .discipline-card, all absent from this page DOM."
       },
       {
-        "rule": "tiny-text",
+        "rule": "overused-font",
+        "value": "space grotesk",
+        "files": [
+          "site/topicos/03-metodo-euler/index.html"
+        ],
+        "createdAt": "2026-10-05T21:35:02.789Z",
+        "reason": "Agent: incumbent portal display face from shared base.css, preserved for this added course topic."
+      },
+      {
+        "rule": "overused-font",
+        "value": "space grotesk",
+        "files": [
+          "site/disciplinas/prccomp/index.html"
+        ],
+        "createdAt": "2026-10-05T21:35:02.803Z",
+        "reason": "Agent: pre-existing portal display face; adding a course resource does not authorize a rebrand."
+      },
+      {
+        "rule": "hero-eyebrow-chip",
+        "value": "*",
+        "files": [
+          "site/topicos/03-metodo-euler/index.html"
+        ],
+        "createdAt": "2026-10-05T21:35:02.810Z",
+        "reason": "Agent: topic number and official course code reproduce the established curricular identification in topics 01 and 02."
+      },
+      {
+        "rule": "hero-eyebrow-chip",
         "value": "*",
         "files": [
           "site/disciplinas/prccomp/index.html"
         ],
-        "createdAt": "2026-10-05T21:31:37.774Z",
-        "reason": "Agent verified computed styles in the browser after local typography fixes: no visible text in this page is below 12px; the remaining static finding is not rendered body text."
+        "createdAt": "2026-10-05T21:35:02.818Z",
+        "reason": "Agent: pre-existing official course code and semester identification, unchanged by this topic addition."
+      },
+      {
+        "rule": "cramped-padding",
+        "value": "*",
+        "files": [
+          "site/topicos/03-metodo-euler/index.html"
+        ],
+        "createdAt": "2026-10-05T21:35:02.826Z",
+        "reason": "Agent: flagged topbar has a bottom separator rather than a box; browser confirms 16px viewport inset and separate control padding."
+      },
+      {
+        "rule": "cramped-padding",
+        "value": "*",
+        "files": [
+          "site/disciplinas/prccomp/index.html"
+        ],
+        "createdAt": "2026-10-05T21:35:02.834Z",
+        "reason": "Agent: details wrapper delegates padding to children; browser confirms summary 25.6px 19.2px and body 0px 19.2px 16px on mobile."
+      },
+      {
+        "rule": "flat-type-hierarchy",
+        "value": "*",
+        "files": [
+          "site/topicos/03-metodo-euler/index.html"
+        ],
+        "createdAt": "2026-10-05T21:35:02.841Z",
+        "reason": "Agent: browser computed body 16.32px, h2 24.48px and h3 19.0944px; static report incorrectly assigns 16.3px to all three."
+      },
+      {
+        "rule": "side-tab",
+        "value": "*",
+        "files": [
+          "site/topicos/03-metodo-euler/index.html"
+        ],
+        "createdAt": "2026-10-05T21:35:02.849Z",
+        "reason": "Agent: local notes and mathematical blocks now use 1px borders; remaining pseudo-element warnings reference absent area-card, report-template-promo and discipline-card selectors."
+      },
+      {
+        "rule": "side-tab",
+        "value": "*",
+        "files": [
+          "site/disciplinas/prccomp/index.html"
+        ],
+        "createdAt": "2026-10-05T21:35:02.856Z",
+        "reason": "Agent: browser confirms zero area-card, report-template-promo and discipline-card elements; warnings come from unused imported shared CSS."
+      },
+      {
+        "rule": "codex-grid-background",
+        "value": "*",
+        "files": [
+          "site/topicos/03-metodo-euler/index.html"
+        ],
+        "createdAt": "2026-10-05T21:35:02.864Z",
+        "reason": "Agent: preserves the established graph-paper background of this physics teaching portal, inherited from shared base.css."
+      },
+      {
+        "rule": "codex-grid-background",
+        "value": "*",
+        "files": [
+          "site/disciplinas/prccomp/index.html"
+        ],
+        "createdAt": "2026-10-05T21:35:02.871Z",
+        "reason": "Agent: existing graph-paper identity of the physics course portal is unchanged by the resource addition."
       }
     ]
   }
