@@ -189,6 +189,14 @@ ferramenta escolhida, o código para rodar e as referências. O catálogo usa
    (Raspberry Pi, Hailo e OAK-D), com códigos completos e inferências YOLO reais.
    Os notebooks são lidos dentro do capítulo 3; cards organizam capítulos e seções.
 
+3. [método de Euler e evolução temporal](site/topicos/03-metodo-euler/): da
+   intuição geométrica do vídeo de Apastron e do campo de direções à atualização
+   numérica, com os primeiros passos do resfriamento
+   calculados à mão e reproduzidos em Python sem bibliotecas. Compara passos
+   com a solução exata, aplica Euler à queda com resistência do ar e termina
+   com uma introdução a Runge–Kutta e o mesmo resfriamento usando SciPy/RK45.
+   Os três scripts podem ser baixados diretamente na página.
+
 ## Executar localmente
 
 ```powershell

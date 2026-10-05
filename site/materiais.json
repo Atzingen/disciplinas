@@ -531,5 +531,16 @@
       "segmentação",
       "embarcados"
     ]
+  },
+  {
+    "id": "topico-03-metodo-euler",
+    "title": "Tópico 3 — Método de Euler e evolução temporal",
+    "kind": "topico",
+    "section": "topicos",
+    "disciplines": ["PRCCOMP"],
+    "theme": "EDOs, integração numérica e Runge–Kutta",
+    "description": "Da taxa de variação ao algoritmo: Euler passo a passo, resfriamento e queda com resistência do ar em Python, tamanho do passo e Runge–Kutta com SciPy.",
+    "path": "topicos/03-metodo-euler/",
+    "tags": ["Euler", "EDO", "equações diferenciais", "evolução temporal", "métodos numéricos", "Python", "resfriamento", "queda", "Runge-Kutta", "SciPy"]
   }
 ]

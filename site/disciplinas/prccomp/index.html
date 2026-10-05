@@ -8,6 +8,17 @@
   <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="../../assets/base.css">
   <link rel="stylesheet" href="../../assets/entregas.css">
+  <style>
+    .course-page--prccomp { --on-accent: #101620; }
+    .course-page--prccomp .brand small,
+    .course-page--prccomp .site-navigation a,
+    .course-page--prccomp .site-navigation summary,
+    .course-page--prccomp .theme-toggle__label,
+    .course-page--prccomp .course-meta li,
+    .course-page--prccomp .catalog-card__kind,
+    .course-page--prccomp .tag-list__item { font-size: .875rem; }
+    .course-page--prccomp .resource-card__number { color: var(--ink-soft); }
+  </style>
   <script>try{if(localStorage.getItem("tema")==="escuro"){document.documentElement.dataset.theme="escuro"}}catch(erro){}</script>
 </head>
 <body class="course-page course-page--prccomp">
@@ -64,6 +75,11 @@
         <a class="resource-card" href="../../topicos/02-visao-computacional/">
           <span class="resource-card__number">03</span>
           <span><strong>Visão computacional</strong><small>Imagem, pêndulo, convolução e redes neurais.</small></span>
+          <span aria-hidden="true">→</span>
+        </a>
+        <a class="resource-card" href="../../topicos/03-metodo-euler/">
+          <span class="resource-card__number">04</span>
+          <span><strong>Método de Euler</strong><small>EDOs passo a passo, evolução temporal e Runge–Kutta em Python.</small></span>
           <span aria-hidden="true">→</span>
         </a>
       </div>

@@ -1,0 +1,471 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Método de Euler passo a passo: da EDO à evolução temporal, com resfriamento, queda com resistência do ar, Python simples e Runge–Kutta com SciPy.">
+  <title>Método de Euler: evolução temporal e EDOs · Tópico 03</title>
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../assets/base.css">
+  <link rel="stylesheet" href="../../assets/simulador.css">
+  <link rel="stylesheet" href="euler.css">
+  <script>try{if(localStorage.getItem("tema")==="escuro"){document.documentElement.dataset.theme="escuro"}}catch(erro){}</script>
+</head>
+<body class="lesson-page euler-page">
+  <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+  <div class="site-topbar" data-topbar>
+    <div class="site-topbar__inner">
+      <nav class="breadcrumb" aria-label="Navegação estrutural">
+        <a href="../../disciplinas/prccomp/">Física Computacional</a>
+        <span aria-hidden="true">/</span>
+        <a href="../">Tópicos</a>
+        <span aria-hidden="true">/</span>
+        <strong aria-current="page">Tópico 03</strong>
+      </nav>
+      <div class="lesson-area-navigation" data-site-navigation data-root-path="../../" data-active-section="topicos"></div>
+    </div>
+    <nav class="section-nav" aria-label="Seções do tópico" data-section-nav>
+      <a href="#intuicao">Intuição e vídeo</a>
+      <a href="#edo">A EDO</a>
+      <a href="#euler">Euler</a>
+      <a href="#resfriamento">Passo a passo</a>
+      <a href="#python">Python</a>
+      <a href="#passo">Tamanho do passo</a>
+      <a href="#queda">Queda</a>
+      <a href="#runge-kutta">Runge–Kutta</a>
+      <a href="#biblioteca">Com biblioteca</a>
+    </nav>
+  </div>
+
+  <header class="lesson-header">
+    <div class="lesson-title-row">
+      <div>
+        <p class="eyebrow">Tópico 03 · PRCCOMP</p>
+        <h1>Método de Euler: um passo de cada vez</h1>
+      </div>
+      <p class="lesson-intro">
+        Como calcular a temperatura de um corpo ou a velocidade de um objeto
+        nos próximos instantes? Uma lei física fornece a taxa de variação.
+        O método de Euler usa essa taxa para avançar um pequeno intervalo de
+        tempo — e repete a conta. Vamos fazer os passos à mão, transformá-los
+        em Python e, ao final, resolver o mesmo problema com Runge–Kutta.
+      </p>
+    </div>
+  </header>
+
+  <main class="lesson-main" id="conteudo">
+    <div class="lesson-sections">
+      <section class="lesson-section" id="intuicao" aria-labelledby="intuicao-title">
+        <p class="solution-step">Para começar</p>
+        <h2 id="intuicao-title">Seguir a inclinação, mesmo sem conhecer a curva</h2>
+        <p>
+          A abertura segue a intuição apresentada por <strong>Apastron</strong>
+          em <a href="https://www.youtube.com/watch?v=6GfkRtf-A4M">Why does Euler's Method Work?</a>:
+          a EDO informa a inclinação em cada ponto, mesmo quando ainda não
+          conhecemos a curva que resolve o problema.
+        </p>
+        <div class="euler-video">
+          <iframe src="https://www.youtube-nocookie.com/embed/6GfkRtf-A4M?start=326" title="Why does Euler's Method Work? — Apastron, a partir de 5min26s" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+        </div>
+        <p>
+          <a href="https://www.youtube.com/watch?v=6GfkRtf-A4M&amp;t=38s">0:38 — intuição e campo de direções</a>
+          · <a href="https://www.youtube.com/watch?v=6GfkRtf-A4M&amp;t=233s">3:53 — da intuição à fórmula</a>
+          · <a href="https://www.youtube.com/watch?v=6GfkRtf-A4M&amp;t=326s">5:26 — exemplo do foguete</a>.
+          O vídeo acima abre nesse último trecho, em que uma tabela organiza
+          os passos do cálculo.
+        </p>
+        <p>
+          Comecemos, como no vídeo, com \(dy/dx=y\) e \(y(0)=1\).
+          Em cada ponto, desenhamos um pequeno segmento cuja inclinação é
+          \(y\): esse conjunto é um <strong>campo de direções</strong>.
+          Partindo de \((0,1)\), a inclinação vale 1. Avançar
+          \(\Delta x=0{,}25\) nessa direção dá \(y=1+1\times0{,}25=1{,}25\).
+          Recalculamos a inclinação no novo ponto: agora ela vale 1,25.
+        </p>
+        <figure>
+          <img src="campo-direcoes.svg" width="960" height="540" alt="Campo de direções de dy/dx igual a y, com a solução exata e os quatro primeiros passos de Euler a partir de (0, 1). Cada segmento de Euler segue a inclinação no início do passo.">
+          <figcaption>Figura produzida para este tópico. As pequenas retas indicam inclinações possíveis; a condição inicial escolhe por onde começar.</figcaption>
+        </figure>
+        <p>
+          Uma curva suave se parece com uma reta quando olhamos um trecho
+          pequeno. Euler transforma essa aproximação local em um caminho
+          de pequenos passos. A seguir, a variável independente será o tempo
+          \(t\), e o estado será uma grandeza física.
+        </p>
+      </section>
+
+      <section class="lesson-section" id="edo" aria-labelledby="edo-title">
+        <p class="solution-step">Parte 1</p>
+        <h2 id="edo-title">A lei física diz como o estado muda</h2>
+        <p>
+          Uma <strong>equação diferencial ordinária (EDO)</strong> relaciona uma
+          grandeza às suas derivadas em relação a uma única variável independente.
+          Aqui essa variável será o tempo. Podemos escrever uma EDO de primeira ordem como:
+        </p>
+        <div class="math-block">\[\frac{dy}{dt}=f(t,y),\qquad y(t_0)=y_0.\]</div>
+        <p>
+          \(y\) é a grandeza que queremos acompanhar; \(f(t,y)\) é sua taxa de
+          variação. A <strong>condição inicial</strong> \(y_0\) informa onde
+          começar, no instante \(t_0\). Uma taxa em °C/min descreve a mudança
+          da temperatura; uma taxa em m/s² descreve a mudança da velocidade.
+        </p>
+        <p>
+          Resolver a EDO numericamente significa construir uma sequência de
+          valores aproximados: \(y_0,y_1,y_2,\ldots\), nos instantes
+          \(t_0,t_1,t_2,\ldots\). Não precisamos encontrar antes uma fórmula
+          exata para \(y(t)\): precisamos saber calcular a taxa no estado atual.
+        </p>
+      </section>
+
+      <section class="lesson-section" id="euler" aria-labelledby="euler-title">
+        <p class="solution-step">Parte 2</p>
+        <h2 id="euler-title">Da derivada à regra de Euler</h2>
+        <p>
+          Em um intervalo pequeno \(\Delta t\), aproximamos a derivada pela
+          variação da grandeza dividida pela variação do tempo:
+        </p>
+        <div class="math-block">\[f(t_n,y_n)\approx\frac{y_{n+1}-y_n}{\Delta t}.\]</div>
+        <p>
+          Isolando o próximo valor, obtemos o <strong>método de Euler explícito</strong>:
+        </p>
+        <div class="math-block math-block--result">
+          \[y_{n+1}=y_n+f(t_n,y_n)\,\Delta t\]
+          \[t_{n+1}=t_n+\Delta t.\]
+        </div>
+        <p>
+          Os índices \(n\) e \(n+1\) indicam o passo atual e o próximo.
+          A aproximação está em usar a taxa do <strong>início do intervalo</strong>
+          durante todo aquele passo. No gráfico, seguimos um pequeno trecho de
+          reta com essa inclinação; no próximo ponto, calculamos outra inclinação.
+        </p>
+        <ol class="euler-steps">
+          <li>Escolha a EDO \(f(t,y)\), o instante inicial e o valor inicial.</li>
+          <li>Escolha o passo \(\Delta t\) e o tempo final.</li>
+          <li>Calcule a taxa \(f(t_n,y_n)\) usando o estado atual.</li>
+          <li>Multiplique a taxa por \(\Delta t\) e some ao valor atual.</li>
+          <li>Avance o tempo, guarde o resultado e repita a partir do passo 3.</li>
+        </ol>
+        <aside class="euler-note"><p><strong>Confira as unidades:</strong>
+          taxa × tempo deve ter a unidade da grandeza atual.
+          Por exemplo, (°C/min) × min = °C.
+        </p></aside>
+      </section>
+
+      <section class="lesson-section" id="resfriamento" aria-labelledby="resfriamento-title">
+        <p class="solution-step">Parte 3</p>
+        <h2 id="resfriamento-title">Exemplo físico: um corpo esfriando</h2>
+        <p>
+          Considere um corpo inicialmente a 80 °C em um ambiente a 20 °C.
+          Vamos usar a <strong>lei de resfriamento de Newton</strong>, supondo
+          temperatura uniforme no corpo, temperatura ambiente constante e
+          coeficiente de resfriamento constante:
+        </p>
+        <div class="math-block">\[\frac{dT}{dt}=-k(T-T_{\mathrm{amb}}).\]</div>
+        <p>
+          Quanto maior a diferença para o ambiente, maior o módulo da taxa.
+          O sinal negativo faz a temperatura cair quando \(T&gt;T_{\mathrm{amb}}\).
+          Adotaremos valores didáticos: \(k=0{,}1\;\mathrm{min}^{-1}\),
+          \(T_{\mathrm{amb}}=20\;°\mathrm{C}\) e \(T(0)=80\;°\mathrm{C}\).
+          O tempo será medido em minutos e usaremos \(\Delta t=1\;\mathrm{min}\).
+        </p>
+        <div class="math-block">\[T_{n+1}=T_n-0{,}1(T_n-20)\,\Delta t.\]</div>
+
+        <h3>Passo 1 — de 0 para 1 minuto</h3>
+        <p>No início, \(T_0=80\;°\mathrm{C}\). Primeiro a taxa, depois a variação e o novo valor:</p>
+        <div class="math-block">
+          \[\text{taxa}_0=-0{,}1(80-20)=-6\;°\mathrm{C/min}\]
+          \[\Delta T_0=(-6)\times 1=-6\;°\mathrm{C}\]
+          \[T_1=80-6=74\;°\mathrm{C}.\]
+        </div>
+
+        <h3>Passo 2 — de 1 para 2 minutos</h3>
+        <p>Agora usamos <strong>74 °C</strong> para recalcular a taxa:</p>
+        <div class="math-block">
+          \[\text{taxa}_1=-0{,}1(74-20)=-5{,}4\;°\mathrm{C/min}\]
+          \[T_2=74+(-5{,}4)\times 1=68{,}6\;°\mathrm{C}.\]
+        </div>
+
+        <h3>Passo 3 — de 2 para 3 minutos</h3>
+        <div class="math-block">
+          \[\text{taxa}_2=-0{,}1(68{,}6-20)=-4{,}86\;°\mathrm{C/min}\]
+          \[T_3=68{,}6+(-4{,}86)\times 1=63{,}74\;°\mathrm{C}.\]
+        </div>
+        <p>
+          A queda de temperatura fica menor a cada passo: o corpo se aproxima
+          do ambiente. Subtrair sempre 6 °C usaria a taxa inicial para sempre,
+          deixando de representar esta EDO.
+        </p>
+        <div class="table-scroll">
+          <table class="value-table">
+            <caption>Euler com passo de 1 min. A taxa de cada linha calcula a temperatura da próxima.</caption>
+            <thead><tr><th scope="col">Passo \(n\)</th><th scope="col">Tempo (min)</th><th scope="col">\(T_n\) (°C)</th><th scope="col">Taxa (°C/min)</th></tr></thead>
+            <tbody>
+              <tr><td>0</td><td>0</td><td>80,000</td><td>−6,000</td></tr>
+              <tr><td>1</td><td>1</td><td>74,000</td><td>−5,400</td></tr>
+              <tr><td>2</td><td>2</td><td>68,600</td><td>−4,860</td></tr>
+              <tr><td>3</td><td>3</td><td>63,740</td><td>−4,374</td></tr>
+              <tr><td>4</td><td>4</td><td>59,366</td><td>−3,937</td></tr>
+              <tr><td>5</td><td>5</td><td>55,429</td><td>−3,543</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="lesson-section" id="python" aria-labelledby="python-title">
+        <p class="solution-step">Parte 4</p>
+        <h2 id="python-title">O algoritmo em Python, sem solucionador pronto</h2>
+        <p>
+          O programa abaixo faz exatamente as contas anteriores. Basta ter
+          Python instalado; este exemplo não importa biblioteca alguma.
+          Para manter o laço simples, escolhemos um tempo final que é múltiplo
+          de <code>dt</code>: 10 min divididos em dez passos de 1 min.
+        </p>
+        <p><a href="euler_resfriamento.py" download>Baixar euler_resfriamento.py</a></p>
+        <pre><code data-source="euler_resfriamento.py">temperatura_ambiente = 20.0  # °C
+temperatura = 80.0  # °C, no instante inicial
+k = 0.1  # 1/min
+dt = 1.0  # min
+tempo_final = 10.0  # min
+numero_passos = round(tempo_final / dt)
+
+print("t (min) | T (°C)")
+print(f"{0.0:7.2f} | {temperatura:7.3f}")
+
+for passo in range(numero_passos):
+    taxa = -k * (temperatura - temperatura_ambiente)
+    temperatura = temperatura + taxa * dt
+    tempo = (passo + 1) * dt
+    print(f"{tempo:7.2f} | {temperatura:7.3f}")</code></pre>
+        <p>Salve o arquivo e execute no terminal, na pasta em que ele está:</p>
+        <pre><code>python euler_resfriamento.py</code></pre>
+        <p>
+          <code>taxa</code> usa a temperatura atual. A linha seguinte implementa
+          Euler: Python calcula o lado direito antes de guardar o novo valor
+          em <code>temperatura</code>. O <code>for</code> repete a atualização,
+          e <code>print</code> mostra a evolução temporal. O resultado final é
+          <strong>40,921 °C em 10 min</strong>.
+        </p>
+        <p>
+          O formato <code>.3f</code> só arredonda a apresentação na tela;
+          não arredondamos a temperatura dentro do cálculo. No código,
+          números decimais usam ponto, como <code>0.1</code>.
+        </p>
+      </section>
+
+      <section class="lesson-section" id="passo" aria-labelledby="passo-title">
+        <p class="solution-step">Parte 5</p>
+        <h2 id="passo-title">O tamanho do passo muda a resposta</h2>
+        <p>
+          A taxa real muda dentro de cada intervalo; Euler só a atualiza
+          no começo do próximo. Para este problema, passos menores acompanham
+          melhor a curva. Podemos conferir porque esta EDO também possui uma
+          solução exata:
+        </p>
+        <div class="math-block">\[T(t)=20+60e^{-0{,}1t}.\]</div>
+        <p>
+          Em 10 min, ela fornece aproximadamente <strong>42,073 °C</strong>.
+          Não usamos essa fórmula para executar Euler; ela serve aqui como
+          referência para medir o erro.
+        </p>
+        <div class="table-scroll">
+          <table class="value-table">
+            <caption>Comparação no mesmo instante final: 10 min.</caption>
+            <thead><tr><th scope="col">Passo (min)</th><th scope="col">Atualizações</th><th scope="col">Euler (°C)</th><th scope="col">Erro absoluto (°C)</th></tr></thead>
+            <tbody>
+              <tr><td>1,0</td><td>10</td><td>40,921</td><td>1,152</td></tr>
+              <tr><td>0,5</td><td>20</td><td>41,509</td><td>0,564</td></tr>
+              <tr><td>0,1</td><td>100</td><td>41,962</td><td>0,111</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <figure>
+          <img src="comparacao-euler.svg" width="960" height="540" loading="lazy" alt="Gráfico da temperatura de 0 a 10 minutos: Euler com passo de 1 minuto fica abaixo da solução exata; com passo de 0,1 minuto os valores ficam mais próximos da curva exata.">
+          <figcaption>
+            Cada marcador da curva de passo 1 min é um estado calculado.
+            As linhas ligam os pontos de Euler; a curva exata permite enxergar
+            a diferença acumulada.
+          </figcaption>
+        </figure>
+        <p>
+          Euler é um método de primeira ordem: para uma solução suficientemente
+          suave e passos pequenos e estáveis, reduzir o passo pela metade
+          costuma reduzir aproximadamente pela metade o erro acumulado no mesmo
+          intervalo de tempo. Isso exige o dobro de atualizações.
+        </p>
+        <aside class="euler-note"><p><strong>Um passo grande pode mudar a física aparente.</strong>
+          Neste modelo, \(T_{n+1}-20=(1-k\Delta t)(T_n-20)\).
+          Para \(0&lt;k\Delta t\leq1\), a aproximação vai em direção ao ambiente
+          sem cruzá-lo. Se \(1&lt;k\Delta t&lt;2\), ela alterna acima e abaixo
+          de 20 °C; com \(k\Delta t\geq2\), não converge para o ambiente.
+          Essa oscilação é um efeito numérico, ausente na solução física deste modelo.
+        </p></aside>
+        <p>
+          <strong>Experimente:</strong> execute o mesmo script com
+          <code>dt = 0.5</code> e depois <code>dt = 0.1</code> e confira a tabela.
+          A concordância com a solução exata verifica o cálculo para esta EDO;
+          verificar se a lei de resfriamento descreve um corpo real exige medidas.
+        </p>
+      </section>
+
+      <section class="lesson-section" id="queda" aria-labelledby="queda-title">
+        <p class="solution-step">Parte 6</p>
+        <h2 id="queda-title">A mesma ideia para a velocidade de uma queda</h2>
+        <p>
+          Agora o estado é a velocidade \(v\). Escolhendo o sentido positivo
+          para baixo e um modelo de resistência do ar proporcional à velocidade,
+          a segunda lei de Newton dá:
+        </p>
+        <div class="math-block">
+          \[m\frac{dv}{dt}=mg-bv\quad\Rightarrow\quad\frac{dv}{dt}=g-\frac{b}{m}v.\]
+          \[v_{n+1}=v_n+\left(g-\frac{b}{m}v_n\right)\Delta t.\]
+        </div>
+        <p>
+          Com \(m=1\;\mathrm{kg}\), \(b=0{,}2\;\mathrm{kg/s}\),
+          \(g=9{,}81\;\mathrm{m/s^2}\), \(v_0=0\) e \(\Delta t=0{,}1\;\mathrm{s}\),
+          os dois primeiros passos são:
+        </p>
+        <div class="math-block">
+          \[v_1=0+(9{,}81-0{,}2\times0)\times0{,}1=0{,}981\;\mathrm{m/s}\]
+          \[v_2=0{,}981+(9{,}81-0{,}2\times0{,}981)\times0{,}1=1{,}94238\;\mathrm{m/s}.\]
+        </div>
+        <p><a href="euler_queda.py" download>Baixar euler_queda.py</a></p>
+        <pre><code data-source="euler_queda.py">g = 9.81  # m/s²
+massa = 1.0  # kg
+b = 0.2  # kg/s, resistência linear do ar
+velocidade = 0.0  # m/s, sentido positivo para baixo
+dt = 0.1  # s
+tempo_final = 10.0  # s
+numero_passos = round(tempo_final / dt)
+
+print("t (s) | v (m/s)")
+print(f"{0.0:5.1f} | {velocidade:8.4f}")
+
+for passo in range(numero_passos):
+    aceleracao = g - (b / massa) * velocidade
+    velocidade = velocidade + aceleracao * dt
+    tempo = (passo + 1) * dt
+    print(f"{tempo:5.1f} | {velocidade:8.4f}")</code></pre>
+        <p>
+          Execute com <code>python euler_queda.py</code>. O corpo acelera, mas a
+          resistência aumenta com a velocidade. No modelo, a velocidade tende a
+          \(v_{\mathrm{terminal}}=mg/b=49{,}05\;\mathrm{m/s}\), quando a aceleração
+          tende a zero. O exemplo acompanha uma queda idealizada sem calcular o
+          instante de chegada ao solo; a resistência linear é uma hipótese,
+          não uma descrição de toda queda no ar.
+        </p>
+        <p>
+          Se quisermos também a posição \(x\), acrescentamos \(dx/dt=v\).
+          No Euler explícito, calculamos \(x_{n+1}=x_n+v_n\Delta t\) e
+          \(v_{n+1}=v_n+a_n\Delta t\) usando os valores do <strong>mesmo instante
+          antigo</strong>. Isso transforma uma EDO de segunda ordem para a posição
+          em duas EDOs de primeira ordem.
+        </p>
+      </section>
+
+      <section class="lesson-section" id="runge-kutta" aria-labelledby="runge-kutta-title">
+        <p class="solution-step">Parte 7</p>
+        <h2 id="runge-kutta-title">Outros métodos: olhar mais de uma inclinação</h2>
+        <p>
+          Euler usa uma única avaliação da taxa por passo. A família
+          <strong>Runge–Kutta</strong> combina taxas calculadas em estados
+          intermediários estimados para acompanhar melhor a curvatura da solução.
+          A lei física e a condição inicial continuam as mesmas; muda a regra de avanço.
+        </p>
+        <ul>
+          <li><strong>RK2, como o ponto médio:</strong> estima o estado na metade
+            do intervalo e usa a taxa nesse ponto para avançar o passo inteiro.</li>
+          <li><strong>RK4 clássico:</strong> combina quatro avaliações da taxa
+            por passo. É de quarta ordem e costuma ser mais preciso que Euler
+            para o mesmo passo em problemas suaves.</li>
+          <li><strong>Passo adaptativo:</strong> métodos como RK45 estimam o
+            erro e ajustam o intervalo durante a integração.</li>
+        </ul>
+        <p>
+          Para entender o algoritmo, Euler deixa cada conta visível.
+          Para resolver problemas na prática, uma biblioteca permite usar
+          métodos com controle de erro sem reescrever o solucionador.
+        </p>
+      </section>
+
+      <section class="lesson-section" id="biblioteca" aria-labelledby="biblioteca-title">
+        <p class="solution-step">Parte 8</p>
+        <h2 id="biblioteca-title">O mesmo resfriamento com SciPy e Runge–Kutta</h2>
+        <p>
+          Agora passamos a EDO e o estado inicial à função
+          <a href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.integrate.solve_ivp.html"><code>solve_ivp</code> do SciPy</a>.
+          A opção <code>method="RK45"</code> usa Runge–Kutta de ordem 5(4),
+          com passo adaptativo. RK45 é diferente do RK4 clássico de passo fixo.
+        </p>
+        <p>Instale as bibliotecas neste ambiente Python:</p>
+        <pre><code>python -m pip install scipy matplotlib</code></pre>
+        <p><a href="runge_kutta_resfriamento.py" download>Baixar runge_kutta_resfriamento.py</a></p>
+        <pre><code data-source="runge_kutta_resfriamento.py">from collections.abc import Sequence
+
+import matplotlib.pyplot as plt
+from scipy.integrate import solve_ivp
+
+
+def resfriamento(t: float, estado: Sequence[float]) -&gt; list[float]:
+    temperatura = estado[0]
+    return [-0.1 * (temperatura - 20.0)]
+
+
+tempos = [float(t) for t in range(11)]
+solucao = solve_ivp(
+    resfriamento,
+    (0.0, 10.0),
+    [80.0],
+    method="RK45",
+    t_eval=tempos,
+    rtol=1e-8,
+    atol=1e-10,
+)
+
+if not solucao.success:
+    raise RuntimeError(solucao.message)
+
+for tempo, temperatura in zip(solucao.t, solucao.y[0]):
+    print(f"{tempo:5.1f} min | {temperatura:7.3f} °C")
+
+plt.plot(solucao.t, solucao.y[0], "o-", label="Runge–Kutta (RK45)")
+plt.xlabel("Tempo (min)")
+plt.ylabel("Temperatura (°C)")
+plt.grid(True)
+plt.legend()
+plt.show()</code></pre>
+        <p>Execute com <code>python runge_kutta_resfriamento.py</code>.</p>
+        <ul>
+          <li><code>resfriamento</code> retorna a derivada, não a temperatura futura.
+            O argumento <code>t</code> faz parte da interface, mesmo quando a taxa
+            depende apenas do estado.</li>
+          <li><code>(0.0, 10.0)</code> define o intervalo;
+            <code>[80.0]</code> contém a condição inicial.</li>
+          <li><code>t_eval</code> indica os instantes de saída.
+            <strong>Não fixa os passos internos</strong> do método.</li>
+          <li><code>rtol</code> e <code>atol</code> controlam as tolerâncias de erro local.
+            <code>solucao.y[0]</code> contém as temperaturas calculadas.</li>
+        </ul>
+        <p>
+          Com esses parâmetros, a última linha mostra aproximadamente
+          <strong>42,073 °C em 10 min</strong>, próxima da solução exata.
+          Compare com os 40,921 °C obtidos por Euler com passo de 1 min.
+          Nos dois casos, fornecemos a mesma física: a biblioteca automatiza
+          o avanço numérico.
+        </p>
+        <p>
+          <strong>Para investigar:</strong> troque a temperatura inicial por
+          10 °C nos dois programas de resfriamento. O que muda no sinal da taxa?
+          Por que o mesmo modelo agora descreve um aquecimento?
+        </p>
+      </section>
+    </div>
+  </main>
+  <footer class="site-footer">
+    <p>Método de Euler · Física Computacional</p>
+    <a href="../../disciplinas/prccomp/">Voltar à disciplina</a>
+  </footer>
+  <script type="module" src="../../componentes/navegacao-principal.js"></script>
+  <script type="module" src="../../componentes/navegacao-secoes.js"></script>
+  <script type="module">import { typesetMath } from "../../componentes/matematica.js"; typesetMath(document.querySelector("main"));</script>
+</body>
+</html>

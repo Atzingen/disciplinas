@@ -119,6 +119,15 @@
         ],
         "createdAt": "2026-09-16T14:03:36.721Z",
         "reason": "Agent: local callouts/output borders reduced to uniform 1px; remaining detector stripes belong to shared .area-card, .report-template-promo and .discipline-card, all absent from this page DOM."
+      },
+      {
+        "rule": "tiny-text",
+        "value": "*",
+        "files": [
+          "site/disciplinas/prccomp/index.html"
+        ],
+        "createdAt": "2026-10-05T21:31:37.774Z",
+        "reason": "Agent verified computed styles in the browser after local typography fixes: no visible text in this page is below 12px; the remaining static finding is not rendered body text."
       }
     ]
   }

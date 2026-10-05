@@ -1,0 +1,43 @@
+.euler-page { --on-accent: #101620; }
+.euler-page .site-navigation a,
+.euler-page .site-navigation summary,
+.euler-page .theme-toggle__label,
+.euler-page .section-nav a { font-size: .875rem; }
+.euler-page .lesson-sections,
+.euler-page .lesson-section { min-width: 0; }
+.euler-page .lesson-section p,
+.euler-page .lesson-section li { max-width: 78ch; }
+.euler-page pre {
+  max-width: 100%;
+  overflow-x: auto;
+  padding: 1rem 1.2rem;
+  background: var(--paper-deep);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  font: .84rem/1.65 var(--font-mono);
+}
+.euler-page :not(pre) > code { font: .9em var(--font-mono); overflow-wrap: anywhere; }
+.euler-page .euler-note {
+  margin: 1.5rem 0;
+  padding: 1rem 1.2rem;
+  border-left: 3px solid var(--accent);
+  background: var(--paper-deep);
+}
+.euler-page .euler-note p { margin: 0; }
+.euler-page .euler-steps li { margin-bottom: .8rem; }
+.euler-page figure { margin: 1.5rem 0; }
+.euler-page figure img { display: block; width: 100%; height: auto; border-radius: 8px; }
+.euler-page figcaption { margin-top: .7rem; color: var(--ink-soft); font-size: .92rem; }
+.euler-page caption { text-align: left; margin-bottom: .7rem; }
+.euler-page .value-table th { white-space: nowrap; font-size: .875rem; }
+.euler-page .euler-video { max-width: 900px; margin: 1.5rem 0; }
+.euler-page .euler-video iframe { display: block; width: 100%; aspect-ratio: 16 / 9; border: 0; border-radius: 8px; }
+.euler-page mjx-container[display="true"] { max-width: 100%; overflow-x: auto; overflow-y: hidden; padding: .3rem 0; }
+@media (max-width: 600px) {
+  .euler-page .site-topbar { position: static; }
+  .euler-page .section-nav { flex-wrap: nowrap; overflow-x: auto; }
+  .euler-page .section-nav a { white-space: nowrap; flex-shrink: 0; }
+  .euler-page h1 { font-size: clamp(2rem, 9vw, 3rem); }
+  .euler-page pre { font-size: .76rem; padding: .8rem; }
+  .euler-page .lesson-section { scroll-margin-top: 1rem; }
+}
