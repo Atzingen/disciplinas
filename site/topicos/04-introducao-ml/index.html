@@ -1,0 +1,578 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Apresentação: o que é inteligência artificial, a diferença para aprendizado de máquina, redes neurais e deep learning, os tipos de aprendizado e o perceptron treinado passada por passada, com explorador interativo.">
+  <title>Introdução ao aprendizado de máquina · Tópico 04</title>
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../assets/base.css">
+  <link rel="stylesheet" href="../../assets/simulador.css">
+  <link rel="stylesheet" href="ml.css">
+  <script>try{if(localStorage.getItem("tema")==="escuro"){document.documentElement.dataset.theme="escuro"}}catch(erro){}</script>
+</head>
+<body class="lesson-page ml-page">
+  <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+  <div class="site-topbar" data-topbar>
+    <div class="site-topbar__inner">
+      <nav class="breadcrumb" aria-label="Navegação estrutural">
+        <a href="../../disciplinas/prccomp/">Física Computacional</a>
+        <span aria-hidden="true">/</span>
+        <a href="../">Tópicos</a>
+        <span aria-hidden="true">/</span>
+        <strong aria-current="page">Tópico 04</strong>
+      </nav>
+      <div class="lesson-area-navigation" data-site-navigation data-root-path="../../" data-active-section="topicos"></div>
+    </div>
+  </div>
+
+  <main class="deck" id="conteudo" data-deck>
+
+    <!-- 1 -->
+    <section class="slide slide--capa" id="capa" aria-label="Capa">
+      <p class="eyebrow">Tópico 04 · PRCCOMP · Física Computacional</p>
+      <h1>Introdução ao aprendizado de máquina</h1>
+      <p class="slide-lead">Da definição de inteligência artificial ao perceptron treinado passo a passo.</p>
+      <p class="slide-autor">Prof. Gustavo Voltani von Atzingen · IFSP Câmpus Piracicaba</p>
+      <p class="slide-dica">Use ← e → (ou toque nas laterais) para navegar · <kbd>F</kbd> tela cheia</p>
+    </section>
+
+    <!-- 2 -->
+    <section class="slide" id="roteiro" aria-labelledby="roteiro-titulo">
+      <h2 id="roteiro-titulo">Roteiro de hoje</h2>
+      <ol class="roteiro">
+        <li><strong>O que é inteligência artificial?</strong> Definições e um pouco de história.</li>
+        <li><strong>IA, aprendizado de máquina, redes neurais e deep learning:</strong> quem contém quem.</li>
+        <li><strong>Como uma máquina aprende</strong> a partir de dados, e os três tipos de aprendizado.</li>
+        <li><strong>O neurônio artificial</strong> e o perceptron.</li>
+        <li><strong>Treinamento passada por passada:</strong> propagar, medir o erro, corrigir os pesos.</li>
+        <li><strong>O limite do XOR</strong> e o caminho até as redes profundas.</li>
+      </ol>
+    </section>
+
+    <!-- 3 -->
+    <section class="slide" id="deep-blue" aria-labelledby="deep-blue-titulo">
+      <p class="eyebrow">Para começar</p>
+      <h2 id="deep-blue-titulo">O Deep Blue era inteligente?</h2>
+      <div class="duas-colunas">
+        <div>
+          <p>Em 1997, o computador <strong>Deep Blue</strong>, da IBM, venceu o campeão mundial de xadrez Garry Kasparov em uma partida oficial.</p>
+          <p>Ele não aprendia com dados: avaliava cerca de 200 milhões de posições por segundo com <strong>busca em árvore</strong>, regras escritas por especialistas e hardware dedicado.</p>
+          <p class="destaque">Kasparov é inteligente. E o Deep Blue?</p>
+        </div>
+        <div class="citacoes">
+          <blockquote>
+            <p>“Eu podia sentir — podia cheirar — um novo tipo de inteligência do outro lado da mesa.”</p>
+            <footer>Garry Kasparov, 1996</footer>
+          </blockquote>
+          <blockquote>
+            <p>“Dizer que o Deep Blue não pensa de verdade quando joga xadrez é como dizer que um avião não voa de verdade porque não bate as asas.”</p>
+            <footer>Drew McDermott, cientista da computação</footer>
+          </blockquote>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4 -->
+    <section class="slide" id="definicoes" aria-labelledby="definicoes-titulo">
+      <p class="eyebrow">O que é IA?</p>
+      <h2 id="definicoes-titulo">Quatro maneiras de definir inteligência artificial</h2>
+      <div class="quadro-definicoes">
+        <span class="quadro-definicoes__eixo"></span>
+        <span class="quadro-definicoes__eixo">Como seres humanos</span>
+        <span class="quadro-definicoes__eixo">Racionalmente</span>
+        <span class="quadro-definicoes__eixo quadro-definicoes__eixo--linha">Pensar</span>
+        <div><p>“O novo e interessante esforço para fazer os computadores pensarem (…) máquinas com mentes.”</p><small>Haugeland, 1985</small><p>“Automatização de atividades que associamos ao pensamento humano: tomar decisões, resolver problemas, aprender.”</p><small>Bellman, 1978</small></div>
+        <div><p>“O estudo das faculdades mentais pelo uso de modelos computacionais.”</p><small>Charniak e McDermott, 1985</small><p>“O estudo das computações que tornam possível perceber, raciocinar e agir.”</p><small>Winston, 1992</small></div>
+        <span class="quadro-definicoes__eixo quadro-definicoes__eixo--linha">Agir</span>
+        <div><p>“A arte de criar máquinas que executam funções que exigem inteligência quando executadas por pessoas.”</p><small>Kurzweil, 1990</small><p>“O estudo de como fazer computadores realizarem tarefas que hoje as pessoas fazem melhor.”</p><small>Rich e Knight, 1991</small></div>
+        <div><p>“Inteligência computacional é o estudo do projeto de agentes inteligentes.”</p><small>Poole et al., 1998</small></div>
+      </div>
+      <p class="fonte">Organização de Russell e Norvig, <cite>Inteligência Artificial</cite>, 3ª ed. A definição é pelo <strong>objetivo</strong>, não pela técnica.</p>
+    </section>
+
+    <!-- 5 -->
+    <section class="slide" id="hierarquia" aria-labelledby="hierarquia-titulo">
+      <p class="eyebrow">Quatro termos que não são sinônimos</p>
+      <h2 id="hierarquia-titulo">IA ⊃ aprendizado de máquina ⊃ redes neurais ⊃ deep learning</h2>
+      <div class="duas-colunas duas-colunas--figura">
+        <svg class="diagrama-hierarquia" viewBox="0 0 440 440" role="img" aria-labelledby="hierarquia-svg-titulo">
+          <title id="hierarquia-svg-titulo">Quatro círculos concêntricos: inteligência artificial contém aprendizado de máquina, que contém redes neurais, que contêm deep learning.</title>
+          <circle cx="220" cy="220" r="214" class="nivel nivel--1"/>
+          <circle cx="220" cy="258" r="168" class="nivel nivel--2"/>
+          <circle cx="220" cy="296" r="122" class="nivel nivel--3"/>
+          <circle cx="220" cy="334" r="76" class="nivel nivel--4"/>
+          <text x="220" y="62" class="nivel-rotulo">Inteligência artificial</text>
+          <text x="220" y="140" class="nivel-rotulo">Aprendizado de máquina</text>
+          <text x="220" y="218" class="nivel-rotulo">Redes neurais</text>
+          <text x="220" y="330" class="nivel-rotulo nivel-rotulo--claro">Deep learning</text>
+          <text x="220" y="354" class="nivel-detalhe">muitas camadas</text>
+        </svg>
+        <dl class="lista-termos">
+          <dt>Inteligência artificial</dt>
+          <dd>Máquinas fazendo tarefas que, feitas por pessoas, chamaríamos de inteligentes. Inclui sistemas <em>sem</em> aprendizado: regras “se-então”, busca A*, o Deep Blue.</dd>
+          <dt>Aprendizado de máquina</dt>
+          <dd>As regras não são escritas: são <strong>ajustadas a partir de dados</strong>. Regressão, árvores de decisão, KNN…</dd>
+          <dt>Redes neurais</dt>
+          <dd>Modelos feitos de neurônios artificiais ligados por pesos. O perceptron é o mais simples.</dd>
+          <dt>Deep learning</dt>
+          <dd>Redes com muitas camadas, treinadas com muitos dados e GPUs: CNNs para imagens, transformers para texto.</dd>
+        </dl>
+      </div>
+    </section>
+
+    <!-- 6 -->
+    <section class="slide" id="linha-do-tempo" aria-labelledby="linha-titulo">
+      <p class="eyebrow">Um pouco de história</p>
+      <h2 id="linha-titulo">De 1943 a hoje: avanços, promessas e dois invernos</h2>
+      <ol class="linha-tempo">
+        <li><time>1943</time><span>McCulloch e Pitts propõem o neurônio artificial lógico.</span></li>
+        <li><time>1950</time><span>Turing troca “máquinas podem pensar?” pelo jogo da imitação.</span></li>
+        <li><time>1956</time><span>A conferência de Dartmouth batiza o campo: <em>artificial intelligence</em>.</span></li>
+        <li class="marco"><time>1958</time><span>Rosenblatt apresenta o <strong>perceptron</strong>, o primeiro neurônio que aprende.</span></li>
+        <li class="marco"><time>1969</time><span>Minsky e Papert: um perceptron sozinho não resolve o <strong>XOR</strong>.</span></li>
+        <li class="inverno"><time>1974–80</time><span>Primeiro inverno da IA: cortes de financiamento.</span></li>
+        <li><time>1986</time><span>Rumelhart, Hinton e Williams popularizam o <strong>backpropagation</strong>.</span></li>
+        <li class="inverno"><time>1987–93</time><span>Segundo inverno da IA.</span></li>
+        <li><time>1997</time><span>Deep Blue vence Kasparov — com busca, quase sem aprendizado.</span></li>
+        <li><time>2012</time><span>AlexNet vence o ImageNet: dados + GPUs + redes profundas.</span></li>
+        <li><time>2017</time><span>O <em>transformer</em> (“Attention is all you need”).</span></li>
+        <li><time>2022</time><span>ChatGPT leva os modelos de linguagem ao público.</span></li>
+        <li class="marco"><time>2024</time><span>Nobel de <strong>Física</strong> para Hopfield e Hinton.</span></li>
+      </ol>
+      <p class="fonte">Os marcos em destaque aparecem de novo nesta aula.</p>
+    </section>
+
+    <!-- 7 -->
+    <section class="slide" id="nobel" aria-labelledby="nobel-titulo">
+      <p class="eyebrow">Por que isso é assunto de Física?</p>
+      <h2 id="nobel-titulo">Nobel de Física 2024: redes neurais nascidas de ferramentas da física</h2>
+      <div class="duas-colunas">
+        <div class="cartao">
+          <h3>John Hopfield</h3>
+          <p>Criou uma memória associativa que guarda e reconstrói padrões. A rede é descrita como um sistema de <strong>spins</strong> com uma <strong>energia</strong>: lembrar um padrão é descer até um mínimo dessa energia.</p>
+        </div>
+        <div class="cartao">
+          <h3>Geoffrey Hinton</h3>
+          <p>A partir da rede de Hopfield, criou a <strong>máquina de Boltzmann</strong>, que usa <strong>física estatística</strong> (a distribuição de Boltzmann) para aprender sozinha as propriedades dos dados.</p>
+        </div>
+      </div>
+      <blockquote class="citacao-larga">
+        <p>“Os dois laureados deste ano usaram ferramentas da física para desenvolver métodos que são a base do poderoso aprendizado de máquina de hoje.”</p>
+        <footer>Academia Real das Ciências da Suécia, comunicado do Nobel de Física de 2024</footer>
+      </blockquote>
+    </section>
+
+    <!-- 8 -->
+    <section class="slide" id="entender-o-mundo" aria-labelledby="mundo-titulo">
+      <p class="eyebrow">Como se aprende</p>
+      <h2 id="mundo-titulo">Três maneiras de entender e agir no mundo</h2>
+      <div class="tres-fluxos">
+        <div><h3>Método científico</h3><p class="fluxo"><span>Observações</span><span>Modelo</span><span>Validação</span></p></div>
+        <div><h3>Nosso cérebro</h3><p class="fluxo"><span>Observações</span><span>Experimentação</span><span>Aprendizado</span></p></div>
+        <div><h3>Aprendizado de máquina</h3><p class="fluxo"><span>Dados</span><span>Treinamento</span><span>Inferência</span></p></div>
+      </div>
+      <aside class="nota">
+        <p><strong>Você já fez isso.</strong> No Tópico 2, a trajetória do pêndulo filmado foi ajustada a um modelo e o valor de \(g\) saiu dos dados. Treinar um modelo é a mesma ideia: escolher os <strong>parâmetros</strong> que deixam o modelo mais perto das observações — só que com muito mais parâmetros e sem uma fórmula física por trás.</p>
+      </aside>
+    </section>
+
+    <!-- 9 -->
+    <section class="slide" id="programacao-x-aprendizado" aria-labelledby="paradigma-titulo">
+      <p class="eyebrow">A virada de paradigma</p>
+      <h2 id="paradigma-titulo">Sistemas podem aprender com dados</h2>
+      <div class="paradigmas">
+        <div class="paradigma">
+          <h3>Programação tradicional</h3>
+          <div class="paradigma__fluxo"><span class="caixa">Dados</span><span class="caixa caixa--destaque">Regras</span><span class="seta" aria-hidden="true">→</span><span class="caixa caixa--maquina">Programa</span><span class="seta" aria-hidden="true">→</span><span class="caixa">Respostas</span></div>
+          <p>Quem programa escreve as regras. Ex.: “se a temperatura passar de 30 °C, ligue o ventilador”.</p>
+        </div>
+        <div class="paradigma">
+          <h3>Aprendizado supervisionado</h3>
+          <div class="paradigma__fluxo"><span class="caixa">Dados</span><span class="caixa">Respostas</span><span class="seta" aria-hidden="true">→</span><span class="caixa caixa--maquina">Treinamento</span><span class="seta" aria-hidden="true">→</span><span class="caixa caixa--destaque">Regras</span></div>
+          <p>Damos exemplos com a resposta certa e o algoritmo <strong>encontra as regras</strong> — o modelo —, que depois respondem a casos novos.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 10 -->
+    <section class="slide" id="tipos-de-aprendizado" aria-labelledby="tipos-titulo">
+      <p class="eyebrow">Tipos de aprendizado de máquina</p>
+      <h2 id="tipos-titulo">Supervisionado, não supervisionado e por reforço</h2>
+      <div class="tres-cartoes">
+        <div class="cartao">
+          <h3>Supervisionado</h3>
+          <p>Aprende com pares <strong>entrada → saída correta</strong>: encontra a função que liga uma à outra.</p>
+          <p class="exemplos">Reconhecer imagens, diagnósticos, prever preços, classificar spam.</p>
+        </div>
+        <div class="cartao">
+          <h3>Não supervisionado</h3>
+          <p>Só há as entradas, sem rótulos: o algoritmo procura <strong>estrutura e agrupamentos</strong>.</p>
+          <p class="exemplos">Clusterização, sistemas de recomendação, detecção de anomalias.</p>
+        </div>
+        <div class="cartao">
+          <h3>Por reforço</h3>
+          <p>Um agente <strong>age</strong>, recebe recompensas ou punições e aprende a decidir, continuamente.</p>
+          <p class="exemplos">Robôs que andam, jogos (AlphaGo), controle em tempo real.</p>
+        </div>
+      </div>
+      <figure class="figura-clara figura-clara--estreita">
+        <img src="imagens/supervisionado-nao-supervisionado.webp" width="647" height="285" alt="À esquerda, aprendizado supervisionado: pontos de duas classes marcados como círculos e xis. À direita, aprendizado não supervisionado: os mesmos pontos sem rótulo, agrupados em dois conjuntos.">
+      </figure>
+    </section>
+
+    <!-- 11 -->
+    <section class="slide slide--imagem" id="exemplo-treino-1" aria-labelledby="treino1-titulo">
+      <p class="eyebrow">Exemplo · aprendizado supervisionado</p>
+      <h2 id="treino1-titulo">Treino: dados + rótulos</h2>
+      <figure class="figura-clara">
+        <img src="imagens/treino-pato-ganso.webp" width="1600" height="900" alt="Fotos de aves com rótulos PATO ou GANSO entram no computador, que produz regras, isto é, um modelo.">
+      </figure>
+    </section>
+
+    <!-- 12 -->
+    <section class="slide slide--imagem" id="exemplo-resultado-1" aria-labelledby="resultado1-titulo">
+      <p class="eyebrow">Exemplo · aprendizado supervisionado</p>
+      <h2 id="resultado1-titulo">Inferência: o modelo responde para fotos que nunca viu</h2>
+      <figure class="figura-clara">
+        <img src="imagens/resultado-pato-ganso.webp" width="1600" height="900" alt="Duas fotos novas passam pelo modelo: a primeira é classificada como PATO e a segunda como GANSO.">
+      </figure>
+    </section>
+
+    <!-- 13 -->
+    <section class="slide slide--imagem" id="exemplo-treino-2" aria-labelledby="treino2-titulo">
+      <p class="eyebrow">Exemplo · aprendizado supervisionado</p>
+      <h2 id="treino2-titulo">Outro treino: “é pato” ou “não é”</h2>
+      <figure class="figura-clara">
+        <img src="imagens/treino-pato-nao.webp" width="1600" height="900" alt="Fotos rotuladas como PATO ou NÃO, incluindo um elefante e um cupcake, entram no computador, que produz regras.">
+      </figure>
+    </section>
+
+    <!-- 14 -->
+    <section class="slide slide--imagem" id="exemplo-resultado-2" aria-labelledby="resultado2-titulo">
+      <p class="eyebrow">Exemplo · aprendizado supervisionado</p>
+      <h2 id="resultado2-titulo">O modelo só sabe responder o que aprendeu a perguntar</h2>
+      <figure class="figura-clara">
+        <img src="imagens/resultado-pato-nao.webp" width="1600" height="900" alt="Uma foto de pato é classificada como PATO e uma foto de galo é classificada como NÃO.">
+      </figure>
+      <p class="legenda">As classes possíveis e os exemplos escolhidos definem o que o modelo é capaz de dizer.</p>
+    </section>
+
+    <!-- 15 -->
+    <section class="slide" id="dados-reais" aria-labelledby="dados-reais-titulo">
+      <p class="eyebrow">Cuidado com os dados</p>
+      <h2 id="dados-reais-titulo">Dados de treinamento × dados do mundo real</h2>
+      <div class="duas-colunas duas-colunas--figura">
+        <div>
+          <p>No treino, os exemplos costumam ser limpos e bem diferentes entre si:</p>
+          <div class="par-imagens">
+            <img src="imagens/chihuahua.webp" width="800" height="800" alt="Foto de um chihuahua de frente.">
+            <img src="imagens/muffin.webp" width="900" height="563" alt="Foto de dois muffins com castanhas.">
+          </div>
+          <p>No mundo real, aparecem casos parecidos, ruidosos e ambíguos. O modelo precisa <strong>generalizar</strong>, não decorar.</p>
+        </div>
+        <figure>
+          <img class="imagem-quadrada" src="imagens/chihuahua-ou-muffin.webp" width="796" height="800" alt="Grade de 16 fotos que alterna rostos de chihuahuas e muffins de mirtilo, difíceis de distinguir.">
+          <figcaption>Chihuahua ou muffin? Montagem de Karen Zack (@teenybiscuit).</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- 16 -->
+    <section class="slide" id="moravec" aria-labelledby="moravec-titulo">
+      <p class="eyebrow">Deep learning e as fronteiras</p>
+      <h2 id="moravec-titulo">O paradoxo de Moravec</h2>
+      <p class="slide-lead">O raciocínio formal exige pouca computação; perceber, mover-se e usar linguagem exigem uma quantidade enorme.</p>
+      <div class="duas-colunas duas-colunas--figura">
+        <figure class="figura-clara">
+          <img src="imagens/moravec-xadrez.webp" width="1000" height="667" alt="Ilustração de uma mão robótica e uma mão humana jogando xadrez.">
+          <figcaption>Xadrez: resolvido por busca em 1997.</figcaption>
+        </figure>
+        <figure class="figura-clara">
+          <img src="imagens/moravec-robos.webp" width="790" height="900" alt="Os robôs Atlas, humanoide, e Spot, quadrúpede, da Boston Dynamics.">
+          <figcaption>Andar, pegar objetos, enxergar: desafios que só avançaram com deep learning.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- 17 -->
+    <section class="slide" id="neuronio" aria-labelledby="neuronio-titulo">
+      <p class="eyebrow">Redes neurais</p>
+      <h2 id="neuronio-titulo">Do neurônio biológico ao neurônio artificial</h2>
+      <div class="duas-colunas duas-colunas--figura">
+        <div>
+          <p>O neurônio recebe sinais pelos <strong>dendritos</strong>; se o estímulo total passa de um limiar, ele dispara pelo <strong>axônio</strong>. A força de cada <strong>sinapse</strong> muda com o aprendizado.</p>
+          <p>O modelo de McCulloch e Pitts (1943) copia essa ideia:</p>
+          <ol class="passos-neuronio">
+            <li>cada entrada \(x_i\) é multiplicada por um <strong>peso</strong> \(w_i\);</li>
+            <li>os produtos são somados ao <strong>bias</strong> \(b\);</li>
+            <li>a <strong>função de ativação</strong> \(\varphi\) decide a saída.</li>
+          </ol>
+          <div class="math-block math-block--result">\[v=w_1x_1+w_2x_2+b,\qquad y=\varphi(v)\]</div>
+        </div>
+        <svg class="diagrama-neuronio" viewBox="0 0 460 300" role="img" aria-labelledby="neuronio-svg-titulo">
+          <title id="neuronio-svg-titulo">Neurônio artificial: entradas x1 e x2 e uma entrada constante 1 entram, multiplicadas pelos pesos w1, w2 e b, em um somatório; o resultado v passa pela função de ativação e gera a saída y.</title>
+          <defs><marker id="seta-neuronio" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 10 5 0 10z" class="seta-ponta"/></marker></defs>
+          <circle cx="40" cy="70" r="24" class="no-entrada"/><text x="40" y="76" class="no-texto">x₁</text>
+          <circle cx="40" cy="160" r="24" class="no-entrada"/><text x="40" y="166" class="no-texto">x₂</text>
+          <circle cx="40" cy="250" r="24" class="no-bias"/><text x="40" y="256" class="no-texto">1</text>
+          <line x1="64" y1="74" x2="196" y2="140" class="ligacao" marker-end="url(#seta-neuronio)"/>
+          <line x1="64" y1="160" x2="194" y2="158" class="ligacao" marker-end="url(#seta-neuronio)"/>
+          <line x1="64" y1="246" x2="196" y2="176" class="ligacao" marker-end="url(#seta-neuronio)"/>
+          <text x="128" y="94" class="peso-texto">w₁</text>
+          <text x="128" y="150" class="peso-texto">w₂</text>
+          <text x="128" y="230" class="peso-texto">b</text>
+          <circle cx="230" cy="160" r="34" class="no-soma"/><text x="230" y="171" class="no-texto no-texto--grande">Σ</text>
+          <line x1="264" y1="160" x2="316" y2="160" class="ligacao" marker-end="url(#seta-neuronio)"/>
+          <text x="288" y="148" class="peso-texto">v</text>
+          <rect x="318" y="126" width="68" height="68" rx="10" class="no-ativacao"/>
+          <path d="M328 182 H352 V138 H376" class="curva-ativacao"/>
+          <text x="352" y="214" class="peso-texto">φ</text>
+          <line x1="386" y1="160" x2="440" y2="160" class="ligacao" marker-end="url(#seta-neuronio)"/>
+          <text x="420" y="146" class="no-texto">y</text>
+        </svg>
+      </div>
+    </section>
+
+    <!-- 18 -->
+    <section class="slide" id="ativacao" aria-labelledby="ativacao-titulo">
+      <p class="eyebrow">O neurônio artificial</p>
+      <h2 id="ativacao-titulo">Função de ativação e o papel do bias</h2>
+      <div class="duas-colunas">
+        <figure class="grafico-ativacao">
+          <svg viewBox="0 0 320 200" role="img" aria-labelledby="degrau-titulo">
+            <title id="degrau-titulo">Função degrau: vale 0 para v negativo e 1 para v maior ou igual a zero.</title>
+            <line x1="20" y1="160" x2="300" y2="160" class="eixo"/><line x1="160" y1="20" x2="160" y2="180" class="eixo"/>
+            <line x1="155" y1="40" x2="165" y2="40" class="eixo"/><text x="150" y="45" class="eixo-texto" text-anchor="end">1</text>
+            <path d="M20 160 H160 M160 40 H300" class="curva"/>
+            <circle cx="160" cy="40" r="5" class="curva-ponto"/><circle cx="160" cy="160" r="5" class="curva-ponto curva-ponto--vazio"/>
+            <text x="296" y="182" class="eixo-texto" text-anchor="end">v</text>
+          </svg>
+          <figcaption><strong>Degrau</strong> (perceptron de Rosenblatt): \(\varphi(v)=1\) se \(v\ge 0\), senão \(0\). Saída “sim ou não”.</figcaption>
+        </figure>
+        <figure class="grafico-ativacao">
+          <svg viewBox="0 0 320 200" role="img" aria-labelledby="sigmoide-titulo">
+            <title id="sigmoide-titulo">Função sigmoide: curva suave em forma de S que vai de 0 a 1, valendo um meio em v igual a zero.</title>
+            <line x1="20" y1="160" x2="300" y2="160" class="eixo"/><line x1="160" y1="20" x2="160" y2="180" class="eixo"/>
+            <line x1="155" y1="40" x2="165" y2="40" class="eixo"/><text x="150" y="45" class="eixo-texto" text-anchor="end">1</text>
+            <path d="M20 159.9 L25 159.9 L30 159.8 L35 159.8 L40 159.7 L45 159.6 L50 159.5 L55 159.4 L60 159.2 L65 159.0 L70 158.7 L75 158.3 L80 157.8 L85 157.2 L90 156.5 L95 155.5 L100 154.3 L105 152.8 L110 150.9 L115 148.6 L120 145.7 L125 142.2 L130 138.1 L135 133.3 L140 127.7 L145 121.5 L150 114.7 L155 107.5 L160 100.0 L165 92.5 L170 85.3 L175 78.5 L180 72.3 L185 66.7 L190 61.9 L195 57.8 L200 54.3 L205 51.4 L210 49.1 L215 47.2 L220 45.7 L225 44.5 L230 43.5 L235 42.8 L240 42.2 L245 41.7 L250 41.3 L255 41.0 L260 40.8 L265 40.6 L270 40.5 L275 40.4 L280 40.3 L285 40.2 L290 40.2 L295 40.1 L300 40.1" class="curva"/><circle cx="160" cy="100" r="4" class="curva-ponto"/><text x="168" y="96" class="eixo-texto">½</text>
+            <text x="296" y="182" class="eixo-texto" text-anchor="end">v</text>
+          </svg>
+          <figcaption><strong>Sigmoide</strong>: \(\varphi(v)=\dfrac{1}{1+e^{-v}}\). Suave e derivável, com \(\varphi'(v)=y\,(1-y)\).</figcaption>
+        </figure>
+      </div>
+      <aside class="nota"><p>O <strong>bias</strong> \(b\) desloca o limiar: com \(b\) negativo, a soma ponderada precisa ser maior para o neurônio disparar. Na reta de decisão, ele afasta a reta da origem.</p></aside>
+    </section>
+
+    <!-- 19 -->
+    <section class="slide" id="reta-de-decisao" aria-labelledby="reta-titulo">
+      <p class="eyebrow">O perceptron</p>
+      <h2 id="reta-titulo">Com duas entradas, o perceptron é uma reta</h2>
+      <div class="duas-colunas duas-colunas--figura">
+        <div>
+          <p>A saída troca de 0 para 1 onde \(v=0\):</p>
+          <div class="math-block math-block--result">\[w_1x_1+w_2x_2+b=0\]</div>
+          <p>Isso é a equação de uma <strong>reta</strong> no plano \((x_1,x_2)\). De um lado o neurônio responde 1; do outro, 0. Aprender é <strong>mover essa reta</strong> mudando \(w_1\), \(w_2\) e \(b\).</p>
+          <p>Primeiro problema: a porta lógica <strong>AND</strong>, que só vale 1 quando as duas entradas valem 1.</p>
+        </div>
+        <div>
+          <table class="tabela-verdade">
+            <caption>Porta AND</caption>
+            <thead><tr><th scope="col">\(x_1\)</th><th scope="col">\(x_2\)</th><th scope="col">\(d\) (desejado)</th></tr></thead>
+            <tbody><tr><td>0</td><td>0</td><td>0</td></tr><tr><td>0</td><td>1</td><td>0</td></tr><tr><td>1</td><td>0</td><td>0</td></tr><tr><td>1</td><td>1</td><td>1</td></tr></tbody>
+          </table>
+          <svg class="plano-pequeno" viewBox="0 0 240 240" role="img" aria-labelledby="and-plano-titulo">
+            <title id="and-plano-titulo">Os quatro pontos da porta AND no plano; apenas o ponto (1, 1) é da classe 1. Uma reta tracejada separa esse ponto dos outros três.</title>
+            <line x1="40" y1="200" x2="225" y2="200" class="eixo"/><line x1="40" y1="15" x2="40" y2="200" class="eixo"/>
+            <line x1="95" y1="15" x2="225" y2="145" class="reta-exemplo"/>
+            <circle cx="70" cy="170" r="11" class="ponto-0"/><circle cx="70" cy="50" r="11" class="ponto-0"/><circle cx="190" cy="170" r="11" class="ponto-0"/><circle cx="190" cy="50" r="11" class="ponto-1"/>
+            <text x="70" y="222" class="eixo-texto">0</text><text x="190" y="222" class="eixo-texto">1</text><text x="26" y="174" class="eixo-texto">0</text><text x="26" y="54" class="eixo-texto">1</text>
+            <text x="222" y="222" class="eixo-texto">x₁</text><text x="16" y="24" class="eixo-texto">x₂</text>
+          </svg>
+        </div>
+      </div>
+    </section>
+
+    <!-- 20 -->
+    <section class="slide" id="regra-de-aprendizado" aria-labelledby="regra-titulo">
+      <p class="eyebrow">Aprendizado por correção de erro</p>
+      <h2 id="regra-titulo">Uma passada: propagar, medir o erro, corrigir</h2>
+      <div class="tres-cartoes tres-cartoes--etapas">
+        <div class="cartao"><h3><span class="etapa">1</span> Propagação</h3><p>A amostra atravessa o neurônio:</p><div class="math-block">\[v=w_1x_1+w_2x_2+b\]\[y=\varphi(v)\]</div></div>
+        <div class="cartao"><h3><span class="etapa">2</span> Erro</h3><p>Compara a saída com a resposta desejada \(d\):</p><div class="math-block">\[e=d-y\]</div></div>
+        <div class="cartao"><h3><span class="etapa">3</span> Correção</h3><p>Cada peso anda na direção que reduz o erro, com taxa de aprendizado \(\eta\):</p><div class="math-block">\[w_i\leftarrow w_i+\eta\,\delta\,x_i\]\[b\leftarrow b+\eta\,\delta\]</div></div>
+      </div>
+      <div class="duas-colunas">
+        <aside class="nota"><p><strong>Degrau</strong> (regra do perceptron): \(\delta=e\). Se acertou, \(e=0\) e nada muda; se respondeu 0 e devia ser 1, os pesos das entradas ativas aumentam.</p></aside>
+        <aside class="nota"><p><strong>Sigmoide</strong> (descida do gradiente): minimizando \(E=\tfrac12e^2\), a regra da cadeia dá \(\delta=e\,\varphi'(v)=e\,y(1-y)\). Esse é o <strong>backpropagation</strong> com uma camada só.</p></aside>
+      </div>
+    </section>
+
+    <!-- 21 -->
+    <section class="slide" id="passo-a-passo" aria-labelledby="passo-titulo">
+      <p class="eyebrow">Antes do computador</p>
+      <h2 id="passo-titulo">AND, primeira época, à mão</h2>
+      <p>Pesos iniciais \(w_1=-0{,}5\), \(w_2=0{,}5\), \(b=-0{,}25\) e taxa \(\eta=0{,}25\). Ativação degrau.</p>
+      <div class="table-scroll">
+        <table class="value-table tabela-passos">
+          <thead><tr><th scope="col">\(x_1,x_2\)</th><th scope="col">\(d\)</th><th scope="col">\(v=w_1x_1+w_2x_2+b\)</th><th scope="col">\(y\)</th><th scope="col">\(e=d-y\)</th><th scope="col">\(w_1\)</th><th scope="col">\(w_2\)</th><th scope="col">\(b\)</th></tr></thead>
+          <tbody>
+            <tr><td>0, 0</td><td>0</td><td>\(-0{,}25\)</td><td>0</td><td>0</td><td>−0,50</td><td>0,50</td><td>−0,25</td></tr>
+            <tr class="corrigiu"><td>0, 1</td><td>0</td><td>\(0{,}5-0{,}25=0{,}25\)</td><td>1</td><td>−1</td><td>−0,50</td><td>0,25</td><td>−0,50</td></tr>
+            <tr><td>1, 0</td><td>0</td><td>\(-0{,}5-0{,}5=-1\)</td><td>0</td><td>0</td><td>−0,50</td><td>0,25</td><td>−0,50</td></tr>
+            <tr class="corrigiu"><td>1, 1</td><td>1</td><td>\(-0{,}5+0{,}25-0{,}5=-0{,}75\)</td><td>0</td><td>1</td><td>−0,25</td><td>0,50</td><td>−0,25</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>As colunas \(w_1\), \(w_2\) e \(b\) mostram os valores <strong>depois</strong> da correção. Na linha 2: \(w_2\leftarrow 0{,}5+0{,}25\cdot(-1)\cdot 1=0{,}25\) e \(b\leftarrow-0{,}25+0{,}25\cdot(-1)=-0{,}5\).</p>
+      <p>Duas amostras certas e duas corrigidas. O treino repete as épocas até uma época inteira passar <strong>sem erro</strong>: isso acontece na 5ª. Continue no próximo slide.</p>
+    </section>
+
+    <!-- 22 -->
+    <section class="slide slide--interativo" id="perceptron-interativo" aria-labelledby="interativo-titulo">
+      <h2 id="interativo-titulo" class="titulo-compacto">Perceptron interativo: treine passada por passada</h2>
+      <div class="perceptron" data-perceptron-explorer>
+        <form class="perceptron__controles" data-perceptron-form>
+          <label><span>Problema</span>
+            <select name="problema"><option value="and">AND</option><option value="or">OR</option><option value="xor">XOR</option></select>
+          </label>
+          <label><span>Ativação</span>
+            <select name="ativacao"><option value="degrau">Degrau</option><option value="sigmoide">Sigmoide</option></select>
+          </label>
+          <label><span>Taxa \(\eta\)</span>
+            <input name="taxa" type="number" min="0.01" max="5" step="0.05" value="0.25" inputmode="decimal">
+          </label>
+          <label><span>\(w_1\) inicial</span>
+            <input name="w1" type="number" min="-3" max="3" step="0.25" value="-0.5" inputmode="decimal">
+          </label>
+          <label><span>\(w_2\) inicial</span>
+            <input name="w2" type="number" min="-3" max="3" step="0.25" value="0.5" inputmode="decimal">
+          </label>
+          <label><span>\(b\) inicial</span>
+            <input name="b" type="number" min="-3" max="3" step="0.25" value="-0.25" inputmode="decimal">
+          </label>
+        </form>
+        <div class="perceptron__grafico">
+          <svg viewBox="0 0 360 360" role="img" aria-label="Plano x1 por x2 com as quatro amostras, a reta de decisão atual e as regiões classificadas como 0 e 1." data-perceptron-plano></svg>
+          <p class="perceptron__legenda"><span class="chave chave--1">desejado 1</span><span class="chave chave--0">desejado 0</span><span class="chave chave--errado">classificado errado</span><span class="chave chave--anterior">reta anterior</span></p>
+        </div>
+        <div class="perceptron__painel">
+          <div class="perceptron__botoes">
+            <button type="button" data-perceptron-acao="passada">Uma passada</button>
+            <button type="button" data-perceptron-acao="epoca">Uma época</button>
+            <button type="button" data-perceptron-acao="treinar">Treinar até convergir</button>
+            <button type="button" data-perceptron-acao="reiniciar">Reiniciar</button>
+          </div>
+          <p class="perceptron__status" data-perceptron-status aria-live="polite"></p>
+          <div class="perceptron__conta" data-perceptron-conta aria-live="polite"></div>
+          <div class="perceptron__epocas">
+            <p>Amostras erradas por época</p>
+            <svg viewBox="0 0 320 70" role="img" aria-label="Barras com o número de amostras classificadas errado em cada época." data-perceptron-epocas></svg>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 23 -->
+    <section class="slide" id="xor" aria-labelledby="xor-titulo">
+      <p class="eyebrow">O limite de um neurônio só</p>
+      <h2 id="xor-titulo">XOR: nenhuma reta separa as classes</h2>
+      <div class="duas-colunas duas-colunas--figura">
+        <div>
+          <p>No XOR, \((0,1)\) e \((1,0)\) valem 1, mas \((0,0)\) e \((1,1)\) valem 0. Experimente no explorador: o perceptron <strong>nunca converge</strong>. Foi esse resultado de Minsky e Papert (1969) que esfriou a área.</p>
+          <p>A saída é empilhar neurônios em <strong>camadas</strong>: a camada escondida dobra o plano e a de saída combina as retas. Para corrigir os pesos internos, o erro é propagado de trás para frente pela regra da cadeia — o <strong>backpropagation</strong> (1986).</p>
+          <p>Redes assim reconhecem os dígitos do MNIST — <a href="../02-visao-computacional/03-convolucao-redes/">continue no Tópico 2, capítulo 3</a>.</p>
+        </div>
+        <div class="xor-figuras">
+          <svg class="plano-pequeno" viewBox="0 0 240 240" role="img" aria-labelledby="xor-plano-titulo">
+            <title id="xor-plano-titulo">Os quatro pontos do XOR: (0, 1) e (1, 0) são da classe 1, (0, 0) e (1, 1) da classe 0, em diagonais cruzadas.</title>
+            <line x1="40" y1="200" x2="225" y2="200" class="eixo"/><line x1="40" y1="15" x2="40" y2="200" class="eixo"/>
+            <circle cx="70" cy="170" r="11" class="ponto-0"/><circle cx="70" cy="50" r="11" class="ponto-1"/><circle cx="190" cy="170" r="11" class="ponto-1"/><circle cx="190" cy="50" r="11" class="ponto-0"/>
+            <text x="70" y="222" class="eixo-texto">0</text><text x="190" y="222" class="eixo-texto">1</text><text x="26" y="174" class="eixo-texto">0</text><text x="26" y="54" class="eixo-texto">1</text>
+            <text x="222" y="222" class="eixo-texto">x₁</text><text x="16" y="24" class="eixo-texto">x₂</text>
+          </svg>
+          <figure class="figura-clara">
+            <img src="imagens/mlp.webp" width="1200" height="600" alt="Rede neural com quatro entradas, duas camadas escondidas de seis neurônios e duas saídas, todos ligados à camada seguinte.">
+            <figcaption>Rede de múltiplas camadas (MLP).</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- 24 -->
+    <section class="slide" id="python" aria-labelledby="python-titulo">
+      <p class="eyebrow">Agora em Python</p>
+      <h2 id="python-titulo">O mesmo treino em 20 linhas, sem bibliotecas</h2>
+      <div class="duas-colunas duas-colunas--codigo">
+<pre><code>for epoca in range(1, MAXIMO_EPOCAS + 1):
+    erros = 0
+    for (x1, x2), d in AMOSTRAS:
+        # 1. Propagação
+        v = w1 * x1 + w2 * x2 + b
+        y = 1 if v >= 0 else 0
+        # 2. Erro
+        e = d - y
+        # 3. Correção
+        w1 = w1 + TAXA * e * x1
+        w2 = w2 + TAXA * e * x2
+        b = b + TAXA * e
+        if e != 0:
+            erros += 1
+    if erros == 0:
+        break</code></pre>
+        <div>
+          <p><a class="botao-download" href="./perceptron.py" download>Baixar perceptron.py</a></p>
+          <p>Rode com <code>python perceptron.py</code>: o programa imprime cada passada e para na 5ª época, com a reta \(0{,}25x_1+0{,}25x_2-0{,}5=0\).</p>
+          <p><strong>Desafios:</strong></p>
+          <ol>
+            <li>Troque as amostras para a porta OR e para o XOR. O que acontece?</li>
+            <li>Mude a taxa \(\eta\) e os pesos iniciais. O número de épocas muda? A reta final é sempre a mesma?</li>
+            <li>Troque o degrau pela sigmoide e use \(\delta=e\,y(1-y)\).</li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <!-- 25 -->
+    <section class="slide" id="resumo" aria-labelledby="resumo-titulo">
+      <h2 id="resumo-titulo">Para levar</h2>
+      <ul class="lista-resumo">
+        <li>IA é definida pelo <strong>objetivo</strong>; aprendizado de máquina é o caminho em que as regras são <strong>ajustadas a partir de dados</strong>.</li>
+        <li>IA ⊃ aprendizado de máquina ⊃ redes neurais ⊃ deep learning.</li>
+        <li>Supervisionado (com rótulos), não supervisionado (estrutura) e por reforço (recompensa).</li>
+        <li>Um neurônio faz uma soma ponderada e uma ativação; com duas entradas, decide por uma <strong>reta</strong>.</li>
+        <li>Treinar é repetir passadas: <strong>propagar → medir o erro → corrigir</strong> os pesos com \(\eta\).</li>
+        <li>Um perceptron não resolve o XOR; camadas e backpropagation resolvem.</li>
+      </ul>
+    </section>
+
+    <!-- 26 -->
+    <section class="slide" id="referencias" aria-labelledby="referencias-titulo">
+      <h2 id="referencias-titulo">Referências</h2>
+      <ul class="lista-referencias">
+        <li>RUSSELL, S.; NORVIG, P. <cite>Inteligência artificial</cite>. 3. ed. Rio de Janeiro: Elsevier, 2013.</li>
+        <li>HAYKIN, S. <cite>Redes neurais: princípios e prática</cite>. 2. ed. Porto Alegre: Bookman, 2001.</li>
+        <li>ROSENBLATT, F. The perceptron: a probabilistic model for information storage and organization in the brain. <cite>Psychological Review</cite>, v. 65, n. 6, 1958.</li>
+        <li>MINSKY, M.; PAPERT, S. <cite>Perceptrons</cite>. Cambridge: MIT Press, 1969.</li>
+        <li>RUMELHART, D.; HINTON, G.; WILLIAMS, R. Learning representations by back-propagating errors. <cite>Nature</cite>, v. 323, 1986.</li>
+        <li>THE ROYAL SWEDISH ACADEMY OF SCIENCES. <a href="https://www.nobelprize.org/prizes/physics/2024/press-release/">Press release: The Nobel Prize in Physics 2024</a>.</li>
+        <li>3BLUE1BROWN. <a href="https://www.3blue1brown.com/?topic=neural-networks">Neural networks</a> — série em vídeo sobre redes e backpropagation.</li>
+        <li>Material do curso FIC <a href="https://github.com/Atzingen/IA-FIC-IFSP">Introdução à Inteligência Artificial para tomada de decisões</a> (IFSP Piracicaba), de onde vêm as figuras dos exemplos.</li>
+      </ul>
+    </section>
+  </main>
+
+  <nav class="deck-controles" aria-label="Navegação entre slides" data-deck-controles hidden>
+    <button type="button" data-deck-anterior aria-label="Slide anterior">←</button>
+    <span class="deck-controles__contador" data-deck-contador aria-live="polite"></span>
+    <span class="deck-controles__progresso" aria-hidden="true"><span data-deck-progresso></span></span>
+    <button type="button" data-deck-proximo aria-label="Próximo slide">→</button>
+    <button type="button" data-deck-tela-cheia aria-label="Alternar tela cheia">Tela cheia</button>
+  </nav>
+
+  <script type="module" src="../../componentes/navegacao-principal.js"></script>
+  <script type="module" src="apresentacao.js"></script>
+  <script type="module" src="perceptron-explorador.js"></script>
+  <script type="module">import { typesetMath } from "../../componentes/matematica.js"; typesetMath(document.querySelector("main"));</script>
+</body>
+</html>

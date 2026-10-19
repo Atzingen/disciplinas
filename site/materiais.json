@@ -542,5 +542,16 @@
     "description": "Euler passo a passo, resfriamento e queda em Python, Runge–Kutta com SciPy e foguete interativo com solução analítica, Euler, RK2 e RK4.",
     "path": "topicos/03-metodo-euler/",
     "tags": ["Euler", "EDO", "equações diferenciais", "evolução temporal", "métodos numéricos", "Python", "resfriamento", "queda", "Runge-Kutta", "SciPy", "foguete", "RK2", "RK4", "solução analítica"]
+  },
+  {
+    "id": "topico-04-introducao-ml",
+    "title": "Tópico 4 — Introdução ao aprendizado de máquina",
+    "kind": "topico",
+    "section": "topicos",
+    "disciplines": ["PRCCOMP"],
+    "theme": "IA, aprendizado de máquina e o perceptron",
+    "description": "Apresentação em slides: definições de IA, a relação entre IA, aprendizado de máquina, redes neurais e deep learning, os tipos de aprendizado e o perceptron treinado passada por passada em um explorador interativo.",
+    "path": "topicos/04-introducao-ml/",
+    "tags": ["inteligência artificial", "aprendizado de máquina", "machine learning", "redes neurais", "deep learning", "perceptron", "regra delta", "backpropagation", "sigmoide", "XOR", "Python", "apresentação"]
   }
 ]
