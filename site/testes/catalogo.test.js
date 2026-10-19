@@ -22,10 +22,10 @@ const apiAvailable =
   typeof catalog.normalizeSearchText === "function" &&
   typeof catalog.filterCatalog === "function";
 
-test("catálogo expõe busca e registra os trinta e oito materiais", () => {
+test("catálogo expõe busca e registra os trinta e nove materiais", () => {
   assert.equal(typeof catalog.normalizeSearchText, "function");
   assert.equal(typeof catalog.filterCatalog, "function");
-  assert.equal(items.length, 38);
+  assert.equal(items.length, 39);
 });
 
 test("busca ignora acentos e caixa", { skip: !apiAvailable }, () => {

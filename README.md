@@ -200,6 +200,16 @@ ferramenta escolhida, o código para rodar e as referências. O catálogo usa
    inicial ajustável, Euler/RK2/RK4, zoom e reprodução dos passos.
    Os quatro scripts podem ser baixados diretamente na página.
 
+4. [introdução ao aprendizado de máquina](site/topicos/04-introducao-ml/): a
+   página é uma apresentação em slides (setas do teclado, toque lateral e tela
+   cheia com F; sem JavaScript, os slides ficam empilhados). Cobre definições de
+   IA, a inclusão IA ⊃ aprendizado de máquina ⊃ redes neurais ⊃ deep learning,
+   linha do tempo com o Nobel de Física de 2024, os três tipos de aprendizado
+   com as figuras do curso FIC, o neurônio artificial e o perceptron. Um
+   explorador interativo treina AND, OR e XOR passada por passada (propagação,
+   erro e correção) com degrau ou sigmoide; o modelo fica em
+   `perceptron-modelo.js` e o mesmo treino, em `perceptron.py`, pode ser baixado.
+
 ## Executar localmente
 
 ```powershell
