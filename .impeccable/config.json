@@ -218,6 +218,78 @@
         ],
         "createdAt": "2026-10-05T21:35:02.871Z",
         "reason": "Agent: existing graph-paper identity of the physics course portal is unchanged by the resource addition."
+      },
+      {
+        "rule": "hero-eyebrow-chip",
+        "value": "*",
+        "files": [
+          "site/topicos/05-redes-neurais/index.html"
+        ],
+        "createdAt": "2026-10-23T21:42:29.761Z",
+        "reason": "Agent: curricular topic and PRCCOMP identifier follows existing lesson pages; retained portal identity for this educational extension."
+      },
+      {
+        "rule": "all-caps-body",
+        "value": "*",
+        "files": [
+          "site/topicos/05-redes-neurais/index.html"
+        ],
+        "createdAt": "2026-10-23T21:42:29.770Z",
+        "reason": "Agent: the 34-character curricular label is a short identifier, not uppercase body prose; body copy uses sentence case."
+      },
+      {
+        "rule": "overused-font",
+        "value": "space grotesk",
+        "files": [
+          "site/topicos/05-redes-neurais/index.html"
+        ],
+        "createdAt": "2026-10-23T21:42:29.780Z",
+        "reason": "Agent: Space Grotesk is the existing portal display font from shared base.css; preserving site identity."
+      },
+      {
+        "rule": "flat-type-hierarchy",
+        "value": "*",
+        "files": [
+          "site/topicos/05-redes-neurais/index.html"
+        ],
+        "createdAt": "2026-10-23T21:42:29.789Z",
+        "reason": "Agent: browser computed body 16.32px, h2 24.48px and h3 19.0944px; detector reports equal sizes incorrectly."
+      },
+      {
+        "rule": "side-tab",
+        "value": "*",
+        "files": [
+          "site/topicos/05-redes-neurais/index.html"
+        ],
+        "createdAt": "2026-10-23T21:42:29.799Z",
+        "reason": "Agent: all three flagged selectors area-card, report-template-promo and discipline-card are absent from the page DOM."
+      },
+      {
+        "rule": "codex-grid-background",
+        "value": "*",
+        "files": [
+          "site/topicos/05-redes-neurais/index.html"
+        ],
+        "createdAt": "2026-10-23T21:42:29.809Z",
+        "reason": "Agent: existing graph-paper background belongs to the physics teaching portal and is preserved."
+      },
+      {
+        "rule": "cramped-padding",
+        "value": "*",
+        "files": [
+          "site/topicos/05-redes-neurais/index.html"
+        ],
+        "createdAt": "2026-10-23T21:42:29.817Z",
+        "reason": "Agent: navigation is a full-width strip with inner 16px viewport gutters and individually padded controls, verified at 390px and 1280px."
+      },
+      {
+        "rule": "low-contrast",
+        "value": "*",
+        "files": [
+          "site/topicos/05-redes-neurais/index.html"
+        ],
+        "createdAt": "2026-10-23T21:43:06.079Z",
+        "reason": "Agent: scoped navigation accent was fixed to #c43d29, verified in browser light and dark themes; white text contrast is 5.19:1. Residual detector uses imported global #e8503a and misses the local override."
       }
     ]
   }

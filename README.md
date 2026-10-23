@@ -210,6 +210,13 @@ ferramenta escolhida, o código para rodar e as referências. O catálogo usa
    erro e correção) com degrau ou sigmoide; o modelo fica em
    `perceptron-modelo.js` e o mesmo treino, em `perceptron.py`, pode ser baixado.
 
+5. [redes neurais na prática](site/topicos/05-redes-neurais/): notebook único
+   de Python, TensorFlow e Keras, com classificação de flores Iris e dígitos
+   MNIST usando camadas densas. Inclui preparação dos dados, separação de
+   treino/validação/teste, montagem das camadas, gráficos de perda e previsões.
+   O código é sequencial, sem funções ou classes próprias. A página incorpora
+   todas as células e os resultados; há download do `.ipynb` e link para o Colab.
+
 ## Executar localmente
 
 ```powershell

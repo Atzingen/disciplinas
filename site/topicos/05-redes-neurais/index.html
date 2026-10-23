@@ -1,0 +1,455 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Aula prática de redes neurais com Python, TensorFlow e Keras: classificação de flores Iris e dígitos MNIST com camadas densas. Notebook completo, com código e resultados.">
+  <title>Redes neurais na prática: Iris e MNIST · Tópico 05</title>
+  <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../assets/base.css">
+  <link rel="stylesheet" href="../../assets/simulador.css">
+  <link rel="stylesheet" href="notebook.css">
+  <script>try{if(localStorage.getItem("tema")==="escuro"){document.documentElement.dataset.theme="escuro"}}catch(erro){}</script>
+</head>
+<body class="lesson-page notebook-page">
+  <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+  <div class="site-topbar" data-topbar>
+    <div class="site-topbar__inner">
+      <nav class="breadcrumb" aria-label="Navegação estrutural">
+        <a href="../../disciplinas/prccomp/">Física Computacional</a>
+        <span aria-hidden="true">/</span>
+        <a href="../">Tópicos</a>
+        <span aria-hidden="true">/</span>
+        <strong aria-current="page">Tópico 05</strong>
+      </nav>
+      <div class="lesson-area-navigation" data-site-navigation data-root-path="../../" data-active-section="topicos"></div>
+    </div>
+    <nav class="section-nav" aria-label="Seções da prática">
+      <a href="#preparacao">Preparação</a>
+      <a href="#iris">Iris</a>
+      <a href="#mnist">MNIST</a>
+      <a href="#experimente">Experimente</a>
+      <a href="#referencias">Referências</a>
+    </nav>
+  </div>
+  <header class="lesson-header">
+    <p class="eyebrow">Tópico 05 · PRCCOMP · Aula prática</p>
+    <h1>Redes neurais na prática: Iris e MNIST</h1>
+    <p class="lesson-intro">Monte as camadas, treine a rede e interprete suas previsões. Um notebook, dois exemplos de classificação, somente redes densas.</p>
+    <div class="notebook-actions">
+      <a href="redes-neurais.ipynb" download>Baixar notebook (.ipynb)</a>
+      <a href="https://colab.research.google.com/github/Atzingen/disciplinas/blob/main/site/topicos/05-redes-neurais/redes-neurais.ipynb">Abrir no Google Colab</a>
+      <a href="../04-introducao-ml/">Rever a aula teórica</a>
+    </div>
+    <p>A leitura completa, com código e resultados salvos, está abaixo. Para executar ou alterar as células, abra o notebook no Colab ou no Jupyter.</p>
+  </header>
+  <main class="lesson-main notebook" id="conteudo">
+<!-- notebook:inicio -->
+<p><strong>Física Computacional · PRCCOMP · Prof. Gustavo Voltani von Atzingen · IFSP Piracicaba</strong></p>
+<p>Na aula de introdução ao aprendizado de máquina, calculamos a saída de um
+neurônio, medimos o erro e corrigimos os pesos. Agora vamos usar o <strong>TensorFlow</strong>
+para os cálculos e o <strong>Keras</strong> para montar e treinar redes em camadas.</p>
+<p>O objetivo é classificar flores a partir de quatro medidas e dígitos a partir
+dos pixels de uma imagem. Nos dois casos, usamos <strong>redes densas</strong>, com uma
+camada escondida. As células são sequenciais: execute de cima para baixo.</p>
+
+<p><a id="preparacao"></a></p>
+<h2 id="Prepara%C3%A7%C3%A3o">Prepara&#231;&#227;o</h2><p>No <strong>Google Colab</strong>, abra este notebook e execute as células com Shift+Enter.
+Uma sessão de CPU é suficiente. Para rodar localmente, use Python 3.12 e instale:</p>
+<div class="highlight"><pre><span></span>python<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>tensorflow<span class="w"> </span>scikit-learn<span class="w"> </span>matplotlib<span class="w"> </span>notebook
+python<span class="w"> </span>-m<span class="w"> </span>notebook
+</pre></div>
+<p>O Iris vem com o scikit-learn; o MNIST será baixado na primeira execução.
+O arquivo já contém os resultados de uma execução, que podem ser lidos sem
+treinar novamente. A semente abaixo ajuda a repetir o experimento; versões
+e equipamentos diferentes ainda podem produzir pequenas diferenças.</p>
+
+<div class="notebook-cell"><p class="cell-label">Célula 1</p>
+<pre class="notebook-code"><code class="language-python">import tensorflow as tf
+from tensorflow import keras
+import matplotlib.pyplot as plt
+from sklearn.datasets import load_iris
+from sklearn.model_selection import train_test_split
+
+keras.utils.set_random_seed(42)
+plt.rcParams.update({&quot;figure.figsize&quot;: (6, 4), &quot;font.size&quot;: 12})
+print(&quot;TensorFlow:&quot;, tf.__version__, &quot;| Keras:&quot;, keras.__version__)</code></pre>
+<details><summary>Mensagens do ambiente</summary><pre class="notebook-output">WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1792791585.406296 1338475 port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+I0000 00:00:1792791585.406572 1338475 cudart_stub.cc:31] Could not find cuda drivers on your machine, GPU will not be used.
+</pre></details>
+<details><summary>Mensagens do ambiente</summary><pre class="notebook-output">WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1792791588.143519 1338475 port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+I0000 00:00:1792791588.143765 1338475 cudart_stub.cc:31] Could not find cuda drivers on your machine, GPU will not be used.
+</pre></details>
+<pre class="notebook-output">TensorFlow: 2.21.0 | Keras: 3.15.1
+</pre>
+</div>
+<p><a id="iris"></a></p>
+<h2 id="1.-Iris:-quatro-n%C3%BAmeros-entram,-uma-esp%C3%A9cie-sai">1. Iris: quatro n&#250;meros entram, uma esp&#233;cie sai</h2><p>O <a href="https://scikit-learn.org/stable/modules/generated/sklearn.datasets.load_iris.html">Iris</a>
+contém <strong>150 flores</strong>, sendo 50 de cada espécie: <em>setosa</em>, <em>versicolor</em> e <em>virginica</em>.
+Cada linha tem quatro medidas em centímetros, nesta ordem:</p>
+<ol>
+<li>Comprimento da sépala.</li>
+<li>Largura da sépala.</li>
+<li>Comprimento da pétala.</li>
+<li>Largura da pétala.</li>
+</ol>
+<p><strong>X</strong> guarda as entradas; <strong>y</strong> guarda os rótulos corretos: 0, 1 ou 2.
+Esses números identificam espécies, não uma ordem de grandeza.
+A seguir vemos uma flor de cada classe.</p>
+
+<div class="notebook-cell"><p class="cell-label">Célula 2</p>
+<pre class="notebook-code"><code class="language-python">iris = load_iris()
+X = iris.data
+y = iris.target
+
+print(&quot;Formato de X:&quot;, X.shape)
+print(&quot;Medidas (cm):\n&quot;, X[[0, 50, 100]])
+print(&quot;Rótulos:&quot;, y[[0, 50, 100]])
+print(&quot;Espécies:&quot;, iris.target_names)</code></pre>
+<pre class="notebook-output">Formato de X: (150, 4)
+Medidas (cm):
+ [[5.1 3.5 1.4 0.2]
+ [7.  3.2 4.7 1.4]
+ [6.3 3.3 6.  2.5]]
+Rótulos: [0 1 2]
+Espécies: [&#x27;setosa&#x27; &#x27;versicolor&#x27; &#x27;virginica&#x27;]
+</pre>
+</div>
+<h3 id="1.1-Separar-os-dados-antes-de-treinar">1.1 Separar os dados antes de treinar</h3><p>Reservamos <strong>90 flores para treino, 30 para validação e 30 para teste</strong>.
+O treino ajusta os pesos; a validação acompanha o aprendizado e permite
+comparar escolhas; o teste fica guardado para a avaliação final.</p>
+<p><code>stratify=y</code> mantém a proporção das três espécies em cada parte.
+No segundo corte, 25% das 120 flores restantes são 30 flores.</p>
+
+<div class="notebook-cell"><p class="cell-label">Célula 3</p>
+<pre class="notebook-code"><code class="language-python">X_treino, X_teste, y_treino, y_teste = train_test_split(
+    X, y, test_size=0.2, random_state=42, stratify=y
+)
+X_treino, X_val, y_treino, y_val = train_test_split(
+    X_treino, y_treino, test_size=0.25, random_state=42, stratify=y_treino
+)
+print(&quot;Treino, validação e teste:&quot;, len(y_treino), len(y_val), len(y_teste))</code></pre>
+<pre class="notebook-output">Treino, validação e teste: 90 30 30
+</pre>
+</div>
+<h3 id="1.2-Olhar-duas-medidas">1.2 Olhar duas medidas</h3><p>O gráfico mostra somente as flores de <strong>treino</strong>, usando as duas medidas
+da pétala. Cores e símbolos identificam as espécies. A rede receberá as
+<strong>quatro</strong> medidas, mesmo que o gráfico mostre apenas duas.</p>
+
+<div class="notebook-cell"><p class="cell-label">Célula 4</p>
+<pre class="notebook-code"><code class="language-python">for classe, cor, simbolo in zip(range(3), [&quot;#246bce&quot;, &quot;#b35a13&quot;, &quot;#656d27&quot;], [&quot;o&quot;, &quot;s&quot;, &quot;^&quot;]):
+    flores = X_treino[y_treino == classe]
+    plt.scatter(flores[:, 2], flores[:, 3], color=cor, marker=simbolo,
+                label=iris.target_names[classe])
+plt.xlabel(&quot;Comprimento da pétala (cm)&quot;)
+plt.ylabel(&quot;Largura da pétala (cm)&quot;)
+plt.title(&quot;Iris: as 90 flores de treino&quot;)
+plt.legend()
+plt.tight_layout()
+plt.show()</code></pre>
+<figure><img src="imagens/figura-01.png" width="584" height="384" loading="lazy" alt="1.2 Olhar duas medidas — resultado desta execução"><figcaption>1.2 Olhar duas medidas — resultado desta execução</figcaption></figure>
+</div>
+<h3 id="1.3-Colocar-as-medidas-em-escalas-compar%C3%A1veis">1.3 Colocar as medidas em escalas compar&#225;veis</h3><p>Para cada coluna, subtraímos a média e dividimos pelo desvio padrão:</p>
+<p>$$x_{\mathrm{padronizado}} = \frac{x-\mu_{\mathrm{treino}}}{\sigma_{\mathrm{treino}}}.$$</p>
+<p><code>axis=0</code> calcula uma média e um desvio para cada uma das quatro medidas.
+Usamos <strong>somente o treino</strong> para calcular esses valores. Validação, teste
+e flores novas passam pela mesma transformação, sem recalcular a média.</p>
+
+<div class="notebook-cell"><p class="cell-label">Célula 5</p>
+<pre class="notebook-code"><code class="language-python">media = X_treino.mean(axis=0)
+desvio = X_treino.std(axis=0)
+
+X_treino = (X_treino - media) / desvio
+X_val = (X_val - media) / desvio
+X_teste = (X_teste - media) / desvio</code></pre>
+
+</div>
+<h3 id="1.4-Montar-a-rede-com-Keras">1.4 Montar a rede com Keras</h3><p><strong>4 entradas → 8 neurônios na camada escondida → 3 saídas.</strong></p>
+<ul>
+<li><code>Input(shape=(4,))</code>: cada flor tem quatro entradas.</li>
+<li><code>Dense(8)</code>: cada um dos oito neurônios recebe as quatro entradas,
+aprende seus próprios pesos e um bias.</li>
+<li><code>relu</code>: aplica a ativação $\max(0,z)$ à soma ponderada $z$.</li>
+<li><code>Dense(3, activation=&quot;softmax&quot;)</code>: produz três probabilidades que somam 1,
+uma para cada espécie. A maior define a classificação.</li>
+</ul>
+<p><code>Sequential</code> coloca essas camadas em sequência. A camada escondida possui
+$4\times 8+8=40$ parâmetros e a saída $8\times 3+3=27$: <strong>67 parâmetros treináveis</strong>.
+São as mesmas somas ponderadas da aula anterior, agora conectadas em camadas.</p>
+
+<div class="notebook-cell"><p class="cell-label">Célula 6</p>
+<pre class="notebook-code"><code class="language-python">modelo_iris = keras.Sequential([
+    keras.Input(shape=(4,)),
+    keras.layers.Dense(8, activation=&quot;relu&quot;),
+    keras.layers.Dense(3, activation=&quot;softmax&quot;),
+])
+modelo_iris.summary()</code></pre>
+<pre class="notebook-output">Model: &quot;sequential&quot;
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━┓
+┃ Layer (type)                    ┃ Output Shape           ┃       Param # ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━┩
+│ dense (Dense)                   │ (None, 8)              │            40 │
+├─────────────────────────────────┼────────────────────────┼───────────────┤
+│ dense_1 (Dense)                 │ (None, 3)              │            27 │
+└─────────────────────────────────┴────────────────────────┴───────────────┘
+ Total params: 67 (268.00 B)
+ Trainable params: 67 (268.00 B)
+ Non-trainable params: 0 (0.00 B)
+</pre>
+</div>
+<h3 id="1.5-Escolher-a-perda-e-treinar">1.5 Escolher a perda e treinar</h3><p><code>compile</code> configura o treinamento; ainda não altera os pesos.
+<code>sparse_categorical_crossentropy</code> compara as probabilidades com o rótulo
+inteiro correto. <strong>Sparse</strong> permite usar 0, 1 e 2 diretamente.
+<code>adam</code> é o otimizador que usa os gradientes para atualizar os pesos;
+<code>accuracy</code> mede a fração de classificações corretas.</p>
+<p><code>fit</code> repete propagação, cálculo da perda e correção por backpropagation.
+Uma <strong>época</strong> percorre o treino inteiro. <code>batch_size=16</code> reúne até 16 flores
+por atualização. A validação é avaliada ao final de cada época e não ajusta
+os pesos. <code>verbose=0</code> evita imprimir 150 linhas de progresso.</p>
+<p>Na aula anterior usamos erro quadrático com sigmoide; aqui a perda é a
+entropia cruzada com softmax. O princípio de aprender com o gradiente continua.</p>
+
+<div class="notebook-cell"><p class="cell-label">Célula 7</p>
+<pre class="notebook-code"><code class="language-python">modelo_iris.compile(
+    optimizer=&quot;adam&quot;, loss=&quot;sparse_categorical_crossentropy&quot;, metrics=[&quot;accuracy&quot;]
+)
+historico_iris = modelo_iris.fit(
+    X_treino, y_treino, epochs=150, batch_size=16,
+    validation_data=(X_val, y_val), verbose=0
+)</code></pre>
+
+</div>
+<h3 id="1.6-Acompanhar-o-aprendizado">1.6 Acompanhar o aprendizado</h3><p>A perda mede o desacordo entre probabilidades e rótulos; <strong>não é uma
+porcentagem de erros</strong>. Quanto menor, melhor para esse objetivo.
+Compare treino e validação: queda no treino acompanhada de subida persistente
+na validação é um sinal de sobreajuste (<em>overfitting</em>).</p>
+
+<div class="notebook-cell"><p class="cell-label">Célula 8</p>
+<pre class="notebook-code"><code class="language-python">epocas = range(1, len(historico_iris.history[&quot;loss&quot;]) + 1)
+plt.plot(epocas, historico_iris.history[&quot;loss&quot;], color=&quot;#246bce&quot;, label=&quot;Treino&quot;)
+plt.plot(epocas, historico_iris.history[&quot;val_loss&quot;], &quot;--&quot;, color=&quot;#b35a13&quot;, label=&quot;Validação&quot;)
+plt.xlabel(&quot;Época&quot;)
+plt.ylabel(&quot;Entropia cruzada&quot;)
+plt.title(&quot;Iris: perda durante o treinamento&quot;)
+plt.legend()
+plt.tight_layout()
+plt.show()</code></pre>
+<figure><img src="imagens/figura-02.png" width="584" height="384" loading="lazy" alt="1.6 Acompanhar o aprendizado — resultado desta execução"><figcaption>1.6 Acompanhar o aprendizado — resultado desta execução</figcaption></figure>
+</div>
+<h3 id="1.7-Avaliar-no-teste-separado">1.7 Avaliar no teste separado</h3><p><code>evaluate</code> usa as 30 flores que ficaram guardadas. A acurácia é uma medida
+desse pequeno conjunto, não uma garantia para toda flor encontrada no mundo.
+Se mudar a arquitetura ou as épocas, compare as opções na <strong>validação</strong>;
+não escolha a rede pelo resultado do teste.</p>
+
+<div class="notebook-cell"><p class="cell-label">Célula 9</p>
+<pre class="notebook-code"><code class="language-python">perda, acuracia = modelo_iris.evaluate(X_teste, y_teste, verbose=0)
+print(f&quot;Acurácia no teste Iris: {acuracia:.1%} ({len(y_teste)} flores)&quot;)</code></pre>
+<pre class="notebook-output">Acurácia no teste Iris: 86.7% (30 flores)
+</pre>
+</div>
+<h3 id="1.8-Classificar-uma-flor-pelas-medidas">1.8 Classificar uma flor pelas medidas</h3><p>Digite quatro medidas em centímetros, na mesma ordem do início.
+Os valores abaixo são <strong>ilustrativos</strong>, não uma nova amostra independente
+para avaliar a rede. A linha precisa ser padronizada com a média e o desvio
+que guardamos do treino. <code>predict</code> aplica os pesos aprendidos, sem treiná-los.</p>
+
+<div class="notebook-cell"><p class="cell-label">Célula 10</p>
+<pre class="notebook-code"><code class="language-python">nova_flor = [[5.2, 3.4, 1.5, 0.2]]
+probabilidades = modelo_iris.predict((nova_flor - media) / desvio, verbose=0)[0]
+print(&quot;Espécies:&quot;, iris.target_names)
+print(&quot;Probabilidades:&quot;, probabilidades.round(3))
+print(&quot;Previsão:&quot;, iris.target_names[probabilidades.argmax()])</code></pre>
+<pre class="notebook-output">Espécies: [&#x27;setosa&#x27; &#x27;versicolor&#x27; &#x27;virginica&#x27;]
+Probabilidades: [0.995 0.005 0.   ]
+Previsão: setosa
+</pre>
+</div>
+<p><a id="mnist"></a></p>
+<h2 id="2.-MNIST:-uma-imagem-tamb%C3%A9m-%C3%A9-um-conjunto-de-n%C3%BAmeros">2. MNIST: uma imagem tamb&#233;m &#233; um conjunto de n&#250;meros</h2><p>O <a href="https://keras.io/api/datasets/mnist/">MNIST</a> reúne dígitos manuscritos de
+<strong>0 a 9</strong>, em imagens de <strong>28 × 28 pixels</strong>, em tons de cinza. O Keras fornece
+60.000 imagens para desenvolvimento e 10.000 para teste.</p>
+<p>Cada pixel varia de 0 a 255. Dividir por 255 coloca as entradas entre 0 e 1.
+Essa escala é conhecida de antemão e não precisa ser estimada com os dados.
+A nova entrada terá 784 números em vez dos quatro do Iris.</p>
+
+<div class="notebook-cell"><p class="cell-label">Célula 11</p>
+<pre class="notebook-code"><code class="language-python">(X_mnist, y_mnist), (X_teste_mnist, y_teste_mnist) = keras.datasets.mnist.load_data()
+X_mnist = X_mnist / 255.0
+X_teste_mnist = X_teste_mnist / 255.0
+print(&quot;Desenvolvimento:&quot;, X_mnist.shape, &quot;| Teste:&quot;, X_teste_mnist.shape)</code></pre>
+<pre class="notebook-output">Desenvolvimento: (60000, 28, 28) | Teste: (10000, 28, 28)
+</pre>
+</div>
+<h3 id="2.1-Ver-a-entrada-e-seu-r%C3%B3tulo">2.1 Ver a entrada e seu r&#243;tulo</h3><p>Escolha um índice e observe a imagem. O rótulo é a resposta correta que
+acompanha essa amostra; ainda não é uma previsão da rede.</p>
+
+<div class="notebook-cell"><p class="cell-label">Célula 12</p>
+<pre class="notebook-code"><code class="language-python">indice = 0
+plt.figure(figsize=(3, 3))
+plt.imshow(X_mnist[indice], cmap=&quot;gray&quot;, vmin=0, vmax=1)
+plt.title(f&quot;Rótulo: {y_mnist[indice]}&quot;)
+plt.axis(&quot;off&quot;)
+plt.show()</code></pre>
+<figure><img src="imagens/figura-03.png" width="251" height="275" loading="lazy" alt="2.1 Ver a entrada e seu rótulo — resultado desta execução"><figcaption>2.1 Ver a entrada e seu rótulo — resultado desta execução</figcaption></figure>
+</div>
+<h3 id="2.2-Montar-uma-rede-densa-para-imagens">2.2 Montar uma rede densa para imagens</h3><p><strong>28 × 28 pixels → 784 entradas → 32 neurônios → 10 saídas.</strong></p>
+<p><code>Flatten</code> reorganiza a matriz em um vetor: não aprende pesos e não aplica
+filtros. As camadas <code>Dense</code> fazem o mesmo trabalho do exemplo anterior.
+Usamos somente conexões densas, <strong>sem convoluções</strong>.</p>
+
+<div class="notebook-cell"><p class="cell-label">Célula 13</p>
+<pre class="notebook-code"><code class="language-python">modelo_mnist = keras.Sequential([
+    keras.Input(shape=(28, 28)),
+    keras.layers.Flatten(),
+    keras.layers.Dense(32, activation=&quot;relu&quot;),
+    keras.layers.Dense(10, activation=&quot;softmax&quot;),
+])
+modelo_mnist.summary()</code></pre>
+<pre class="notebook-output">Model: &quot;sequential_1&quot;
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━┓
+┃ Layer (type)                    ┃ Output Shape           ┃       Param # ┃
+┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━┩
+│ flatten (Flatten)               │ (None, 784)            │             0 │
+├─────────────────────────────────┼────────────────────────┼───────────────┤
+│ dense_2 (Dense)                 │ (None, 32)             │        25,120 │
+├─────────────────────────────────┼────────────────────────┼───────────────┤
+│ dense_3 (Dense)                 │ (None, 10)             │           330 │
+└─────────────────────────────────┴────────────────────────┴───────────────┘
+ Total params: 25,450 (99.41 KB)
+ Trainable params: 25,450 (99.41 KB)
+ Non-trainable params: 0 (0.00 B)
+</pre>
+</div>
+<h3 id="2.3-Treinar-com-as-mesmas-etapas">2.3 Treinar com as mesmas etapas</h3><p>A perda e o otimizador são os mesmos. <code>validation_split=0.1</code> reserva as
+últimas <strong>6.000</strong> imagens de desenvolvimento para validação, antes de
+embaralhar o treino: <strong>54.000 treinam os pesos</strong> e <strong>10.000 continuam no teste</strong>.
+As imagens do MNIST não estão agrupadas por classe nessa partição.
+<code>verbose=2</code> imprime somente uma linha de resultado por época.</p>
+
+<div class="notebook-cell"><p class="cell-label">Célula 14</p>
+<pre class="notebook-code"><code class="language-python">modelo_mnist.compile(
+    optimizer=&quot;adam&quot;, loss=&quot;sparse_categorical_crossentropy&quot;, metrics=[&quot;accuracy&quot;]
+)
+historico_mnist = modelo_mnist.fit(
+    X_mnist, y_mnist, epochs=5, validation_split=0.1, verbose=2
+)</code></pre>
+<pre class="notebook-output">Epoch 1/5
+1688/1688 - 1s - 658us/step - accuracy: 0.8970 - loss: 0.3697 - val_accuracy: 0.9493 - val_loss: 0.1832
+Epoch 2/5
+1688/1688 - 1s - 455us/step - accuracy: 0.9433 - loss: 0.1939 - val_accuracy: 0.9568 - val_loss: 0.1482
+Epoch 3/5
+1688/1688 - 1s - 463us/step - accuracy: 0.9549 - loss: 0.1531 - val_accuracy: 0.9627 - val_loss: 0.1301
+Epoch 4/5
+1688/1688 - 1s - 495us/step - accuracy: 0.9618 - loss: 0.1291 - val_accuracy: 0.9665 - val_loss: 0.1187
+Epoch 5/5
+1688/1688 - 1s - 437us/step - accuracy: 0.9672 - loss: 0.1124 - val_accuracy: 0.9677 - val_loss: 0.1132
+</pre>
+</div>
+<h3 id="2.4-Comparar-treino-e-valida%C3%A7%C3%A3o">2.4 Comparar treino e valida&#231;&#227;o</h3><p>Leia as curvas como no Iris. O gráfico mostra a evolução da perda;
+o teste só entra na próxima célula. As duas curvas não precisam coincidir:
+são conjuntos diferentes e a perda do treino é medida enquanto os pesos mudam.</p>
+
+<div class="notebook-cell"><p class="cell-label">Célula 15</p>
+<pre class="notebook-code"><code class="language-python">epocas = range(1, len(historico_mnist.history[&quot;loss&quot;]) + 1)
+plt.plot(epocas, historico_mnist.history[&quot;loss&quot;], &quot;o-&quot;, color=&quot;#246bce&quot;, label=&quot;Treino&quot;)
+plt.plot(epocas, historico_mnist.history[&quot;val_loss&quot;], &quot;s--&quot;, color=&quot;#b35a13&quot;, label=&quot;Validação&quot;)
+plt.xticks(list(epocas))
+plt.xlabel(&quot;Época&quot;)
+plt.ylabel(&quot;Entropia cruzada&quot;)
+plt.title(&quot;MNIST: perda durante o treinamento&quot;)
+plt.legend()
+plt.tight_layout()
+plt.show()</code></pre>
+<figure><img src="imagens/figura-04.png" width="584" height="384" loading="lazy" alt="2.4 Comparar treino e validação — resultado desta execução"><figcaption>2.4 Comparar treino e validação — resultado desta execução</figcaption></figure>
+</div>
+<h3 id="2.5-Avaliar-e-prever">2.5 Avaliar e prever</h3><p>A saída possui dez probabilidades, na ordem dos dígitos de 0 a 9.
+<code>argmax(axis=1)</code> escolhe a maior em cada linha, produzindo uma previsão por imagem.</p>
+
+<div class="notebook-cell"><p class="cell-label">Célula 16</p>
+<pre class="notebook-code"><code class="language-python">perda, acuracia = modelo_mnist.evaluate(X_teste_mnist, y_teste_mnist, verbose=0)
+print(f&quot;Acurácia no teste MNIST: {acuracia:.1%} ({len(y_teste_mnist)} imagens)&quot;)
+
+probabilidades_mnist = modelo_mnist.predict(X_teste_mnist, verbose=0)
+previsoes_mnist = probabilidades_mnist.argmax(axis=1)</code></pre>
+<pre class="notebook-output">Acurácia no teste MNIST: 96.2% (10000 imagens)
+</pre>
+</div>
+<div class="notebook-cell"><p class="cell-label">Célula 17</p>
+<pre class="notebook-code"><code class="language-python">indice = 0
+print(&quot;Probabilidades de 0 a 9:&quot;, probabilidades_mnist[indice].round(3))
+plt.figure(figsize=(3, 3))
+plt.imshow(X_teste_mnist[indice], cmap=&quot;gray&quot;, vmin=0, vmax=1)
+plt.title(f&quot;Real: {y_teste_mnist[indice]} | Rede: {previsoes_mnist[indice]}&quot;)
+plt.axis(&quot;off&quot;)
+plt.show()</code></pre>
+<pre class="notebook-output">Probabilidades de 0 a 9: [0.    0.    0.    0.002 0.    0.    0.    0.997 0.    0.   ]
+</pre>
+<figure><img src="imagens/figura-05.png" width="251" height="274" loading="lazy" alt="2.5 Avaliar e prever — resultado desta execução"><figcaption>2.5 Avaliar e prever — resultado desta execução</figcaption></figure>
+</div>
+<h3 id="2.6-Olhar-tamb%C3%A9m-os-erros">2.6 Olhar tamb&#233;m os erros</h3><p>Uma acurácia alta ainda deixa erros. Abaixo aparecem os <strong>primeiros seis
+erros na ordem do teste</strong>, com o rótulo real e a previsão. Alguns dígitos
+se parecem; reconhecer o MNIST não garante reconhecer qualquer foto de
+um número, com outro fundo, escala ou iluminação.</p>
+
+<div class="notebook-cell"><p class="cell-label">Célula 18</p>
+<pre class="notebook-code"><code class="language-python">erros = (previsoes_mnist != y_teste_mnist).nonzero()[0]
+print(f&quot;Erros: {len(erros)} em {len(y_teste_mnist)} imagens de teste&quot;)
+plt.figure(figsize=(8, 5))
+for posicao, indice in enumerate(erros[:6]):
+    plt.subplot(2, 3, posicao + 1)
+    plt.imshow(X_teste_mnist[indice], cmap=&quot;gray&quot;, vmin=0, vmax=1)
+    plt.title(f&quot;Real: {y_teste_mnist[indice]} | Rede: {previsoes_mnist[indice]}&quot;)
+    plt.axis(&quot;off&quot;)
+plt.tight_layout()
+plt.show()</code></pre>
+<pre class="notebook-output">Erros: 382 em 10000 imagens de teste
+</pre>
+<figure><img src="imagens/figura-06.png" width="735" height="484" loading="lazy" alt="2.6 Olhar também os erros — resultado desta execução"><figcaption>2.6 Olhar também os erros — resultado desta execução</figcaption></figure>
+</div>
+<p><a id="experimente"></a></p>
+<h2 id="3.-Experimente-e-explique">3. Experimente e explique</h2><p>Faça uma mudança por vez e use a <strong>validação</strong> para comparar:</p>
+<ol>
+<li>No Iris, troque os 8 neurônios por 2 e depois por 16. Compare a perda de
+validação e o número de parâmetros em <code>summary()</code>.</li>
+<li>Treine o Iris por 20 épocas em vez de 150. A curva já parou de melhorar?</li>
+<li>No MNIST, troque os 32 neurônios por 8. Observe a validação.</li>
+<li>Por que usamos três saídas no Iris e dez no MNIST? Por que o Iris
+não precisa de <code>Flatten</code>?</li>
+</ol>
+<p><strong>Para cada comparação, reinicie o kernel e execute tudo novamente.</strong>
+Executar só <code>fit</code> continua treinando os pesos anteriores; a padronização
+também não deve ser aplicada duas vezes. Durante as experiências, pule as
+células de avaliação/previsão no teste (1.7, 2.5 e 2.6). No final, avalie uma
+vez a configuração escolhida. Como esta aula já mostra resultados de teste,
+novas escolhas feitas olhando esses resultados deixam de ser uma avaliação
+independente: seriam necessários novos dados para confirmá-las.</p>
+<p>O procedimento foi o mesmo nos dois exemplos: preparar entradas e rótulos,
+montar camadas, configurar a perda, treinar, avaliar e prever.
+O Keras calculou os gradientes e atualizou os pesos; nós escolhemos os dados,
+a arquitetura e a pergunta que a rede pode responder.</p>
+
+<p><a id="referencias"></a></p>
+<h2 id="Refer%C3%AAncias">Refer&#234;ncias</h2><ul>
+<li><a href="https://atzingen.github.io/disciplinas/topicos/04-introducao-ml/">Aula anterior: introdução ao aprendizado de máquina</a>.</li>
+<li><a href="https://scikit-learn.org/stable/modules/generated/sklearn.datasets.load_iris.html">Iris no scikit-learn</a>.</li>
+<li><a href="https://archive.ics.uci.edu/dataset/53/iris">Iris: origem do conjunto no UCI</a>.</li>
+<li><a href="https://keras.io/api/datasets/mnist/">MNIST no Keras: dados e licença</a>.</li>
+<li><a href="https://keras.io/guides/sequential_model/">Keras: modelo Sequential</a>.</li>
+<li><a href="https://keras.io/api/models/model_training_apis/">Keras: compile, fit, evaluate e predict</a>.</li>
+<li><a href="https://www.tensorflow.org/tutorials/quickstart/beginner">TensorFlow: primeira rede para MNIST</a>.</li>
+</ul>
+<p>Material didático elaborado para esta disciplina a partir dessas APIs e datasets.
+O MNIST é disponibilizado sob CC BY-SA 3.0, conforme a documentação do Keras;
+as imagens exibidas mantêm essa atribuição a Yann LeCun e Corinna Cortes.</p>
+
+<!-- notebook:fim -->
+    <nav class="notebook-actions" aria-label="Continuar a prática">
+      <a href="redes-neurais.ipynb" download>Baixar notebook (.ipynb)</a>
+      <a href="../../disciplinas/prccomp/">Voltar à disciplina</a>
+    </nav>
+  </main>
+  <script type="module" src="../../componentes/navegacao-principal.js"></script>
+  <script type="module">import { typesetMath } from "../../componentes/matematica.js"; typesetMath(document.querySelector("main"));</script>
+</body>
+</html>

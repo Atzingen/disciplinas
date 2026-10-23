@@ -1,0 +1,96 @@
+.notebook-page .lesson-header,
+.notebook-page .lesson-main {
+  max-width: 960px;
+}
+
+.notebook-page .site-navigation {
+  --accent: #c43d29;
+}
+
+.notebook-page h1 {
+  max-width: 24ch;
+  font-size: clamp(2.1rem, 5vw, 3.8rem);
+  line-height: 1.1;
+}
+
+.notebook-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.9rem 1.5rem;
+  margin-block: 1.5rem;
+  font-family: var(--font-display);
+}
+
+.notebook-actions a {
+  padding-block: 0.55rem;
+  text-underline-offset: 0.25em;
+}
+
+.notebook h2 {
+  margin-top: 3rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--line);
+}
+
+.notebook h3 {
+  margin-top: 2.5rem;
+}
+
+.notebook [id] {
+  scroll-margin-top: 10rem;
+}
+
+@media (max-width: 760px) {
+  .notebook [id] {
+    scroll-margin-top: 15rem;
+  }
+}
+
+.notebook pre {
+  max-width: 100%;
+  overflow-x: auto;
+  padding: 1rem;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  font: 0.9rem/1.6 var(--font-mono);
+}
+
+.notebook pre code {
+  padding: 0;
+  background: none;
+  font: inherit;
+}
+
+.notebook .notebook-output {
+  border: 0;
+  background: var(--paper-deep);
+}
+
+.cell-label,
+.notebook figcaption {
+  color: var(--ink-soft);
+  font: 0.9rem/1.5 var(--font-display);
+}
+
+.cell-label {
+  margin: 1.4rem 0 0.4rem;
+}
+
+.notebook-cell pre {
+  margin-top: 0;
+}
+
+.notebook figure {
+  margin: 1.5rem 0;
+}
+
+.notebook figure img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  background: white;
+}
+
+.notebook figcaption {
+  margin-top: 0.6rem;
+}
