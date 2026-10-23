@@ -60,8 +60,8 @@ bloco_notebook = "\n".join(partes)
 conteudo, quantidade = re.subn(
     r"<!-- notebook:inicio -->.*?<!-- notebook:fim -->",
     lambda _: "<!-- notebook:inicio -->\n" + bloco_notebook + "\n<!-- notebook:fim -->",
-    pagina.read_text(), flags=re.S,
+    pagina.read_text(encoding="utf-8"), flags=re.S,
 )
 assert quantidade == 1, "Esperava um bloco para a leitura do notebook."
-pagina.write_text(conteudo)
+pagina.write_text(conteudo, encoding="utf-8")
 print(f"Página atualizada: {len(notebook.cells)} células e {figura} figuras.")
