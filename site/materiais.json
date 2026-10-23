@@ -553,5 +553,16 @@
     "description": "Apresentação em slides: definições de IA, a relação entre IA, aprendizado de máquina, redes neurais e deep learning, os tipos de aprendizado e o perceptron treinado passada por passada em um explorador interativo.",
     "path": "topicos/04-introducao-ml/",
     "tags": ["inteligência artificial", "aprendizado de máquina", "machine learning", "redes neurais", "deep learning", "perceptron", "regra delta", "backpropagation", "sigmoide", "XOR", "Python", "apresentação"]
+  },
+  {
+    "id": "topico-05-redes-neurais",
+    "title": "Tópico 5 — Redes neurais na prática: Iris e MNIST",
+    "kind": "topico",
+    "section": "topicos",
+    "disciplines": ["PRCCOMP"],
+    "theme": "Classificação com TensorFlow e Keras",
+    "description": "Aula prática em notebook: flores Iris e dígitos MNIST com camadas densas, código simples, gráficos de treinamento e previsões. Leitura completa, download e Colab.",
+    "path": "topicos/05-redes-neurais/",
+    "tags": ["redes neurais", "aprendizado de máquina", "Python", "TensorFlow", "Keras", "Iris", "MNIST", "classificação", "Dense", "Jupyter", "notebook", "aula prática"]
   }
 ]
