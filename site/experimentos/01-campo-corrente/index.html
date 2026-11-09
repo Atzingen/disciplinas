@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta
     name="description"
-    content="Roteiro avançado da experiência de Oersted: campo magnético de um fio retilíneo, lei de Ampère, lei da tangente e análise de incertezas."
+    content="Experiência de Oersted quantitativa: corrente controlada por fonte de bancada, deflexão de uma bússola, lei da tangente, campo do fio em função da corrente e da distância e campo magnético da Terra no laboratório."
   >
   <title>Campo magnético gerado por corrente · Experimento 01</title>
   <link rel="stylesheet" href="../../assets/base.css">
@@ -76,18 +76,20 @@
   <header class="experiment-header">
     <div class="experiment-hero">
       <div>
-        <p class="eyebrow">Experimento 01 · experiência de Oersted</p>
+        <p class="eyebrow">Experimento 01 · Oersted quantitativo</p>
         <h1>Campo magnético gerado por corrente</h1>
       </div>
       <div>
         <p class="experiment-hero__lead">
-          Observe a deflexão de uma bússola, determine o sentido do campo e
-          confronte a montagem real com o modelo de um fio retilíneo longo.
+          Controle a corrente em um fio com a fonte de bancada, meça a deflexão
+          de uma bússola colocada sob ele e use a lei da tangente para obter o
+          campo do fio e o campo magnético da Terra no próprio laboratório.
         </p>
         <ul class="experiment-meta" aria-label="Características do roteiro">
           <li>PRCLFBE</li>
-          <li>qualitativo + extensão quantitativa</li>
-          <li>corrente contínua de 6 V</li>
+          <li>Parte A: campo × corrente</li>
+          <li>Parte B: campo × distância</li>
+          <li>fonte de bancada 0–3 A</li>
         </ul>
       </div>
     </div>
@@ -105,8 +107,9 @@
       <header class="experiment-section-heading">
         <h2>Montagem</h2>
         <p>
-          Primeiro registre o que a regra da mão direita prevê; só então use a
-          fonte para testar a previsão.
+          As duas partes usam a mesma montagem. Na Parte A a distância entre o
+          fio e a agulha fica fixa e a corrente varia; na Parte B a corrente fica
+          fixa e a bússola é aproximada e afastada do fio.
         </p>
       </header>
 
@@ -114,68 +117,278 @@
         <article class="lab-card">
           <h3>Objetivos de aprendizagem</h3>
           <ul>
-            <li>Verificar que uma corrente elétrica produz campo magnético ao redor do condutor.</li>
-            <li>Relacionar a inversão da corrente e a troca acima/abaixo do fio à inversão da deflexão.</li>
-            <li>Usar simetria, lei de Ampère e regra da mão direita para prever direção e sentido.</li>
-            <li>Conectar a observação à dependência <strong>1/r</strong> e, opcionalmente, à lei da tangente.</li>
+            <li>Medir a deflexão de uma bússola em função da corrente em um fio e verificar que o campo do fio é proporcional à corrente.</li>
+            <li>Usar a lei da tangente para converter ângulo em campo e obter, pelo coeficiente angular, a componente horizontal do campo da Terra no laboratório.</li>
+            <li>Comparar o modelo de fio infinito, \(B=\frac{\mu_0 I}{2\pi r}\), com o campo do acessório real, que tem a forma de um Π.</li>
+            <li>Visualizar a queda do campo com a distância e a inversão do sentido quando a bússola passa para o outro lado do fio.</li>
           </ul>
         </article>
 
         <article class="lab-card">
-          <h3>Material do kit</h3>
+          <h3>Material</h3>
           <ul class="materials-list">
-            <li>1 placa para ensaios de experimentos de eletromagnetismo;</li>
-            <li>1 fonte de alimentação 6 V/1 A;</li>
-            <li>1 bússola;</li>
-            <li>1 acessório para a experiência de Oersted.</li>
+            <li><strong>Do kit AZEHEB:</strong> placa de experimentos (item 1), bússola (item 6), acessório para a experiência de Oersted (item 7) e par de cabos banana/jacaré (item 12).</li>
+            <li><strong>Do laboratório:</strong> fonte de bancada Instrutherm FA-3003 (0–32 V, 0–3 A, com modo de corrente constante e mostrador de corrente).</li>
+            <li>Régua ou paquímetro, fita adesiva e calços <strong>não magnéticos</strong> para a Parte B: placas de MDF, acrílico ou papelão, régua de plástico, estojos de CD.</li>
+            <li>Opcional: multímetro Minipa ET-2704 na escala de 10 A, em série, para conferir a corrente; celular com o aplicativo phyphox para medir o campo da Terra.</li>
           </ul>
         </article>
       </div>
 
       <aside class="experiment-safety">
-        <strong>Segurança e proteção da fonte</strong>
+        <strong>Fonte de alimentação e segurança</strong>
         <p>
-          Antes de conectar, deixe o dial no mínimo e a chave desligada. Em cada
-          observação, energize por <strong>5–10 s</strong>, desligue por
-          <strong>5–10 s</strong> para resfriamento e aumente o dial apenas de
-          modo gradual, sem ultrapassar metade do curso. Manuseie a placa pelas
-          bordas, evitando contato com sua face inferior.
+          <em>Não use a fonte de 6 V do kit nem o dial da placa.</em> O
+          acessório de Oersted é praticamente um curto-circuito; com a fonte do
+          kit, quem limita a corrente é um resistor sob a placa, que aquece muito
+          (o manual limita cada acionamento a 5–10 s) e não informa a corrente.
+          Aqui o adaptador de 6 V fica desconectado, a chave do setor
+          “força magnética/Oersted” fica na posição central (desligada) e a
+          corrente vem da fonte de bancada em modo de corrente constante, até
+          2,5 A. A tensão nos terminais fica abaixo de 1 V, mas
+          cabos e jacarés aquecem se a corrente alta ficar ligada sem necessidade:
+          leia o ângulo e reduza a corrente. Volte a corrente ao mínimo antes de
+          inverter os cabos ou mover a bússola.
         </p>
       </aside>
 
       <figure class="experiment-figure">
         <img
-          src="../../assets/experimentos/azeheb/exp-01-oersted-montagem.jpg"
-          alt="Placa de eletromagnetismo com a bússola posicionada sob o trecho retilíneo do acessório de Oersted"
+          src="../../assets/experimentos/azeheb/exp-01-kit-composicao.jpg"
+          alt="Peças do conjunto de eletromagnetismo numeradas de 1 a 12: placa de experimentos, ímã em U, fonte, limalha, galvanômetro, bússola, acessório de Oersted, balanço, torres, rotor, ímã de neodímio e cabos"
         >
         <figcaption>
-          A bússola fica diretamente junto ao trecho retilíneo do condutor; antes
-          da energização, fio e agulha devem estar paralelos ao campo terrestre.
-          <strong>Fonte: manual AZEHEB.</strong>
+          Composição do kit. Neste experimento usam-se a placa (1), a bússola
+          (6), o acessório de Oersted (7) e os cabos banana/jacaré (12). Deixe o
+          ímã em U (2) e o ímã de neodímio (11) <strong>fora da bancada</strong>:
+          eles dominam o campo na bússola. <strong>Fonte: manual AZEHEB.</strong>
+        </figcaption>
+      </figure>
+
+      <div class="experiment-grid experiment-photo-grid">
+        <figure class="experiment-figure">
+          <img
+            src="../../assets/experimentos/azeheb/exp-01-oersted-montagem.jpg"
+            alt="Placa de eletromagnetismo com a bússola posicionada sob o trecho retilíneo do acessório de Oersted"
+          >
+          <figcaption>
+            Posição de partida: bússola sob o centro do trecho horizontal, com
+            fio e agulha paralelos antes de ligar a corrente.
+            <strong>Fonte: manual AZEHEB.</strong>
+          </figcaption>
+        </figure>
+        <figure class="experiment-figure">
+          <img
+            src="../../assets/experimentos/azeheb/exp-01-oersted-deflexao.jpg"
+            alt="Mesma montagem com corrente: a agulha da bússola gira e deixa de ficar paralela ao fio"
+          >
+          <figcaption>
+            Com corrente, a agulha gira até o ângulo φ em que o campo do fio e o
+            campo da Terra se equilibram. <strong>Fonte: manual AZEHEB.</strong>
+          </figcaption>
+        </figure>
+      </div>
+
+      <figure class="experiment-figure survey-diagram">
+        <svg
+          viewBox="0 0 1000 560"
+          role="img"
+          aria-labelledby="oersted-esquema-titulo oersted-esquema-desc"
+        >
+          <title id="oersted-esquema-titulo">Geometria do acessório de Oersted e da bússola</title>
+          <desc id="oersted-esquema-desc">
+            À esquerda, vista lateral: o acessório em forma de Π tem duas pernas
+            verticais encaixadas nos bornes, separadas por 2a, e um trecho
+            horizontal à altura h da placa. A agulha da bússola fica à altura
+            z_n, a uma distância d = h − z_n abaixo do fio. Os jacarés ficam nas
+            pernas à altura z_1 e os cabos, torcidos, vão até a fonte em modo de
+            corrente constante. À direita, vista de cima: o campo horizontal da
+            Terra aponta ao longo do fio, o campo do fio é perpendicular a ele e
+            a agulha se alinha com a resultante, formando o ângulo φ.
+          </desc>
+          <defs>
+            <marker id="oe-cota" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+              <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--measure)"/>
+            </marker>
+            <marker id="oe-corrente" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="5" markerHeight="5" orient="auto">
+              <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--positive)"/>
+            </marker>
+            <marker id="oe-terra" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+              <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--negative)"/>
+            </marker>
+            <marker id="oe-fio" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+              <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--positive)"/>
+            </marker>
+            <marker id="oe-resultante" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+              <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--resultant)"/>
+            </marker>
+          </defs>
+
+          <g font-family="var(--font-mono)" font-size="17" fill="var(--ink-soft)" font-weight="700">
+            <text x="40" y="40">VISTA LATERAL</text>
+            <text x="660" y="40">VISTA DE CIMA</text>
+          </g>
+
+          <rect x="40" y="430" width="560" height="26" rx="4" fill="var(--paper-deep)" stroke="var(--line-strong)" stroke-width="2"/>
+          <text x="50" y="482" font-family="var(--font-mono)" font-size="16" fill="var(--ink-soft)">placa</text>
+
+          <rect x="136" y="388" width="28" height="42" rx="4" fill="var(--ink)"/>
+          <rect x="456" y="388" width="28" height="42" rx="4" fill="var(--positive)"/>
+          <g font-family="var(--font-mono)" font-size="15" fill="var(--ink-soft)">
+            <text x="112" y="482">borne preto</text>
+            <text x="418" y="482">borne vermelho</text>
+          </g>
+
+          <g fill="none" stroke="var(--force-2)" stroke-width="7" stroke-linejoin="round">
+            <path d="M 150 388 V 150 H 470 V 388"/>
+          </g>
+          <g stroke="var(--positive)" stroke-width="3" marker-end="url(#oe-corrente)">
+            <line x1="490" y1="300" x2="490" y2="230"/>
+            <line x1="350" y1="134" x2="270" y2="134"/>
+            <line x1="130" y1="230" x2="130" y2="300"/>
+          </g>
+          <text x="300" y="124" font-family="var(--font-mono)" font-size="17" fill="var(--positive)" font-weight="700">I</text>
+
+          <rect x="140" y="362" width="20" height="14" rx="3" fill="var(--ink-faint)"/>
+          <rect x="460" y="362" width="20" height="14" rx="3" fill="var(--ink-faint)"/>
+          <path d="M 160 369 C 230 372, 300 520, 420 528 M 460 369 C 420 380, 380 520, 430 520" fill="none" stroke="var(--ink-faint)" stroke-width="3"/>
+          <rect x="430" y="500" width="160" height="46" rx="8" fill="var(--surface)" stroke="var(--line-strong)" stroke-width="2"/>
+          <text x="442" y="529" font-family="var(--font-mono)" font-size="15" fill="var(--ink)">FA-3003 · CC</text>
+          <text x="40" y="540" font-family="var(--font-mono)" font-size="14" fill="var(--ink-soft)">cabos torcidos, longe da bússola</text>
+
+          <rect x="250" y="378" width="120" height="52" rx="10" fill="var(--surface)" stroke="var(--negative)" stroke-width="3"/>
+          <polygon points="268,404 310,399 352,404 310,409" fill="var(--ink-soft)"/>
+          <circle cx="310" cy="404" r="4" fill="var(--ink)"/>
+          <circle cx="310" cy="266" r="15" fill="none" stroke="var(--positive)" stroke-width="3"/>
+          <circle cx="310" cy="266" r="4" fill="var(--positive)"/>
+          <text x="232" y="250" font-family="var(--font-mono)" font-size="15" fill="var(--positive)">B do fio</text>
+
+          <g stroke="var(--measure)" stroke-width="2.5" fill="none" marker-start="url(#oe-cota)" marker-end="url(#oe-cota)">
+            <line x1="150" y1="92" x2="470" y2="92"/>
+            <line x1="545" y1="150" x2="545" y2="430"/>
+            <line x1="226" y1="404" x2="226" y2="430"/>
+            <line x1="200" y1="150" x2="200" y2="404"/>
+            <line x1="92" y1="369" x2="92" y2="430"/>
+          </g>
+          <g stroke="var(--measure)" stroke-width="1.5" stroke-dasharray="5 5">
+            <line x1="470" y1="150" x2="560" y2="150"/>
+            <line x1="190" y1="404" x2="260" y2="404"/>
+            <line x1="80" y1="369" x2="140" y2="369"/>
+          </g>
+          <g font-family="var(--font-mono)" font-size="18" fill="var(--measure)" font-weight="700">
+            <text x="294" y="82">2a</text>
+            <text x="556" y="296">h</text>
+            <text x="203" y="426">zₙ</text>
+            <text x="210" y="200">d = h − zₙ</text>
+            <text x="52" y="404">z₁</text>
+          </g>
+
+          <circle cx="815" cy="300" r="122" fill="var(--surface)" stroke="var(--negative)" stroke-width="4"/>
+          <line x1="815" y1="140" x2="815" y2="460" stroke="var(--force-2)" stroke-width="6" stroke-dasharray="14 8" opacity="0.8"/>
+          <text x="826" y="150" font-family="var(--font-mono)" font-size="15" fill="var(--ink-soft)">fio (acima)</text>
+          <polygon points="815,300 868,214 875,224" fill="var(--positive)" opacity="0.9"/>
+          <polygon points="815,300 762,386 755,376" fill="var(--ink-soft)" opacity="0.9"/>
+          <g stroke-width="4">
+            <line x1="815" y1="300" x2="815" y2="200" stroke="var(--negative)" marker-end="url(#oe-terra)"/>
+            <line x1="815" y1="300" x2="881" y2="300" stroke="var(--positive)" marker-end="url(#oe-fio)"/>
+            <line x1="815" y1="300" x2="878" y2="200" stroke="var(--resultant)" marker-end="url(#oe-resultante)"/>
+          </g>
+          <path d="M 815 245 A 55 55 0 0 1 845 254" fill="none" stroke="var(--ink)" stroke-width="2"/>
+          <g font-family="var(--font-mono)" font-size="16" font-weight="700">
+            <text x="696" y="190" fill="var(--negative)">B_T,h</text>
+            <text x="888" y="306" fill="var(--positive)">B_fio</text>
+            <text x="886" y="196" fill="var(--resultant)">B_res</text>
+            <text x="828" y="238" fill="var(--ink)">φ</text>
+          </g>
+          <text x="690" y="470" font-family="var(--font-mono)" font-size="18" fill="var(--ink)">tan φ = B_fio / B_T,h</text>
+        </svg>
+        <figcaption>
+          Grandezas medidas na bancada. O ponto de referência para as alturas é a
+          superfície da placa; <em>d</em> vai do eixo do fio ao pivô da agulha.
+          A seta vermelha da agulha marca o polo norte. Esquema do roteiro.
         </figcaption>
       </figure>
 
       <div class="prediction-box">
         <strong>Previsão obrigatória antes de ligar</strong>
         <p>
-          Desenhe o sentido convencional da corrente para cada posição da chave.
-          Para a bússola abaixo e acima do fio, use a regra da mão direita e
-          indique para que lado espera que o polo norte desvie. Depois preveja o
-          que muda quando a corrente é invertida. Não altere a previsão após ver
-          o resultado: registre o confronto separadamente.
+          (1) Com a regra da mão direita, desenhe o sentido do campo do fio no
+          ponto da agulha e diga para que lado o polo norte vai girar com a
+          corrente entrando pelo borne vermelho. (2) Meça <em>d</em> e calcule o
+          ângulo esperado para 1,0 A pelo modelo de fio infinito,
+          \(\tan\varphi=\frac{\mu_0 I}{2\pi d\,B_{T,h}}\), usando
+          \(B_{T,h}=17{,}6\ \mu\mathrm{T}\). Registre as duas previsões antes
+          da primeira medida e não as corrija depois.
         </p>
       </div>
 
       <article class="lab-card">
-        <h3>Procedimento</h3>
+        <h3>Preparação da bancada</h3>
         <ol class="procedure-list">
-          <li>Use o setor “força magnética/Oersted” da placa e afaste ímãs, celulares, ferramentas ferromagnéticas e cabos que possam perturbar a bússola.</li>
-          <li>Posicione inicialmente a bússola <strong>abaixo do fio</strong>. Com a fonte desconectada, gire a placa até a agulha se alinhar ao campo magnético terrestre e ficar paralela ao condutor.</li>
-          <li>Com a chave desligada e o dial em zero, conecte a fonte de 6,0 VCC ao variador da placa. Identifique nas marcações da chave o sentido convencional esperado da corrente.</li>
-          <li>Registre a previsão. Selecione o sentido do borne vermelho para o preto, ligue apenas durante o intervalo de segurança e aumente lentamente o dial até uma posição intermediária, nunca além da metade. Observe a deflexão e desligue.</li>
-          <li>Respeite o intervalo de resfriamento. Sem mudar o sentido da corrente, coloque a bússola <strong>acima do fio</strong>, confira novamente o alinhamento e repita a observação.</li>
-          <li>Depois de novo resfriamento, volte a bússola para baixo, <strong>inverta o sentido da corrente</strong> pela chave e repita. Compare o sinal da deflexão com a previsão.</li>
-          <li>Para completar a matriz de controle, repita também com a bússola acima e a corrente invertida. Em todas as quatro configurações, desligue antes de reposicionar a bússola ou a chave.</li>
+          <li>Tire da bancada ímãs, celulares, chaves, tesouras e estojos com metal. Coloque a fonte de bancada a pelo menos 50 cm da bússola. Anote se há armário de aço, pé de mesa metálico ou tubulação perto: eles deformam o campo da Terra no local.</li>
+          <li>Desconecte o adaptador de 6 V da placa e deixe a chave do setor “força magnética/Oersted” na posição central. Encaixe o acessório de Oersted nos bornes vermelho e preto.</li>
+          <li>Coloque a bússola sobre a placa, sob o centro do trecho horizontal do fio. Gire a <strong>placa inteira</strong>, não só a bússola, até a agulha ficar paralela ao fio. Dê leves toques na placa para vencer o atrito do pivô e confira de novo.</li>
+          <li>Meça a geometria e anote na tabela “Medidas da montagem” (aba Dados): o vão entre as pernas, <em>2a</em>; a altura do eixo do fio sobre a placa, <em>h</em>; a altura do pivô da agulha, <em>zₙ</em>; e, depois de prender os jacarés, a altura deles, <em>z₁</em>. A distância do fio à agulha é \(d=h-z_n\).</li>
+          <li>Com a fonte desligada, ligue um cabo na saída + (vermelha) e outro na saída − (preta). Prenda o jacaré do + na perna do borne vermelho e o do − na perna do borne preto, o mais baixo possível. Torça os dois cabos um no outro e leve-os para trás da placa, longe da bússola.</li>
+          <li>Gire o ajuste de corrente da fonte para o mínimo e o de tensão para cerca de 3 V. Ligue a fonte: como o acessório é quase um curto-circuito, ela entra em corrente constante (indicador CC) e o mostrador passa a indicar a corrente. Suba até 0,5 A para conferir o circuito e volte ao mínimo.</li>
+          <li>Anote a leitura da agulha com a corrente no mínimo. Os jacarés e a fonte podem deslocá-la um ou dois graus; isso não atrapalha, porque o tratamento usa a diferença entre as leituras com corrente direta e invertida.</li>
+        </ol>
+      </article>
+
+      <article class="lab-card">
+        <h3>Parte A — campo em função da corrente, com d fixo</h3>
+        <ol class="procedure-list">
+          <li>Suba a corrente até 0,20 A. Espere a agulha parar (5–10 s; um toque leve na placa ajuda) e leia o ângulo do polo norte, \(\varphi_+\), com o sinal da convenção do seu diagrama. Leia olhando de cima, para evitar paralaxe.</li>
+          <li>Repita de 0,20 em 0,20 A até 2,0 A ou até a deflexão passar de 70°, o que vier primeiro. Anote sempre a corrente que o mostrador indica, não a desejada.</li>
+          <li>Volte a corrente ao mínimo. <strong>Inverta o sentido da corrente trocando os pinos banana nas saídas da fonte</strong>, sem mexer nos jacarés nem na bússola.</li>
+          <li>Repita a série com as mesmas correntes e anote \(\varphi_-\). A agulha deve girar para o outro lado.</li>
+          <li>Volte ao mínimo e confira a leitura de zero. Se ela mudou mais de 2°, a placa ou a bússola se moveu: realinhe e refaça a série.</li>
+          <li>Para cada corrente, calcule \(\varphi=\frac{\varphi_+-\varphi_-}{2}\). A média elimina o desvio de zero e reduz o efeito de um pequeno desalinhamento entre o fio e o campo da Terra.</li>
+        </ol>
+        <p>
+          <strong>Se a graduação da bússola for grossa</strong> (5° ou mais),
+          fotografe de cima com o celular paralelo à placa e meça na foto o
+          ângulo entre a agulha e o fio de latão, que aparece por cima dela e é a
+          própria referência de 0°. Ferramentas que servem: ImageJ/Fiji
+          (ferramenta Angle) ou GeoGebra (inserir imagem e ferramenta Ângulo).
+        </p>
+      </article>
+
+      <figure class="experiment-figure">
+        <img
+          src="../../assets/experimentos/azeheb/exp-01-oersted-bussola-acima.jpg"
+          alt="Bússola apoiada sobre o trecho horizontal do acessório de Oersted, com a agulha desviada para o lado oposto ao da montagem com a bússola embaixo"
+        >
+        <figcaption>
+          Bússola acima do fio, usada no fim da Parte B: com a mesma corrente,
+          a deflexão troca de sentido. <strong>Fonte: manual AZEHEB.</strong>
+        </figcaption>
+      </figure>
+
+      <article class="lab-card">
+        <h3>Parte B — queda do campo com a distância, com I fixo</h3>
+        <ol class="procedure-list">
+          <li>Escolha a corrente da Parte B, <em>I_B</em>: a que deu entre 40° e 50° na Parte A (em geral 1,0 a 1,5 A). Use a mesma em todas as posições.</li>
+          <li><strong>Posição 1:</strong> bússola apoiada na placa, como na Parte A. Leia \(\varphi_+\), volte ao mínimo, inverta os pinos na fonte e leia \(\varphi_-\).</li>
+          <li><strong>Posições 2 a 4:</strong> coloque calços não magnéticos sob a bússola para aproximá-la do fio, até a caixa quase encostar nele. Meça a espessura <em>s</em> de cada pilha; a distância passa a ser \(d=h-z_n-s\). Em cada altura, realinhe a agulha com o fio, leia \(\varphi_+\) e \(\varphi_-\).</li>
+          <li><strong>Bússola acima do fio:</strong> apoie a bússola sobre o trecho horizontal do acessório, como na figura acima, e repita a leitura. Meça a nova distância, do eixo do fio ao pivô da agulha. Compare o sentido da deflexão com o das posições abaixo do fio.</li>
+          <li>Se houver tempo, acrescente um calço entre o fio e a bússola de cima para afastá-la mais e repita.</li>
+          <li>Ao terminar, volte a corrente ao mínimo, desligue a fonte e desconecte os cabos.</li>
+        </ol>
+        <p>
+          A Parte B é de visualização: o objetivo é ver a deflexão cair à medida
+          que a bússola se afasta e se inverter do outro lado do fio. Com poucas
+          posições e um fio curto, não espere uma reta perfeita no gráfico de
+          B × 1/d.
+        </p>
+      </article>
+
+      <article class="lab-card">
+        <h3>Opcional — campo da Terra medido com o celular</h3>
+        <ol class="procedure-list">
+          <li>No phyphox, abra “Magnetômetro”. Deite o celular no lugar onde fica a bússola, com a fonte desligada e longe dela.</li>
+          <li>Anote \(B_x\) e \(B_y\). Gire o celular 180° em torno da vertical, sem levantá-lo, e anote de novo.</li>
+          <li>A diferença cancela o desvio próprio do sensor: \(B_{T,h}=\frac{1}{2}\sqrt{(B_{x,0}-B_{x,180})^2+(B_{y,0}-B_{y,180})^2}\).</li>
         </ol>
       </article>
     </section>
@@ -192,7 +405,8 @@
         <h2>Fundamentos</h2>
         <p>
           O modelo ideal é um fio retilíneo muito mais longo que a distância à
-          bússola, com corrente estacionária e espessura desprezível.
+          bússola. O acessório real tem um trecho reto curto e duas pernas; a
+          seção 6 mostra quanto isso muda o campo.
         </p>
       </header>
 
@@ -300,9 +514,9 @@
           <h3>4. Superposição e lei da tangente</h3>
           <p>
             Com fio e agulha inicialmente paralelos à componente horizontal do
-            campo terrestre B_T,h, o campo do fio no ponto da bússola é
-            horizontal e perpendicular a B_T,h. A agulha se orienta pela soma
-            dos dois campos, formando o ângulo φ com a direção inicial.
+            campo terrestre, \(B_{T,h}\), o campo do fio no ponto da bússola é
+            horizontal e perpendicular a \(B_{T,h}\). A agulha se orienta pela
+            soma dos dois campos, formando o ângulo φ com a direção inicial.
           </p>
           <div class="math-block math-display">
             \[
@@ -313,10 +527,12 @@
             \]
           </div>
           <p>
-            Assim, se B_T,h for conhecido, B_fio = B_T,h tan φ. A relação exige
-            campos aproximadamente perpendiculares, bússola nivelada e pequena
-            perturbação magnética local. Para ângulos próximos de 0° ou 90°, a
-            incerteza relativa tende a se tornar desfavorável.
+            A relação exige campos aproximadamente perpendiculares, bússola
+            nivelada e pequena perturbação magnética local. Se o fio estiver
+            desalinhado do norte por um ângulo pequeno δ, as deflexões com
+            corrente direta e invertida deixam de ser simétricas; a média
+            \(\frac{\varphi_+-\varphi_-}{2}\) cancela esse efeito em primeira
+            ordem e também o desvio de zero.
           </p>
         </article>
       </div>
@@ -330,7 +546,82 @@
           desalinhamento e campos de estruturas metálicas ou da própria fonte
           também deslocam o ângulo. A aproximação de fio longo é melhor quando a
           distância ao trecho central é pequena comparada ao comprimento desse
-          trecho, mas ainda grande frente ao raio do condutor.
+          trecho, mas ainda grande frente ao raio do condutor. No acessório do
+          kit, <em>d</em> e o vão <em>2a</em> têm a mesma ordem de grandeza:
+          por isso a seção 6 calcula o campo da geometria real.
+        </p>
+      </article>
+
+      <article class="theory-card">
+        <h3>6. O campo do acessório real, em forma de Π</h3>
+        <p>
+          Para um segmento retilíneo finito, Biot–Savart dá
+          \(B=\frac{\mu_0 I}{4\pi\rho}\left(\sin\beta_2-\sin\beta_1\right)\),
+          em que ρ é a distância perpendicular do ponto à reta do segmento e
+          \(\beta_1\), \(\beta_2\) são os ângulos sob os quais se veem as
+          extremidades. Com a agulha no plano do Π, centrada entre as pernas e
+          sob o trecho horizontal, os três segmentos produzem campo horizontal
+          na <strong>mesma</strong> direção e no mesmo sentido: as pernas somam
+          ao trecho reto. O campo por unidade de corrente é um fator geométrico
+          <em>G</em>, em T/A:
+        </p>
+        <div class="equation-flow" aria-label="Campo do acessório em forma de Pi">
+          <div class="equation-step math-display">
+            \[
+            \begin{aligned}
+            G_{\infty}&=\frac{\mu_0}{2\pi d},\\
+            G_{\Pi}&=\frac{\mu_0}{4\pi}\left[\frac{2a}{d\sqrt{a^2+d^2}}
+              +\frac{2}{a}\left(\frac{h-z_n}{\sqrt{a^2+(h-z_n)^2}}
+              -\frac{z_1-z_n}{\sqrt{a^2+(z_1-z_n)^2}}\right)\right].
+            \end{aligned}
+            \]
+            <small>O primeiro termo de G_Π é o trecho horizontal de comprimento 2a; o segundo, as duas pernas, que conduzem corrente da altura z₁ dos jacarés até h. Os cabos torcidos não entram na conta.</small>
+          </div>
+        </div>
+        <p>
+          Exemplo com números plausíveis (vão de 8 cm, fio a 3,5 cm da placa,
+          agulha a 0,8 cm e jacarés na base): \(G_\infty=7{,}4\ \mu\mathrm{T/A}\),
+          o trecho reto sozinho dá \(6{,}1\ \mu\mathrm{T/A}\) e o Π completo
+          \(9{,}9\ \mu\mathrm{T/A}\), cerca de 30% acima do fio infinito. Use as
+          medidas da sua bancada: esse desvio não é erro experimental, é o
+          modelo que precisa descrever a montagem.
+        </p>
+      </article>
+
+      <article class="theory-card">
+        <h3>7. O que o ajuste fornece</h3>
+        <p>
+          Juntando a lei da tangente e \(B_{\mathrm{fio}}=G\,I\), a tangente da
+          deflexão é proporcional à corrente. O coeficiente angular <em>k</em>
+          do gráfico de tan φ contra <em>I</em>, ajustado pela origem, dá o
+          campo da Terra no laboratório:
+        </p>
+        <div class="equation-flow" aria-label="Linearização e ajuste">
+          <div class="equation-step math-display">
+            \[
+            \begin{aligned}
+            \tan\varphi&=\frac{G}{B_{T,h}}\,I=k\,I,\\
+            B_{T,h}&=\frac{G}{k}.
+            \end{aligned}
+            \]
+          </div>
+          <div class="equation-step math-display">
+            \[
+            \begin{aligned}
+            k&=\frac{\sum_i I_i\tan\varphi_i}{\sum_i I_i^2},\\
+            u_k&=\sqrt{\frac{\sum_i\left(\tan\varphi_i-k\,I_i\right)^2}{(n-1)\sum_i I_i^2}}.
+            \end{aligned}
+            \]
+            <small>Ajuste de uma reta que passa pela origem, com n pontos; u_k é a incerteza do coeficiente angular estimada pela dispersão dos pontos.</small>
+          </div>
+        </div>
+        <p>
+          Calcule \(B_{T,h}\) com \(G_\infty\) e com \(G_\Pi\) e compare com o
+          valor de referência: o modelo IGRF-14 dá
+          \(B_{T,h}\approx 17{,}6\ \mu\mathrm{T}\) para a região de Piracicaba
+          em novembro de 2026 (inclinação de −39° e declinação de −22°).
+          Dentro do prédio, estruturas de aço podem mudar esse valor em alguns
+          microtesla; a medida com o celular é a referência local.
         </p>
       </article>
     </section>
@@ -346,40 +637,105 @@
       <header class="experiment-section-heading">
         <h2>Dados</h2>
         <p>
-          A atividade básica é qualitativa. Preencha somente valores realmente
-          observados ou medidos; deixe em branco o que não foi instrumentado.
+          Preencha somente valores realmente medidos. Os números da primeira
+          tabela são previsões do modelo, para saber o que esperar, e não
+          substituem medidas.
         </p>
       </header>
 
-      <aside class="theory-note">
-        <strong>Extensão quantitativa opcional.</strong>
-        Amperímetro e régua não estão incluídos no kit descrito para este
-        experimento. Use-os apenas se estiverem disponíveis e forem conectados
-        com orientação docente: amperímetro em série e régua para medir a menor
-        distância entre o eixo do fio e o centro da bússola.
-      </aside>
-
       <div class="data-table-wrapper">
         <table class="data-table">
-          <caption>Registro das configurações e das medições — não preencher com valores simulados</caption>
+          <caption>Previsão do modelo de fio infinito com B_T,h = 17,6 μT: deflexão φ esperada</caption>
           <thead>
             <tr>
-              <th scope="col">Sentido da corrente</th>
-              <th scope="col">Posição acima/abaixo</th>
-              <th scope="col">r (m)</th>
-              <th scope="col">I (A)</th>
-              <th scope="col">Ângulo φ (°)</th>
-              <th scope="col">B_fio (T)</th>
-              <th scope="col">Observações</th>
+              <th scope="col">d</th>
+              <th scope="col">0,5 A</th>
+              <th scope="col">1,0 A</th>
+              <th scope="col">1,5 A</th>
+              <th scope="col">2,0 A</th>
+              <th scope="col">2,5 A</th>
             </tr>
           </thead>
           <tbody>
-            <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
-            <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
-            <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
-            <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
-            <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
-            <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+            <tr><td>1 cm</td><td>30°</td><td>49°</td><td>60°</td><td>66°</td><td>71°</td></tr>
+            <tr><td>2 cm</td><td>16°</td><td>30°</td><td>40°</td><td>49°</td><td>55°</td></tr>
+            <tr><td>3 cm</td><td>11°</td><td>21°</td><td>30°</td><td>37°</td><td>43°</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="data-table-wrapper">
+        <table class="data-table">
+          <caption>Medidas da montagem</caption>
+          <thead>
+            <tr>
+              <th scope="col">Grandeza</th>
+              <th scope="col">Valor</th>
+              <th scope="col">Incerteza</th>
+              <th scope="col">Como foi medida</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>vão entre as pernas, 2a (mm)</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+            <tr><td>altura do eixo do fio, h (mm)</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+            <tr><td>altura do pivô da agulha, zₙ (mm)</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+            <tr><td>altura dos jacarés, z₁ (mm)</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+            <tr><td>distância d = h − zₙ (mm)</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+            <tr><td>leitura de zero antes / depois (°)</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+            <tr><td>B_T,h medido com o celular (μT), se houver</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="data-table-wrapper">
+        <table class="data-table">
+          <caption>Parte A — d fixo; correntes-alvo de 0,20 em 0,20 A (anote a corrente indicada pela fonte)</caption>
+          <thead>
+            <tr>
+              <th scope="col">I (A)</th>
+              <th scope="col">φ₊ (°)</th>
+              <th scope="col">φ₋ (°)</th>
+              <th scope="col">φ = (φ₊ − φ₋)/2 (°)</th>
+              <th scope="col">tan φ</th>
+              <th scope="col">B_fio = B_T,h tan φ (10⁻⁶ T)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+            <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+            <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+            <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+            <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+            <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+            <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+            <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+            <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+            <tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="data-table-wrapper">
+        <table class="data-table">
+          <caption>Parte B — I fixo (I_B = ______ A)</caption>
+          <thead>
+            <tr>
+              <th scope="col">Posição</th>
+              <th scope="col">Calço s (mm)</th>
+              <th scope="col">d (mm)</th>
+              <th scope="col">φ₊ (°)</th>
+              <th scope="col">φ₋ (°)</th>
+              <th scope="col">φ (°)</th>
+              <th scope="col">B_fio (10⁻⁶ T)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>1 · abaixo, na placa</td><td>0</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+            <tr><td>2 · abaixo</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+            <tr><td>3 · abaixo</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+            <tr><td>4 · abaixo</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+            <tr><td>5 · acima do fio</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+            <tr><td>6 · acima, com calço</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
           </tbody>
         </table>
       </div>
@@ -388,44 +744,45 @@
         <article class="lab-card">
           <h3>Tratamento dos dados</h3>
           <ol>
-            <li>Adote sinais para I e φ e declare a convenção no diagrama.</li>
-            <li>Confira se inverter I, mantendo a posição, inverte o sinal de φ.</li>
-            <li>Confira se trocar acima por abaixo, mantendo I, também inverte o sinal.</li>
-            <li>Se \(B_{T,h}\) for conhecido, calcule \(B_{\mathrm{fio}}\) pela lei da tangente e compare com \(\frac{\mu_0I}{2\pi r}\).</li>
-            <li>Com vários valores de r, teste a proporcionalidade 1/r por um gráfico de B_fio versus 1/r; não conclua sobre a lei radial a partir de um único ponto.</li>
+            <li>Parte A: calcule φ e tan φ para cada corrente. Faça o gráfico de tan φ contra I e ajuste uma reta pela origem; anote \(k\pm u_k\). Use pontos entre cerca de 10° e 70°: perto de 90° a tangente explode e pequenos erros de leitura viram grandes erros.</li>
+            <li>Com as medidas da montagem, calcule \(G_\infty=\frac{\mu_0}{2\pi d}\) e \(G_\Pi\) (Fundamentos, seção 6).</li>
+            <li>Obtenha \(B_{T,h}=\frac{G}{k}\) com cada modelo e compare com 17,6 μT (IGRF-14) e com o valor do celular, se medido.</li>
+            <li>Parte B: calcule \(B_{\mathrm{fio}}=B_{T,h}\tan\varphi\) para cada posição, com o \(B_{T,h}\) que você considerar mais confiável. Faça o gráfico de B contra d e sobreponha as curvas \(G_\infty I_B\) e \(G_\Pi I_B\). Use sinal negativo para as posições acima do fio.</li>
+            <li>Faça também B contra 1/d com as posições abaixo do fio e descreva a tendência; não conclua a lei radial a partir de poucos pontos.</li>
           </ol>
         </article>
 
         <article class="lab-card">
           <h3>Controles e desvios</h3>
           <p>
-            Registre o ângulo com a corrente desligada antes e depois da série.
-            Um zero que deriva sugere campo local variável ou deslocamento da
-            montagem. O desalinhamento inicial faz B_fio deixar de ser exatamente
-            perpendicular a B_T,h, invalidando a forma simples da lei da
-            tangente. Afaste materiais magnéticos e mantenha fonte e cabos na
-            mesma posição em todas as leituras.
+            Compare a leitura de zero antes e depois de cada série: se ela
+            derivou, algo se moveu. Verifique se \(\varphi_+\) e \(-\varphi_-\)
+            têm valores próximos; uma diferença grande e sistemática indica fio
+            desalinhado com o norte. Mantenha a fonte e os cabos na mesma posição
+            em todas as leituras e registre objetos metálicos próximos. Se a
+            agulha encostar no vidro ou travar, a leitura não vale.
           </p>
         </article>
       </div>
 
       <div class="uncertainty-box">
-        <h3>Propagação opcional para o modelo de Ampère</h3>
+        <h3>Incertezas</h3>
         <div class="math-block math-display">
           \[
-          \left(\frac{u_B}{B}\right)^2
-          =
-          \left(\frac{u_I}{I}\right)^2
-          +
-          \left(\frac{u_r}{r}\right)^2.
+          \begin{aligned}
+          u_{\tan\varphi}&=\sec^2\varphi\;u_\varphi,\\
+          \frac{u_{B_{T,h}}}{B_{T,h}}&=\sqrt{\left(\frac{u_k}{k}\right)^2+\left(\frac{u_G}{G}\right)^2},\qquad
+          \frac{u_{G_\infty}}{G_\infty}=\frac{u_d}{d}.
+          \end{aligned}
           \]
         </div>
         <p>
-          Esta forma supõe incertezas pequenas e independentes em I e r. Ela não
-          inclui sistemáticos como comprimento finito, posição efetiva do centro
-          da bússola, campo dos terminais, desalinhamento ou campo magnético local;
-          discuta esses efeitos separadamente. Se B for obtido pela lei da
-          tangente, inclua também as incertezas de φ e de B_T,h.
+          Na primeira expressão, \(u_\varphi\) vai em radianos. A incerteza
+          relativa da tangente é mínima perto de 45°, por isso a faixa
+          intermediária de ângulos rende os melhores pontos. A incerteza de
+          <em>d</em> costuma dominar: um erro de 2 mm em 25 mm já é 8%.
+          Comprimento finito, pernas e cabos são efeitos sistemáticos; trate-os
+          pelo modelo do Π, e não somando-os à incerteza.
         </p>
       </div>
     </section>
@@ -465,31 +822,28 @@
           <article class="report-card">
             <h3>Objetivo e previsão</h3>
             <p>
-              Declare o objetivo com suas palavras. Anexe a previsão feita antes
-              da energização e diferencie-a do que foi observado.
+              Declare o objetivo com suas palavras. Anexe as previsões de sentido
+              e de ângulo feitas antes de ligar a corrente.
             </p>
             <div class="report-template__line"></div>
             <div class="report-template__line"></div>
           </article>
 
           <article class="report-card">
-            <h3>Diagrama e sentidos</h3>
+            <h3>Montagem e geometria</h3>
             <p>
-              Desenhe fio, corrente convencional, bússola acima/abaixo, norte
-              terrestre, campo do fio e sinal adotado para φ. Aplique a regra da
-              mão direita às quatro configurações.
+              Desenhe o acessório em Π, a bússola, a fonte e os cabos. Indique
+              2a, h, zₙ, z₁ e d com valores e incertezas.
             </p>
-            <div class="report-template__line"></div>
             <div class="report-template__line"></div>
             <div class="report-template__line"></div>
           </article>
 
           <article class="report-card">
-            <h3>Dados e evidências</h3>
+            <h3>Dados</h3>
             <p>
-              Transcreva a tabela sem completar lacunas com estimativas. Inclua
-              uma fotografia da montagem, se autorizada, e descreva o estado da
-              corrente em cada registro.
+              Transcreva as tabelas das Partes A e B sem completar lacunas com
+              estimativas. Inclua uma fotografia da montagem, se autorizada.
             </p>
             <div class="report-template__line"></div>
           </article>
@@ -497,9 +851,9 @@
           <article class="report-card">
             <h3>Análise</h3>
             <p>
-              Confronte sinais previstos e observados. Demonstre
-              \(B(r)=\frac{\mu_0I}{2\pi r}\), explique a lei da tangente e, se houver medidas
-              em diferentes distâncias, compare os dados com 1/r.
+              Gráfico de tan φ × I com ajuste pela origem; \(B_{T,h}\) obtido
+              com \(G_\infty\) e com \(G_\Pi\); gráfico de B × d da Parte B com
+              as duas curvas de modelo.
             </p>
             <div class="report-template__line"></div>
             <div class="report-template__line"></div>
@@ -508,9 +862,8 @@
           <article class="report-card">
             <h3>Incerteza e limitações</h3>
             <p>
-              Apresente resoluções instrumentais e propagação quando aplicável.
-              Discuta desalinhamento, campo local, fio finito, terminais, atrito
-              da bússola e aquecimento sem confundir dispersão com viés.
+              Propague as incertezas de k e de d. Discuta desalinhamento, campo
+              local, atrito do pivô, geometria finita e posição dos cabos.
             </p>
             <div class="report-template__line"></div>
             <div class="report-template__line"></div>
@@ -519,10 +872,9 @@
           <article class="report-card">
             <h3>Conclusão</h3>
             <p>
-              Responda apenas ao que os dados sustentam: existência, sentido e,
-              se houve extensão quantitativa suficiente, dependência radial do
-              campo. Não transforme uma observação qualitativa em confirmação
-              numérica.
+              Responda com os números do grupo: o campo é proporcional à
+              corrente? Qual modelo reproduz o campo da Terra de referência? O
+              que a Parte B mostrou sobre a distância e o sentido?
             </p>
             <div class="report-template__line"></div>
             <div class="report-template__line"></div>
@@ -535,13 +887,13 @@
             <table class="data-table">
               <thead>
                 <tr>
-                  <th scope="col">Sentido de I</th>
-                  <th scope="col">Acima/abaixo</th>
-                  <th scope="col">r (m)</th>
+                  <th scope="col">Parte</th>
                   <th scope="col">I (A)</th>
+                  <th scope="col">d (mm)</th>
+                  <th scope="col">φ₊ (°)</th>
+                  <th scope="col">φ₋ (°)</th>
                   <th scope="col">φ (°)</th>
-                  <th scope="col">B_fio (T)</th>
-                  <th scope="col">Observações</th>
+                  <th scope="col">tan φ</th>
                 </tr>
               </thead>
               <tbody>
@@ -558,10 +910,10 @@
           <h3>Perguntas conceituais</h3>
           <ol class="question-list">
             <li>Por que a troca de abaixo para acima inverte o campo do fio no ponto da bússola?</li>
-            <li>Por que inverter a corrente produz efeito equivalente sobre o sentido da deflexão?</li>
-            <li>Que simetrias justificam escolher uma circunferência como caminho amperiano?</li>
-            <li>Por que o fator 1/r² de Biot–Savart não é a dependência final do campo de um fio longo?</li>
-            <li>Em quais condições \(\tan\varphi=\frac{B_{\mathrm{fio}}}{B_{T,h}}\) deixa de ser uma boa aproximação?</li>
+            <li>Por que a média \(\frac{\varphi_+-\varphi_-}{2}\) cancela o desvio de zero e reduz o efeito de um pequeno desalinhamento?</li>
+            <li>Que simetrias justificam escolher uma circunferência como caminho amperiano, e quais delas o acessório real quebra?</li>
+            <li>Por que as pernas do Π aumentam o campo na agulha em vez de diminuí-lo?</li>
+            <li>Por que pontos com deflexão próxima de 90° pioram o ajuste de tan φ × I?</li>
             <li>Quais dados seriam necessários para distinguir experimentalmente 1/r de 1/r²?</li>
           </ol>
         </article>
@@ -569,13 +921,13 @@
         <article class="report-card">
           <h3>Checklist de entrega</h3>
           <ul class="report-checklist">
-            <li>□ identificação e objetivo;</li>
-            <li>□ previsão original e diagrama com sentidos;</li>
-            <li>□ fotografia ou desenho fiel da montagem;</li>
-            <li>□ tabela com unidades e dados realmente obtidos;</li>
-            <li>□ derivação, cálculos e gráfico B_fio versus 1/r, quando houver dados quantitativos;</li>
-            <li>□ análise de incerteza e limitações;</li>
-            <li>□ respostas conceituais e conclusão compatível com as evidências.</li>
+            <li>□ identificação, objetivo e previsões originais;</li>
+            <li>□ desenho da montagem com 2a, h, zₙ, z₁ e d;</li>
+            <li>□ tabelas das Partes A e B com unidades e dados realmente obtidos;</li>
+            <li>□ gráfico tan φ × I com ajuste e o valor de k ± u_k;</li>
+            <li>□ B_T,h com os dois modelos, comparado com a referência;</li>
+            <li>□ gráfico B × d da Parte B com as curvas de modelo;</li>
+            <li>□ análise de incerteza, limitações e conclusão compatível com as evidências.</li>
           </ul>
         </article>
       </div>
