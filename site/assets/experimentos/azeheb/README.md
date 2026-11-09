@@ -11,7 +11,10 @@ montagem didática e mantém o crédito `Fonte: manual AZEHEB`.
 
 | Arquivo no site | Página do PDF | Objeto extraído | Uso |
 |---|---:|---|---|
+| `exp-01-kit-composicao.jpg` | 3 | `f-003-001.jpg` | peças numeradas do conjunto |
 | `exp-01-oersted-montagem.jpg` | 4 | `exp1-p04-002.jpg` | montagem da experiência de Oersted |
+| `exp-01-oersted-deflexao.jpg` | 5 | `f-005-007.jpg` | agulha desviada com a bússola sob o fio |
+| `exp-01-oersted-bussola-acima.jpg` | 6 | `f-006-011.jpg` | bússola apoiada sobre o fio |
 | `exp-02-solenoide-montagem.jpg` | 7 | `exp2-p07-08-001.jpg` | bússola junto ao solenoide |
 | `exp-02-solenoide-limalha.jpg` | 8 | `exp2-p07-08-004.jpg` | padrão das limalhas sobre a placa |
 | `exp-02-solenoide-visao-geral.jpg` | 8 | `exp2-p07-08-005.jpg` | visão geral da montagem energizada |

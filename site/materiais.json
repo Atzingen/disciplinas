@@ -384,9 +384,9 @@
     "disciplines": ["PRCLFBE"],
     "reference": "Manual AZEHEB",
     "theme": "Experiência de Oersted e lei de Ampère",
-    "description": "Observe a deflexão de uma bússola e investigue quantitativamente o campo magnético produzido por um condutor retilíneo.",
+    "description": "Controle a corrente com a fonte de bancada, meça a deflexão de uma bússola e obtenha o campo do fio e o campo da Terra pela lei da tangente.",
     "path": "experimentos/01-campo-corrente/",
-    "tags": ["Oersted", "campo magnético", "corrente", "lei de Ampère", "Biot-Savart"]
+    "tags": ["Oersted", "campo magnético", "corrente", "lei de Ampère", "Biot-Savart", "lei da tangente", "campo da Terra"]
   },
   {
     "id": "experimento-02-campo-solenoide",
