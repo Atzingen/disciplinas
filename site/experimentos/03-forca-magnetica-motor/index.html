@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Roteiro avançado sobre força magnética em um condutor, torque em uma espira e funcionamento de um motor elementar.">
+  <meta name="description" content="Força magnética sobre um condutor medida de duas formas: deflexão do balanço com calibração mecânica e reação do ímã sobre uma balança. Inclui o motor elementar como demonstração.">
   <title>Força magnética e motor elementar · Experimento 03</title>
   <link rel="stylesheet" href="../../assets/base.css">
   <link rel="stylesheet" href="../../assets/experimentos.css">
@@ -77,13 +77,15 @@
       </div>
       <div>
         <p class="experiment-hero__lead">
-          Do desvio de um condutor ao torque sustentado de um rotor: preveja os
-          sinais, observe a montagem real e confronte o modelo com o movimento.
+          Meça a força que um ímã exerce sobre um fio com corrente de duas
+          maneiras independentes, pela inclinação do balanço e pela reação do
+          ímã sobre uma balança, e compare os dois valores de B·ℓ.
         </p>
         <ul class="experiment-meta" aria-label="Informações do experimento">
-          <li>Duas partes</li>
-          <li>Fonte 6 V / 1 A</li>
-          <li>Força · torque · comutação</li>
+          <li>Parte A: balanço</li>
+          <li>Parte B: balança</li>
+          <li>Parte C: motor (demonstração)</li>
+          <li>fonte de bancada 0–3 A</li>
         </ul>
       </div>
     </div>
@@ -103,8 +105,9 @@
           <h2>Montagem</h2>
         </div>
         <p>
-          A Parte I isola o sinal da força sobre um condutor. A Parte II troca o
-          balanço pelo rotor e investiga como um par de forças produz rotação.
+          As Partes A e B medem a mesma grandeza, o produto B·ℓ do ímã em U, por
+          caminhos diferentes. A Parte C troca o balanço pelo rotor e mostra o
+          torque em uma espira.
         </p>
       </div>
 
@@ -112,35 +115,38 @@
         <article class="lab-card">
           <h3>Objetivos de aprendizagem</h3>
           <ul>
-            <li>Aplicar o produto vetorial para prever a direção da força magnética antes de ligar a fonte.</li>
-            <li>Testar separadamente o efeito de inverter a corrente e de inverter o campo magnético.</li>
-            <li>Relacionar o par de forças na espira ao torque, à energia potencial e à estabilidade.</li>
-            <li>Explicar por que comutação, inércia e dissipação são essenciais ao motor elementar.</li>
+            <li>Prever o sentido da força com \(\vec F=I\,\vec\ell\times\vec B\) e testar as inversões de corrente e de campo.</li>
+            <li>Medir a força em função da corrente e verificar que \(F\propto I\).</li>
+            <li>Converter deslocamento em força por uma calibração mecânica do balanço (Parte A) e medir a força diretamente pela terceira lei de Newton (Parte B).</li>
+            <li>Comparar os dois valores de B·ℓ e discutir o que cada método supõe.</li>
+            <li>Relacionar o par de forças em uma espira ao torque e ao funcionamento do motor elementar (Parte C).</li>
           </ul>
         </article>
 
         <article class="lab-card">
-          <h3>Material efetivamente utilizado</h3>
+          <h3>Material</h3>
           <ul class="materials-list">
-            <li>1 placa para ensaios de eletromagnetismo;</li>
-            <li>1 ímã em forma de U;</li>
-            <li>1 fonte de alimentação de 6 V / 1 A;</li>
-            <li>1 balanço magnético;</li>
-            <li>2 torres para experimentos de força magnética;</li>
-            <li>1 rotor para motor elementar.</li>
+            <li><strong>Do kit AZEHEB:</strong> placa de experimentos, ímã em U, balanço magnético, duas torres, rotor do motor elementar e par de cabos banana/jacaré.</li>
+            <li><strong>Do laboratório:</strong> fonte de bancada Instrutherm FA-3003 (0–32 V, 0–3 A, com modo de corrente constante e mostrador de corrente).</li>
+            <li>Parte A: régua ou papel milimetrado colado em papelão, fita adesiva, celular para fotografar e uma balança qualquer para pesar o balanço.</li>
+            <li>Parte B: <strong>balança digital de 0,01 g</strong> (não faz parte do kit), uma régua de madeira ou plástico e duas pilhas de livros ou caixas da mesma altura, ou um suporte universal com garra.</li>
           </ul>
         </article>
       </div>
 
       <aside class="experiment-safety">
-        <strong>Segurança elétrica, térmica e mecânica</strong>
+        <strong>Fonte de alimentação e segurança</strong>
         <p>
-          Monte sempre com a chave desligada e o dial no mínimo. Energize por
-          <b>5–10 s</b>, desligue por <b>5–10 s</b> para resfriamento e trabalhe
-          no máximo até metade do curso do dial. Manuseie a placa somente pelas
-          bordas. Na Parte II, mantenha dedos, cabelos, roupas e cabos longe do
-          rotor. Segure o ímã em U com firmeza: ele pode atrair peças e prender
-          os dedos quando for aproximado, afastado ou invertido.
+          <em>Não use a fonte de 6 V do kit nem o dial da placa.</em> O balanço
+          é praticamente um curto-circuito; com a fonte do kit, um resistor sob a
+          placa limita a corrente, aquece muito (o manual restringe cada
+          acionamento a 5–10 s) e a corrente não é medida. Aqui o adaptador de
+          6 V fica desconectado, a chave do setor “força magnética/Oersted” fica
+          na posição central e a corrente vem da fonte de bancada em modo de
+          corrente constante. Volte a corrente ao mínimo antes de inverter cabos,
+          mexer no ímã ou trocar o balanço pelo rotor. Segure o ímã em U com
+          firmeza: ele atrai peças de aço e pode prender os dedos. Na Parte C,
+          mantenha dedos, cabelos e cabos longe do rotor.
         </p>
       </aside>
 
@@ -150,21 +156,146 @@
           Antes de energizar, desenhe três eixos e declare o ponto de vista do
           observador. Use no registro as expressões <em>para dentro do ímã</em>,
           <em>para fora do ímã</em>, <em>para cima</em> e <em>para baixo</em>.
-          Marque o sentido convencional da corrente, do borne vermelho para o
-          preto, e o campo do polo norte para o sul. Sem esse referencial, um
+          Marque o sentido convencional da corrente e o campo do polo norte
+          (bloco vermelho) para o polo sul (bloco azul). Sem esse referencial, um
           acerto de sinal não pode ser auditado.
         </p>
       </article>
 
-      <section aria-labelledby="parte-i-montagem">
+      <figure class="experiment-figure survey-diagram">
+        <svg
+          viewBox="0 0 1000 540"
+          role="img"
+          aria-labelledby="forca-esquema-titulo forca-esquema-desc"
+        >
+          <title id="forca-esquema-titulo">Os dois métodos de medida da força</title>
+          <desc id="forca-esquema-desc">
+            À esquerda, Parte A: o balanço, visto ao longo do trecho inferior,
+            pende de um pivô no alto da torre. O trecho inferior fica entre os
+            blocos do ímã em U, com o campo vertical; a força horizontal F
+            desloca o balanço de x e o inclina de θ, enquanto o peso mg atua no
+            centro de massa. À direita, Parte B: o ímã em U fica em pé sobre uma
+            balança, com o campo horizontal entre os blocos; o balanço pende de
+            uma régua isolante apoiada em duas pilhas de livros, a força no fio
+            é vertical e a reação, de mesmo módulo e sentido oposto, muda a
+            leitura da balança.
+          </desc>
+          <defs>
+            <marker id="fm-cota" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+              <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--measure)"/>
+            </marker>
+            <marker id="fm-forca" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+              <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--positive)"/>
+            </marker>
+            <marker id="fm-campo" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+              <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--negative)"/>
+            </marker>
+            <marker id="fm-peso" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+              <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--ink-soft)"/>
+            </marker>
+          </defs>
+
+          <g font-family="var(--font-mono)" font-size="17" fill="var(--ink-soft)" font-weight="700">
+            <text x="30" y="36">PARTE A · BALANÇO</text>
+            <text x="540" y="36">PARTE B · BALANÇA</text>
+          </g>
+
+          <rect x="236" y="56" width="70" height="14" rx="4" fill="var(--ink-faint)"/>
+          <text x="316" y="68" font-family="var(--font-mono)" font-size="14" fill="var(--ink-soft)">alto da torre (pivô)</text>
+          <circle cx="250" cy="80" r="7" fill="none" stroke="var(--force-2)" stroke-width="4"/>
+          <line x1="250" y1="86" x2="250" y2="380" stroke="var(--force-2)" stroke-width="3" stroke-dasharray="8 7" opacity="0.5"/>
+          <line x1="250" y1="86" x2="307" y2="374" stroke="var(--force-2)" stroke-width="6"/>
+
+          <rect x="150" y="300" width="24" height="140" fill="var(--ink-faint)"/>
+          <rect x="150" y="300" width="200" height="16" fill="var(--ink-faint)"/>
+          <rect x="150" y="424" width="200" height="16" fill="var(--ink-faint)"/>
+          <rect x="270" y="316" width="80" height="34" fill="var(--positive)"/>
+          <rect x="270" y="390" width="80" height="34" fill="var(--negative)"/>
+          <g font-family="var(--font-mono)" font-size="15" fill="var(--on-accent)" font-weight="700">
+            <text x="302" y="339">N</text>
+            <text x="304" y="413">S</text>
+          </g>
+          <line x1="226" y1="352" x2="226" y2="392" stroke="var(--negative)" stroke-width="4" marker-end="url(#fm-campo)"/>
+          <text x="200" y="377" font-family="var(--font-mono)" font-size="16" fill="var(--negative)" font-weight="700">B</text>
+
+          <circle cx="307" cy="370" r="11" fill="var(--surface)" stroke="var(--force-2)" stroke-width="4"/>
+          <circle cx="307" cy="370" r="3.5" fill="var(--force-2)"/>
+          <line x1="320" y1="370" x2="392" y2="370" stroke="var(--positive)" stroke-width="4" marker-end="url(#fm-forca)"/>
+          <text x="400" y="376" font-family="var(--font-mono)" font-size="16" fill="var(--positive)" font-weight="700">F</text>
+          <line x1="278" y1="230" x2="278" y2="272" stroke="var(--ink-soft)" stroke-width="3" marker-end="url(#fm-peso)"/>
+          <circle cx="278" cy="230" r="5" fill="var(--ink-soft)"/>
+          <text x="292" y="226" font-family="var(--font-mono)" font-size="14" fill="var(--ink-soft)">mg no centro de massa</text>
+          <path d="M 250 140 A 56 56 0 0 0 261 139" fill="none" stroke="var(--ink)" stroke-width="2"/>
+          <path d="M 250 150 A 66 66 0 0 0 263 149" fill="none" stroke="var(--ink)" stroke-width="2"/>
+          <text x="232" y="170" font-family="var(--font-mono)" font-size="16" fill="var(--ink)" font-weight="700">θ</text>
+
+          <g stroke="var(--measure)" stroke-width="2.5" fill="none" marker-start="url(#fm-cota)" marker-end="url(#fm-cota)">
+            <line x1="252" y1="288" x2="288" y2="288"/>
+            <line x1="120" y1="80" x2="120" y2="370"/>
+          </g>
+          <g stroke="var(--measure)" stroke-width="1.5" stroke-dasharray="5 5">
+            <line x1="110" y1="80" x2="242" y2="80"/>
+            <line x1="110" y1="370" x2="148" y2="370"/>
+          </g>
+          <g font-family="var(--font-mono)" font-size="18" fill="var(--measure)" font-weight="700">
+            <text x="196" y="292">x</text>
+            <text x="94" y="232">L</text>
+          </g>
+          <text x="30" y="528" font-family="var(--font-mono)" font-size="14" fill="var(--ink-soft)">vista ao longo do trecho inferior</text>
+
+          <rect x="560" y="118" width="380" height="14" rx="3" fill="var(--measure)" opacity="0.75"/>
+          <text x="600" y="110" font-family="var(--font-mono)" font-size="14" fill="var(--ink-soft)">régua isolante</text>
+          <rect x="560" y="132" width="40" height="338" fill="var(--paper)" stroke="var(--line-strong)" stroke-width="2"/>
+          <rect x="900" y="132" width="40" height="338" fill="var(--paper)" stroke="var(--line-strong)" stroke-width="2"/>
+          <text x="566" y="300" font-family="var(--font-mono)" font-size="13" fill="var(--ink-soft)" transform="rotate(-90 580 300)">livros</text>
+          <circle cx="750" cy="132" r="8" fill="none" stroke="var(--force-2)" stroke-width="4"/>
+          <line x1="750" y1="140" x2="750" y2="318" stroke="var(--force-2)" stroke-width="6"/>
+          <rect x="740" y="168" width="20" height="14" rx="3" fill="var(--ink-faint)"/>
+          <path d="M 760 175 C 820 170, 860 160, 892 150" fill="none" stroke="var(--ink-faint)" stroke-width="3"/>
+          <text x="772" y="200" font-family="var(--font-mono)" font-size="13" fill="var(--ink-soft)">jacaré · à fonte (CC)</text>
+
+          <rect x="615" y="430" width="270" height="40" rx="6" fill="var(--surface)" stroke="var(--line-strong)" stroke-width="2"/>
+          <rect x="800" y="440" width="70" height="20" rx="3" fill="var(--paper-deep)"/>
+          <text x="806" y="455" font-family="var(--font-mono)" font-size="13" fill="var(--ink)">0,00 g</text>
+          <text x="630" y="455" font-family="var(--font-mono)" font-size="13" fill="var(--ink-soft)">balança 0,01 g</text>
+          <rect x="660" y="290" width="26" height="140" fill="var(--ink-faint)"/>
+          <rect x="814" y="290" width="26" height="140" fill="var(--ink-faint)"/>
+          <rect x="660" y="410" width="180" height="20" fill="var(--ink-faint)"/>
+          <rect x="686" y="290" width="34" height="56" fill="var(--positive)"/>
+          <rect x="780" y="290" width="34" height="56" fill="var(--negative)"/>
+          <g font-family="var(--font-mono)" font-size="15" fill="var(--on-accent)" font-weight="700">
+            <text x="697" y="324">N</text>
+            <text x="791" y="324">S</text>
+          </g>
+          <circle cx="750" cy="318" r="11" fill="var(--surface)" stroke="var(--force-2)" stroke-width="4"/>
+          <circle cx="750" cy="318" r="3.5" fill="var(--force-2)"/>
+          <line x1="724" y1="360" x2="776" y2="360" stroke="var(--negative)" stroke-width="4" marker-end="url(#fm-campo)"/>
+          <text x="744" y="382" font-family="var(--font-mono)" font-size="16" fill="var(--negative)" font-weight="700">B</text>
+          <line x1="768" y1="306" x2="768" y2="256" stroke="var(--positive)" stroke-width="4" marker-end="url(#fm-forca)"/>
+          <text x="776" y="262" font-family="var(--font-mono)" font-size="15" fill="var(--positive)" font-weight="700">F no fio</text>
+          <line x1="870" y1="300" x2="870" y2="350" stroke="var(--positive)" stroke-width="4" marker-end="url(#fm-forca)"/>
+          <text x="858" y="376" font-family="var(--font-mono)" font-size="15" fill="var(--positive)" font-weight="700">−F</text>
+          <text x="540" y="528" font-family="var(--font-mono)" font-size="14" fill="var(--ink-soft)">vista ao longo do fio</text>
+        </svg>
+        <figcaption>
+          Parte A: o campo vertical empurra o trecho inferior na horizontal e o
+          balanço inclina até o torque do peso equilibrar o da força. Parte B: com
+          o ímã em pé, o campo fica horizontal, a força no fio fica vertical e a
+          balança registra a reação sobre o ímã (seta −F). Nos dois desenhos, o
+          círculo com ponto é o fio visto de frente, com a corrente saindo da
+          página. Esquema do roteiro.
+        </figcaption>
+      </figure>
+
+      <section aria-labelledby="parte-a-montagem">
         <div class="experiment-section-heading">
           <div>
-            <p class="eyebrow">Parte I</p>
-            <h2 id="parte-i-montagem">Balanço e força magnética</h2>
+            <p class="eyebrow">Parte A</p>
+            <h2 id="parte-a-montagem">Balanço: deslocamento em função da corrente</h2>
           </div>
           <p>
-            Uma variável é invertida por vez. Registre a previsão antes de cada
-            pulso e a observação somente depois.
+            Primeiro os sinais, com uma inversão por vez; depois a série de
+            correntes, medindo o deslocamento do balanço.
           </p>
         </div>
 
@@ -183,37 +314,45 @@
         <div class="prediction-box">
           <strong>Previsão obrigatória antes de energizar.</strong>
           Com o polo N vermelho para cima, indique o sentido vertical do campo.
-          Para a corrente do vermelho para o preto, aplique a regra da mão
-          direita e preveja se o balanço irá para dentro ou para fora do ímã.
-          Em seguida, preveja o que muda ao inverter apenas a corrente, apenas o
+          Para a corrente entrando pela torre do borne vermelho, aplique a regra
+          da mão direita e preveja se o balanço irá para dentro ou para fora do
+          ímã. Preveja também o que muda ao inverter apenas a corrente, apenas o
           ímã e ambos. Não corrija a previsão depois de observar.
         </div>
 
         <div class="experiment-grid">
           <article class="lab-card">
-            <h3>Procedimento da Parte I</h3>
+            <h3>Preparação</h3>
             <ol class="procedure-list">
-              <li>Com chave desligada e dial no mínimo, instale as duas torres, o balanço e o ímã em U como na Figura 1. Deixe o polo N vermelho para cima.</li>
-              <li>Identifique o campo no vão: ele parte do norte e chega ao sul; nesta configuração, o manual o descreve verticalmente para baixo.</li>
-              <li>Conecte a fonte de 6 V à placa sem alterar o estado desligado. Confira se o balanço se move livremente e anote sua posição de repouso.</li>
-              <li>Configure a corrente convencional do borne vermelho para o preto e registre a previsão da força.</li>
-              <li>Ligue por 5–10 s e aumente o dial lentamente, sem ultrapassar metade do curso. Observe o primeiro deslocamento; desligue e aguarde 5–10 s.</li>
-              <li>Inverta somente o sentido da corrente. Faça uma nova previsão, repita o pulso e registre o deslocamento.</li>
-              <li>Com chave desligada e dial no mínimo, gire o ímã em U para inverter os polos e o campo. Repita as duas orientações de corrente, sempre prevendo antes de ligar.</li>
-              <li>Ao terminar, volte o dial ao mínimo e deixe a chave desligada.</li>
+              <li>Desconecte o adaptador de 6 V e deixe a chave do setor “força magnética/Oersted” na posição central. Instale as duas torres nos bornes, pendure o balanço e posicione o ímã em U como na Figura 1, com o polo N vermelho para cima. O trecho inferior deve ficar no meio do vão, sem tocar os blocos.</li>
+              <li>Com a fonte desligada, ligue um cabo na saída + e outro na saída −. Prenda os jacarés nas torres, perto da base. Leve os cabos para longe do balanço, sem encostar nele.</li>
+              <li>Ajuste a corrente da fonte no mínimo e a tensão em cerca de 3 V. Ao ligar, a fonte entra em corrente constante (indicador CC): a corrente fica a mesma mesmo que o contato nos ganchos do balanço varie.</li>
+              <li>Prenda a escala milimetrada na vertical, logo atrás de um dos braços do balanço, no plano do movimento. Apoie o celular numa pilha de livros, de lado para o balanço, para fotografar sempre da mesma posição.</li>
+              <li>Meça o comprimento <em>L</em>, do ponto de apoio no gancho até o eixo do trecho inferior, e o comprimento <em>b</em> do trecho inferior. Anote a distância <em>L′</em> do pivô até o ponto do braço em que você vai ler o deslocamento. Ao final da aula, pese o balanço (<em>m</em>).</li>
             </ol>
           </article>
 
           <article class="lab-card">
-            <h3>O que observar</h3>
-            <ul>
-              <li>O sentido do primeiro deslocamento, não a posição final após oscilações.</li>
-              <li>Se a inversão de uma única variável inverte o sinal do movimento.</li>
-              <li>Se inverter corrente e campo simultaneamente restaura o sinal inicial.</li>
-              <li>Folgas, contato com o ímã, assimetria do balanço ou retorno incompleto ao zero.</li>
-            </ul>
+            <h3>Teste dos sinais (antes da série)</h3>
+            <ol class="procedure-list">
+              <li>Com 0,5 A, observe o sentido do primeiro deslocamento e compare com a previsão. Volte ao mínimo.</li>
+              <li>Inverta somente a corrente, trocando os pinos banana nas saídas da fonte. Repita.</li>
+              <li>Com a corrente no mínimo, vire o ímã em U de cabeça para baixo para inverter o campo. Repita as duas polaridades e registre na Tabela 1.</li>
+              <li>Volte o ímã para a posição da Figura 1 antes da série de medidas.</li>
+            </ol>
           </article>
         </div>
+
+        <article class="lab-card">
+          <h3>Série de medidas da Parte A</h3>
+          <ol class="procedure-list">
+            <li>Com a corrente no mínimo, marque a posição de repouso na escala (ou fotografe).</li>
+            <li>Suba a corrente de 0,10 em 0,10 A. Em cada valor, espere a oscilação parar (um toque leve na mesa ajuda a vencer o atrito nos ganchos), fotografe e anote a posição do braço, \(x_+\), e a corrente indicada pela fonte.</li>
+            <li>Pare quando o trecho inferior chegar perto da borda dos blocos do ímã ou encostar em algo; daí em diante o campo deixa de ser o mesmo. Em geral isso acontece com alguns milímetros de deslocamento.</li>
+            <li>Volte ao mínimo, inverta os pinos banana na fonte e repita a série, anotando \(x_-\).</li>
+            <li>Para cada corrente, use \(x=\frac{x_+-x_-}{2}\), medido a partir do repouso. A média cancela o erro de zero da escala.</li>
+          </ol>
+        </article>
 
         <figure class="experiment-figure">
           <img
@@ -221,18 +360,62 @@
             alt="Balanço magnético inclinado para fora do vão do ímã em U durante a passagem de corrente."
           >
           <figcaption>
-            <strong>Figura 2 — resposta do balanço.</strong> A inclinação torna
-            visível o sinal da força; compare-a com sua previsão vetorial, sem
-            tomar a ilustração como dado medido. Fonte: manual AZEHEB.
+            <strong>Figura 2 — resposta do balanço.</strong> A ilustração exagera
+            a inclinação; nas medidas, mantenha o trecho inferior dentro do vão.
+            Fonte: manual AZEHEB.
           </figcaption>
         </figure>
       </section>
 
-      <section aria-labelledby="parte-ii-montagem">
+      <section aria-labelledby="parte-b-montagem">
         <div class="experiment-section-heading">
           <div>
-            <p class="eyebrow">Parte II</p>
-            <h2 id="parte-ii-montagem">Motor elementar</h2>
+            <p class="eyebrow">Parte B</p>
+            <h2 id="parte-b-montagem">Balança: a força medida pela reação do ímã</h2>
+          </div>
+          <p>
+            Pela terceira lei de Newton, a força do ímã sobre o fio tem a mesma
+            intensidade que a força do fio sobre o ímã. Com o ímã sobre a
+            balança e o campo horizontal, essa reação vira uma variação de massa
+            indicada.
+          </p>
+        </div>
+
+        <div class="prediction-box">
+          <strong>Previsão antes de energizar.</strong>
+          Com o ímã em pé e o bloco N à esquerda, desenhe B, a corrente e a força
+          sobre o fio. A leitura da balança deve aumentar ou diminuir? Use a
+          estimativa da Parte A para prever quantos gramas a leitura deve mudar
+          com 1,0 A.
+        </div>
+
+        <article class="lab-card">
+          <h3>Procedimento da Parte B</h3>
+          <ol class="procedure-list">
+            <li>Coloque a balança de 0,01 g na bancada, longe da fonte. Ponha o ímã em U <strong>em pé</strong> sobre o prato, com a abertura para cima: os blocos vermelho e azul ficam frente a frente na horizontal e o campo entre eles fica horizontal.</li>
+            <li>Monte duas pilhas de livros, uma de cada lado da balança, e apoie sobre elas a régua de madeira ou plástico (ou use o suporte universal com uma vareta isolante). Pendure o balanço pela régua, pelas argolas de cima. A régua precisa ser isolante: uma haste metálica ligaria as duas argolas e a corrente não passaria pelo balanço.</li>
+            <li>Ajuste a altura das pilhas até o trecho inferior do balanço ficar no meio do vão entre os blocos, perpendicular à linha que liga os blocos e sem tocar o ímã.</li>
+            <li>Prenda os jacarés nos dois braços do balanço, logo abaixo das argolas. Os cabos não podem encostar na balança nem no ímã.</li>
+            <li>Com a corrente no mínimo, aguarde a leitura estabilizar e tare a balança.</li>
+            <li>Suba a corrente de 0,25 em 0,25 A até 2,5 A. Em cada valor, espere a leitura estabilizar e anote \(m_+\). Volte ao mínimo, confira se a leitura voltou ao zero, inverta os pinos banana na fonte e repita, anotando \(m_-\).</li>
+            <li>Para cada corrente, use \(\Delta m=\frac{m_+-m_-}{2}\) e \(F=\Delta m\,g\). A média elimina a deriva do zero e o efeito do aquecimento do fio sobre a balança.</li>
+          </ol>
+        </article>
+
+        <aside class="theory-note">
+          <strong>Ordem de grandeza.</strong>
+          Para B ≈ 0,1 T e ℓ ≈ 2 cm, a força é cerca de 2 mN por ampère, o que
+          muda a leitura em aproximadamente 0,2 g por ampère. Uma balança de
+          0,01 g resolve isso com folga; uma balança de cozinha de 0,1 g, não.
+          São estimativas para planejar a medida, não valores do ímã do kit.
+        </aside>
+      </section>
+
+      <section aria-labelledby="parte-c-montagem">
+        <div class="experiment-section-heading">
+          <div>
+            <p class="eyebrow">Parte C</p>
+            <h2 id="parte-c-montagem">Motor elementar (demonstração)</h2>
           </div>
           <p>
             O balanço dá lugar à espira: forças opostas nos ramos longos formam
@@ -248,7 +431,7 @@
           <figcaption>
             <strong>Figura 3 — rotor instalado.</strong> A espira deve girar sem
             tocar o ímã, os suportes ou cabos. A instalação é feita somente com
-            a chave desligada. Fonte: manual AZEHEB.
+            a corrente no mínimo. Fonte: manual AZEHEB.
           </figcaption>
         </figure>
 
@@ -262,16 +445,14 @@
 
         <div class="experiment-grid">
           <article class="lab-card">
-            <h3>Procedimento da Parte II</h3>
+            <h3>Procedimento da Parte C</h3>
             <ol class="procedure-list">
-              <li>Reutilize a placa, as torres e o ímã da Parte I. Desligue a chave, retorne o dial ao mínimo e retire o balanço.</li>
-              <li>Com a chave ainda desligada, apoie o rotor nos dois suportes circulares e posicione a espira entre os polos do ímã, como na Figura 3.</li>
-              <li>Gire o rotor à mão, sem energizar, apenas para verificar liberdade de movimento e distância segura de ímã e cabos.</li>
-              <li>Registre a previsão vetorial. Só então, mantendo a chave desligada, ajuste o dial a uma posição intermediária, correspondente a aproximadamente metade do curso.</li>
-              <li>Ligue a chave. Dê um pequeno impulso no rotor apenas se necessário para vencer uma posição de torque nulo ou o atrito estático.</li>
-              <li>Se a rotação ficar muito alta, reduza imediatamente a corrente pelo dial ou, com cuidado, afaste ligeiramente o ímã em U.</li>
-              <li>Observe o sentido de partida e a regularidade durante no máximo 5–10 s. Desligue por 5–10 s antes de uma nova tentativa.</li>
-              <li>Finalize com a chave desligada e o dial no mínimo.</li>
+              <li>Volte à montagem da Parte A na placa, com a corrente no mínimo, e retire o balanço.</li>
+              <li>Apoie o rotor nos dois suportes circulares das torres e posicione a espira entre os polos do ímã, como na Figura 3.</li>
+              <li>Gire o rotor à mão, sem corrente, para verificar liberdade de movimento e distância segura do ímã e dos cabos.</li>
+              <li>Registre a previsão vetorial. Suba a corrente até cerca de 0,5 A e dê um pequeno impulso no rotor apenas se necessário para vencer uma posição de torque nulo ou o atrito estático.</li>
+              <li>Se a rotação ficar muito alta, reduza a corrente na fonte ou, com cuidado, afaste ligeiramente o ímã em U. Não passe de 1,0 A.</li>
+              <li>Observe o sentido de partida e a regularidade por 5–10 s, volte ao mínimo e repita com a corrente invertida.</li>
             </ol>
           </article>
 
@@ -302,8 +483,9 @@
           <h2>Fundamentos</h2>
         </div>
         <p>
-          A sequência parte da carga individual, passa ao fio e fecha no modelo
-          energético e dinâmico do rotor.
+          A sequência parte da carga individual, passa ao fio, mostra como cada
+          método transforma uma leitura em força e fecha no modelo energético e
+          dinâmico do rotor.
         </p>
       </div>
 
@@ -341,17 +523,104 @@
           </div>
         </div>
         <p>
-          A orientação segue a regra da mão direita para carga positiva ou
-          corrente convencional. Carga negativa inverte a força microscópica.
           No fio, inverter apenas <i>I</i> ou apenas <i>B</i> troca o sinal de
           <i>F</i>; inverter ambos preserva o sinal. A força é máxima para 90° e
-          nula quando o trecho é paralelo ao campo.
+          nula quando o trecho é paralelo ao campo. No balanço, os braços
+          verticais ficam paralelos ao campo vertical da Parte A e não recebem
+          força: só o trecho inferior que está entre os blocos conta. Como o
+          campo não termina abruptamente na borda dos blocos, o comprimento que
+          entra na conta é um comprimento efetivo,
+          \(\ell_{\mathrm{ef}}=\frac{1}{B_0}\int B\,d\ell\), um pouco maior que a
+          largura dos blocos.
         </p>
       </article>
 
       <div class="experiment-grid">
         <article class="theory-card">
-          <h3>2. Da força ao par de forças</h3>
+          <h3>2. Parte A: equilíbrio do balanço</h3>
+          <p>
+            O balanço é um pêndulo físico apoiado nos ganchos. A força magnética
+            horizontal <em>F</em> atua no trecho inferior, à distância
+            <em>L</em> do pivô; o peso atua no centro de massa, à distância
+            \(L_{\mathrm{cm}}\). No equilíbrio, os torques se anulam:
+          </p>
+          <div class="math-block math-display">
+            \[
+            \begin{aligned}
+            F\,L\cos\theta&=m g\,L_{\mathrm{cm}}\sin\theta,\\
+            F&=m g\,\frac{L_{\mathrm{cm}}}{L}\tan\theta,\\
+            \frac{L_{\mathrm{cm}}}{L}&=\frac{L+b}{2L+b}.
+            \end{aligned}
+            \]
+          </div>
+          <p>
+            A última expressão vale para um balanço de fio uniforme, com dois
+            braços de comprimento <em>L</em> e trecho inferior de comprimento
+            <em>b</em>. O ângulo vem do deslocamento lido no braço:
+            \(\sin\theta=\frac{x}{L'}\), em que <em>L′</em> é a distância do
+            pivô ao ponto de leitura. Essa é a calibração mecânica que transforma
+            deslocamento em força.
+          </p>
+        </article>
+
+        <article class="theory-card">
+          <h3>3. Parte B: a balança mede a reação</h3>
+          <p>
+            Com o ímã em pé, o campo é horizontal e perpendicular ao trecho
+            inferior, e a força no fio é vertical. Pela terceira lei de Newton,
+            o fio exerce sobre o ímã uma força de mesmo módulo e sentido oposto,
+            que a balança registra como variação de massa:
+          </p>
+          <div class="math-block math-display">
+            \[
+            \begin{aligned}
+            \vec F_{\mathrm{fio\to ímã}}&=-\vec F_{\mathrm{ímã\to fio}},\\
+            F&=\Delta m\,g=B\,I\,\ell_{\mathrm{ef}}.
+            \end{aligned}
+            \]
+          </div>
+          <p>
+            Esse método não depende da massa nem da geometria do balanço, e o
+            balanço não se move. Ele supõe apenas que nada além da reação
+            magnética muda a leitura: cabos encostados, fio tocando o ímã ou
+            correntes de ar invalidam a medida.
+          </p>
+        </article>
+      </div>
+
+      <article class="theory-card">
+        <h3>4. O que os ajustes fornecem</h3>
+        <p>
+          Nos dois métodos, o gráfico de <em>F</em> contra <em>I</em> deve ser
+          uma reta pela origem. O coeficiente angular é o produto
+          \(B\ell_{\mathrm{ef}}\), em T·m, que caracteriza o ímã e o trecho do
+          fio dentro do vão:
+        </p>
+        <div class="equation-flow" aria-label="Ajuste da força em função da corrente">
+          <div class="equation-step math-display">
+            \[
+            \begin{aligned}
+            F&=\left(B\ell_{\mathrm{ef}}\right)I=s\,I,\\
+            s&=\frac{\sum_i I_iF_i}{\sum_i I_i^2},\qquad
+            u_s=\sqrt{\frac{\sum_i\left(F_i-s\,I_i\right)^2}{(n-1)\sum_i I_i^2}}.
+            \end{aligned}
+            \]
+            <small>Ajuste de uma reta que passa pela origem, com n pontos; u_s é a incerteza do coeficiente angular estimada pela dispersão.</small>
+          </div>
+        </div>
+        <p>
+          Compare \(s_A\), do balanço, com \(s_B\), da balança. Os dois usam o
+          mesmo ímã e o mesmo trecho de fio; uma diferença maior que as
+          incertezas aponta para a calibração do balanço (massa, centro de
+          massa, ângulo) ou para o trecho inferior saindo da região de campo na
+          Parte A. Se o campo no vão for medido com uma sonda Hall, o
+          comprimento efetivo sai de \(\ell_{\mathrm{ef}}=\frac{s}{B}\).
+        </p>
+      </article>
+
+      <div class="experiment-grid">
+        <article class="theory-card">
+          <h3>5. Da força ao par de forças (Parte C)</h3>
           <p>
             Em uma espira retangular situada em campo aproximadamente uniforme,
             os ramos opostos recebem forças de mesmo módulo e sentidos opostos.
@@ -393,7 +662,7 @@
       </div>
 
       <article class="theory-card">
-        <h3>3. Energia, trabalho e estabilidade</h3>
+        <h3>6. Energia, trabalho e estabilidade</h3>
         <div class="equation-flow">
           <div class="equation-step math-display">
             \[
@@ -417,7 +686,7 @@
       </article>
 
       <article class="theory-card">
-        <h3>4. Por que a comutação mantém torque útil</h3>
+        <h3>7. Por que a comutação mantém torque útil</h3>
         <p>
           Após meia volta, uma corrente fixa faria o torque mudar de sinal e
           frear a rotação que acabou de produzir. Em um motor de corrente
@@ -435,16 +704,15 @@
           Em rotores didáticos simples, o contato pode interromper a corrente
           durante a metade desfavorável em vez de realizar uma reversão
           contínua perfeita. Nesse caso, a inércia atravessa a região sem torque
-          até o contato útil retornar. Nos dois mecanismos, a função da
-          comutação é impedir um torque eletromagnético sustentado contrário ao
-          movimento. Atrito, contato imperfeito e as posições em que sin θ = 0
-          explicam por que um pequeno impulso pode ser necessário.
+          até o contato útil retornar. Atrito, contato imperfeito e as posições
+          em que sin θ = 0 explicam por que um pequeno impulso pode ser
+          necessário.
         </p>
       </article>
 
       <div class="experiment-grid">
         <article class="theory-card">
-          <h3>5. Equação dinâmica mínima</h3>
+          <h3>8. Equação dinâmica mínima</h3>
           <div class="math-block math-display">
             \[
             \begin{aligned}
@@ -462,15 +730,14 @@
             θ¨ sua aceleração, <i>b</i> um coeficiente efetivo de atrito viscoso
             e τ_carga o torque resistente. Aumentar a corrente eleva o torque
             eletromagnético; afastar o ímã reduz o campo e, portanto, o torque.
-            Em regime médio estável, o torque motor equilibra carga e perdas.
           </p>
         </article>
 
         <article class="theory-card">
-          <h3>6. Análise dimensional</h3>
+          <h3>9. Análise dimensional</h3>
           <ul>
             <li>\([qvB]=\mathrm{C}\,\frac{\mathrm m}{\mathrm s}\,\mathrm T=\mathrm N\), pois \(\mathrm T=\frac{\mathrm N}{\mathrm{A\,m}}\) e \(\frac{\mathrm C}{\mathrm A}=\mathrm s\).</li>
-            <li>\([BI\ell]=\mathrm{T\,A\,m=N}\), unidade de força.</li>
+            <li>\([BI\ell]=\mathrm{T\,A\,m=N}\), unidade de força; o coeficiente angular \(s=B\ell_{\mathrm{ef}}\) tem unidade \(\mathrm{T\,m}=\mathrm{N/A}\).</li>
             <li>\([\mu]=\mathrm{A\,m^2}\); o número de espiras \(N\) é adimensional.</li>
             <li>\([\mu B]=\mathrm{A\,m^2\,T=N\,m=J}\): torque e energia têm a mesma dimensão, embora sejam grandezas distintas.</li>
             <li>\([J\ddot\theta]=\frac{\mathrm{kg\,m^2}}{\mathrm{s^2}}=\mathrm{N\,m}\) e \([b]=\mathrm{N\,m\,s}\), com o radiano tratado como adimensional.</li>
@@ -480,12 +747,12 @@
 
       <aside class="theory-note">
         <strong>Limites do modelo ideal.</strong>
-        O campo do ímã em U não é perfeitamente uniforme; apenas partes da
-        espira ficam no vão. A corrente muda com resistência, aquecimento e
-        contato; o eixo tem atrito e pode estar desalinhado; a comutação é
-        descontínua; o balanço tem inércia e oscila. Portanto, a simetria de
-        sinais é uma previsão mais robusta do que o módulo da força sem uma
-        caracterização independente de B, I, L e da resposta mecânica.
+        O campo do ímã em U não é uniforme e se espalha além dos blocos; na
+        Parte A, o trecho inferior se desloca dentro dessa região e o campo que
+        ele sente muda com o deslocamento, por isso a série para em poucos
+        milímetros. O balanço real não é um fio perfeitamente uniforme: argolas
+        e dobras deslocam o centro de massa. Na Parte B, o modelo vale enquanto
+        o fio não toca o ímã e nada mais apoia na balança.
       </aside>
     </section>
 
@@ -507,18 +774,8 @@
         </p>
       </div>
 
-      <article class="lab-card">
-        <h3>Convenções antes da primeira medida</h3>
-        <ul>
-          <li>Desenhe o referencial usado e registre quais polos delimitam o vão.</li>
-          <li>Use o sentido convencional de I e descreva B do norte para o sul.</li>
-          <li>Para cada linha, escreva a previsão de F antes de energizar e preserve eventuais previsões incorretas.</li>
-          <li>Classifique uma observação ambígua como inconclusiva, sem forçar concordância.</li>
-        </ul>
-      </article>
-
-      <section aria-labelledby="dados-parte-i">
-        <h3 id="dados-parte-i">Parte I — balanço e sinal da força</h3>
+      <section aria-labelledby="dados-sinais">
+        <h3 id="dados-sinais">Parte A — teste dos sinais</h3>
         <div class="data-table-wrapper">
           <table class="data-table">
             <caption>Tabela 1 — inversões independentes de corrente e campo</caption>
@@ -541,18 +798,102 @@
         </div>
       </section>
 
-      <section aria-labelledby="dados-parte-ii">
-        <h3 id="dados-parte-ii">Parte II — partida e regime do motor</h3>
+      <section aria-labelledby="dados-geometria">
+        <h3 id="dados-geometria">Medidas do balanço e do ímã</h3>
         <div class="data-table-wrapper">
           <table class="data-table">
-            <caption>Tabela 2 — comportamento do rotor em cada tentativa</caption>
+            <caption>Tabela 2 — calibração mecânica e geometria</caption>
+            <thead>
+              <tr>
+                <th scope="col">Grandeza</th>
+                <th scope="col">Valor</th>
+                <th scope="col">Incerteza</th>
+                <th scope="col">Instrumento</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>massa do balanço, m (g)</td><td></td><td></td><td></td></tr>
+              <tr><td>braço, L: pivô até o eixo do trecho inferior (mm)</td><td></td><td></td><td></td></tr>
+              <tr><td>trecho inferior, b (mm)</td><td></td><td></td><td></td></tr>
+              <tr><td>pivô até o ponto de leitura, L′ (mm)</td><td></td><td></td><td></td></tr>
+              <tr><td>largura dos blocos ao longo do fio, w (mm)</td><td></td><td></td><td></td></tr>
+              <tr><td>vão entre os blocos (mm)</td><td></td><td></td><td></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section aria-labelledby="dados-parte-a">
+        <h3 id="dados-parte-a">Parte A — balanço</h3>
+        <div class="data-table-wrapper">
+          <table class="data-table">
+            <caption>Tabela 3 — deslocamento em função da corrente (passos de 0,10 A)</caption>
+            <thead>
+              <tr>
+                <th scope="col">I (A)</th>
+                <th scope="col">x₊ (mm)</th>
+                <th scope="col">x₋ (mm)</th>
+                <th scope="col">x = (x₊ − x₋)/2 (mm)</th>
+                <th scope="col">θ (°)</th>
+                <th scope="col">F (mN)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+              <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+              <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+              <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+              <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+              <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+              <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+              <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section aria-labelledby="dados-parte-b">
+        <h3 id="dados-parte-b">Parte B — balança</h3>
+        <div class="data-table-wrapper">
+          <table class="data-table">
+            <caption>Tabela 4 — variação da leitura em função da corrente (passos de 0,25 A)</caption>
+            <thead>
+              <tr>
+                <th scope="col">I (A)</th>
+                <th scope="col">m₊ (g)</th>
+                <th scope="col">m₋ (g)</th>
+                <th scope="col">Δm = (m₊ − m₋)/2 (g)</th>
+                <th scope="col">F = Δm·g (mN)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td></td><td></td><td></td><td></td><td></td></tr>
+              <tr><td></td><td></td><td></td><td></td><td></td></tr>
+              <tr><td></td><td></td><td></td><td></td><td></td></tr>
+              <tr><td></td><td></td><td></td><td></td><td></td></tr>
+              <tr><td></td><td></td><td></td><td></td><td></td></tr>
+              <tr><td></td><td></td><td></td><td></td><td></td></tr>
+              <tr><td></td><td></td><td></td><td></td><td></td></tr>
+              <tr><td></td><td></td><td></td><td></td><td></td></tr>
+              <tr><td></td><td></td><td></td><td></td><td></td></tr>
+              <tr><td></td><td></td><td></td><td></td><td></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section aria-labelledby="dados-parte-c">
+        <h3 id="dados-parte-c">Parte C — partida e regime do motor</h3>
+        <div class="data-table-wrapper">
+          <table class="data-table">
+            <caption>Tabela 5 — comportamento do rotor em cada tentativa</caption>
             <thead>
               <tr>
                 <th scope="col">Configuração</th>
+                <th scope="col">I (A)</th>
                 <th scope="col">Sentido de partida</th>
                 <th scope="col">Estabilidade</th>
-                <th scope="col">Corrente opcional</th>
-                <th scope="col">Período / rotação opcional</th>
+                <th scope="col">Impulso necessário?</th>
               </tr>
             </thead>
             <tbody>
@@ -564,69 +905,56 @@
         </div>
       </section>
 
-      <aside class="theory-note">
-        <strong>Extensões opcionais, não incluídas no kit.</strong>
-        Um amperímetro pode registrar I; uma régua pode quantificar o
-        deslocamento; e um cronômetro pode estimar período ou rotação. Esses
-        instrumentos não fazem parte da lista do conjunto usado neste roteiro.
-        Uma régua não transforma o balanço em dinamômetro: para obter força a
-        partir do deslocamento é indispensável conhecer uma calibração mecânica
-        independente.
-      </aside>
-
       <div class="experiment-grid">
-        <article class="theory-card">
-          <h3>Comparação qualitativa</h3>
-          <p>
-            Teste as relações de sinal \(\vec F(-I,\vec B)=-\vec F(I,\vec B)\),
-            \(\vec F(I,-\vec B)=-\vec F(I,\vec B)\) e
-            \(\vec F(-I,-\vec B)=\vec F(I,\vec B)\). A evidência é o primeiro
-            sentido de deslocamento, acompanhado da repetibilidade e do retorno
-            ao repouso. Para o motor, confronte o sentido inicial com o diagrama
-            do par de forças e compare a regularidade antes e depois de reduzir
-            corrente ou campo.
-          </p>
+        <article class="lab-card">
+          <h3>Tratamento dos dados</h3>
+          <ol>
+            <li>Parte A: para cada corrente, calcule \(\theta=\arcsin\frac{x}{L'}\) e \(F=mg\,\frac{L+b}{2L+b}\tan\theta\).</li>
+            <li>Parte B: calcule \(F=\Delta m\,g\), com Δm em kg.</li>
+            <li>Faça os dois gráficos de F contra I no mesmo par de eixos e ajuste retas pela origem; anote \(s_A\pm u_{s_A}\) e \(s_B\pm u_{s_B}\), em mN/A.</li>
+            <li>Compare \(s_A\) e \(s_B\) e calcule \(\ell_{\mathrm{ef}}=\frac{s}{B}\) se o campo no vão tiver sido medido. Compare \(\ell_{\mathrm{ef}}\) com a largura <em>w</em> dos blocos.</li>
+            <li>Parte C: confronte o sentido de partida com o par de forças desenhado.</li>
+          </ol>
         </article>
 
-        <article class="theory-card">
-          <h3>Comparação quantitativa possível</h3>
+        <article class="lab-card">
+          <h3>Controles e desvios</h3>
           <p>
-            Se \(B\), \(I\), o comprimento ativo \(\ell\) e o ângulo forem medidos
-            independentemente, compare \(F_{\mathrm{mod}}=BI\ell\sin\theta\) a uma força
-            experimental obtida de uma calibração conhecida do balanço. Para o
-            rotor, com \(n\) voltas observadas em um intervalo \(\Delta t\), use
-            \(T=\frac{\Delta t}{n}\) e \(\omega=\frac{2\pi n}{\Delta t}\). Sem esses instrumentos e calibrações, limite
-            a conclusão ao sinal e à ordem de grandeza qualitativa.
+            Na Parte A, confira se o balanço volta ao mesmo repouso entre as
+            séries e se \(x_+\) e \(-x_-\) são parecidos; uma assimetria grande
+            indica trecho inferior fora do centro do vão. Na Parte B, confira se
+            a leitura volta a zero com a corrente no mínimo e se ela não muda ao
+            encostar de leve nos cabos: se mudar, os cabos estão transmitindo
+            força para a balança.
           </p>
         </article>
       </div>
 
       <div class="uncertainty-box">
-        <h3>Incerteza e rastreabilidade</h3>
+        <h3>Incertezas</h3>
         <p>
-          Registre a resolução dos instrumentos opcionais, repetição, oscilação
-          do balanço, folga, atrito, alinhamento, posição do ímã, aquecimento e
-          contato elétrico. Para leitura uniforme com menor divisão \(\delta x\), uma
-          estimativa é \(u(x)=\delta x/\sqrt{12}\). Com grandezas independentes, a propagação
-          do modelo pode ser escrita como:
+          Para leitura uniforme com menor divisão \(\delta x\), uma estimativa é
+          \(u(x)=\delta x/\sqrt{12}\). Para pequenos ângulos,
+          \(F\approx mg\,\frac{L_{\mathrm{cm}}}{L}\,\frac{x}{L'}\), e as
+          incertezas relativas se somam em quadratura:
         </p>
         <div class="math-block math-display">
           \[
-          \frac{u(F_{\mathrm{mod}})}{F_{\mathrm{mod}}}
-          =\sqrt{
-            \left(\frac{u(B)}{B}\right)^2
-            +\left(\frac{u(I)}{I}\right)^2
-            +\left(\frac{u(\ell)}{\ell}\right)^2
-            +\left(\cot\theta\,u(\theta)\right)^2
-          }.
+          \begin{aligned}
+          \frac{u(F_A)}{F_A}&\approx\sqrt{
+            \left(\frac{u(m)}{m}\right)^2
+            +\left(\frac{u(x)}{x}\right)^2
+            +\left(\frac{u(L')}{L'}\right)^2
+            +\left(\frac{u(L_{\mathrm{cm}}/L)}{L_{\mathrm{cm}}/L}\right)^2},\\
+          \frac{u(F_B)}{F_B}&=\frac{u(\Delta m)}{\Delta m}.
+          \end{aligned}
           \]
         </div>
         <p>
-          Para \(T=\frac{\Delta t}{n}\), se \(n\) for contado sem ambiguidade,
-          \(\frac{u(T)}{T}\approx\frac{u(\Delta t)}{\Delta t}\) e
-          \(\frac{u(\omega)}{\omega}\) tem a mesma contribuição relativa. Se o
-          objetivo for apenas o sentido, relate a incerteza como concordante,
-          discordante ou inconclusiva e justifique pela observação.
+          Na Parte A, a incerteza de <em>x</em> costuma dominar nas correntes
+          baixas, e a saída do campo uniforme domina nas altas. Na Parte B, com
+          resolução de 0,01 g e leituras de algumas dezenas de centésimos, o
+          limite costuma ser a estabilidade da leitura.
         </p>
       </div>
     </section>
@@ -644,8 +972,8 @@
           <h2>Relatório</h2>
         </div>
         <p>
-          Mostre o encadeamento previsão → observação → modelo. Um desenho
-          vetorial legível vale mais que uma resposta de sinal sem referencial.
+          Mostre o encadeamento previsão → medida → modelo. O resultado central
+          é a comparação entre os dois valores de B·ℓ.
         </p>
       </div>
 
@@ -666,41 +994,36 @@
 
         <div class="report-grid">
           <section class="report-card">
-            <h3>Parte I — balanço</h3>
+            <h3>Parte A — balanço</h3>
             <ol>
-              <li>Inclua a Tabela 1 completa, sem apagar previsões divergentes.</li>
-              <li>Desenhe I, B e F para as quatro combinações de sinais.</li>
-              <li>Explique as inversões usando dF = I dℓ × B.</li>
-              <li>Discuta retorno ao zero, oscilação e eventuais resultados inconclusivos.</li>
+              <li>Inclua as Tabelas 1 a 3 sem apagar previsões divergentes.</li>
+              <li>Mostre a calibração mecânica: m, L, b, L′ e a expressão de F.</li>
+              <li>Gráfico de F × I com ajuste pela origem e \(s_A\).</li>
             </ol>
           </section>
 
           <section class="report-card">
-            <h3>Parte II — motor</h3>
+            <h3>Parte B — balança</h3>
             <ol>
-              <li>Inclua a Tabela 2 e o sentido de partida previsto.</li>
-              <li>Desenhe o par de forças nos dois ramos e o eixo do torque.</li>
-              <li>Relacione τ = μ × B, U = −μ·B e estabilidade.</li>
-              <li>Explique comutação, posição morta, impulso inicial e regime observado.</li>
+              <li>Inclua a Tabela 4 e o diagrama com B, I, F no fio e reação no ímã.</li>
+              <li>Gráfico de F × I com ajuste pela origem e \(s_B\).</li>
+              <li>Compare \(s_A\) e \(s_B\) dentro das incertezas.</li>
             </ol>
           </section>
 
           <section class="report-card">
-            <h3>Incerteza e comparação</h3>
+            <h3>Parte C — motor</h3>
             <p>
-              Separe incerteza de leitura, repetibilidade e limitações do
-              modelo. Compare quantitativamente apenas as grandezas de fato
-              medidas com instrumentos identificados; caso contrário, faça a
-              comparação qualitativa de sinais e declare esse limite.
+              Inclua a Tabela 5, o par de forças nos dois ramos e a relação
+              entre τ = μ × B, U = −μ·B, estabilidade e comutação.
             </p>
           </section>
 
           <section class="report-card">
             <h3>Conclusão</h3>
             <p>
-              Responda aos objetivos com evidências das duas partes. Diferencie
-              confirmação do produto vetorial, explicação do torque e condições
-              necessárias para rotação sustentada.
+              Responda com os números do grupo: F é proporcional a I? Os dois
+              métodos concordam? Qual limitação dominou cada um?
             </p>
             <p><a href="./relatorio.md">Abrir o modelo preenchível em Markdown</a></p>
           </section>
@@ -710,13 +1033,11 @@
           <h3>Perguntas para análise</h3>
           <ol class="question-list">
             <li>Por que a força magnética é perpendicular ao fio e ao campo, e qual inversão preserva seu sinal?</li>
-            <li>Como a força sobre cargas individuais conduz à expressão dF = I dℓ × B?</li>
+            <li>Por que os braços verticais do balanço não recebem força na Parte A, mas o trecho inferior recebe?</li>
+            <li>O que a Parte A supõe sobre o balanço que a Parte B não precisa supor?</li>
+            <li>Por que virar o ímã em pé transforma uma força horizontal em uma variação de leitura da balança?</li>
             <li>Como uma espira pode ter força resultante nula e torque resultante não nulo?</li>
-            <li>Quais orientações do rotor são estável, instável e de torque máximo segundo U = −μ·B?</li>
-            <li>O que ocorreria depois de meia volta se a corrente não fosse comutada nem interrompida?</li>
-            <li>Por que o impulso inicial pode ajudar sem ser a fonte da rotação sustentada?</li>
-            <li>Quais observações permitem distinguir torque insuficiente, posição morta, mau contato e atrito excessivo?</li>
-            <li>Que conclusão ainda é defensável se nenhuma medida quantitativa opcional tiver sido realizada?</li>
+            <li>O que ocorreria depois de meia volta se a corrente do rotor não fosse comutada nem interrompida?</li>
           </ol>
         </section>
 
@@ -724,13 +1045,11 @@
           <h3>Checklist de entrega</h3>
           <ul class="report-checklist">
             <li>Identificação, objetivo e referencial de sinais.</li>
-            <li>Fotografia ou desenho identificado das montagens das Partes I e II.</li>
-            <li>Quatro diagramas vetoriais da Parte I e diagrama do par de forças da Parte II.</li>
-            <li>Duas tabelas preenchidas com previsão e observação separadas.</li>
-            <li>Derivação da força no fio, do torque e interpretação energética.</li>
-            <li>Análise explícita da comutação e da equação dinâmica.</li>
-            <li>Incertezas, limitações e instrumentos opcionais declarados.</li>
-            <li>Respostas às perguntas e conclusão sustentada pelos dados.</li>
+            <li>Diagramas das Partes A e B com I, B e F, e o par de forças da Parte C.</li>
+            <li>Tabelas preenchidas, com previsão e observação separadas.</li>
+            <li>Calibração mecânica do balanço e cálculo de F em cada ponto.</li>
+            <li>Gráfico conjunto de F × I com os dois ajustes e a comparação de s_A e s_B.</li>
+            <li>Incertezas, limitações e conclusão sustentada pelos dados.</li>
           </ul>
         </section>
       </article>

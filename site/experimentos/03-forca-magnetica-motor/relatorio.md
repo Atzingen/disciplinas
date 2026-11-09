@@ -14,19 +14,20 @@
 
 ## Questão investigativa, objetivos e previsões
 
-O trabalho reúne duas montagens. Na Parte I, um balanço torna visível o sentido
-da força magnética sobre um trecho de condutor percorrido por corrente. Na Parte
-II, o balanço é substituído por uma espira móvel, permitindo observar como
-forças opostas podem produzir torque, como a energia potencial depende da
-orientação e por que um motor elementar precisa de comutação e inércia para
-continuar girando.
+O trabalho mede a força que o ímã em U exerce sobre um trecho de fio com
+corrente por dois métodos independentes. Na Parte A, o balanço se inclina e uma
+calibração mecânica converte o deslocamento em força. Na Parte B, o ímã fica
+sobre uma balança e a força é lida diretamente pela reação, de acordo com a
+terceira lei de Newton. Os dois métodos devem fornecer o mesmo produto
+$B\ell_{\mathrm{ef}}$. Na Parte C, o balanço é substituído por uma espira móvel
+e o motor elementar mostra como forças opostas produzem torque.
 
-A questão investigativa deve conectar as duas partes: em que medida o produto
-vetorial entre corrente e campo explica o sinal do deslocamento linear e, ao
-mesmo tempo, o sentido inicial e a continuidade da rotação? Formule uma
-hipótese antes de energizar. Não escreva apenas “a regra da mão direita será
-confirmada”; explicite quais sinais serão observados e como eles devem mudar
-quando uma variável for invertida.
+A questão investigativa deve conectar as partes: o produto vetorial entre
+corrente e campo explica o sentido da força, a proporcionalidade com a corrente
+e o mesmo valor de $B\ell_{\mathrm{ef}}$ medido por caminhos diferentes? Formule
+uma hipótese antes de energizar. Não escreva apenas “a regra da mão direita será
+confirmada”; explicite quais sinais serão observados, como a força deve variar
+com a corrente e por que os dois métodos devem concordar.
 
 Defina os eixos, o ponto de vista e o sentido convencional da corrente. No vão
 do ímã, represente $\vec B$ do polo norte para o polo sul. Para a configuração
@@ -36,9 +37,8 @@ previsões:
 - força ao inverter apenas a corrente;
 - força ao inverter apenas o campo;
 - força ao inverter simultaneamente corrente e campo;
-- sentido inicial do torque sobre o rotor;
-- orientações em que o torque deve ser máximo ou nulo;
-- comportamento esperado se a corrente não for comutada após meia volta.
+- sentido da variação da leitura da balança na Parte B;
+- sentido inicial do torque sobre o rotor na Parte C.
 
 **Hipótese e justificativa vetorial:**
 
@@ -48,19 +48,19 @@ ________________________________________________________________________
 
 ## Segurança, materiais e rastreabilidade
 
-O conjunto básico contém placa para ensaios, fonte de
-$6\ \mathrm{V}/1\ \mathrm{A}$, ímã em U, balanço magnético, duas torres e rotor
-do motor elementar. Amperímetro, régua, cronômetro e câmera de alta taxa de
-quadros são extensões opcionais. Se empregados, registre fabricante ou
-identificação, faixa, resolução e modo de leitura.
+Do kit foram usados a placa, o ímã em U, o balanço, as duas torres, o rotor e os
+cabos banana/jacaré. A corrente veio da fonte de bancada Instrutherm FA-3003 em
+modo de corrente constante; a fonte de $6\ \mathrm{V}$ do kit não foi usada,
+porque o balanço é praticamente um curto-circuito e, com ela, um resistor sob a
+placa limita a corrente, aquece em poucos segundos (o manual restringe cada
+acionamento a 5–10 s) e a corrente não é medida. A Parte B usou uma balança
+digital de $0{,}01\ \mathrm{g}$ e uma régua isolante apoiada em duas pilhas de
+livros ou um suporte universal. Registre a identificação, a faixa e a resolução
+de cada instrumento.
 
-Todas as modificações devem ser feitas com a chave desligada e o controle no
-mínimo. Energize por apenas $5$–$10\ \mathrm{s}$, intercalando períodos
-desligados de $5$–$10\ \mathrm{s}$ para reduzir aquecimento. Não ultrapasse
-metade do curso do controle sem autorização. Segure o ímã com cuidado para não
-prender os dedos e, na Parte II, mantenha mãos, cabelos, roupas e cabos fora da
-trajetória do rotor. Interrompa o ensaio diante de ruído de contato, cheiro,
-aquecimento excessivo ou rotação insegura.
+Todas as modificações foram feitas com a corrente no mínimo. Descreva incidentes
+e alterações da montagem, como contato do fio com o ímã, cabos encostados na
+balança ou mau contato nos ganchos.
 
 **Desvios, incidentes ou alterações da montagem:**
 
@@ -68,81 +68,96 @@ ________________________________________________________________________
 
 ## Procedimento e estratégia de observação
 
-### Parte I — balanço e sinal da força
+### Parte A — balanço
 
-Instale as torres, o balanço e o ímã com a fonte desligada. Verifique se o
-condutor atravessa o vão sem tocar os polos e se retorna livremente à posição de
-repouso. Identifique corrente e campo no desenho. Registre o primeiro
-deslocamento previsto; somente então aplique um pulso de corrente.
+Com a fonte desligada, o grupo instalou as torres, o balanço e o ímã com o polo
+N para cima, conferiu que o trecho inferior atravessava o vão sem tocar os
+blocos e prendeu os jacarés nas torres. Antes da série, testou os sinais com uma
+inversão por vez: corrente, campo e ambos. Na série, a corrente subiu em passos
+de $0{,}10\ \mathrm{A}$; em cada valor, esperou-se a oscilação parar e o
+deslocamento foi lido numa escala milimetrada atrás do braço, por foto tirada
+sempre da mesma posição. A série foi repetida com a corrente invertida.
+Relate o critério usado para parar a série e como o repouso foi conferido.
 
-Observe o início do movimento, e não apenas a posição final depois de
-oscilações. Desligue, aguarde e repita para verificar reprodutibilidade. Inverta
-uma variável por vez: primeiro a corrente, depois o campo, mantendo registro
-claro de cada configuração. Finalmente, inverta as duas. Se o balanço não
-retornar ao zero, registre a nova posição de repouso em vez de forçar uma
-classificação binária.
+### Parte B — balança
 
-### Parte II — espira e motor elementar
+O ímã ficou em pé sobre a balança, com a abertura para cima e o campo
+horizontal. O balanço pendeu de uma régua isolante, com o trecho inferior no
+centro do vão e perpendicular à linha que liga os blocos, e os jacarés foram
+presos nos braços, logo abaixo das argolas. Com a corrente no mínimo, a balança
+foi tarada. A corrente subiu em passos de $0{,}25\ \mathrm{A}$ e, em cada valor,
+anotou-se a leitura estabilizada; a série foi repetida com a corrente invertida.
+Relate como o grupo garantiu que nada além da reação magnética alterava a
+leitura.
 
-Com a fonte desligada, substitua o balanço pelo rotor e confirme que a espira
-gira sem contato. Desenhe as correntes nos dois ramos longos e as forças
-correspondentes. Registre o sentido previsto do binário e as posições de torque
-nulo. Energize pelo intervalo seguro. Um pequeno impulso pode ser aplicado
-apenas quando necessário para sair de uma posição morta ou vencer o atrito
-estático; anote se isso ocorreu.
+### Parte C — motor elementar
 
-Observe sentido de partida, regularidade, oscilações, interrupções de contato e
-efeito qualitativo de reduzir corrente ou afastar o ímã. Não confunda o impulso
-manual com a fonte de energia da rotação sustentada. Entre tentativas, desligue
-a alimentação e espere o resfriamento.
+Com a corrente no mínimo, o balanço foi substituído pelo rotor. O grupo
+desenhou as correntes nos dois ramos longos e o par de forças, previu o sentido
+de partida e as posições de torque nulo, e só então energizou com cerca de
+$0{,}5\ \mathrm{A}$. Anote se foi preciso dar impulso e o que mudou ao reduzir a
+corrente ou afastar o ímã.
 
 ## Dados brutos
 
 Preserve os registros na ordem de aquisição. Valores corrigidos, médias e
-grandezas calculadas pertencem ao tratamento. Uma observação pode ser
-classificada como inconclusiva quando folga, contato ou oscilação impedirem a
-determinação segura do sinal.
+grandezas calculadas pertencem ao tratamento.
 
-### Parte I — inversões independentes
+### Teste dos sinais
 
-| Ensaio | Sentido de $I$ | Polos e sentido de $\vec B$ | $\vec F$ prevista | Primeiro deslocamento observado | repetições e ocorrências |
+| Ensaio | Sentido de $I$ | Polos e sentido de $\vec B$ | $\vec F$ prevista | Primeiro deslocamento observado | Ocorrências |
 |---|---|---|---|---|---|
 | 1 |  |  |  |  |  |
 | 2 |  |  |  |  |  |
 | 3 |  |  |  |  |  |
 | 4 |  |  |  |  |  |
 
-**Posição de repouso e retorno ao zero:**
+### Calibração mecânica e geometria
 
-________________________________________________________________________
+| Grandeza | Valor | Unidade | Resolução | Instrumento |
+|---|---:|---|---:|---|
+| Massa do balanço $m$ |  |  |  |  |
+| Braço $L$ |  |  |  |  |
+| Trecho inferior $b$ |  |  |  |  |
+| Pivô ao ponto de leitura $L'$ |  |  |  |  |
+| Largura dos blocos $w$ |  |  |  |  |
+| Vão entre os blocos |  |  |  |  |
 
-**Oscilação, contato, assimetria ou outra ocorrência:**
+### Parte A — deslocamento do balanço
 
-________________________________________________________________________
+| $I\,(\mathrm{A})$ | $x_+\,(\mathrm{mm})$ | $x_-\,(\mathrm{mm})$ | Observações |
+|---:|---:|---:|---|
+|  |  |  |  |
+|  |  |  |  |
+|  |  |  |  |
+|  |  |  |  |
+|  |  |  |  |
+|  |  |  |  |
+|  |  |  |  |
+|  |  |  |  |
 
-### Parte II — partida e regime do rotor
+### Parte B — leitura da balança
 
-| Tentativa | configuração | partida prevista | partida observada | impulso necessário | regime e posição morta | ocorrências |
-|---|---|---|---|---|---|---|
+| $I\,(\mathrm{A})$ | $m_+\,(\mathrm{g})$ | $m_-\,(\mathrm{g})$ | Zero após a série | Observações |
+|---:|---:|---:|---:|---|
+|  |  |  |  |  |
+|  |  |  |  |  |
+|  |  |  |  |  |
+|  |  |  |  |  |
+|  |  |  |  |  |
+|  |  |  |  |  |
+|  |  |  |  |  |
+|  |  |  |  |  |
+|  |  |  |  |  |
+|  |  |  |  |  |
+
+### Parte C — partida e regime do rotor
+
+| Tentativa | Configuração | $I\,(\mathrm{A})$ | Partida prevista | Partida observada | Impulso necessário | Regime e posição morta |
+|---|---|---:|---|---|---|---|
 | 1 |  |  |  |  |  |  |
 | 2 |  |  |  |  |  |  |
 | 3 |  |  |  |  |  |  |
-| 4 |  |  |  |  |  |  |
-
-### Instrumentação quantitativa opcional
-
-Preencha somente quando os instrumentos forem utilizados. Uma régua não
-transforma automaticamente o balanço em dinamômetro: converter deslocamento em
-força exige uma calibração mecânica independente.
-
-| Grandeza | valor bruto | unidade | resolução | repetição | instrumento e identificação |
-|---|---:|---|---:|---:|---|
-| Corrente $I$ |  |  |  |  |  |
-| Campo $B$ |  |  |  |  |  |
-| Comprimento ativo $\ell$ |  |  |  |  |  |
-| Ângulo $\alpha$ |  |  |  |  |  |
-| Intervalo $\Delta t$ |  |  |  |  |  |
-| Número de voltas $n_{\mathrm{voltas}}$ |  |  |  |  |  |
 
 ## Tratamento e análise
 
@@ -178,20 +193,12 @@ F&=BI\ell\sin\alpha,
 $$
 
 em que $\alpha$ é o ângulo entre o fio orientado pela corrente convencional e
-o campo. Verifique a dimensão:
+o campo. Como o campo do ímã se espalha além dos blocos, o comprimento que entra
+na conta é o comprimento efetivo
+$\ell_{\mathrm{ef}}=\frac{1}{B_0}\int B\,d\ell$. Explique por que, na Parte A,
+os braços verticais do balanço não recebem força.
 
-$$
-[B I\ell]
-=\frac{\mathrm{N}}{\mathrm{A\,m}}\,
- \mathrm{A\,m}
-=\mathrm{N}.
-$$
-
-Explique por que elétrons em deriva contrária à corrente não mudam a orientação
-final da expressão macroscópica: o sinal negativo da carga já está incorporado
-na definição da corrente convencional.
-
-### 2. Teste dos sinais na Parte I
+### 2. Teste dos sinais
 
 Use os dados para avaliar, e não apenas repetir, as relações
 
@@ -203,19 +210,70 @@ $$
 \end{aligned}
 $$
 
-Para cada linha da tabela, associe previsão e primeiro deslocamento. Se houver
-repetições, informe a fração de ensaios com o mesmo sinal. Não transforme uma
-oscilação grande em falsa precisão: para este conjunto, uma classificação
-qualitativa — concordante, discordante ou inconclusiva — pode ser a análise mais
-adequada.
+Para cada linha da tabela, associe previsão e primeiro deslocamento. Uma
+discordância não implica imediatamente falha da lei: verifique se o polo foi
+identificado corretamente, se a corrente realmente foi invertida e se houve
+contato com o ímã.
 
-Uma discordância não implica imediatamente falha da lei. Verifique se o polo foi
-identificado corretamente, se a corrente realmente foi invertida, se outro
-trecho do balanço entrou no campo, se houve contato com o ímã ou se a posição de
-repouso mudou por torção. O argumento final deve mostrar por que a evidência é
-ou não capaz de discriminar os sinais.
+### 3. Parte A: da inclinação à força
 
-### 3. Forças distribuídas, momento magnético e torque
+No equilíbrio do balanço, o torque da força magnética em relação ao pivô
+equilibra o torque do peso aplicado no centro de massa:
+
+$$
+\begin{aligned}
+F\,L\cos\theta&=m g\,L_{\mathrm{cm}}\sin\theta,\\
+F&=m g\,\frac{L_{\mathrm{cm}}}{L}\tan\theta,\\
+\frac{L_{\mathrm{cm}}}{L}&=\frac{L+b}{2L+b},\qquad
+\sin\theta=\frac{x}{L'},\qquad
+x=\frac{x_+-x_-}{2}.
+\end{aligned}
+$$
+
+A expressão de $L_{\mathrm{cm}}/L$ supõe um balanço de fio uniforme; discuta se
+argolas e dobras alteram essa hipótese. Calcule $F$ para cada corrente e mostre
+uma substituição numérica completa, com unidades.
+
+### 4. Parte B: a reação sobre o ímã
+
+Com o campo horizontal e perpendicular ao trecho inferior, a força no fio é
+vertical, e a balança registra a reação sobre o ímã:
+
+$$
+\begin{aligned}
+\vec F_{\mathrm{fio\to ímã}}&=-\vec F_{\mathrm{ímã\to fio}},\\
+F&=\Delta m\,g,\qquad \Delta m=\frac{m_+-m_-}{2}.
+\end{aligned}
+$$
+
+Explique por que esse método dispensa a massa e a geometria do balanço e o que
+ele supõe sobre os cabos e o contato do fio com o ímã.
+
+### 5. Ajustes e comparação dos métodos
+
+Faça os dois gráficos de $F$ contra $I$ no mesmo par de eixos, com barras de
+incerteza, e ajuste retas pela origem:
+
+$$
+\begin{aligned}
+F&=\left(B\ell_{\mathrm{ef}}\right)I=s\,I,\\
+s&=\frac{\sum_i I_iF_i}{\sum_i I_i^2},\qquad
+u_s=\sqrt{\frac{\sum_i\left(F_i-s\,I_i\right)^2}{(n-1)\sum_i I_i^2}}.
+\end{aligned}
+$$
+
+| Método | $s\,(\mathrm{mN/A})$ | $u_s\,(\mathrm{mN/A})$ | Número de pontos | Faixa de corrente |
+|---|---:|---:|---:|---|
+| Parte A — balanço |  |  |  |  |
+| Parte B — balança |  |  |  |  |
+
+Calcule a diferença $s_A-s_B$ e compare-a com
+$\sqrt{u_{s_A}^2+u_{s_B}^2}$. Se o campo no vão foi medido com uma sonda Hall,
+calcule $\ell_{\mathrm{ef}}=\frac{s}{B}$ e compare com a largura $w$ dos blocos.
+Mostre também os resíduos de cada ajuste: na Parte A, resíduos que crescem com
+$I$ indicam que o trecho inferior saiu da região de campo uniforme.
+
+### 6. Forças distribuídas, momento magnético e torque (Parte C)
 
 Na espira retangular, as forças sobre os ramos opostos têm o mesmo módulo e
 sentidos contrários. A soma vetorial pode ser nula, mas os momentos em relação
@@ -230,24 +288,8 @@ $$
 $$
 
 em que $\hat n$ é definida pela regra da mão direita e $\theta$ é o ângulo entre
-$\vec\mu$ e $\vec B$. Refaça o diagrama dos dois ramos, identifique os braços de
-alavanca e mostre como o binário conduz à expressão do torque. Diferencie
-$\alpha$, usado na força de cada fio, de $\theta$, usado na orientação global da
-espira.
-
-A análise dimensional deve confirmar
-
-$$
-[\mu B]
-=\mathrm{A\,m^2}\,
- \frac{\mathrm{N}}{\mathrm{A\,m}}
-=\mathrm{N\,m}.
-$$
-
-Torque e energia têm a mesma dimensão, mas são grandezas distintas: torque é um
-vetor axial associado à tendência de rotação; energia é escalar.
-
-### 4. Energia, estabilidade e trabalho
+$\vec\mu$ e $\vec B$. Refaça o diagrama dos dois ramos e mostre como o binário
+conduz à expressão do torque.
 
 O produto escalar fornece a energia potencial do dipolo:
 
@@ -258,100 +300,55 @@ U(\theta)&=-\vec\mu\cdot\vec B=-\mu B\cos\theta,\\
 \end{aligned}
 $$
 
-Em $\theta=0$, $U$ é mínima e o equilíbrio é estável. Em $\theta=\pi$, $U$ é
-máxima e o equilíbrio é instável. Em ambos os casos o torque instantâneo é
-nulo, mas a resposta a uma pequena perturbação é diferente. Para
-$\theta=\pi/2$ ou $3\pi/2$, o módulo do torque é máximo.
-
-Relacione o trabalho eletromagnético à variação da energia:
-
-$$
-dW_{\mathrm{em}}=\tau_\theta\,d\theta=-dU.
-$$
-
-Esse resultado ajuda a interpretar por que uma espira sem comutação tende a se
-alinhar, pode ultrapassar o mínimo por inércia e depois oscilar até dissipar
-energia. A fonte elétrica mantém a separação de cargas e a corrente no circuito;
-assim, o sistema completo pode entregar trabalho mecânico mesmo que a força
-magnética sobre cada carga tenha produto escalar nulo com sua velocidade
-microscópica.
-
-### 5. Comutação e equação dinâmica
-
-Após meia volta, uma corrente fixa produziria torque contrário ao movimento.
-Um comutador ideal inverte a corrente e, portanto, $\vec\mu$, preservando o
-sentido útil do torque. Um modelo simplificado é
-
-$$
-\tau_{\mathrm{em}}(\theta)
-\simeq\tau_0\lvert\sin\theta\rvert.
-$$
-
-Em rotores didáticos, o contato pode interromper a corrente durante o setor
-desfavorável em vez de fazer uma inversão contínua. A inércia atravessa a região
-sem alimentação até o contato ser recuperado. A dinâmica mínima pode ser
-representada por
+Em $\theta=0$, $U$ é mínima e o equilíbrio é estável; em $\theta=\pi$, $U$ é
+máxima e o equilíbrio é instável. Após meia volta, uma corrente fixa produziria
+torque contrário ao movimento; um comutador inverte a corrente e preserva o
+sentido útil do torque. A dinâmica mínima é
 
 $$
 \begin{aligned}
 J\ddot{\theta}+b\dot{\theta}
 &=\tau_{\mathrm{em}}(\theta)-\tau_{\mathrm{carga}},\\
-\frac{d}{dt}
-\left(\frac{J\dot{\theta}^{\,2}}{2}\right)
-&=\tau_{\mathrm{em}}\dot{\theta}
--b\dot{\theta}^{\,2}
--\tau_{\mathrm{carga}}\dot{\theta}.
+\tau_{\mathrm{em}}(\theta)
+&\simeq\tau_0\lvert\sin\theta\rvert.
 \end{aligned}
 $$
 
 $J$ é o momento de inércia; $b$ representa perdas aproximadamente viscosas; e
 $\tau_{\mathrm{carga}}$ reúne torque resistente externo. Use o modelo para
-distinguir quatro situações: posição morta, na qual o torque instantâneo é
-nulo; torque insuficiente para vencer o atrito estático; mau contato, no qual a
-corrente é intermitente; e atrito excessivo ou desalinhamento, que produz perda
-mesmo com corrente.
+distinguir posição morta, torque insuficiente, mau contato e atrito excessivo.
 
-### 6. Extensão quantitativa e incertezas
+## Incertezas e qualidade da evidência
 
-Se $B$, $I$, $\ell$ e $\alpha$ foram medidos de forma independente, calcule
-$F_{\mathrm{mod}}=BI\ell\sin\alpha$. Para grandezas não correlacionadas, a
-propagação de primeira ordem é
-
-$$
-\left[\frac{u(F_{\mathrm{mod}})}{F_{\mathrm{mod}}}\right]^2
-=
-\left[\frac{u(B)}{B}\right]^2
-+
-\left[\frac{u(I)}{I}\right]^2
-+
-\left[\frac{u(\ell)}{\ell}\right]^2
-+
-\left[\cot\alpha\,u(\alpha)\right]^2.
-$$
-
-O ângulo e sua incerteza devem ser expressos em radianos nessa derivação. Uma
-comparação com força experimental só é válida se houver curva de calibração do
-balanço e incerteza associada. Sem calibração, deslocamento não é força.
-
-Para $n_{\mathrm{voltas}}$ voltas contadas em $\Delta t$,
+Para leitura uniforme com menor divisão $\delta x$, uma estimativa é
+$u(x)=\delta x/\sqrt{12}$. Na Parte A, para pequenos ângulos,
 
 $$
 \begin{aligned}
-T&=\frac{\Delta t}{n_{\mathrm{voltas}}},\\
-\omega&=\frac{2\pi n_{\mathrm{voltas}}}{\Delta t}.
+F_A&\approx mg\,\frac{L_{\mathrm{cm}}}{L}\,\frac{x}{L'},\\
+\frac{u(F_A)}{F_A}&\approx\sqrt{
+\left(\frac{u(m)}{m}\right)^2
++\left(\frac{u(x)}{x}\right)^2
++\left(\frac{u(L')}{L'}\right)^2
++\left(\frac{u(L_{\mathrm{cm}}/L)}{L_{\mathrm{cm}}/L}\right)^2}.
 \end{aligned}
 $$
 
-Inclua incerteza de tempo, ambiguidade na contagem e variação do período. Uma
-análise por vídeo deve informar taxa de quadros e critério usado para localizar
-cada passagem angular.
+Na Parte B, $\frac{u(F_B)}{F_B}=\frac{u(\Delta m)}{\Delta m}$, com $u(\Delta m)$
+dominado pela estabilidade da leitura, e não só pela resolução de
+$0{,}01\ \mathrm{g}$. Separe dispersão aleatória de efeitos sistemáticos.
 
-Mesmo na análise qualitativa, discuta fontes de incerteza: oscilação do balanço,
-retorno ao zero, folga, atrito, posição do ímã, não uniformidade de $\vec B$,
-aquecimento, resistência de contato e referência espacial. Separe dispersão
-aleatória de efeitos sistemáticos comuns a todas as tentativas.
+| Fonte | Estimativa | Afeta qual parte | Aleatória ou sistemática |
+|---|---:|---|---|
+| leitura do deslocamento |  |  |  |
+| centro de massa do balanço |  |  |  |
+| saída do campo uniforme |  |  |  |
+| atrito nos ganchos |  |  |  |
+| estabilidade da balança |  |  |  |
+| cabos e contato com o ímã |  |  |  |
+| corrente indicada pela fonte |  |  |  |
 
-**Cálculos, diagramas e resultados tratados:**
+**Cálculos, gráficos e resultados tratados:**
 
 ________________________________________________________________________
 
@@ -359,51 +356,43 @@ ________________________________________________________________________
 
 ## Discussão
 
-A discussão deve integrar as duas partes. Comece avaliando a hipótese com base
-nos dados, citando ensaios específicos. Diga quais inversões trocaram o sinal do
-deslocamento e se a dupla inversão restaurou o comportamento inicial. Resultados
-ambíguos devem permanecer visíveis e ser explicados por limitações observadas,
-sem seleção retrospectiva.
+A discussão deve integrar as três partes. Comece pelos sinais: diga quais
+inversões trocaram o sentido do deslocamento e se a dupla inversão restaurou o
+comportamento inicial. Resultados ambíguos devem permanecer visíveis e ser
+explicados por limitações observadas.
+
+Depois discuta a proporcionalidade. Os pontos de cada método seguem uma reta
+pela origem dentro das incertezas? Os resíduos mostram curvatura? Em que faixa de
+corrente a Parte A deixa de ser confiável e por quê?
+
+O núcleo da discussão é a comparação entre $s_A$ e $s_B$. Os dois métodos medem
+o mesmo produto $B\ell_{\mathrm{ef}}$, mas dependem de hipóteses diferentes: a
+Parte A depende da massa, do centro de massa e do ângulo do balanço, além de o
+trecho inferior permanecer na região de campo; a Parte B depende apenas de a
+balança registrar somente a reação magnética. Se os valores concordarem, diga o
+que isso confirma. Se discordarem, examine primeiro a calibração mecânica do
+balanço e a posição do trecho inferior no vão antes de atribuir a diferença ao
+modelo. Explique também por que a terceira lei de Newton garante que a balança
+mede a mesma força que atua no fio.
 
 Relacione o primeiro movimento do rotor ao par de forças previsto. Explique como
 força resultante nula pode coexistir com torque não nulo e conecte a orientação
 da espira ao gráfico conceitual de $U(\theta)$. Se houve posição morta ou
 necessidade de impulso, avalie se isso é compatível com torque instantâneo nulo,
-atrito estático ou falha de contato. O impulso fornece condição inicial; não
-substitui a energia elétrica necessária para manter o movimento.
-
-Discuta a comutação a partir das observações de regularidade e interrupção. Um
-motor que gira aos trancos ainda pode demonstrar o princípio, mas evidencia a
-natureza descontínua do contato e as perdas. Se a redução da corrente ou o
-afastamento do ímã alterou a rotação, interprete o resultado pela dependência
-$\tau\propto IB$, sem atribuir proporcionalidade quantitativa a uma observação
-apenas visual.
-
-Também responda no texto: por que a força magnética não realiza trabalho
-diretamente sobre uma carga, embora o motor entregue trabalho; qual inversão
-preserva o sinal da força; como as linhas de ação criam um binário; quais
-orientações são estável e instável; o que ocorreria sem comutação; e que
-evidência diferencia torque insuficiente, posição morta, mau contato e atrito.
-
-Compare o grau de evidência disponível com o alcance da conclusão. Se não houve
-medida de $B$, $I$ nem calibração mecânica, o experimento testa direções,
-simetrias de sinal e coerência do modelo, não o valor numérico de
-$F=BI\ell\sin\alpha$. Essa limitação não diminui o resultado; apenas define de
-forma rigorosa o que foi efetivamente medido.
+atrito estático ou falha de contato. Por fim, responda no texto por que a força
+magnética não realiza trabalho diretamente sobre uma carga, embora o motor
+entregue trabalho mecânico.
 
 ## Conclusão
 
-Redija uma síntese que retome separadamente as metas da Parte I e da Parte II,
-mas mostre a conexão física entre elas. Declare se as relações de inversão foram
-sustentadas, refutadas ou ficaram inconclusivas e cite a principal evidência.
-Explique se o sentido inicial do rotor concordou com o torque previsto e como
-comutação, inércia e perdas explicam o regime observado.
-
-Caso existam resultados quantitativos, apresente-os com unidade e incerteza e
-compare-os ao modelo dentro da precisão disponível. Caso contrário, declare o
-caráter qualitativo do teste. Encerre identificando a limitação dominante e uma
-melhoria concreta, como medir a corrente, mapear o campo, calibrar o balanço ou
-analisar a cinemática por vídeo.
+Redija uma síntese que retome as metas das três partes. Declare se as relações
+de inversão foram sustentadas, se a força foi proporcional à corrente e quais
+foram os valores de $s_A$ e $s_B$ com suas incertezas. Diga se os dois métodos
+concordaram e qual foi a limitação dominante de cada um. Para o motor, diga se o
+sentido inicial concordou com o torque previsto e como comutação, inércia e
+perdas explicam o regime observado. Encerre com uma melhoria concreta, como
+medir o campo no vão com uma sonda Hall, prender o trecho inferior em posição
+fixa ou usar um balanço de massa conhecida.
 
 **Síntese final:**
 
@@ -415,18 +404,19 @@ ________________________________________________________________________
 
 Inclua o manual AZEHEB, a bibliografia da disciplina e toda fonte realmente
 consultada. Numere fotografias, diagramas vetoriais, tabelas e gráficos. Anexe
-os registros originais e, quando houver análise computacional, o código e os
-arquivos necessários para reproduzir os resultados.
+os registros originais, as fotos usadas para medir o deslocamento e, quando
+houver análise computacional, o código e os arquivos necessários para reproduzir
+os resultados.
 
 ## Checklist de entrega
 
 - [ ] Referencial, hipótese e previsões originais documentados.
-- [ ] Segurança e eventuais ocorrências registradas.
-- [ ] Dados brutos das duas partes preservados.
-- [ ] Diagramas com $I$, $\vec B$, $\vec F$, $\vec\mu$ e $\vec\tau$.
-- [ ] Dedução da força no fio e teste explícito das inversões.
-- [ ] Torque, energia, estabilidade e comutação articulados.
-- [ ] Equação dinâmica relacionada ao comportamento observado.
+- [ ] Segurança, instrumentos e eventuais ocorrências registrados.
+- [ ] Dados brutos das três partes preservados.
+- [ ] Diagramas com $I$, $\vec B$, $\vec F$, a reação no ímã, $\vec\mu$ e $\vec\tau$.
+- [ ] Teste explícito das inversões.
+- [ ] Calibração mecânica do balanço e força calculada em cada ponto.
+- [ ] Gráfico conjunto de $F$ contra $I$, ajustes, resíduos e comparação de $s_A$ e $s_B$.
+- [ ] Torque, energia, estabilidade e comutação articulados ao rotor observado.
 - [ ] Incertezas compatíveis com os instrumentos efetivamente usados.
 - [ ] Discussão integrada e conclusão sustentada pelas evidências.
-- [ ] Figuras, referências e anexos permitem reproduzir a análise.
