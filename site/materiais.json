@@ -408,9 +408,9 @@
     "disciplines": ["PRCLFBE"],
     "reference": "Manual AZEHEB",
     "theme": "Força sobre corrente, torque e comutação",
-    "description": "Relacione a força magnética sobre um condutor ao torque de uma espira e ao funcionamento de um motor de corrente contínua.",
+    "description": "Meça a força sobre um fio com corrente pelo balanço e pela reação do ímã sobre uma balança, compare os dois valores de B·ℓ e veja o torque no motor elementar.",
     "path": "experimentos/03-forca-magnetica-motor/",
-    "tags": ["força magnética", "motor", "torque", "momento de dipolo", "comutação"]
+    "tags": ["força magnética", "balança", "terceira lei de Newton", "motor", "torque", "momento de dipolo", "comutação"]
   },
   {
     "id": "experimento-04-inducao-eletromagnetica",
