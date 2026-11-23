@@ -1,0 +1,689 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Mapeamento 3D do campo magnético de espiras planas com magnetômetro de três eixos levado por uma impressora 3D: passadas com a bobina desligada e ligada, correção de deriva, modelo de Biot-Savart, ajuste e visualização 3D no navegador.">
+  <title>Mapeamento 3D do campo de espiras · Experimento 09</title>
+  <link rel="icon" href="../../assets/favicon.svg">
+  <link rel="stylesheet" href="../../assets/base.css">
+  <link rel="stylesheet" href="../../assets/experimentos.css">
+  <link rel="stylesheet" href="./mapa-campo.css">
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three@0.187.0/build/three.module.js",
+        "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.187.0/examples/jsm/"
+      }
+    }
+  </script>
+  <script>try{if(localStorage.getItem("tema")==="escuro"){document.documentElement.dataset.theme="escuro"}}catch(erro){}</script>
+</head>
+<body class="experiment-page">
+  <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+  <div class="page-shell" data-experiment-tabs>
+  <div class="site-topbar" data-topbar>
+    <div class="site-topbar__inner">
+      <nav class="experiment-breadcrumb" aria-label="Trilha de navegação">
+        <a href="../../disciplinas/prclfbe/">Laboratório de Física Básica: Eletromagnetismo</a>
+        <span aria-hidden="true">›</span>
+        <a href="../">Experimentos</a>
+        <span aria-hidden="true">›</span>
+        <span aria-current="page">Experimento 09</span>
+      </nav>
+      <div class="experiment-header__navigation">
+        <div data-site-navigation data-root-path="../../" data-active-section="experimentos"></div>
+      </div>
+    </div>
+      <div class="experiment-tab-list" role="tablist" aria-label="Etapas do experimento">
+        <button class="experiment-tab" id="aba-montagem" type="button" role="tab" aria-selected="true" aria-controls="painel-montagem" tabindex="0">Montagem</button>
+        <button class="experiment-tab" id="aba-fundamentos" type="button" role="tab" aria-selected="false" aria-controls="painel-fundamentos" tabindex="-1">Fundamentos</button>
+        <button class="experiment-tab" id="aba-dados" type="button" role="tab" aria-selected="false" aria-controls="painel-dados" tabindex="-1">Dados</button>
+        <button class="experiment-tab" id="aba-visualizacao" type="button" role="tab" aria-selected="false" aria-controls="painel-visualizacao" tabindex="-1">Visualização</button>
+        <button class="experiment-tab" id="aba-relatorio" type="button" role="tab" aria-selected="false" aria-controls="painel-relatorio" tabindex="-1">Relatório</button>
+      </div>
+  </div>
+
+  <header class="experiment-header">
+    <div class="experiment-hero">
+      <div>
+        <p class="eyebrow">Experimento 09 · Lei de Biot-Savart</p>
+        <h1>Mapeamento 3D do campo de espiras</h1>
+      </div>
+      <div>
+        <p class="experiment-hero__lead">
+          Uma impressora 3D leva um magnetômetro de três eixos por uma grade de
+          pontos acima de uma bobina plana. Duas passadas, com a bobina
+          desligada e ligada, dão o campo da bobina ponto a ponto; o ajuste do
+          modelo de Biot-Savart mede μ0 e a posição real da bobina.
+        </p>
+        <ul class="experiment-meta" aria-label="Características do roteiro">
+          <li>PRCLFBE</li>
+          <li>impressora 3D + MLX90393</li>
+          <li>bobinas de 15 cm · 20 voltas · 1 A</li>
+          <li>ΔB = ligada − desligada</li>
+        </ul>
+      </div>
+    </div>
+  </header>
+
+  <main class="experiment-main" id="conteudo">
+
+    <section class="experiment-panel" id="painel-montagem" role="tabpanel" aria-labelledby="aba-montagem" tabindex="0">
+      <header class="experiment-section-heading">
+        <h2>Montagem</h2>
+        <p>
+          A bobina fica parada sobre um suporte não magnético e o sensor, preso
+          ao cabeçote, percorre a mesma grade duas vezes. Nada na mesa pode
+          mudar de lugar entre as duas passadas.
+        </p>
+      </header>
+
+      <div class="experiment-grid">
+        <article class="lab-card">
+          <h3>Objetivos</h3>
+          <ul>
+            <li>Medir as três componentes do campo de uma espira plana em centenas de pontos do espaço acima dela.</li>
+            <li>Separar o campo da bobina do campo da Terra, do fundo da impressora e da deriva do sensor por uma medida diferencial.</li>
+            <li>Comparar o mapa medido com o modelo de Biot-Savart por segmentos retos e com as fórmulas fechadas no eixo.</li>
+            <li>Ajustar o fator de escala k (μ0 medido = k·μ0) e a posição do centro da bobina, com incerteza e resíduo.</li>
+          </ul>
+        </article>
+        <article class="lab-card">
+          <h3>Material</h3>
+          <ul class="materials-list">
+            <li>Duas bobinas planas, cada uma com <strong>20 voltas</strong> de fio de cobre esmaltado de 0,6 a 0,7 mm: um quadrado de 15 cm de lado e um círculo de 15 cm de diâmetro. Os dois fios de ligação saem trançados de um único ponto.</li>
+            <li>Fonte de bancada em <strong>modo de corrente constante</strong>, ajustada para 1,000 A, sem resistor em série; multímetro para conferir a corrente.</li>
+            <li>Suporte não magnético (madeira ou peça impressa) que deixa o plano da bobina 10 cm acima da mesa.</li>
+            <li>Impressora 3D Kywoo3D Tycoon Slim (curso 240 × 240 × 300 mm, firmware Marlin 2.0) e computador ligado a ela pela USB.</li>
+            <li>Magnetômetro de três eixos MLX90393 lido por uma ESP32, num braço preso ao cabeçote: 2 cm abaixo do bico e cerca de 5 cm à frente, longe do motor da extrusora.</li>
+          </ul>
+        </article>
+      </div>
+
+      <figure class="experiment-figure survey-diagram">
+        <svg viewBox="0 0 1000 470" role="img" aria-labelledby="mapa-esquema-titulo mapa-esquema-desc">
+          <title id="mapa-esquema-titulo">Vista lateral da montagem na impressora</title>
+          <desc id="mapa-esquema-desc">
+            A mesa da impressora fica embaixo. Sobre ela, um suporte de 10 cm de
+            altura segura a bobina plana. O cabeçote, acima, leva um braço com o
+            sensor 2 cm abaixo do bico e cerca de 5 cm à frente. A altura z do
+            sensor é medida a partir do plano da bobina e vai de 2 a 18 cm. Os
+            fios de ligação saem trançados até a fonte em corrente constante.
+          </desc>
+          <defs>
+            <marker id="mapa-cota" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+              <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--measure)"/>
+            </marker>
+            <marker id="mapa-eixo" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+              <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--ink-soft)"/>
+            </marker>
+          </defs>
+          <rect x="60" y="410" width="700" height="22" rx="4" fill="var(--paper-deep)" stroke="var(--line-strong)" stroke-width="2"/>
+          <text x="70" y="456" font-family="var(--font-mono)" font-size="16" fill="var(--ink-soft)">mesa da impressora</text>
+          <rect x="250" y="300" width="36" height="110" fill="var(--tint-warm)" stroke="var(--force-6)" stroke-width="2"/>
+          <rect x="474" y="300" width="36" height="110" fill="var(--tint-warm)" stroke="var(--force-6)" stroke-width="2"/>
+          <rect x="230" y="292" width="300" height="10" rx="2" fill="var(--tint-warm)" stroke="var(--force-6)" stroke-width="2"/>
+          <text x="300" y="372" font-family="var(--font-mono)" font-size="15" fill="var(--ink-soft)">suporte de madeira</text>
+          <line x1="268" y1="286" x2="492" y2="286" stroke="var(--force-2)" stroke-width="8" stroke-linecap="round"/>
+          <text x="300" y="276" font-family="var(--font-mono)" font-size="15" fill="var(--force-2)" font-weight="700">bobina (z = 0)</text>
+          <path d="M 492 286 C 560 300, 560 330, 600 336 S 660 360, 700 362" fill="none" stroke="var(--ink-faint)" stroke-width="3"/>
+          <path d="M 492 286 C 556 308, 570 322, 606 342 S 664 352, 700 370" fill="none" stroke="var(--ink-faint)" stroke-width="3"/>
+          <rect x="700" y="340" width="230" height="50" rx="8" fill="var(--surface)" stroke="var(--line-strong)" stroke-width="2"/>
+          <text x="714" y="371" font-family="var(--font-mono)" font-size="15" fill="var(--ink)">fonte · CC · 1,000 A</text>
+          <text x="600" y="400" font-family="var(--font-mono)" font-size="14" fill="var(--ink-soft)">fios trançados</text>
+
+          <rect x="300" y="40" width="130" height="70" rx="8" fill="var(--paper-deep)" stroke="var(--line-strong)" stroke-width="2"/>
+          <text x="318" y="80" font-family="var(--font-mono)" font-size="15" fill="var(--ink)">cabeçote</text>
+          <path d="M 352 110 L 378 110 L 365 132 Z" fill="var(--ink-soft)"/>
+          <path d="M 430 76 H 520 V 150" fill="none" stroke="var(--ink-soft)" stroke-width="5"/>
+          <rect x="506" y="150" width="28" height="16" rx="3" fill="var(--resultant)"/>
+          <text x="546" y="142" font-family="var(--font-mono)" font-size="15" fill="var(--resultant)" font-weight="700">MLX90393 + ESP32</text>
+
+          <g stroke="var(--measure)" stroke-width="2.5" fill="none" marker-start="url(#mapa-cota)" marker-end="url(#mapa-cota)">
+            <line x1="200" y1="292" x2="200" y2="410"/>
+            <line x1="590" y1="166" x2="590" y2="284"/>
+            <line x1="365" y1="190" x2="520" y2="190"/>
+            <line x1="460" y1="132" x2="460" y2="158"/>
+          </g>
+          <g stroke="var(--measure)" stroke-width="1.5" stroke-dasharray="5 5">
+            <line x1="365" y1="132" x2="365" y2="200"/>
+            <line x1="534" y1="158" x2="600" y2="158"/>
+            <line x1="378" y1="132" x2="470" y2="132"/>
+          </g>
+          <g font-family="var(--font-mono)" font-size="17" fill="var(--measure)" font-weight="700">
+            <text x="120" y="356">10 cm</text>
+            <text x="600" y="236">z: 2 a 18 cm</text>
+            <text x="400" y="214">≈ 5 cm</text>
+            <text x="404" y="152">2 cm</text>
+          </g>
+          <g stroke="var(--ink-soft)" stroke-width="2.5" marker-end="url(#mapa-eixo)">
+            <line x1="860" y1="200" x2="860" y2="110"/>
+            <line x1="860" y1="200" x2="950" y2="200"/>
+          </g>
+          <g font-family="var(--font-mono)" font-size="17" fill="var(--ink-soft)" font-weight="700">
+            <text x="868" y="118">Z</text>
+            <text x="940" y="224">X</text>
+            <text x="800" y="250">Y entra na tela</text>
+          </g>
+        </svg>
+        <figcaption>
+          Vista lateral, fora de escala. As alturas do roteiro são medidas a
+          partir do plano da bobina, e não da mesa. Esquema do roteiro.
+        </figcaption>
+      </figure>
+
+      <aside class="experiment-safety">
+        <strong>Cuidados com a impressora e com o sensor</strong>
+        <p>
+          Faça o home (<code>G28</code>) com a mesa <em>vazia</em>, antes
+          de colocar o suporte: o sensor de nivelamento bateria nele. Depois disso
+          não refaça o home, porque a origem mudaria entre as passadas. Envie
+          <code>M18 S0</code> para os motores não desligarem por inatividade (um
+          motor solto perde a posição) e <code>M400</code> antes de cada medida,
+          para a leitura só começar com o cabeçote parado. Não encoste na mesa,
+          no suporte, nos fios nem na impressora entre as duas passadas, e
+          mantenha ímãs, ferramentas e celulares longe da área.
+        </p>
+        <p>
+          Com 1 A, o fio de 0,6 mm aquece pouco; mesmo assim, desligue a fonte
+          entre as passadas e confira na fonte e no multímetro que a corrente
+          ficou em 1,000 A durante toda a passada ligada.
+        </p>
+      </aside>
+
+      <article class="lab-card">
+        <h3>Procedimento</h3>
+        <ol class="procedure-list">
+          <li><strong>Home e fixação.</strong> Com a mesa vazia, faça o <code>G28</code>. Coloque o suporte com a bobina no centro da mesa e prenda-o com fita para não deslizar. Envie <code>M18 S0</code>.</li>
+          <li><strong>Origem.</strong> Leve o sensor, em passos pequenos, até ficar sobre o centro marcado da bobina e anote as coordenadas da impressora. A origem dos dados é esse ponto; a altura z = 0 é o plano do fio. Meça com régua ou paquímetro a altura do plano da bobina sobre a mesa e a distância vertical entre o bico e o centro do sensor.</li>
+          <li><strong>Grade.</strong> Escolha os pontos: x e y de −120 a 120 mm, a cada 10 ou 20 mm, e alturas de 20 a 180 mm, mais densas perto da bobina (por exemplo 20, 30, 50, 80, 120 e 180 mm). Verifique que nenhum ponto leva o cabeçote para fora do curso nem o braço do sensor contra o suporte.</li>
+          <li><strong>Passada desligada.</strong> Com a fonte desligada, percorra a grade. Em cada ponto: <code>M400</code>, uma pequena espera, 16 leituras do sensor, média e desvio padrão. A cada linha da grade, visite o ponto de referência, longe da bobina, e meça-o do mesmo jeito.</li>
+          <li><strong>Passada ligada.</strong> Ligue a fonte em 1,000 A e espere a corrente estabilizar. Repita exatamente os mesmos pontos, na mesma ordem, com as mesmas visitas ao ponto de referência.</li>
+          <li><strong>Arquivos.</strong> Grave as duas passadas no formato da aba Dados, num arquivo só ou em dois. Abra-os na aba Visualização e confira o resumo antes de desmontar qualquer coisa.</li>
+          <li><strong>Segunda bobina.</strong> Troque a bobina sem mover o suporte, refaça a origem pelo centro marcado da nova bobina e repita as duas passadas.</li>
+        </ol>
+      </article>
+
+      <div class="prediction-box">
+        <strong>Previsão antes de medir</strong>
+        <p>
+          Com as fórmulas da aba Fundamentos, calcule o campo no eixo das duas
+          bobinas a 2, 10 e 18 cm de altura para 20 voltas e 1 A, e diga em que
+          altura o quadrado passa a ter campo maior que o círculo. Compare a
+          ordem de grandeza com o ruído do sensor, de cerca de 0,45 μT por
+          leitura: até que altura o mapa tem sinal útil?
+        </p>
+      </div>
+    </section>
+
+    <section class="experiment-panel" id="painel-fundamentos" role="tabpanel" aria-labelledby="aba-fundamentos" tabindex="0" hidden>
+      <header class="experiment-section-heading">
+        <h2>Fundamentos</h2>
+        <p>
+          O modelo é a lei de Biot-Savart somada sobre segmentos retos. Ele vale
+          em qualquer ponto, não só no eixo, e é isso que o mapa 3D testa.
+        </p>
+      </header>
+
+      <article class="theory-card">
+        <h3>1. Biot-Savart para um segmento reto</h3>
+        <p>
+          Cada elemento de corrente contribui com
+          \(d\vec B=\frac{\mu_0}{4\pi}\frac{I\,d\vec\ell\times\hat r}{r^2}\).
+          Integrando ao longo de um segmento reto, de um início a um fim, e
+          escrevendo \(\vec a\) e \(\vec b\) como os vetores que vão do ponto de
+          observação P até as duas pontas do segmento, o campo tem forma fechada:
+        </p>
+        <div class="equation-flow" aria-label="Campo de um segmento reto">
+          <div class="equation-step math-display">
+            \[
+            \begin{aligned}
+            \vec a&=\vec r_{\mathrm{início}}-\vec r_P,\qquad \vec b=\vec r_{\mathrm{fim}}-\vec r_P,\\
+            \vec B_{\mathrm{seg}}&=\frac{\mu_0 I}{4\pi}\,
+              \frac{(\vec a\times\vec b)\,\left(|\vec a|+|\vec b|\right)}
+                   {|\vec a|\,|\vec b|\,\left(|\vec a|\,|\vec b|+\vec a\cdot\vec b\right)}.
+            \end{aligned}
+            \]
+            <small>O quadrado e o U são somas de 4 e 3 segmentos; o círculo é um polígono de 360 lados, cujo erro relativo no centro é de 3 × 10⁻⁵.</small>
+          </div>
+          <div class="equation-step math-display">
+            \[
+            \vec B_{\mathrm{bobina}}(P)=N\sum_{j}\vec B_{\mathrm{seg},j}(P).
+            \]
+            <small>As N voltas são tratadas como coincidentes: a espessura do enrolamento (alguns milímetros) é pequena diante das distâncias medidas.</small>
+          </div>
+        </div>
+      </article>
+
+      <div class="experiment-grid">
+        <article class="theory-card">
+          <h3>2. Fórmulas no eixo</h3>
+          <p>No eixo central, a uma altura z, as duas bobinas têm forma fechada (círculo de raio R; quadrado de lado a):</p>
+          <div class="math-block math-display">
+            \[
+            \begin{aligned}
+            B_{\circ}(z)&=\frac{\mu_0 N I R^2}{2\left(R^2+z^2\right)^{3/2}},\\
+            B_{\square}(z)&=\frac{\mu_0 N I a^2}{2\pi\left(z^2+\frac{a^2}{4}\right)\sqrt{z^2+\frac{a^2}{2}}}.
+            \end{aligned}
+            \]
+          </div>
+          <p>
+            Conferências do modelo, por ampère-volta: quadrado de 20 cm no
+            centro, 5,657 μT; círculo de 20 cm no centro, 6,283 μT; quadrado de
+            15 cm a 10 cm de altura, 1,98 μT; círculo de 15 cm a 10 cm, 1,81 μT.
+          </p>
+        </article>
+
+        <article class="theory-card">
+          <h3>3. Ordem de grandeza (20 A·volta)</h3>
+          <div class="data-table-wrapper">
+            <table class="data-table">
+              <caption>Campo no eixo previsto pelo modelo, em μT, bobinas de 15 cm</caption>
+              <thead><tr><th scope="col">z</th><th scope="col">círculo</th><th scope="col">quadrado</th></tr></thead>
+              <tbody>
+                <tr><td>0 (centro)</td><td>167,6</td><td>150,9</td></tr>
+                <tr><td>2 cm</td><td>151,2</td><td>138,4</td></tr>
+                <tr><td>5 cm</td><td>96,5</td><td>94,5</td></tr>
+                <tr><td>10 cm</td><td>36,2</td><td>39,5</td></tr>
+                <tr><td>18 cm</td><td>9,5</td><td>11,3</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p>
+            A 2 cm acima do fio o campo chega a cerca de 200 μT; no canto da área
+            de 24 × 24 cm, a 18 cm de altura, cai para cerca de 4 μT. O campo da
+            Terra no laboratório é de algumas dezenas de microtesla e não pode ser
+            ignorado: ele é removido pela diferença entre as passadas.
+          </p>
+        </article>
+      </div>
+
+      <article class="theory-card">
+        <h3>4. Medida diferencial e deriva</h3>
+        <p>
+          O sensor mede a soma do campo da Terra, do campo do aço da impressora
+          (que depende da posição), do desvio de zero do próprio sensor
+          \(\vec B_0\) e de uma deriva lenta \(\vec d(t)\). Só a passada ligada
+          inclui o campo da bobina:
+        </p>
+        <div class="equation-flow" aria-label="Diferença entre passadas">
+          <div class="equation-step math-display">
+            \[
+            \begin{aligned}
+            \vec B_{\mathrm{desl}}(P)&=\vec B_T+\vec B_{\mathrm{fundo}}(P)+\vec B_0+\vec d(t_{\mathrm{desl}}),\\
+            \vec B_{\mathrm{lig}}(P)&=\vec B_T+\vec B_{\mathrm{fundo}}(P)+\vec B_0+\vec d(t_{\mathrm{lig}})+\vec B_{\mathrm{bob}}(P).
+            \end{aligned}
+            \]
+          </div>
+          <div class="equation-step math-display">
+            \[
+            \Delta\vec B(P)=\left[\vec B_{\mathrm{lig}}(P)-\vec r_{\mathrm{lig}}(t)\right]
+              -\left[\vec B_{\mathrm{desl}}(P)-\vec r_{\mathrm{desl}}(t')\right]
+              +\vec B_{\mathrm{bob}}(P_{\mathrm{ref}}).
+            \]
+            <small>
+              \(\vec r(t)\) é a leitura do ponto de referência interpolada no
+              tempo dentro de cada passada. Subtraí-la cancela B₀ e a deriva; como
+              na passada ligada a referência também sente um pouco da bobina,
+              esse pequeno campo, calculado pelo modelo, é devolvido no fim.
+            </small>
+          </div>
+        </div>
+        <p>
+          Sem a correção, \(\Delta\vec B=\vec B_{\mathrm{bob}}+\vec d(t_{\mathrm{lig}})-\vec d(t_{\mathrm{desl}})\):
+          uma deriva de 0,5 μT por hora, em passadas de três horas, já deixa um
+          erro maior que o ruído.
+        </p>
+      </article>
+
+      <div class="experiment-grid">
+        <article class="theory-card">
+          <h3>5. Incerteza de cada ponto</h3>
+          <p>
+            Cada linha do arquivo traz a média de n leituras e o desvio padrão
+            s dessas leituras. A incerteza da média é \(s/\sqrt{n}\) e, na
+            diferença, as duas passadas se somam em quadratura:
+          </p>
+          <div class="math-block math-display">
+            \[
+            \begin{aligned}
+            u_{\Delta B_x}&=\sqrt{\frac{s_{x,\mathrm{lig}}^2}{n_{\mathrm{lig}}}+\frac{s_{x,\mathrm{desl}}^2}{n_{\mathrm{desl}}}},\\
+            u_{\Delta B}&\approx 0{,}45\,\mu\mathrm{T}\sqrt{\frac{2}{16}}\approx 0{,}16\,\mu\mathrm{T}.
+            \end{aligned}
+            \]
+          </div>
+        </article>
+
+        <article class="theory-card">
+          <h3>6. O ajuste</h3>
+          <p>
+            O modelo ajustado é \(\vec B_{\mathrm{mod}}(P)=k\,N I\,\vec f(P-\vec c)\),
+            em que \(\vec f\) é o campo por ampère-volta da geometria nominal e
+            \(\vec c=(x_0,y_0,z_0)\) é o centro real da bobina. Os quatro
+            parâmetros minimizam
+          </p>
+          <div class="math-block math-display">
+            \[
+            \chi^2=\sum_{i}\sum_{\alpha=x,y,z}\left(\frac{\Delta B_{\alpha,i}-B_{\mathrm{mod},\alpha}(P_i)}{u_{\alpha,i}}\right)^2 .
+            \]
+          </div>
+          <p>
+            Como o modelo é proporcional a μ0, o fator k mede \(\mu_0\) em
+            unidades do valor de referência. Um \(\chi^2/\nu\) muito acima de 1
+            indica efeitos que o modelo não inclui.
+          </p>
+        </article>
+      </div>
+
+      <article class="theory-card">
+        <h3>7. O que comparar</h3>
+        <ul>
+          <li><strong>k e 1:</strong> a diferença cabe nas incertezas da corrente, do número de voltas e da escala do sensor?</li>
+          <li><strong>Centro ajustado e marcado:</strong> x0 e y0 dizem quanto a origem escolhida errou o centro; z0 diz onde está, de fato, o plano médio do enrolamento.</li>
+          <li><strong>Perfil no eixo:</strong> ΔBz em x = y = 0 contra a fórmula fechada, em escala linear e logarítmica.</li>
+          <li><strong>Mapas de resíduo:</strong> resíduo sem estrutura é ruído; um padrão perto dos fios de ligação, um lado sistematicamente forte ou uma componente com sinal trocado apontam fios não modelados, bobina inclinada ou eixos do sensor desalinhados.</li>
+          <li><strong>Círculo e quadrado:</strong> onde cada geometria tem campo maior, e a partir de que distância as duas ficam parecidas com um dipolo.</li>
+        </ul>
+      </article>
+    </section>
+
+    <section class="experiment-panel" id="painel-dados" role="tabpanel" aria-labelledby="aba-dados" tabindex="0" hidden>
+      <header class="experiment-section-heading">
+        <h2>Dados</h2>
+        <p>
+          Os dados vêm do programa de coleta em arquivos CSV. Esta aba descreve o
+          formato e o que anotar à mão; o tratamento fica na aba Visualização.
+        </p>
+      </header>
+
+      <article class="lab-card" id="formato-do-arquivo">
+        <h3>Formato do arquivo</h3>
+        <p>
+          CSV em UTF-8, separador vírgula e ponto decimal. Linhas que começam com
+          <code>#</code> são comentários; as do tipo <code># chave: valor</code>
+          no topo, antes do cabeçalho, são metadados.
+        </p>
+        <pre class="mapa-codigo"><code># formato: mapa-campo v1
+# geometria: circulo
+# dimensao_mm: 150
+# voltas: 20
+# corrente_A: 1.000
+# leituras_por_ponto: 16
+# data: 2026-11-24T14:30:00-03:00
+# observacao: texto livre
+passada,tipo,t_s,x_mm,y_mm,z_mm,bx_uT,by_uT,bz_uT,sx_uT,sy_uT,sz_uT,n
+desligada,ref,0.0,-120.0,-120.0,180.0,12.10,-15.30,-28.40,0.40,0.45,0.50,16
+desligada,ponto,3.1,-120.0,-120.0,20.0,10.32,-15.10,-30.55,0.41,0.44,0.52,16
+ligada,ponto,2.9,-120.0,-120.0,20.0,11.02,-14.80,-26.10,0.43,0.40,0.49,16</code></pre>
+        <div class="data-table-wrapper">
+          <table class="data-table">
+            <caption>Metadados</caption>
+            <thead><tr><th scope="col">Chave</th><th scope="col">Significado</th></tr></thead>
+            <tbody>
+              <tr><td><code>formato</code></td><td>sempre <code>mapa-campo v1</code></td></tr>
+              <tr><td><code>geometria</code></td><td><code>circulo</code>, <code>quadrado</code>, <code>u</code> ou <code>outra</code></td></tr>
+              <tr><td><code>dimensao_mm</code></td><td>diâmetro do círculo ou lado do quadrado e do U, em mm</td></tr>
+              <tr><td><code>voltas</code>, <code>corrente_A</code></td><td>número de voltas e corrente da passada ligada, em A</td></tr>
+              <tr><td><code>leituras_por_ponto</code></td><td>leituras médias em cada ponto (o valor real de cada linha está na coluna n)</td></tr>
+              <tr><td><code>data</code>, <code>observacao</code></td><td>data e hora ISO 8601 e texto livre; podem mudar entre arquivos</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="data-table-wrapper">
+          <table class="data-table">
+            <caption>Colunas</caption>
+            <thead><tr><th scope="col">Coluna</th><th scope="col">Significado</th></tr></thead>
+            <tbody>
+              <tr><td><code>passada</code></td><td><code>desligada</code> ou <code>ligada</code></td></tr>
+              <tr><td><code>tipo</code></td><td><code>ponto</code> (grade) ou <code>ref</code> (ponto de referência revisitado)</td></tr>
+              <tr><td><code>t_s</code></td><td>segundos desde o início daquela passada</td></tr>
+              <tr><td><code>x_mm</code>, <code>y_mm</code>, <code>z_mm</code></td><td>posição do sensor; origem no centro da bobina, z = altura acima do plano da bobina, eixos paralelos aos X, Y e Z da impressora</td></tr>
+              <tr><td><code>bx_uT</code>, <code>by_uT</code>, <code>bz_uT</code></td><td>média das n leituras, em μT, já nos eixos da impressora</td></tr>
+              <tr><td><code>sx_uT</code>, <code>sy_uT</code>, <code>sz_uT</code></td><td>desvio padrão das n leituras (não da média), em μT</td></tr>
+              <tr><td><code>n</code></td><td>número de leituras do ponto</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <ul>
+          <li><strong>Geometria.</strong> A bobina fica no plano z = 0, centrada na origem. O quadrado tem lados paralelos a X e Y; o U tem três lados e o lado aberto voltado para −Y. A corrente positiva circula no sentido anti-horário visto de cima, o que dá Bz &gt; 0 no centro; se o ajuste der k negativo, a corrente circulou no sentido contrário.</li>
+          <li><strong>Arquivos.</strong> As duas passadas podem vir num arquivo só ou em dois; o visualizador junta todos os arquivos soltos. As colunas são lidas pelo nome, em qualquer ordem.</li>
+          <li><strong>Pareamento.</strong> Os pontos das duas passadas são pareados pela posição arredondada a 0,1 mm. O visualizador avisa quando falta o par de um ponto, quando os metadados da montagem diferem entre arquivos e quando faltam colunas.</li>
+          <li><strong>Fios de ligação.</strong> O modelo não inclui os fios de ligação. Eles saem trançados e quase não produzem campo, mas no U os terminais ficam no lado aberto e o efeito deles aparece no resíduo.</li>
+        </ul>
+        <p>O mesmo formato está descrito no arquivo <a href="./README.md">README.md</a> desta pasta.</p>
+      </article>
+
+      <div class="data-table-wrapper">
+        <table class="data-table">
+          <caption>Registro da montagem (anote à mão)</caption>
+          <thead><tr><th scope="col">Grandeza</th><th scope="col">Círculo</th><th scope="col">Quadrado</th><th scope="col">Como foi medida</th></tr></thead>
+          <tbody>
+            <tr><td>diâmetro ou lado médio do enrolamento (mm)</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+            <tr><td>número de voltas contado</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+            <tr><td>corrente no multímetro, início e fim da passada ligada (A)</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+            <tr><td>altura do plano da bobina sobre a mesa (mm)</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+            <tr><td>coordenadas da impressora na origem (X, Y, Z)</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+            <tr><td>posição do ponto de referência (mm)</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+            <tr><td>duração de cada passada (min)</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+            <tr><td>nome dos arquivos CSV</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="experiment-panel" id="painel-visualizacao" role="tabpanel" aria-labelledby="aba-visualizacao" tabindex="0" hidden>
+      <header class="experiment-section-heading">
+        <h2>Visualização</h2>
+        <p>
+          Carregue os arquivos das duas passadas, ou o exemplo sintético, para
+          ver o campo em 3D, em cortes e ao longo de uma reta, e para ajustar o
+          modelo de Biot-Savart. Tudo roda no navegador; nenhum dado sai do
+          computador.
+        </p>
+      </header>
+
+      <div class="mapa" data-mapa-campo>
+        <section class="mapa-bloco" aria-labelledby="mapa-arquivos-titulo">
+          <h3 id="mapa-arquivos-titulo">Arquivos</h3>
+          <div class="mapa-soltar" data-mapa-soltar>
+            <p><strong>Arraste um ou mais arquivos CSV para cá.</strong> As duas passadas podem estar no mesmo arquivo ou em arquivos separados.</p>
+            <div class="mapa-acoes">
+              <label class="mapa-botao mapa-botao--principal">
+                Escolher arquivos
+                <input class="mapa-arquivo" type="file" accept=".csv,text/csv,text/plain" multiple data-mapa-arquivo>
+              </label>
+              <button class="mapa-botao" type="button" data-mapa-exemplo>Carregar exemplo</button>
+              <button class="mapa-botao" type="button" data-mapa-limpar disabled>Limpar</button>
+            </div>
+          </div>
+          <p class="mapa-status" data-mapa-status role="status" aria-live="polite">Nenhum dado carregado.</p>
+        </section>
+
+        <div class="mapa-conteudo" data-mapa-conteudo hidden>
+          <section class="mapa-bloco" aria-labelledby="mapa-resumo-titulo">
+            <h3 id="mapa-resumo-titulo">Resumo</h3>
+            <dl class="mapa-resumo" data-mapa-resumo></dl>
+            <details class="mapa-avisos" data-mapa-avisos-caixa hidden>
+              <summary data-mapa-avisos-titulo>Avisos</summary>
+              <ul data-mapa-avisos></ul>
+            </details>
+          </section>
+
+          <section class="mapa-bloco" aria-labelledby="mapa-modelo-titulo">
+            <h3 id="mapa-modelo-titulo">Processamento, modelo e ajuste</h3>
+            <div class="mapa-controles">
+              <label class="mapa-campo-form">
+                <span>Mostrar</span>
+                <select data-mapa-grandeza>
+                  <option value="delta">ΔB medido (ligada − desligada)</option>
+                  <option value="ligada">Passada ligada</option>
+                  <option value="desligada">Passada desligada (fundo)</option>
+                  <option value="modelo">Modelo de Biot-Savart</option>
+                  <option value="residuo">Resíduo (medido − modelo)</option>
+                </select>
+              </label>
+              <label class="mapa-checkbox">
+                <input type="checkbox" data-mapa-deriva checked>
+                <span>Corrigir a deriva pelos pontos de referência</span>
+              </label>
+            </div>
+            <fieldset class="mapa-modelo">
+              <legend>Modelo (vem dos metadados; pode ser editado)</legend>
+              <label class="mapa-campo-form"><span>Geometria</span>
+                <select data-mapa-param="geometria">
+                  <option value="circulo">círculo</option>
+                  <option value="quadrado">quadrado</option>
+                  <option value="u">U (três lados)</option>
+                  <option value="outra">outra (sem modelo)</option>
+                </select>
+              </label>
+              <label class="mapa-campo-form"><span>Dimensão (mm)</span><input type="number" step="0.1" min="1" data-mapa-param="dimensaoMm"></label>
+              <label class="mapa-campo-form"><span>Voltas</span><input type="number" step="1" min="1" data-mapa-param="voltas"></label>
+              <label class="mapa-campo-form"><span>Corrente (A)</span><input type="number" step="0.001" data-mapa-param="correnteA"></label>
+              <label class="mapa-campo-form"><span>k (μ0 medido / μ0)</span><input type="number" step="0.0001" data-mapa-param="k"></label>
+              <label class="mapa-campo-form"><span>x0 (mm)</span><input type="number" step="0.01" data-mapa-param="x0"></label>
+              <label class="mapa-campo-form"><span>y0 (mm)</span><input type="number" step="0.01" data-mapa-param="y0"></label>
+              <label class="mapa-campo-form"><span>z0 (mm)</span><input type="number" step="0.01" data-mapa-param="z0"></label>
+            </fieldset>
+            <p class="mapa-nota" data-mapa-nota-u hidden>
+              No U, o modelo não inclui os fios de ligação que chegam ao lado aberto; perto dele, o resíduo mostra o campo desses fios.
+            </p>
+            <div class="mapa-acoes">
+              <button class="mapa-botao mapa-botao--principal" type="button" data-mapa-ajustar>Ajustar k e o centro da bobina</button>
+              <button class="mapa-botao" type="button" data-mapa-restaurar>Voltar aos valores dos metadados</button>
+            </div>
+            <div class="mapa-ajuste" data-mapa-ajuste aria-live="polite"></div>
+          </section>
+
+          <section class="mapa-bloco" aria-labelledby="mapa-3d-titulo">
+            <h3 id="mapa-3d-titulo">Vista 3D</h3>
+            <div class="mapa-controles">
+              <label class="mapa-campo-form"><span>Comprimento das setas</span>
+                <select data-mapa-3d-escala>
+                  <option value="log">logarítmico</option>
+                  <option value="linear">linear</option>
+                </select>
+              </label>
+              <label class="mapa-campo-form"><span>Densidade</span>
+                <select data-mapa-3d-densidade>
+                  <option value="1">todos os pontos</option>
+                  <option value="2" selected>1 em 2 (em x e y)</option>
+                  <option value="3">1 em 3</option>
+                  <option value="4">1 em 4</option>
+                </select>
+              </label>
+              <label class="mapa-campo-form"><span>Alturas</span>
+                <select data-mapa-3d-camadas>
+                  <option value="todas">todas</option>
+                  <option value="corte">só o plano do corte 2D</option>
+                </select>
+              </label>
+            </div>
+            <div class="mapa-3d" data-mapa-3d>
+              <p class="mapa-3d__mensagem" data-mapa-3d-mensagem>Carregando a vista 3D…</p>
+            </div>
+            <div class="mapa-legenda" data-mapa-3d-legenda></div>
+            <p class="mapa-nota">Arraste para girar, use a roda ou o gesto de pinça para aproximar e o botão direito (ou dois dedos) para deslocar. A cor e o comprimento indicam o módulo; o plano translúcido marca o corte 2D.</p>
+          </section>
+
+          <div class="mapa-duas-colunas">
+            <section class="mapa-bloco" aria-labelledby="mapa-corte-titulo">
+              <h3 id="mapa-corte-titulo">Corte 2D</h3>
+              <div class="mapa-controles">
+                <label class="mapa-campo-form"><span>Plano</span>
+                  <select data-mapa-plano>
+                    <option value="xy">XY (z fixo)</option>
+                    <option value="xz">XZ (y fixo)</option>
+                    <option value="yz">YZ (x fixo)</option>
+                  </select>
+                </label>
+                <label class="mapa-campo-form"><span>Componente</span>
+                  <select data-mapa-componente>
+                    <option value="bz">Bz</option>
+                    <option value="bx">Bx</option>
+                    <option value="by">By</option>
+                    <option value="modulo">|B|</option>
+                  </select>
+                </label>
+                <label class="mapa-campo-form"><span>Escala de cor</span>
+                  <select data-mapa-faixa>
+                    <option value="corte">do corte atual</option>
+                    <option value="global">de todos os cortes</option>
+                  </select>
+                </label>
+                <label class="mapa-campo-form mapa-campo-form--largo">
+                  <span>Posição do corte: <output data-mapa-posicao-valor></output></span>
+                  <input type="range" min="0" max="0" step="1" value="0" data-mapa-posicao>
+                </label>
+              </div>
+              <canvas class="mapa-canvas" data-mapa-corte role="img" aria-label="Mapa de cor do corte 2D"></canvas>
+              <p class="mapa-leitura" data-mapa-leitura aria-live="polite">Passe o mouse (ou toque) sobre o mapa para ler o valor de um ponto.</p>
+              <div class="mapa-acoes">
+                <button class="mapa-botao" type="button" data-mapa-png>Baixar o corte em PNG</button>
+              </div>
+            </section>
+
+            <section class="mapa-bloco" aria-labelledby="mapa-perfil-titulo">
+              <h3 id="mapa-perfil-titulo">Perfil 1D</h3>
+              <div class="mapa-controles">
+                <label class="mapa-campo-form"><span>Variar</span>
+                  <select data-mapa-perfil-eixo>
+                    <option value="z">z (x e y fixos)</option>
+                    <option value="x">x (y e z fixos)</option>
+                    <option value="y">y (x e z fixos)</option>
+                  </select>
+                </label>
+                <label class="mapa-campo-form"><span data-mapa-perfil-rotulo-1>x (mm)</span><select data-mapa-perfil-fixo-1></select></label>
+                <label class="mapa-campo-form"><span data-mapa-perfil-rotulo-2>y (mm)</span><select data-mapa-perfil-fixo-2></select></label>
+                <label class="mapa-campo-form"><span>Componente</span>
+                  <select data-mapa-perfil-componente>
+                    <option value="bz">Bz</option>
+                    <option value="bx">Bx</option>
+                    <option value="by">By</option>
+                    <option value="modulo">|B|</option>
+                  </select>
+                </label>
+                <label class="mapa-checkbox"><input type="checkbox" data-mapa-perfil-log><span>Escala logarítmica (|valor|)</span></label>
+              </div>
+              <canvas class="mapa-canvas" data-mapa-perfil role="img" aria-label="Perfil 1D do campo medido com barras de incerteza e curva do modelo"></canvas>
+              <p class="mapa-leitura" data-mapa-perfil-leitura aria-live="polite"></p>
+            </section>
+          </div>
+
+          <section class="mapa-bloco" aria-labelledby="mapa-exportar-titulo">
+            <h3 id="mapa-exportar-titulo">Exportar</h3>
+            <p>O CSV traz, para cada ponto pareado, ΔB processado com a correção escolhida, a incerteza de cada componente e o campo do modelo com os parâmetros atuais.</p>
+            <div class="mapa-acoes">
+              <button class="mapa-botao mapa-botao--principal" type="button" data-mapa-csv>Baixar ΔB processado (CSV)</button>
+            </div>
+          </section>
+        </div>
+      </div>
+    </section>
+
+    <section class="experiment-panel" id="painel-relatorio" role="tabpanel" aria-labelledby="aba-relatorio" tabindex="0" hidden>
+      <header class="experiment-section-heading">
+        <h2>Relatório</h2>
+        <p>Apresente os mapas, o ajuste e a comparação com Biot-Savart para as duas bobinas, com os arquivos brutos anexados.</p>
+      </header>
+      <div class="mapa-acoes">
+        <button class="mapa-botao mapa-botao--principal" type="button" data-print-report>Imprimir relatório</button>
+        <a href="./relatorio.md" download>Baixar modelo em Markdown</a>
+        <a href="../modelo-relatorio/">Consultar exemplo de formatação acadêmica</a>
+      </div>
+      <div class="report-template" data-markdown-report="./relatorio.md"><p>Carregando o modelo de relatório. Se o conteúdo não aparecer, use o link para baixar o Markdown.</p></div>
+    </section>
+  </main>
+
+  <footer class="experiment-footer">
+    <p>Experimento 09 · Mapeamento 3D do campo de espiras</p>
+    <a href="../">Voltar aos experimentos</a>
+  </footer>
+
+  <script type="module" src="../../componentes/navegacao-principal.js"></script>
+  <script type="module" src="../experimento.js"></script>
+  <script type="module" src="./visualizador-mapa.js"></script>
+  </div>
+</body>
+</html>
