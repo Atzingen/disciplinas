@@ -104,6 +104,7 @@ export function mountFieldMap(raiz) {
 
   const estado = {
     arquivos: new Map(),
+    textos: new Map(), // conteúdo de cada arquivo, para reconhecer o mesmo arquivo carregado de novo
     linhas: [],
     metadados: {},
     avisosDaLeitura: [],
@@ -128,15 +129,34 @@ export function mountFieldMap(raiz) {
 
   // ---------- arquivos ----------
 
-  async function readFiles(lista) {
+  // Dois arquivos diferentes com o mesmo nome (por exemplo um de cada passada) ficam os dois;
+  // o mesmo arquivo carregado de novo substitui o anterior em vez de dobrar os pontos.
+  function uniqueName(nome, texto) {
+    let candidato = nome;
+    for (let i = 2; estado.textos.has(candidato) && estado.textos.get(candidato) !== texto; i += 1) {
+      candidato = `${nome} (${i})`;
+    }
+    return candidato;
+  }
+
+  // substituir: descarta o que estava carregado (a aba Coleta manda sempre a coleta inteira).
+  async function readFiles(lista, { substituir = false } = {}) {
     const arquivos = [...lista];
     if (arquivos.length === 0) return;
+    if (substituir) {
+      estado.arquivos.clear();
+      estado.textos.clear();
+    }
     // Arquivos novos se somam aos já carregados, mas nunca ao exemplo sintético.
     estado.arquivos.delete(NOME_DO_EXEMPLO);
+    estado.textos.delete(NOME_DO_EXEMPLO);
     setStatus(`Lendo ${arquivos.length} arquivo(s)…`);
     for (const arquivo of arquivos) {
       try {
-        estado.arquivos.set(arquivo.name, parseMapFile(await arquivo.text(), arquivo.name));
+        const texto = await arquivo.text();
+        const nome = uniqueName(arquivo.name, texto);
+        estado.textos.set(nome, texto);
+        estado.arquivos.set(nome, parseMapFile(texto, nome));
       } catch (erro) {
         estado.arquivos.set(arquivo.name, { nome: arquivo.name, erro: `${arquivo.name}: não foi possível ler (${erro.message}).` });
       }
@@ -146,12 +166,16 @@ export function mountFieldMap(raiz) {
 
   function loadExample() {
     estado.arquivos.clear();
+    estado.textos.clear();
     estado.arquivos.set(NOME_DO_EXEMPLO, parseMapFile(generateExampleCsv(), NOME_DO_EXEMPLO));
     loadData();
   }
 
   function clearAll() {
     estado.arquivos.clear();
+    estado.textos.clear();
+    estado.destaqueCorte = null;
+    estado.destaquePerfil = null;
     estado.linhas = [];
     estado.processado = null;
     estado.ajuste = null;
@@ -164,14 +188,23 @@ export function mountFieldMap(raiz) {
   function parametersFromMetadata(metadados, avisos) {
     const parametros = { ...PARAMETROS_PADRAO };
     const mapa = { geometria: "geometria", dimensao_mm: "dimensaoMm", voltas: "voltas", corrente_A: "correnteA" };
+    const valido = {
+      geometria: (valor) => typeof valor === "string" && valor.length > 0,
+      dimensao_mm: (valor) => valor > 0,
+      voltas: (valor) => valor > 0,
+      corrente_A: (valor) => Number.isFinite(valor) && valor !== 0,
+    };
     for (const [chave, nome] of Object.entries(mapa)) {
-      if (chave in metadados) parametros[nome] = metadados[chave];
-      else avisos.push(`Metadado "${chave}" ausente: o modelo começa com ${PARAMETROS_PADRAO[nome]}.`);
+      if (!(chave in metadados)) avisos.push(`Metadado "${chave}" ausente: o modelo começa com ${PARAMETROS_PADRAO[nome]}.`);
+      else if (!valido[chave](metadados[chave])) avisos.push(`Metadado "${chave}" inválido (${metadados[chave]}): o modelo começa com ${PARAMETROS_PADRAO[nome]}.`);
+      else parametros[nome] = metadados[chave];
     }
     return parametros;
   }
 
   function loadData() {
+    estado.destaqueCorte = null;
+    estado.destaquePerfil = null;
     const juntado = mergeMapFiles([...estado.arquivos.values()]);
     estado.linhas = juntado.linhas;
     estado.metadados = juntado.metadados;
@@ -409,20 +442,12 @@ export function mountFieldMap(raiz) {
     el.ajuste.replaceChildren(Object.assign(document.createElement("p"), { className: "mapa-nota", textContent: "Ajustando…" }));
     setTimeout(() => {
       try {
-        let parametros = { ...estado.parametros };
-        let resultado = null;
-        // Com a correção de deriva, o salto entre passadas usa o modelo no ponto de
-        // referência; um segundo ajuste com o modelo já ajustado elimina essa dependência.
-        const rodadas = el.deriva.checked ? 2 : 1;
-        for (let rodada = 0; rodada < rodadas; rodada += 1) {
-          const processado = processMap(estado.linhas, {
-            corrigirDeriva: el.deriva.checked,
-            campoDaBobina: createModel(parametros),
-          });
-          resultado = fitCoil(processado.pontos, parametros);
-          parametros = { ...parametros, k: resultado.k, x0: resultado.x0, y0: resultado.y0, z0: resultado.z0 };
-        }
-        estado.parametros = parametros;
+        // Com a correção entre passadas, o ajuste usa o campo relativo à referência, que não
+        // depende do modelo; depois o ΔB mostrado é refeito com os parâmetros ajustados.
+        const { deriva, pontos } = estado.processado;
+        const referencia = deriva.modo === "relativa" ? deriva.referencia : null;
+        const resultado = fitCoil(pontos, estado.parametros, { referencia });
+        estado.parametros = { ...estado.parametros, k: resultado.k, x0: resultado.x0, y0: resultado.y0, z0: resultado.z0 };
         estado.ajuste = { ...resultado, comDeriva: el.deriva.checked };
         fillParameters();
         reprocess();

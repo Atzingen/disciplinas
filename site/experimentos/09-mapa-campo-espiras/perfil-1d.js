@@ -118,6 +118,12 @@ export function drawProfile(canvas, pontos, opcoes) {
     }),
     ...curva.map((item) => transformar(item.valor)),
   ].filter((valor) => Number.isFinite(valor) && (!log || valor > 0));
+  if (todos.length === 0) {
+    ctx.fillStyle = tinta.tintaSuave;
+    ctx.font = `13px ${tinta.fonteMono}`;
+    ctx.fillText("Todos os valores desta reta são zero: não há o que mostrar em escala logarítmica.", 12, 60);
+    return null;
+  }
   let yMin = Math.min(...todos);
   let yMax = Math.max(...todos);
   if (log) {

@@ -60,11 +60,12 @@ export function parseMapFile(texto, nome = "arquivo") {
   let colunas = null;
   let indices = null;
 
+  let faltandoNoCabecalho = null;
   const conteudo = texto.replace(/^﻿/, "").split(/\r?\n/);
   conteudo.forEach((bruta, posicao) => {
     const numeroDaLinha = posicao + 1;
     const linha = bruta.trim();
-    if (linha === "") return;
+    if (linha === "" || faltandoNoCabecalho) return;
     if (linha.startsWith("#")) {
       // Metadados só no topo, antes do cabeçalho; depois disso é comentário.
       if (colunas) return;
@@ -76,6 +77,9 @@ export function parseMapFile(texto, nome = "arquivo") {
     if (!colunas) {
       colunas = campos;
       indices = Object.fromEntries(COLUNAS.map((coluna) => [coluna, campos.indexOf(coluna)]));
+      // Sem as colunas obrigatórias, as linhas de dados nem são lidas (evita erro e avisos falsos).
+      const faltando = COLUNAS.filter((coluna) => !colunas.includes(coluna));
+      if (faltando.length > 0) faltandoNoCabecalho = faltando;
       return;
     }
     if (campos.length !== colunas.length) {

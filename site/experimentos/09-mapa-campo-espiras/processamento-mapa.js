@@ -95,7 +95,8 @@ export function detectGrid(posicoes) {
 }
 
 // Trilha temporal do ponto de referência de uma passada: interpolação linear em t,
-// constante antes da primeira e depois da última visita.
+// constante antes da primeira e depois da última visita. `pesos` diz quanto cada
+// visita entra no valor interpolado, para propagar a incerteza sem contar duas vezes.
 export function referenceTrack(referencias) {
   if (referencias.length === 0) return null;
   const visitas = [...referencias]
@@ -106,18 +107,21 @@ export function referenceTrack(referencias) {
   );
 
   function at(t) {
-    if (t <= visitas[0].t) return visitas[0];
-    const ultima = visitas[visitas.length - 1];
-    if (t >= ultima.t) return ultima;
-    let i = 1;
-    while (visitas[i].t < t) i += 1;
-    const antes = visitas[i - 1];
-    const depois = visitas[i];
-    const w = depois.t === antes.t ? 0 : (t - antes.t) / (depois.t - antes.t);
+    let pesos;
+    if (t <= visitas[0].t) {
+      pesos = [{ indice: 0, w: 1 }];
+    } else if (t >= visitas[visitas.length - 1].t) {
+      pesos = [{ indice: visitas.length - 1, w: 1 }];
+    } else {
+      let i = 1;
+      while (visitas[i].t < t) i += 1;
+      const w = visitas[i].t === visitas[i - 1].t ? 0 : (t - visitas[i - 1].t) / (visitas[i].t - visitas[i - 1].t);
+      pesos = [{ indice: i - 1, w: 1 - w }, { indice: i, w }];
+    }
     return {
       t,
-      b: [0, 1, 2].map((eixo) => (1 - w) * antes.b[eixo] + w * depois.b[eixo]),
-      u: [0, 1, 2].map((eixo) => Math.hypot((1 - w) * antes.u[eixo], w * depois.u[eixo])),
+      pesos,
+      b: [0, 1, 2].map((eixo) => pesos.reduce((soma, { indice, w }) => soma + w * visitas[indice].b[eixo], 0)),
     };
   }
 
@@ -138,8 +142,14 @@ function mostCommonPosition(referencias) {
 }
 
 // Prepara a correção de deriva das duas passadas.
-// campoDaBobina(x, y, z) dá o campo previsto da bobina (µT); serve para descontar,
-// no salto entre passadas, o campo da bobina no próprio ponto de referência.
+//
+// Dentro de cada passada, a leitura do ponto de referência acompanha a deriva lenta do sensor.
+// Entre as passadas, quando a referência está na mesma posição nas duas, a diferença
+// (ligada − ref ligada) − (desligada − ref desligada) já não tem zero do sensor nem fundo:
+// é o campo da bobina relativo ao campo dela no ponto de referência. Esse "relativo" não
+// depende de modelo; o ajuste compara com B(P) − B(ref). Para mostrar ΔB, soma-se o campo da
+// bobina na referência dado por campoDaBobina (só exibição). Sem modelo, só a deriva dentro de
+// cada passada é corrigida.
 export function buildDriftCorrection(referencias, campoDaBobina) {
   const avisos = [];
   const trilhas = {};
@@ -159,37 +169,68 @@ export function buildDriftCorrection(referencias, campoDaBobina) {
       lista.filter((linha) => positionKey(linha.x_mm, linha.y_mm, linha.z_mm) === chave),
     );
     if (trilhas[passada].visitas.length < 2) {
-      avisos.push(`A passada ${passada} tem uma só visita ao ponto de referência: só o deslocamento de zero foi corrigido, não a deriva ao longo do tempo.`);
+      avisos.push(`A passada ${passada} tem uma só visita ao ponto de referência: a deriva ao longo do tempo não foi corrigida.`);
     }
   }
 
+  let modo = trilhas.ligada || trilhas.desligada ? "dentro" : "nenhuma";
   let salto = [0, 0, 0];
   let referencia = null;
+  let campoNaReferencia = null;
   if (trilhas.ligada && trilhas.desligada) {
-    if (chaves.ligada === chaves.desligada) {
+    if (chaves.ligada !== chaves.desligada) {
+      avisos.push("O ponto de referência não está na mesma posição nas duas passadas: só a deriva dentro de cada passada foi corrigida.");
+    } else if (!campoDaBobina) {
+      avisos.push("Sem modelo da bobina, o salto de zero entre as passadas não foi corrigido (ele precisa do campo da bobina no ponto de referência): só a deriva dentro de cada passada foi.");
+    } else {
+      modo = "relativa";
       const [rx, ry, rz] = chaves.ligada.split("|").map((valor) => Number(valor) / 10);
       referencia = { x: rx, y: ry, z: rz };
-      const bobina = campoDaBobina ? campoDaBobina(rx, ry, rz) : [0, 0, 0];
-      if (!campoDaBobina) {
-        avisos.push("Sem modelo da bobina: o campo dela no ponto de referência não foi descontado do salto entre passadas.");
-      }
+      campoNaReferencia = campoDaBobina(rx, ry, rz);
       salto = [0, 1, 2].map(
-        (eixo) => trilhas.ligada.media[eixo] - trilhas.desligada.media[eixo] - bobina[eixo],
+        (eixo) => trilhas.ligada.media[eixo] - trilhas.desligada.media[eixo] - campoNaReferencia[eixo],
       );
-    } else {
-      avisos.push("O ponto de referência não está na mesma posição nas duas passadas: só a deriva dentro de cada passada foi corrigida.");
     }
   }
-  return { trilhas, salto, referencia, avisos };
+  return { modo, trilhas, salto, referencia, campoNaReferencia, avisos };
 }
 
-function correctedReading(linha, trilha) {
+// Variância, por eixo, da parte que as visitas à referência acrescentam: cada visita entra com
+// o seu coeficiente (o mesmo índice pode aparecer na interpolação e na média).
+function referenceVariance(trilha, coeficientes, eixo) {
+  let soma = 0;
+  for (const [indice, coeficiente] of coeficientes) soma += (coeficiente * trilha.visitas[indice].u[eixo]) ** 2;
+  return soma;
+}
+
+// Leitura corrigida só pela deriva dentro da passada: b − (ref(t) − média das visitas).
+function correctedWithinPass(linha, trilha) {
   const leitura = meanAndUncertainty(linha);
   if (!trilha) return leitura;
   const ref = trilha.at(linha.t_s);
+  const coeficientes = new Map(trilha.visitas.map((_, indice) => [indice, 1 / trilha.visitas.length]));
+  for (const { indice, w } of ref.pesos) coeficientes.set(indice, coeficientes.get(indice) - w);
   return {
     b: [0, 1, 2].map((eixo) => leitura.b[eixo] - (ref.b[eixo] - trilha.media[eixo])),
-    u: [0, 1, 2].map((eixo) => Math.hypot(leitura.u[eixo], ref.u[eixo])),
+    u: [0, 1, 2].map((eixo) => Math.sqrt(leitura.u[eixo] ** 2 + referenceVariance(trilha, coeficientes, eixo))),
+  };
+}
+
+// (ligada − ref ligada(t)) − (desligada − ref desligada(t')): campo da bobina relativo à referência.
+function relativeToReference(par, trilhas) {
+  const ligada = meanAndUncertainty(par.ligada);
+  const desligada = meanAndUncertainty(par.desligada);
+  const refLigada = trilhas.ligada.at(par.ligada.t_s);
+  const refDesligada = trilhas.desligada.at(par.desligada.t_s);
+  const pesosLigada = refLigada.pesos.map(({ indice, w }) => [indice, w]);
+  const pesosDesligada = refDesligada.pesos.map(({ indice, w }) => [indice, w]);
+  return {
+    b: [0, 1, 2].map((eixo) => (ligada.b[eixo] - refLigada.b[eixo]) - (desligada.b[eixo] - refDesligada.b[eixo])),
+    u: [0, 1, 2].map((eixo) => Math.sqrt(
+      ligada.u[eixo] ** 2 + desligada.u[eixo] ** 2
+        + referenceVariance(trilhas.ligada, pesosLigada, eixo)
+        + referenceVariance(trilhas.desligada, pesosDesligada, eixo),
+    )),
   };
 }
 
@@ -207,24 +248,23 @@ export function processMap(linhas, opcoes = {}) {
   const grade = detectGrid(pareamento.posicoes);
   const deriva = opcoes.corrigirDeriva
     ? buildDriftCorrection(pareamento.referencias, opcoes.campoDaBobina)
-    : { trilhas: {}, salto: [0, 0, 0], referencia: null, avisos: [] };
+    : { modo: "nenhuma", trilhas: {}, salto: [0, 0, 0], referencia: null, campoNaReferencia: null, avisos: [] };
 
   const pontos = pareamento.pares.map((par) => {
-    const ligada = correctedReading(par.ligada, deriva.trilhas.ligada);
-    const desligada = correctedReading(par.desligada, deriva.trilhas.desligada);
-    return {
-      chave: par.chave,
-      x: par.x,
-      y: par.y,
-      z: par.z,
-      ligada,
-      desligada,
-      delta: {
-        b: [0, 1, 2].map((eixo) => ligada.b[eixo] - desligada.b[eixo] - deriva.salto[eixo]),
+    const ligada = correctedWithinPass(par.ligada, deriva.trilhas.ligada);
+    const desligada = correctedWithinPass(par.desligada, deriva.trilhas.desligada);
+    let relativo = null;
+    let delta;
+    if (deriva.modo === "relativa") {
+      relativo = relativeToReference(par, deriva.trilhas);
+      delta = { b: [0, 1, 2].map((eixo) => relativo.b[eixo] + deriva.campoNaReferencia[eixo]), u: relativo.u };
+    } else {
+      delta = {
+        b: [0, 1, 2].map((eixo) => ligada.b[eixo] - desligada.b[eixo]),
         u: [0, 1, 2].map((eixo) => Math.hypot(ligada.u[eixo], desligada.u[eixo])),
-      },
-      modelo: null,
-    };
+      };
+    }
+    return { chave: par.chave, x: par.x, y: par.y, z: par.z, ligada, desligada, relativo, delta, modelo: null };
   });
 
   const linhasDaGrade = linhas.filter((linha) => linha.tipo === "ponto");

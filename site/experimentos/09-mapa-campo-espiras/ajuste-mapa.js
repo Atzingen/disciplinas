@@ -89,30 +89,44 @@ function invertMatrix(matriz) {
   return a.map((linha) => linha.slice(n));
 }
 
-// pontos: [{ x, y, z, delta: { b, u } }]. parametros: geometria, dimensaoMm,
-// voltas, correnteA e o chute inicial de x0, y0, z0 (mm).
-export function fitCoil(pontos, parametros) {
+// pontos: [{ x, y, z, delta: { b, u }, relativo: { b, u } | null }]. parametros: geometria,
+// dimensaoMm, voltas, correnteA e o chute inicial de x0, y0, z0 (mm).
+// opcoes.referencia { x, y, z }: com a correção de deriva entre passadas, os dados são o campo
+// relativo ao ponto de referência (ponto.relativo) e o modelo vira B(P) − B(ref). Assim o
+// ajuste não depende do chute usado para mostrar ΔB.
+export function fitCoil(pontos, parametros, opcoes = {}) {
   const vertices = coilPath(parametros.geometria, parametros.dimensaoMm);
   if (!vertices) throw new Error("Geometria sem modelo: não há o que ajustar.");
   if (pontos.length < 2) throw new Error("São necessários pelo menos dois pontos para o ajuste.");
+  const referencia = opcoes.referencia ?? null;
+  if (referencia && pontos.some((ponto) => !ponto.relativo)) {
+    throw new Error("Os pontos não têm o campo relativo à referência.");
+  }
+  const dados = pontos.map((ponto) => (referencia ? ponto.relativo : ponto.delta));
   const escala = parametros.voltas * parametros.correnteA;
   const n = pontos.length * 3;
   const medidos = new Float64Array(n);
   const raizDoPeso = new Float64Array(n);
-  pontos.forEach((ponto, i) => {
+  // Piso da incerteza (metade da mediana): um ponto com desvio zero não pode valer mais que 4 pontos típicos.
+  const positivas = dados.flatMap((dado) => dado.u).filter((u) => u > 0).sort((a, b) => a - b);
+  const piso = positivas.length ? 0.5 * positivas[Math.floor(positivas.length / 2)] : 1e-3;
+  dados.forEach((dado, i) => {
     for (let eixo = 0; eixo < 3; eixo += 1) {
-      medidos[3 * i + eixo] = ponto.delta.b[eixo];
-      raizDoPeso[3 * i + eixo] = 1 / Math.max(ponto.delta.u[eixo], 1e-3);
+      medidos[3 * i + eixo] = dado.b[eixo];
+      raizDoPeso[3 * i + eixo] = 1 / Math.max(dado.u[eixo], piso);
     }
   });
 
   // Campo do modelo com k = 1 e centro em c, já ponderado.
   function weightedModel(c) {
     const m = new Float64Array(n);
+    const naReferencia = referencia
+      ? pathField(vertices, referencia.x - c[0], referencia.y - c[1], referencia.z - c[2])
+      : [0, 0, 0];
     pontos.forEach((ponto, i) => {
       const campo = pathField(vertices, ponto.x - c[0], ponto.y - c[1], ponto.z - c[2]);
       for (let eixo = 0; eixo < 3; eixo += 1) {
-        m[3 * i + eixo] = campo[eixo] * escala * raizDoPeso[3 * i + eixo];
+        m[3 * i + eixo] = (campo[eixo] - naReferencia[eixo]) * escala * raizDoPeso[3 * i + eixo];
       }
     });
     return m;

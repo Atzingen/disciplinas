@@ -241,14 +241,10 @@ test("ajuste recupera k e o centro da bobina a partir de dados com ruído", () =
 test("exemplo sintético atravessa leitura, correção de deriva e ajuste", () => {
   const juntado = mergeMapFiles([parseMapFile(generateExampleCsv(), "exemplo.csv")]);
   assert.deepEqual(juntado.avisos, []);
-  let parametros = { geometria: "circulo", dimensaoMm: 150, voltas: 20, correnteA: 1, k: 1, x0: 0, y0: 0, z0: 0 };
-  let processado;
-  let ajuste;
-  for (let rodada = 0; rodada < 2; rodada += 1) {
-    processado = processMap(juntado.linhas, { corrigirDeriva: true, campoDaBobina: createModel(parametros) });
-    ajuste = fitCoil(processado.pontos, parametros);
-    parametros = { ...parametros, k: ajuste.k, x0: ajuste.x0, y0: ajuste.y0, z0: ajuste.z0 };
-  }
+  const parametros = { geometria: "circulo", dimensaoMm: 150, voltas: 20, correnteA: 1, k: 1, x0: 0, y0: 0, z0: 0 };
+  const processado = processMap(juntado.linhas, { corrigirDeriva: true, campoDaBobina: createModel(parametros) });
+  assert.equal(processado.deriva.modo, "relativa");
+  const ajuste = fitCoil(processado.pontos, parametros, { referencia: processado.deriva.referencia });
   assert.equal(processado.pontos.length, 25 * 25 * 6);
   assert.deepEqual(processado.grade.z, EXEMPLO.grade.z);
   closeTo(processado.ruido.porLeitura, EXEMPLO.ruidoPorLeitura, 0.03, "ruído por leitura");
@@ -256,6 +252,65 @@ test("exemplo sintético atravessa leitura, correção de deriva e ajuste", () =
   closeTo(ajuste.x0, EXEMPLO.x0, 0.05, "x0 do exemplo");
   closeTo(ajuste.y0, EXEMPLO.y0, 0.05, "y0 do exemplo");
   closeTo(ajuste.z0, EXEMPLO.z0, 0.05, "z0 do exemplo");
+});
+
+// Falha que pega: com a referência perto da bobina, o salto entre passadas descontado pelo modelo do
+// chute inicial (k = 1) puxava o ajuste para longe do k verdadeiro.
+test("ajuste com referência perto da bobina não depende do chute inicial", () => {
+  const verdadeiro = createModel({ geometria: "quadrado", dimensaoMm: 150, voltas: 20, correnteA: 1, k: 1.6 });
+  const fundo = (x, y, z) => [17 + 0.01 * x, 12 - 0.02 * y, 14 + 0.005 * z];
+  const linhas = [];
+  for (const passada of ["desligada", "ligada"]) {
+    let t = 0;
+    const medir = (tipo, posicao) => {
+      const extra = passada === "ligada" ? verdadeiro(...posicao) : [0, 0, 0];
+      linhas.push(linha(passada, tipo, t, posicao, fundo(...posicao).map((valor, i) => valor + extra[i])));
+      t += 5;
+    };
+    for (const z of [20, 50]) {
+      for (const y of [-60, 0, 60]) {
+        medir("ref", [0, 0, 30]);
+        for (const x of [-60, 0, 60]) medir("ponto", [x, y, z]);
+      }
+    }
+    medir("ref", [0, 0, 30]);
+  }
+  const lidas = parseMapFile([CABECALHO, ...linhas].join("\n"), "ref-perto.csv").linhas;
+  const chute = { geometria: "quadrado", dimensaoMm: 150, voltas: 20, correnteA: 1, k: 1, x0: 0, y0: 0, z0: 0 };
+  const processado = processMap(lidas, { corrigirDeriva: true, campoDaBobina: createModel(chute) });
+  const ajuste = fitCoil(processado.pontos, chute, { referencia: processado.deriva.referencia });
+  closeTo(ajuste.k, 1.6, 1e-3, "k verdadeiro");
+  closeTo(ajuste.rms, 0, 1e-3, "resíduo sem ruído");
+});
+
+// Falha que pega: com uma só visita à referência, a correção dentro da passada se anula (b − r + média),
+// mas a incerteza da referência entrava mesmo assim e inflava u(ΔB) em várias vezes.
+test("incerteza não conta a referência quando a correção dela se anula", () => {
+  const linhas = [
+    linha("desligada", "ponto", 0, [0, 0, 20], [10, 10, 10], 0.4, 16),
+    linha("ligada", "ref", 0, [-100, -100, 150], [11, 11, 11], 4, 16),
+    linha("ligada", "ponto", 5, [0, 0, 20], [30, 30, 30], 0.4, 16),
+  ];
+  const lidas = parseMapFile([CABECALHO, ...linhas].join("\n"), "uma-ref.csv").linhas;
+  const processado = processMap(lidas, { corrigirDeriva: true });
+  closeTo(processado.pontos[0].delta.b[0], 20, 1e-12, "ΔB");
+  closeTo(processado.pontos[0].delta.u[0], Math.hypot(0.1, 0.1), 1e-12, "u(ΔB) só das leituras do ponto");
+});
+
+// Falha que pega: CSV sem a coluna passada (por exemplo o processado exportado) derrubava a leitura com
+// TypeError em vez de dizer quais colunas faltam.
+test("arquivo sem colunas obrigatórias é recusado sem erro de execução", () => {
+  const lido = parseMapFile("tipo,t_s,x_mm\nponto,1,0\nponto,2,10", "sem-passada.csv");
+  assert.match(lido.erro, /faltam as colunas.*passada/);
+  assert.deepEqual(lido.avisos, []);
+});
+
+// Falha que pega: um ponto com desvio zero (uma leitura só) ganhava peso de milhares e arrastava k.
+test("ponto com incerteza zero não domina o ajuste", () => {
+  const pontos = noisyModelData({ geometria: "quadrado", k: 1, centro: [0, 0, 0], ruido: 0.16 });
+  pontos[40].delta = { b: pontos[40].delta.b.map((valor) => valor + 30), u: [0, 0, 0] };
+  const ajuste = fitCoil(pontos, { geometria: "quadrado", dimensaoMm: 150, voltas: 20, correnteA: 1 });
+  closeTo(ajuste.k, 1, 0.01, "k com um ponto corrompido de incerteza zero");
 });
 
 test("página do experimento 09 fixa o three.js e traz as abas e o formato", async () => {
@@ -267,7 +322,7 @@ test("página do experimento 09 fixa o three.js e traz as abas e o formato", asy
   assert.equal(versoes.length, 2);
   assert.ok(versoes[0] && versoes.every((versao) => versao === versoes[0]), "uma só versão exata do three.js");
 
-  for (const painel of ["montagem", "fundamentos", "dados", "visualizacao", "relatorio"]) {
+  for (const painel of ["montagem", "fundamentos", "dados", "coleta", "visualizacao", "relatorio"]) {
     assert.match(html, new RegExp(`aria-controls="painel-${painel}"`));
     assert.match(html, new RegExp(`id="painel-${painel}"[^>]*role="tabpanel"`));
   }
