@@ -19,6 +19,7 @@ const PARAMETROS_PADRAO = Object.freeze({
 });
 const NOMES_DOS_PARAMETROS = ["geometria", "dimensaoMm", "voltas", "correnteA", "k", "x0", "y0", "z0"];
 const FIXOS_DO_PERFIL = { z: ["x", "y"], x: ["y", "z"], y: ["x", "z"] };
+const NOME_DO_EXEMPLO = "exemplo-sintetico.csv";
 
 function formatVector(vetor, casas = 2) {
   return `(${vetor.map((valor) => formatDecimal(valor, casas)).join("; ")})`;
@@ -65,6 +66,7 @@ export function mountFieldMap(raiz) {
     limpar: $("[data-mapa-limpar]"),
     status: $("[data-mapa-status]"),
     conteudo: $("[data-mapa-conteudo]"),
+    vistas: $("[data-mapa-vistas]"),
     resumo: $("[data-mapa-resumo]"),
     avisosCaixa: $("[data-mapa-avisos-caixa]"),
     avisosTitulo: $("[data-mapa-avisos-titulo]"),
@@ -129,6 +131,8 @@ export function mountFieldMap(raiz) {
   async function readFiles(lista) {
     const arquivos = [...lista];
     if (arquivos.length === 0) return;
+    // Arquivos novos se somam aos já carregados, mas nunca ao exemplo sintético.
+    estado.arquivos.delete(NOME_DO_EXEMPLO);
     setStatus(`Lendo ${arquivos.length} arquivo(s)…`);
     for (const arquivo of arquivos) {
       try {
@@ -142,8 +146,7 @@ export function mountFieldMap(raiz) {
 
   function loadExample() {
     estado.arquivos.clear();
-    const nome = "exemplo-sintetico.csv";
-    estado.arquivos.set(nome, parseMapFile(generateExampleCsv(), nome));
+    estado.arquivos.set(NOME_DO_EXEMPLO, parseMapFile(generateExampleCsv(), NOME_DO_EXEMPLO));
     loadData();
   }
 
@@ -231,6 +234,7 @@ export function mountFieldMap(raiz) {
       campoDaBobina: estado.modelo,
     });
     attachModel(estado.processado.pontos, estado.modelo);
+    el.vistas.hidden = estado.processado.pontos.length === 0;
     if (reiniciarControles) resetViewControls();
     updateAvailability();
     drawSummary();
