@@ -313,6 +313,47 @@ test("ponto com incerteza zero não domina o ajuste", () => {
   closeTo(ajuste.k, 1, 0.01, "k com um ponto corrompido de incerteza zero");
 });
 
+// Falha que pega: carregar juntos o CSV parcial e o final da mesma coleta dobrava a visita à referência
+// em t = 0 da passada desligada; sem modelo, ΔBx saía 9,87 μT em vez de 9,20 μT. A visita em t = 10,
+// que só o arquivo final tem, precisa continuar valendo.
+test("CSV parcial e final da mesma coleta não duplicam as visitas à referência", () => {
+  const meta = { formato: "mapa-campo v1", geometria: "outra" };
+  const comecoDaDesligada = [
+    linha("desligada", "ref", 0, [-100, -100, 150], [0, 0, 0]),
+    linha("desligada", "ponto", 3, [0, 0, 20], [10, 10, 10]),
+  ];
+  const resto = [
+    linha("desligada", "ref", 10, [-100, -100, 150], [4, 4, 4]),
+    linha("ligada", "ref", 0, [-100, -100, 150], [0, 0, 0]),
+    linha("ligada", "ponto", 3, [0, 0, 20], [20, 20, 20]),
+    linha("ligada", "ref", 10, [-100, -100, 150], [0, 0, 0]),
+  ];
+  const parcial = arquivo("coleta-parcial.csv", meta, comecoDaDesligada);
+  const final = arquivo("coleta.csv", meta, [...comecoDaDesligada, ...resto]);
+
+  const juntado = mergeMapFiles([parcial, final]);
+  assert.ok(juntado.avisos.some((aviso) => /^1 visita\(s\) ao ponto de referência/.test(aviso)));
+  const soFinal = processMap(mergeMapFiles([final]).linhas, { corrigirDeriva: true });
+  const ambos = processMap(juntado.linhas, { corrigirDeriva: true });
+
+  assert.equal(ambos.deriva.trilhas.desligada.visitas.length, 2);
+  closeTo(ambos.pontos[0].delta.b[0], 9.2, 1e-12, "ΔBx");
+  assert.deepEqual(ambos.pontos[0].delta, soFinal.pontos[0].delta);
+});
+
+// Falha que pega: com corrente 0 (o campo vazio da tela também virava 0) e dados não nulos, o ajuste
+// devolvia convergiu = true, k = 0 e incerteza indefinida em vez de recusar.
+test("ajuste recusa voltas × corrente zero ou não numérico", () => {
+  const pontos = noisyModelData({ geometria: "quadrado", k: 1, centro: [0, 0, 0], ruido: 0.16 });
+  for (const correnteA of [0, NaN]) {
+    assert.throws(
+      () => fitCoil(pontos, { geometria: "quadrado", dimensaoMm: 150, voltas: 20, correnteA }),
+      /voltas × corrente/,
+      `corrente ${correnteA}`,
+    );
+  }
+});
+
 test("página do experimento 09 fixa o three.js e traz as abas e o formato", async () => {
   const html = await readFile(new URL("../experimentos/09-mapa-campo-espiras/index.html", import.meta.url), "utf8");
   const relatorio = await readFile(new URL("../experimentos/09-mapa-campo-espiras/relatorio.md", import.meta.url), "utf8");

@@ -1,5 +1,6 @@
 // Leitura e escrita do formato "mapa-campo v1" (CSV com metadados em comentários).
 // O formato está descrito no README.md desta pasta e na aba Dados da página.
+import { positionKey } from "./processamento-mapa.js";
 
 export const FORMATO = "mapa-campo v1";
 
@@ -138,12 +139,22 @@ export function parseMapFile(texto, nome = "arquivo") {
   return { nome, metadados, colunas, linhas, avisos, erro: null };
 }
 
+// A mesma visita à referência gravada em dois arquivos (por exemplo o CSV parcial e o final da
+// mesma coleta) tem a mesma passada, o mesmo t_s e a mesma posição.
+function referenceVisitKey(linha) {
+  return `${linha.passada}|${linha.t_s}|${positionKey(linha.x_mm, linha.y_mm, linha.z_mm)}`;
+}
+
 // Junta arquivos já lidos. Arquivos com erro ficam de fora e o erro vira aviso.
+// Uma visita à referência que já veio de um arquivo anterior é descartada: contada duas vezes,
+// ela pesaria em dobro na média da trilha de deriva.
 export function mergeMapFiles(arquivos) {
   const avisos = [];
   const metadados = {};
   const origemDoMetadado = {};
   const linhas = [];
+  const visitasDosArquivosAnteriores = new Set();
+  let visitasDescartadas = 0;
   let colunasDeReferencia = null;
 
   for (const arquivo of arquivos) {
@@ -169,7 +180,24 @@ export function mergeMapFiles(arquivos) {
         );
       }
     }
-    linhas.push(...arquivo.linhas);
+    const visitasDesteArquivo = [];
+    for (const linha of arquivo.linhas) {
+      if (linha.tipo === "ref") {
+        const chave = referenceVisitKey(linha);
+        if (visitasDosArquivosAnteriores.has(chave)) {
+          visitasDescartadas += 1;
+          continue;
+        }
+        visitasDesteArquivo.push(chave);
+      }
+      linhas.push(linha);
+    }
+    for (const chave of visitasDesteArquivo) visitasDosArquivosAnteriores.add(chave);
+  }
+  if (visitasDescartadas > 0) {
+    avisos.push(
+      `${visitasDescartadas} visita(s) ao ponto de referência repetem uma visita de outro arquivo (mesma passada, mesmo t_s e mesma posição) e foram descartadas.`,
+    );
   }
   return { metadados, linhas, avisos };
 }

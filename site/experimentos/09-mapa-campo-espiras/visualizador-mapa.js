@@ -253,6 +253,8 @@ export function mountFieldMap(raiz) {
     }
     if (!(lidos.dimensaoMm > 0)) lidos.dimensaoMm = estado.parametros.dimensaoMm;
     if (!(lidos.voltas > 0)) lidos.voltas = estado.parametros.voltas;
+    // Corrente negativa vale (sentido horário); zero, inclusive o campo vazio, não.
+    if (lidos.correnteA === 0) lidos.correnteA = estado.parametros.correnteA;
     return lidos;
   }
 
@@ -448,7 +450,7 @@ export function mountFieldMap(raiz) {
         const referencia = deriva.modo === "relativa" ? deriva.referencia : null;
         const resultado = fitCoil(pontos, estado.parametros, { referencia });
         estado.parametros = { ...estado.parametros, k: resultado.k, x0: resultado.x0, y0: resultado.y0, z0: resultado.z0 };
-        estado.ajuste = { ...resultado, comDeriva: el.deriva.checked };
+        estado.ajuste = { ...resultado, comDeriva: deriva.modo !== "nenhuma" };
         fillParameters();
         reprocess();
         drawFit();
@@ -614,7 +616,7 @@ export function mountFieldMap(raiz) {
     const p = estado.parametros;
     const texto = formatProcessedCsv(estado.processado.pontos, {
       origem: [...estado.arquivos.keys()].join("; "),
-      correcao_de_deriva: el.deriva.checked ? "sim" : "não",
+      correcao_de_deriva: estado.processado.deriva.modo === "nenhuma" ? "não" : "sim",
       geometria: p.geometria,
       dimensao_mm: p.dimensaoMm,
       voltas: p.voltas,

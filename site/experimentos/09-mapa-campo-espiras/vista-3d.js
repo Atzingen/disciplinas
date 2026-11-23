@@ -195,7 +195,10 @@ export async function createFieldView(container) {
       if (dados.filtro && !dados.filtro(ponto)) continue;
       const vetor = quantityAt(ponto, dados.grandeza);
       if (!vetor) continue;
-      selecionados.push({ ponto, b: vetor.b, modulo: Math.hypot(...vetor.b) });
+      // Vetor nulo não tem direção: sem seta, em vez de uma seta falsa para +z.
+      const modulo = Math.hypot(...vetor.b);
+      if (!(modulo > 0)) continue;
+      selecionados.push({ ponto, b: vetor.b, modulo });
     }
     const maximo = Math.max(0, ...selecionados.map((item) => item.modulo));
     const passo = Math.min(grade.passo.x ?? 10, grade.passo.y ?? 10);
@@ -215,8 +218,7 @@ export async function createFieldView(container) {
     selecionados.forEach((item, i) => {
       const t = arrowScale(item.modulo, maximo, dados.escala);
       const comprimento = comprimentoMaximo * Math.max(0.12, t);
-      if (item.modulo > 0) direcao.set(...item.b).normalize();
-      else direcao.set(0, 0, 1);
+      direcao.set(...item.b).normalize();
       rotacao.setFromUnitVectors(cima, direcao);
       escala.set(largura, comprimento, largura);
       posicao.set(item.ponto.x, item.ponto.y, item.ponto.z);

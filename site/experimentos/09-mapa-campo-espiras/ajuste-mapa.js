@@ -104,6 +104,10 @@ export function fitCoil(pontos, parametros, opcoes = {}) {
   }
   const dados = pontos.map((ponto) => (referencia ? ponto.relativo : ponto.delta));
   const escala = parametros.voltas * parametros.correnteA;
+  // Com escala zero o modelo é nulo e k fica indeterminado: o ajuste "convergiria" com k = 0.
+  if (!Number.isFinite(escala) || escala === 0) {
+    throw new Error("voltas × corrente é zero ou não é um número: informe a corrente da passada ligada e o número de voltas.");
+  }
   const n = pontos.length * 3;
   const medidos = new Float64Array(n);
   const raizDoPeso = new Float64Array(n);

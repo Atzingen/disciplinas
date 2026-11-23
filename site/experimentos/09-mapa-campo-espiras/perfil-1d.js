@@ -6,7 +6,11 @@ import { wrapParts } from "./cortes-2d.js";
 import { seriesColors, themeInk } from "./paletas.js";
 
 const MARGEM = { esquerda: 66, direita: 18, base: 50 };
-const LEGENDAS = { medido: "medido ± incerteza", modelo: "modelo de Biot-Savart" };
+const LEGENDAS = {
+  medido: "medido ± incerteza",
+  calculado: "calculado nos pontos da grade",
+  modelo: "modelo de Biot-Savart",
+};
 
 function niceStep(intervalo, alvo = 6) {
   const bruto = intervalo / alvo;
@@ -87,9 +91,13 @@ export function drawProfile(canvas, pontos, opcoes) {
   const linhasDoTitulo = wrapParts(ctx, [GRANDEZAS[grandeza], `${COMPONENTES[componente]} ao longo de ${eixo}`, `(${fixos})`], largura - 24);
   linhasDoTitulo.forEach((linha, i) => ctx.fillText(linha, 12, 22 + 17 * i, largura - 24));
 
+  // Com a grandeza "modelo" os pontos são o próprio modelo: calculados, sem incerteza.
+  const pontosCalculados = grandeza === "modelo";
+  const entradaDosPontos = pontosCalculados ? "calculado" : "medido";
+
   // Posição das entradas da legenda: na mesma linha quando cabem.
   ctx.font = `12px ${tinta.fonteMono}`;
-  const entradas = curva.length > 0 ? ["medido", "modelo"] : ["medido"];
+  const entradas = curva.length > 0 ? [entradaDosPontos, "modelo"] : [entradaDosPontos];
   const posicoesDaLegenda = [];
   let xLegenda = 12;
   let yLegenda = 22 + 17 * linhasDoTitulo.length + 4;
@@ -106,7 +114,7 @@ export function drawProfile(canvas, pontos, opcoes) {
   if (medidos.length === 0) {
     ctx.fillStyle = tinta.tintaSuave;
     ctx.font = `13px ${tinta.fonteMono}`;
-    ctx.fillText("Nenhum ponto medido nesta reta.", 12, 60);
+    ctx.fillText("Nenhum ponto medido nesta reta.", 12, yLegenda + 24);
     return null;
   }
 
@@ -121,7 +129,7 @@ export function drawProfile(canvas, pontos, opcoes) {
   if (todos.length === 0) {
     ctx.fillStyle = tinta.tintaSuave;
     ctx.font = `13px ${tinta.fonteMono}`;
-    ctx.fillText("Todos os valores desta reta são zero: não há o que mostrar em escala logarítmica.", 12, 60);
+    ctx.fillText("Todos os valores desta reta são zero: não há o que mostrar em escala logarítmica.", 12, yLegenda + 24);
     return null;
   }
   let yMin = Math.min(...todos);
@@ -210,7 +218,7 @@ export function drawProfile(canvas, pontos, opcoes) {
     ctx.stroke();
   }
 
-  // Pontos medidos com barras de incerteza
+  // Pontos com barras de incerteza (os calculados não têm barra)
   ctx.strokeStyle = cores.medido;
   ctx.fillStyle = cores.medido;
   ctx.lineWidth = 1.5;
@@ -218,15 +226,17 @@ export function drawProfile(canvas, pontos, opcoes) {
     const x = paraX(item.s);
     const v = transformar(item.valor.valor);
     if (log && !(v > 0)) continue;
-    const baixo = log ? Math.max(v - item.valor.u, yMin) : v - item.valor.u;
-    ctx.beginPath();
-    ctx.moveTo(x, paraY(baixo));
-    ctx.lineTo(x, paraY(v + item.valor.u));
-    ctx.moveTo(x - 4, paraY(baixo));
-    ctx.lineTo(x + 4, paraY(baixo));
-    ctx.moveTo(x - 4, paraY(v + item.valor.u));
-    ctx.lineTo(x + 4, paraY(v + item.valor.u));
-    ctx.stroke();
+    if (!pontosCalculados) {
+      const baixo = log ? Math.max(v - item.valor.u, yMin) : v - item.valor.u;
+      ctx.beginPath();
+      ctx.moveTo(x, paraY(baixo));
+      ctx.lineTo(x, paraY(v + item.valor.u));
+      ctx.moveTo(x - 4, paraY(baixo));
+      ctx.lineTo(x + 4, paraY(baixo));
+      ctx.moveTo(x - 4, paraY(v + item.valor.u));
+      ctx.lineTo(x + 4, paraY(v + item.valor.u));
+      ctx.stroke();
+    }
     ctx.beginPath();
     ctx.arc(x, paraY(v), opcoes.destaque === item.ponto ? 6 : 4, 0, 2 * Math.PI);
     ctx.fill();
@@ -243,7 +253,7 @@ export function drawProfile(canvas, pontos, opcoes) {
   ctx.textAlign = "left";
   ctx.textBaseline = "middle";
   for (const { entrada, x, y } of posicoesDaLegenda) {
-    if (entrada === "medido") {
+    if (entrada !== "modelo") {
       ctx.fillStyle = cores.medido;
       ctx.beginPath();
       ctx.arc(x + 9, y, 4, 0, 2 * Math.PI);
