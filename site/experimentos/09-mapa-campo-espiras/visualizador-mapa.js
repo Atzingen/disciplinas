@@ -730,7 +730,8 @@ export function mountFieldMap(raiz) {
 }
 
 if (typeof document !== "undefined") {
+  // A aba Coleta usa readFiles para abrir aqui o que acabou de medir.
   for (const raiz of document.querySelectorAll("[data-mapa-campo]")) {
-    mountFieldMap(raiz);
+    raiz.mapaCampo = mountFieldMap(raiz);
   }
 }

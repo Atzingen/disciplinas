@@ -39,6 +39,7 @@
         <button class="experiment-tab" id="aba-montagem" type="button" role="tab" aria-selected="true" aria-controls="painel-montagem" tabindex="0">Montagem</button>
         <button class="experiment-tab" id="aba-fundamentos" type="button" role="tab" aria-selected="false" aria-controls="painel-fundamentos" tabindex="-1">Fundamentos</button>
         <button class="experiment-tab" id="aba-dados" type="button" role="tab" aria-selected="false" aria-controls="painel-dados" tabindex="-1">Dados</button>
+        <button class="experiment-tab" id="aba-coleta" type="button" role="tab" aria-selected="false" aria-controls="painel-coleta" tabindex="-1">Coleta</button>
         <button class="experiment-tab" id="aba-visualizacao" type="button" role="tab" aria-selected="false" aria-controls="painel-visualizacao" tabindex="-1">Visualização</button>
         <button class="experiment-tab" id="aba-relatorio" type="button" role="tab" aria-selected="false" aria-controls="painel-relatorio" tabindex="-1">Relatório</button>
       </div>
@@ -196,11 +197,11 @@
         <h3>Procedimento</h3>
         <ol class="procedure-list">
           <li><strong>Home e fixação.</strong> Com a mesa vazia, faça o <code>G28</code>. Coloque o suporte com a bobina no centro da mesa e prenda-o com fita para não deslizar. Envie <code>M18 S0</code>.</li>
-          <li><strong>Origem.</strong> Leve o sensor, em passos pequenos, até ficar sobre o centro marcado da bobina e anote as coordenadas da impressora. A origem dos dados é esse ponto; a altura z = 0 é o plano do fio. Meça com régua ou paquímetro a altura do plano da bobina sobre a mesa e a distância vertical entre o bico e o centro do sensor.</li>
+          <li><strong>Origem.</strong> Pela aba Coleta, leve o sensor, em passos pequenos, até ficar sobre o centro marcado da bobina e anote as coordenadas da impressora. A origem dos dados é esse ponto; a altura z = 0 é o plano do fio. Meça com régua ou paquímetro a altura do plano da bobina sobre a mesa e a distância vertical entre o bico e o centro do sensor.</li>
           <li><strong>Grade.</strong> Escolha os pontos: x e y de −120 a 120 mm, a cada 10 ou 20 mm, e alturas de 20 a 180 mm, mais densas perto da bobina (por exemplo 20, 30, 50, 80, 120 e 180 mm). Verifique que nenhum ponto leva o cabeçote para fora do curso nem o braço do sensor contra o suporte.</li>
           <li><strong>Passada desligada.</strong> Com a fonte desligada, percorra a grade. Em cada ponto: <code>M400</code>, uma pequena espera, 16 leituras do sensor, média e desvio padrão. A cada linha da grade, visite o ponto de referência, longe da bobina, e meça-o do mesmo jeito.</li>
           <li><strong>Passada ligada.</strong> Ligue a fonte em 1,000 A e espere a corrente estabilizar. Repita exatamente os mesmos pontos, na mesma ordem, com as mesmas visitas ao ponto de referência.</li>
-          <li><strong>Arquivos.</strong> Grave as duas passadas no formato da aba Dados, num arquivo só ou em dois. Abra-os na aba Visualização e confira o resumo antes de desmontar qualquer coisa.</li>
+          <li><strong>Arquivos.</strong> A aba Coleta faz as duas passadas e grava o CSV no formato da aba Dados. Abra-os na aba Visualização e confira o resumo antes de desmontar qualquer coisa.</li>
           <li><strong>Segunda bobina.</strong> Troque a bobina sem mover o suporte, refaça a origem pelo centro marcado da nova bobina e repita as duas passadas.</li>
         </ol>
       </article>
@@ -392,7 +393,7 @@
       <header class="experiment-section-heading">
         <h2>Dados</h2>
         <p>
-          Os dados vêm do programa de coleta em arquivos CSV. Esta aba descreve o
+          Os dados vêm da aba Coleta em arquivos CSV. Esta aba descreve o
           formato e o que anotar à mão; o tratamento fica na aba Visualização.
         </p>
       </header>
@@ -469,6 +470,204 @@ ligada,ponto,2.9,-120.0,-120.0,20.0,11.02,-14.80,-26.10,0.43,0.40,0.49,16</code>
             <tr><td>nome dos arquivos CSV</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
           </tbody>
         </table>
+      </div>
+    </section>
+
+    <section class="experiment-panel" id="painel-coleta" role="tabpanel" aria-labelledby="aba-coleta" tabindex="0" hidden>
+      <header class="experiment-section-heading">
+        <h2>Coleta</h2>
+        <p>
+          Esta aba conduz a impressora e lê o sensor pelas portas USB do
+          computador, faz as duas passadas e grava o CSV no formato da aba Dados.
+          Funciona no Chrome, no Edge ou no Opera do computador (Linux, macOS ou
+          Windows); o Safari e o Firefox não têm acesso a portas seriais.
+        </p>
+      </header>
+
+      <div class="mapa coleta" data-coleta>
+        <p class="mapa-status" data-coleta-status role="status" aria-live="polite">Conecte a impressora e o sensor para começar.</p>
+
+        <section class="mapa-bloco" aria-labelledby="coleta-conexoes-titulo">
+          <h3 id="coleta-conexoes-titulo">1. Conexões</h3>
+          <p>
+            Grave na ESP32 o <a href="./sensor_mlx90393/sensor_mlx90393.ino" download>sketch do sensor</a>
+            (biblioteca Adafruit MLX90393 2.0.5, placa “ESP32 Dev Module”). Cada
+            botão de conectar abre a lista de portas do navegador: escolha a da
+            impressora e depois a da ESP32.
+          </p>
+          <div class="coleta-grade">
+            <fieldset class="mapa-modelo">
+              <legend>Impressora (Marlin)</legend>
+              <label class="mapa-campo-form">Velocidade da porta
+                <select data-coleta-baud>
+                  <option value="115200" selected>115200</option>
+                  <option value="250000">250000</option>
+                </select>
+              </label>
+              <div class="mapa-acoes">
+                <button class="mapa-botao mapa-botao--principal" type="button" data-coleta-conectar-impressora>Conectar impressora</button>
+                <button class="mapa-botao" type="button" data-coleta-desconectar-impressora disabled>Desconectar</button>
+              </div>
+              <p class="mapa-nota" data-coleta-estado-impressora>Desconectada.</p>
+            </fieldset>
+            <fieldset class="mapa-modelo">
+              <legend>Sensor (ESP32 com MLX90393)</legend>
+              <div class="mapa-acoes">
+                <button class="mapa-botao mapa-botao--principal" type="button" data-coleta-conectar-sensor>Conectar sensor</button>
+                <button class="mapa-botao" type="button" data-coleta-desconectar-sensor disabled>Desconectar</button>
+                <button class="mapa-botao" type="button" data-coleta-medir-aqui disabled>Medir aqui</button>
+              </div>
+              <p class="mapa-nota" data-coleta-estado-sensor>Desconectado.</p>
+            </fieldset>
+          </div>
+          <p class="mapa-nota">
+            No Linux, o usuário precisa poder abrir as portas: no Arch ele entra
+            no grupo <code>uucp</code>, no Debian e no Ubuntu no grupo
+            <code>dialout</code> (depois saia e entre de novo na sessão).
+          </p>
+        </section>
+
+        <section class="mapa-bloco" aria-labelledby="coleta-movimento-titulo">
+          <h3 id="coleta-movimento-titulo">2. Movimento manual</h3>
+          <p>
+            Faça o home <strong>com a mesa vazia</strong>, antes de colocar o
+            suporte da bobina: o sensor de nivelamento desce no meio da mesa e
+            bateria nele. Depois disso, não refaça o home até terminar as duas
+            passadas.
+          </p>
+          <div class="mapa-acoes">
+            <button class="mapa-botao" type="button" data-coleta-home disabled>Home (G28), mesa vazia</button>
+            <button class="mapa-botao" type="button" data-coleta-subir disabled>Subir para Z = 250</button>
+            <button class="mapa-botao" type="button" data-coleta-ir-origem disabled>Ir para a origem</button>
+          </div>
+          <div class="mapa-controles coleta-jog">
+            <label class="mapa-campo-form coleta-curto">Passo
+              <select data-coleta-passo>
+                <option value="0.1">0,1 mm</option>
+                <option value="1">1 mm</option>
+                <option value="10" selected>10 mm</option>
+                <option value="50">50 mm</option>
+              </select>
+            </label>
+            <div class="mapa-acoes" role="group" aria-label="Mover a cabeça">
+              <button class="mapa-botao" type="button" data-coleta-jog="X-" disabled>X −</button>
+              <button class="mapa-botao" type="button" data-coleta-jog="X+" disabled>X +</button>
+              <button class="mapa-botao" type="button" data-coleta-jog="Y-" disabled>Y −</button>
+              <button class="mapa-botao" type="button" data-coleta-jog="Y+" disabled>Y +</button>
+              <button class="mapa-botao" type="button" data-coleta-jog="Z-" disabled>Z −</button>
+              <button class="mapa-botao" type="button" data-coleta-jog="Z+" disabled>Z +</button>
+            </div>
+          </div>
+          <dl class="mapa-resumo">
+            <div><dt>Impressora</dt><dd data-coleta-posicao>—</dd></div>
+            <div><dt>Bobina (x, y, z)</dt><dd data-coleta-posicao-bobina>—</dd></div>
+            <div><dt>Última medida</dt><dd data-coleta-ultima>—</dd></div>
+          </dl>
+        </section>
+
+        <section class="mapa-bloco" aria-labelledby="coleta-origem-titulo">
+          <h3 id="coleta-origem-titulo">3. Origem e eixos</h3>
+          <p>
+            Leve o sensor (o furinho da ponteira) para cima do centro marcado da
+            bobina, meça com a régua a altura dele até o plano do fio e marque a
+            origem. As coordenadas do arquivo passam a contar a partir daí.
+          </p>
+          <div class="mapa-controles">
+            <label class="mapa-campo-form">Altura do sensor acima da bobina (mm)
+              <input type="number" step="0.5" min="5" value="30" data-coleta-h0>
+            </label>
+            <button class="mapa-botao mapa-botao--principal" type="button" data-coleta-marcar-origem disabled>Marcar origem aqui</button>
+          </div>
+          <p class="mapa-nota" data-coleta-origem>Origem ainda não marcada.</p>
+          <p>
+            Para onde aponta cada eixo da caneta, nos eixos da impressora. Confira
+            com “Medir aqui” e um ímã: aproximando o polo norte pelo lado +X, o Bx
+            mostrado deve ficar negativo.
+          </p>
+          <div class="mapa-controles">
+            <label class="mapa-campo-form">frente <select data-coleta-eixo="frente"></select></label>
+            <label class="mapa-campo-form">esquerda <select data-coleta-eixo="esquerda"></select></label>
+            <label class="mapa-campo-form">cima <select data-coleta-eixo="cima"></select></label>
+          </div>
+        </section>
+
+        <section class="mapa-bloco" aria-labelledby="coleta-plano-titulo">
+          <h3 id="coleta-plano-titulo">4. Plano da varredura</h3>
+          <div class="mapa-controles">
+            <label class="mapa-campo-form">x mínimo (mm) <input type="number" step="1" value="-110" data-coleta-plano="xMin"></label>
+            <label class="mapa-campo-form">x máximo (mm) <input type="number" step="1" value="110" data-coleta-plano="xMax"></label>
+            <label class="mapa-campo-form">passo em x (mm) <input type="number" step="0.5" min="1" value="10" data-coleta-plano="xPasso"></label>
+            <label class="mapa-campo-form">y mínimo (mm) <input type="number" step="1" value="-110" data-coleta-plano="yMin"></label>
+            <label class="mapa-campo-form">y máximo (mm) <input type="number" step="1" value="110" data-coleta-plano="yMax"></label>
+            <label class="mapa-campo-form">passo em y (mm) <input type="number" step="0.5" min="1" value="10" data-coleta-plano="yPasso"></label>
+            <label class="mapa-campo-form mapa-campo-form--largo">alturas z (mm, separadas por vírgula)
+              <input type="text" value="20, 30, 50, 80, 120, 180" data-coleta-plano="alturas">
+            </label>
+            <label class="mapa-campo-form">referência x (mm) <input type="number" step="1" value="-110" data-coleta-plano="refX"></label>
+            <label class="mapa-campo-form">referência y (mm) <input type="number" step="1" value="-110" data-coleta-plano="refY"></label>
+            <label class="mapa-campo-form">referência z (mm) <input type="number" step="1" value="180" data-coleta-plano="refZ"></label>
+            <label class="mapa-campo-form">leituras por ponto <input type="number" step="1" min="1" max="256" value="16" data-coleta-plano="leituras"></label>
+            <label class="mapa-campo-form">pausa antes de medir (ms) <input type="number" step="50" min="0" value="300" data-coleta-plano="pausaMs"></label>
+            <label class="mapa-campo-form">velocidade (mm/min) <input type="number" step="100" min="100" value="3000" data-coleta-plano="velocidade"></label>
+          </div>
+          <fieldset class="mapa-modelo">
+            <legend>Bobina (vai para os metadados do arquivo)</legend>
+            <label class="mapa-campo-form">geometria
+              <select data-coleta-meta="geometria">
+                <option value="circulo">círculo</option>
+                <option value="quadrado">quadrado</option>
+                <option value="u">U</option>
+                <option value="outra">outra</option>
+              </select>
+            </label>
+            <label class="mapa-campo-form">dimensão (mm) <input type="number" step="1" value="150" data-coleta-meta="dimensao_mm"></label>
+            <label class="mapa-campo-form">voltas <input type="number" step="1" min="1" value="20" data-coleta-meta="voltas"></label>
+            <label class="mapa-campo-form">corrente na passada ligada (A) <input type="number" step="0.001" min="0" value="1.000" data-coleta-meta="corrente_A"></label>
+            <label class="mapa-campo-form mapa-campo-form--largo">observação <input type="text" value="" data-coleta-meta="observacao"></label>
+          </fieldset>
+          <div class="mapa-acoes">
+            <button class="mapa-botao" type="button" data-coleta-conferir>Conferir plano</button>
+            <button class="mapa-botao" type="button" data-coleta-cantos disabled>Percorrer os cantos na menor altura</button>
+          </div>
+          <p class="mapa-nota" data-coleta-resumo-plano>—</p>
+        </section>
+
+        <section class="mapa-bloco" aria-labelledby="coleta-passadas-titulo">
+          <h3 id="coleta-passadas-titulo">5. Passadas</h3>
+          <p>
+            Primeiro a passada com a fonte desligada (campo da Terra e fundo da
+            impressora), depois a ligada, sem mexer em nada entre as duas. O
+            andamento fica salvo neste navegador: se a página fechar, abra de novo
+            e use “Retomar”, desde que a impressora não tenha sido desligada nem
+            feito home.
+          </p>
+          <div class="mapa-acoes">
+            <button class="mapa-botao mapa-botao--principal" type="button" data-coleta-iniciar="desligada" disabled>Iniciar passada desligada</button>
+            <button class="mapa-botao mapa-botao--principal" type="button" data-coleta-iniciar="ligada" disabled>Iniciar passada ligada</button>
+            <button class="mapa-botao" type="button" data-coleta-pausar disabled>Pausar</button>
+            <button class="mapa-botao" type="button" data-coleta-parar disabled>Parar</button>
+            <button class="mapa-botao" type="button" data-coleta-retomar disabled>Retomar de onde parou</button>
+          </div>
+          <progress class="coleta-progresso" max="1" value="0" data-coleta-progresso></progress>
+          <p class="mapa-nota" data-coleta-andamento>Nenhuma passada em andamento.</p>
+          <div class="mapa-acoes">
+            <button class="mapa-botao" type="button" data-coleta-ver disabled>Ver no visualizador</button>
+            <button class="mapa-botao" type="button" data-coleta-baixar disabled>Baixar CSV</button>
+            <button class="mapa-botao" type="button" data-coleta-descartar disabled>Descartar dados salvos</button>
+          </div>
+        </section>
+
+        <section class="mapa-bloco" aria-labelledby="coleta-console-titulo">
+          <h3 id="coleta-console-titulo">6. Console G-code</h3>
+          <form class="mapa-controles" data-coleta-form-gcode>
+            <label class="mapa-campo-form mapa-campo-form--largo">Comando para a impressora
+              <input type="text" placeholder="por exemplo M114" autocomplete="off" spellcheck="false" data-coleta-gcode>
+            </label>
+            <button class="mapa-botao" type="submit" data-coleta-enviar-gcode disabled>Enviar</button>
+            <label class="mapa-checkbox"><input type="checkbox" data-coleta-mostrar-ok> mostrar “ok” e “busy”</label>
+          </form>
+          <pre class="coleta-log" data-coleta-log aria-label="Comandos enviados e respostas"></pre>
+        </section>
       </div>
     </section>
 
@@ -686,6 +885,7 @@ ligada,ponto,2.9,-120.0,-120.0,20.0,11.02,-14.80,-26.10,0.43,0.40,0.49,16</code>
   <script type="module" src="../../componentes/navegacao-principal.js"></script>
   <script type="module" src="../experimento.js"></script>
   <script type="module" src="./visualizador-mapa.js"></script>
+  <script type="module" src="./coleta-mapa.js"></script>
   </div>
 </body>
 </html>

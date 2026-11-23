@@ -87,6 +87,34 @@ ligada,ponto,2.9,-120.0,-120.0,20.0,11.02,-14.80,-26.10,0.43,0.40,0.49,16
   para cada centro e o centro é buscado por Nelder-Mead. A incerteza vem da
   covariância escalonada por χ²/ν.
 
+## Coleta (aba Coleta)
+
+A aba Coleta conduz a impressora e lê o sensor pelo Web Serial do navegador
+(Chrome, Edge ou Opera no computador; Safari e Firefox não têm). Ela conecta as
+duas portas, faz o home e o movimento manual, marca a origem sobre o centro da
+bobina, confere o plano contra o curso da impressora (240 x 240 x 300 mm) e roda
+as duas passadas com pausa, parada e retomada. O andamento fica salvo no
+`localStorage` do navegador, e o CSV sai neste formato. "Ver no visualizador"
+abre na aba Visualização o que já foi medido.
+
+Em cada ponto a aba envia `G1 X.. Y.. Z.. F..`, `M400` e `G4 P<pausa>` e só então
+pede a medida. O primeiro comando só sai depois de 1,5 s sem linhas chegando da
+impressora, porque um "ok" atrasado do boot deixaria os seguintes fora de ordem.
+
+Protocolo do sketch `sensor_mlx90393/sensor_mlx90393.ino` (ESP32, 115200):
+
+- `s`: modo silencioso; a placa para de imprimir leituras sozinha.
+- `f`: faixa de campo fraco (±4,9 mT em X e Y).
+- `r16`: média de 16 leituras (1 a 256), respondida em uma linha
+  `med,n,frente,esquerda,cima,s_frente,s_esquerda,s_cima`, em μT, nos eixos da
+  caneta, com a calibração gravada aplicada. Falha: `erro,leitura`.
+- O fim do setup imprime `obs: pronto`.
+
+Os eixos da caneta (frente, esquerda, cima) são levados aos eixos da impressora
+pela escolha feita na aba (por exemplo frente = +Y, esquerda = −X, cima = +Z).
+No Linux, o usuário precisa estar no grupo `uucp` (Arch) ou `dialout` (Debian,
+Ubuntu) para abrir as portas.
+
 ## Arquivos desta pasta
 
 | Arquivo | Conteúdo |
@@ -100,7 +128,11 @@ ligada,ponto,2.9,-120.0,-120.0,20.0,11.02,-14.80,-26.10,0.43,0.40,0.49,16
 | `vista-3d.js` | cena three.js (versão fixada no import map do `index.html`) |
 | `cortes-2d.js`, `perfil-1d.js`, `paletas.js` | desenho do corte, do perfil e cores |
 | `visualizador-mapa.js` | ligação da aba Visualização com a página |
+| `coleta-mapa.js` | ligação da aba Coleta com a página |
+| `coleta-marlin.js`, `coleta-sensor.js`, `coleta-serial.js` | conversa com o Marlin, com a ESP32 e com a porta Web Serial |
+| `coleta-varredura.js` | plano da varredura, limites, eixos, CSV e execução de uma passada |
+| `sensor_mlx90393/sensor_mlx90393.ino` | sketch da ESP32 com o MLX90393 |
 | `relatorio.md` | modelo de relatório |
 
-Os testes da lógica pura estão em `site/testes/mapa-campo.test.js`
-(`npm test` na raiz do repositório).
+Os testes da lógica pura estão em `site/testes/mapa-campo.test.js` e
+`site/testes/coleta-mapa-campo.test.js` (`npm test` na raiz do repositório).
