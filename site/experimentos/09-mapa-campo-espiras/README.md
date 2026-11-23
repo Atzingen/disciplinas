@@ -76,16 +76,21 @@ ligada,ponto,2.9,-120.0,-120.0,20.0,11.02,-14.80,-26.10,0.43,0.40,0.49,16
 - ΔB = ligada − desligada em cada posição pareada. A incerteza de cada
   componente é `sqrt(s_lig²/n_lig + s_desl²/n_desl)`.
 - Correção de deriva (ligada por padrão): em cada passada, as leituras do ponto
-  de referência são interpoladas linearmente no tempo e a variação delas em
-  torno da média é subtraída de cada leitura. O salto de zero entre as passadas
-  é a diferença das médias da referência menos o campo da bobina no ponto de
-  referência, calculado pelo modelo com os parâmetros atuais. Se a referência
-  estiver em posições diferentes nas duas passadas, só a deriva dentro de cada
-  passada é corrigida.
+  de referência são interpoladas linearmente no tempo. Com a referência na mesma
+  posição nas duas passadas, cada ponto dá
+  `relativo = (ligada − ref ligada(t)) − (desligada − ref desligada(t'))`, o
+  campo da bobina relativo ao campo dela na referência, sem zero do sensor nem
+  fundo e sem depender de modelo. O ajuste compara esse relativo com
+  `B(P) − B(ref)`. O ΔB mostrado é `relativo + B_modelo(ref)`, com os parâmetros
+  atuais do modelo (só exibição). Sem modelo, ou com a referência em posições
+  diferentes, só a deriva dentro de cada passada é corrigida. A incerteza entra
+  com o peso de cada visita à referência na interpolação.
 - O ajuste estima k (μ0 medido = k·μ0) e o centro (x0, y0, z0) da bobina por
   mínimos quadrados ponderados sobre as três componentes: k tem solução fechada
   para cada centro e o centro é buscado por Nelder-Mead. A incerteza vem da
-  covariância escalonada por χ²/ν.
+  covariância escalonada por χ²/ν. O peso de cada componente usa uma incerteza
+  de pelo menos metade da mediana, para um ponto com desvio zero não valer mais
+  que quatro pontos típicos.
 
 ## Coleta (aba Coleta)
 
@@ -100,14 +105,29 @@ abre na aba Visualização o que já foi medido.
 Em cada ponto a aba envia `G1 X.. Y.. Z.. F..`, `M400` e `G4 P<pausa>` e só então
 pede a medida. O primeiro comando só sai depois de 1,5 s sem linhas chegando da
 impressora, porque um "ok" atrasado do boot deixaria os seguintes fora de ordem.
+Pelo mesmo motivo, um comando sem resposta deixa a conexão "fora de sincronia" e
+a aba recusa novos comandos até reconectar. "echo:Home XYZ First" (movimento
+recusado por falta de home) interrompe a passada, e a posição é conferida com
+`M114` no primeiro ponto de cada passada e em cada visita à referência. O primeiro
+movimento sobe antes de andar no plano e só então desce.
+
+Uma operação de impressora por vez: movimento manual, home, console e passada
+travam os outros botões até terminar. Origem, eixos da caneta, plano e dados
+fixos da bobina ficam congelados do início da primeira passada até "Descartar",
+para a passada ligada repetir exatamente a grade da desligada. Recomeçar uma
+passada apaga antes as medidas dela. O ponto de referência é visitado no começo
+de uma linha a cada N linhas (padrão 4): o eixo Z é lento e subir até a
+referência a cada linha alongaria muito a passada.
 
 Protocolo do sketch `sensor_mlx90393/sensor_mlx90393.ino` (ESP32, 115200):
 
 - `s`: modo silencioso; a placa para de imprimir leituras sozinha.
 - `f`: faixa de campo fraco (±4,9 mT em X e Y).
-- `r16`: média de 16 leituras (1 a 256), respondida em uma linha
+- `r16`: média de 16 leituras (2 a 256), respondida em uma linha
   `med,n,frente,esquerda,cima,s_frente,s_esquerda,s_cima`, em μT, nos eixos da
-  caneta, com a calibração gravada aplicada. Falha: `erro,leitura`.
+  caneta, com a calibração gravada aplicada. Com menos de duas leituras válidas
+  (sem como estimar o desvio): `erro,leitura`. O número é lido só até o fim da
+  linha, para não engolir o comando seguinte.
 - O fim do setup imprime `obs: pronto`.
 
 Os eixos da caneta (frente, esquerda, cima) são levados aos eixos da impressora

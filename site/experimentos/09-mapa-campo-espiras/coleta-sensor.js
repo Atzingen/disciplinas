@@ -4,9 +4,11 @@
 export function lerMedida(linha) {
   const partes = String(linha).trim().split(",");
   if (partes[0] !== "med" || partes.length !== 8) return null;
+  if (partes.some((parte) => parte.trim() === "")) return null; // Number("") seria 0
   const numeros = partes.slice(1).map(Number);
   if (numeros.some((valor) => !Number.isFinite(valor))) return null;
   const [n, frente, esquerda, cima, sFrente, sEsquerda, sCima] = numeros;
+  if (!Number.isInteger(n) || n < 2) return null;
   return { n, frente, esquerda, cima, sFrente, sEsquerda, sCima };
 }
 
@@ -70,14 +72,32 @@ export function createSensorLink(write, { log = () => {} } = {}) {
           clearTimeout(relogio);
           resolve();
         },
+        reject: (erro) => {
+          clearTimeout(relogio);
+          reject(erro);
+        },
       };
     });
+  }
+
+  // Cabo solto ou porta fechada: as promessas pendentes não ficam esperando o prazo acabar.
+  function cancelarTudo(motivo = "Conexão com a ESP32 encerrada.") {
+    if (pendente) {
+      clearTimeout(pendente.relogio);
+      pendente.reject(new Error(motivo));
+      pendente = null;
+    }
+    if (prontoEsperado) {
+      prontoEsperado.reject(new Error(motivo));
+      prontoEsperado = null;
+    }
   }
 
   return {
     receber,
     medir,
     esperarPronto,
+    cancelarTudo,
     silenciar: () => enviar("s"),
     faixaFraca: () => enviar("f"),
   };

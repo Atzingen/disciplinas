@@ -327,7 +327,10 @@
               \(\vec r(t)\) é a leitura do ponto de referência interpolada no
               tempo dentro de cada passada. Subtraí-la cancela B₀ e a deriva; como
               na passada ligada a referência também sente um pouco da bobina,
-              esse pequeno campo, calculado pelo modelo, é devolvido no fim.
+              esse pequeno campo, calculado pelo modelo, é devolvido no fim. O
+              ajuste não usa esse termo: compara a parte medida (os dois
+              colchetes) com \(\vec B_{\mathrm{bob}}(P)-\vec B_{\mathrm{bob}}(P_{\mathrm{ref}})\)
+              do modelo, e por isso não depende do chute inicial.
             </small>
           </div>
         </div>
@@ -606,7 +609,8 @@ ligada,ponto,2.9,-120.0,-120.0,20.0,11.02,-14.80,-26.10,0.43,0.40,0.49,16</code>
             <label class="mapa-campo-form">referência x (mm) <input type="number" step="1" value="-110" data-coleta-plano="refX"></label>
             <label class="mapa-campo-form">referência y (mm) <input type="number" step="1" value="-110" data-coleta-plano="refY"></label>
             <label class="mapa-campo-form">referência z (mm) <input type="number" step="1" value="180" data-coleta-plano="refZ"></label>
-            <label class="mapa-campo-form">leituras por ponto <input type="number" step="1" min="1" max="256" value="16" data-coleta-plano="leituras"></label>
+            <label class="mapa-campo-form">referência a cada (linhas) <input type="number" step="1" min="1" value="4" data-coleta-plano="refCada"></label>
+            <label class="mapa-campo-form">leituras por ponto <input type="number" step="1" min="2" max="256" value="16" data-coleta-plano="leituras"></label>
             <label class="mapa-campo-form">pausa antes de medir (ms) <input type="number" step="50" min="0" value="300" data-coleta-plano="pausaMs"></label>
             <label class="mapa-campo-form">velocidade (mm/min) <input type="number" step="100" min="100" value="3000" data-coleta-plano="velocidade"></label>
           </div>

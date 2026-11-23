@@ -4,25 +4,40 @@
 // eixos paralelos aos da impressora. A calibração guarda a posição da impressora (X0, Y0, Z0) em que o sensor
 // estava sobre o centro da bobina a uma altura h0 medida com régua.
 
+import { lerPosicao } from "./coleta-marlin.js";
+
 export const CABECALHO_CSV = "passada,tipo,t_s,x_mm,y_mm,z_mm,bx_uT,by_uT,bz_uT,sx_uT,sy_uT,sz_uT,n";
 
+const TOLERANCIA_DE_POSICAO_MM = 0.05;
+
 export function valoresDaFaixa({ min, max, passo }) {
+  if (![min, max, passo].every(Number.isFinite)) throw new Error("Faixa inválida: preencha mínimo, máximo e passo com números.");
   if (!(passo > 0) || max < min) throw new Error("Faixa inválida: o passo precisa ser positivo e o máximo maior que o mínimo.");
   const quantidade = Math.floor((max - min) / passo + 1e-6) + 1;
   return Array.from({ length: quantidade }, (_, i) => Number((min + i * passo).toFixed(3)));
 }
 
-// Linhas em zigue-zague para a cabeça não voltar ao começo a cada linha; o ponto de referência é medido no
-// começo de cada linha (e no fim da passada), para acompanhar a deriva lenta do sensor.
-export function planejarVarredura({ x, y, alturas, referencia }) {
+// Linhas em zigue-zague para a cabeça não voltar ao começo a cada linha. O ponto de referência é medido no
+// começo de uma linha a cada `referenciaACadaLinhas` (e no fim da passada), para acompanhar a deriva lenta do
+// sensor; visitar a cada linha custa caro quando a referência fica alta, porque o eixo Z é lento.
+export function planejarVarredura({ x, y, alturas, referencia, referenciaACadaLinhas = 1 }) {
   const xs = valoresDaFaixa(x);
   const ys = valoresDaFaixa(y);
-  const zs = [...alturas].sort((a, b) => a - b);
+  if (!alturas.length || !alturas.every((z) => Number.isFinite(z) && z > 0)) {
+    throw new Error("Informe pelo menos uma altura z, em mm, maior que zero.");
+  }
+  if (referencia && ![referencia.x, referencia.y, referencia.z].every(Number.isFinite)) {
+    throw new Error("Preencha x, y e z do ponto de referência.");
+  }
+  if (!(Number.isInteger(referenciaACadaLinhas) && referenciaACadaLinhas >= 1)) {
+    throw new Error("A referência precisa ser visitada a cada 1 ou mais linhas (número inteiro).");
+  }
+  const zs = [...new Set(alturas)].sort((a, b) => a - b);
   const passos = [];
   let linha = 0;
   for (const z of zs) {
     for (const yLinha of ys) {
-      if (referencia) passos.push({ tipo: "ref", ...referencia });
+      if (referencia && linha % referenciaACadaLinhas === 0) passos.push({ tipo: "ref", ...referencia });
       const ordem = linha % 2 === 0 ? xs : [...xs].reverse();
       for (const xPonto of ordem) passos.push({ tipo: "ponto", x: xPonto, y: yLinha, z });
       linha++;
@@ -40,6 +55,10 @@ export function conferirLimites(passos, calibracao, { mesa = { x: 240, y: 240, z
   const problemas = [];
   for (const passo of passos) {
     const { X, Y, Z } = paraImpressora(passo, calibracao);
+    if (![X, Y, Z].every(Number.isFinite)) {
+      problemas.push("posição que não é número (algum campo vazio)");
+      continue;
+    }
     if (passo.z < alturaMinima) problemas.push(`altura ${passo.z} mm abaixo do mínimo de ${alturaMinima} mm`);
     if (X < 0 || X > mesa.x) problemas.push(`X = ${X.toFixed(1)} mm fora do curso (0 a ${mesa.x})`);
     if (Y < 0 || Y > mesa.y) problemas.push(`Y = ${Y.toFixed(1)} mm fora do curso (0 a ${mesa.y})`);
@@ -66,12 +85,16 @@ export function paraEixosDaImpressora(medida, mapeamento) {
   };
 }
 
-export function estimarDuracao(passos, { velocidadeMmS = 50, segundosPorMedida = 1.2, pausaS = 0.3 } = {}) {
+// O Marlin limita a velocidade do Z (poucos mm/s em impressora cartesiana): o trecho dura o maior dos dois tempos.
+export function estimarDuracao(passos, { velocidadeMmS = 50, velocidadeZMmS = 5, segundosPorMedida = 1.2, pausaS = 0.3 } = {}) {
   let total = 0;
   let anterior = null;
   for (const passo of passos) {
     if (anterior) {
-      total += Math.hypot(passo.x - anterior.x, passo.y - anterior.y, passo.z - anterior.z) / velocidadeMmS;
+      total += Math.max(
+        Math.hypot(passo.x - anterior.x, passo.y - anterior.y) / velocidadeMmS,
+        Math.abs(passo.z - anterior.z) / velocidadeZMmS,
+      );
     }
     total += segundosPorMedida + pausaS + 0.15;
     anterior = passo;
@@ -99,22 +122,47 @@ export function linhaCsv(registro) {
   ].join(",");
 }
 
+async function conferirPosicao(marlin, alvo) {
+  const posicao = lerPosicao(await marlin.enviar("M114"));
+  const fora = !posicao || Math.abs(posicao.x - alvo.X) > TOLERANCIA_DE_POSICAO_MM ||
+    Math.abs(posicao.y - alvo.Y) > TOLERANCIA_DE_POSICAO_MM || Math.abs(posicao.z - alvo.Z) > TOLERANCIA_DE_POSICAO_MM;
+  if (fora) {
+    const onde = posicao ? `X ${posicao.x}, Y ${posicao.y}, Z ${posicao.z}` : "posição desconhecida";
+    throw new Error(`A impressora não foi para X ${alvo.X.toFixed(2)}, Y ${alvo.Y.toFixed(2)}, Z ${alvo.Z.toFixed(2)} ` +
+      `(está em ${onde}). Ela pode ter perdido o home: não refaça o home com a bobina na mesa.`);
+  }
+}
+
 // Executa a passada a partir de `inicio`. Cada ponto: anda, espera o movimento acabar (M400), espera a
 // vibração passar (G4) e mede. Devolve onde parou, para retomar depois. Ao retomar, passe o mesmo
 // `inicioDaPassadaMs` para o t_s continuar contando desde o começo da passada (a correção de deriva usa ele).
+// O primeiro movimento sobe antes de andar no plano e só desce no fim, porque a cabeça pode estar em
+// qualquer lugar (por exemplo baixa, perto da bobina, depois de uma pausa e de movimento manual). A posição
+// é conferida pelo M114 no primeiro ponto e em cada visita à referência: movimento recusado pelo firmware
+// interrompe a passada em vez de medir no lugar errado.
 export async function executarPassada({
   passos, inicio = 0, passada, calibracao, mapeamento, marlin, sensor,
   leituras = 16, pausaMs = 300, velocidadeMmMin = 3000, relogio = () => Date.now(), inicioDaPassadaMs,
   aoMedir = () => {}, controle = { parar: () => false, esperarSePausado: async () => {} },
 }) {
   const t0 = inicioDaPassadaMs ?? relogio();
+  await marlin.enviar("G90");
   for (let i = inicio; i < passos.length; i++) {
     await controle.esperarSePausado();
     if (controle.parar()) return { estado: "parada", proximo: i };
     const passo = passos[i];
-    const { X, Y, Z } = paraImpressora(passo, calibracao);
+    const alvo = paraImpressora(passo, calibracao);
+    const { X, Y, Z } = alvo;
+    if (i === inicio) {
+      await marlin.enviar("M400");
+      const atual = lerPosicao(await marlin.enviar("M114"));
+      const zSeguro = Math.max(Z, atual?.z ?? Z);
+      await marlin.enviar(`G1 Z${zSeguro.toFixed(2)} F${velocidadeMmMin}`);
+      await marlin.enviar(`G1 X${X.toFixed(2)} Y${Y.toFixed(2)} F${velocidadeMmMin}`);
+    }
     await marlin.enviar(`G1 X${X.toFixed(2)} Y${Y.toFixed(2)} Z${Z.toFixed(2)} F${velocidadeMmMin}`);
     await marlin.enviar("M400");
+    if (i === inicio || passo.tipo === "ref") await conferirPosicao(marlin, alvo);
     if (pausaMs > 0) await marlin.enviar(`G4 P${pausaMs}`);
     const medida = await sensor.medir(leituras);
     const campo = paraEixosDaImpressora(medida, mapeamento);

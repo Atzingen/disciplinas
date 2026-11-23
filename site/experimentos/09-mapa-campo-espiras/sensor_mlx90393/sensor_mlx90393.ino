@@ -34,7 +34,7 @@
 //   r16   mede 16 leituras (de 1 a 256; sem número, 16) e responde numa linha:
 //         med,n,frente,esquerda,cima,s_frente,s_esquerda,s_cima
 //         em µT, com a calibração aplicada e sem o zero do z; s_ é o desvio padrão das n leituras.
-//         Se nenhuma leitura der certo, responde "erro,leitura".
+//         Com menos de duas leituras válidas (sem como estimar o desvio), responde "erro,leitura".
 //
 // As mensagens começam com "obs:" para o Serial Plotter não as desenhar. O fim do setup imprime "obs: pronto".
 
@@ -252,19 +252,36 @@ void medirParaColeta(int n) {
       somaQuadrados[i] += diferenca * (b[i] - media[i]);
     }
   }
-  if (validas == 0) {
+  if (validas < 2) {
     Serial.println("erro,leitura");
     return;
   }
   float desvio[3];
-  for (int i = 0; i < 3; i++) desvio[i] = validas > 1 ? sqrt(somaQuadrados[i] / (validas - 1)) : 0;
+  for (int i = 0; i < 3; i++) desvio[i] = sqrt(somaQuadrados[i] / (validas - 1));
   Serial.printf("med,%d,%.3f,%.3f,%.3f,%.3f,%.3f,%.3f\n", validas, media[0], media[1], media[2],
                 desvio[0], desvio[1], desvio[2]);
 }
 
+// Número do comando r, lido só até o fim da linha. O parseInt() da biblioteca pula qualquer caractere
+// que não seja dígito e engoliria o comando seguinte ("r\ns\n" viraria uma medida sem o "s").
+int lerNumeroAteOFimDaLinha() {
+  int numero = 0;
+  unsigned long inicio = millis();
+  while (millis() - inicio < 100) {
+    if (!Serial.available()) continue;
+    char c = Serial.peek();
+    if (c >= '0' && c <= '9') {
+      numero = numero * 10 + (Serial.read() - '0');
+    } else {
+      if (c == '\n' || c == '\r') Serial.read();
+      break;
+    }
+  }
+  return numero;
+}
+
 void setup() {
   Serial.begin(115200);
-  Serial.setTimeout(100);  // para o número do comando r
   delay(500);
   Serial.println("obs: MLX90393 na ESP32");
   Wire.begin(PINO_SDA, PINO_SCL);
@@ -299,7 +316,7 @@ void loop() {
   while (Serial.available()) {
     char comando = Serial.read();
     if (comando == 's') { silencioso = true; Serial.println("obs: modo silencioso"); }
-    if (comando == 'r') medirParaColeta(Serial.parseInt());
+    if (comando == 'r') medirParaColeta(lerNumeroAteOFimDaLinha());
     if (comando == 'm' || comando == 't' || comando == 'b') silencioso = false;
     if (comando == 'm') { modo = MEDIR; Serial.println("obs: modo medir"); }
     if (comando == 't') { modo = TABELA; Serial.println("t_ms,frente_uT,esquerda_uT,cima_uT,total_uT"); }

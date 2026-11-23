@@ -57,6 +57,36 @@ test("Marlin: mensagens de ocupado durante um movimento longo não viram erro de
   }
 });
 
+// Falha que pega: depois de um comando sem resposta, o "ok" atrasado confirmava o comando seguinte
+// (um M400 confirmado cedo faz medir com a cabeça andando).
+test("Marlin: depois de um comando sem resposta, o ok atrasado não confirma o próximo", async () => {
+  mock.timers.enable({ apis: ["setTimeout"] });
+  try {
+    const enviados = [];
+    const marlin = createMarlinLink(async (texto) => enviados.push(texto.trim()), { prazoMs: 1000 });
+    const perdido = marlin.enviar("G1 X10");
+    const seguinte = marlin.enviar("M400");
+    await Promise.resolve();
+    mock.timers.tick(1001);
+    await assert.rejects(perdido, /não respondeu/);
+    await assert.rejects(seguinte, /sincronia/);
+    marlin.receber("ok");
+    await assert.rejects(marlin.enviar("M400"), /sincronia/);
+    assert.deepEqual(enviados, ["G1 X10"], "nada mais é enviado depois da perda de sincronia");
+    assert.equal(marlin.foraDeSincronia(), true);
+  } finally {
+    mock.timers.reset();
+  }
+});
+
+test("Marlin: movimento recusado por falta de home rejeita, mesmo com o ok depois", async () => {
+  const marlin = createMarlinLink(async () => {});
+  const resposta = marlin.enviar("G1 X10 Y10 Z40");
+  marlin.receber("echo:Home XYZ First");
+  marlin.receber("ok");
+  await assert.rejects(resposta, /recusou/);
+});
+
 test("Marlin: comando desconhecido ou erro rejeita, mesmo com o ok depois", async () => {
   const marlin = createMarlinLink(async () => {});
   const resposta = marlin.enviar("G1 X99999");
@@ -67,6 +97,8 @@ test("Marlin: comando desconhecido ou erro rejeita, mesmo com o ok depois", asyn
 
 test("sensor: a medida chega já separada por eixo, e erro do sensor rejeita", async () => {
   assert.equal(lerMedida("frente_uT:1.0 esquerda_uT:2.0"), null);
+  assert.equal(lerMedida("med,16,1.5,,30.1,0.4,0.4,0.5"), null, "campo vazio não vira zero");
+  assert.equal(lerMedida("med,1,1.5,2.0,30.1,0,0,0"), null, "uma leitura só não dá desvio");
   const enviados = [];
   const sensor = createSensorLink(async (texto) => enviados.push(texto));
   const medida = sensor.medir(16);
@@ -77,6 +109,25 @@ test("sensor: a medida chega já separada por eixo, e erro do sensor rejeita", a
   const falha = sensor.medir(16);
   sensor.receber("erro,leitura");
   await assert.rejects(falha, /não conseguiu medir/);
+});
+
+// Falha que pega: campo vazio virava NaN, passava pela conferência e ia para o Marlin como "G1 XNaN".
+test("campo vazio ou não numérico é recusado antes de chegar à impressora", () => {
+  assert.throws(() => valoresDaFaixa({ min: Number(""), max: NaN, passo: 10 }), /preencha/);
+  assert.throws(() => planejarVarredura({ x: { min: 0, max: 10, passo: 10 }, y: { min: 0, max: 0, passo: 1 }, alturas: [] }), /altura/);
+  const problemas = conferirLimites([{ tipo: "ponto", x: NaN, y: 0, z: 20 }], { X0: 100, Y0: 100, Z0: 50, h0: 30 });
+  assert.ok(problemas.some((p) => /não é número/.test(p)));
+});
+
+test("referência visitada a cada N linhas, sempre na primeira e no fim", () => {
+  const passos = planejarVarredura({
+    x: { min: 0, max: 10, passo: 10 }, y: { min: 0, max: 30, passo: 10 }, alturas: [20],
+    referencia: { x: -100, y: -100, z: 150 }, referenciaACadaLinhas: 2,
+  });
+  const linhasComRef = [];
+  passos.forEach((p, i) => { if (p.tipo === "ref" && i + 1 < passos.length) linhasComRef.push(passos[i + 1].y); });
+  assert.deepEqual(linhasComRef, [0, 20]);
+  assert.equal(passos.at(-1).tipo, "ref");
 });
 
 test("faixa inclusiva: de -120 a 120 de 10 em 10 dá 25 valores, com passo fracionário sem perder o último", () => {
@@ -114,14 +165,48 @@ test("eixos: a caneta virada leva cada componente para o eixo certo da impressor
   assert.throws(() => paraEixosDaImpressora(medida, { frente: "+X", esquerda: "-X", cima: "+Z" }), /Dois eixos/);
 });
 
-test("passada: anda para a posição da impressora, espera o movimento e só então mede; parar e retomar", async () => {
+// Impressora de mentira que guarda a posição e responde ao M114 como o Marlin (posição projetada).
+// `recusar` simula a impressora sem home: o movimento não acontece e chega "echo:Home XYZ First".
+function marlinFalso({ recusar = false, inicio = { x: 0, y: 0, z: 0 } } = {}) {
+  const posicao = { ...inicio };
   const comandos = [];
-  const marlin = { enviar: async (texto) => { comandos.push(texto); return []; } };
-  let medidas = 0;
-  const sensor = { medir: async () => { medidas++; comandos.push("MEDIR"); return { n: 16, frente: 5, esquerda: 0, cima: -1, sFrente: 0.4, sEsquerda: 0.4, sCima: 0.5 }; } };
+  let relativo = false;
+  return {
+    comandos,
+    posicao,
+    enviar: async (texto) => {
+      comandos.push(texto);
+      if (texto === "G90") relativo = false;
+      if (texto === "G91") relativo = true;
+      if (texto === "M114") return [`X:${posicao.x.toFixed(2)} Y:${posicao.y.toFixed(2)} Z:${posicao.z.toFixed(2)} E:0.00 Count X:0 Y:0 Z:0`];
+      if (/^G1 /.test(texto) && !recusar) {
+        for (const eixo of ["X", "Y", "Z"]) {
+          const encontrado = new RegExp(`${eixo}(-?\\d+(?:\\.\\d+)?)`).exec(texto);
+          if (encontrado) {
+            const chave = eixo.toLowerCase();
+            posicao[chave] = relativo ? posicao[chave] + Number(encontrado[1]) : Number(encontrado[1]);
+          }
+        }
+      }
+      return [];
+    },
+  };
+}
+
+function sensorFalso(comandos) {
+  return {
+    medir: async () => {
+      comandos?.push("MEDIR");
+      return { n: 16, frente: 5, esquerda: 0, cima: -1, sFrente: 0.4, sEsquerda: 0.4, sCima: 0.5 };
+    },
+  };
+}
+
+test("passada: sobe antes do primeiro ponto, espera o movimento e só então mede; parar e retomar", async () => {
+  const marlin = marlinFalso({ inicio: { x: 10, y: 10, z: 30 } });
+  const sensor = sensorFalso(marlin.comandos);
   const passos = planejarVarredura({ x: { min: -10, max: 10, passo: 10 }, y: { min: 0, max: 0, passo: 1 }, alturas: [20] });
   const registros = [];
-  let pararDepois = 2;
   let agora = 1000;
   const comum = {
     passos, passada: "ligada", calibracao: { X0: 100, Y0: 100, Z0: 50, h0: 30 },
@@ -130,17 +215,34 @@ test("passada: anda para a posição da impressora, espera o movimento e só ent
   };
   const primeira = await executarPassada({
     ...comum, inicioDaPassadaMs: 1000,
-    controle: { parar: () => registros.length >= pararDepois, esperarSePausado: async () => {} },
+    controle: { parar: () => registros.length >= 2, esperarSePausado: async () => {} },
   });
   assert.deepEqual(primeira, { estado: "parada", proximo: 2 });
-  assert.deepEqual(comandos.slice(0, 4), ["G1 X90.00 Y100.00 Z40.00 F3000", "M400", "G4 P300", "MEDIR"]);
+  // Cabeça em Z 30, primeiro ponto em Z 40: sobe para 40 antes de andar em XY.
+  assert.deepEqual(marlin.comandos.slice(0, 10), [
+    "G90", "M400", "M114", "G1 Z40.00 F3000", "G1 X90.00 Y100.00 F3000", "G1 X90.00 Y100.00 Z40.00 F3000",
+    "M400", "M114", "G4 P300", "MEDIR",
+  ]);
   const segunda = await executarPassada({ ...comum, inicio: 2, inicioDaPassadaMs: 1000 });
   assert.deepEqual(segunda, { estado: "concluida", proximo: 3 });
-  assert.equal(medidas, 3);
   assert.deepEqual(registros.map((r) => r.x), [-10, 0, 10]);
   assert.ok(registros[2].t_s > registros[1].t_s, "o tempo continua contando depois de retomar");
   assert.equal(registros[0].bx, 5);
   assert.equal(registros[0].bz, -1);
+});
+
+// Falha que pega: impressora reconectada sem home recusa o movimento (e responde "ok"); a passada
+// "terminava" medindo sempre no mesmo lugar.
+test("passada: movimento recusado interrompe antes de medir no lugar errado", async () => {
+  const marlin = marlinFalso({ recusar: true });
+  const sensor = sensorFalso();
+  const passos = planejarVarredura({ x: { min: 0, max: 10, passo: 10 }, y: { min: 0, max: 0, passo: 1 }, alturas: [20] });
+  const registros = [];
+  await assert.rejects(executarPassada({
+    passos, passada: "desligada", calibracao: { X0: 100, Y0: 100, Z0: 50, h0: 30 },
+    mapeamento: { frente: "+X", esquerda: "+Y", cima: "+Z" }, marlin, sensor, aoMedir: (r) => registros.push(r),
+  }), /não foi para X 100\.00/);
+  assert.equal(registros.length, 0);
 });
 
 test("CSV: cabeçalho com metadados e linhas no formato mapa-campo v1", () => {

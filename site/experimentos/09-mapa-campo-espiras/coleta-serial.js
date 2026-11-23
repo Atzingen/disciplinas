@@ -62,7 +62,7 @@ export async function abrirCanal(porta, { velocidade = 115200, aoLinha, aoFechar
       aoFechar?.(mensagem);
     }
   }
-  ler();
+  const leitura = ler();
 
   // Um escritor só para a conexão inteira: a resposta pode chegar antes de a escrita anterior terminar, e o
   // próximo comando sairia com a porta ainda travada se cada escrita pegasse e soltasse o seu.
@@ -73,22 +73,25 @@ export async function abrirCanal(porta, { velocidade = 115200, aoLinha, aoFechar
     await escritor.write(codificador.encode(texto));
   }
 
+  // A porta só fecha com as duas pontas destravadas: cancela a leitura, espera o laço soltar o
+  // leitor e só então fecha (senão o close falha e a porta fica presa até recarregar a página).
   async function fechar() {
     lendo = false;
+    try {
+      await leitor?.cancel();
+    } catch {
+      // a porta já pode ter caído
+    }
+    await leitura;
     try {
       escritor.releaseLock();
     } catch {
       // já solto
     }
     try {
-      await leitor?.cancel();
-    } catch {
-      // a porta já pode ter caído
-    }
-    try {
       await porta.close();
     } catch {
-      // idem
+      // a porta já pode ter caído
     }
   }
 
