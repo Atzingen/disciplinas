@@ -1,5 +1,8 @@
 // Conversa com a ESP32 do MLX90393 (sketch sensor_mlx90393): "s" deixa a placa em silêncio e "r16" pede
 // a média de 16 leituras, que volta numa linha "med,n,frente,esquerda,cima,s_frente,s_esquerda,s_cima".
+// A resposta não diz a que pedido pertence. Depois de uma medida sem resposta no prazo, a resposta atrasada
+// dela seria aceita pela medida seguinte (o campo de outro ponto); por isso o link fica fora de sincronia e
+// recusa novas medidas até ser refeito, como o do Marlin.
 
 export function lerMedida(linha) {
   const partes = String(linha).trim().split(",");
@@ -15,6 +18,9 @@ export function lerMedida(linha) {
 export function createSensorLink(write, { log = () => {} } = {}) {
   let pendente = null;
   let prontoEsperado = null;
+  let foraDeSincronia = false;
+  const MENSAGEM_SEM_SINCRONIA = "A conversa com a ESP32 saiu de sincronia (uma medida ficou sem resposta). " +
+    "Desconecte e conecte o sensor de novo antes de continuar.";
 
   function receber(linhaBruta) {
     const linha = String(linhaBruta).trim();
@@ -46,12 +52,14 @@ export function createSensorLink(write, { log = () => {} } = {}) {
 
   // Cada leitura leva ~63 ms com o filtro do sketch; o prazo deixa folga de sobra.
   function medir(leituras = 16) {
+    if (foraDeSincronia) return Promise.reject(new Error(MENSAGEM_SEM_SINCRONIA));
     if (pendente) return Promise.reject(new Error("Já há uma medida em andamento."));
     return new Promise((resolve, reject) => {
       pendente = { resolve, reject };
       pendente.relogio = setTimeout(() => {
         pendente = null;
-        reject(new Error("A ESP32 não respondeu à medida."));
+        foraDeSincronia = true;
+        reject(new Error(`A ESP32 não respondeu à medida. ${MENSAGEM_SEM_SINCRONIA}`));
       }, 3000 + leituras * 200);
       enviar(`r${leituras}`).catch((erro) => {
         clearTimeout(pendente?.relogio);
@@ -98,6 +106,7 @@ export function createSensorLink(write, { log = () => {} } = {}) {
     medir,
     esperarPronto,
     cancelarTudo,
+    foraDeSincronia: () => foraDeSincronia,
     silenciar: () => enviar("s"),
     faixaFraca: () => enviar("f"),
   };

@@ -67,6 +67,26 @@ export function conferirLimites(passos, calibracao, { mesa = { x: 240, y: 240, z
   return [...new Set(problemas)];
 }
 
+// Os quatro cantos da grade de fato percorrida, na menor altura: os menores e maiores x e y dos pontos. Com
+// uma faixa que não é múltipla do passo, o último valor fica antes do máximo digitado (de -110 a 115 de 10 em
+// 10, a grade termina em 110), e o canto digitado pode cair fora do curso da impressora.
+export function cantosDaGrade(passos) {
+  const pontos = passos.filter((passo) => passo.tipo === "ponto");
+  const xs = pontos.map((ponto) => ponto.x);
+  const ys = pontos.map((ponto) => ponto.y);
+  const xMin = Math.min(...xs);
+  const xMax = Math.max(...xs);
+  const yMin = Math.min(...ys);
+  const yMax = Math.max(...ys);
+  const z = Math.min(...pontos.map((ponto) => ponto.z));
+  return [
+    { tipo: "ponto", x: xMin, y: yMin, z },
+    { tipo: "ponto", x: xMax, y: yMin, z },
+    { tipo: "ponto", x: xMax, y: yMax, z },
+    { tipo: "ponto", x: xMin, y: yMax, z },
+  ];
+}
+
 // mapeamento: para cada eixo da caneta, o eixo da impressora para onde ele aponta, com sinal.
 // Exemplo: { frente: "+Y", esquerda: "-X", cima: "+Z" }.
 export function paraEixosDaImpressora(medida, mapeamento) {
@@ -122,7 +142,7 @@ export function linhaCsv(registro) {
   ].join(",");
 }
 
-async function conferirPosicao(marlin, alvo) {
+export async function conferirPosicao(marlin, alvo) {
   const posicao = lerPosicao(await marlin.enviar("M114"));
   const fora = !posicao || Math.abs(posicao.x - alvo.X) > TOLERANCIA_DE_POSICAO_MM ||
     Math.abs(posicao.y - alvo.Y) > TOLERANCIA_DE_POSICAO_MM || Math.abs(posicao.z - alvo.Z) > TOLERANCIA_DE_POSICAO_MM;
@@ -148,6 +168,9 @@ export async function executarPassada({
   const t0 = inicioDaPassadaMs ?? relogio();
   await marlin.enviar("G90");
   for (let i = inicio; i < passos.length; i++) {
+    // Parada conferida antes e depois da pausa: com Parar e depois Pausar durante uma medida, esperar a
+    // pausa primeiro deixaria a passada presa esperando um "Continuar" que não vem.
+    if (controle.parar()) return { estado: "parada", proximo: i };
     await controle.esperarSePausado();
     if (controle.parar()) return { estado: "parada", proximo: i };
     const passo = passos[i];

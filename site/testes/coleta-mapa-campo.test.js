@@ -4,8 +4,8 @@ import test, { mock } from "node:test";
 import { createMarlinLink, lerPosicao } from "../experimentos/09-mapa-campo-espiras/coleta-marlin.js";
 import { createSensorLink, lerMedida } from "../experimentos/09-mapa-campo-espiras/coleta-sensor.js";
 import {
-  cabecalhoCsv, conferirLimites, executarPassada, linhaCsv, paraEixosDaImpressora, planejarVarredura,
-  valoresDaFaixa,
+  cabecalhoCsv, cantosDaGrade, conferirLimites, executarPassada, linhaCsv, paraEixosDaImpressora,
+  planejarVarredura, valoresDaFaixa,
 } from "../experimentos/09-mapa-campo-espiras/coleta-varredura.js";
 
 test("Marlin: o comando só termina no ok e devolve as linhas antes dele", async () => {
@@ -79,6 +79,26 @@ test("Marlin: depois de um comando sem resposta, o ok atrasado não confirma o p
   }
 });
 
+// Falha que pega: qualquer linha renovava o prazo. Com a porta da ESP32 escolhida como impressora, as leituras
+// que ela manda sem parar ("frente_uT:..." a cada 200 ms) mantinham o M114 esperando para sempre.
+// O prazo do teste faz a regressão falhar em vez de deixar o teste preso esperando.
+test("Marlin: só as mensagens de ocupado renovam o prazo; outras linhas não", { timeout: 2000 }, async () => {
+  mock.timers.enable({ apis: ["setTimeout"] });
+  try {
+    const marlin = createMarlinLink(async () => {}, { prazoMs: 5000 });
+    const resposta = marlin.enviar("M114");
+    await Promise.resolve();
+    for (let i = 0; i < 6; i++) {
+      mock.timers.tick(1000);
+      marlin.receber("frente_uT:1.20 esquerda_uT:-3.40 cima_uT:20.10 total_uT:20.42");
+    }
+    await assert.rejects(resposta, /não respondeu a "M114"/);
+    assert.equal(marlin.foraDeSincronia(), true);
+  } finally {
+    mock.timers.reset();
+  }
+});
+
 test("Marlin: movimento recusado por falta de home rejeita, mesmo com o ok depois", async () => {
   const marlin = createMarlinLink(async () => {});
   const resposta = marlin.enviar("G1 X10 Y10 Z40");
@@ -109,6 +129,26 @@ test("sensor: a medida chega já separada por eixo, e erro do sensor rejeita", a
   const falha = sensor.medir(16);
   sensor.receber("erro,leitura");
   await assert.rejects(falha, /não conseguiu medir/);
+});
+
+// Falha que pega: depois do prazo esgotado de um r16, a medida seguinte aceitava a resposta atrasada da
+// anterior, que é o campo de outro ponto.
+test("sensor: depois de uma medida sem resposta, a resposta atrasada não vale para a seguinte", async () => {
+  mock.timers.enable({ apis: ["setTimeout"] });
+  try {
+    const enviados = [];
+    const sensor = createSensorLink(async (texto) => enviados.push(texto));
+    const perdida = sensor.medir(16);
+    mock.timers.tick(3000 + 16 * 200 + 1);
+    await assert.rejects(perdida, /não respondeu/);
+    assert.equal(sensor.foraDeSincronia(), true);
+    const seguinte = sensor.medir(16);
+    sensor.receber("med,16,1.500,-2.250,30.125,0.400,0.410,0.520");
+    await assert.rejects(seguinte, /sincronia/);
+    assert.deepEqual(enviados, ["r16\n"], "nada mais é pedido à placa depois da perda de sincronia");
+  } finally {
+    mock.timers.reset();
+  }
 });
 
 // Falha que pega: campo vazio virava NaN, passava pela conferência e ia para o Marlin como "G1 XNaN".
@@ -156,6 +196,18 @@ test("limites: ponto fora do curso da mesa ou baixo demais é apontado antes de 
   const problemas = conferirLimites(passos, calibracao, { alturaMinima: 15 });
   assert.ok(problemas.some((p) => p.includes("X = -10.0")));
   assert.ok(problemas.some((p) => p.includes("altura 10 mm")));
+});
+
+// Falha que pega: com x de -110 a 115 de 10 em 10, a grade termina em 110, mas os cantos iam ao máximo digitado
+// (115); com X0 = 126 isso mandava X 241 a uma impressora de 240 mm de curso.
+test("cantos: os da grade de fato percorrida, sem a referência, na menor altura", () => {
+  const passos = planejarVarredura({
+    x: { min: -110, max: 115, passo: 10 }, y: { min: -110, max: 110, passo: 10 }, alturas: [50, 20],
+    referencia: { x: -120, y: -120, z: 180 },
+  });
+  const cantos = cantosDaGrade(passos);
+  assert.deepEqual(cantos.map((c) => [c.x, c.y, c.z]), [[-110, -110, 20], [110, -110, 20], [110, 110, 20], [-110, 110, 20]]);
+  assert.deepEqual(conferirLimites(cantos, { X0: 126, Y0: 120, Z0: 100, h0: 30 }), []);
 });
 
 test("eixos: a caneta virada leva cada componente para o eixo certo da impressora, com sinal", () => {
@@ -243,6 +295,28 @@ test("passada: movimento recusado interrompe antes de medir no lugar errado", as
     mapeamento: { frente: "+X", esquerda: "+Y", cima: "+Z" }, marlin, sensor, aoMedir: (r) => registros.push(r),
   }), /não foi para X 100\.00/);
   assert.equal(registros.length, 0);
+});
+
+// Falha que pega: Parar e depois Pausar durante uma medida; a passada esperava a pausa antes de olhar a parada
+// e ficava presa esperando um "Continuar" que não vinha.
+test("passada: com Parar e depois Pausar durante uma medida, a passada para em vez de esperar a pausa", { timeout: 2000 }, async () => {
+  const marlin = marlinFalso();
+  const passos = planejarVarredura({ x: { min: 0, max: 20, passo: 10 }, y: { min: 0, max: 0, passo: 1 }, alturas: [20] });
+  let pararPedido = false;
+  let pausado = false;
+  const resultado = await executarPassada({
+    passos, passada: "desligada", calibracao: { X0: 100, Y0: 100, Z0: 50, h0: 30 },
+    mapeamento: { frente: "+X", esquerda: "+Y", cima: "+Z" }, marlin, sensor: sensorFalso(),
+    aoMedir: () => {
+      pararPedido = true;
+      pausado = true;
+    },
+    controle: {
+      parar: () => pararPedido,
+      esperarSePausado: () => (pausado ? new Promise(() => {}) : Promise.resolve()),
+    },
+  });
+  assert.deepEqual(resultado, { estado: "parada", proximo: 1 });
 });
 
 test("CSV: cabeçalho com metadados e linhas no formato mapa-campo v1", () => {

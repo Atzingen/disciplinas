@@ -70,6 +70,9 @@ ligada,ponto,2.9,-120.0,-120.0,20.0,11.02,-14.80,-26.10,0.43,0.40,0.49,16
   diferem entre arquivos (vale o primeiro), quando faltam colunas (o arquivo é
   ignorado) e quando uma linha tem campos a mais, a menos ou não numéricos (a
   linha é ignorada). `data` e `observacao` podem mudar de um arquivo para outro.
+- Visitas à referência idênticas (mesma passada, mesmo `t_s` e mesma posição)
+  vindas de arquivos diferentes, como o CSV parcial e o final da mesma coleta,
+  contam uma vez só, com aviso.
 
 ## Processamento
 
@@ -106,18 +109,29 @@ Em cada ponto a aba envia `G1 X.. Y.. Z.. F..`, `M400` e `G4 P<pausa>` e só ent
 pede a medida. O primeiro comando só sai depois de 1,5 s sem linhas chegando da
 impressora, porque um "ok" atrasado do boot deixaria os seguintes fora de ordem.
 Pelo mesmo motivo, um comando sem resposta deixa a conexão "fora de sincronia" e
-a aba recusa novos comandos até reconectar. "echo:Home XYZ First" (movimento
-recusado por falta de home) interrompe a passada, e a posição é conferida com
-`M114` no primeiro ponto de cada passada e em cada visita à referência. O primeiro
-movimento sobe antes de andar no plano e só então desce.
+a aba recusa novos comandos até reconectar; o mesmo vale para uma medida da ESP32
+sem resposta, cuja resposta atrasada seria o campo de outro ponto. Só as
+mensagens de ocupado do Marlin (`echo:busy`) renovam o prazo de um comando, para
+a porta errada (a da ESP32, que não para de mandar linhas) não travar a aba.
+"echo:Home XYZ First" (movimento recusado por falta de home) interrompe a
+passada, e a posição é conferida com `M114` no primeiro ponto de cada passada e
+em cada visita à referência. O primeiro movimento sobe antes de andar no plano e
+só então desce.
 
 Uma operação de impressora por vez: movimento manual, home, console e passada
 travam os outros botões até terminar. Origem, eixos da caneta, plano e dados
 fixos da bobina ficam congelados do início da primeira passada até "Descartar",
-para a passada ligada repetir exatamente a grade da desligada. Recomeçar uma
-passada apaga antes as medidas dela. O ponto de referência é visitado no começo
-de uma linha a cada N linhas (padrão 4): o eixo Z é lento e subir até a
-referência a cada linha alongaria muito a passada.
+para a passada ligada repetir exatamente a grade da desligada; nada muda antes
+de todas as confirmações. A corrente é gravada quando a passada ligada começa e
+trava, e a retomada pede a confirmação dessa corrente; a observação continua
+editável e fica salva com a coleta. Recomeçar uma passada apaga antes as
+medidas dela. Com uma coleta salva, o console recusa os comandos que mudam o
+referencial da impressora (G28, G92, M206, M428, M501, M502 e G53 a G59); sem coleta, eles
+desmarcam a origem. Um home numa coleta ainda sem medidas a desfaz. "Percorrer
+os cantos" vai aos cantos da grade de fato medida (com faixa que não é múltipla
+do passo, antes do máximo digitado) e confere cada um com `M114`. O ponto de
+referência é visitado no começo de uma linha a cada N linhas (padrão 4): o eixo
+Z é lento e subir até a referência a cada linha alongaria muito a passada.
 
 Protocolo do sketch `sensor_mlx90393/sensor_mlx90393.ino` (ESP32, 115200):
 

@@ -1,6 +1,7 @@
 // Conversa com o Marlin pela serial: um comando por vez, e cada um só termina quando chega o "ok".
-// Enquanto um movimento longo roda, o Marlin manda mensagens de ocupado ("busy"); qualquer linha recebida
-// renova o prazo, então só um silêncio completo vira erro de tempo. Depois de um comando sem resposta, a
+// Enquanto um movimento longo roda, o Marlin manda mensagens de ocupado ("busy"); só elas renovam o prazo.
+// Qualquer outra linha não renova: com a porta da ESP32 escolhida por engano, o fluxo contínuo de leituras
+// dela manteria o comando esperando para sempre. Depois de um comando sem resposta, a
 // conversa fica fora de sincronia: o "ok" dele pode chegar depois e confirmar o comando seguinte (um M400
 // confirmado cedo faria medir com a cabeça andando). Por isso o link recusa tudo até ser refeito.
 
@@ -10,8 +11,28 @@ export function limparComando(texto) {
   return String(texto).replace(/;.*$/, "").trim();
 }
 
+// Comandos que mudam o referencial da impressora: home (G28), deslocamento das coordenadas (G92, M206, M428,
+// e M501/M502, que recarregam ou zeram o deslocamento do M206)
+// e sistemas de coordenadas de trabalho (G53 a G59, inclusive G59.1 a G59.3). Depois deles, a mesma
+// coordenada lógica pode ser outro lugar físico, e o M114 confere a coordenada já deslocada.
+const COMANDOS_QUE_MUDAM_O_REFERENCIAL = [
+  "G28", "G92", "M206", "M428", "M501", "M502", "G53", "G54", "G55", "G56", "G57", "G58", "G59",
+];
+
+export function mudaReferencial(texto) {
+  const encontrado = /^(?:N\d+\s*)?([GM])\s*(\d+)/i.exec(limparComando(texto));
+  if (!encontrado) return false;
+  const codigo = `${encontrado[1].toUpperCase()}${Number(encontrado[2])}`; // "G092" é o mesmo G92
+  return COMANDOS_QUE_MUDAM_O_REFERENCIAL.includes(codigo);
+}
+
 function ehOk(linha) {
   return linha === "ok" || linha.startsWith("ok ");
+}
+
+// Mensagem de ocupado do Marlin, como "echo:busy: processing"; a forma sem o "echo:" também vale.
+function ehOcupado(linha) {
+  return /^echo:\s*busy/i.test(linha) || /^busy:/i.test(linha);
 }
 
 // "echo:Home XYZ First" aparece quando a impressora perdeu o home: o Marlin recusa o movimento e
@@ -63,7 +84,7 @@ export function createMarlinLink(write, { log = () => {}, prazoMs = PRAZO_PADRAO
     if (!linha) return;
     log({ direcao: "recebido", texto: linha });
     if (!atual) return;
-    armarRelogio(atual);
+    if (ehOcupado(linha)) armarRelogio(atual);
     if (ehOk(linha)) {
       terminarAtual(atual.erro ? new Error(atual.erro) : null);
       return;

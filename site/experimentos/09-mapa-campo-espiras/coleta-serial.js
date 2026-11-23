@@ -27,6 +27,11 @@ export async function abrirCanal(porta, { velocidade = 115200, aoLinha, aoFechar
   let leitor = null;
   let bytesRecebidos = 0;
 
+  // Um escritor só para a conexão inteira: a resposta pode chegar antes de a escrita anterior terminar, e o
+  // próximo comando sairia com a porta ainda travada se cada escrita pegasse e soltasse o seu.
+  const escritor = porta.writable.getWriter();
+  const codificador = new TextEncoder();
+
   async function ler() {
     const decodificador = new TextDecoder();
     let resto = "";
@@ -54,6 +59,18 @@ export async function abrirCanal(porta, { velocidade = 115200, aoLinha, aoFechar
     }
     if (lendo) {
       lendo = false;
+      // O laço terminou sem ninguém pedir (erro de leitura, placa reiniciada, cabo solto): solta o escritor e
+      // fecha a porta aqui, senão ela continua aberta e conectar de novo falha com "The port is already open".
+      try {
+        escritor.releaseLock();
+      } catch {
+        // já solto
+      }
+      try {
+        await porta.close();
+      } catch {
+        // a porta já pode ter caído
+      }
       let mensagem = erro ? `Conexão perdida: ${erro.message}` : "A porta foi fechada.";
       if (erro?.name === "NetworkError" && bytesRecebidos === 0 && navigator.userAgent.includes("Linux")) {
         mensagem = "O Chrome perdeu a porta logo ao abrir. No Linux, rode no terminal: stty -F /dev/ttyUSB0 min 1 " +
@@ -63,11 +80,6 @@ export async function abrirCanal(porta, { velocidade = 115200, aoLinha, aoFechar
     }
   }
   const leitura = ler();
-
-  // Um escritor só para a conexão inteira: a resposta pode chegar antes de a escrita anterior terminar, e o
-  // próximo comando sairia com a porta ainda travada se cada escrita pegasse e soltasse o seu.
-  const escritor = porta.writable.getWriter();
-  const codificador = new TextEncoder();
 
   async function escrever(texto) {
     await escritor.write(codificador.encode(texto));

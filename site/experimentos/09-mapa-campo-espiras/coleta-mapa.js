@@ -8,19 +8,22 @@
 // - a coleta (origem, eixos da caneta, plano e dados fixos da bobina) é congelada quando a primeira passada
 //   começa e vale para as duas passadas até "Descartar", inclusive depois de recarregar a página.
 
-import { createMarlinLink, lerPosicao } from "./coleta-marlin.js";
+import { createMarlinLink, lerPosicao, mudaReferencial } from "./coleta-marlin.js";
 import { createSensorLink } from "./coleta-sensor.js";
 import { abrirCanal, reiniciarEsp32, webSerialDisponivel } from "./coleta-serial.js";
 import {
-  cabecalhoCsv, conferirLimites, estimarDuracao, executarPassada, linhaCsv, paraEixosDaImpressora,
-  paraImpressora, planejarVarredura,
+  cabecalhoCsv, cantosDaGrade, conferirLimites, conferirPosicao, estimarDuracao, executarPassada, linhaCsv,
+  paraEixosDaImpressora, paraImpressora, planejarVarredura,
 } from "./coleta-varredura.js";
 
 const CHAVE_SALVA = "mapa-campo-coleta-v2";
 const MAX_LINHAS_LOG = 400;
 const DIRECOES = ["+X", "-X", "+Y", "-Y", "+Z", "-Z"];
 const ALTURA_MINIMA_MANUAL_MM = 10;
-const META_EDITAVEL = ["corrente_A", "observacao"]; // pode mudar entre as passadas (medida no multímetro)
+// Podem mudar depois do início da coleta: a corrente (medida no multímetro) até a passada ligada começar,
+// quando ela é gravada na coleta e trava; a observação a qualquer momento fora de uma passada.
+const META_EDITAVEL = ["corrente_A", "observacao"];
+const MEDIDA_ZERADA = { frente: 0, esquerda: 0, cima: 0, sFrente: 0, sEsquerda: 0, sCima: 0 };
 const NOMES_DO_PLANO = {
   xMin: "x mínimo", xMax: "x máximo", xPasso: "passo em x", yMin: "y mínimo", yMax: "y máximo", yPasso: "passo em y",
   refX: "referência x", refY: "referência y", refZ: "referência z", refCada: "referência a cada",
@@ -197,13 +200,18 @@ export function setupFieldCollector(raiz) {
     };
   }
 
+  // Com uma coleta, valem a corrente gravada ao iniciar a passada ligada e a observação gravada nela.
   function metadadosDoArquivo() {
     const base = estado.coleta?.metadados ?? lerMetadadosFixos(lerPlano());
     return {
       ...base,
       corrente_A: base.corrente_A ?? campoMeta("corrente_A").value.trim(),
-      observacao: campoMeta("observacao").value.trim(),
+      observacao: base.observacao ?? campoMeta("observacao").value.trim(),
     };
+  }
+
+  function correnteGravada() {
+    return estado.coleta?.metadados.corrente_A;
   }
 
   // --- estado dos botões ---
@@ -214,7 +222,8 @@ export function setupFieldCollector(raiz) {
 
   function atualizarBotoes() {
     const impressoraOk = Boolean(impressora) && !impressora.marlin.foraDeSincronia();
-    const sensorOk = Boolean(sensor);
+    const sensorOk = Boolean(sensor) && !sensor.link.foraDeSincronia();
+    if (sensor && !sensorOk) el.estadoSensor.textContent = "Fora de sincronia: desconecte e conecte o sensor de novo.";
     const ocupado = Boolean(executando || operacao || conectando.impressora || conectando.sensor);
     const coleta = estado.coleta;
 
@@ -233,7 +242,7 @@ export function setupFieldCollector(raiz) {
     const pronto = impressoraOk && sensorOk && !ocupado && origemValida;
     for (const botao of el.iniciar) botao.disabled = !pronto;
     el.retomar.disabled = !pronto || !coleta || !passadaParada();
-    el.pausar.disabled = !executando;
+    el.pausar.disabled = !executando || executando.pararPedido;
     el.parar.disabled = !executando;
     el.pausar.textContent = executando?.pausado ? "Continuar" : "Pausar";
     el.ver.disabled = estado.linhas.length === 0;
@@ -245,6 +254,7 @@ export function setupFieldCollector(raiz) {
     for (const campo of el.meta) {
       campo.disabled = META_EDITAVEL.includes(campo.dataset.coletaMeta) ? Boolean(executando) : travado;
     }
+    if (correnteGravada() !== undefined) campoMeta("corrente_A").disabled = true;
   }
 
   function mostrarOrigem() {
@@ -461,24 +471,42 @@ export function setupFieldCollector(raiz) {
         }
       }
       await impressora.marlin.enviar("G91");
+      let erroDoMovimento = null;
       try {
         await impressora.marlin.enviar(`G1 ${eixo}${distancia} F${eixo === "Z" ? 600 : 3000}`);
-      } finally {
-        await impressora.marlin.enviar("G90");
+      } catch (erro) {
+        erroDoMovimento = erro;
       }
+      // Volta ao modo absoluto mesmo se o movimento falhou, mas só com a impressora conectada e em sincronia
+      // (senão o envio falharia de novo), e sem que uma falha do G90 esconda a do movimento.
+      try {
+        if (impressora && !impressora.marlin.foraDeSincronia()) await impressora.marlin.enviar("G90");
+      } catch (erro) {
+        erroDoMovimento ??= erro;
+      }
+      if (erroDoMovimento) throw erroDoMovimento;
       await atualizarPosicao();
     });
   }
 
+  // Depois do home (ou de outro comando que mude o referencial) a origem marcada não vale mais. Uma coleta sem
+  // nenhuma medida (a primeira passada falhou logo no primeiro ponto) não tem o que guardar e é desfeita direto,
+  // sem exigir "Descartar".
   function aposHome() {
     estado.calibracao = null;
-    if (estado.coleta) estado.coleta.homeRefeito = true;
+    if (estado.coleta && estado.linhas.length === 0) {
+      estado.coleta = null;
+      estado.passadas = {};
+    } else if (estado.coleta) {
+      estado.coleta.homeRefeito = true;
+    }
     salvar();
     mostrarOrigem();
+    mostrarAndamento();
   }
 
   function home() {
-    const aviso = estado.coleta
+    const aviso = estado.coleta && estado.linhas.length > 0
       ? "Há uma coleta em andamento: depois do home a origem dela não vale mais e ela terá de ser descartada. " +
         "A mesa está vazia, sem o suporte da bobina?"
       : "A mesa está vazia, sem o suporte da bobina? O home desce o sensor de nivelamento no meio da mesa.";
@@ -524,15 +552,21 @@ export function setupFieldCollector(raiz) {
 
   // Plano em uso: o congelado da coleta, ou o da tela quando ainda não há coleta.
   function planoAtual() {
-    if (estado.coleta) return { plano: estado.coleta.plano, passos: estado.coleta.passos, calibracao: estado.coleta.calibracao };
+    if (estado.coleta) {
+      const { plano, passos, calibracao, mapeamento } = estado.coleta;
+      return { plano, passos, calibracao, mapeamento };
+    }
     const plano = lerPlano();
-    return { plano, passos: planejarVarredura(plano), calibracao: estado.calibracao };
+    return { plano, passos: planejarVarredura(plano), calibracao: estado.calibracao, mapeamento: lerMapeamento() };
   }
 
-  // Devolve true quando o plano pode ser executado (origem marcada e todos os pontos dentro dos limites).
+  // Devolve true quando o plano pode ser executado (eixos da caneta válidos, origem marcada e todos os pontos
+  // dentro dos limites).
   function conferirPlano() {
     try {
-      const { plano, passos, calibracao } = planoAtual();
+      const { plano, passos, calibracao, mapeamento } = planoAtual();
+      // Dois eixos da caneta no mesmo eixo da impressora lançam erro aqui, antes de andar e medir.
+      paraEixosDaImpressora(MEDIDA_ZERADA, mapeamento);
       const problemas = calibracao ? conferirLimites(passos, calibracao) : [];
       const pontos = passos.filter((p) => p.tipo === "ponto").length;
       const duracao = estimarDuracao(passos, {
@@ -556,12 +590,18 @@ export function setupFieldCollector(raiz) {
       status("Corrija o plano antes de percorrer os cantos (veja o resumo do plano).", "error");
       return;
     }
-    const { plano, calibracao } = planoAtual();
-    const z = Math.min(...plano.alturas);
+    const { passos, calibracao } = planoAtual();
+    const cantos = cantosDaGrade(passos);
+    const problemas = conferirLimites(cantos, calibracao);
+    if (problemas.length) {
+      status(`Os cantos da grade não cabem no curso da impressora: ${problemas[0]}.`, "error");
+      return;
+    }
     return operar("cantos", async () => {
-      for (const [x, y] of [[plano.x.min, plano.y.min], [plano.x.max, plano.y.min], [plano.x.max, plano.y.max], [plano.x.min, plano.y.max]]) {
-        status(`Indo ao canto (${x}, ${y}) a ${z} mm…`);
-        await irPara({ x, y, z }, calibracao);
+      for (const canto of cantos) {
+        status(`Indo ao canto (${canto.x}, ${canto.y}) a ${canto.z} mm…`);
+        await irPara(canto, calibracao);
+        await conferirPosicao(impressora.marlin, paraImpressora(canto, calibracao));
       }
       status("Cantos percorridos. Confira se nada encostou na bobina nem no suporte.", "ready");
     });
@@ -574,21 +614,28 @@ export function setupFieldCollector(raiz) {
     delete estado.passadas[passada];
   }
 
+  // Depois que a passada ligada começa, vale a corrente gravada nela (o campo da tela volta ao padrão ao recarregar).
   function confirmarFonte(passada) {
     if (passada === "ligada") {
-      const corrente = campoMeta("corrente_A").value.trim();
+      const corrente = correnteGravada() ?? campoMeta("corrente_A").value.trim();
       return globalThis.confirm(`A fonte está ligada, com a corrente em ${corrente} A conferida no multímetro? Nada mais pode mudar de lugar.`);
     }
     return globalThis.confirm("A fonte da bobina está desligada (corrente zero)?");
   }
 
+  // Todas as conferências e confirmações vêm antes de mudar o estado: cancelar uma delas não pode deixar a
+  // coleta congelada só na memória nem apagar as medidas da passada.
   function iniciarPassada(passada) {
     if (executando || operacao) return;
+    if (!estado.coleta && !conferirPlano()) {
+      status("Corrija o plano antes de começar (veja o resumo do plano).", "error");
+      return;
+    }
+    const medidas = estado.linhas.filter((linha) => linha.startsWith(`${passada},`)).length;
+    if (medidas > 0 && !globalThis.confirm(`Recomeçar a passada ${passada} do zero apaga as ${medidas} medidas dela. Continuar?`)) return;
+    if (!confirmarFonte(passada)) return;
+
     if (!estado.coleta) {
-      if (!conferirPlano()) {
-        status("Corrija o plano antes de começar (veja o resumo do plano).", "error");
-        return;
-      }
       const plano = lerPlano();
       estado.coleta = {
         calibracao: { ...estado.calibracao },
@@ -596,18 +643,12 @@ export function setupFieldCollector(raiz) {
         campos: lerCampos(),
         plano,
         passos: planejarVarredura(plano),
-        metadados: lerMetadadosFixos(plano),
+        metadados: { ...lerMetadadosFixos(plano), observacao: campoMeta("observacao").value.trim() },
         homeRefeito: false,
       };
       estado.passadas = {};
     }
-    const existente = estado.passadas[passada];
-    if (existente) {
-      const medidas = estado.linhas.filter((linha) => linha.startsWith(`${passada},`)).length;
-      if (!globalThis.confirm(`Recomeçar a passada ${passada} do zero apaga as ${medidas} medidas dela. Continuar?`)) return;
-      apagarPassada(passada);
-    }
-    if (!confirmarFonte(passada)) return;
+    apagarPassada(passada);
     if (passada === "ligada") estado.coleta.metadados.corrente_A = campoMeta("corrente_A").value.trim();
     estado.passadas[passada] = { inicioMs: Date.now(), proximo: 0, concluida: false };
     salvar();
@@ -655,7 +696,10 @@ export function setupFieldCollector(raiz) {
         inicioDaPassadaMs: registro.inicioMs,
         controle: {
           parar: () => executando.pararPedido,
-          esperarSePausado: () => (executando.pausado ? new Promise((resolve) => { executando.retomarPausa = resolve; }) : Promise.resolve()),
+          // Com a parada pedida não há pausa a esperar; parar() também solta uma pausa que já está esperando.
+          esperarSePausado: () => (executando.pausado && !executando.pararPedido
+            ? new Promise((resolve) => { executando.retomarPausa = resolve; })
+            : Promise.resolve()),
         },
         aoMedir: (linha, indice) => {
           estado.linhas.push(linhaCsv(linha));
@@ -691,7 +735,7 @@ export function setupFieldCollector(raiz) {
   }
 
   function pausarOuContinuar() {
-    if (!executando) return;
+    if (!executando || executando.pararPedido) return;
     executando.pausado = !executando.pausado;
     if (!executando.pausado) {
       executando.retomarPausa?.();
@@ -711,6 +755,7 @@ export function setupFieldCollector(raiz) {
       executando.retomarPausa?.();
     }
     status("Parando depois do ponto atual…", "warning");
+    atualizarBotoes();
   }
 
   // --- arquivo ---
@@ -764,12 +809,19 @@ export function setupFieldCollector(raiz) {
       status("Espere a operação atual terminar para enviar o comando.", "warning");
       return;
     }
+    // Comando que muda o referencial: com uma coleta salva, é recusado; sem coleta, invalida a origem marcada.
+    const mudaOReferencial = mudaReferencial(comando);
+    if (mudaOReferencial && estado.coleta) {
+      status("Há uma coleta salva: o console não aceita G28, G92, M206, M428, M501, M502 nem G53 a G59, que mudam o referencial " +
+        "da impressora e invalidariam a origem dela. Baixe o CSV e descarte a coleta antes.", "warning");
+      return;
+    }
     el.gcode.value = "";
     return operar("console", async () => {
       try {
         await impressora.marlin.enviar(comando, { prazoMs: 240000 });
       } finally {
-        if (/^G28\b/i.test(comando)) aposHome();
+        if (mudaOReferencial) aposHome();
       }
       await atualizarPosicao();
     });
@@ -784,7 +836,12 @@ export function setupFieldCollector(raiz) {
   const salvo = lerSalvo();
   if (salvo) {
     Object.assign(estado, salvo);
-    if (estado.coleta) preencherCampos(estado.coleta.campos);
+    if (estado.coleta) {
+      preencherCampos(estado.coleta.campos);
+      const { corrente_A, observacao } = estado.coleta.metadados;
+      if (corrente_A !== undefined) campoMeta("corrente_A").value = corrente_A;
+      if (observacao !== undefined) campoMeta("observacao").value = observacao;
+    }
     if (estado.linhas.length) {
       status(`Há ${estado.linhas.length} medidas salvas neste navegador. Se a impressora não foi desligada nem fez home, dá para retomar.`, "warning");
     }
@@ -814,6 +871,11 @@ export function setupFieldCollector(raiz) {
   for (const botao of el.jogs) botao.addEventListener("click", () => jog(botao.dataset.coletaJog));
   el.marcarOrigem.addEventListener("click", marcarOrigem);
   for (const select of el.eixos) select.addEventListener("change", () => { estado.mapeamento = lerMapeamento(); salvar(); });
+  campoMeta("observacao").addEventListener("input", () => {
+    if (!estado.coleta) return;
+    estado.coleta.metadados.observacao = campoMeta("observacao").value.trim();
+    salvar();
+  });
   el.conferir.addEventListener("click", conferirPlano);
   el.cantos.addEventListener("click", percorrerCantos);
   for (const botao of el.iniciar) botao.addEventListener("click", () => iniciarPassada(botao.dataset.coletaIniciar));

@@ -31,7 +31,7 @@
 //
 // Comandos para o software de coleta (mapa do campo com a impressora 3D):
 //   s     silencioso: para de imprimir leituras sozinho e só responde aos comandos (m, t ou b voltam ao normal)
-//   r16   mede 16 leituras (de 1 a 256; sem número, 16) e responde numa linha:
+//   r16   mede 16 leituras (de 2 a 256; sem número, 16) e responde numa linha:
 //         med,n,frente,esquerda,cima,s_frente,s_esquerda,s_cima
 //         em µT, com a calibração aplicada e sem o zero do z; s_ é o desvio padrão das n leituras.
 //         Com menos de duas leituras válidas (sem como estimar o desvio), responde "erro,leitura".
