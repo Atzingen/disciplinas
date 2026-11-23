@@ -485,6 +485,18 @@
     "tags": ["RLC", "ressonância", "indutor", "capacitor", "resistor", "osciloscópio", "gerador de funções", "fase", "amortecimento", "fator de qualidade"]
   },
   {
+    "id": "experimento-09-mapa-campo-espiras",
+    "title": "Experimento 9 — Mapeamento 3D do campo de espiras",
+    "kind": "experimento",
+    "section": "experimentos",
+    "disciplines": ["PRCLFBE"],
+    "reference": "Montagem própria",
+    "theme": "Lei de Biot-Savart, mapa 3D e ajuste de μ0",
+    "description": "Uma impressora 3D leva um magnetômetro de três eixos sobre bobinas planas de 15 cm; duas passadas, com a bobina desligada e ligada, dão o campo ponto a ponto, visto em 3D e ajustado pelo modelo de Biot-Savart.",
+    "path": "experimentos/09-mapa-campo-espiras/",
+    "tags": ["Biot-Savart", "campo magnético", "espira", "bobina", "magnetômetro", "MLX90393", "impressora 3D", "mapa 3D", "ajuste", "μ0"]
+  },
+  {
     "id": "topico-01-picoh",
     "title": "Tópico 1 — Manipulação do robô Picoh",
     "kind": "topico",

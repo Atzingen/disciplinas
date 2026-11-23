@@ -137,6 +137,20 @@ O oitavo roteiro investiga a resposta em frequência de um circuito RLC:
    O relatório traz tabelas vazias e distingue a resposta normalizada CH2/CH1
    da corrente carregada pela resistência interna do gerador.
 
+O nono roteiro mapeia em três dimensões o campo de espiras planas:
+
+9. [mapeamento 3D do campo de espiras](site/experimentos/09-mapa-campo-espiras/):
+   bobinas planas de 15 cm (quadrado e círculo, 20 voltas, 1 A) sobre um
+   suporte não magnético; uma impressora 3D leva um magnetômetro MLX90393 por
+   uma grade de pontos e mede duas passadas, com a bobina desligada e ligada.
+   A aba **Visualização** lê os CSV no formato `mapa-campo v1` (descrito no
+   [README da pasta](site/experimentos/09-mapa-campo-espiras/README.md)),
+   pareia as passadas, corrige a deriva pelo ponto de referência, calcula o
+   modelo de Biot-Savart por segmentos retos e ajusta k (μ0 medido = k·μ0) e o
+   centro da bobina. Mostra o campo em 3D (three.js), em cortes 2D e em perfis
+   1D contra o modelo, exporta o ΔB em CSV e o corte em PNG, e traz um exemplo
+   sintético gerado no próprio navegador.
+
 Na página de cada experimento, a aba **Relatório** contém uma folha preparada
 para impressão. O botão de impressão ativa essa aba e remove da cópia os
 controles de navegação. A mesma estrutura também está disponível em

@@ -231,6 +231,7 @@ test("cada página restaura o tema escolhido antes de pintar a tela", async () =
     "exercicios/halliday-23-29/index.html",
     "experimentos/index.html",
     "experimentos/01-campo-corrente/index.html",
+    "experimentos/09-mapa-campo-espiras/index.html",
     "simuladores/index.html",
     "simuladores/cargas-e-vetores/index.html",
     "simuladores/cuba-eletrolitica/index.html",
@@ -288,6 +289,7 @@ test("experimentos e simuladores usam a mesma barra fixa dos exercícios", async
     "experimentos/05-escada-resistores/index.html",
     "experimentos/06-cuba-eletrolitica/index.html",
     "experimentos/07-carga-descarga-capacitores/index.html",
+    "experimentos/09-mapa-campo-espiras/index.html",
     "simuladores/cargas-e-vetores/index.html",
     "simuladores/cuba-eletrolitica/index.html",
   ];
