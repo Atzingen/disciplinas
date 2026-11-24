@@ -87,37 +87,140 @@ function plainText(html) {
     .replace(/\s+/g, " ");
 }
 
-function createInteractiveFixture({ withReport = false } = {}) {
-  const panels = new Map();
-  const makeTab = (controls, selected) => {
-    const attributes = new Map([
-      ["aria-controls", controls],
-      ["aria-selected", String(selected)],
-    ]);
-    return {
-      tabIndex: selected ? 0 : -1,
-      getAttribute: (name) => attributes.get(name),
-      setAttribute: (name, value) => attributes.set(name, value),
-      addEventListener() {},
-      removeEventListener() {},
-      focus() {},
-    };
-  };
-  const tabs = [
-    makeTab("painel-montagem", true),
-    makeTab("painel-fundamentos", false),
-    makeTab("painel-dados", false),
-    makeTab("painel-relatorio", false),
-  ];
-  for (const tab of tabs) {
-    panels.set(`#${tab.getAttribute("aria-controls")}`, { hidden: false });
-  }
-  const printButton = {
-    clickHandler: null,
+// Elemento falso com só o que experimento.js e abas.js usam do DOM.
+function fakeElement(tagName = "div") {
+  const attributes = new Map();
+  const listeners = new Map();
+  let ownText = "";
+  return {
+    tagName: tagName.toUpperCase(),
+    children: [],
+    hidden: false,
+    tabIndex: -1,
+    focused: false,
+    rect: { top: 0, bottom: 0 },
+    get textContent() {
+      return (
+        ownText +
+        this.children
+          .map((child) => (typeof child === "string" ? child : child.textContent))
+          .join("")
+      );
+    },
+    set textContent(value) {
+      ownText = String(value);
+      this.children = [];
+    },
+    getAttribute: (name) => attributes.get(name) ?? null,
+    setAttribute: (name, value) => attributes.set(name, String(value)),
     addEventListener(type, handler) {
-      if (type === "click") this.clickHandler = handler;
+      listeners.set(type, [...(listeners.get(type) ?? []), handler]);
+    },
+    removeEventListener() {},
+    // Chama os ouvintes na ordem de registro, como o navegador, e devolve o último resultado.
+    dispatch(type, event = {}) {
+      return (listeners.get(type) ?? [])
+        .map((handler) => handler({ preventDefault() {}, ...event }))
+        .at(-1);
+    },
+    append(...nodes) {
+      this.children.push(...nodes);
+    },
+    prepend(...nodes) {
+      this.children.unshift(...nodes);
+    },
+    before() {},
+    focus() {
+      this.focused = true;
+    },
+    getBoundingClientRect() {
+      return this.rect;
     },
   };
+}
+
+function descendants(element) {
+  return element.children
+    .filter((child) => typeof child !== "string")
+    .flatMap((child) => [child, ...descendants(child)]);
+}
+
+function partLinks(panel) {
+  return descendants(panel)
+    .filter((element) => element.tagName === "A")
+    .map((link) => ({ link, text: link.textContent }));
+}
+
+function createInteractiveFixture(t, { withReport = false, hash = "" } = {}) {
+  const windowListeners = new Map();
+  const created = [];
+  // Histórico com pilha de entradas, para simular o voltar do navegador.
+  const entries = [{ state: null, hash }];
+  let current = 0;
+  const fakeWindow = {
+    location: { hash },
+    pushed: [],
+    scrolls: [],
+    scrollY: 0,
+    history: {
+      get state() {
+        return entries[current].state;
+      },
+      pushState(state, _title, address) {
+        entries.splice(current + 1, Infinity, { state, hash: address });
+        current += 1;
+        fakeWindow.pushed.push(address);
+        fakeWindow.location.hash = address;
+      },
+      replaceState(state, _title, address = entries[current].hash) {
+        entries[current] = { state, hash: address };
+        fakeWindow.location.hash = address;
+      },
+      back() {
+        current -= 1;
+        fakeWindow.location.hash = entries[current].hash;
+        fakeWindow.dispatch("popstate");
+      },
+    },
+    scrollTo(options) {
+      fakeWindow.scrolls.push(options);
+    },
+    addEventListener(type, handler) {
+      windowListeners.set(type, handler);
+    },
+    dispatch(type) {
+      windowListeners.get(type)?.({});
+    },
+  };
+  globalThis.window = fakeWindow;
+  globalThis.document = {
+    createElement(tagName) {
+      const element = fakeElement(tagName);
+      created.push(element);
+      return element;
+    },
+  };
+  t.after(() => {
+    delete globalThis.window;
+    delete globalThis.document;
+  });
+
+  const names = ["Montagem", "Fundamentos", "Dados", "Relatório"];
+  const anchors = ["montagem", "fundamentos", "dados", "relatorio"];
+  const tabs = anchors.map((anchor, index) => {
+    const tab = fakeElement("button");
+    tab.setAttribute("aria-controls", `painel-${anchor}`);
+    tab.setAttribute("aria-selected", String(index === 0));
+    tab.textContent = names[index];
+    return tab;
+  });
+  const panels = new Map(
+    anchors.map((anchor) => [`#painel-${anchor}`, fakeElement("section")]),
+  );
+  const topbar = fakeElement("div");
+  topbar.rect = { top: 0, bottom: 120 };
+  const tabList = fakeElement("div");
+  const printButton = fakeElement("button");
   const reportDocument = withReport ? {} : null;
   const root = {
     querySelectorAll(selector) {
@@ -126,21 +229,25 @@ function createInteractiveFixture({ withReport = false } = {}) {
     querySelector(selector) {
       if (selector === "[data-print-report]") return printButton;
       if (selector === "[data-markdown-report]") return reportDocument;
+      if (selector === "[data-topbar]") return topbar;
+      if (selector === '[role="tablist"]') return tabList;
       return panels.get(selector) ?? null;
     },
   };
-  return { root, tabs, panels, printButton, reportDocument };
+  const progress = () =>
+    created.find((element) => element.className === "experiment-progress");
+  return { root, tabs, panels, printButton, window: fakeWindow, progress };
 }
 
-test("ação de imprimir ativa primeiro a aba Relatório", async () => {
+test("ação de imprimir ativa primeiro a aba Relatório", async (t) => {
   assert.equal(typeof experimentApi.setupExperiment, "function");
-  const fixture = createInteractiveFixture();
+  const fixture = createInteractiveFixture(t);
   let printCalls = 0;
 
   experimentApi.setupExperiment(fixture.root, () => {
     printCalls += 1;
   });
-  const printResult = fixture.printButton.clickHandler();
+  const printResult = fixture.printButton.dispatch("click");
 
   assert.equal(typeof printResult?.then, "function");
   await printResult;
@@ -151,8 +258,8 @@ test("ação de imprimir ativa primeiro a aba Relatório", async () => {
   assert.equal(printCalls, 1);
 });
 
-test("ação de imprimir aguarda o relatório Markdown completo", async () => {
-  const fixture = createInteractiveFixture({ withReport: true });
+test("ação de imprimir aguarda o relatório Markdown completo", async (t) => {
+  const fixture = createInteractiveFixture(t, { withReport: true });
   let releaseReport;
   let printCalls = 0;
   const reportReady = new Promise((resolve) => {
@@ -166,13 +273,79 @@ test("ação de imprimir aguarda o relatório Markdown completo", async () => {
     },
     () => reportReady,
   );
-  const printResult = fixture.printButton.clickHandler();
+  const printResult = fixture.printButton.dispatch("click");
 
   await Promise.resolve();
   assert.equal(printCalls, 0);
   releaseReport();
   await printResult;
   assert.equal(printCalls, 1);
+});
+
+test("abrir o experimento com #dados mostra direto a parte Dados", (t) => {
+  const fixture = createInteractiveFixture(t, { hash: "#dados" });
+  experimentApi.setupExperiment(fixture.root, () => {});
+
+  assert.equal(fixture.tabs[2].getAttribute("aria-selected"), "true");
+  assert.equal(fixture.panels.get("#painel-dados").hidden, false);
+  assert.equal(fixture.panels.get("#painel-montagem").hidden, true);
+  assert.equal(fixture.progress().textContent, "Parte 3 de 4 · Dados");
+  assert.equal(fixture.window.scrolls.length, 1);
+});
+
+test("a primeira parte só oferece Próxima e a última só Anterior", (t) => {
+  const fixture = createInteractiveFixture(t);
+  experimentApi.setupExperiment(fixture.root, () => {});
+
+  const first = partLinks(fixture.panels.get("#painel-montagem")).map(({ text }) => text);
+  const last = partLinks(fixture.panels.get("#painel-relatorio")).map(({ text }) => text);
+  const middle = partLinks(fixture.panels.get("#painel-dados")).map(({ text }) => text);
+
+  assert.deepEqual(first, ["Próxima: Fundamentos→", "Próxima: Fundamentos→"]);
+  assert.deepEqual(last, ["←Anterior: Dados", "←Anterior: Dados"]);
+  assert.deepEqual(middle, [
+    "←Anterior: Fundamentos",
+    "Próxima: Relatório→",
+    "←Anterior: Fundamentos",
+    "Próxima: Relatório→",
+  ]);
+});
+
+test("Próxima ativa a parte seguinte e o voltar do navegador retorna", (t) => {
+  const fixture = createInteractiveFixture(t);
+  experimentApi.setupExperiment(fixture.root, () => {});
+  const [, { link: next }] = partLinks(fixture.panels.get("#painel-montagem"));
+
+  fixture.window.scrollY = 5100;
+  next.dispatch("click");
+
+  assert.equal(fixture.tabs[1].getAttribute("aria-selected"), "true");
+  assert.equal(fixture.panels.get("#painel-fundamentos").hidden, false);
+  assert.equal(fixture.panels.get("#painel-montagem").hidden, true);
+  assert.equal(fixture.panels.get("#painel-fundamentos").focused, true);
+  assert.equal(fixture.progress().textContent, "Parte 2 de 4 · Fundamentos");
+  assert.deepEqual(fixture.window.pushed, ["#fundamentos"]);
+
+  fixture.window.history.back();
+
+  assert.equal(fixture.tabs[0].getAttribute("aria-selected"), "true");
+  assert.equal(fixture.panels.get("#painel-montagem").hidden, false);
+  // Volta ao ponto da parte onde o aluno clicou em Próxima.
+  assert.deepEqual(fixture.window.scrolls.at(-1), { top: 5100, behavior: "instant" });
+});
+
+test("clique na aba empilha o endereço e as setas só o substituem", (t) => {
+  const fixture = createInteractiveFixture(t);
+  experimentApi.setupExperiment(fixture.root, () => {});
+
+  fixture.tabs[1].dispatch("keydown", { key: "ArrowRight" });
+  fixture.tabs[2].dispatch("keydown", { key: "ArrowRight" });
+  assert.equal(fixture.window.location.hash, "#relatorio");
+  assert.deepEqual(fixture.window.pushed, []);
+
+  fixture.tabs[1].dispatch("click");
+  assert.equal(fixture.tabs[1].getAttribute("aria-selected"), "true");
+  assert.deepEqual(fixture.window.pushed, ["#fundamentos"]);
 });
 
 test("renderização Markdown preserva delimitadores e comandos LaTeX", () => {
