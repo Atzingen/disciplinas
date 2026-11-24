@@ -122,6 +122,24 @@ export function createMarlinLink(write, { log = () => {}, prazoMs = PRAZO_PADRAO
   };
 }
 
+// Curso real da impressora, pelos limites por software que o M211 informa. A Kywoo responde numa linha
+// "Min:  X-14.00 Y0.00 Z0.00   Max:  X240.00 Y250.00 Z300.00"; o Marlin padrão põe o mesmo texto depois de
+// "echo:Soft endstops: On".
+export function lerLimites(linhas) {
+  const numero = String.raw`(-?\d+(?:\.\d+)?)`;
+  const padrao = new RegExp(
+    `Min:\\s*X\\s*${numero}\\s+Y\\s*${numero}\\s+Z\\s*${numero}\\s+Max:\\s*X\\s*${numero}\\s+Y\\s*${numero}\\s+Z\\s*${numero}`,
+  );
+  for (const linha of linhas) {
+    const encontrado = padrao.exec(linha);
+    if (encontrado) {
+      const [xMin, yMin, zMin, xMax, yMax, zMax] = encontrado.slice(1).map(Number);
+      return { min: { x: xMin, y: yMin, z: zMin }, max: { x: xMax, y: yMax, z: zMax } };
+    }
+  }
+  return null;
+}
+
 export function lerPosicao(linhas) {
   for (const linha of linhas) {
     const encontrado = /X:\s*(-?\d+(?:\.\d+)?)\s+Y:\s*(-?\d+(?:\.\d+)?)\s+Z:\s*(-?\d+(?:\.\d+)?)/.exec(linha);

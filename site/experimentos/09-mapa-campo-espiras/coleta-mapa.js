@@ -8,11 +8,11 @@
 // - a coleta (origem, eixos da caneta, plano e dados fixos da bobina) é congelada quando a primeira passada
 //   começa e vale para as duas passadas até "Descartar", inclusive depois de recarregar a página.
 
-import { createMarlinLink, lerPosicao, mudaReferencial } from "./coleta-marlin.js";
+import { createMarlinLink, lerLimites, lerPosicao, mudaReferencial } from "./coleta-marlin.js";
 import { createSensorLink } from "./coleta-sensor.js";
 import { abrirCanal, reiniciarEsp32, webSerialDisponivel } from "./coleta-serial.js";
 import {
-  cabecalhoCsv, cantosDaGrade, conferirLimites, conferirPosicao, estimarDuracao, executarPassada, linhaCsv,
+  CURSO_PADRAO, cabecalhoCsv, cantosDaGrade, conferirLimites, conferirPosicao, estimarDuracao, executarPassada, linhaCsv,
   paraEixosDaImpressora, paraImpressora, planejarVarredura,
 } from "./coleta-varredura.js";
 
@@ -117,11 +117,17 @@ export function setupFieldCollector(raiz) {
   let operacao = null; // nome da operação de impressora ou sensor em andamento
   let executando = null; // { passada, pausado, pararPedido, retomarPausa }
   let posicaoAtual = null;
+  let cursoDaImpressora = CURSO_PADRAO; // trocado pelo que o M211 informa ao conectar
   const linhasLog = [];
 
   function status(texto, tipo = "info") {
     el.status.textContent = texto;
     el.status.dataset.kind = TIPO_DO_STATUS[tipo] ?? "";
+    // O status fica no topo da aba; erro de um botão lá embaixo (iniciar a passada) passaria despercebido.
+    if (tipo === "error" || tipo === "warning") {
+      const caixa = el.status.getBoundingClientRect();
+      if (caixa.top < 0 || caixa.bottom > window.innerHeight) el.status.scrollIntoView({ block: "center", behavior: "smooth" });
+    }
   }
 
   function registrarLog({ direcao, texto }, origemTexto) {
@@ -346,6 +352,7 @@ export function setupFieldCollector(raiz) {
       await esperarSilencio(() => ultimaLinha);
       el.estadoImpressora.textContent = "Conferindo a resposta…";
       await marlin.enviar("M114", { prazoMs: 10000 });
+      cursoDaImpressora = lerLimites(await marlin.enviar("M211")) ?? CURSO_PADRAO; // M211 sem S só informa
       await marlin.enviar("G90");
       await marlin.enviar("M18 S0"); // motores não desligam parados (posição e fundo magnético iguais nas duas passadas)
       impressora = { canal, marlin };
@@ -567,7 +574,7 @@ export function setupFieldCollector(raiz) {
       const { plano, passos, calibracao, mapeamento } = planoAtual();
       // Dois eixos da caneta no mesmo eixo da impressora lançam erro aqui, antes de andar e medir.
       paraEixosDaImpressora(MEDIDA_ZERADA, mapeamento);
-      const problemas = calibracao ? conferirLimites(passos, calibracao) : [];
+      const problemas = calibracao ? conferirLimites(passos, calibracao, { curso: cursoDaImpressora }) : [];
       const pontos = passos.filter((p) => p.tipo === "ponto").length;
       const duracao = estimarDuracao(passos, {
         velocidadeMmS: plano.velocidade / 60, segundosPorMedida: plano.leituras * 0.075, pausaS: plano.pausaMs / 1000,
@@ -592,7 +599,7 @@ export function setupFieldCollector(raiz) {
     }
     const { passos, calibracao } = planoAtual();
     const cantos = cantosDaGrade(passos);
-    const problemas = conferirLimites(cantos, calibracao);
+    const problemas = conferirLimites(cantos, calibracao, { curso: cursoDaImpressora });
     if (problemas.length) {
       status(`Os cantos da grade não cabem no curso da impressora: ${problemas[0]}.`, "error");
       return;
@@ -659,7 +666,7 @@ export function setupFieldCollector(raiz) {
   function retomarPassada() {
     const passada = passadaParada();
     if (!passada || !estado.coleta || executando || operacao) return;
-    const problemas = conferirLimites(estado.coleta.passos, estado.coleta.calibracao);
+    const problemas = conferirLimites(estado.coleta.passos, estado.coleta.calibracao, { curso: cursoDaImpressora });
     if (problemas.length) {
       status(`O plano desta coleta não cabe mais no curso: ${problemas[0]}.`, "error");
       return;

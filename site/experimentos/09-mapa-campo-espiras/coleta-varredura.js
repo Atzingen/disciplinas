@@ -51,7 +51,10 @@ export function paraImpressora({ x, y, z }, { X0, Y0, Z0, h0 }) {
   return { X: X0 + x, Y: Y0 + y, Z: Z0 + (z - h0) };
 }
 
-export function conferirLimites(passos, calibracao, { mesa = { x: 240, y: 240, z: 300 }, alturaMinima = 15 } = {}) {
+// Curso usado enquanto a impressora não informou o dela pelo M211 (o da Tycoon Slim no catálogo).
+export const CURSO_PADRAO = { min: { x: 0, y: 0, z: 0 }, max: { x: 240, y: 240, z: 300 } };
+
+export function conferirLimites(passos, calibracao, { curso = CURSO_PADRAO, alturaMinima = 15 } = {}) {
   const problemas = [];
   for (const passo of passos) {
     const { X, Y, Z } = paraImpressora(passo, calibracao);
@@ -60,9 +63,11 @@ export function conferirLimites(passos, calibracao, { mesa = { x: 240, y: 240, z
       continue;
     }
     if (passo.z < alturaMinima) problemas.push(`altura ${passo.z} mm abaixo do mínimo de ${alturaMinima} mm`);
-    if (X < 0 || X > mesa.x) problemas.push(`X = ${X.toFixed(1)} mm fora do curso (0 a ${mesa.x})`);
-    if (Y < 0 || Y > mesa.y) problemas.push(`Y = ${Y.toFixed(1)} mm fora do curso (0 a ${mesa.y})`);
-    if (Z < 0 || Z > mesa.z) problemas.push(`Z = ${Z.toFixed(1)} mm fora do curso (0 a ${mesa.z})`);
+    for (const [eixo, valor] of [["X", X], ["Y", Y], ["Z", Z]]) {
+      const minimo = curso.min[eixo.toLowerCase()];
+      const maximo = curso.max[eixo.toLowerCase()];
+      if (valor < minimo || valor > maximo) problemas.push(`${eixo} = ${valor.toFixed(1)} mm fora do curso (${minimo} a ${maximo})`);
+    }
   }
   return [...new Set(problemas)];
 }

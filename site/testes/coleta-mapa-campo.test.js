@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import test, { mock } from "node:test";
 
-import { createMarlinLink, lerPosicao } from "../experimentos/09-mapa-campo-espiras/coleta-marlin.js";
+import { createMarlinLink, lerLimites, lerPosicao } from "../experimentos/09-mapa-campo-espiras/coleta-marlin.js";
 import { createSensorLink, lerMedida } from "../experimentos/09-mapa-campo-espiras/coleta-sensor.js";
 import {
   cabecalhoCsv, cantosDaGrade, conferirLimites, executarPassada, linhaCsv, paraEixosDaImpressora,
@@ -196,6 +196,22 @@ test("limites: ponto fora do curso da mesa ou baixo demais é apontado antes de 
   const problemas = conferirLimites(passos, calibracao, { alturaMinima: 15 });
   assert.ok(problemas.some((p) => p.includes("X = -10.0")));
   assert.ok(problemas.some((p) => p.includes("altura 10 mm")));
+});
+
+// Falha que pega: a página recusava Y 250 com o curso fixo de 240 mm, embora o firmware da Tycoon Slim aceite até
+// 250 (e X até -14): uma bobina perto da borda da mesa não tinha plano que passasse, e a passada nem começava.
+test("limites: o curso vem do M211 da impressora (Kywoo e Marlin padrão)", () => {
+  const curso = lerLimites(["M211 S1 ; ON", "Min:  X-14.00 Y0.00 Z0.00   Max:  X240.00 Y250.00 Z300.00"]);
+  assert.deepEqual(curso, { min: { x: -14, y: 0, z: 0 }, max: { x: 240, y: 250, z: 300 } });
+  assert.deepEqual(lerLimites(["echo:Soft endstops: On  Min:  X0.00 Y0.00 Z0.00  Max:  X235.00 Y235.00 Z250.00"]).max,
+    { x: 235, y: 235, z: 250 });
+  assert.equal(lerLimites(["ok"]), null);
+
+  const calibracao = { X0: 81, Y0: 190, Z0: 0, h0: 30 };
+  const dentro = [{ tipo: "ponto", x: -95, y: 60, z: 30 }]; // X -14 e Y 250, os extremos do firmware
+  assert.deepEqual(conferirLimites(dentro, calibracao, { curso }), []);
+  assert.ok(conferirLimites([{ tipo: "ponto", x: 0, y: 61, z: 30 }], calibracao, { curso })
+    .some((p) => p.includes("Y = 251.0 mm fora do curso (0 a 250)")));
 });
 
 // Falha que pega: com x de -110 a 115 de 10 em 10, a grade termina em 110, mas os cantos iam ao máximo digitado

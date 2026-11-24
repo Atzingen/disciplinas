@@ -100,7 +100,9 @@ ligada,ponto,2.9,-120.0,-120.0,20.0,11.02,-14.80,-26.10,0.43,0.40,0.49,16
 A aba Coleta conduz a impressora e lê o sensor pelo Web Serial do navegador
 (Chrome, Edge ou Opera no computador; Safari e Firefox não têm). Ela conecta as
 duas portas, faz o home e o movimento manual, marca a origem sobre o centro da
-bobina, confere o plano contra o curso da impressora (240 x 240 x 300 mm) e roda
+bobina, confere o plano contra o curso que a impressora informa no M211 (na
+Tycoon Slim, X de -14 a 240, Y de 0 a 250 e Z de 0 a 300 mm; 240 x 240 x 300 mm
+se ela não informar) e roda
 as duas passadas com pausa, parada e retomada. O andamento fica salvo no
 `localStorage` do navegador, e o CSV sai neste formato. "Ver no visualizador"
 abre na aba Visualização o que já foi medido.
