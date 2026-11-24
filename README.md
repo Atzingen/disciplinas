@@ -151,6 +151,15 @@ O nono roteiro mapeia em três dimensões o campo de espiras planas:
    1D contra o modelo, exporta o ΔB em CSV e o corte em PNG, e traz um exemplo
    sintético gerado no próprio navegador.
 
+As abas de cada experimento são partes em sequência, mostradas uma por vez. A
+barra fixa no topo numera as partes, destaca a atual, marca as já vistas e
+mostra "Parte N de M"; o início e o fim de cada parte têm os botões
+"Anterior" e "Próxima". Cada parte tem endereço próprio, formado pelo nome do
+painel sem o prefixo `painel-` (por exemplo
+`09-mapa-campo-espiras/#visualizacao`), que abre direto naquela parte, e o
+voltar do navegador retorna à parte anterior. Tudo isso é gerado por
+`site/experimentos/experimento.js` a partir das abas que já estão no HTML.
+
 Na página de cada experimento, a aba **Relatório** contém uma folha preparada
 para impressão. O botão de impressão ativa essa aba e remove da cópia os
 controles de navegação. A mesma estrutura também está disponível em

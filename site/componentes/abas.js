@@ -17,7 +17,9 @@ export function nextTabIndex(currentIndex, key, total) {
   return null;
 }
 
-export function setupTabs(root) {
+// initialIndex escolhe a aba inicial; onActivate(index, origin) recebe cada troca, com
+// origin "click", "keyboard" ou "program" (ativação inicial ou chamada direta de activate).
+export function setupTabs(root, { initialIndex, onActivate } = {}) {
   const tabs = [...root.querySelectorAll('[role="tab"]')];
   const panels = tabs.map((tab) =>
     root.querySelector("#" + tab.getAttribute("aria-controls")),
@@ -27,7 +29,7 @@ export function setupTabs(root) {
     throw new Error("A estrutura de abas está incompleta.");
   }
 
-  function activate(index, focus = false) {
+  function activate(index, focus = false, origin = "program") {
     tabs.forEach((tab, tabIndex) => {
       const selected = tabIndex === index;
       tab.setAttribute("aria-selected", String(selected));
@@ -38,10 +40,11 @@ export function setupTabs(root) {
     if (focus) {
       tabs[index].focus();
     }
+    onActivate?.(index, origin);
   }
 
   const clickHandlers = tabs.map((tab, index) => {
-    const handler = () => activate(index);
+    const handler = () => activate(index, false, "click");
     tab.addEventListener("click", handler);
     return handler;
   });
@@ -53,17 +56,17 @@ export function setupTabs(root) {
         return;
       }
       event.preventDefault();
-      activate(targetIndex, true);
+      activate(targetIndex, true, "keyboard");
     };
     tab.addEventListener("keydown", handler);
     return handler;
   });
 
-  const initialIndex = Math.max(
+  const selectedInMarkup = Math.max(
     0,
     tabs.findIndex((tab) => tab.getAttribute("aria-selected") === "true"),
   );
-  activate(initialIndex);
+  activate(initialIndex ?? selectedInMarkup);
 
   return {
     activate,
