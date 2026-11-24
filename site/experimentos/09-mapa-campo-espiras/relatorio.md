@@ -103,9 +103,10 @@ entre as passadas.
 
 Descreva a montagem realmente utilizada e inclua uma fotografia ou um esquema
 com a mesa, o suporte, a bobina, o braço do sensor e os fios de ligação.
-Informe a altura do plano da bobina sobre a mesa, a posição do sensor em
-relação ao bico e como a origem dos dados foi escolhida. Registre as
-coordenadas da impressora no ponto de origem e o ponto de referência usado.
+Informe as medidas da configuração (dx, dy e dz do sensor em relação ao bico;
+hb, xc e yc da bobina, que também estão nos metadados do CSV), como cada uma
+foi obtida (régua, paquímetro ou posição da impressora) e o ponto de
+referência usado.
 
 Relate a sequência de comandos: home com a mesa vazia antes de colocar o
 suporte, `M18 S0` para manter os motores ligados, `M400`

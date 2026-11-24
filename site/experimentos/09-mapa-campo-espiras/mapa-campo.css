@@ -425,3 +425,209 @@
   content: "Os comandos enviados e as respostas aparecem aqui.";
   color: var(--ink-soft);
 }
+
+.coleta-avancado > summary {
+  cursor: pointer;
+  font: 700 1.15rem/1.3 var(--font-display);
+}
+
+.coleta-avancado[open] > summary {
+  margin-bottom: 0.8rem;
+}
+
+/* ---------- assistente de configuração da Coleta ---------- */
+
+.coleta-assistente {
+  width: min(calc(100% - 2rem), 980px);
+  max-width: none;
+  height: min(calc(100dvh - 2rem), 920px);
+  max-height: calc(100dvh - 2rem);
+  padding: 0;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  color: var(--ink);
+  box-shadow: var(--shadow);
+}
+
+/* Só o conteúdo da etapa rola; título, etapas e botões de avançar ficam sempre à vista. */
+.coleta-assistente[open] {
+  display: flex;
+  flex-direction: column;
+}
+
+.coleta-assistente::backdrop {
+  background: rgb(16 22 32 / 55%);
+}
+
+.coleta-assistente__topo {
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem 1.4rem 0.8rem;
+}
+
+.coleta-assistente__topo h3 {
+  margin: 0;
+  font: 700 1.3rem/1.2 var(--font-display);
+}
+
+.coleta-etapas {
+  display: flex;
+  flex: none;
+  gap: 0.4rem;
+  margin: 0;
+  padding: 0 1.4rem 0.9rem;
+  overflow-x: auto;
+  border-bottom: 1px solid var(--line);
+  list-style: none;
+}
+
+.coleta-etapas button {
+  min-height: 36px;
+  padding: 0.35rem 0.85rem;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-pill);
+  background: var(--surface);
+  color: var(--ink-soft);
+  font: 600 0.84rem/1.2 var(--font-display);
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.coleta-etapas button:hover {
+  border-color: var(--ink-soft);
+  color: var(--ink);
+}
+
+.coleta-etapas button[aria-current="step"] {
+  border-color: var(--ink);
+  background: var(--ink);
+  color: var(--on-ink);
+}
+
+.coleta-etapa {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 1rem 1.4rem 1.2rem;
+}
+
+.coleta-etapa h4 {
+  margin: 0 0 0.8rem;
+  font: 700 1.1rem/1.3 var(--font-display);
+}
+
+.coleta-etapa h5 {
+  margin: 1.3rem 0 0.4rem;
+  font: 700 0.95rem/1.3 var(--font-display);
+}
+
+.coleta-etapa > p {
+  margin: 0.6rem 0;
+}
+
+.coleta-etapa .mapa-resumo {
+  margin: 0.9rem 0;
+}
+
+.coleta-assistente__aviso,
+.coleta-assistente .mapa-status {
+  flex: none;
+  margin: 0.6rem 1.4rem 0;
+}
+
+.coleta-assistente__aviso {
+  padding: 0.6rem 0.9rem;
+  border-left: 4px solid var(--measure);
+  background: var(--tint-warm);
+}
+
+.coleta-assistente__rodape {
+  display: flex;
+  flex: none;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 0.6rem;
+  padding: 0.8rem 1.4rem;
+  border-top: 1px solid var(--line);
+}
+
+.coleta-assistente__rodape [data-coleta-assistente-voltar] {
+  margin-right: auto;
+}
+
+.coleta-desenho {
+  margin: 0 0 1rem;
+}
+
+.coleta-desenho:empty {
+  display: none;
+}
+
+.coleta-desenho svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  background: var(--paper-deep);
+}
+
+/* .mapa-botao define display e venceria o hidden do Próximo e do Concluir. */
+.coleta-assistente__rodape [hidden] {
+  display: none;
+}
+
+.coleta-legenda {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 1.2rem;
+  margin: 0.55rem 0 0;
+  padding: 0;
+  color: var(--ink-soft);
+  font: 0.78rem/1.4 var(--font-mono);
+  list-style: none;
+}
+
+.coleta-legenda li {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.coleta-legenda__marca {
+  display: inline-block;
+  flex: none;
+}
+
+.coleta-legenda__marca--linha,
+.coleta-legenda__marca--tracejado {
+  width: 1.4rem;
+  border-top: 3px solid var(--cor-da-marca);
+}
+
+.coleta-legenda__marca--tracejado {
+  border-top-style: dashed;
+  border-top-width: 2px;
+}
+
+.coleta-legenda__marca--ponto {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background: var(--cor-da-marca);
+}
+
+.coleta-legenda__marca--losango {
+  width: 0.55rem;
+  height: 0.55rem;
+  background: var(--cor-da-marca);
+  transform: rotate(45deg);
+}
+
+.coleta-etapa > .mapa-acoes {
+  margin-bottom: 0.9rem;
+}

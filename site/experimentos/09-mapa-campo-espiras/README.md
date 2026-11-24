@@ -99,11 +99,38 @@ ligada,ponto,2.9,-120.0,-120.0,20.0,11.02,-14.80,-26.10,0.43,0.40,0.49,16
 
 A aba Coleta conduz a impressora e lê o sensor pelo Web Serial do navegador
 (Chrome, Edge ou Opera no computador; Safari e Firefox não têm). Ela conecta as
-duas portas, faz o home e o movimento manual, marca a origem sobre o centro da
-bobina, confere o plano contra o curso da impressora (240 x 240 x 300 mm) e roda
-as duas passadas com pausa, parada e retomada. O andamento fica salvo no
-`localStorage` do navegador, e o CSV sai neste formato. "Ver no visualizador"
-abre na aba Visualização o que já foi medido.
+duas portas, lê o firmware (`M115`) e o curso do bico (`M211`; na Tycoon Slim,
+X de -14 a 240, Y de 0 a 250 e Z de 0 a 300 mm; 240 x 240 x 300 mm se ela não
+informar) e roda as duas passadas com pausa, parada e retomada. O andamento fica
+salvo no `localStorage` do navegador, e o CSV sai neste formato. "Ver no
+visualizador" abre na aba Visualização o que já foi medido.
+
+A montagem é descrita no assistente "Configurar o experimento", em cinco etapas,
+cada uma com um desenho feito com os valores digitados: impressora (conexão,
+home e a confirmação de que houve home desde que ela foi ligada), sensor no
+cabeçote, bobina na mesa, plano e conferência (com o percurso pelos cantos).
+Todas as medidas são em mm, nos eixos da impressora; X, Y e Z do Marlin são a
+ponta do bico, e Z = 0 é o bico encostado na mesa depois do home.
+
+| Medida | O que é |
+| --- | --- |
+| `dx`, `dy` | posição do sensor em relação ao bico (sensor em X = bico + dx) |
+| `dz` | quanto o sensor fica abaixo da ponta do bico (positivo) |
+| `hb` | altura do plano do fio sobre a mesa |
+| `xc`, `yc` | centro da bobina, em coordenadas da impressora |
+
+A origem sai dessas medidas (`coleta-setup.js`): com o bico em X0 = xc − dx,
+Y0 = yc − dy, o sensor fica sobre o centro da bobina, e com o bico em
+Z = hb + dz + z o sensor fica z acima do plano do fio. O centro e o hb também
+podem ser tirados da posição da impressora (sensor sobre o centro marcado;
+sensor encostado no topo do enrolamento). "Sugerir a partir da bobina" monta uma
+grade quadrada de ±(raio + margem), passo de 10 % do diâmetro (5 a 20 mm) e
+alturas de 20 a 180 mm, cortada para caber no que o sensor alcança. As medidas,
+o firmware e o curso vão para os metadados do CSV (`sensor_dx_mm`,
+`sensor_dy_mm`, `sensor_dz_mm`, `bobina_hb_mm`, `bobina_xc_mm`, `bobina_yc_mm`,
+`firmware`, `curso`). Mudar qualquer medida depois de concluir pede concluir o
+assistente de novo; nenhuma passada começa sem a configuração concluída e sem o
+home confirmado.
 
 Em cada ponto a aba envia `G1 X.. Y.. Z.. F..`, `M400` e `G4 P<pausa>` e só então
 pede a medida. O primeiro comando só sai depois de 1,5 s sem linhas chegando da
@@ -119,7 +146,7 @@ em cada visita à referência. O primeiro movimento sobe antes de andar no plano
 só então desce.
 
 Uma operação de impressora por vez: movimento manual, home, console e passada
-travam os outros botões até terminar. Origem, eixos da caneta, plano e dados
+travam os outros botões até terminar. Medidas, eixos da caneta, plano e dados
 fixos da bobina ficam congelados do início da primeira passada até "Descartar",
 para a passada ligada repetir exatamente a grade da desligada; nada muda antes
 de todas as confirmações. A corrente é gravada quando a passada ligada começa e
@@ -127,7 +154,7 @@ trava, e a retomada pede a confirmação dessa corrente; a observação continua
 editável e fica salva com a coleta. Recomeçar uma passada apaga antes as
 medidas dela. Com uma coleta salva, o console recusa os comandos que mudam o
 referencial da impressora (G28, G92, M206, M428, M501, M502 e G53 a G59); sem coleta, eles
-desmarcam a origem. Um home numa coleta ainda sem medidas a desfaz. "Percorrer
+tiram a confirmação do home (o G28 a refaz). Um home numa coleta ainda sem medidas a desfaz. "Percorrer
 os cantos" vai aos cantos da grade de fato medida (com faixa que não é múltipla
 do passo, antes do máximo digitado) e confere cada um com `M114`. O ponto de
 referência é visitado no começo de uma linha a cada N linhas (padrão 4): o eixo
@@ -165,8 +192,11 @@ Ubuntu) para abrir as portas.
 | `coleta-mapa.js` | ligação da aba Coleta com a página |
 | `coleta-marlin.js`, `coleta-sensor.js`, `coleta-serial.js` | conversa com o Marlin, com a ESP32 e com a porta Web Serial |
 | `coleta-varredura.js` | plano da varredura, limites, eixos, CSV e execução de uma passada |
+| `coleta-setup.js` | medidas da montagem, origem, alcance do sensor e plano sugerido |
+| `coleta-desenhos.js` | desenhos SVG das etapas do assistente |
 | `sensor_mlx90393/sensor_mlx90393.ino` | sketch da ESP32 com o MLX90393 |
 | `relatorio.md` | modelo de relatório |
 
-Os testes da lógica pura estão em `site/testes/mapa-campo.test.js` e
-`site/testes/coleta-mapa-campo.test.js` (`npm test` na raiz do repositório).
+Os testes da lógica pura estão em `site/testes/mapa-campo.test.js`,
+`site/testes/coleta-mapa-campo.test.js` e `site/testes/coleta-setup.test.js`
+(`npm test` na raiz do repositório).

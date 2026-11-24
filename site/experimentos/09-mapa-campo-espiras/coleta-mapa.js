@@ -1,25 +1,33 @@
 // Aba de coleta: liga a impressora (Marlin) e a ESP32 do MLX90393 pelo Web Serial do Chrome, conduz as duas
 // passadas e grava o CSV no formato mapa-campo v1.
 //
+// A configuração (sensor no cabeçote, bobina na mesa, plano) fica num assistente em etapas, com desenhos; a
+// origem sai das medidas (coleta-setup.js), em coordenadas absolutas da impressora depois do home.
+//
 // Regras de segurança da tela:
 // - uma operação de impressora por vez (movimento manual, home, console, passada): os botões ficam travados
 //   até ela terminar, para comandos de duas operações nunca se intercalarem (um G91 no meio de movimentos
 //   absolutos, por exemplo);
 // - a coleta (origem, eixos da caneta, plano e dados fixos da bobina) é congelada quando a primeira passada
-//   começa e vale para as duas passadas até "Descartar", inclusive depois de recarregar a página.
+//   começa e vale para as duas passadas até "Descartar", inclusive depois de recarregar a página;
+// - nenhuma passada começa sem a configuração concluída no assistente e sem a confirmação de que a
+//   impressora fez o home desde que foi ligada (as alturas contam a partir da mesa).
 
-import { createMarlinLink, lerPosicao, mudaReferencial } from "./coleta-marlin.js";
+import { createMarlinLink, lerLimites, lerPosicao, mudaReferencial } from "./coleta-marlin.js";
 import { createSensorLink } from "./coleta-sensor.js";
 import { abrirCanal, reiniciarEsp32, webSerialDisponivel } from "./coleta-serial.js";
 import {
-  cabecalhoCsv, cantosDaGrade, conferirLimites, conferirPosicao, estimarDuracao, executarPassada, linhaCsv,
+  CURSO_PADRAO, cabecalhoCsv, cantosDaGrade, conferirLimites, conferirPosicao, estimarDuracao, executarPassada, linhaCsv,
   paraEixosDaImpressora, paraImpressora, planejarVarredura,
 } from "./coleta-varredura.js";
+import { areaDoSensor, calibracaoDoSetup, lerFirmware, lerSetup, sugerirPlano } from "./coleta-setup.js";
+import { desenhoDaBobina, desenhoDoCabecote, desenhoDoPlano } from "./coleta-desenhos.js";
 
 const CHAVE_SALVA = "mapa-campo-coleta-v2";
 const MAX_LINHAS_LOG = 400;
 const DIRECOES = ["+X", "-X", "+Y", "-Y", "+Z", "-Z"];
 const ALTURA_MINIMA_MANUAL_MM = 10;
+const TOTAL_DE_ETAPAS = 5;
 // Podem mudar depois do início da coleta: a corrente (medida no multímetro) até a passada ligada começar,
 // quando ela é gravada na coleta e trava; a observação a qualquer momento fora de uma passada.
 const META_EDITAVEL = ["corrente_A", "observacao"];
@@ -29,6 +37,7 @@ const NOMES_DO_PLANO = {
   refX: "referência x", refY: "referência y", refZ: "referência z", refCada: "referência a cada",
   leituras: "leituras por ponto", pausaMs: "pausa antes de medir", velocidade: "velocidade",
 };
+const NOMES_DA_GEOMETRIA = { circulo: "círculo", quadrado: "quadrado", u: "U", outra: "outra" };
 
 // Os tipos de status da coleta viram os do visualizador (mapa-status): ok, aviso ou erro.
 const TIPO_DO_STATUS = { ready: "ok", complete: "ok", collecting: "ok", warning: "aviso", error: "erro" };
@@ -56,36 +65,41 @@ function formatarDuracao(segundos) {
   return `${Math.floor(minutos / 60)} h ${String(minutos % 60).padStart(2, "0")} min`;
 }
 
+const mm = (valor) => `${Number(valor).toLocaleString("pt-BR", { maximumFractionDigits: 1 })} mm`;
+
+function descreverCurso(curso) {
+  const eixo = (nome) => `${nome} ${curso.min[nome.toLowerCase()]} a ${curso.max[nome.toLowerCase()]}`;
+  return `${eixo("X")}, ${eixo("Y")}, ${eixo("Z")} mm`;
+}
+
 export function setupFieldCollector(raiz) {
   const $ = (seletor) => raiz.querySelector(seletor);
   const $$ = (seletor) => [...raiz.querySelectorAll(seletor)];
   const el = {
     status: $("[data-coleta-status]"),
     baud: $("[data-coleta-baud]"),
-    conectarImpressora: $("[data-coleta-conectar-impressora]"),
+    conectarImpressora: $$("[data-coleta-conectar-impressora]"),
     desconectarImpressora: $("[data-coleta-desconectar-impressora]"),
     estadoImpressora: $("[data-coleta-estado-impressora]"),
     conectarSensor: $("[data-coleta-conectar-sensor]"),
     desconectarSensor: $("[data-coleta-desconectar-sensor]"),
     estadoSensor: $("[data-coleta-estado-sensor]"),
-    medirAqui: $("[data-coleta-medir-aqui]"),
-    home: $("[data-coleta-home]"),
-    subir: $("[data-coleta-subir]"),
+    medirAqui: $$("[data-coleta-medir-aqui]"),
+    home: $$("[data-coleta-home]"),
+    subir: $$("[data-coleta-subir]"),
     irOrigem: $("[data-coleta-ir-origem]"),
-    passo: $("[data-coleta-passo]"),
     jogs: $$("[data-coleta-jog]"),
-    posicao: $("[data-coleta-posicao]"),
+    posicao: $$("[data-coleta-posicao]"),
     posicaoBobina: $("[data-coleta-posicao-bobina]"),
-    ultima: $("[data-coleta-ultima]"),
-    h0: $("[data-coleta-h0]"),
-    marcarOrigem: $("[data-coleta-marcar-origem]"),
+    ultima: $$("[data-coleta-ultima]"),
     origem: $("[data-coleta-origem]"),
+    resumoConfig: $$("[data-coleta-resumo-config]"),
+    resumoPlano: $$("[data-coleta-resumo-plano]"),
     eixos: $$("[data-coleta-eixo]"),
     plano: $$("[data-coleta-plano]"),
     meta: $$("[data-coleta-meta]"),
-    conferir: $("[data-coleta-conferir]"),
+    setup: $$("[data-coleta-setup]"),
     cantos: $("[data-coleta-cantos]"),
-    resumoPlano: $("[data-coleta-resumo-plano]"),
     iniciar: $$("[data-coleta-iniciar]"),
     pausar: $("[data-coleta-pausar]"),
     parar: $("[data-coleta-parar]"),
@@ -100,14 +114,38 @@ export function setupFieldCollector(raiz) {
     enviarGcode: $("[data-coleta-enviar-gcode]"),
     mostrarOk: $("[data-coleta-mostrar-ok]"),
     log: $("[data-coleta-log]"),
+    // assistente
+    abrirAssistente: $("[data-coleta-abrir-assistente]"),
+    assistente: $("[data-coleta-assistente]"),
+    etapas: $$("[data-coleta-etapa]"),
+    irParaEtapa: $$("[data-coleta-etapa-ir]"),
+    voltar: $("[data-coleta-assistente-voltar]"),
+    proximo: $("[data-coleta-assistente-proximo]"),
+    concluir: $("[data-coleta-assistente-concluir]"),
+    fecharAssistente: $("[data-coleta-assistente-fechar]"),
+    erroDoAssistente: $("[data-coleta-assistente-erro]"),
+    congelado: $("[data-coleta-assistente-congelado]"),
+    firmware: $("[data-coleta-firmware]"),
+    curso: $("[data-coleta-curso]"),
+    homeConfirmado: $("[data-coleta-home-confirmado]"),
+    centroAqui: $("[data-coleta-centro-aqui]"),
+    topoAqui: $("[data-coleta-topo-aqui]"),
+    sugerir: $("[data-coleta-sugerir]"),
+    desenhos: Object.fromEntries($$("[data-coleta-desenho]").map((caixa) => [caixa.dataset.coletaDesenho, caixa])),
   };
   const campoMeta = (chave) => el.meta.find((campo) => campo.dataset.coletaMeta === chave);
+  const escrever = (lista, texto) => { for (const elemento of lista) elemento.textContent = texto; };
 
-  // Estado que sobrevive a recarregar a página (a impressora guarda a posição enquanto não fizer home).
+  // Estado que sobrevive a recarregar a página.
   const estado = {
-    calibracao: null, // { X0, Y0, Z0, h0 }: origem atual, usada no movimento manual
+    campos: null, // valores dos campos do assistente (texto), para reabrir como estavam
+    setupConfirmado: false, // o assistente foi concluído com estas medidas
+    homeConfirmado: false, // a impressora fez o home desde que foi ligada (volta a falso a cada conexão)
+    firmware: null, // { firmware, maquina } do M115
+    curso: CURSO_PADRAO, // limites do bico pelo M211
+    calibracao: null, // { X0, Y0, Z0, h0 }: origem calculada das medidas
     mapeamento: { frente: "+X", esquerda: "+Y", cima: "+Z" },
-    coleta: null, // congelada na primeira passada: { calibracao, mapeamento, campos, plano, passos, metadados, homeRefeito }
+    coleta: null, // congelada na primeira passada: { calibracao, mapeamento, campos, setup, plano, passos, metadados, homeRefeito }
     passadas: {}, // desligada/ligada: { inicioMs, proximo, concluida }
     linhas: [], // linhas CSV já medidas, das duas passadas
   };
@@ -117,11 +155,25 @@ export function setupFieldCollector(raiz) {
   let operacao = null; // nome da operação de impressora ou sensor em andamento
   let executando = null; // { passada, pausado, pararPedido, retomarPausa }
   let posicaoAtual = null;
+  let etapaAtual = 1;
   const linhasLog = [];
 
   function status(texto, tipo = "info") {
     el.status.textContent = texto;
     el.status.dataset.kind = TIPO_DO_STATUS[tipo] ?? "";
+    // O status fica no topo da aba; erro de um botão lá embaixo (iniciar a passada) passaria despercebido.
+    if ((tipo === "error" || tipo === "warning") && !el.assistente.open) {
+      const caixa = el.status.getBoundingClientRect();
+      if (caixa.top < 0 || caixa.bottom > window.innerHeight) el.status.scrollIntoView({ block: "center", behavior: "smooth" });
+    }
+    // Com o assistente aberto, o status da página fica atrás dele: o mesmo aviso aparece no rodapé do assistente.
+    if (el.assistente.open) avisoNoAssistente(tipo === "error" || tipo === "warning" ? texto : "", tipo);
+  }
+
+  function avisoNoAssistente(texto, tipo = "error") {
+    el.erroDoAssistente.hidden = !texto;
+    el.erroDoAssistente.textContent = texto;
+    el.erroDoAssistente.dataset.kind = TIPO_DO_STATUS[tipo] ?? "erro";
   }
 
   function registrarLog({ direcao, texto }, origemTexto) {
@@ -143,17 +195,18 @@ export function setupFieldCollector(raiz) {
     return {
       plano: Object.fromEntries(el.plano.map((campo) => [campo.dataset.coletaPlano, campo.value])),
       meta: Object.fromEntries(el.meta.map((campo) => [campo.dataset.coletaMeta, campo.value])),
-      h0: el.h0.value,
+      setup: Object.fromEntries(el.setup.map((campo) => [campo.dataset.coletaSetup, campo.value])),
     };
   }
 
   function preencherCampos(campos) {
-    for (const campo of el.plano) if (campo.dataset.coletaPlano in campos.plano) campo.value = campos.plano[campo.dataset.coletaPlano];
+    if (!campos) return;
+    for (const campo of el.plano) if (campo.dataset.coletaPlano in (campos.plano ?? {})) campo.value = campos.plano[campo.dataset.coletaPlano];
+    for (const campo of el.setup) if (campo.dataset.coletaSetup in (campos.setup ?? {})) campo.value = campos.setup[campo.dataset.coletaSetup];
     for (const campo of el.meta) {
       const chave = campo.dataset.coletaMeta;
-      if (chave in campos.meta && !META_EDITAVEL.includes(chave)) campo.value = campos.meta[chave];
+      if (chave in (campos.meta ?? {}) && !META_EDITAVEL.includes(chave)) campo.value = campos.meta[chave];
     }
-    el.h0.value = campos.h0;
   }
 
   function lerPlano(valores = lerCampos().plano) {
@@ -185,17 +238,47 @@ export function setupFieldCollector(raiz) {
     return plano;
   }
 
+  function lerSetupDaTela() {
+    return lerSetup(lerCampos().setup);
+  }
+
+  function lerBobina() {
+    const dimensao = Number(campoMeta("dimensao_mm").value);
+    const voltas = Number(campoMeta("voltas").value);
+    if (!(dimensao > 0)) throw new Error("Informe o diâmetro ou o lado da bobina, em mm.");
+    if (!(Number.isInteger(voltas) && voltas >= 1)) throw new Error("Informe o número de voltas da bobina (inteiro).");
+    return { geometria: campoMeta("geometria").value, dimensaoMm: dimensao, voltas };
+  }
+
   function lerMapeamento() {
     return Object.fromEntries(el.eixos.map((select) => [select.dataset.coletaEixo, select.value]));
   }
 
-  // Metadados fixos da bobina, congelados com a coleta.
+  // Origem calculada das medidas da tela (ou nula enquanto alguma estiver inválida).
+  function atualizarCalibracao() {
+    try {
+      estado.calibracao = calibracaoDoSetup(lerSetupDaTela());
+    } catch {
+      estado.calibracao = null;
+    }
+  }
+
+  // Metadados fixos da bobina e da montagem, congelados com a coleta.
   function lerMetadadosFixos(plano) {
+    const setup = lerSetupDaTela();
     return {
       geometria: campoMeta("geometria").value,
       dimensao_mm: campoMeta("dimensao_mm").value.trim(),
       voltas: campoMeta("voltas").value.trim(),
       leituras_por_ponto: plano.leituras,
+      sensor_dx_mm: setup.dx,
+      sensor_dy_mm: setup.dy,
+      sensor_dz_mm: setup.dz,
+      bobina_hb_mm: setup.hb,
+      bobina_xc_mm: setup.xc,
+      bobina_yc_mm: setup.yc,
+      firmware: estado.firmware ? `${estado.firmware.firmware}${estado.firmware.maquina ? `, ${estado.firmware.maquina}` : ""}` : "",
+      curso: descreverCurso(estado.curso),
       data: new Date().toISOString(),
     };
   }
@@ -228,18 +311,21 @@ export function setupFieldCollector(raiz) {
     const coleta = estado.coleta;
 
     const temSerial = webSerialDisponivel();
-    el.conectarImpressora.disabled = !temSerial || Boolean(impressora) || conectando.impressora;
+    for (const botao of el.conectarImpressora) botao.disabled = !temSerial || Boolean(impressora) || conectando.impressora;
     el.desconectarImpressora.disabled = !impressora || Boolean(executando) || conectando.impressora;
     el.conectarSensor.disabled = !temSerial || Boolean(sensor) || conectando.sensor;
     el.desconectarSensor.disabled = !sensor || Boolean(executando) || conectando.sensor;
-    el.medirAqui.disabled = !sensorOk || ocupado;
-    for (const botao of [el.home, el.subir, ...el.jogs, el.enviarGcode]) botao.disabled = !impressoraOk || ocupado;
-    el.marcarOrigem.disabled = !impressoraOk || ocupado || Boolean(coleta);
-    el.irOrigem.disabled = !impressoraOk || ocupado || !estado.calibracao;
-    el.cantos.disabled = !impressoraOk || ocupado || !(coleta?.calibracao ?? estado.calibracao) || Boolean(coleta?.homeRefeito);
+    for (const botao of el.medirAqui) botao.disabled = !sensorOk || ocupado;
+    for (const botao of [...el.home, ...el.subir, ...el.jogs, el.enviarGcode]) botao.disabled = !impressoraOk || ocupado;
+    const calibracao = coleta?.calibracao ?? estado.calibracao;
+    el.irOrigem.disabled = !impressoraOk || ocupado || !calibracao;
+    el.cantos.disabled = !impressoraOk || ocupado || !calibracao || Boolean(coleta?.homeRefeito);
+    el.centroAqui.disabled = !impressoraOk || ocupado || Boolean(coleta);
+    el.topoAqui.disabled = !impressoraOk || ocupado || Boolean(coleta);
+    el.sugerir.disabled = Boolean(coleta) || ocupado;
 
-    const origemValida = coleta ? !coleta.homeRefeito : Boolean(estado.calibracao);
-    const pronto = impressoraOk && sensorOk && !ocupado && origemValida;
+    // Iniciar fica clicável com tudo conectado: o que faltar (configuração, home) é explicado na mensagem.
+    const pronto = impressoraOk && sensorOk && !ocupado && !coleta?.homeRefeito;
     for (const botao of el.iniciar) botao.disabled = !pronto;
     el.retomar.disabled = !pronto || !coleta || !passadaParada();
     el.pausar.disabled = !executando || executando.pararPedido;
@@ -250,33 +336,62 @@ export function setupFieldCollector(raiz) {
     el.descartar.disabled = Boolean(executando) || (estado.linhas.length === 0 && !coleta);
 
     const travado = ocupado || Boolean(coleta);
-    for (const campo of [...el.plano, ...el.eixos, el.h0]) campo.disabled = travado;
+    for (const campo of [...el.plano, ...el.eixos, ...el.setup]) campo.disabled = travado;
     for (const campo of el.meta) {
       campo.disabled = META_EDITAVEL.includes(campo.dataset.coletaMeta) ? Boolean(executando) : travado;
     }
     if (correnteGravada() !== undefined) campoMeta("corrente_A").disabled = true;
+    el.congelado.hidden = !coleta;
+    el.homeConfirmado.checked = estado.homeConfirmado;
   }
 
-  function mostrarOrigem() {
-    const c = estado.coleta?.calibracao ?? estado.calibracao;
-    let texto = c
-      ? `Origem: impressora em X ${c.X0.toFixed(2)}, Y ${c.Y0.toFixed(2)}, Z ${c.Z0.toFixed(2)}, com o sensor a ${c.h0} mm acima da bobina.`
-      : "Origem ainda não marcada.";
-    if (estado.coleta?.homeRefeito) {
-      texto += " Houve home depois do início desta coleta: a origem dela não vale mais. Baixe o CSV, descarte e recomece.";
-    } else if (estado.coleta) {
-      texto += " Origem, eixos e plano estão fixos até descartar a coleta.";
+  function mostrarConfiguracao() {
+    const itens = [];
+    try {
+      const setup = lerSetupDaTela();
+      itens.push(["Sensor", `dx ${mm(setup.dx)}, dy ${mm(setup.dy)}, ${mm(setup.dz)} abaixo do bico`]);
+      itens.push(["Bobina na mesa", `centro em X ${mm(setup.xc)}, Y ${mm(setup.yc)}; plano do fio a ${mm(setup.hb)} da mesa`]);
+    } catch (erro) {
+      itens.push(["Medidas", erro.message]);
     }
+    const geometria = NOMES_DA_GEOMETRIA[campoMeta("geometria").value] ?? campoMeta("geometria").value;
+    itens.push(["Bobina", `${geometria}, ${campoMeta("dimensao_mm").value} mm, ${campoMeta("voltas").value} voltas`]);
+    itens.push(["Curso do bico", `${descreverCurso(estado.curso)}${impressora ? " (do M211)" : ""}`]);
+    itens.push(["Home", estado.homeConfirmado ? "confirmado" : "não confirmado (etapa 1 do assistente)"]);
+    for (const lista of el.resumoConfig) {
+      lista.replaceChildren(...itens.map(([titulo, texto]) => {
+        const bloco = document.createElement("div");
+        const dt = document.createElement("dt");
+        const dd = document.createElement("dd");
+        dt.textContent = titulo;
+        dd.textContent = texto;
+        bloco.append(dt, dd);
+        return bloco;
+      }));
+    }
+
+    const c = estado.coleta?.calibracao ?? estado.calibracao;
+    let texto;
+    if (estado.coleta?.homeRefeito) {
+      texto = "Houve um comando que muda o referencial da impressora depois do início desta coleta: a origem dela não vale mais. Baixe o CSV, descarte e recomece.";
+    } else if (estado.coleta) {
+      texto = "Coleta em andamento: medidas, eixos e plano estão fixos até descartar a coleta.";
+    } else if (!estado.setupConfirmado) {
+      texto = "Experimento ainda não configurado: abra o passo a passo e conclua as cinco etapas.";
+    } else {
+      texto = "Experimento configurado.";
+    }
+    if (c) texto += ` Com o sensor sobre o centro da bobina, o bico fica em X ${c.X0.toFixed(1)}, Y ${c.Y0.toFixed(1)}.`;
     el.origem.textContent = texto;
   }
 
   function mostrarPosicao() {
     if (!posicaoAtual) return;
-    el.posicao.textContent = `X ${posicaoAtual.x.toFixed(2)} · Y ${posicaoAtual.y.toFixed(2)} · Z ${posicaoAtual.z.toFixed(2)}`;
-    const c = estado.calibracao;
+    escrever(el.posicao, `X ${posicaoAtual.x.toFixed(2)} · Y ${posicaoAtual.y.toFixed(2)} · Z ${posicaoAtual.z.toFixed(2)}`);
+    const c = estado.coleta?.calibracao ?? estado.calibracao;
     el.posicaoBobina.textContent = c
       ? `${(posicaoAtual.x - c.X0).toFixed(1)} · ${(posicaoAtual.y - c.Y0).toFixed(1)} · ${(posicaoAtual.z - c.Z0 + c.h0).toFixed(1)} mm`
-      : "marque a origem";
+      : "configure o experimento";
   }
 
   function mostrarAndamento() {
@@ -290,6 +405,55 @@ export function setupFieldCollector(raiz) {
     el.andamento.textContent = estado.coleta ? `Passadas — ${partes.join("; ")}.` : "Nenhuma passada em andamento.";
     const ativa = executando?.passada ?? passadaParada();
     el.progresso.value = ativa && total ? estado.passadas[ativa].proximo / total : 0;
+  }
+
+  function mostrarFirmware() {
+    el.firmware.textContent = estado.firmware
+      ? `${estado.firmware.firmware}${estado.firmware.maquina ? ` · ${estado.firmware.maquina}` : ""}`
+      : (impressora ? "não informado" : "impressora não conectada");
+    el.curso.textContent = `${descreverCurso(estado.curso)}${impressora ? " (do M211)" : " (última conexão ou padrão)"}`;
+  }
+
+  // Desenhos do assistente com os valores da tela; valor inválido vira a mensagem no lugar do desenho.
+  function desenhar() {
+    const mostrar = (nome, montar) => {
+      const caixa = el.desenhos[nome];
+      if (!caixa) return;
+      try {
+        caixa.innerHTML = montar();
+      } catch (erro) {
+        caixa.innerHTML = "";
+        const aviso = document.createElement("p");
+        aviso.className = "mapa-nota";
+        aviso.textContent = erro.message;
+        caixa.append(aviso);
+      }
+    };
+    mostrar("cabecote", () => desenhoDoCabecote(lerSetupDaTela()));
+    mostrar("bobina", () => {
+      const bobina = lerBobina();
+      return desenhoDaBobina({ setup: lerSetupDaTela(), curso: estado.curso, geometria: bobina.geometria, dimensaoMm: bobina.dimensaoMm });
+    });
+    mostrar("plano", () => {
+      const { passos, setup } = planoAtual();
+      const bobina = estado.coleta ? { geometria: estado.coleta.metadados.geometria, dimensaoMm: Number(estado.coleta.metadados.dimensao_mm) } : lerBobina();
+      return desenhoDoPlano({ passos, area: areaDoSensor(estado.curso, setup), geometria: bobina.geometria, dimensaoMm: bobina.dimensaoMm });
+    });
+  }
+
+  // Qualquer mudança nos campos do assistente: guarda, recalcula a origem e redesenha. A configuração mudou,
+  // então precisa ser concluída de novo no assistente.
+  function aoMudarCampos() {
+    if (estado.coleta) return;
+    estado.setupConfirmado = false;
+    estado.campos = lerCampos();
+    estado.mapeamento = lerMapeamento();
+    atualizarCalibracao();
+    salvar();
+    desenhar();
+    conferirPlano();
+    mostrarConfiguracao();
+    mostrarPosicao();
   }
 
   async function atualizarPosicao() {
@@ -346,12 +510,19 @@ export function setupFieldCollector(raiz) {
       await esperarSilencio(() => ultimaLinha);
       el.estadoImpressora.textContent = "Conferindo a resposta…";
       await marlin.enviar("M114", { prazoMs: 10000 });
+      estado.firmware = lerFirmware(await marlin.enviar("M115"));
+      estado.curso = lerLimites(await marlin.enviar("M211")) ?? CURSO_PADRAO; // M211 sem S só informa
       await marlin.enviar("G90");
       await marlin.enviar("M18 S0"); // motores não desligam parados (posição e fundo magnético iguais nas duas passadas)
       impressora = { canal, marlin };
+      // Não dá para saber se a impressora foi religada desde o último home: a confirmação volta a ser pedida.
+      estado.homeConfirmado = false;
+      salvar();
       await atualizarPosicao();
-      el.estadoImpressora.textContent = "Conectada e respondendo.";
-      status("Impressora conectada.", "ready");
+      el.estadoImpressora.textContent = estado.firmware
+        ? `Conectada: ${estado.firmware.firmware}${estado.firmware.maquina ? `, ${estado.firmware.maquina}` : ""}.`
+        : "Conectada e respondendo.";
+      status("Impressora conectada. Confirme o home na etapa 1 do assistente antes das passadas.", "ready");
     } catch (erro) {
       impressora = null;
       marlin?.cancelarTudo();
@@ -362,6 +533,10 @@ export function setupFieldCollector(raiz) {
       }
     } finally {
       conectando.impressora = false;
+      mostrarFirmware();
+      mostrarConfiguracao();
+      desenhar();
+      conferirPlano();
       atualizarBotoes();
     }
   }
@@ -372,6 +547,7 @@ export function setupFieldCollector(raiz) {
     atual?.marlin.cancelarTudo();
     await atual?.canal.fechar();
     el.estadoImpressora.textContent = "Desconectada.";
+    mostrarFirmware();
     atualizarBotoes();
   }
 
@@ -381,6 +557,7 @@ export function setupFieldCollector(raiz) {
     impressora = null;
     el.estadoImpressora.textContent = mensagem;
     status(`Impressora: ${mensagem}`, "error");
+    mostrarFirmware();
     atualizarBotoes();
   }
 
@@ -449,24 +626,33 @@ export function setupFieldCollector(raiz) {
     return operar("medir", async () => {
       const medida = await sensor.link.medir(8);
       const campo = paraEixosDaImpressora(medida, estado.coleta?.mapeamento ?? lerMapeamento());
-      el.ultima.textContent = `frente ${medida.frente.toFixed(1)}, esquerda ${medida.esquerda.toFixed(1)}, cima ${medida.cima.toFixed(1)} µT → ` +
-        `Bx ${campo.bx.toFixed(1)}, By ${campo.by.toFixed(1)}, Bz ${campo.bz.toFixed(1)} µT`;
+      escrever(el.ultima, `frente ${medida.frente.toFixed(1)}, esquerda ${medida.esquerda.toFixed(1)}, cima ${medida.cima.toFixed(1)} µT → ` +
+        `Bx ${campo.bx.toFixed(1)}, By ${campo.by.toFixed(1)}, Bz ${campo.bz.toFixed(1)} µT`);
     });
   }
 
-  // --- movimento e origem ---
+  // --- movimento ---
 
-  function jog(direcao) {
+  function jog(botao) {
+    const direcao = botao.dataset.coletaJog;
+    const passo = Number(botao.closest("[data-coleta-jog-grupo]")?.querySelector("[data-coleta-passo]")?.value ?? 10);
     return operar("jog", async () => {
       const eixo = direcao[0];
-      const sinal = direcao[1] === "-" ? -1 : 1;
-      const distancia = sinal * Number(el.passo.value);
+      const distancia = (direcao[1] === "-" ? -1 : 1) * passo;
+      await atualizarPosicao();
+      // O firmware para no limite sem avisar: o aviso vem daqui, antes de mandar o movimento.
+      const destino = posicaoAtual[eixo.toLowerCase()] + distancia;
+      const minimo = estado.curso.min[eixo.toLowerCase()];
+      const maximo = estado.curso.max[eixo.toLowerCase()];
+      if (destino < minimo || destino > maximo) {
+        status(`${eixo} ${destino.toFixed(1)} fica fora do curso da impressora (${minimo} a ${maximo} mm): ela não se move. Use um passo menor.`, "warning");
+        return;
+      }
       const calibracao = estado.coleta?.calibracao ?? estado.calibracao;
-      if (eixo === "Z" && sinal < 0 && calibracao) {
-        await atualizarPosicao();
-        const alturaNova = posicaoAtual.z + distancia - calibracao.Z0 + calibracao.h0;
+      if (eixo === "Z" && distancia < 0 && calibracao && estado.setupConfirmado) {
+        const alturaNova = destino - calibracao.Z0 + calibracao.h0;
         if (alturaNova < ALTURA_MINIMA_MANUAL_MM) {
-          status(`Esse passo deixaria o sensor a ${alturaNova.toFixed(1)} mm da bobina (mínimo ${ALTURA_MINIMA_MANUAL_MM} mm). Use um passo menor.`, "warning");
+          status(`Esse passo deixaria o sensor a ${alturaNova.toFixed(1)} mm do plano da bobina (mínimo ${ALTURA_MINIMA_MANUAL_MM} mm). Use um passo menor.`, "warning");
           return;
         }
       }
@@ -489,11 +675,11 @@ export function setupFieldCollector(raiz) {
     });
   }
 
-  // Depois do home (ou de outro comando que mude o referencial) a origem marcada não vale mais. Uma coleta sem
-  // nenhuma medida (a primeira passada falhou logo no primeiro ponto) não tem o que guardar e é desfeita direto,
-  // sem exigir "Descartar".
-  function aposHome() {
-    estado.calibracao = null;
+  // Depois do home as coordenadas voltam a ser as da mesa e a configuração (absoluta) continua valendo. Uma
+  // coleta já começada é conservadora: qualquer mudança de referencial no meio dela a invalida. Uma coleta sem
+  // nenhuma medida (a primeira passada falhou logo no primeiro ponto) não tem o que guardar e é desfeita direto.
+  function aposMudarReferencial({ foiHome }) {
+    estado.homeConfirmado = foiHome;
     if (estado.coleta && estado.linhas.length === 0) {
       estado.coleta = null;
       estado.passadas = {};
@@ -501,7 +687,7 @@ export function setupFieldCollector(raiz) {
       estado.coleta.homeRefeito = true;
     }
     salvar();
-    mostrarOrigem();
+    mostrarConfiguracao();
     mostrarAndamento();
   }
 
@@ -515,25 +701,18 @@ export function setupFieldCollector(raiz) {
       status("Fazendo o home…");
       await impressora.marlin.enviar("G28", { prazoMs: 240000 });
       await impressora.marlin.enviar("M18 S0");
-      aposHome();
-      status("Home feito. Suba o Z, coloque o suporte da bobina e marque a origem.", "ready");
+      aposMudarReferencial({ foiHome: true });
+      status("Home feito. Suba o Z e coloque o suporte da bobina.", "ready");
       await atualizarPosicao();
     });
   }
 
-  function marcarOrigem() {
-    const h0 = Number(el.h0.value);
-    if (!(h0 >= 5)) {
-      status("Informe a altura do sensor acima da bobina (mm), medida com régua.", "warning");
-      return;
-    }
-    return operar("origem", async () => {
+  function subir() {
+    return operar("subir", async () => {
+      await impressora.marlin.enviar("G90");
+      const z = Math.min(250, estado.curso.max.z);
+      await impressora.marlin.enviar(`G1 Z${z} F600`);
       await atualizarPosicao();
-      estado.calibracao = { X0: posicaoAtual.x, Y0: posicaoAtual.y, Z0: posicaoAtual.z, h0 };
-      salvar();
-      mostrarOrigem();
-      mostrarPosicao();
-      status("Origem marcada.", "ready");
     });
   }
 
@@ -548,51 +727,133 @@ export function setupFieldCollector(raiz) {
     await atualizarPosicao();
   }
 
+  function irParaOCentro() {
+    const calibracao = estado.coleta?.calibracao ?? estado.calibracao;
+    if (!estado.homeConfirmado) {
+      status("Confirme o home (etapa 1 do assistente) antes de mandar o sensor para a bobina.", "warning");
+      return;
+    }
+    let z = 30;
+    try {
+      z = Math.min(...planoAtual().plano.alturas);
+    } catch {
+      // plano inválido: usa 30 mm
+    }
+    const alvo = { x: 0, y: 0, z };
+    const problemas = conferirLimites([alvo], calibracao, { curso: estado.curso, alturaMinima: ALTURA_MINIMA_MANUAL_MM });
+    if (problemas.length) {
+      status(`O centro da bobina não cabe no curso: ${problemas[0]}.`, "error");
+      return;
+    }
+    return operar("centro", () => irPara(alvo, calibracao));
+  }
+
+  // Etapa 3: a posição medida pela própria impressora vira o centro ou a altura da bobina.
+  function usarPosicaoComoCentro() {
+    let setup;
+    try {
+      setup = lerSetupDaTela();
+    } catch (erro) {
+      status(erro.message, "error");
+      return;
+    }
+    if (!estado.homeConfirmado) {
+      status("Confirme o home (etapa 1) antes: o centro vem do X e do Y da impressora, que só valem depois do home.", "warning");
+      return;
+    }
+    return operar("centro", async () => {
+      await atualizarPosicao();
+      const campo = (chave) => el.setup.find((c) => c.dataset.coletaSetup === chave);
+      campo("xc").value = (posicaoAtual.x + setup.dx).toFixed(1);
+      campo("yc").value = (posicaoAtual.y + setup.dy).toFixed(1);
+      aoMudarCampos();
+      status("Centro da bobina tirado da posição do sensor.", "ready");
+    });
+  }
+
+  function usarPosicaoComoTopo() {
+    let setup;
+    try {
+      setup = lerSetupDaTela();
+    } catch (erro) {
+      status(erro.message, "error");
+      return;
+    }
+    if (!estado.homeConfirmado) {
+      status("Confirme o home (etapa 1) antes: a altura hb vem do Z da impressora, que só vale depois do home.", "warning");
+      return;
+    }
+    return operar("topo", async () => {
+      await atualizarPosicao();
+      const hb = posicaoAtual.z - setup.dz;
+      if (!(hb >= 0)) throw new Error(`Com Z ${posicaoAtual.z} e o sensor ${setup.dz} mm abaixo do bico, o sensor estaria abaixo da mesa: confira o dz.`);
+      el.setup.find((c) => c.dataset.coletaSetup === "hb").value = hb.toFixed(1);
+      aoMudarCampos();
+      status("Altura do plano da bobina tirada da posição do sensor.", "ready");
+    });
+  }
+
   // --- plano ---
 
   // Plano em uso: o congelado da coleta, ou o da tela quando ainda não há coleta.
   function planoAtual() {
     if (estado.coleta) {
-      const { plano, passos, calibracao, mapeamento } = estado.coleta;
-      return { plano, passos, calibracao, mapeamento };
+      const { plano, passos, calibracao, mapeamento, setup } = estado.coleta;
+      return { plano, passos, calibracao, mapeamento, setup };
     }
     const plano = lerPlano();
-    return { plano, passos: planejarVarredura(plano), calibracao: estado.calibracao, mapeamento: lerMapeamento() };
+    const setup = lerSetupDaTela();
+    return { plano, passos: planejarVarredura(plano), calibracao: calibracaoDoSetup(setup), mapeamento: lerMapeamento(), setup };
   }
 
-  // Devolve true quando o plano pode ser executado (eixos da caneta válidos, origem marcada e todos os pontos
-  // dentro dos limites).
+  // Devolve true quando o plano pode ser executado (eixos da caneta válidos, medidas válidas e todos os pontos
+  // dentro do curso).
   function conferirPlano() {
     try {
       const { plano, passos, calibracao, mapeamento } = planoAtual();
       // Dois eixos da caneta no mesmo eixo da impressora lançam erro aqui, antes de andar e medir.
       paraEixosDaImpressora(MEDIDA_ZERADA, mapeamento);
-      const problemas = calibracao ? conferirLimites(passos, calibracao) : [];
+      const problemas = conferirLimites(passos, calibracao, { curso: estado.curso });
       const pontos = passos.filter((p) => p.tipo === "ponto").length;
       const duracao = estimarDuracao(passos, {
         velocidadeMmS: plano.velocidade / 60, segundosPorMedida: plano.leituras * 0.075, pausaS: plano.pausaMs / 1000,
       });
       let texto = `${pontos} pontos e ${passos.length - pontos} visitas à referência por passada; ` +
         `cerca de ${formatarDuracao(duracao)} por passada (com o eixo Z a 5 mm/s).`;
-      if (!calibracao) texto += " Marque a origem para conferir os limites da impressora.";
-      else if (problemas.length) texto += ` Problemas: ${problemas.slice(0, 4).join("; ")}.`;
+      if (problemas.length) texto += ` Problemas: ${problemas.slice(0, 4).join("; ")}. Use "Sugerir a partir da bobina" ou ajuste a grade.`;
       else texto += " Todos os pontos cabem no curso da impressora.";
-      el.resumoPlano.textContent = texto;
-      return Boolean(calibracao) && problemas.length === 0;
+      escrever(el.resumoPlano, texto);
+      return problemas.length === 0;
     } catch (erro) {
-      el.resumoPlano.textContent = erro.message;
+      escrever(el.resumoPlano, erro.message);
       return false;
     }
   }
 
+  function sugerir() {
+    try {
+      const bobina = lerBobina();
+      const campos = sugerirPlano({ dimensaoMm: bobina.dimensaoMm, setup: lerSetupDaTela(), curso: estado.curso });
+      for (const campo of el.plano) if (campo.dataset.coletaPlano in campos) campo.value = campos[campo.dataset.coletaPlano];
+      aoMudarCampos();
+      avisoNoAssistente("");
+    } catch (erro) {
+      avisoNoAssistente(erro.message);
+    }
+  }
+
   function percorrerCantos() {
+    if (!estado.homeConfirmado) {
+      status("Confirme o home (etapa 1) antes de mandar a cabeça aos cantos.", "warning");
+      return;
+    }
     if (!conferirPlano()) {
       status("Corrija o plano antes de percorrer os cantos (veja o resumo do plano).", "error");
       return;
     }
     const { passos, calibracao } = planoAtual();
     const cantos = cantosDaGrade(passos);
-    const problemas = conferirLimites(cantos, calibracao);
+    const problemas = conferirLimites(cantos, calibracao, { curso: estado.curso });
     if (problemas.length) {
       status(`Os cantos da grade não cabem no curso da impressora: ${problemas[0]}.`, "error");
       return;
@@ -605,6 +866,86 @@ export function setupFieldCollector(raiz) {
       }
       status("Cantos percorridos. Confira se nada encostou na bobina nem no suporte.", "ready");
     });
+  }
+
+  // --- assistente ---
+
+  function validarEtapa(etapa) {
+    if (etapa === 2) {
+      lerSetupDaTela();
+      paraEixosDaImpressora(MEDIDA_ZERADA, lerMapeamento());
+    }
+    if (etapa === 3) {
+      lerBobina();
+      lerSetupDaTela();
+    }
+    if (etapa === 4 && !conferirPlano()) {
+      throw new Error("O plano ainda tem problemas (veja o resumo abaixo da grade).");
+    }
+  }
+
+  function mostrarEtapa(etapa) {
+    etapaAtual = Math.min(Math.max(etapa, 1), TOTAL_DE_ETAPAS);
+    for (const secao of el.etapas) secao.hidden = Number(secao.dataset.coletaEtapa) !== etapaAtual;
+    for (const botao of el.irParaEtapa) {
+      const numero = Number(botao.dataset.coletaEtapaIr);
+      if (numero === etapaAtual) {
+        botao.setAttribute("aria-current", "step");
+        // Em tela estreita a faixa de etapas rola de lado: a atual fica à vista.
+        botao.scrollIntoView({ block: "nearest", inline: "nearest" });
+      } else {
+        botao.removeAttribute("aria-current");
+      }
+    }
+    el.voltar.disabled = etapaAtual === 1;
+    el.proximo.hidden = etapaAtual === TOTAL_DE_ETAPAS;
+    el.concluir.hidden = etapaAtual !== TOTAL_DE_ETAPAS;
+    avisoNoAssistente("");
+    desenhar();
+    conferirPlano();
+    mostrarConfiguracao();
+    const secao = el.assistente.querySelector(`[data-coleta-etapa="${etapaAtual}"]`);
+    if (secao) secao.scrollTop = 0;
+  }
+
+  function irParaEtapa(etapa) {
+    // Para a frente, a etapa atual precisa estar válida; para trás, sempre pode.
+    if (etapa > etapaAtual && !estado.coleta) {
+      try {
+        for (let e = etapaAtual; e < etapa; e++) validarEtapa(e);
+      } catch (erro) {
+        avisoNoAssistente(erro.message);
+        return;
+      }
+    }
+    mostrarEtapa(etapa);
+  }
+
+  function abrirAssistente() {
+    el.assistente.showModal();
+    mostrarFirmware();
+    mostrarEtapa(estado.setupConfirmado || estado.coleta ? TOTAL_DE_ETAPAS : 1);
+  }
+
+  function concluirAssistente() {
+    if (estado.coleta) {
+      el.assistente.close();
+      return;
+    }
+    try {
+      for (let e = 1; e < TOTAL_DE_ETAPAS; e++) validarEtapa(e);
+    } catch (erro) {
+      avisoNoAssistente(erro.message);
+      return;
+    }
+    aoMudarCampos();
+    estado.setupConfirmado = true;
+    salvar();
+    mostrarConfiguracao();
+    el.assistente.close();
+    status(estado.homeConfirmado
+      ? "Experimento configurado. Pode começar pela passada desligada."
+      : "Experimento configurado. Falta confirmar o home (etapa 1 do assistente) antes das passadas.", estado.homeConfirmado ? "ready" : "warning");
   }
 
   // --- passadas ---
@@ -623,12 +964,24 @@ export function setupFieldCollector(raiz) {
     return globalThis.confirm("A fonte da bobina está desligada (corrente zero)?");
   }
 
+  // O que falta para andar com a impressora, numa mensagem só (o botão fica clicável para a pessoa saber o porquê).
+  function faltaParaPassada() {
+    if (!estado.coleta && !estado.setupConfirmado) return "Configure o experimento antes (botão “Configurar o experimento”).";
+    if (!estado.homeConfirmado) return "Confirme que a impressora fez o home desde que foi ligada (etapa 1 do assistente).";
+    return null;
+  }
+
   // Todas as conferências e confirmações vêm antes de mudar o estado: cancelar uma delas não pode deixar a
   // coleta congelada só na memória nem apagar as medidas da passada.
   function iniciarPassada(passada) {
     if (executando || operacao) return;
+    const falta = faltaParaPassada();
+    if (falta) {
+      status(falta, "error");
+      return;
+    }
     if (!estado.coleta && !conferirPlano()) {
-      status("Corrija o plano antes de começar (veja o resumo do plano).", "error");
+      status("O plano não cabe no curso ou tem campo inválido: abra o assistente na etapa 4.", "error");
       return;
     }
     const medidas = estado.linhas.filter((linha) => linha.startsWith(`${passada},`)).length;
@@ -637,10 +990,12 @@ export function setupFieldCollector(raiz) {
 
     if (!estado.coleta) {
       const plano = lerPlano();
+      const setup = lerSetupDaTela();
       estado.coleta = {
-        calibracao: { ...estado.calibracao },
+        calibracao: calibracaoDoSetup(setup),
         mapeamento: lerMapeamento(),
         campos: lerCampos(),
+        setup,
         plano,
         passos: planejarVarredura(plano),
         metadados: { ...lerMetadadosFixos(plano), observacao: campoMeta("observacao").value.trim() },
@@ -652,14 +1007,19 @@ export function setupFieldCollector(raiz) {
     if (passada === "ligada") estado.coleta.metadados.corrente_A = campoMeta("corrente_A").value.trim();
     estado.passadas[passada] = { inicioMs: Date.now(), proximo: 0, concluida: false };
     salvar();
-    mostrarOrigem();
+    mostrarConfiguracao();
     return rodarPassada(passada);
   }
 
   function retomarPassada() {
     const passada = passadaParada();
     if (!passada || !estado.coleta || executando || operacao) return;
-    const problemas = conferirLimites(estado.coleta.passos, estado.coleta.calibracao);
+    const falta = faltaParaPassada();
+    if (falta) {
+      status(falta, "error");
+      return;
+    }
+    const problemas = conferirLimites(estado.coleta.passos, estado.coleta.calibracao, { curso: estado.curso });
     if (problemas.length) {
       status(`O plano desta coleta não cabe mais no curso: ${problemas[0]}.`, "error");
       return;
@@ -709,7 +1069,7 @@ export function setupFieldCollector(raiz) {
           const decorrido = (Date.now() - registro.inicioMs) / 1000;
           const restante = decorrido / registro.proximo * (total - registro.proximo);
           el.andamento.textContent = `Passada ${passada}: ${registro.proximo} de ${total}; falta cerca de ${formatarDuracao(restante)}.`;
-          el.ultima.textContent = `(${linha.x}, ${linha.y}, ${linha.z}) mm: Bx ${linha.bx.toFixed(1)}, By ${linha.by.toFixed(1)}, Bz ${linha.bz.toFixed(1)} µT`;
+          escrever(el.ultima, `(${linha.x}, ${linha.y}, ${linha.z}) mm: Bx ${linha.bx.toFixed(1)}, By ${linha.by.toFixed(1)}, Bz ${linha.bz.toFixed(1)} µT`);
         },
       });
       registro.proximo = resultado.proximo;
@@ -794,9 +1154,11 @@ export function setupFieldCollector(raiz) {
     estado.passadas = {};
     estado.coleta = null;
     salvar();
-    mostrarOrigem();
+    mostrarConfiguracao();
     mostrarAndamento();
     atualizarBotoes();
+    desenhar();
+    conferirPlano();
   }
 
   // --- console ---
@@ -809,7 +1171,7 @@ export function setupFieldCollector(raiz) {
       status("Espere a operação atual terminar para enviar o comando.", "warning");
       return;
     }
-    // Comando que muda o referencial: com uma coleta salva, é recusado; sem coleta, invalida a origem marcada.
+    // Comando que muda o referencial: com uma coleta salva, é recusado; sem coleta, só o home confirma o home.
     const mudaOReferencial = mudaReferencial(comando);
     if (mudaOReferencial && estado.coleta) {
       status("Há uma coleta salva: o console não aceita G28, G92, M206, M428, M501, M502 nem G53 a G59, que mudam o referencial " +
@@ -821,7 +1183,7 @@ export function setupFieldCollector(raiz) {
       try {
         await impressora.marlin.enviar(comando, { prazoMs: 240000 });
       } finally {
-        if (mudaOReferencial) aposHome();
+        if (mudaOReferencial) aposMudarReferencial({ foiHome: /^\s*(?:N\d+\s*)?G0*28\b/i.test(comando) });
       }
       await atualizarPosicao();
     });
@@ -836,48 +1198,71 @@ export function setupFieldCollector(raiz) {
   const salvo = lerSalvo();
   if (salvo) {
     Object.assign(estado, salvo);
+    estado.curso ??= CURSO_PADRAO;
+    preencherCampos(estado.coleta?.campos ?? estado.campos);
     if (estado.coleta) {
-      preencherCampos(estado.coleta.campos);
       const { corrente_A, observacao } = estado.coleta.metadados;
       if (corrente_A !== undefined) campoMeta("corrente_A").value = corrente_A;
       if (observacao !== undefined) campoMeta("observacao").value = observacao;
     }
     if (estado.linhas.length) {
-      status(`Há ${estado.linhas.length} medidas salvas neste navegador. Se a impressora não foi desligada nem fez home, dá para retomar.`, "warning");
+      status(`Há ${estado.linhas.length} medidas salvas neste navegador. Se a impressora não foi desligada, dá para retomar.`, "warning");
     }
   }
-  if (!estado.coleta && estado.calibracao) el.h0.value = estado.calibracao.h0;
   const mapeamentoNaTela = estado.coleta?.mapeamento ?? estado.mapeamento;
   for (const select of el.eixos) select.value = mapeamentoNaTela[select.dataset.coletaEixo];
-  mostrarOrigem();
+  if (!estado.coleta) atualizarCalibracao();
+  mostrarFirmware();
+  mostrarConfiguracao();
   mostrarAndamento();
+  desenhar();
+  conferirPlano();
 
   if (!webSerialDisponivel()) {
     status("Este navegador não tem Web Serial. Abra a página no Chrome, no Edge ou no Opera do computador.", "error");
   }
 
-  el.conectarImpressora.addEventListener("click", conectarImpressora);
+  for (const botao of el.conectarImpressora) botao.addEventListener("click", conectarImpressora);
   el.desconectarImpressora.addEventListener("click", desconectarImpressora);
   el.conectarSensor.addEventListener("click", conectarSensor);
   el.desconectarSensor.addEventListener("click", desconectarSensor);
-  el.medirAqui.addEventListener("click", medirAqui);
-  el.home.addEventListener("click", home);
-  el.subir.addEventListener("click", () => operar("subir", async () => {
-    await impressora.marlin.enviar("G90");
-    await impressora.marlin.enviar("G1 Z250 F600");
-    await atualizarPosicao();
-  }));
-  el.irOrigem.addEventListener("click", () => operar("origem", () => irPara({ x: 0, y: 0, z: estado.calibracao.h0 }, estado.calibracao)));
-  for (const botao of el.jogs) botao.addEventListener("click", () => jog(botao.dataset.coletaJog));
-  el.marcarOrigem.addEventListener("click", marcarOrigem);
-  for (const select of el.eixos) select.addEventListener("change", () => { estado.mapeamento = lerMapeamento(); salvar(); });
+  for (const botao of el.medirAqui) botao.addEventListener("click", medirAqui);
+  for (const botao of el.home) botao.addEventListener("click", home);
+  for (const botao of el.subir) botao.addEventListener("click", subir);
+  el.irOrigem.addEventListener("click", irParaOCentro);
+  for (const botao of el.jogs) botao.addEventListener("click", () => jog(botao));
+  for (const campo of [...el.setup, ...el.plano, ...el.eixos]) {
+    campo.addEventListener("input", aoMudarCampos);
+    campo.addEventListener("change", aoMudarCampos);
+  }
+  for (const campo of el.meta.filter((c) => !META_EDITAVEL.includes(c.dataset.coletaMeta))) {
+    campo.addEventListener("input", aoMudarCampos);
+    campo.addEventListener("change", aoMudarCampos);
+  }
   campoMeta("observacao").addEventListener("input", () => {
     if (!estado.coleta) return;
     estado.coleta.metadados.observacao = campoMeta("observacao").value.trim();
     salvar();
   });
-  el.conferir.addEventListener("click", conferirPlano);
+  el.homeConfirmado.addEventListener("change", () => {
+    estado.homeConfirmado = el.homeConfirmado.checked;
+    salvar();
+    mostrarConfiguracao();
+  });
+  el.centroAqui.addEventListener("click", usarPosicaoComoCentro);
+  el.topoAqui.addEventListener("click", usarPosicaoComoTopo);
+  el.sugerir.addEventListener("click", sugerir);
   el.cantos.addEventListener("click", percorrerCantos);
+  el.abrirAssistente.addEventListener("click", abrirAssistente);
+  el.fecharAssistente.addEventListener("click", () => el.assistente.close());
+  el.voltar.addEventListener("click", () => mostrarEtapa(etapaAtual - 1));
+  el.proximo.addEventListener("click", () => irParaEtapa(etapaAtual + 1));
+  el.concluir.addEventListener("click", concluirAssistente);
+  for (const botao of el.irParaEtapa) botao.addEventListener("click", () => irParaEtapa(Number(botao.dataset.coletaEtapaIr)));
+  el.assistente.addEventListener("close", () => {
+    mostrarConfiguracao();
+    atualizarBotoes();
+  });
   for (const botao of el.iniciar) botao.addEventListener("click", () => iniciarPassada(botao.dataset.coletaIniciar));
   el.retomar.addEventListener("click", retomarPassada);
   el.pausar.addEventListener("click", pausarOuContinuar);
