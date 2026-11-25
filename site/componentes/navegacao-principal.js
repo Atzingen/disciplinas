@@ -4,7 +4,7 @@ export function buildMainNavigation(rootPath = "./", activeSection = "inicio") {
       id: "prcfemg",
       label: "PRCFEMG — Fundamentos do Eletromagnetismo",
       href: `${rootPath}disciplinas/prcfemg/`,
-      current: ["prcfemg", "exercicios"].includes(activeSection),
+      current: ["prcfemg", "exercicios", "aulas"].includes(activeSection),
     },
     {
       id: "prclfbe",

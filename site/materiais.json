@@ -576,5 +576,16 @@
     "description": "Aula prática em notebook: flores Iris e dígitos MNIST com camadas densas, código simples, gráficos de treinamento e previsões. Leitura completa, download e Colab.",
     "path": "topicos/05-redes-neurais/",
     "tags": ["redes neurais", "aprendizado de máquina", "Python", "TensorFlow", "Keras", "Iris", "MNIST", "classificação", "Dense", "Jupyter", "notebook", "aula prática"]
+  },
+  {
+    "id": "aula-maxwell-ondas",
+    "title": "Aula — Das quatro leis à luz",
+    "kind": "aula",
+    "section": "aulas",
+    "disciplines": ["PRCFEMG"],
+    "theme": "Equações de Maxwell e ondas eletromagnéticas",
+    "description": "Apresentação com animações interativas: a corrente de deslocamento, as quatro equações nas formas integral e diferencial, divergente, rotacional, os teoremas de Gauss e de Stokes e a dedução da equação de onda.",
+    "path": "aulas/maxwell-ondas/",
+    "tags": ["aula", "equações de Maxwell", "corrente de deslocamento", "lei de Ampère", "lei de Faraday", "lei de Gauss", "divergente", "rotacional", "teorema de Stokes", "equação de onda", "onda eletromagnética", "força de Lorentz"]
   }
 ]

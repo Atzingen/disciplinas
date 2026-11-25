@@ -1,0 +1,643 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Aula de PRCFEMG: corrente de deslocamento, equações de Maxwell nas formas integral e diferencial e a dedução da equação de onda, com animações interativas.">
+<title>Das quatro leis à luz · Aula de PRCFEMG</title>
+<link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="katex/katex.min.css">
+<link rel="stylesheet" href="deck.css?v=6">
+</head>
+<body>
+<div id="palco">
+
+<!-- ===================== ABERTURA ===================== -->
+
+<section class="slide capa" id="s-capa" data-titulo="Das quatro leis à luz">
+  <p class="tag"><a href="../../disciplinas/prcfemg/">PRCFEMG · Fundamentos do Eletromagnetismo</a> · Licenciatura em Física</p>
+  <h1>Das quatro leis<br>à luz</h1>
+  <p class="sub">Corrente de deslocamento, equações de Maxwell e ondas eletromagnéticas</p>
+  <canvas data-viz="ondaplana" data-modo="capa" class="limpo" width="1600" height="300"></canvas>
+  <p class="teclas">→ avança · ← volta · F tela cheia · T tema claro ou escuro · no celular, deslize para o lado<span data-so-com-notas> · N abre a nota de aula desta tela</span></p>
+</section>
+
+<section class="slide" id="s-roteiro" data-titulo="Roteiro">
+  <p class="tag">Roteiro</p>
+  <h2>Quatro passos até a luz</h2>
+  <div class="miolo">
+    <div class="grade4">
+      <div class="cartao passo-bloco alto"><div class="n">1</div><h3>O que falta na lei de Ampère</h3><p class="nota">O paradoxo do capacitor e a corrente de deslocamento.</p></div>
+      <div class="cartao passo-bloco alto"><div class="n">2</div><h3>O mapa das quatro equações</h3><p class="nota">Forma integral: um desenho e uma frase para cada lei.</p></div>
+      <div class="cartao passo-bloco alto"><div class="n">3</div><h3>Da integral à derivada</h3><p class="nota">Divergente, rotacional e os teoremas de Gauss e de Stokes.</p></div>
+      <div class="cartao passo-bloco alto"><div class="n">4</div><h3>Das quatro equações à luz</h3><p class="nota">A equação de onda e a velocidade \(c\).</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== BLOCO 1 ===================== -->
+
+<section class="slide" id="s-ja-temos" data-bloco="1" data-titulo="O que já temos">
+  <p class="tag">Bloco 1 · O que falta na lei de Ampère</p>
+  <h2>O que já temos</h2>
+  <div class="miolo">
+    <div class="grade2 alto">
+      <div class="cartao"><h3>Lei de Gauss</h3><div class="eq gg">\[\oint_S \vE\cdot\dA=\frac{Q_\text{int}}{\varepsilon_0}\]</div></div>
+      <div class="cartao"><h3>Lei de Faraday</h3><div class="eq gg">\[\oint_C \vE\cdot\dl=-\frac{d\Phi_B}{dt}\]</div></div>
+      <div class="cartao"><h3>Lei de Gauss do magnetismo</h3><div class="eq gg">\[\oint_S \vB\cdot\dA=0\]</div></div>
+      <div class="cartao"><h3>Lei de Ampère</h3><div class="eq gg">\[\oint_C \vB\cdot\dl=\mu_0 I_\text{int}+\;\htmlClass{interroga}{?}\]</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" id="s-pergunta" data-bloco="1" data-titulo="A pergunta">
+  <p class="tag">Bloco 1 · O que falta na lei de Ampère</p>
+  <h2>Campo magnético variando cria campo elétrico. E o contrário?</h2>
+  <canvas data-viz="dueto" data-modo="pergunta" width="1460" height="540"></canvas>
+</section>
+
+<section class="slide" id="s-ampere" data-bloco="1" data-passos="1" data-titulo="Lei de Ampère">
+  <p class="tag">Bloco 1 · O que falta na lei de Ampère</p>
+  <h2>Lei de Ampère: onde paramos</h2>
+  <div class="cols">
+    <div class="coluna"><canvas data-viz="ampere" data-modo="fio" width="900" height="600"></canvas></div>
+    <div class="lado">
+      <p class="nota">A corrente <span class="cI">\(I\)</span> faz o campo <span class="cB">\(\vec B\)</span> circular em volta do fio.</p>
+      <div data-step="1">
+        <div class="eq g">\[\oint_C \vB\cdot\dl=\mu_0 I_\text{int}\]</div>
+        <p class="nota">\(I_\text{int}\) é a corrente que atravessa uma superfície apoiada na curva <span class="cA">\(C\)</span>.</p>
+        <p class="nota"><strong>Qualquer</strong> superfície apoiada em \(C\).</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" id="s-capacitor" data-bloco="1" data-passos="3" data-titulo="O paradoxo do capacitor">
+  <p class="tag">Bloco 1 · O que falta na lei de Ampère</p>
+  <h2>O paradoxo do capacitor</h2>
+  <div class="cols">
+    <div class="coluna"><canvas data-viz="capacitor" width="1000" height="540"></canvas></div>
+    <div class="lado">
+      <p class="nota">A corrente chega, a carga se acumula e o campo <span class="cE">\(\vec E\)</span> entre as placas cresce.</p>
+      <div data-step="1"><p class="nota">Pela superfície \(S_1\):</p><div class="eq">\[\oint_C \vB\cdot\dl=\mu_0 I\]</div></div>
+      <div data-step="2"><p class="nota">Pela superfície \(S_2\):</p><div class="eq">\[\oint_C \vB\cdot\dl=0\;\;\htmlClass{cX}{?}\]</div></div>
+      <div data-step="3"><p class="nota">O que atravessa \(S_2\) é campo elétrico crescendo:</p><div class="eq">\[\varepsilon_0\frac{d\Phi_E}{dt}=I\]</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" id="s-maxwell-termo" data-bloco="1" data-titulo="A correção de Maxwell">
+  <p class="tag">Bloco 1 · O que falta na lei de Ampère</p>
+  <h2>A correção de Maxwell</h2>
+  <div class="miolo">
+    <div class="eq" style="font-size:52px">\[\oint_C \vB\cdot\dl=\mu_0\Big(\underbrace{I_\text{int}}_{\text{corrente de cargas}}+\underbrace{\varepsilon_0\frac{d\Phi_E}{dt}}_{\text{corrente de deslocamento}}\Big)\]</div>
+    <div class="grade2 alto">
+      <div class="cartao" data-step="1">
+        <h3>A unidade confere</h3>
+        <div class="eq" style="font-size:30px;margin-top:18px">\[\Big[\varepsilon_0\frac{d\Phi_E}{dt}\Big]=\frac{\text{C}^2}{\text{N}\,\text{m}^2}\cdot\frac{(\text{N}/\text{C})\,\text{m}^2}{\text{s}}=\frac{\text{C}}{\text{s}}=\text{A}\]</div>
+      </div>
+      <div class="cartao" data-step="2">
+        <h3>Cuidado com o nome</h3>
+        <p class="nota" style="font-size:27px">Não é carga em movimento: entre as placas não passa carga nenhuma. É campo elétrico variando no tempo, que produz \(\vB\) como uma corrente produziria.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" id="s-placas" data-bloco="1" data-titulo="Campo magnético entre as placas">
+  <p class="tag">Bloco 1 · O que falta na lei de Ampère</p>
+  <h2>O campo magnético entre as placas</h2>
+  <div class="cols">
+    <div class="coluna"><canvas data-viz="placas" width="1000" height="540"></canvas></div>
+    <div class="lado">
+      <p class="nota">Curva circular de raio \(r\) entre as placas: nenhuma corrente de cargas a atravessa.</p>
+      <div class="eq p" data-step="1">\[B\,(2\pi r)=\mu_0\varepsilon_0\frac{d}{dt}\big(E\,\pi r^2\big)\]</div>
+      <div data-step="2">
+        <div class="eq p">\[B(r)=\frac{\mu_0 I}{2\pi R^2}\,r\quad(r\le R)\]</div>
+        <div class="eq p">\[B(r)=\frac{\mu_0 I}{2\pi r}\quad(r\ge R)\]</div>
+        <p class="nota">Fora das placas, igual ao campo do fio: como se a corrente não tivesse sido interrompida.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" id="s-simetria" data-bloco="1" data-titulo="A simetria que faltava">
+  <p class="tag">Bloco 1 · O que falta na lei de Ampère</p>
+  <h2>A simetria que faltava</h2>
+  <canvas data-viz="dueto" data-modo="resposta" width="1460" height="520"></canvas>
+  <div class="grade2" style="margin-top:14px">
+    <div class="eq p">\[\oint_C \vE\cdot\dl=-\frac{d\Phi_B}{dt}\]</div>
+    <div class="eq p">\[\oint_C \vB\cdot\dl=\mu_0\varepsilon_0\frac{d\Phi_E}{dt}\quad\text{(sem corrente de cargas)}\]</div>
+  </div>
+</section>
+
+<!-- ===================== BLOCO 2 ===================== -->
+
+<section class="slide divisor" id="s-bloco2" data-bloco="2" data-titulo="Bloco 2">
+  <div class="num">2</div>
+  <h2>O mapa das quatro equações</h2>
+  <p>Só existem dois tipos de conta. As quatro equações são uma de cada tipo, para \(\vE\) e para \(\vB\).</p>
+</section>
+
+<section class="slide" id="s-dois-tipos" data-bloco="2" data-titulo="Fluxo e circulação">
+  <p class="tag">Bloco 2 · O mapa das quatro equações</p>
+  <h2>Só existem dois tipos de conta</h2>
+  <canvas data-viz="fluxocirc" width="1460" height="540"></canvas>
+  <div class="grade2" style="margin-top:12px">
+    <p class="nota p" style="text-align:center">\(\displaystyle\oint_S \vec F\cdot\dA\): a superfície fechada envolve um volume.</p>
+    <p class="nota p" style="text-align:center">\(\displaystyle\oint_C \vec F\cdot\dl\): a curva fechada é a borda de uma superfície aberta.</p>
+  </div>
+</section>
+
+<section class="slide" id="s-gauss" data-bloco="2" data-titulo="Lei de Gauss">
+  <p class="tag">Bloco 2 · O mapa das quatro equações</p>
+  <h2>1 · Lei de Gauss</h2>
+  <div class="cols">
+    <div class="coluna"><canvas data-viz="gaussE" width="960" height="550"></canvas></div>
+    <div class="lado">
+      <div class="eq g">\[\oint_S \vE\cdot\dA=\frac{Q_\text{int}}{\varepsilon_0}\]</div>
+      <p class="nota">Carga elétrica é fonte de campo elétrico.</p>
+      <p class="nota">O fluxo que sai de uma superfície fechada mede a carga que está dentro dela.</p>
+      <p class="nota p">Tire a carga de dentro. Depois ponha uma positiva e uma negativa dentro.</p>
+    </div>
+  </div>
+</section>
+
+<section class="slide" id="s-gauss-b" data-bloco="2" data-titulo="Lei de Gauss do magnetismo">
+  <p class="tag">Bloco 2 · O mapa das quatro equações</p>
+  <h2>2 · Lei de Gauss do magnetismo</h2>
+  <div class="cols">
+    <div class="coluna"><canvas data-viz="gaussB" width="960" height="550"></canvas></div>
+    <div class="lado">
+      <div class="eq g">\[\oint_S \vB\cdot\dA=0\]</div>
+      <p class="nota">Não existe carga magnética.</p>
+      <p class="nota">Toda linha de \(\vB\) que sai de uma superfície fechada volta a entrar nela.</p>
+      <p class="nota p">Partir o ímã não isola um polo: cada pedaço fica com norte e sul.</p>
+    </div>
+  </div>
+</section>
+
+<section class="slide" id="s-faraday" data-bloco="2" data-titulo="Lei de Faraday">
+  <p class="tag">Bloco 2 · O mapa das quatro equações</p>
+  <h2>3 · Lei de Faraday</h2>
+  <div class="cols">
+    <div class="coluna"><canvas data-viz="faraday" width="960" height="550"></canvas></div>
+    <div class="lado">
+      <div class="eq g">\[\oint_C \vE\cdot\dl=-\frac{d\Phi_B}{dt}\]</div>
+      <p class="nota">Campo magnético variando no tempo faz o campo elétrico circular.</p>
+      <p class="nota">O sinal de menos é a lei de Lenz.</p>
+      <p class="nota p">Ímã parado dentro da espira: fluxo grande, fem zero. O que conta é a variação.</p>
+    </div>
+  </div>
+</section>
+
+<section class="slide" id="s-ampere-maxwell" data-bloco="2" data-titulo="Lei de Ampère–Maxwell">
+  <p class="tag">Bloco 2 · O mapa das quatro equações</p>
+  <h2>4 · Lei de Ampère–Maxwell</h2>
+  <div class="cols">
+    <div class="coluna"><canvas data-viz="ampere" data-modo="ambos" width="900" height="560"></canvas></div>
+    <div class="lado">
+      <div class="eq">\[\oint_C \vB\cdot\dl=\mu_0 I_\text{int}+\mu_0\varepsilon_0\frac{d\Phi_E}{dt}\]</div>
+      <p class="nota">Corrente elétrica e campo elétrico variando no tempo fazem o campo magnético circular em volta deles.</p>
+      <p class="nota">Os dois no mesmo sentido.</p>
+    </div>
+  </div>
+</section>
+
+<section class="slide" id="s-mapa" data-bloco="2" data-titulo="O mapa das quatro equações">
+  <p class="tag">Bloco 2 · O mapa das quatro equações</p>
+  <h2>As quatro equações de Maxwell</h2>
+  <canvas data-viz="mapa4" width="1460" height="340"></canvas>
+  <div class="grade4 mapa-legendas" style="margin-top:18px">
+    <div><h3>Gauss</h3><div class="eq">\[\oint_S \vE\cdot\dA=\frac{Q_\text{int}}{\varepsilon_0}\]</div><p class="nota p">Carga é fonte de \(\vE\).</p></div>
+    <div><h3>Gauss do magnetismo</h3><div class="eq">\[\oint_S \vB\cdot\dA=0\]</div><p class="nota p">\(\vB\) não tem fonte: as linhas são fechadas.</p></div>
+    <div><h3>Faraday</h3><div class="eq">\[\oint_C \vE\cdot\dl=-\frac{d\Phi_B}{dt}\]</div><p class="nota p">\(\vB\) variando faz \(\vE\) circular.</p></div>
+    <div><h3>Ampère–Maxwell</h3><div class="eq" style="flex-direction:column">\[\oint_C \vB\cdot\dl=\mu_0 I_\text{int}\]\[{}+\mu_0\varepsilon_0\frac{d\Phi_E}{dt}\]</div><p class="nota p">Corrente e \(\vE\) variando fazem \(\vB\) circular.</p></div>
+  </div>
+</section>
+
+<section class="slide" id="s-tabela" data-bloco="2" data-passos="1" data-titulo="E se existisse carga magnética?">
+  <p class="tag">Bloco 2 · O mapa das quatro equações</p>
+  <h2>Lendo o mapa</h2>
+  <div class="miolo">
+    <table class="tab mapa2x2">
+      <thead><tr><th></th><th>Fluxo por superfície fechada</th><th>Circulação por curva fechada</th></tr></thead>
+      <tbody>
+        <tr><td>\(\vE\)</td><td>\(\displaystyle\oint_S \vE\cdot\dA=\frac{Q_\text{int}}{\varepsilon_0}\)</td><td>\(\displaystyle\oint_C \vE\cdot\dl=-\frac{d\Phi_B}{dt}\htmlClass{cM}{\;-\;\mu_0 I_m}\)</td></tr>
+        <tr><td>\(\vB\)</td><td>\(\displaystyle\oint_S \vB\cdot\dA=\htmlClass{so0}{0}\htmlClass{cM}{\mu_0 Q_m}\)</td><td>\(\displaystyle\oint_C \vB\cdot\dl=\mu_0\varepsilon_0\frac{d\Phi_E}{dt}+\mu_0 I_\text{int}\)</td></tr>
+      </tbody>
+    </table>
+    <div class="troca">
+      <p class="nota" data-step="0" data-ate="0">Existe carga elétrica. Carga magnética, nunca se observou.</p>
+      <p class="nota" data-step="1"><span class="cM" style="display:inline">Se existisse carga magnética</span> \(Q_m\), e corrente magnética \(I_m\), as quatro ficariam simétricas.</p>
+    </div>
+  </div>
+</section>
+
+<section class="slide" id="s-lorentz" data-bloco="2" data-titulo="Força de Lorentz: o jogo">
+  <p class="tag">Bloco 2 · O mapa das quatro equações</p>
+  <h2>A quinta equação: o que os campos fazem com as cargas</h2>
+  <div class="cols">
+    <div class="coluna"><canvas data-viz="lorentz" width="960" height="500"></canvas></div>
+    <div class="lado">
+      <div class="eq g">\[\vec F=q\,\big(\vE+\vec v\times\vB\big)\]</div>
+      <p class="nota">Ajuste a carga e os campos para a partícula entrar no gol.</p>
+      <p class="nota p"><span class="cE">\(\vec E\)</span> empurra sempre para o mesmo lado. <span class="cB">\(\vec B\)</span> entorta a trajetória sem mudar a rapidez.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== BLOCO 3 ===================== -->
+
+<section class="slide divisor" id="s-bloco3" data-bloco="3" data-titulo="Bloco 3">
+  <div class="num">3</div>
+  <h2>Da integral à derivada</h2>
+  <p>A forma integral fala de uma região inteira. A forma diferencial diz o que acontece em cada ponto.</p>
+</section>
+
+<section class="slide" id="s-local" data-bloco="3" data-titulo="Da região ao ponto, em três passos">
+  <p class="tag">Bloco 3 · Da integral à derivada</p>
+  <h2>Da região ao ponto, em três passos</h2>
+  <div class="miolo">
+    <div class="tres-passos">
+      <div class="cartao"><p class="rot-passo">Ponto de partida</p><div class="eq">\[\oint_S \vE\cdot\dA=\frac{Q_\text{int}}{\varepsilon_0}\]</div><p class="nota p">A lei de Gauss vale para uma região inteira.</p></div>
+      <div class="cartao" data-step="1"><p class="rot-passo">1 · Carga como densidade</p><div class="eq">\[Q_\text{int}=\int_V \rho\,dV\]</div><p class="nota p">O lado direito vira uma integral no volume.</p></div>
+      <div class="cartao" data-step="2"><p class="rot-passo">2 · Fluxo como integral no volume</p><div class="eq">\[\oint_S \vE\cdot\dA=\int_V \htmlClass{interroga}{\;?\;}\,dV\]</div><p class="nota p">É o que falta. Vamos construir: o divergente e o teorema de Gauss.</p></div>
+      <div class="cartao" data-step="3"><p class="rot-passo">3 · Mesmo volume dos dois lados</p><div class="eq">\[\int_V \htmlClass{interroga}{\;?\;}\,dV=\int_V \frac{\rho}{\varepsilon_0}\,dV\]</div><p class="nota p">Vale para qualquer volume: os integrandos são iguais em cada ponto.</p></div>
+    </div>
+    <p class="nota" data-step="4">Faraday e Ampère–Maxwell seguem o mesmo caminho, com curvas no lugar de superfícies: corrente como densidade, \(I_\text{int}=\int_S \vec J\cdot\dA\), e a circulação como integral na superfície (rotacional e teorema de Stokes).</p>
+  </div>
+</section>
+
+<section class="slide" id="s-divergente" data-bloco="3" data-passos="1" data-titulo="Divergente">
+  <p class="tag">Bloco 3 · Da integral à derivada · parte 1: as leis de fluxo</p>
+  <h2>Divergente: quanto campo nasce em cada ponto</h2>
+  <div class="cols">
+    <div class="coluna"><canvas data-viz="campo2d" data-modo="div" width="930" height="530"></canvas></div>
+    <div class="lado">
+      <p class="rot-passo">Definição</p>
+      <div class="eq p">\[\dive\vec F=\lim_{V\to 0}\frac{1}{V}\oint_S \vec F\cdot\dA\]</div>
+      <p class="nota">Fluxo que sai por unidade de volume.</p>
+      <p class="nota p">Na tela, em duas dimensões: fluxo por unidade de área. Diminua a caixinha.</p>
+      <div data-step="1">
+        <p class="rot-passo" style="margin-top:14px">Como se calcula</p>
+        <div class="eq p">\[\dive\vec F=\frac{\partial F_x}{\partial x}+\frac{\partial F_y}{\partial y}+\frac{\partial F_z}{\partial z}\]</div>
+      </div>
+      <p class="ref">Ainda não é o teorema de Gauss, é só a definição. A fórmula com derivadas sai dela no <span data-ref="cubinho"></span>; o teorema é a soma de muitos cubinhos, no <span data-ref="teo-gauss"></span>.</p>
+    </div>
+  </div>
+</section>
+
+<section class="slide" id="s-cubinho" data-bloco="3" data-passos="4" data-titulo="O fluxo num cubinho">
+  <p class="tag">Bloco 3 · Da integral à derivada · parte 1: as leis de fluxo</p>
+  <h2>O fluxo que sai de um cubinho</h2>
+  <div class="cols">
+    <div class="coluna">
+      <div class="palco-viz">
+        <canvas data-viz="elemento" data-modo="cubo" width="760" height="560"></canvas>
+        <span class="rot" data-r="fx0">\(F_x(x)\)</span>
+        <span class="rot" data-r="fx1">\(F_x(x+dx)\)</span>
+        <span class="rot" data-r="fy0">\(F_y(y)\)</span>
+        <span class="rot" data-r="fy1">\(F_y(y+dy)\)</span>
+        <span class="rot" data-r="fz0">\(F_z(z)\)</span>
+        <span class="rot" data-r="fz1">\(F_z(z+dz)\)</span>
+        <span class="rot area" data-r="ax">área \(dy\,dz\)</span>
+        <span class="rot area" data-r="ay">área \(dx\,dz\)</span>
+        <span class="rot area" data-r="az">área \(dx\,dy\)</span>
+      </div>
+    </div>
+    <div class="lado">
+      <p class="nota">\(d\Phi\) é o fluxo total que sai do cubinho, de volume \(dV=dx\,dy\,dz\): a soma do fluxo pelas seis faces.</p>
+      <p class="nota p">Fluxo por uma face = componente do campo perpendicular à face × área da face. Em cada par de faces, o que sai menos o que entra:</p>
+      <div class="eq p" data-step="1" style="font-size:23px">\[d\Phi_x=\big[F_x(x+dx)-F_x(x)\big]\,dy\,dz=\frac{\partial F_x}{\partial x}\,dx\,dy\,dz\]</div>
+      <div class="eq p" data-step="2" style="font-size:23px">\[d\Phi_y=\big[F_y(y+dy)-F_y(y)\big]\,dx\,dz=\frac{\partial F_y}{\partial y}\,dx\,dy\,dz\]</div>
+      <div class="eq p" data-step="3" style="font-size:23px">\[d\Phi_z=\big[F_z(z+dz)-F_z(z)\big]\,dx\,dy=\frac{\partial F_z}{\partial z}\,dx\,dy\,dz\]</div>
+      <div data-step="4">
+        <p class="rot-passo" style="margin-top:8px">Somando os três pares</p>
+        <div class="eq p" style="font-size:23px">\[d\Phi=d\Phi_x+d\Phi_y+d\Phi_z=\Big(\frac{\partial F_x}{\partial x}+\frac{\partial F_y}{\partial y}+\frac{\partial F_z}{\partial z}\Big)\,dV\]</div>
+        <div class="eq" style="font-size:32px">\[d\Phi=(\dive\vec F)\,dV\]</div>
+        <p class="ref">É a definição do <span data-ref="divergente"></span>: divergente = fluxo que sai ÷ volume, \(\dive\vec F=d\Phi/dV\).</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" id="s-teo-gauss" data-bloco="3" data-passos="4" data-titulo="Teorema de Gauss">
+  <p class="tag">Bloco 3 · Da integral à derivada · parte 1: as leis de fluxo</p>
+  <h2>Teorema de Gauss: o que é interno se cancela</h2>
+  <div class="cols">
+    <div class="coluna"><canvas data-viz="ladrilho" data-modo="fluxo" width="940" height="540"></canvas></div>
+    <div class="lado">
+      <p class="nota">Na face que duas células dividem, o que sai de uma entra na vizinha.</p>
+      <div data-step="1">
+        <p class="nota p">Somando todas, só sobra a borda de fora:</p>
+        <div class="eq p" style="font-size:24px">\[\oint_S \vec F\cdot\dA=\sum_\text{células}\,\oint_\text{célula}\vec F\cdot\dA\]</div>
+      </div>
+      <div data-step="2">
+        <p class="nota p">Em cada célula pequena, fluxo = divergente × volume (<span data-ref="divergente"></span>):</p>
+        <div class="eq p" style="font-size:24px">\[=\sum(\dive\vec F)\,\Delta V\;\longrightarrow\;\int_V (\dive\vec F)\,dV\]</div>
+      </div>
+      <div data-step="3">
+        <p class="rot-passo" style="margin-top:10px">Teorema de Gauss</p>
+        <div class="eq" style="font-size:30px">\[\oint_S \vec F\cdot\dA=\int_V (\dive\vec F)\,dV\]</div>
+      </div>
+      <p class="ref" data-step="4">Com células cada vez menores, a cor vira o mapa do divergente.</p>
+    </div>
+  </div>
+</section>
+
+<section class="slide" id="s-conv-gauss" data-bloco="3" data-titulo="Convertendo a lei de Gauss">
+  <p class="tag">Bloco 3 · Da integral à derivada · parte 1: as leis de fluxo</p>
+  <h2>Convertendo a lei de Gauss</h2>
+  <div class="cadeia cheia">
+    <div class="elo"><div class="eq">\[\oint_S \vE\cdot\dA=\frac{Q_\text{int}}{\varepsilon_0}\]</div></div>
+    <div class="elo" data-step="1"><p class="porque">teorema de Gauss à esquerda (<span data-ref="teo-gauss"></span>), densidade de carga à direita (<span data-ref="local"></span>)</p><div class="eq">\[\int_V (\dive\vE)\,dV=\int_V \frac{\rho}{\varepsilon_0}\,dV\]</div></div>
+    <div class="elo" data-step="2"><p class="porque">vale para qualquer volume, por menor que seja: os integrandos são iguais</p><div class="eq">\[\int_V \Big(\dive\vE-\frac{\rho}{\varepsilon_0}\Big)\,dV=0\]</div></div>
+    <div class="elo" data-step="3"><div class="destaque eq" style="font-size:44px;margin-top:0">\[\dive\vE=\frac{\rho}{\varepsilon_0}\qquad\qquad\dive\vB=0\]</div><p class="ref">É a interrogação do <span data-ref="local"></span>. A lei de Gauss do magnetismo sai pelo mesmo caminho. Para Faraday e Ampère–Maxwell falta a outra ferramenta: o rotacional.</p></div>
+  </div>
+</section>
+
+<section class="slide" id="s-rotacional" data-bloco="3" data-passos="1" data-titulo="Rotacional">
+  <p class="tag">Bloco 3 · Da integral à derivada · parte 2: as leis de circulação</p>
+  <h2>Rotacional: quanto o campo gira em cada ponto</h2>
+  <div class="cols">
+    <div class="coluna"><canvas data-viz="campo2d" data-modo="rot" width="930" height="530"></canvas></div>
+    <div class="lado">
+      <p class="rot-passo">Definição</p>
+      <div class="eq p" style="font-size:22px">\[(\rot\vec F)\cdot\hat n=\lim_{A\to 0}\frac{1}{A}\oint_C \vec F\cdot\dl\]</div>
+      <p class="nota">Circulação por unidade de área. A direção é o eixo do redemoinho.</p>
+      <div data-step="1">
+        <p class="rot-passo" style="margin-top:14px">Como se calcula</p>
+        <div class="eq p">\[(\rot\vec F)_z=\frac{\partial F_y}{\partial x}-\frac{\partial F_x}{\partial y}\]</div>
+      </div>
+      <p class="ref">A fórmula com derivadas sai da definição no <span data-ref="quadradinho"></span>; o teorema de Stokes é a soma de muitos quadradinhos, no <span data-ref="teo-stokes"></span>.</p>
+      <p class="ref">Em volta de um fio o campo dá voltas, mas a rodinha não gira: fora do fio, o rotacional é zero.</p>
+    </div>
+  </div>
+</section>
+
+<section class="slide" id="s-quadradinho" data-bloco="3" data-passos="3" data-titulo="A circulação num quadradinho">
+  <p class="tag">Bloco 3 · Da integral à derivada · parte 2: as leis de circulação</p>
+  <h2>A circulação em volta de um quadradinho</h2>
+  <div class="cols">
+    <div class="coluna">
+      <div class="palco-viz">
+        <canvas data-viz="elemento" data-modo="quadrado" width="820" height="560"></canvas>
+        <span class="rot" data-r="c0">\((x,\,y)\)</span>
+        <span class="rot" data-r="c1">\((x+dx,\;y+dy)\)</span>
+        <span class="rot" data-r="baixo">\(F_x(y)\,dx\)</span>
+        <span class="rot" data-r="cima">\(-F_x(y+dy)\,dx\)</span>
+        <span class="rot" data-r="dir">\(F_y(x+dx)\,dy\)</span>
+        <span class="rot" data-r="esq">\(-F_y(x)\,dy\)</span>
+      </div>
+    </div>
+    <div class="lado">
+      <p class="nota">Percorrendo o contorno no sentido anti-horário e somando \(\vec F\cdot\dl\) em cada lado.</p>
+      <div class="eq p" data-step="1">\[-\big[F_x(y+dy)-F_x(y)\big]\,dx=-\frac{\partial F_x}{\partial y}\,dx\,dy\]</div>
+      <div class="eq p" data-step="2">\[\big[F_y(x+dx)-F_y(x)\big]\,dy=\frac{\partial F_y}{\partial x}\,dx\,dy\]</div>
+      <div class="eq p" data-step="3">\[d\Gamma=\Big(\frac{\partial F_y}{\partial x}-\frac{\partial F_x}{\partial y}\Big)\,dx\,dy=(\rot\vec F)_z\,dA\]</div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" id="s-teo-stokes" data-bloco="3" data-passos="4" data-titulo="Teoremas de Green e de Stokes">
+  <p class="tag">Bloco 3 · Da integral à derivada · parte 2: as leis de circulação</p>
+  <h2>Green e Stokes: sobra a borda</h2>
+  <div class="cols">
+    <div class="coluna"><canvas data-viz="ladrilho" data-modo="circ" width="940" height="540"></canvas></div>
+    <div class="lado">
+      <p class="nota">No lado que duas células dividem, uma percorre num sentido e a vizinha no outro.</p>
+      <div data-step="1">
+        <p class="nota p">Somando todas, só sobra a borda de fora:</p>
+        <div class="eq p" style="font-size:24px">\[\oint_C \vec F\cdot\dl=\sum_\text{células}\,\oint_\text{célula}\vec F\cdot\dl\]</div>
+      </div>
+      <div data-step="2">
+        <p class="nota p">Em cada célula pequena, circulação = rotacional × área (<span data-ref="rotacional"></span>):</p>
+        <div class="eq p" style="font-size:22px">\[=\sum(\rot\vec F)\cdot\Delta\vec A\;\longrightarrow\;\int_S (\rot\vec F)\cdot\dA\]</div>
+      </div>
+      <div data-step="3">
+        <p class="rot-passo" style="margin-top:10px">Teorema de Stokes</p>
+        <div class="eq" style="font-size:30px">\[\oint_C \vec F\cdot\dl=\int_S (\rot\vec F)\cdot\dA\]</div>
+      </div>
+      <p class="ref" data-step="4">No plano, com \(\vec F=(P,Q,0)\), é o teorema de Green: \(\oint_C (P\,dx+Q\,dy)=\iint_D \big(\partial Q/\partial x-\partial P/\partial y\big)\,dx\,dy\).</p>
+    </div>
+  </div>
+</section>
+
+<section class="slide" id="s-stokes-3d" data-bloco="3" data-passos="2" data-titulo="Stokes no espaço">
+  <p class="tag">Bloco 3 · Da integral à derivada · parte 2: as leis de circulação</p>
+  <h2>Stokes: a mesma borda, qualquer superfície</h2>
+  <div class="cols">
+    <div class="coluna"><canvas data-viz="stokes3d" width="960" height="540"></canvas></div>
+    <div class="lado">
+      <div class="eq p">\[\oint_C \vec F\cdot\dl=\int_S (\rot\vec F)\cdot\dA\]</div>
+      <p class="nota">O fluxo do rotacional é o mesmo por qualquer superfície apoiada na curva <span class="cA">\(C\)</span>.</p>
+      <p class="nota p">Regra da mão direita: dedos no sentido de \(C\), polegar no sentido de \(\dA\).</p>
+      <div class="cartao" data-step="2">
+        <p class="nota" style="margin:0">É o balão do capacitor. Sem o termo de Maxwell, a lei de Ampère dava uma resposta para o disco e outra para o balão.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" id="s-conv-faraday" data-bloco="3" data-titulo="Convertendo a lei de Faraday">
+  <p class="tag">Bloco 3 · Da integral à derivada · parte 2: as leis de circulação</p>
+  <h2>Convertendo a lei de Faraday</h2>
+  <div class="cadeia cheia">
+    <div class="elo"><div class="eq">\[\oint_C \vE\cdot\dl=-\frac{d}{dt}\int_S \vB\cdot\dA\]</div></div>
+    <div class="elo" data-step="1"><p class="porque">teorema de Stokes à esquerda (<span data-ref="teo-stokes"></span>); à direita, a derivada entra na integral</p><div class="eq">\[\int_S (\rot\vE)\cdot\dA=-\int_S \frac{\partial\vB}{\partial t}\cdot\dA\]</div><p class="ref">A curva e a superfície estão paradas: dentro da integral, só \(\vB\) muda com o tempo.</p></div>
+    <div class="elo" data-step="2"><p class="porque">vale para qualquer superfície: os integrandos são iguais</p><div class="eq">\[\int_S \Big(\rot\vE+\frac{\partial\vB}{\partial t}\Big)\cdot\dA=0\]</div></div>
+    <div class="elo" data-step="3"><div class="destaque eq" style="font-size:38px;margin-top:0">\[\rot\vE=-\frac{\partial\vB}{\partial t}\qquad\qquad\rot\vB=\mu_0\vec J+\mu_0\varepsilon_0\frac{\partial\vE}{\partial t}\]</div><p class="ref">Ampère–Maxwell sai pelo mesmo caminho, com \(I_\text{int}=\int_S \vec J\cdot\dA\) (<span data-ref="local"></span>).</p></div>
+  </div>
+</section>
+
+<section class="slide" id="s-quadro" data-bloco="3" data-titulo="Integral e diferencial lado a lado">
+  <p class="tag">Bloco 3 · Da integral à derivada</p>
+  <h2>As quatro equações, nas duas formas</h2>
+  <div class="miolo">
+    <table class="tab quadro">
+      <thead><tr><th>Lei</th><th>Forma integral</th><th>Forma diferencial</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Gauss</strong><span class="oq">Carga é fonte de \(\vE\).</span><span class="via">pelo teorema de Gauss</span></td><td class="f">\(\displaystyle\oint_S \vE\cdot\dA=\frac{Q_\text{int}}{\varepsilon_0}\)</td><td class="f">\(\displaystyle\dive\vE=\frac{\rho}{\varepsilon_0}\)</td></tr>
+        <tr><td><strong>Gauss do magnetismo</strong><span class="oq">\(\vB\) não tem fonte.</span><span class="via">pelo teorema de Gauss</span></td><td class="f">\(\displaystyle\oint_S \vB\cdot\dA=0\)</td><td class="f">\(\displaystyle\dive\vB=0\)</td></tr>
+        <tr><td><strong>Faraday</strong><span class="oq">\(\vB\) variando faz \(\vE\) girar.</span><span class="via">pelo teorema de Stokes</span></td><td class="f">\(\displaystyle\oint_C \vE\cdot\dl=-\frac{d\Phi_B}{dt}\)</td><td class="f">\(\displaystyle\rot\vE=-\frac{\partial\vB}{\partial t}\)</td></tr>
+        <tr><td><strong>Ampère–Maxwell</strong><span class="oq">Corrente e \(\vE\) variando fazem \(\vB\) girar.</span><span class="via">pelo teorema de Stokes</span></td><td class="f">\(\displaystyle\oint_C \vB\cdot\dl=\mu_0 I_\text{int}+\mu_0\varepsilon_0\frac{d\Phi_E}{dt}\)</td><td class="f">\(\displaystyle\rot\vB=\mu_0\vec J+\mu_0\varepsilon_0\frac{\partial\vE}{\partial t}\)</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ===================== BLOCO 4 ===================== -->
+
+<section class="slide divisor" id="s-bloco4" data-bloco="4" data-titulo="Bloco 4">
+  <div class="num">4</div>
+  <h2>Das quatro equações à luz</h2>
+  <p>No vácuo, sem cargas nem correntes, as quatro equações juntas dão uma equação de onda.</p>
+</section>
+
+<section class="slide" id="s-corda" data-bloco="4" data-passos="1" data-titulo="A onda na corda">
+  <p class="tag">Bloco 4 · Das quatro equações à luz</p>
+  <h2>Lembrando: a onda na corda</h2>
+  <canvas data-viz="corda" width="1460" height="390"></canvas>
+  <div class="cols" style="margin-top:8px;align-items:center">
+    <div class="eq g" style="margin:0">\[\frac{\partial^2 y}{\partial x^2}=\frac{1}{v^2}\,\frac{\partial^2 y}{\partial t^2}\]</div>
+    <div class="lado">
+      <p class="nota">Derivada segunda no espaço igual a uma constante vezes a derivada segunda no tempo. A constante é \(1/v^2\).</p>
+      <p class="nota">Qualquer forma \(f(x-vt)\) é solução.</p>
+    </div>
+  </div>
+</section>
+
+<section class="slide" id="s-vacuo" data-bloco="4" data-titulo="Maxwell no vácuo">
+  <p class="tag">Bloco 4 · Das quatro equações à luz</p>
+  <h2>As equações de Maxwell no vácuo</h2>
+  <div class="miolo">
+    <table class="vac">
+      <tbody>
+        <tr><th>Com cargas e correntes</th><td>\(\displaystyle\dive\vE=\frac{\htmlClass{cX}{\rho}}{\varepsilon_0}\)</td><td>\(\dive\vB=0\)</td><td>\(\displaystyle\rot\vE=-\frac{\partial\vB}{\partial t}\)</td><td>\(\displaystyle\rot\vB=\htmlClass{cX}{\mu_0\vec J}+\mu_0\varepsilon_0\frac{\partial\vE}{\partial t}\)</td></tr>
+        <tr data-step="1"><th>No vácuo: \(\rho=0\), \(\vec J=0\)</th><td>\(\dive\vE=0\)</td><td>\(\dive\vB=0\)</td><td>\(\displaystyle\rot\vE=-\frac{\partial\vB}{\partial t}\)</td><td>\(\displaystyle\rot\vB=\mu_0\varepsilon_0\frac{\partial\vE}{\partial t}\)</td></tr>
+      </tbody>
+    </table>
+    <p class="nota" data-step="2" style="font-size:28px">As duas últimas estão acopladas: \(\vB\) aparece na equação de \(\vE\), e \(\vE\) na de \(\vB\). Objetivo: uma equação só com \(\vE\).</p>
+  </div>
+</section>
+
+<section class="slide" id="s-identidade" data-bloco="4" data-titulo="A identidade do rotacional do rotacional">
+  <p class="tag">Bloco 4 · Das quatro equações à luz</p>
+  <h2>Uma identidade que vamos usar</h2>
+  <div class="miolo">
+    <div class="cadeia"><div class="destaque eq g" style="margin-top:0">\[\rot(\rot\vec F)=\nabla(\dive\vec F)-\nabla^2\vec F\]</div></div>
+    <div class="grade2 alto">
+      <div class="cartao" data-step="1">
+        <h3>Para lembrar</h3>
+        <p class="nota">É a regra do produto vetorial triplo, com \(\nabla\) no lugar de \(\vec A\) e de \(\vec B\):</p>
+        <div class="eq p" style="margin-top:18px">\[\vec A\times(\vec B\times\vec C)=\vec B\,(\vec A\cdot\vec C)-\vec C\,(\vec A\cdot\vec B)\]</div>
+      </div>
+      <div class="cartao" data-step="2">
+        <h3>Para demonstrar: componente \(x\)</h3>
+        <div class="eq p" style="font-size:21px">\[\begin{aligned}\big[\rot(\rot\vec F)\big]_x&amp;=\frac{\partial}{\partial y}\Big(\frac{\partial F_y}{\partial x}-\frac{\partial F_x}{\partial y}\Big)-\frac{\partial}{\partial z}\Big(\frac{\partial F_x}{\partial z}-\frac{\partial F_z}{\partial x}\Big)\\[4pt]&amp;=\frac{\partial}{\partial x}\Big(\frac{\partial F_y}{\partial y}+\frac{\partial F_z}{\partial z}\Big)-\frac{\partial^2 F_x}{\partial y^2}-\frac{\partial^2 F_x}{\partial z^2}\end{aligned}\]</div>
+        <p class="nota p">Somando e subtraindo \(\partial^2 F_x/\partial x^2\), fica \(\dfrac{\partial}{\partial x}(\dive\vec F)-\nabla^2 F_x\).</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" id="s-deducao" data-bloco="4" data-titulo="A dedução da equação de onda">
+  <p class="tag">Bloco 4 · Das quatro equações à luz</p>
+  <h2>A dedução da equação de onda</h2>
+  <table class="tab formulas compacta" style="font-size:24px">
+    <tbody>
+      <tr><td class="eq">\(\displaystyle\phantom{\rot(}\rot\vE\phantom{)}=-\frac{\partial\vB}{\partial t}\)</td><td>Ponto de partida: a lei de Faraday.</td></tr>
+      <tr data-step="1"><td class="eq">\(\displaystyle\rot(\rot\vE)=-\rot\frac{\partial\vB}{\partial t}\)</td><td>Rotacional dos dois lados.</td></tr>
+      <tr data-step="2"><td class="eq">\(\displaystyle\phantom{\rot(\rot\vE)}=-\frac{\partial}{\partial t}\big(\rot\vB\big)\)</td><td>Derivadas no espaço e no tempo podem trocar de ordem.</td></tr>
+      <tr data-step="3"><td class="eq">\(\displaystyle\phantom{\rot(\rot\vE)}=-\mu_0\varepsilon_0\frac{\partial^2\vE}{\partial t^2}\)</td><td>Lei de Ampère–Maxwell no vácuo: \(\rot\vB=\mu_0\varepsilon_0\,\partial\vE/\partial t\).</td></tr>
+      <tr data-step="4"><td class="eq">\(\displaystyle\nabla(\underbrace{\dive\vE}_{=\,0})-\nabla^2\vE=-\mu_0\varepsilon_0\frac{\partial^2\vE}{\partial t^2}\)</td><td>Identidade no lado esquerdo (<span data-ref="identidade"></span>) e lei de Gauss no vácuo.</td></tr>
+    </tbody>
+  </table>
+  <div class="cadeia" data-step="5" style="margin-top:12px">
+    <div class="destaque eq" style="font-size:36px;margin-top:0">\[\nabla^2\vE=\mu_0\varepsilon_0\frac{\partial^2\vE}{\partial t^2}\qquad\qquad\nabla^2\vB=\mu_0\varepsilon_0\frac{\partial^2\vB}{\partial t^2}\]</div>
+  </div>
+</section>
+
+<section class="slide" id="s-velocidade" data-bloco="4" data-titulo="A velocidade da onda">
+  <p class="tag">Bloco 4 · Das quatro equações à luz</p>
+  <h2>Com que velocidade?</h2>
+  <div class="miolo">
+    <div class="eq" style="font-size:38px">\[\frac{\partial^2 y}{\partial x^2}=\frac{1}{v^2}\,\frac{\partial^2 y}{\partial t^2}\qquad\longleftrightarrow\qquad\nabla^2\vE=\mu_0\varepsilon_0\,\frac{\partial^2\vE}{\partial t^2}\]</div>
+    <div class="eq g" data-step="1">\[v=\frac{1}{\sqrt{\mu_0\varepsilon_0}}=\frac{1}{\sqrt{(4\pi\times10^{-7})(8{,}854\times10^{-12})}}\]</div>
+    <div class="eq gg" data-step="2">\[v=2{,}998\times10^{8}\ \text{m/s}=c\]</div>
+    <blockquote data-step="3">"Dificilmente podemos evitar a inferência de que a luz consiste nas ondulações transversais do mesmo meio que é a causa dos fenômenos elétricos e magnéticos."<br><span class="nota">James Clerk Maxwell, 1862 (tradução livre)</span></blockquote>
+  </div>
+</section>
+
+<section class="slide" id="s-pulso" data-bloco="4" data-passos="1" data-titulo="Um pulso que não fica parado">
+  <p class="tag">Bloco 4 · Das quatro equações à luz</p>
+  <h2>Um pulso de campo elétrico não fica parado</h2>
+  <canvas data-viz="fdtd" width="1460" height="500"></canvas>
+  <p class="nota p" style="margin-top:10px">Aqui o computador só aplica, passo a passo, as duas equações acopladas. Ninguém disse a ele que existe onda.</p>
+</section>
+
+<section class="slide" id="s-onda-plana-perp" data-bloco="4" data-passos="2" data-titulo="Por que os campos são perpendiculares">
+  <p class="tag">Bloco 4 · Das quatro equações à luz</p>
+  <h2>Por que os campos e a propagação são perpendiculares</h2>
+  <div class="cols">
+    <div class="coluna"><canvas data-viz="retangulo" width="700" height="560"></canvas></div>
+    <div class="lado">
+      <p class="nota">Onda andando na direção \(x\): os campos só dependem de \(x\) e de \(t\).</p>
+      <div data-step="1">
+        <p class="rot-passo" style="margin-top:18px">1 · Leis de Gauss</p>
+        <div class="eq p">\[\dive\vE=\frac{\partial E_x}{\partial x}=0\qquad\quad\dive\vB=\frac{\partial B_x}{\partial x}=0\]</div>
+        <p class="nota p">As componentes em \(x\) não variam ao longo de \(x\): não fazem parte da onda. Os dois campos são transversais.</p>
+      </div>
+      <div data-step="2">
+        <p class="rot-passo" style="margin-top:18px">2 · Lei de Faraday</p>
+        <div class="eq p">\[\rot\vE=\frac{\partial \cE{E_y}}{\partial x}\,\hat k=-\frac{\partial\vB}{\partial t}\]</div>
+        <p class="nota p">Com \(\vE\) na direção \(y\) e variando ao longo de \(x\), o rotacional só tem componente \(z\). Então é \(\cB{B_z}\) que varia: \(\vB\perp\vE\).</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" id="s-onda-plana-contas" data-bloco="4" data-titulo="Onda plana: a solução">
+  <p class="tag">Bloco 4 · Das quatro equações à luz</p>
+  <h2>Onda plana: a solução</h2>
+  <div class="cadeia cheia menor">
+    <div class="elo"><p class="nota p">Faraday e Ampère–Maxwell, para \(\cE{E_y}(x,t)\) e \(\cB{B_z}(x,t)\):</p><div class="eq">\[\frac{\partial\cE{E_y}}{\partial x}=-\frac{\partial\cB{B_z}}{\partial t}\qquad\qquad-\frac{\partial\cB{B_z}}{\partial x}=\mu_0\varepsilon_0\frac{\partial\cE{E_y}}{\partial t}\]</div></div>
+    <div class="elo" data-step="1"><p class="porque">tentativa com exponencial complexa: derivar vira multiplicar (∂/∂x → ik, ∂/∂t → −iω)</p><div class="eq">\[\cE{E_y}=E_0\,e^{\,i(kx-\omega t)}\qquad\qquad\cB{B_z}=B_0\,e^{\,i(kx-\omega t)}\]</div></div>
+    <div class="elo" data-step="2"><p class="porque">substituindo nas duas equações</p><div class="eq">\[k\,E_0=\omega\,B_0\qquad\qquad k\,B_0=\mu_0\varepsilon_0\,\omega\,E_0\]</div></div>
+    <div class="elo" data-step="3"><p class="porque">dividindo uma pela outra</p><div class="eq">\[\frac{\omega}{k}=\frac{1}{\sqrt{\mu_0\varepsilon_0}}=c\qquad\qquad B_0=\frac{E_0}{c}\]</div></div>
+    <div class="elo" data-step="4"><div class="destaque eq" style="margin-top:0">\[\vE=\mathrm{Re}\big[E_0\,e^{\,i(kx-\omega t)}\big]\,\hat\jmath=E_0\cos(kx-\omega t)\,\hat\jmath\qquad\quad\vB=\frac{E_0}{c}\cos(kx-\omega t)\,\hat k\]</div><p class="ref">\(e^{i\theta}=\cos\theta+i\,\mathrm{sen}\,\theta\): o campo físico é a parte real. \(B_0/E_0\) é um número real, então os dois campos estão em fase.</p></div>
+  </div>
+</section>
+
+<section class="slide" id="s-onda-plana" data-bloco="4" data-passos="2" data-titulo="A onda eletromagnética">
+  <p class="tag">Bloco 4 · Das quatro equações à luz</p>
+  <h2>A onda eletromagnética</h2>
+  <canvas data-viz="ondaplana" width="1460" height="520"></canvas>
+  <p class="nota" data-step="2" style="margin-top:8px">\(E=cB\) · os dois campos em fase · \(\vE\perp\vB\) · \(\vE\times\vB\) aponta para onde a onda vai.</p>
+</section>
+
+<section class="slide genesis" id="s-fecho" data-bloco="4" data-titulo="E fez-se a luz">
+  <p class="disse">E Deus disse:</p>
+  <div class="eq" style="font-size:40px">
+    \[\dive\vec E=\frac{\rho}{\varepsilon_0}\]
+    \[\dive\vec B=0\]
+    \[\rot\vec E=-\frac{\partial\vec B}{\partial t}\]
+    \[\rot\vec B=\mu_0\vec J+\mu_0\varepsilon_0\frac{\partial\vec E}{\partial t}\]
+  </div>
+  <p class="fez" data-step="1">e fez-se a luz.</p>
+  <p class="nota" data-step="2">Sem o termo \(\mu_0\varepsilon_0\,\partial\vec E/\partial t\), nada de luz. Hertz produziu e detectou essas ondas em laboratório entre 1886 e 1888.</p>
+</section>
+
+<section class="slide" id="s-lista" data-bloco="4" data-titulo="Lista para casa">
+  <p class="tag">Para casa</p>
+  <h2>Lista</h2>
+  <div class="miolo">
+  <ol class="lista grande">
+    <li>Calcule o divergente e o rotacional de \(\vec F=(x,y,z)\) e de \(\vec F=(-y,x,0)\). Desenhe os dois campos no plano \(xy\) e diga o que cada resultado significa.</li>
+    <li>A partir da lei de Ampère–Maxwell na forma diferencial e da lei de Gauss, mostre que \(\dive\vec J=-\partial\rho/\partial t\). O que essa equação diz em palavras?</li>
+    <li>Um capacitor de placas circulares de raio \(R\) é carregado por uma corrente \(I\). Calcule \(B(r)\) entre as placas, para \(r\lt R\) e para \(r\gt R\), e faça o gráfico.</li>
+    <li>Repita a dedução da equação de onda para \(\vB\), começando pelo rotacional da lei de Ampère–Maxwell no vácuo.</li>
+    <li>Mostre que \(E_y=E_0\cos(kx-\omega t)\) satisfaz a equação de onda se \(\omega/k=1/\sqrt{\mu_0\varepsilon_0}\). Use a lei de Faraday para encontrar \(B_z\).</li>
+    <li>Desafio: demonstre as componentes \(y\) e \(z\) da identidade \(\rot(\rot\vE)=\nabla(\dive\vE)-\nabla^2\vE\).</li>
+  </ol>
+  </div>
+</section>
+
+<div id="rodape">
+  <span id="rod-bloco"></span>
+  <span><button type="button" id="nav-volta" aria-label="Voltar">‹</button><span id="rod-num"></span><button type="button" id="nav-avanca" aria-label="Avançar">›</button></span>
+</div>
+<div id="barra"></div>
+</div>
+
+<script src="katex/katex.min.js"></script>
+<script src="katex/auto-render.min.js"></script>
+<script src="viz-core.js?v=6"></script>
+<script src="viz-b1.js?v=6"></script>
+<script src="viz-b2.js?v=6"></script>
+<script src="viz-b3.js?v=6"></script>
+<script src="viz-b4.js?v=6"></script>
+<script src="deck.js?v=6"></script>
+</body>
+</html>

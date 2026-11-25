@@ -112,6 +112,14 @@ test("áreas legadas ativam a disciplina correspondente", () => {
       .map((link) => link.id),
     ["prcfemg"],
   );
+
+  const lessonLinks = navigation.buildMainNavigation("../", "aulas");
+  const lessonDisciplines = lessonLinks.find((link) => link.id === "disciplinas");
+  assert.equal(lessonDisciplines.current, true);
+  assert.deepEqual(
+    lessonDisciplines.children.filter((link) => link.current).map((link) => link.id),
+    ["prcfemg"],
+  );
 });
 
 test("disciplinas ocupam um único item expansível na navegação principal", () => {

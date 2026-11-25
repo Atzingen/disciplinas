@@ -22,10 +22,10 @@ const apiAvailable =
   typeof catalog.normalizeSearchText === "function" &&
   typeof catalog.filterCatalog === "function";
 
-test("catálogo expõe busca e registra os quarenta e um materiais", () => {
+test("catálogo expõe busca e registra os quarenta e dois materiais", () => {
   assert.equal(typeof catalog.normalizeSearchText, "function");
   assert.equal(typeof catalog.filterCatalog, "function");
-  assert.equal(items.length, 41);
+  assert.equal(items.length, 42);
 });
 
 test("busca ignora acentos e caixa", { skip: !apiAvailable }, () => {
@@ -106,11 +106,25 @@ test("escopo por disciplina mantém teoria e laboratório separados", { skip: !a
     discipline: "PRCLFBE",
   });
 
-  assert.equal(electromagnetism.length, 26);
+  assert.equal(electromagnetism.length, 27);
   assert.equal(laboratory.length, 10);
   assert.ok(electromagnetism.every((item) => item.kind !== "experimento"));
   assert.ok(laboratory.some((item) => item.id === "cuba-eletrolitica-potencial"));
   assert.ok(laboratory.every((item) => item.disciplines.includes("PRCLFBE")));
+});
+
+test("o filtro de aulas mostra a aula de Maxwell só na disciplina teórica", { skip: !apiAvailable }, () => {
+  const ids = (scope) =>
+    catalog.filterCatalog(items, "", "aula", scope).map((item) => item.id);
+
+  assert.deepEqual(ids({ discipline: "PRCFEMG" }), ["aula-maxwell-ondas"]);
+  assert.deepEqual(ids({ section: "aulas", discipline: "PRCFEMG" }), ["aula-maxwell-ondas"]);
+  assert.deepEqual(ids({ discipline: "PRCLFBE" }), []);
+  assert.ok(
+    catalog
+      .filterCatalog(items, "equacoes de maxwell", "todos", { discipline: "PRCFEMG" })
+      .some((item) => item.id === "aula-maxwell-ondas"),
+  );
 });
 
 test("uma simulação marcada com várias disciplinas aparece em cada uma delas", { skip: !apiAvailable }, () => {
@@ -248,9 +262,9 @@ test("registro fornece os metadados que orientam cada área", () => {
   assert.equal(new Set(ids).size, ids.length);
 
   for (const item of items) {
-    assert.ok(["simulador", "resolucao", "experimento", "topico"].includes(item.kind));
+    assert.ok(["simulador", "resolucao", "experimento", "topico", "aula"].includes(item.kind));
     assert.ok(
-      ["simulacoes", "exercicios", "experimentos", "topicos"].includes(item.section),
+      ["simulacoes", "exercicios", "experimentos", "topicos", "aulas"].includes(item.section),
     );
     assert.ok(Array.isArray(item.disciplines) && item.disciplines.length > 0);
     assert.ok(
@@ -263,7 +277,7 @@ test("registro fornece os metadados que orientam cada área", () => {
     assert.ok(Array.isArray(item.tags) && item.tags.length > 0);
     assert.match(
       item.path,
-      /^(simuladores|exercicios|experimentos|topicos)\/[a-z0-9-]+\/$/,
+      /^(simuladores|exercicios|experimentos|topicos|aulas)\/[a-z0-9-]+\/$/,
     );
     assert.ok(!item.path.includes(".."));
 

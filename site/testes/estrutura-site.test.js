@@ -204,6 +204,59 @@ test("os oito materiais de campo elétrico apontam para o capítulo 22", async (
   }
 });
 
+test("PRCFEMG encaminha às aulas e o índice de aulas limita o catálogo", async () => {
+  const electromagnetism = await readSitePage("disciplinas/prcfemg/index.html");
+  const lessons = await readSitePage("aulas/index.html");
+
+  assert.match(electromagnetism, /class="resource-card" href="\.\.\/\.\.\/aulas\/"/);
+  assert.match(electromagnetism, /data-catalog-filter="aula"/);
+  assert.equal(count(lessons, /<h1\b/g), 1);
+  assert.match(lessons, /scope:\s*\{ section: "aulas", discipline: "PRCFEMG" \}/);
+  assert.match(lessons, /pathPrefix:\s*"\.\.\/"/);
+  assert.match(lessons, /data-active-section="aulas"/);
+  assert.match(lessons, /href="\.\.\/disciplinas\/prcfemg\/"/);
+});
+
+test("a aula de Maxwell roda só com os arquivos da própria pasta", async () => {
+  const pasta = "aulas/maxwell-ondas/";
+  const html = await readSitePage(`${pasta}index.html`);
+  const referencias = [...html.matchAll(/<(?:script|link)\b[^>]*\b(?:src|href)="([^"]+)"/g)]
+    .map((achado) => achado[1])
+    .filter((caminho) => !caminho.startsWith("../"));
+
+  assert.ok(referencias.length >= 9, "folhas de estilo e scripts da apresentação");
+  for (const caminho of referencias) {
+    assert.doesNotMatch(caminho, /^(https?:)?\/\//, caminho);
+    const arquivo = await readSitePage(pasta + caminho.replace(/\?.*$/, ""));
+    assert.ok(arquivo.length > 0, `arquivo ausente: ${caminho}`);
+  }
+
+  const katexCss = await readSitePage(`${pasta}katex/katex.min.css`);
+  const fontes = [...katexCss.matchAll(/url\((fonts\/[^)]+\.woff2)\)/g)].map((achado) => achado[1]);
+  assert.ok(fontes.length > 0);
+  for (const fonte of new Set(fontes)) {
+    await assert.doesNotReject(
+      readFile(new URL(`../${pasta}katex/${fonte}`, import.meta.url)),
+      `fonte ausente: ${fonte}`,
+    );
+  }
+
+  const animacoes = new Set(
+    [...html.matchAll(/data-viz="([^"]+)"/g)].map((achado) => achado[1]),
+  );
+  let registradas = "";
+  for (const nome of ["viz-b1.js", "viz-b2.js", "viz-b3.js", "viz-b4.js"]) {
+    registradas += await readSitePage(pasta + nome);
+  }
+  assert.ok(animacoes.size > 0);
+  for (const animacao of animacoes) {
+    assert.ok(registradas.includes(`V.reg("${animacao}"`), `animação sem código: ${animacao}`);
+  }
+
+  assert.match(html, /href="\.\.\/\.\.\/disciplinas\/prcfemg\/"/);
+  assert.doesNotMatch(html, /data-notas=/);
+});
+
 test("simuladores indicam a disciplina à qual pertencem", async () => {
   const charges = await readSitePage("simuladores/cargas-e-vetores/index.html");
   const tank = await readSitePage("simuladores/cuba-eletrolitica/index.html");
