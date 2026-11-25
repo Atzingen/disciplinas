@@ -288,3 +288,78 @@ test("registro fornece os metadados que orientam cada área", () => {
     }
   }
 });
+
+test("o link da nota de aula no cartão leva à página de login da própria aula", async () => {
+  const withNotes = items.filter((item) => item.teacherNotesPath !== undefined);
+  assert.deepEqual(
+    withNotes.map((item) => item.id),
+    ["aula-maxwell-ondas"],
+  );
+
+  for (const item of withNotes) {
+    assert.equal(item.teacherNotesPath, `${item.path}notas.html`);
+    const page = await readFile(new URL(`../${item.teacherNotesPath}`, import.meta.url), "utf8");
+    assert.match(page, /data-google-button/);
+  }
+});
+
+function fakeElement(tagName) {
+  return {
+    tagName,
+    children: [],
+    value: "",
+    classList: { add() {} },
+    append(...nodes) {
+      this.children.push(...nodes);
+    },
+    replaceChildren(...nodes) {
+      this.children = nodes;
+    },
+    setAttribute() {},
+    removeAttribute() {},
+    addEventListener() {},
+  };
+}
+
+async function renderedTeacherLinks(t, pathPrefix, scope) {
+  const parts = {
+    "[data-catalog-controls]": fakeElement("div"),
+    "[data-catalog-results]": fakeElement("div"),
+    "[data-catalog-count]": fakeElement("p"),
+    "[data-catalog-search]": fakeElement("input"),
+  };
+  const root = {
+    querySelector: (selector) => parts[selector],
+    querySelectorAll: () => [],
+  };
+  const realFetch = globalThis.fetch;
+  globalThis.document = { createElement: fakeElement };
+  globalThis.fetch = async () => ({ ok: true, json: async () => items });
+  t.after(() => {
+    delete globalThis.document;
+    globalThis.fetch = realFetch;
+  });
+
+  await catalog.mountCatalog(root, { pathPrefix, scope });
+  const cards = parts["[data-catalog-results]"].children;
+  return {
+    cards: cards.length,
+    links: cards
+      .flatMap((card) => card.children)
+      .filter((node) => node.className === "catalog-card__teacher-link")
+      .map((link) => [link.textContent, link.href]),
+  };
+}
+
+test("só o cartão da aula com nota mostra o link do professor, no caminho da página", async (t) => {
+  const label = "Nota de aula · acesso do professor";
+
+  const lessonsPage = await renderedTeacherLinks(t, "../", { section: "aulas", discipline: "PRCFEMG" });
+  assert.deepEqual(lessonsPage, { cards: 1, links: [[label, "../aulas/maxwell-ondas/notas.html"]] });
+
+  const disciplinePage = await renderedTeacherLinks(t, "../../", { discipline: "PRCFEMG" });
+  assert.deepEqual(disciplinePage, {
+    cards: 27,
+    links: [[label, "../../aulas/maxwell-ondas/notas.html"]],
+  });
+});
