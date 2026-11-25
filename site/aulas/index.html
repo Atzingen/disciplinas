@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Aulas de PRCFEMG — Fundamentos do Eletromagnetismo: as apresentações usadas em sala, com equações e animações interativas.">
+  <title>Aulas · PRCFEMG</title>
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../assets/base.css">
+  <script>try{if(localStorage.getItem("tema")==="escuro"){document.documentElement.dataset.theme="escuro"}}catch(erro){}</script>
+</head>
+<body class="area-page">
+  <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+  <header class="site-header">
+    <a class="brand" href="../" aria-label="Portal docente — início">
+      <span class="brand__mark" aria-hidden="true">G</span>
+      <span><strong>Gustavo von Atzingen</strong><small>IFSP · materiais didáticos</small></span>
+    </a>
+    <div data-site-navigation data-root-path="../" data-active-section="aulas"></div>
+  </header>
+
+  <main class="area-page-main" id="conteudo">
+    <header class="area-hero">
+      <p class="eyebrow">PRCFEMG · Fundamentos do Eletromagnetismo</p>
+      <h1>Aulas</h1>
+      <p>
+        As apresentações usadas em sala. As deduções são feitas na lousa; aqui
+        ficam as equações, as figuras e as animações interativas de cada aula,
+        para rever e mexer depois. No computador, as setas do teclado avançam
+        e voltam e a tecla F abre em tela cheia; no celular, deslize para o
+        lado.
+      </p>
+    </header>
+
+    <section class="catalog-section catalog-section--area" aria-labelledby="catalog-title" data-catalog-root>
+      <div class="section-heading">
+        <div><p class="eyebrow">Apresentações com animações</p><h2 id="catalog-title">Aulas publicadas</h2></div>
+        <p class="catalog-count" data-catalog-count aria-live="polite">Carregando materiais…</p>
+      </div>
+      <div class="catalog-controls" data-catalog-controls aria-busy="true">
+        <label class="search-field"><span>Buscar aula</span><input type="search" placeholder="Ex.: Maxwell, rotacional, onda" autocomplete="off" data-catalog-search></label>
+        <div class="filter-group" aria-label="Filtrar tipo de material">
+          <button type="button" data-catalog-filter="todos" aria-pressed="true">Todos</button>
+          <button type="button" data-catalog-filter="aula" aria-pressed="false">Aulas</button>
+        </div>
+      </div>
+      <div class="catalog-grid" data-catalog-results aria-live="polite"></div>
+    </section>
+  </main>
+
+  <footer class="site-footer"><p>Aulas · PRCFEMG</p><a href="../disciplinas/prcfemg/">Voltar à disciplina</a></footer>
+  <script type="module" src="../componentes/navegacao-principal.js"></script>
+  <script type="module">
+    import { mountCatalog } from "../componentes/catalogo.js";
+    mountCatalog(document.querySelector("[data-catalog-root]"), {
+      registryUrl: "../materiais.json",
+      pathPrefix: "../",
+      scope: { section: "aulas", discipline: "PRCFEMG" },
+    });
+  </script>
+</body>
+</html>

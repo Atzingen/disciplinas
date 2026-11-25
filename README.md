@@ -13,7 +13,8 @@ A página inicial abre com um texto de apresentação, segue com o professor e
 encaminha para os três componentes curriculares atualmente disponíveis:
 
 - **PRCFEMG — Fundamentos do Eletromagnetismo:** resoluções organizadas por
-  referência e capítulo e simulações de cargas, forças, campos e vetores;
+  referência e capítulo, simulações de cargas, forças, campos e vetores e as
+  aulas apresentadas em sala, com animações interativas;
 - **PRCLFBE — Laboratório de Física Básica: Eletromagnetismo:** roteiros
   experimentais, montagens, dados, relatórios e recursos virtuais de apoio;
 - **PRCCOMP — Física Computacional:** tópicos de programação, modelagem e
@@ -46,6 +47,35 @@ A pasta local e o repositório remoto se chamam `disciplinas`
 (`git@github.com:Atzingen/disciplinas.git`).
 O workflow `.github/workflows/pages.yml` publica o conteúdo de `site/` no
 endereço acima a partir de `main`.
+
+## Aulas
+
+A área de aulas (`site/aulas/`) guarda as apresentações usadas em sala em
+PRCFEMG. Cada aula é uma pasta com uma apresentação em HTML que não depende
+de nada de fora da pasta: slides de 1600 × 900 escalados para a tela,
+equações em KaTeX e animações interativas desenhadas em canvas. As deduções
+são feitas na lousa; a apresentação traz as equações, as figuras e as
+simulações.
+
+1. [Das quatro leis à luz](site/aulas/maxwell-ondas/): a corrente de
+   deslocamento e o paradoxo do capacitor, as quatro equações de Maxwell na
+   forma integral, divergente e rotacional com os teoremas de Gauss e de
+   Stokes, a forma diferencial e a dedução da equação de onda. São 42 slides
+   em quatro blocos de 50 minutos, com 24 animações, entre elas um jogo com a
+   força de Lorentz e uma simulação das duas equações acopladas em uma
+   dimensão.
+
+As setas do teclado e as teclas PageUp e PageDown voltam e avançam um passo;
+`F` abre em tela cheia e `T` troca o tema; no celular, deslizar para o lado
+troca de slide. `deck.js` cuida da navegação e dos passos, `viz-core.js` do
+laço de animação e dos controles, e `viz-b1.js` a `viz-b4.js` trazem as
+animações de cada bloco. O KaTeX 0.19.1 e a fonte Space Grotesk ficam na
+própria pasta, com as respectivas licenças. Ao alterar um `.css` ou `.js` da
+aula, suba o número em `?v=` nas referências do `index.html`, para o navegador
+não usar a cópia antiga em cache.
+
+Uma aula nova ganha uma pasta em `site/aulas/<nome>/` e uma entrada em
+`site/materiais.json` com `kind: "aula"` e `section: "aulas"`.
 
 ## Exercícios
 
@@ -275,6 +305,8 @@ O exercício que iniciou o projeto permanece em:
 - [Portal de disciplinas](site/)
 - [PRCFEMG — Fundamentos do Eletromagnetismo](site/disciplinas/prcfemg/)
 - [PRCLFBE — Laboratório de Física Básica: Eletromagnetismo](site/disciplinas/prclfbe/)
+- [Índice de aulas](site/aulas/)
+- [Aula: das quatro leis à luz](site/aulas/maxwell-ondas/)
 - [Índice de exercícios](site/exercicios/)
 - [Enade · Física](site/enade/)
 - [Halliday — Capítulo 21](site/exercicios/capitulo-21/)

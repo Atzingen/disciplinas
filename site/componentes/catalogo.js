@@ -81,6 +81,7 @@ function createCard(item, pathPrefix = "", showDisciplines = false) {
   const card = element("article", "catalog-card");
   const link = element("a", "catalog-card__link");
   const kindLabels = {
+    aula: "Aula",
     experimento: "Experimento",
     resolucao: "Resolução",
     simulador: "Simulador",
