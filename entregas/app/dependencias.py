@@ -26,6 +26,10 @@ def pasta_de_arquivos(configuracao: Configuracao) -> Path:
     return configuracao.pasta_dados / "arquivos"
 
 
+def pasta_de_notas_de_aula(configuracao: Configuracao) -> Path:
+    return configuracao.pasta_dados / "notas-de-aula"
+
+
 def obter_conexao(
     configuracao: Configuracao = Depends(obter_configuracao),
 ) -> Iterator[sqlite3.Connection]:

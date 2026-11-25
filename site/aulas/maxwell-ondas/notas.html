@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<meta name="description" content="Nota de aula do professor para a aula Das quatro leis à luz. Acesso com conta de professor.">
+<title>Nota de aula · Das quatro leis à luz</title>
+<link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="katex/katex.min.css">
+<link rel="stylesheet" href="notas.css?v=1">
+<script>try{if(localStorage.getItem("tema-aula")==="escuro"){document.documentElement.dataset.theme="escuro"}}catch(erro){}</script>
+</head>
+<body>
+<!-- Esta página não traz a nota de aula. O conteúdo fica no serviço de entregas e só é
+     entregue a uma conta de professor: ver site/componentes/nota-de-aula.js. -->
+<main data-nota-raiz>
+  <section class="portao" data-nota-portao>
+    <p class="eyebrow">PRCFEMG · área do professor</p>
+    <h1>Nota de aula</h1>
+    <p class="lede">O roteiro do professor para a aula <a href="./">Das quatro leis à luz</a>. Entre com a conta Google de professor para abrir.</p>
+    <div class="botao-google" data-google-button></div>
+    <p class="aviso" role="alert" data-nota-mensagem></p>
+    <p class="volta"><a href="./">Voltar à apresentação</a> · <a href="../../disciplinas/prcfemg/">PRCFEMG</a></p>
+  </section>
+
+  <p class="conta" data-nota-conta hidden>
+    <span>Área do professor</span>
+    <button type="button" data-nota-sair>Sair</button>
+  </p>
+  <div data-nota-conteudo hidden></div>
+</main>
+
+<script src="katex/katex.min.js"></script>
+<script src="katex/auto-render.min.js"></script>
+<script src="viz-core.js?v=7"></script>
+<script type="module">
+  import { mountLessonNotes } from "../../componentes/nota-de-aula.js";
+  import { ENTREGAS_CONFIG } from "../../entregas/config.js";
+
+  function depoisDeMostrar(conteudo) {
+    renderMathInElement(conteudo, {
+      delimiters: [
+        { left: "\\[", right: "\\]", display: true },
+        { left: "\\(", right: "\\)", display: false },
+      ],
+      macros: MACROS_DA_AULA,
+      trust: true,
+      strict: false,
+      throwOnError: false,
+    });
+
+    // A apresentação abre a nota com "#s-<slide>": rola até a linha daquele slide.
+    let alvo = null;
+    try {
+      alvo = document.getElementById(decodeURIComponent(location.hash.slice(1)));
+    } catch (erro) {
+      alvo = null;
+    }
+    if (alvo) {
+      alvo.classList.add("alvo");
+      alvo.scrollIntoView();
+    }
+  }
+
+  mountLessonNotes(document.querySelector("[data-nota-raiz]"), {
+    config: ENTREGAS_CONFIG,
+    lesson: "maxwell-ondas",
+    afterRender: depoisDeMostrar,
+  });
+</script>
+</body>
+</html>

@@ -254,7 +254,27 @@ test("a aula de Maxwell roda só com os arquivos da própria pasta", async () =>
   }
 
   assert.match(html, /href="\.\.\/\.\.\/disciplinas\/prcfemg\/"/);
-  assert.doesNotMatch(html, /data-notas=/);
+});
+
+test("a nota de aula publicada é só a porta de entrada do professor", async () => {
+  const pasta = "aulas/maxwell-ondas/";
+  const apresentacao = await readSitePage(`${pasta}index.html`);
+  const nota = await readSitePage(`${pasta}notas.html`);
+  const estilos = await readSitePage(`${pasta}deck.css`);
+  const componente = await readSitePage("componentes/nota-de-aula.js");
+
+  // O roteiro fica no serviço de entregas: nada dele pode estar no arquivo publicado.
+  assert.ok(nota.length > 0);
+  assert.doesNotMatch(nota, /<article\b|class="(?:lousa|tela|fala|m)"|Na lousa|Gabarito/i);
+  assert.match(nota, /<meta name="robots" content="noindex">/);
+  assert.match(nota, /data-google-button/);
+  assert.match(nota, /componentes\/nota-de-aula\.js/);
+  assert.match(nota, /lesson:\s*"maxwell-ondas"/);
+  assert.match(componente, /`\/notas-de-aula\/\$\{lesson\}`/);
+
+  // A apresentação abre a nota com a tecla N, mas a dica da capa não aparece para a turma.
+  assert.match(apresentacao, /<html lang="pt-BR" data-notas="notas\.html" data-notas-restrita>/);
+  assert.match(estilos, /html\[data-notas-restrita\] \[data-so-com-notas\]\s*\{\s*display:\s*none/);
 });
 
 test("simuladores indicam a disciplina à qual pertencem", async () => {
