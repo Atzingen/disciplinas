@@ -22,7 +22,7 @@ test("títulos das áreas permanecem dentro da largura móvel", () => {
 test("títulos longos dos experimentos permanecem dentro da largura móvel", () => {
   assert.match(
     experimentCss,
-    /@media\s*\(max-width:\s*520px\)[\s\S]*?\.experiment-hero h1\s*\{[\s\S]*?font-size:\s*clamp\(2\.6rem,\s*14vw,\s*4\.7rem\)/,
+    /@media\s*\(max-width:\s*520px\)[\s\S]*?\.experiment-hero h1\s*\{[\s\S]*?font-size:\s*clamp\(2\.4rem,\s*12\.5vw,\s*4\.7rem\)/,
   );
 });
 

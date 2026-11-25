@@ -47,6 +47,10 @@
   max-width: 13ch;
   font-size: clamp(3rem, 7vw, 6.2rem);
   line-height: 0.93;
+  /* Rede de segurança no celular: palavra que não couber no título quebra (com hífen onde o navegador souber)
+     em vez de passar da tela. */
+  overflow-wrap: break-word;
+  hyphens: auto;
 }
 
 .experiment-hero__lead {
@@ -565,8 +569,34 @@
 }
 
 .report-template {
+  /* A folha do relatório é branca nos dois temas: dentro dela valem as cores do tema claro (no escuro, a tinta
+     clara do tema sumia no branco). */
+  --paper-deep: #eef2f7;
+  --surface: #ffffff;
+  --ink: #101620;
+  --ink-soft: #556072;
+  --ink-faint: #7b8697;
+  --line: #dde4ec;
+  --line-soft: #e9eef4;
+  --line-strong: #c2ccd8;
+  --positive: #d94841;
+  --negative: #246bce;
+  --resultant: #7a3ce7;
+  --measure: #c8880c;
+  --force-3: #2d8659;
+  --tint-warm: rgb(200 136 12 / 10%);
+  color-scheme: light; /* caixas de marcar e barras de rolagem claras sobre a folha */
   background: #ffffff;
   color: #142a3b;
+}
+
+/* Na tela, a folha tem margem interna e borda, para o texto não encostar na beira; na impressão, a página é a folha. */
+@media screen {
+  .report-template {
+    padding: clamp(1.25rem, 4vw, 3rem);
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius-lg);
+  }
 }
 
 .report-template .data-table th {
@@ -636,6 +666,8 @@
 .report-document--markdown p,
 .report-document--markdown li {
   line-height: 1.75;
+  /* As linhas de preencher ("Curso e turma: ____") são uma palavra só: quebram em vez de passar da folha. */
+  overflow-wrap: anywhere;
 }
 
 .report-document--markdown ul,
@@ -683,13 +715,31 @@
   margin: 0;
 }
 
+/* Blocos seguidos de uma parte, ou de uma seção dentro dela (cartões, figuras, grades, notas), não encostam um no
+   outro. Esta regra fica depois das dos blocos, que zeram a própria margem (a figura, por exemplo), e só a
+   navegação do fim pede mais espaço. */
+.experiment-panel > :where(* + *),
+.experiment-panel > :where(section) > :where(* + *) {
+  margin-top: 1rem;
+}
+
+/* A fórmula em destaque zera a própria margem; a grade de cartões logo abaixo dela não pode encostar. */
+.experiment-page .math-block + .experiment-grid {
+  margin-top: 1rem;
+}
+
+.experiment-panel > .experiment-part-nav--fim {
+  margin-top: 3rem;
+}
+
 @media (max-width: 760px) {
+  /* minmax(0, 1fr): uma fórmula ou palavra larga rola ou quebra dentro da coluna, em vez de alargar a página. */
   .experiment-hero,
   .experiment-section-heading,
   .experiment-grid,
   .report-grid,
   .coverage-rule {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
 
   .experiment-header__navigation {
@@ -735,8 +785,9 @@
     width: min(calc(100% - 1.1rem), 1240px);
   }
 
+  /* 12,5vw: a palavra mais longa dos títulos ("eletromagnética", cerca de 7,3 vezes a fonte) cabe a partir de 340 px. */
   .experiment-hero h1 {
-    font-size: clamp(2.6rem, 14vw, 4.7rem);
+    font-size: clamp(2.4rem, 12.5vw, 4.7rem);
   }
 
   .report-print-bar,
@@ -752,6 +803,11 @@
 }
 
 @media print {
+  /* Na impressão o cabeçalho da parte some (no 08, também o título): a folha começa no topo da página. */
+  .experiment-panel > .report-template {
+    margin-top: 0;
+  }
+
   @page {
     size: A4;
     margin: 1.4cm;
