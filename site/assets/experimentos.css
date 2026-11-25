@@ -585,6 +585,7 @@
   --measure: #c8880c;
   --force-3: #2d8659;
   --tint-warm: rgb(200 136 12 / 10%);
+  color-scheme: light; /* caixas de marcar e barras de rolagem claras sobre a folha */
   background: #ffffff;
   color: #142a3b;
 }
@@ -802,6 +803,11 @@
 }
 
 @media print {
+  /* Na impressão o cabeçalho da parte some (no 08, também o título): a folha começa no topo da página. */
+  .experiment-panel > .report-template {
+    margin-top: 0;
+  }
+
   @page {
     size: A4;
     margin: 1.4cm;
