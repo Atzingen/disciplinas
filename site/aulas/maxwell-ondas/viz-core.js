@@ -209,6 +209,12 @@ const V = (() => {
     fabricas[nome] = fabrica;
   }
 
+  // Depois de um clique com o mouse, o foco sai do botão e o teclado volta a comandar os slides.
+  // Acionado pelo teclado (evento.detail === 0), o botão mantém o foco.
+  function soltarFocoSeMouse(evento, botao) {
+    if (evento.detail > 0) botao.blur();
+  }
+
   function criarApi(cv, largura, altura, controles) {
     const rotulos = {};
     const api = {
@@ -223,9 +229,9 @@ const V = (() => {
         const b = document.createElement("button");
         b.type = "button";
         b.textContent = rotulo;
-        b.addEventListener("click", () => {
+        b.addEventListener("click", (evento) => {
           aoClicar(b);
-          b.blur();
+          soltarFocoSeMouse(evento, b);
         });
         controles.append(b);
         return b;
@@ -246,11 +252,11 @@ const V = (() => {
           b.type = "button";
           b.textContent = rotulo;
           b.classList.toggle("lig", valor === inicial);
-          b.addEventListener("click", () => {
+          b.addEventListener("click", (evento) => {
             grupo.querySelectorAll("button").forEach((outro) => outro.classList.remove("lig"));
             b.classList.add("lig");
             aoEscolher(valor);
-            b.blur();
+            soltarFocoSeMouse(evento, b);
           });
           grupo.append(b);
         });
@@ -268,8 +274,19 @@ const V = (() => {
         entrada.max = maximo;
         entrada.step = incremento;
         entrada.value = valor;
+        // Arrastado com o mouse, o controle solta o foco no fim, e o teclado volta a comandar os
+        // slides. Usado pelo teclado, mantém o foco, para as setas continuarem ajustando o valor.
+        let porPonteiro = false;
+        entrada.addEventListener("pointerdown", () => {
+          porPonteiro = true;
+        });
+        entrada.addEventListener("keydown", () => {
+          porPonteiro = false;
+        });
         entrada.addEventListener("input", () => aoMudar(Number(entrada.value)));
-        entrada.addEventListener("change", () => entrada.blur());
+        entrada.addEventListener("change", () => {
+          if (porPonteiro) entrada.blur();
+        });
         caixa.append(nome, entrada);
         controles.append(caixa);
         return entrada;

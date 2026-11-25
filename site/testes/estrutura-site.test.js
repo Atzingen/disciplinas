@@ -242,7 +242,7 @@ test("a aula de Maxwell roda só com os arquivos da própria pasta", async () =>
   }
 
   const animacoes = new Set(
-    [...html.matchAll(/data-viz="([a-z0-9]+)"/g)].map((achado) => achado[1]),
+    [...html.matchAll(/data-viz="([^"]+)"/g)].map((achado) => achado[1]),
   );
   let registradas = "";
   for (const nome of ["viz-b1.js", "viz-b2.js", "viz-b3.js", "viz-b4.js"]) {

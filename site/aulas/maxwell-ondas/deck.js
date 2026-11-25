@@ -86,7 +86,12 @@ const Deck = (() => {
   }
 
   function lerEndereco() {
-    const texto = decodeURIComponent(location.hash.slice(1));
+    let texto = location.hash.slice(1);
+    try {
+      texto = decodeURIComponent(texto);
+    } catch (erro) {
+      texto = ""; // endereço malformado (por exemplo "#%"): abre a capa
+    }
     if (!texto) return ir(0, 0);
     const [alvo, passoDoEndereco] = texto.split("/");
     let indice = /^\d+$/.test(alvo) ? Number(alvo) - 1 : slides.findIndex((s) => s.id === "s-" + alvo);
@@ -107,6 +112,8 @@ const Deck = (() => {
     if (evento.target.matches("input, select, textarea")) return;
     if (evento.ctrlKey || evento.metaKey || evento.altKey) return;
     const tecla = evento.key;
+    // com o foco num link ou num botão, Enter e Espaço fazem o que o próprio elemento faz
+    if ((tecla === "Enter" || tecla === " ") && evento.target.closest("a, button")) return;
     if (["ArrowRight", "PageDown", " ", "Enter"].includes(tecla)) {
       evento.preventDefault();
       avancar();
@@ -160,13 +167,21 @@ const Deck = (() => {
     window.addEventListener("keydown", aoTeclar);
     window.addEventListener("hashchange", lerEndereco);
     // no celular e no tablet, arrastar para o lado troca de slide (fora das animações e dos controles)
+    // Só vale o gesto de um dedo: um segundo toque (pinça para ampliar) cancela.
     let toque = null;
     palco.addEventListener("pointerdown", (evento) => {
       const emControle = evento.target.closest("canvas, input, button, a");
-      toque = evento.pointerType === "mouse" || emControle ? null : { x: evento.clientX, y: evento.clientY };
+      if (evento.pointerType === "mouse" || emControle || !evento.isPrimary) {
+        toque = null;
+        return;
+      }
+      toque = { id: evento.pointerId, x: evento.clientX, y: evento.clientY };
+    });
+    palco.addEventListener("pointercancel", () => {
+      toque = null;
     });
     palco.addEventListener("pointerup", (evento) => {
-      if (!toque) return;
+      if (!toque || evento.pointerId !== toque.id) return;
       const dx = evento.clientX - toque.x;
       const dy = evento.clientY - toque.y;
       toque = null;
@@ -174,8 +189,17 @@ const Deck = (() => {
       if (dx < 0) avancar();
       else voltar();
     });
-    document.getElementById("nav-volta").addEventListener("click", voltar);
-    document.getElementById("nav-avanca").addEventListener("click", avancar);
+
+    // depois de um clique com o mouse, o foco sai do botão e o teclado volta a comandar os slides
+    const soltarFocoSeMouse = (evento) => {
+      if (evento.detail > 0) evento.currentTarget.blur();
+    };
+    const botaoVolta = document.getElementById("nav-volta");
+    const botaoAvanca = document.getElementById("nav-avanca");
+    botaoVolta.addEventListener("click", voltar);
+    botaoAvanca.addEventListener("click", avancar);
+    botaoVolta.addEventListener("click", soltarFocoSeMouse);
+    botaoAvanca.addEventListener("click", soltarFocoSeMouse);
   }
 
   api.iniciar = iniciar;
