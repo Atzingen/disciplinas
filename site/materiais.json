@@ -586,6 +586,7 @@
     "theme": "Equações de Maxwell e ondas eletromagnéticas",
     "description": "Apresentação com animações interativas: a corrente de deslocamento, as quatro equações nas formas integral e diferencial, divergente, rotacional, os teoremas de Gauss e de Stokes e a dedução da equação de onda.",
     "path": "aulas/maxwell-ondas/",
+    "teacherNotesPath": "aulas/maxwell-ondas/notas.html",
     "tags": ["aula", "equações de Maxwell", "corrente de deslocamento", "lei de Ampère", "lei de Faraday", "lei de Gauss", "divergente", "rotacional", "teorema de Stokes", "equação de onda", "onda eletromagnética", "força de Lorentz"]
   }
 ]

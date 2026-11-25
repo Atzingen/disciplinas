@@ -288,3 +288,17 @@ test("registro fornece os metadados que orientam cada área", () => {
     }
   }
 });
+
+test("o link da nota de aula no cartão leva à página de login da própria aula", async () => {
+  const withNotes = items.filter((item) => item.teacherNotesPath !== undefined);
+  assert.deepEqual(
+    withNotes.map((item) => item.id),
+    ["aula-maxwell-ondas"],
+  );
+
+  for (const item of withNotes) {
+    assert.equal(item.teacherNotesPath, `${item.path}notas.html`);
+    const page = await readFile(new URL(`../${item.teacherNotesPath}`, import.meta.url), "utf8");
+    assert.match(page, /data-google-button/);
+  }
+});

@@ -82,7 +82,10 @@ abre essa página na linha do slide em que se está. Os detalhes estão em
 [entregas/README.md](entregas/README.md).
 
 Uma aula nova ganha uma pasta em `site/aulas/<nome>/` e uma entrada em
-`site/materiais.json` com `kind: "aula"` e `section: "aulas"`.
+`site/materiais.json` com `kind: "aula"` e `section: "aulas"`. Se a aula tem
+nota de aula, o campo `teacherNotesPath` da entrada aponta para o `notas.html`
+dela, e o cartão da aula passa a mostrar o link "Nota de aula · acesso do
+professor", visível a todos, mas que só abre o conteúdo depois do login.
 
 ## Exercícios
 

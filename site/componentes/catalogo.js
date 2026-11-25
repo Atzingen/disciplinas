@@ -116,6 +116,17 @@ function createCard(item, pathPrefix = "", showDisciplines = false) {
   }
   link.append(tags);
   card.append(link);
+  if (item.teacherNotesPath) {
+    // A página de destino pede o login de professor; o cartão só mostra o caminho até ela.
+    const teacherLink = element(
+      "a",
+      "catalog-card__teacher-link",
+      "Nota de aula · acesso do professor",
+    );
+    teacherLink.href = resolveCatalogPath(item.teacherNotesPath, pathPrefix);
+    card.classList.add("catalog-card--with-teacher-link");
+    card.append(teacherLink);
+  }
   return card;
 }
 
