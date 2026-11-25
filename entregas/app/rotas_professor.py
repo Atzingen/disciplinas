@@ -371,7 +371,8 @@ def ler_nota_de_aula(aula: str, configuracao: ConfiguracaoAtual) -> FileResponse
         raise nao_encontrada
 
     caminho = pasta_de_notas_de_aula(configuracao) / f"{aula}.html"
-    if not caminho.is_file():
+    # Link simbólico não vale: poderia apontar para um arquivo de fora da pasta de notas.
+    if caminho.is_symlink() or not caminho.is_file():
         raise nao_encontrada
 
     return FileResponse(

@@ -33,7 +33,7 @@
 
 <script src="katex/katex.min.js"></script>
 <script src="katex/auto-render.min.js"></script>
-<script src="viz-core.js?v=7"></script>
+<script src="viz-core.js?v=8"></script>
 <script type="module">
   import { mountLessonNotes } from "../../componentes/nota-de-aula.js";
   import { ENTREGAS_CONFIG } from "../../entregas/config.js";
@@ -45,12 +45,19 @@
         { left: "\\(", right: "\\)", display: false },
       ],
       macros: MACROS_DA_AULA,
-      trust: true,
+      // Só as macros de cor da aula (\\htmlClass); o resto do HTML embutido do KaTeX fica desligado.
+      trust: (contexto) => contexto.command === "\\htmlClass",
       strict: false,
       throwOnError: false,
     });
 
-    // A apresentação abre a nota com "#s-<slide>": rola até a linha daquele slide.
+    destacarAlvo();
+  }
+
+  // A apresentação abre a nota com "#s-<slide>", e a tecla N reaproveita esta aba: a cada
+  // mudança do endereço, o destaque passa para a linha daquele slide.
+  function destacarAlvo() {
+    document.querySelector(".m.alvo")?.classList.remove("alvo");
     let alvo = null;
     try {
       alvo = document.getElementById(decodeURIComponent(location.hash.slice(1)));
@@ -62,6 +69,7 @@
       alvo.scrollIntoView();
     }
   }
+  window.addEventListener("hashchange", destacarAlvo);
 
   mountLessonNotes(document.querySelector("[data-nota-raiz]"), {
     config: ENTREGAS_CONFIG,

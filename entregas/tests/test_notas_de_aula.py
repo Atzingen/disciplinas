@@ -51,6 +51,10 @@ def test_nome_fora_do_padrao_nao_le_arquivo_fora_da_pasta_de_notas(
     cliente: TestClient, nota_no_servidor: Path, pasta_dados: Path
 ) -> None:
     (pasta_dados / "segredo.html").write_text("fora da pasta de notas", encoding="utf-8")
+    # Arquivos que existem na pasta, mas com nome fora do padrão: sem a validação do nome,
+    # a rota os entregaria.
+    (nota_no_servidor.parent / "Maxwell-Ondas.html").write_text("nome com maiúscula", encoding="utf-8")
+    (nota_no_servidor.parent / "rascunho.v2.html").write_text("nome com ponto", encoding="utf-8")
     professor = como("professor")
 
     for caminho in (
@@ -60,8 +64,22 @@ def test_nome_fora_do_padrao_nao_le_arquivo_fora_da_pasta_de_notas(
         "/notas-de-aula/..%2Fentregas.sqlite3",
         "/notas-de-aula/maxwell-ondas.html",
         "/notas-de-aula/Maxwell-Ondas",
+        "/notas-de-aula/rascunho.v2",
     ):
         resposta = cliente.get(caminho, headers=professor)
         assert resposta.status_code == 404, caminho
-        assert "fora da pasta de notas" not in resposta.text
-        assert "roteiro do professor" not in resposta.text
+        for conteudo in ("fora da pasta de notas", "nome com", "roteiro do professor"):
+            assert conteudo not in resposta.text, caminho
+
+
+def test_link_simbolico_na_pasta_de_notas_nao_entrega_arquivo_de_fora(
+    cliente: TestClient, nota_no_servidor: Path, pasta_dados: Path
+) -> None:
+    fora = pasta_dados / "segredo.html"
+    fora.write_text("fora da pasta de notas", encoding="utf-8")
+    (nota_no_servidor.parent / "atalho.html").symlink_to(fora)
+
+    resposta = cliente.get("/notas-de-aula/atalho", headers=como("professor"))
+
+    assert resposta.status_code == 404
+    assert "fora da pasta de notas" not in resposta.text

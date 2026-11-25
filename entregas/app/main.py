@@ -8,13 +8,14 @@ from fastapi.middleware.cors import CORSMiddleware
 from app import rotas_aluno, rotas_professor
 from app.banco import preparar_banco
 from app.config import Configuracao, carregar_configuracao
-from app.dependencias import caminho_do_banco, pasta_de_arquivos
+from app.dependencias import caminho_do_banco, pasta_de_arquivos, pasta_de_notas_de_aula
 from app.identidade import VerificadorDeToken, criar_verificador_google
 
 
 def criar_app(configuracao: Configuracao, verificar_token: VerificadorDeToken) -> FastAPI:
     preparar_banco(caminho_do_banco(configuracao))
     pasta_de_arquivos(configuracao).mkdir(parents=True, exist_ok=True)
+    pasta_de_notas_de_aula(configuracao).mkdir(parents=True, exist_ok=True)
 
     app = FastAPI(title="Entregas", docs_url=None, redoc_url=None, openapi_url=None)
     app.state.configuracao = configuracao

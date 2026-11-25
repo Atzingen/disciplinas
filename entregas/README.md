@@ -29,7 +29,8 @@ dados, com o mesmo nome da pasta da aula em `site/aulas/`. A rota
 `GET /notas-de-aula/<aula>` só responde a contas da lista `PROFESSORES`; a página
 `site/aulas/<aula>/notas.html` faz o login e mostra o conteúdo.
 
-O arquivo é posto no servidor por quem o administra, com a conta `deployer`:
+O serviço cria a pasta `notas-de-aula/` ao subir. O arquivo é posto nela por quem
+administra o servidor, com a conta `deployer`; a rota só lê, e não segue link simbólico:
 
 ```bash
 scp nota.html gustavo-01-deployer:/var/local/apps/disciplinas-dados/notas-de-aula/maxwell-ondas.html
@@ -63,5 +64,6 @@ As páginas, servidas em `http://localhost:8000` (`npm run serve`), já apontam 
   `disciplinas-entregas`). Nada é copiado para as máquinas do professor. O `rclone.conf` com
   o token fica só no servidor; para refazer a autorização: `rclone config reconnect
   gdrive-entregas:` com um túnel `ssh -L 53682:127.0.0.1:53682`. Para restaurar, parar o contêiner,
-  extrair o arquivo, pôr `entregas.backup.sqlite3` como `entregas.sqlite3` e a pasta
-  `arquivos/` em `/var/local/apps/disciplinas-dados/`, e subir o contêiner de novo.
+  extrair o arquivo, pôr `entregas.backup.sqlite3` como `entregas.sqlite3` e as pastas
+  `arquivos/` e `notas-de-aula/` em `/var/local/apps/disciplinas-dados/`, e subir o contêiner
+  de novo.
