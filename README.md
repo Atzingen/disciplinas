@@ -74,6 +74,13 @@ própria pasta, com as respectivas licenças. Ao alterar um `.css` ou `.js` da
 aula, suba o número em `?v=` nas referências do `index.html`, para o navegador
 não usar a cópia antiga em cache.
 
+A nota de aula do professor (o roteiro da lousa, ligado a cada slide) não fica
+neste repositório. A página `site/aulas/maxwell-ondas/notas.html` é só a porta
+de entrada: pede o login com a conta Google de professor e busca o conteúdo no
+serviço de entregas, que o guarda no servidor. Na apresentação, a tecla `N`
+abre essa página na linha do slide em que se está. Os detalhes estão em
+[entregas/README.md](entregas/README.md).
+
 Uma aula nova ganha uma pasta em `site/aulas/<nome>/` e uma entrada em
 `site/materiais.json` com `kind: "aula"` e `section: "aulas"`.
 

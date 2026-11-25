@@ -403,6 +403,7 @@ ol.lista.grande li { margin-bottom: 20px; }
 .rot.area { font-size: 21px; color: var(--a); }
 
 /* versão publicada: sem nota de aula, com gesto de arrastar e link de volta na capa */
-html:not([data-notas]) [data-so-com-notas] { display: none; }
+html:not([data-notas]) [data-so-com-notas],
+html[data-notas-restrita] [data-so-com-notas] { display: none; }
 #palco { touch-action: pan-y pinch-zoom; }
 .tag a { color: inherit; }

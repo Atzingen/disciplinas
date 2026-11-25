@@ -1,4 +1,4 @@
-"""Rotas do professor: turmas, lista de permitidos, atividades e entregas recebidas."""
+"""Rotas do professor: turmas, lista de permitidos, atividades, entregas e notas de aula."""
 
 from __future__ import annotations
 
@@ -26,8 +26,10 @@ from app.dependencias import (
     ConfiguracaoAtual,
     exigir_professor,
     pasta_de_arquivos,
+    pasta_de_notas_de_aula,
 )
 from app.regras import (
+    PADRAO_DE_AULA,
     PADRAO_DE_DISCIPLINA,
     PADRAO_DE_SEMESTRE,
     agora_em_utc,
@@ -355,4 +357,26 @@ def baixar_entregas_em_zip(
         filename=nome_do_zip,
         media_type="application/zip",
         background=BackgroundTask(os.unlink, caminho_do_zip),
+    )
+
+
+@roteador.get("/notas-de-aula/{aula}")
+def ler_nota_de_aula(aula: str, configuracao: ConfiguracaoAtual) -> FileResponse:
+    """A nota de aula do professor: um HTML guardado no servidor, fora do repositório público.
+
+    O arquivo é posto na pasta de notas por quem administra o servidor; aqui ele só é lido.
+    """
+    nao_encontrada = HTTPException(status_code=404, detail="Nota de aula não encontrada.")
+    if not PADRAO_DE_AULA.fullmatch(aula):
+        raise nao_encontrada
+
+    caminho = pasta_de_notas_de_aula(configuracao) / f"{aula}.html"
+    # Link simbólico não vale: poderia apontar para um arquivo de fora da pasta de notas.
+    if caminho.is_symlink() or not caminho.is_file():
+        raise nao_encontrada
+
+    return FileResponse(
+        caminho,
+        media_type="text/html; charset=utf-8",
+        headers={"Cache-Control": "no-store", "X-Content-Type-Options": "nosniff"},
     )

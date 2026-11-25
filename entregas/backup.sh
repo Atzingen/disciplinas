@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Refaz, no próprio servidor, o arquivo único de backup do serviço de entregas (uma cópia
-# consistente do banco e os arquivos enviados) e o envia ao Google Drive. Roda toda noite
-# pelo cron do deployer.
+# consistente do banco, os arquivos enviados e as notas de aula) e o envia ao Google Drive.
+# Roda toda noite pelo cron do deployer.
 set -euo pipefail
 
 DADOS="/var/local/apps/disciplinas-dados"
@@ -22,8 +22,14 @@ destino.close()
 origem.close()
 " < /dev/null
 
+# As notas de aula do professor entram quando a pasta existir.
+PASTAS=(arquivos)
+if [ -d "$DADOS/notas-de-aula" ]; then
+    PASTAS+=(notas-de-aula)
+fi
+
 # Grava em um arquivo provisório e troca no fim: uma falha no meio não destrói o backup anterior.
-tar -czf "$ARQUIVO.novo" -C "$DADOS" entregas.backup.sqlite3 arquivos
+tar -czf "$ARQUIVO.novo" -C "$DADOS" entregas.backup.sqlite3 "${PASTAS[@]}"
 mv "$ARQUIVO.novo" "$ARQUIVO"
 rm "$DADOS/entregas.backup.sqlite3"
 

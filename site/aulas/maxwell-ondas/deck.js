@@ -132,7 +132,8 @@ const Deck = (() => {
     } else if (tecla === "n" || tecla === "N") {
       // a nota de aula só existe na cópia do professor: <html data-notas="notas.html">
       const notas = document.documentElement.dataset.notas;
-      if (notas) window.open(notas + "#" + slides[atual].id, "_blank");
+      // A janela tem nome: apertar N de novo reaproveita a mesma aba, já com o login feito.
+      if (notas) window.open(notas + "#" + slides[atual].id, "nota-de-aula");
     }
   }
 

@@ -98,6 +98,7 @@ export function createApi(apiUrl) {
 
   return {
     get: (path) => requestJson("GET", path),
+    text: async (path) => (await request("GET", path)).text(),
     post: (path, json) => requestJson("POST", path, { json }),
     put: (path, json) => requestJson("PUT", path, { json }),
     patch: (path, json) => requestJson("PATCH", path, { json }),

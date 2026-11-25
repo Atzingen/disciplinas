@@ -21,6 +21,21 @@ banco e arquivos. O desenho completo está em
 5. No fim do semestre, baixar os zips e apagar a turma, o que remove do servidor a lista
    de alunos e todos os arquivos.
 
+## Notas de aula
+
+O serviço também guarda as notas de aula do professor, que não entram no repositório
+público. Cada nota é um arquivo HTML em `notas-de-aula/<aula>.html`, dentro da pasta de
+dados, com o mesmo nome da pasta da aula em `site/aulas/`. A rota
+`GET /notas-de-aula/<aula>` só responde a contas da lista `PROFESSORES`; a página
+`site/aulas/<aula>/notas.html` faz o login e mostra o conteúdo.
+
+O serviço cria a pasta `notas-de-aula/` ao subir. O arquivo é posto nela por quem
+administra o servidor, com a conta `deployer`; a rota só lê, e não segue link simbólico:
+
+```bash
+scp nota.html gustavo-01-deployer:/var/local/apps/disciplinas-dados/notas-de-aula/maxwell-ondas.html
+```
+
 ## Desenvolvimento
 
 ```bash
@@ -37,17 +52,18 @@ As páginas, servidas em `http://localhost:8000` (`npm run serve`), já apontam 
 ## Servidor
 
 - Clone em `/var/local/apps/disciplinas`; dados em `/var/local/apps/disciplinas-dados`
-  (`entregas.sqlite3` e `arquivos/`), fora do clone.
+  (`entregas.sqlite3`, `arquivos/` e `notas-de-aula/`), fora do clone.
 - `.env` em `entregas/.env`, só no servidor.
 - nginx faz o proxy de `entregas.iatzingen.com.br` para `127.0.0.1:8100`, com certificado
   do certbot.
 - O workflow `entregas-deploy.yml` roda os testes e executa `deploy.sh` no servidor a cada
   push na `main` que altere `entregas/`.
 - Backup: `backup.sh` refaz toda noite, pelo cron do `deployer`, um único arquivo em
-  `/var/local/apps/disciplinas-backup/entregas-backup.tar.gz` (banco e arquivos) e envia o
+  `/var/local/apps/disciplinas-backup/entregas-backup.tar.gz` (banco, arquivos e notas de aula) e envia o
   mesmo arquivo ao Google Drive do professor (remote `gdrive-entregas` do `rclone`, pasta
   `disciplinas-entregas`). Nada é copiado para as máquinas do professor. O `rclone.conf` com
   o token fica só no servidor; para refazer a autorização: `rclone config reconnect
   gdrive-entregas:` com um túnel `ssh -L 53682:127.0.0.1:53682`. Para restaurar, parar o contêiner,
-  extrair o arquivo, pôr `entregas.backup.sqlite3` como `entregas.sqlite3` e a pasta
-  `arquivos/` em `/var/local/apps/disciplinas-dados/`, e subir o contêiner de novo.
+  extrair o arquivo, pôr `entregas.backup.sqlite3` como `entregas.sqlite3` e as pastas
+  `arquivos/` e `notas-de-aula/` em `/var/local/apps/disciplinas-dados/`, e subir o contêiner
+  de novo.

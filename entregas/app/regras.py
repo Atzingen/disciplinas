@@ -17,6 +17,9 @@ PADRAO_DE_DISCIPLINA = re.compile(r"[A-Z0-9]{3,12}")
 PADRAO_DE_SEMESTRE = re.compile(r"\d{4}-[12]")
 PADRAO_DE_EXTENSAO = re.compile(r"[a-z0-9]{1,8}")
 PADRAO_DE_MATERIAL = re.compile(r"[A-Za-z0-9._/#-]*")
+# Nome de aula como na pasta do site (site/aulas/<aula>/): sem ponto nem barra, para o nome
+# nunca apontar para fora da pasta de notas.
+PADRAO_DE_AULA = re.compile(r"[a-z0-9]+(?:-[a-z0-9]+)*")
 SEPARADORES_DE_COLUNA = re.compile(r"[\t;,|]| {2,}")
 
 
