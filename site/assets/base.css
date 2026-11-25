@@ -1378,6 +1378,7 @@ h1 {
 .discipline-card {
   position: relative;
   display: grid;
+  container-type: inline-size;
   min-height: 380px;
   overflow: hidden;
   padding: 1.5rem;
@@ -1447,7 +1448,9 @@ a.discipline-card:hover {
 .discipline-card h3 {
   max-width: 9ch;
   margin: 0 0 1rem;
-  font-size: clamp(2rem, 3vw, 2.8rem);
+  /* "Eletromagnetismo" ocupa cerca de 8,1 vezes o tamanho da fonte: o limite em cqi mantém a palavra dentro do
+     cartão, que corta o que passa (overflow: hidden), em qualquer largura de tela. */
+  font-size: min(clamp(2rem, 3vw, 2.8rem), 11.5cqi);
   line-height: 0.98;
   letter-spacing: -0.04em;
 }

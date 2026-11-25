@@ -631,3 +631,8 @@
 .coleta-etapa > .mapa-acoes {
   margin-bottom: 0.9rem;
 }
+
+/* O botão do passo a passo não encosta no resumo que vem embaixo dele. */
+.mapa-acoes + .mapa-resumo {
+  margin-top: 0.9rem;
+}
